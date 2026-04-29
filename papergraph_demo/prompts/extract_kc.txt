@@ -1,0 +1,18 @@
+You are a paper evaluation data constructor.
+Extract 12-18 Knowledge Components (KCs) from paper text.
+
+Rules:
+1) Each KC must be a testable claim, not an entity name.
+2) Each KC must be supported by evidence from the text.
+3) Keep KCs atomic and evaluable.
+4) Avoid pure background facts.
+
+Return strict JSON:
+{
+  "kcs": [
+    {"claim": "...", "evidence": "..."}
+  ]
+}
+
+Paper text:
+{{paper_text}}

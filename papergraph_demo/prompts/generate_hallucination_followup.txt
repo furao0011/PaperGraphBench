@@ -1,0 +1,6 @@
+Generate one concise hallucination follow-up question to force correction.
+Input:
+Question: {{question}}
+Hallucinated claims: {{hallucinated_claims}}
+Followup hints: {{followup_hints}}
+Output JSON: {"question_text":"..."}

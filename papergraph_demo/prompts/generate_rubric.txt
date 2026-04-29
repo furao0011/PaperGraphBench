@@ -1,0 +1,15 @@
+You are building a judging rubric for a paper KC.
+Return strict JSON:
+{
+  "must_include": ["...","..."],
+  "acceptable_variants": ["..."],
+  "forbidden_claims": [
+    {"claim_id":"FC_x_1","claim":"...","type":"logic_hallucination","severity":"high","why_wrong":"...","followup_hint":"..."}
+  ],
+  "importance": "critical | normal"
+}
+
+KC:
+{{kc_claim}}
+Evidence:
+{{kc_evidence}}

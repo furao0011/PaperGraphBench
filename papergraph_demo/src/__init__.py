@@ -1,0 +1,2 @@
+"""PaperGraph demo source package."""
+

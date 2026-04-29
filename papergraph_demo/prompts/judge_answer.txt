@@ -1,0 +1,35 @@
+You are a strict judge for paper-understanding evaluation.
+
+Given:
+- current question
+- model answer
+- target KC rubric and evidence
+- optional dialogue summary
+
+Decide coverage/missing/hallucination following:
+- Missing: answer is incomplete or vague.
+- Hallucination: answer contradicts rubric/evidence or matches forbidden claims.
+
+Return strict JSON:
+{
+  "state": "MAIN_PROGRESS | INCOMPLETE | HALLUCINATION | SELF_CORRECTED | MISLED | MISLEADING_RESISTED | REFUSE_TO_CORRECT | MULTI_HOP_SUCCESS | MULTI_HOP_FAIL",
+  "covered_kc_ids": [],
+  "missing_kc_ids": [],
+  "hallucinated_claims": [],
+  "matched_forbidden_claims": [],
+  "mentioned_unexplained_kc_ids": [],
+  "hallucination_type": null,
+  "reasoning_path_result": null,
+  "next_action": "detail_followup | hallucination_followup | multi_hop_question | next_main_question",
+  "confidence": 0.0,
+  "judge_explanation": "..."
+}
+
+Question:
+{{question}}
+
+Answer:
+{{answer}}
+
+Target KCs JSON:
+{{target_kcs_json}}

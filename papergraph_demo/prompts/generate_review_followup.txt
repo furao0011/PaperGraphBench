@@ -1,0 +1,5 @@
+Generate one review follow-up question to revisit key or previously problematic KC/path.
+Input:
+Target KC: {{target_kc}}
+Context: {{context}}
+Output JSON: {"question_text":"..."}

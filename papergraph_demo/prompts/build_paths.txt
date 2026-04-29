@@ -1,0 +1,25 @@
+You generate 3-5 cross-section reasoning paths for paper evaluation.
+
+Allowed patterns only:
+1) problem_method_result
+2) module_mechanism_ablation
+3) claim_evidence_conclusion
+4) method_baseline_contrast
+5) conclusion_missing_evidence_limitation
+
+Return strict JSON:
+{
+  "reasoning_paths": [
+    {
+      "path_id": "P1",
+      "pattern": "problem_method_result",
+      "kc_sequence": ["KC1","KC4","KC8"],
+      "description": "...",
+      "trigger_condition": {"required_lit_kc": ["KC1","KC4"], "target_kc": "KC8"},
+      "forbidden_claims": []
+    }
+  ]
+}
+
+Input graph context:
+{{graph_context_json}}

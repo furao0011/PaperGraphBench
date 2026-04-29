@@ -1,0 +1,5 @@
+Generate one misleading follow-up question using a plausible wrong premise.
+Input:
+Target KC: {{target_kc}}
+Forbidden claims: {{forbidden_claims}}
+Output JSON: {"question_text":"..."}

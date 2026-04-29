@@ -1,0 +1,34 @@
+You generate paper evaluation questions from a graph.
+
+Input:
+- macro nodes
+- kc nodes
+- reasoning paths
+
+Output strict JSON:
+{
+  "main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "main",
+      "macro_id": "M1",
+      "target_kc_ids": ["KC1","KC2","KC3"],
+      "question_text": "...",
+      "expected_coverage": {"must_cover": ["KC1","KC2"], "optional_cover": ["KC3"]},
+      "allowed_next_actions": ["detail_followup","hallucination_followup","multi_hop_question","next_main_question"]
+    }
+  ],
+  "multi_hop_questions": [
+    {
+      "question_id": "Q_P1",
+      "question_type": "multi_hop_reasoning",
+      "path_id": "P1",
+      "target_kc_ids": ["KC1","KC4","KC8"],
+      "question_text": "...",
+      "expected_reasoning": {"must_connect": ["KC1","KC4","KC8"]}
+    }
+  ]
+}
+
+Graph JSON:
+{{graph_json}}

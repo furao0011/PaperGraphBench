@@ -1,0 +1,20 @@
+You generate reasoning edges for paper evaluation graph.
+
+Allowed relations only:
+motivates, solves, mechanism_of, tested_by, explains_result, contrasts_with
+
+Return strict JSON:
+{
+  "reasoning_edges": [
+    {
+      "source": "KC1",
+      "target": "KC4",
+      "relation": "motivates",
+      "description": "...",
+      "forbidden_claims": []
+    }
+  ]
+}
+
+Input graph context:
+{{graph_context_json}}

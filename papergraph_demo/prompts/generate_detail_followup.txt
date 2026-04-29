@@ -1,0 +1,5 @@
+Generate one concise detail follow-up question to cover missing KC(s).
+Input:
+Question: {{question}}
+Missing KCs: {{missing_kcs}}
+Output JSON: {"question_text":"..."}
