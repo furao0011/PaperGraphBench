@@ -1,4 +1,10 @@
-Generate one concise hallucination follow-up question to force correction.
+Generate one concise hallucination follow-up question to verify and invite correction.
+Rules:
+- Use English.
+- Do not state that the paper claims the suspected hallucination.
+- Frame the listed claims as possible unsupported claims from the previous answer.
+- Ask the model to check each claim against the paper, retract unsupported parts, and restate the corrected answer.
+- Do not introduce a wrong premise. That is reserved for misleading follow-up questions.
 Input:
 Question: {{question}}
 Hallucinated claims: {{hallucinated_claims}}

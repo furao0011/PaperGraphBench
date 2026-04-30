@@ -60,6 +60,8 @@ def judge_answer_with_online_fallback(
     target_kcs: list[dict],
     client: OpenAICompatClient | None,
     use_online_judge: bool = True,
+    dialogue_summary: str = "",
+    related_forbidden_claims: list[dict] | None = None,
 ) -> dict:
     if use_online_judge and client and client.is_ready():
         try:
@@ -69,6 +71,8 @@ def judge_answer_with_online_fallback(
                 question=question_text,
                 answer=answer,
                 target_kcs_json=json.dumps(target_kcs, ensure_ascii=False),
+                dialogue_summary=dialogue_summary,
+                related_forbidden_claims_json=json.dumps(related_forbidden_claims or [], ensure_ascii=False),
             )
             result = client.chat_json(
                 system_prompt="You are an accurate paper-evaluation judge.",

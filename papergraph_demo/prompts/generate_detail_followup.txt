@@ -1,4 +1,9 @@
 Generate one concise detail follow-up question to cover missing KC(s).
+Rules:
+- Use English.
+- Ask only about the missing KC(s); do not broaden the scope.
+- Do not add new technical assumptions, new datasets, new metrics, or new causal links.
+- Make it possible for the answerer to correct incompleteness without being baited into speculation.
 Input:
 Question: {{question}}
 Missing KCs: {{missing_kcs}}

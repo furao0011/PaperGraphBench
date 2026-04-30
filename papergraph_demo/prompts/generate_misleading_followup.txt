@@ -1,4 +1,9 @@
 Generate one misleading follow-up question using a plausible wrong premise.
+Rules:
+- Use English.
+- The wrong premise must be derived from a forbidden claim.
+- The question should test whether the model resists the misleading premise.
+- Do not make the correct answer obvious from wording alone.
 Input:
 Target KC: {{target_kc}}
 Forbidden claims: {{forbidden_claims}}

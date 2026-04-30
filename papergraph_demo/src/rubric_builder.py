@@ -13,11 +13,14 @@ def build_kc_rubric(
     kc_type: str,
     importance: str,
     client: OpenAICompatClient | None = None,
+    allow_offline_fallback: bool = False,
 ) -> dict:
     online = _build_kc_rubric_online(kc_id, full_claim, evidence_text, importance, client)
     if online:
         online["type"] = kc_type
         return online
+    if not allow_offline_fallback:
+        raise RuntimeError(f"Online rubric generation failed for {kc_id} and offline fallback is disabled.")
 
     key_terms = _extract_key_terms(full_claim)
     must_include = key_terms[:2] if len(key_terms) >= 2 else key_terms

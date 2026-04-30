@@ -1,9 +1,18 @@
-You generate paper evaluation questions from a graph.
+You generate graph-grounded paper evaluation questions from a PaperGraph.
 
 Input:
 - macro nodes
 - kc nodes
 - reasoning paths
+
+Rules:
+1) Use English.
+2) Generate exactly one main question for every macro node that has at least one KC.
+3) Generate exactly one multi-hop question for every reasoning path with at least three KCs.
+4) Each question must be answerable from the target KC claims, evidence, and path/edge descriptions.
+5) Do not introduce entities, modules, datasets, metrics, sections, figures, tables, or citations that are not present in the target KCs/path.
+6) Multi-hop questions must not force a causal relationship unless the path description or edges support it. If a relation may be weak, ask the model to distinguish supported links from unsupported links.
+7) Preserve IDs exactly: Q_M1 for macro M1, Q_P1 for path P1, etc.
 
 Output strict JSON:
 {

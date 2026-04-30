@@ -6,17 +6,19 @@ import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from src.model_client import OpenAICompatClient
 from src.prompt_loader import load_prompt, render_prompt
+from src.progress import log, span
 from src.rubric_builder import build_kc_rubric
 
 
 MACRO_META = {
-    "M1": {"title": "研究问题与动机", "role": "motivation", "summary": "论文提出方法的动机与问题背景。"},
-    "M2": {"title": "核心方法与机制", "role": "method", "summary": "核心方法、模块与机制解释。"},
-    "M3": {"title": "实验设计与结果", "role": "experiment", "summary": "实验验证、结果与分析。"},
-    "M4": {"title": "结论、局限与未验证点", "role": "conclusion", "summary": "结论、局限和未来改进。"},
+    "M1": {"title": "Research Problem and Motivation", "role": "motivation", "summary": "Why the paper is needed and what gaps or problems motivate it."},
+    "M2": {"title": "Core Method and Mechanisms", "role": "method", "summary": "The paper's proposed method, dataset construction, modules, and mechanisms."},
+    "M3": {"title": "Experimental Design and Results", "role": "experiment", "summary": "Evaluation setup, empirical findings, analysis, and ablations."},
+    "M4": {"title": "Conclusion, Limitations, and Open Evidence", "role": "conclusion", "summary": "Conclusions, contributions, limitations, and claims that remain under-validated."},
 }
 
 ALLOWED_RELATIONS = {"motivates", "solves", "mechanism_of", "tested_by", "explains_result", "contrasts_with"}
+MACRO_IDS = ["M1", "M2", "M3", "M4"]
 
 
 def _infer_type(claim: str, macro_id: str) -> str:
@@ -32,22 +34,47 @@ def _infer_type(claim: str, macro_id: str) -> str:
     return "conclusion"
 
 
-def _macro_score(claim: str) -> dict[str, int]:
+def _macro_score(claim: str, section: str = "") -> dict[str, int]:
     c = claim.lower()
+    sec = section.lower()
     scores = {"M1": 0, "M2": 0, "M3": 0, "M4": 0}
-    for kw in ["problem", "challenge", "motivation", "issue", "lack"]:
+    existing_dataset_context = (
+        "video fact-checking datasets" in sec
+        and any(name in c for name in ["checked", "fakesv", "mocheg", "vmh", "existing"])
+    )
+    if any(kw in sec for kw in ["abstract", "introduction", "related"]):
+        scores["M1"] += 3
+    if any(kw in sec for kw in ["method", "framework", "approach", "model", "dataset construction"]):
+        scores["M2"] += 4
+    if any(kw in sec for kw in ["experiment", "result", "analysis", "ablation", "case study", "statistics"]):
+        scores["M3"] += 4
+    if any(kw in sec for kw in ["conclusion", "limitation", "future"]):
+        scores["M4"] += 4
+    for kw in ["problem", "challenge", "motivation", "issue", "lack", "gap", "insufficient"]:
         if kw in c:
             scores["M1"] += 2
-    for kw in ["propose", "framework", "method", "module", "mechanism", "retriever", "descriptor"]:
+    if existing_dataset_context:
+        scores["M1"] += 5
+        scores["M2"] -= 3
+    for kw in ["propose", "framework", "method", "module", "mechanism", "retriever", "descriptor", "manager", "reasoner", "construct"]:
         if kw in c:
             scores["M2"] += 2
-    for kw in ["experiment", "result", "ablation", "accuracy", "table", "figure", "score"]:
+    if "dataset" in c and any(kw in c for kw in ["novel", "proposed", "our", "we develop", "we construct"]):
+        scores["M2"] += 2
+    for kw in ["experiment", "result", "ablation", "accuracy", "table", "figure", "score", "outperform", "performance", "comparison"]:
         if kw in c:
             scores["M3"] += 2
-    for kw in ["limitation", "future", "conclusion", "improvement"]:
+    for kw in ["limitation", "future", "conclusion", "improvement", "remain", "further"]:
         if kw in c:
             scores["M4"] += 2
     return scores
+
+
+def _assign_macro_id(claim: str, section: str = "") -> str:
+    scores = _macro_score(claim, section)
+    # Stable tie-breaker keeps claims from falling into M1 just because all scores are zero.
+    order = ["M2", "M3", "M1", "M4"]
+    return max(order, key=lambda mid: (scores[mid], -order.index(mid)))
 
 
 def _short_label(claim: str) -> str:
@@ -55,23 +82,29 @@ def _short_label(claim: str) -> str:
     return " ".join(words[:10]) + ("..." if len(words) > 10 else "")
 
 
-def _build_kc_nodes(kcs: list[dict], client: OpenAICompatClient | None = None) -> tuple[list[dict], dict[str, list[str]]]:
+def _build_kc_nodes(
+    kcs: list[dict],
+    client: OpenAICompatClient | None = None,
+    allow_offline_fallback: bool = False,
+) -> tuple[list[dict], dict[str, list[str]]]:
     groups = {"M1": [], "M2": [], "M3": [], "M4": []}
     kc_nodes: list[dict] = []
     online_budget = _resolve_online_budget(len(kcs))
+    if not allow_offline_fallback:
+        online_budget = len(kcs)
     rubric_cache: dict[str, dict] = {}
 
     # Parallel online rubric generation for top-budget KCs.
     if client and client.is_ready():
         max_workers = int(os.getenv("RUBRIC_ONLINE_WORKERS", "4"))
         futures = {}
+        log("rubric generation started", online_budget=online_budget, workers=max_workers)
         with ThreadPoolExecutor(max_workers=max_workers) as ex:
             for idx, kc in enumerate(kcs[:online_budget]):
                 claim = kc["claim"].strip()
-                scores = _macro_score(claim)
-                macro_id = max(scores, key=scores.get)
-                kc_type = _infer_type(claim, macro_id)
-                importance = "critical" if macro_id in {"M1", "M2"} else "normal"
+                macro_id = _valid_macro_id(kc.get("macro_id")) or _assign_macro_id(claim, kc.get("section", ""))
+                kc_type = _valid_kc_type(kc.get("type")) or _infer_type(claim, macro_id)
+                importance = _valid_importance(kc.get("importance")) or ("critical" if macro_id in {"M1", "M2"} else "normal")
                 fut = ex.submit(
                     build_kc_rubric,
                     kc["kc_id"],
@@ -80,20 +113,23 @@ def _build_kc_nodes(kcs: list[dict], client: OpenAICompatClient | None = None) -
                     kc_type,
                     importance,
                     client,
+                    allow_offline_fallback,
                 )
                 futures[fut] = kc["kc_id"]
             for fut in as_completed(futures):
                 kc_id = futures[fut]
                 try:
                     rubric_cache[kc_id] = fut.result()
+                    log("rubric generated", kc_id=kc_id, completed=len(rubric_cache), total=online_budget)
                 except Exception:
+                    log("rubric generation error", kc_id=kc_id)
                     pass
 
     for idx, kc in enumerate(kcs):
         claim = kc["claim"].strip()
-        scores = _macro_score(claim)
-        macro_id = max(scores, key=scores.get)
-        kc_type = _infer_type(claim, macro_id)
+        macro_id = _valid_macro_id(kc.get("macro_id")) or _assign_macro_id(claim, kc.get("section", ""))
+        kc_type = _valid_kc_type(kc.get("type")) or _infer_type(claim, macro_id)
+        importance = _valid_importance(kc.get("importance")) or ("critical" if macro_id in {"M1", "M2"} else "normal")
         must_1 = _short_label(claim)
         node = {
             "kc_id": kc["kc_id"],
@@ -101,9 +137,13 @@ def _build_kc_nodes(kcs: list[dict], client: OpenAICompatClient | None = None) -
             "type": kc_type,
             "short_label": must_1,
             "full_claim": claim,
-            "importance": "critical" if macro_id in {"M1", "M2"} else "normal",
+            "importance": importance,
+            "section": kc.get("section", ""),
+            "section_id": kc.get("section_id", ""),
         }
         rubric = rubric_cache.get(kc["kc_id"])
+        if not rubric and not allow_offline_fallback:
+            raise RuntimeError(f"Online rubric generation failed for {kc['kc_id']} and offline fallback is disabled.")
         if not rubric:
             rubric = build_kc_rubric(
                 kc_id=kc["kc_id"],
@@ -112,11 +152,52 @@ def _build_kc_nodes(kcs: list[dict], client: OpenAICompatClient | None = None) -
                 kc_type=kc_type,
                 importance=node["importance"],
                 client=client if idx < online_budget else None,
+                allow_offline_fallback=allow_offline_fallback,
             )
         node.update(rubric)
         kc_nodes.append(node)
         groups[macro_id].append(kc["kc_id"])
+    _rebalance_macro_minimum(kc_nodes, groups)
     return kc_nodes, groups
+
+
+def _valid_macro_id(value: object) -> str | None:
+    text = str(value or "").strip()
+    return text if text in MACRO_IDS else None
+
+
+def _valid_kc_type(value: object) -> str | None:
+    text = str(value or "").strip()
+    return text if text in {"problem", "method", "mechanism", "dataset", "experiment", "result", "conclusion", "limitation"} else None
+
+
+def _valid_importance(value: object) -> str | None:
+    text = str(value or "").strip()
+    return text if text in {"critical", "normal"} else None
+
+
+def _rebalance_macro_minimum(kc_nodes: list[dict], groups: dict[str, list[str]], minimum: int = 2) -> None:
+    if len(kc_nodes) < minimum * len(MACRO_IDS):
+        return
+    by_id = {kc["kc_id"]: kc for kc in kc_nodes}
+    for macro_id in MACRO_IDS:
+        while len(groups[macro_id]) < minimum:
+            donor = max(MACRO_IDS, key=lambda mid: len(groups[mid]))
+            if donor == macro_id or len(groups[donor]) <= minimum:
+                return
+            candidates = groups[donor]
+            scored = [
+                (kid, _macro_score(by_id[kid]["full_claim"], by_id[kid].get("section", ""))[macro_id])
+                for kid in candidates
+            ]
+            best, best_score = max(scored, key=lambda item: item[1])
+            if best_score <= 0:
+                return
+            groups[donor].remove(best)
+            groups[macro_id].append(best)
+            by_id[best]["macro_id"] = macro_id
+            by_id[best]["type"] = _infer_type(by_id[best]["full_claim"], macro_id)
+            by_id[best]["importance"] = "critical" if macro_id in {"M1", "M2"} else "normal"
 
 
 def _resolve_online_budget(total_kc: int) -> int:
@@ -222,26 +303,33 @@ def _build_reasoning_edges_online(kc_nodes: list[dict], macro_nodes: list[dict],
         tpl = load_prompt("build_edges.txt")
         context = {"macro_nodes": macro_nodes, "kc_nodes": kc_nodes}
         user_prompt = render_prompt(tpl, graph_context_json=json.dumps(context, ensure_ascii=False))
-        result = client.chat_json(
-            system_prompt="You are a strict graph-construction assistant for paper evaluation.",
-            user_prompt=user_prompt,
-        )
+        with span("generate reasoning edges", kcs=len(kc_nodes)):
+            result = client.chat_json(
+                system_prompt="You are a strict graph-construction assistant for paper evaluation.",
+                user_prompt=user_prompt,
+            )
         edges = result.get("reasoning_edges", [])
         ok = []
-        for i, e in enumerate(edges, start=1):
+        valid_kc_ids = {k["kc_id"] for k in kc_nodes}
+        for e in edges:
             rel = e.get("relation")
             if rel not in ALLOWED_RELATIONS:
                 continue
+            source = e.get("source")
+            target = e.get("target")
+            if source not in valid_kc_ids or target not in valid_kc_ids or source == target:
+                continue
             ok.append(
                 {
-                    "edge_id": f"E{i}",
-                    "source": e.get("source"),
-                    "target": e.get("target"),
+                    "edge_id": f"E{len(ok) + 1}",
+                    "source": source,
+                    "target": target,
                     "relation": rel,
                     "description": e.get("description", ""),
-                    "forbidden_claims": e.get("forbidden_claims", []),
+                    "forbidden_claims": _normalize_forbidden_claims(e.get("forbidden_claims", []), f"E{len(ok) + 1}"),
                 }
             )
+        log("reasoning edges parsed", count=len(ok))
         return ok or None
     except Exception:
         return None
@@ -259,12 +347,15 @@ def _build_reasoning_paths_online(
         tpl = load_prompt("build_paths.txt")
         context = {"macro_nodes": macro_nodes, "kc_nodes": kc_nodes, "reasoning_edges": reasoning_edges}
         user_prompt = render_prompt(tpl, graph_context_json=json.dumps(context, ensure_ascii=False))
-        result = client.chat_json(
-            system_prompt="You are a strict reasoning-path construction assistant.",
-            user_prompt=user_prompt,
-        )
+        with span("generate reasoning paths", kcs=len(kc_nodes), edges=len(reasoning_edges)):
+            result = client.chat_json(
+                system_prompt="You are a strict reasoning-path construction assistant.",
+                user_prompt=user_prompt,
+            )
         paths = result.get("reasoning_paths", [])
-        return paths[:5] if paths else None
+        validated = _validate_reasoning_paths(paths, kc_nodes)
+        log("reasoning paths parsed", raw=len(paths), valid=len(validated))
+        return validated or None
     except Exception:
         return None
 
@@ -274,10 +365,12 @@ def build_master_graph(
     paper_text_path: str,
     kcs: list[dict],
     client: OpenAICompatClient | None = None,
+    allow_offline_fallback: bool = False,
 ) -> dict:
-    kc_nodes, groups = _build_kc_nodes(kcs, client=client)
+    kc_nodes, groups = _build_kc_nodes(kcs, client=client, allow_offline_fallback=allow_offline_fallback)
+    log("KC nodes built", count=len(kc_nodes), m1=len(groups["M1"]), m2=len(groups["M2"]), m3=len(groups["M3"]), m4=len(groups["M4"]))
     macro_nodes = []
-    for macro_id in ["M1", "M2", "M3", "M4"]:
+    for macro_id in MACRO_IDS:
         meta = MACRO_META[macro_id]
         macro_nodes.append(
             {
@@ -285,14 +378,19 @@ def build_master_graph(
                 "title": meta["title"],
                 "role": meta["role"],
                 "summary": meta["summary"],
-                "kc_ids": groups[macro_id][:5],
+                "kc_ids": groups[macro_id],
                 "prerequisite_macro_ids": [] if macro_id == "M1" else [f"M{int(macro_id[1]) - 1}"],
             }
         )
     edges = _build_reasoning_edges_online(kc_nodes, macro_nodes, client)
+    if not edges and not allow_offline_fallback:
+        raise RuntimeError("Online reasoning edge generation failed and offline fallback is disabled.")
     if not edges:
         edges = _build_reasoning_edges(kc_nodes, groups)
+    _ensure_edge_forbidden_claims(edges, kc_nodes)
     paths = _build_reasoning_paths_online(kc_nodes, macro_nodes, edges, client)
+    if not paths and not allow_offline_fallback:
+        raise RuntimeError("Online reasoning path generation failed and offline fallback is disabled.")
     if not paths:
         paths = _build_reasoning_paths(groups)
     return {
@@ -304,3 +402,84 @@ def build_master_graph(
         "reasoning_edges": edges,
         "reasoning_paths": paths,
     }
+
+
+def _validate_reasoning_paths(paths: list[dict], kc_nodes: list[dict]) -> list[dict]:
+    valid_kc_ids = {k["kc_id"] for k in kc_nodes}
+    out: list[dict] = []
+    for p in paths:
+        seq = [kid for kid in p.get("kc_sequence", []) if kid in valid_kc_ids]
+        seq = list(dict.fromkeys(seq))
+        if len(seq) < 3:
+            continue
+        path_id = f"P{len(out) + 1}"
+        out.append(
+            {
+                "path_id": path_id,
+                "pattern": p.get("pattern", "claim_evidence_conclusion"),
+                "kc_sequence": seq[:3],
+                "description": p.get("description", ""),
+                "trigger_condition": {
+                    "required_lit_kc": seq[:2],
+                    "target_kc": seq[2],
+                },
+                "forbidden_claims": _normalize_forbidden_claims(p.get("forbidden_claims", []), path_id),
+            }
+        )
+        if len(out) >= 5:
+            break
+    return out
+
+
+def _normalize_forbidden_claims(items: list, owner_id: str) -> list[dict]:
+    normalized: list[dict] = []
+    for idx, item in enumerate(items[:4], start=1):
+        if isinstance(item, dict):
+            claim = str(item.get("claim", "")).strip()
+            if not claim:
+                continue
+            normalized.append(
+                {
+                    "claim_id": str(item.get("claim_id") or f"FC_{owner_id}_{idx}"),
+                    "claim": claim,
+                    "type": str(item.get("type") or "logic_hallucination"),
+                    "severity": str(item.get("severity") or "high"),
+                    "why_wrong": str(item.get("why_wrong") or "This claim is inconsistent with the graph evidence."),
+                    "followup_hint": str(item.get("followup_hint") or "Ask the model to restate the relation using the paper evidence."),
+                }
+            )
+        elif isinstance(item, str) and item.strip():
+            normalized.append(
+                {
+                    "claim_id": f"FC_{owner_id}_{idx}",
+                    "claim": item.strip(),
+                    "type": "logic_hallucination",
+                    "severity": "high",
+                    "why_wrong": "This claim is inconsistent with the reasoning edge/path.",
+                    "followup_hint": "Ask the model to compare the claim against the paper evidence.",
+                }
+            )
+    return normalized
+
+
+def _ensure_edge_forbidden_claims(edges: list[dict], kc_nodes: list[dict]) -> None:
+    by_id = {kc["kc_id"]: kc for kc in kc_nodes}
+    for edge in edges:
+        if edge.get("forbidden_claims"):
+            edge["forbidden_claims"] = _normalize_forbidden_claims(edge["forbidden_claims"], edge["edge_id"])
+            continue
+        source = by_id.get(edge.get("source"), {})
+        target = by_id.get(edge.get("target"), {})
+        source_label = source.get("short_label") or source.get("full_claim") or edge.get("source")
+        target_label = target.get("short_label") or target.get("full_claim") or edge.get("target")
+        relation = edge.get("relation", "relates_to")
+        edge["forbidden_claims"] = [
+            {
+                "claim_id": f"FC_{edge['edge_id']}_1",
+                "claim": f"The relation between {source_label} and {target_label} is the reverse of {relation}.",
+                "type": "wrong_relation",
+                "severity": "high",
+                "why_wrong": "The graph encodes a directed reasoning relation; reversing it changes the paper's argument structure.",
+                "followup_hint": "Ask whether the source claim supports the target claim, or whether the answer has reversed the direction.",
+            }
+        ]

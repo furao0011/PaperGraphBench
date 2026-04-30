@@ -19,7 +19,7 @@ def load_paper_text_from_dir(directory: Path) -> str:
     for idx, md_file in enumerate(md_files, start=1):
         content = md_file.read_text(encoding="utf-8")
         cleaned = _clean_markdown(content)
-        parts.append(f"\n\n## Page {idx}: {md_file.name}\n\n{cleaned}")
+        parts.append(f"\n\n<!-- page {idx}: {md_file.name} -->\n\n{cleaned}")
     return "".join(parts).strip()
 
 
@@ -83,7 +83,7 @@ def _drop_reference_tail(text: str) -> str:
     Remove references/bibliography and trailing metadata sections.
     """
     pat = re.compile(
-        r"\n##\s*(references|bibliography|appendix|acknowledg(e)?ments?)\b.*$",
+        r"\n#{1,6}\s*(references|bibliography|appendix|acknowledg(e)?ments?)\b.*$",
         flags=re.IGNORECASE | re.DOTALL,
     )
     m = pat.search(text)
@@ -125,16 +125,53 @@ def split_into_sections(paper_text: str) -> list[dict]:
             )
         current_buf = []
 
-    header_pat = re.compile(r"^\s{0,3}(#{1,6}\s+.+)$")
+    header_pat = re.compile(r"^\s{0,3}#{1,6}\s+(.+?)\s*$")
     for ln in lines:
         m = header_pat.match(ln)
         if m:
+            title = m.group(1).strip()
+            if _is_noise_heading(title):
+                continue
             flush()
-            current_title = re.sub(r"^\s*#{1,6}\s*", "", ln).strip()
+            current_title = title
         else:
             current_buf.append(ln)
     flush()
 
     if not sections:
         sections = [{"section_id": "S1", "title": "FullText", "text": paper_text.strip()}]
-    return sections
+    return _merge_short_sections(sections)
+
+
+def _is_noise_heading(title: str) -> bool:
+    title_l = title.strip().lower()
+    if re.match(r"^page\s+\d+\b", title_l):
+        return True
+    if title_l in {"acknowledgments", "acknowledgements"}:
+        return True
+    return False
+
+
+def _merge_short_sections(sections: list[dict]) -> list[dict]:
+    merged: list[dict] = []
+    for sec in sections:
+        text = sec.get("text", "").strip()
+        if not text:
+            continue
+        title = sec.get("title", "")
+        # OCR page turns often leave a tiny orphan before the next real heading.
+        if merged and len(text) < 180 and not _looks_like_major_section(title):
+            merged[-1]["text"] = (merged[-1]["text"].rstrip() + "\n\n" + text).strip()
+            continue
+        merged.append({"section_id": "", "title": title, "text": text})
+    for idx, sec in enumerate(merged, start=1):
+        sec["section_id"] = f"S{idx}"
+    return merged
+
+
+def _looks_like_major_section(title: str) -> bool:
+    t = title.lower()
+    return bool(
+        re.match(r"^(\d+(\.\d+)*)\s+", t)
+        or t in {"abstract", "introduction", "conclusion", "limitations", "references"}
+    )

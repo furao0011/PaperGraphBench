@@ -4,11 +4,16 @@ Given:
 - current question
 - model answer
 - target KC rubric and evidence
-- optional dialogue summary
+- necessary dialogue history summary
+- related edge/path forbidden claims
 
 Decide coverage/missing/hallucination following:
-- Missing: answer is incomplete or vague.
-- Hallucination: answer contradicts rubric/evidence or matches forbidden claims.
+- Missing: answer is incomplete or vague about target KCs.
+- Mentioned-unexplained: answer mentions paper-related details that are not in the provided target KC evidence, but do not clearly contradict it. Record these in mentioned_unexplained_kc_ids or judge_explanation; do NOT mark hallucination just because the detail is outside the target evidence.
+- Hallucination: answer clearly contradicts target KC evidence, asserts a matched forbidden claim, fabricates a specific citation/section/table/figure/number as paper evidence, or explicitly states an unsupported claim as proven by the paper.
+- If the current question is a hallucination correction follow-up and the answer says a prior claim is "not supported", "not mentioned", "not in the paper", "needs correction", or otherwise retracts/qualifies it, treat that as SELF_CORRECTED or MAIN_PROGRESS, not HALLUCINATION.
+- Markdown tables are only formatting. Do not penalize table format unless a table cell explicitly asserts a hallucinated claim.
+- Distinguish "not enough evidence to credit a KC" from "the answer hallucinated". Lack of target evidence should usually be INCOMPLETE, not HALLUCINATION.
 
 Return strict JSON:
 {
@@ -33,3 +38,9 @@ Answer:
 
 Target KCs JSON:
 {{target_kcs_json}}
+
+Dialogue summary:
+{{dialogue_summary}}
+
+Related forbidden claims:
+{{related_forbidden_claims_json}}

@@ -8,6 +8,7 @@ from src.kc_extractor import extract_kcs_by_sections_with_online_fallback
 from src.mermaid_exporter import export_master_graph_mermaid
 from src.model_client import ModelConfig, OpenAICompatClient
 from src.paper_parser import load_paper_text, load_paper_text_from_dir, split_into_sections
+from src.progress import log, span
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -21,16 +22,21 @@ SECTIONS_PATH = BASE_DIR / "data" / "graphs" / "sections.json"
 def main() -> None:
     project_root = BASE_DIR.parent
     settings = load_settings(project_root)
+    log("build_graph configuration loaded", base_dir=BASE_DIR)
 
     input_dir = Path(os.getenv("PAPER_INPUT_DIR", str(PAPER_DIR_PATH)))
     input_file = Path(os.getenv("PAPER_INPUT_FILE", str(PAPER_PATH)))
 
     if input_dir.exists():
-        paper_text = load_paper_text_from_dir(input_dir)
+        log("loading paper from directory", input_dir=input_dir)
+        with span("load paper directory"):
+            paper_text = load_paper_text_from_dir(input_dir)
         paper_id = input_dir.name
         paper_text_path = str(input_dir)
     elif input_file.exists():
-        paper_text = load_paper_text(input_file)
+        log("loading paper from file", input_file=input_file)
+        with span("load paper file"):
+            paper_text = load_paper_text(input_file)
         paper_id = input_file.stem
         paper_text_path = str(input_file)
     else:
@@ -38,21 +44,41 @@ def main() -> None:
             f"No valid input found. Checked directory: {input_dir}, file: {input_file}"
         )
 
-    client = None
-    if settings.api_key and settings.base_url and settings.llm_model:
-        client = OpenAICompatClient(
-            ModelConfig(
-                api_key=settings.api_key,
-                base_url=settings.base_url,
-                llm_model=settings.llm_model,
-            )
+    allow_offline_fallback = os.getenv("ALLOW_OFFLINE_FALLBACK", "false").lower() in {"1", "true", "yes", "on"}
+    client = OpenAICompatClient(
+        ModelConfig(
+            api_key=settings.api_key,
+            base_url=settings.base_url,
+            llm_model=settings.llm_model,
         )
+    )
+    if not client.is_ready() and not allow_offline_fallback:
+        raise RuntimeError("Online graph construction requires API_KEY, BASE_URL, and LLM_MODEL. Set ALLOW_OFFLINE_FALLBACK=true only for local debugging.")
 
-    sections = split_into_sections(paper_text)
+    with span("split paper into sections", paper_chars=len(paper_text)):
+        sections = split_into_sections(paper_text)
+    log("sections ready", count=len(sections))
     SECTIONS_PATH.parent.mkdir(parents=True, exist_ok=True)
     SECTIONS_PATH.write_text(json.dumps({"paper_id": paper_id, "sections": sections}, ensure_ascii=False, indent=2), encoding="utf-8")
-    kcs = extract_kcs_by_sections_with_online_fallback(sections, client)
-    graph = build_master_graph(paper_id=paper_id, paper_text_path=paper_text_path, kcs=kcs, client=client)
+    log("sections written", path=SECTIONS_PATH)
+    with span("extract KCs", sections=len(sections)):
+        kcs = extract_kcs_by_sections_with_online_fallback(sections, client, allow_offline_fallback=allow_offline_fallback)
+    log("KCs extracted", count=len(kcs))
+    with span("build master graph", kcs=len(kcs)):
+        graph = build_master_graph(
+            paper_id=paper_id,
+            paper_text_path=paper_text_path,
+            kcs=kcs,
+            client=client,
+            allow_offline_fallback=allow_offline_fallback,
+        )
+    log(
+        "master graph ready",
+        macros=len(graph.get("macro_nodes", [])),
+        kcs=len(graph.get("kc_nodes", [])),
+        edges=len(graph.get("reasoning_edges", [])),
+        paths=len(graph.get("reasoning_paths", [])),
+    )
 
     GRAPH_PATH.parent.mkdir(parents=True, exist_ok=True)
     GRAPH_PATH.write_text(
@@ -60,6 +86,7 @@ def main() -> None:
         encoding="utf-8",
     )
     MASTER_MMD_PATH.write_text(export_master_graph_mermaid(graph), encoding="utf-8")
+    log("graph artifacts written", graph=GRAPH_PATH, mermaid=MASTER_MMD_PATH)
     print(f"Sections written: {SECTIONS_PATH}")
     print(f"Master graph generated: {GRAPH_PATH}")
 

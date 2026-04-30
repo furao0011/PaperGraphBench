@@ -1,4 +1,8 @@
-Generate one review follow-up question to revisit key or previously problematic KC/path.
+Generate one review follow-up question to revisit a key or previously problematic KC/path.
+Rules:
+- Use English.
+- Ask for a concise restatement grounded in the paper.
+- If the context includes a previous error, ask the model to distinguish the corrected claim from the previous error.
 Input:
 Target KC: {{target_kc}}
 Context: {{context}}

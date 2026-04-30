@@ -5,8 +5,9 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
     kc_states = eval_state.get("kc_states", {})
     total = len(kc_states)
     lit = sum(1 for v in kc_states.values() if v["status"] in {"lit", "corrected"})
-    critical_total = sum(1 for _ in kc_states.values())  # v0: all as critical-compatible
-    critical_lit = lit
+    critical_states = [v for v in kc_states.values() if v.get("importance") == "critical"]
+    critical_total = len(critical_states)
+    critical_lit = sum(1 for v in critical_states if v["status"] in {"lit", "corrected"})
 
     macro_total = 4
     macro_completion = _macro_completion(eval_state, trajectory)
@@ -54,11 +55,14 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
 
 def _macro_completion(eval_state: dict, trajectory: dict) -> int:
     done = set()
-    for turn in trajectory.get("turns", []):
-        if turn.get("question_type") == "main" and turn.get("judge_result", {}).get("state") != "HALLUCINATION":
-            macro = turn.get("macro_id")
-            if macro:
-                done.add(macro)
+    by_macro: dict[str, list[dict]] = {}
+    for state in eval_state.get("kc_states", {}).values():
+        macro_id = state.get("macro_id")
+        if macro_id:
+            by_macro.setdefault(macro_id, []).append(state)
+    for macro_id, states in by_macro.items():
+        if states and all(s.get("status") in {"lit", "corrected"} for s in states):
+            done.add(macro_id)
     return len(done)
 
 

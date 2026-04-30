@@ -12,10 +12,18 @@ def initialize_eval_state(master_graph: dict, target_model: str) -> dict:
             "hallucination_history": [],
             "correction_status": "not_needed",
             "same_hallucination_followed_up_times": 0,
+            "importance": kc.get("importance", "normal"),
+            "macro_id": kc.get("macro_id"),
         }
     path_states = {}
     for path in master_graph.get("reasoning_paths", []):
-        path_states[path["path_id"]] = {"status": "not_tested", "tested_by_turn": None, "result": None}
+        path_states[path["path_id"]] = {
+            "status": "not_tested",
+            "tested_by_turn": None,
+            "result": None,
+            "kc_sequence": path.get("kc_sequence", []),
+            "required_lit_kc": path.get("trigger_condition", {}).get("required_lit_kc", path.get("kc_sequence", [])[:2]),
+        }
     return {
         "paper_id": master_graph.get("paper_id"),
         "target_model": target_model,
@@ -73,6 +81,6 @@ def apply_judge_result(eval_state: dict, turn_id: str, judge_result: dict, path_
             status = "partial"
         else:
             status = "success"
-        eval_state["path_states"][path_id] = {"status": status, "tested_by_turn": turn_id, "result": status}
+        eval_state["path_states"][path_id].update({"status": status, "tested_by_turn": turn_id, "result": status})
     eval_state["global_state"]["turn_count"] += 1
     return {"lit_kc": lit, "missing_kc": missing, "failed": eval_state["global_state"]["failed"]}

@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from src.model_client import OpenAICompatClient
 from src.prompt_loader import load_prompt, render_prompt
+from src.progress import log, span
 
 
 MIN_KC = 12
@@ -188,33 +189,50 @@ def extract_kcs_with_online_fallback(paper_text: str, client: OpenAICompatClient
 def extract_kcs_by_sections_with_online_fallback(
     sections: list[dict],
     client: OpenAICompatClient | None,
+    allow_offline_fallback: bool = False,
 ) -> list[dict]:
     """
     Guidance Step 2/3:
     - Extract 3-5 candidate KCs per section (parallel online calls)
     - Deduplicate and keep 12-18
     """
+    online_errors: list[str] = []
     if client and client.is_ready() and sections:
         candidates: list[dict] = []
         tpl = load_prompt("extract_kc.txt")
 
+        picked_sections = _pick_sections_for_extraction(sections)
+        log("KC extraction sections selected", count=len(picked_sections))
+
         def run_one(sec: dict) -> list[dict]:
+            log("KC extraction section queued", section_id=sec.get("section_id"), title=sec.get("title"))
             user_prompt = render_prompt(tpl, paper_text=sec["text"][:8000])
-            result = client.chat_json(
-                system_prompt="You extract 3-5 evaluable KCs from one section.",
-                user_prompt=user_prompt,
-            )
+            with span("KC extraction section", section_id=sec.get("section_id")):
+                result = client.chat_json(
+                    system_prompt="You extract 3-5 evaluable KCs from one section.",
+                    user_prompt=user_prompt,
+                )
             items = result.get("kcs", [])
             out = []
             for it in items[:5]:
                 claim = str(it.get("claim", "")).strip()
                 evidence = str(it.get("evidence", "")).strip() or sec["text"][:300]
                 if claim:
-                    out.append({"claim": claim, "evidence": evidence, "section": sec["title"]})
+                    out.append(
+                        {
+                            "claim": claim,
+                            "evidence": evidence,
+                            "section": sec["title"],
+                            "section_id": sec.get("section_id", ""),
+                            "section_index": sec.get("_section_index", 0),
+                            "macro_id": str(it.get("macro_id", "")).strip(),
+                            "type": str(it.get("type", "")).strip(),
+                            "importance": str(it.get("importance", "")).strip(),
+                        }
+                    )
+            log("KC extraction section parsed", section_id=sec.get("section_id"), candidates=len(out))
             return out
 
-        section_limit = int(os.getenv("ONLINE_SECTION_LIMIT", "6"))
-        picked_sections = sections[:section_limit]
         max_workers = min(int(os.getenv("ONLINE_KC_WORKERS", "4")), max(1, len(picked_sections)))
         futures = {}
         with ThreadPoolExecutor(max_workers=max_workers) as ex:
@@ -222,11 +240,16 @@ def extract_kcs_by_sections_with_online_fallback(
                 futures[ex.submit(run_one, sec)] = sec["section_id"]
             for fut in as_completed(futures):
                 try:
-                    candidates.extend(fut.result())
-                except Exception:
+                    section_items = fut.result()
+                    candidates.extend(section_items)
+                    log("KC extraction section completed", section_id=futures[fut], total_candidates=len(candidates))
+                except Exception as exc:
+                    online_errors.append(f"{futures[fut]}: {type(exc).__name__}: {exc}")
+                    log("KC extraction section error", section_id=futures[fut], error=f"{type(exc).__name__}: {exc}")
                     continue
 
         if candidates:
+            candidates.sort(key=lambda c: (c.get("section_index", 0), c.get("claim", "")))
             # Deduplicate by normalized claim and keep highest diversity.
             uniq = []
             seen = set()
@@ -236,7 +259,8 @@ def extract_kcs_by_sections_with_online_fallback(
                     continue
                 seen.add(norm)
                 uniq.append(c)
-            selected = uniq[:MAX_KC]
+            selected = _select_diverse_candidates(uniq, MAX_KC)
+            log("KC extraction candidates selected", unique=len(uniq), selected=len(selected))
             if len(selected) < MIN_KC:
                 joined = "\n".join(sec["text"] for sec in sections)
                 fill_claims = _keyword_fallback_claims(joined, MIN_KC - len(selected))
@@ -244,10 +268,96 @@ def extract_kcs_by_sections_with_online_fallback(
                     selected.append({"claim": fc, "evidence": joined[:300], "section": "fallback"})
             out = []
             for i, c in enumerate(selected[:MAX_KC], start=1):
-                out.append({"kc_id": f"KC{i}", "claim": c["claim"], "evidence": c["evidence"]})
+                out.append(
+                    {
+                        "kc_id": f"KC{i}",
+                        "claim": c["claim"],
+                        "evidence": c["evidence"],
+                        "section": c.get("section", ""),
+                        "section_id": c.get("section_id", ""),
+                        "macro_id": c.get("macro_id", ""),
+                        "type": c.get("type", ""),
+                        "importance": c.get("importance", ""),
+                    }
+                )
             if len(out) >= MIN_KC:
                 return out
+
+    if not allow_offline_fallback:
+        detail = "; ".join(online_errors[:3]) if online_errors else "online KC extraction returned too few valid KCs"
+        raise RuntimeError(f"Online KC extraction failed and offline fallback is disabled: {detail}")
 
     # fallback: collapse sections to full text local extractor
     merged = "\n\n".join(s.get("text", "") for s in sections)
     return extract_kcs(merged)
+
+
+def _select_diverse_candidates(candidates: list[dict], limit: int) -> list[dict]:
+    buckets: dict[int, list[dict]] = {}
+    for c in candidates:
+        buckets.setdefault(int(c.get("section_index", 0)), []).append(c)
+    selected: list[dict] = []
+    while len(selected) < limit:
+        progressed = False
+        for section_index in sorted(buckets):
+            bucket = buckets[section_index]
+            if bucket:
+                selected.append(bucket.pop(0))
+                progressed = True
+                if len(selected) >= limit:
+                    break
+        if not progressed:
+            break
+    return selected
+
+
+def _pick_sections_for_extraction(sections: list[dict]) -> list[dict]:
+    section_limit = int(os.getenv("ONLINE_SECTION_LIMIT", "12"))
+    indexed = [
+        {**sec, "_section_index": idx}
+        for idx, sec in enumerate(sections)
+        if sec.get("title") != "Preamble" and len(sec.get("text", "").strip()) >= 200
+    ]
+    if not indexed:
+        indexed = [{**sec, "_section_index": idx} for idx, sec in enumerate(sections)]
+    if section_limit <= 0 or len(indexed) <= section_limit:
+        return indexed
+
+    priority_terms = [
+        "abstract",
+        "introduction",
+        "related",
+        "method",
+        "framework",
+        "dataset",
+        "experiment",
+        "result",
+        "analysis",
+        "ablation",
+        "case",
+        "conclusion",
+        "limitation",
+    ]
+    picked: list[dict] = []
+    seen = set()
+
+    def add(sec: dict) -> None:
+        idx = sec["_section_index"]
+        if idx not in seen and len(picked) < section_limit:
+            picked.append(sec)
+            seen.add(idx)
+
+    for term in priority_terms:
+        for sec in indexed:
+            if term in sec.get("title", "").lower():
+                add(sec)
+                break
+
+    if len(picked) < section_limit:
+        step = max(1, len(indexed) // section_limit)
+        for idx in range(0, len(indexed), step):
+            add(indexed[idx])
+            if len(picked) >= section_limit:
+                break
+
+    return sorted(picked, key=lambda s: s["_section_index"])

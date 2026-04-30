@@ -3,6 +3,13 @@ You generate reasoning edges for paper evaluation graph.
 Allowed relations only:
 motivates, solves, mechanism_of, tested_by, explains_result, contrasts_with
 
+Rules:
+- Use only KC IDs present in the input graph.
+- Create an edge only when the paper's argument supports the relation.
+- Do not create generic topical similarity edges.
+- Include 1-2 realistic forbidden claims for important edges.
+- Use English in descriptions and forbidden claims.
+
 Return strict JSON:
 {
   "reasoning_edges": [

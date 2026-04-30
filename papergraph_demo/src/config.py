@@ -38,14 +38,21 @@ def _to_bool(value: str | None, default: bool = False) -> bool:
 
 def load_settings(project_root: Path) -> Settings:
     load_dotenv(project_root / ".env")
+    def _to_int(name: str, default: int) -> int:
+        raw = os.getenv(name)
+        if raw is None or raw.strip() == "":
+            return default
+        try:
+            return int(raw)
+        except ValueError:
+            return default
     return Settings(
         api_key=os.getenv("API_KEY", ""),
         base_url=os.getenv("BASE_URL", ""),
         llm_model=os.getenv("LLM_MODEL", ""),
         embed_model=os.getenv("EMBED_MODEL", ""),
         working_dir=os.getenv("WORKING_DIR", "./working"),
-        embed_dim=int(os.getenv("EMBED_DIM", "1024")),
-        embed_max_tokens=int(os.getenv("EMBED_MAX_TOKENS", "8192")),
+        embed_dim=_to_int("EMBED_DIM", 1024),
+        embed_max_tokens=_to_int("EMBED_MAX_TOKENS", 8192),
         use_online_kc_extract=_to_bool(os.getenv("USE_ONLINE_KC_EXTRACT"), default=False),
     )
-
