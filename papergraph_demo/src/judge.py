@@ -6,6 +6,16 @@ import re
 from src.model_client import OpenAICompatClient
 from src.prompt_loader import load_prompt, render_prompt
 
+
+JUDGE_PROMPTS = {
+    "main": "judge_main_answer.txt",
+    "detail_followup": "judge_main_answer.txt",
+    "review_followup": "judge_review_answer.txt",
+    "misleading_followup": "judge_misleading_answer.txt",
+    "hallucination_followup": "judge_hallucination_answer.txt",
+    "multi_hop_reasoning": "judge_multi_hop_answer.txt",
+}
+
 def judge_answer(question_text: str, answer: str, target_kcs: list[dict]) -> dict:
     covered = []
     missing = []
@@ -62,13 +72,15 @@ def judge_answer_with_online_fallback(
     use_online_judge: bool = True,
     dialogue_summary: str = "",
     related_forbidden_claims: list[dict] | None = None,
+    question_type: str = "main",
 ) -> dict:
     if use_online_judge and client and client.is_ready():
         try:
-            tpl = load_prompt("judge_answer.txt")
+            tpl = load_prompt(_judge_prompt_name(question_type))
             user_prompt = render_prompt(
                 tpl,
                 question=question_text,
+                question_type=question_type,
                 answer=answer,
                 target_kcs_json=json.dumps(target_kcs, ensure_ascii=False),
                 dialogue_summary=dialogue_summary,
@@ -83,6 +95,10 @@ def judge_answer_with_online_fallback(
         except Exception:
             pass
     return judge_answer(question_text, answer, target_kcs)
+
+
+def _judge_prompt_name(question_type: str) -> str:
+    return JUDGE_PROMPTS.get(question_type, "judge_main_answer.txt")
 
 
 def _contains_semantic(answer_lower: str, phrase: str) -> bool:

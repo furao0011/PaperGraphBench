@@ -74,7 +74,7 @@ def _correction_metrics(turns: list[dict]) -> tuple[float, float]:
         state = jr.get("state")
         covered = jr.get("covered_kc_ids", [])
         missing = jr.get("missing_kc_ids", [])
-        if state == "HALLUCINATION":
+        if state in {"HALLUCINATION", "MISLED"}:
             for kc in covered + missing:
                 first_h.setdefault(kc, i)
         else:

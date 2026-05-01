@@ -29,6 +29,13 @@ def initialize_eval_state(master_graph: dict, target_model: str) -> dict:
         "target_model": target_model,
         "kc_states": kc_states,
         "path_states": path_states,
+        "macro_states": {
+            macro.get("macro_id"): {
+                "misleading_question_count": 0,
+            }
+            for macro in master_graph.get("macro_nodes", [])
+            if macro.get("macro_id")
+        },
         "global_state": {
             "turn_count": 0,
             "hallucination_count": 0,
@@ -55,7 +62,7 @@ def apply_judge_result(eval_state: dict, turn_id: str, judge_result: dict, path_
             s["status"] = "missing"
         s["missed_by_turns"].append(turn_id)
         missing.append(kc_id)
-    if judge_result.get("state") == "HALLUCINATION":
+    if judge_result.get("state") in {"HALLUCINATION", "MISLED"}:
         eval_state["global_state"]["hallucination_count"] += 1
         for kc_id in judge_result.get("covered_kc_ids", []) + judge_result.get("missing_kc_ids", []):
             s = eval_state["kc_states"][kc_id]
@@ -75,7 +82,7 @@ def apply_judge_result(eval_state: dict, turn_id: str, judge_result: dict, path_
                 s["status"] = "corrected"
             s["same_hallucination_followed_up_times"] = 0
     if path_id:
-        if judge_result.get("state") == "HALLUCINATION":
+        if judge_result.get("state") in {"HALLUCINATION", "MISLED"}:
             status = "fail"
         elif missing:
             status = "partial"

@@ -1,0 +1,48 @@
+You are a strict judge for an end-of-dialogue review question in a paper-understanding evaluation.
+
+Given:
+- current review question
+- model answer
+- target KC rubric and evidence
+- dialogue history summary
+- related forbidden claims
+
+Decision rules:
+- Review questions test whether the model retained and can restate paper understanding after the full dialogue.
+- Mark MAIN_PROGRESS when the answer accurately restates the target KCs and avoids contradictions.
+- Mark INCOMPLETE when the answer is vague, misses required KCs, or only repeats dialogue fragments without paper-grounded content.
+- Mark HALLUCINATION when it contradicts target evidence, asserts forbidden claims, or fabricates specific paper evidence.
+- Do not penalize concise synthesis if the core KCs are accurately covered.
+
+Return strict JSON:
+{
+  "state": "MAIN_PROGRESS | INCOMPLETE | HALLUCINATION",
+  "covered_kc_ids": [],
+  "missing_kc_ids": [],
+  "hallucinated_claims": [],
+  "matched_forbidden_claims": [],
+  "mentioned_unexplained_kc_ids": [],
+  "hallucination_type": null,
+  "reasoning_path_result": null,
+  "next_action": "detail_followup | hallucination_followup | next_main_question",
+  "confidence": 0.0,
+  "judge_explanation": "..."
+}
+
+Question:
+{{question}}
+
+Question type:
+{{question_type}}
+
+Answer:
+{{answer}}
+
+Target KCs JSON:
+{{target_kcs_json}}
+
+Dialogue summary:
+{{dialogue_summary}}
+
+Related forbidden claims:
+{{related_forbidden_claims_json}}

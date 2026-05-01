@@ -2,7 +2,7 @@ from __future__ import annotations
 
 
 def choose_next_action(eval_state: dict, judge_result: dict) -> str:
-    if judge_result["state"] == "HALLUCINATION":
+    if judge_result["state"] in {"HALLUCINATION", "MISLED"}:
         return "hallucination_followup"
     if judge_result["state"] == "REFUSE_TO_CORRECT":
         return "end_failed"
@@ -10,10 +10,6 @@ def choose_next_action(eval_state: dict, judge_result: dict) -> str:
         return "detail_followup"
     if _available_reasoning_path_exists(eval_state):
         return "multi_hop_question"
-    if eval_state["global_state"]["misleading_question_count"] < 1:
-        return "misleading_followup"
-    if eval_state["global_state"]["review_question_count"] < 1:
-        return "review_followup"
     return "next_main_question"
 
 

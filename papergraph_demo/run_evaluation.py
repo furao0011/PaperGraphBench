@@ -91,7 +91,47 @@ def _load_eval_checkpoint(checkpoint_path: Path, graph: dict, target_model: str)
             for t in trajectory.get("turns", [])
             if t.get("question_type") in {"main", "multi_hop_reasoning"} and t.get("question_id")
         }
+    _ensure_eval_state_defaults(eval_state, graph)
+    _rebuild_macro_misleading_counts(eval_state, trajectory)
     return eval_state, trajectory, turn_no, completed
+
+
+def _ensure_eval_state_defaults(eval_state: dict, graph: dict) -> None:
+    eval_state.setdefault("macro_states", {})
+    for macro in graph.get("macro_nodes", []):
+        macro_id = macro.get("macro_id")
+        if not macro_id:
+            continue
+        eval_state["macro_states"].setdefault(macro_id, {})
+        eval_state["macro_states"][macro_id].setdefault("misleading_question_count", 0)
+    eval_state.setdefault("global_state", {})
+    eval_state["global_state"].setdefault("misleading_question_count", 0)
+    eval_state["global_state"].setdefault("review_question_count", 0)
+
+
+def _rebuild_macro_misleading_counts(eval_state: dict, trajectory: dict) -> None:
+    counts: dict[str, int] = {}
+    total = 0
+    review_total = 0
+    for turn in trajectory.get("turns", []):
+        if turn.get("question_type") == "review_followup":
+            review_total += 1
+            continue
+        if turn.get("question_type") != "misleading_followup":
+            continue
+        macro_id = turn.get("macro_id")
+        if not macro_id:
+            continue
+        counts[macro_id] = counts.get(macro_id, 0) + 1
+        total += 1
+    for macro_id, count in counts.items():
+        eval_state.setdefault("macro_states", {}).setdefault(macro_id, {})
+        current = eval_state["macro_states"][macro_id].get("misleading_question_count", 0)
+        eval_state["macro_states"][macro_id]["misleading_question_count"] = max(current, count)
+    current_total = eval_state.get("global_state", {}).get("misleading_question_count", 0)
+    eval_state.setdefault("global_state", {})["misleading_question_count"] = max(current_total, total)
+    current_reviews = eval_state["global_state"].get("review_question_count", 0)
+    eval_state["global_state"]["review_question_count"] = max(current_reviews, review_total)
 
 
 def _mock_answer(question: str, target_kcs: list[dict]) -> str:
@@ -102,7 +142,7 @@ def _mock_answer(question: str, target_kcs: list[dict]) -> str:
 def _build_model_answer(client: OpenAICompatClient | None, use_online_eval: bool, prompt: str, target_kcs: list[dict]) -> tuple[str, str]:
     if use_online_eval and client and client.is_ready():
         ans = client.chat_text(
-            system_prompt="Answer the paper-evaluation question based only on provided context.",
+            system_prompt="Answer the paper-evaluation question based only on the provided original paper and dialogue context.",
             user_prompt=prompt,
         )
         return ans, "online"
@@ -121,6 +161,27 @@ def _dialogue_summary(turns: list[dict], keep_last: int = 4) -> str:
         a = t.get("model_answer", "")[:220]
         lines.append(f"{t.get('turn_id')}: Q={q} | A={a}")
     return "\n".join(lines)
+
+
+def _dialogue_history_text(turns: list[dict]) -> str:
+    if not turns:
+        return "No previous turns."
+    return "\n".join(
+        f"{t['turn_id']} Q:{t['question_text']} A:{t['model_answer']}"
+        for t in turns
+    )
+
+
+def _build_eval_prompt(paper_text: str, dialogue_history: str, question_text: str) -> str:
+    return (
+        "```original paper\n"
+        f"{paper_text}\n"
+        "```\n\n"
+        "[dialogue history]\n"
+        f"{dialogue_history}\n\n"
+        "[current question]\n"
+        f"{question_text}"
+    )
 
 
 def _related_forbidden_claims(graph: dict, target_kc_ids: list[str], path_id: str | None) -> list[dict]:
@@ -161,15 +222,84 @@ def _select_followup_target_kcs(
     judge_result: dict,
     by_kc: dict[str, dict],
     fallback_kcs: list[dict],
+    last_turn: dict | None = None,
+    trajectory: dict | None = None,
 ) -> list[dict]:
     if action == "detail_followup":
         ids = judge_result.get("missing_kc_ids", [])
     elif action == "hallucination_followup":
         ids = judge_result.get("covered_kc_ids", []) + judge_result.get("missing_kc_ids", [])
+    elif action == "misleading_followup" and last_turn and trajectory:
+        macro_id = last_turn.get("macro_id")
+        used = {
+            kid
+            for turn in trajectory.get("turns", [])
+            if turn.get("question_type") == "misleading_followup" and turn.get("macro_id") == macro_id
+            for kid in turn.get("target_kc_ids", [])
+        }
+        macro_kcs = [
+            kc
+            for kc in by_kc.values()
+            if kc.get("macro_id") == macro_id and kc.get("kc_id") not in used
+        ]
+        fallback_ids = {k.get("kc_id") for k in fallback_kcs}
+        candidates = [k for k in fallback_kcs if k.get("kc_id") not in used]
+        candidates.extend(k for k in macro_kcs if k.get("kc_id") not in fallback_ids)
+        return candidates[:1] or fallback_kcs[:1]
     else:
         ids = []
     selected = [by_kc[kid] for kid in ids if kid in by_kc]
     return selected or fallback_kcs[:1]
+
+
+def _is_immediate_followup(action: str) -> bool:
+    return action in {
+        "detail_followup",
+        "hallucination_followup",
+        "misleading_followup",
+    }
+
+
+def _bounded_env_int(name: str, default: int, minimum: int, maximum: int) -> int:
+    raw = os.getenv(name)
+    try:
+        value = int(raw) if raw is not None and raw.strip() else default
+    except ValueError:
+        value = default
+    return max(minimum, min(maximum, value))
+
+
+def _misleading_target_per_macro() -> int:
+    return _bounded_env_int("EVAL_MISLEADING_PER_MACRO", 1, 1, 2)
+
+
+def _review_target_at_end() -> int:
+    return _bounded_env_int("EVAL_REVIEW_AT_END", 2, 2, 3)
+
+
+def _macro_misleading_count(eval_state: dict, macro_id: str | None) -> int:
+    if not macro_id:
+        return 0
+    return int(
+        eval_state.get("macro_states", {})
+        .get(macro_id, {})
+        .get("misleading_question_count", 0)
+    )
+
+
+def _choose_next_action_for_turn(eval_state: dict, judge_result: dict, turn: dict) -> str:
+    base_action = choose_next_action(eval_state, judge_result)
+    if base_action in {"hallucination_followup", "detail_followup", "end_failed"}:
+        return base_action
+    macro_id = turn.get("macro_id")
+    question_type = turn.get("question_type")
+    if (
+        macro_id
+        and question_type not in {"review_followup", "multi_hop_reasoning"}
+        and _macro_misleading_count(eval_state, macro_id) < _misleading_target_per_macro()
+    ):
+        return "misleading_followup"
+    return base_action
 
 
 def _normalize_judge_result_for_turn(judge_result: dict, answer: str, question_type: str) -> dict:
@@ -183,37 +313,6 @@ def _normalize_judge_result_for_turn(judge_result: dict, answer: str, question_t
             + " Normalized: all target KCs were covered; incompleteness only concerned off-target material."
         ).strip()
         return fixed
-    if question_type != "hallucination_followup" or judge_result.get("state") != "HALLUCINATION":
-        return judge_result
-    answer_l = answer.lower()
-    correction_cues = [
-        "not supported",
-        "unsupported",
-        "not mentioned",
-        "does not appear",
-        "no mention",
-        "no detailed discussion",
-        "not in the paper",
-        "needs correction",
-        "should be corrected",
-        "partially supported",
-        "不支持",
-        "未提到",
-        "没有提到",
-        "需要修正",
-    ]
-    if any(cue in answer_l for cue in correction_cues):
-        fixed = dict(judge_result)
-        fixed["state"] = "SELF_CORRECTED" if fixed.get("covered_kc_ids") else "MAIN_PROGRESS"
-        fixed["next_action"] = "next_main_question"
-        fixed["hallucinated_claims"] = []
-        fixed["matched_forbidden_claims"] = []
-        explanation = fixed.get("judge_explanation", "")
-        fixed["judge_explanation"] = (
-            explanation
-            + " Normalized: this hallucination follow-up answer retracts or marks suspected claims as unsupported."
-        ).strip()
-        return fixed
     return judge_result
 
 
@@ -223,6 +322,7 @@ def _run_followup_turn(
     trajectory: dict,
     eval_state: dict,
     graph: dict,
+    paper_text: str,
     client: OpenAICompatClient,
     use_online_eval: bool,
     turn_no: int,
@@ -242,10 +342,18 @@ def _run_followup_turn(
     )
     if follow["question_type"] == "misleading_followup":
         eval_state["global_state"]["misleading_question_count"] += 1
+        macro_id = follow.get("macro_id")
+        if macro_id:
+            eval_state.setdefault("macro_states", {}).setdefault(macro_id, {})
+            current = eval_state["macro_states"][macro_id].get("misleading_question_count", 0)
+            eval_state["macro_states"][macro_id]["misleading_question_count"] = current + 1
     if follow["question_type"] == "review_followup":
         eval_state["global_state"]["review_question_count"] += 1
-    history_text = "\n".join([f"{t['turn_id']} Q:{t['question_text']} A:{t['model_answer']}" for t in trajectory["turns"]])
-    f_input = f"[dialogue history]\n{history_text}\n\nCurrent Question:\n{follow['question_text']}"
+    f_input = _build_eval_prompt(
+        paper_text=paper_text,
+        dialogue_history=_dialogue_history_text(trajectory["turns"]),
+        question_text=follow["question_text"],
+    )
     with span("target model answer", turn=f_turn_id):
         f_answer, f_mode = _build_model_answer(client, use_online_eval, f_input, tks)
     f_dsum = _dialogue_summary(trajectory["turns"])
@@ -261,6 +369,7 @@ def _run_followup_turn(
             use_online_judge=use_online_eval,
             dialogue_summary=f_dsum,
             related_forbidden_claims=f_rel_forbidden,
+            question_type=follow["question_type"],
         )
     f_judge = _normalize_judge_result_for_turn(f_judge, f_answer, follow["question_type"])
     f_state_update = apply_judge_result(eval_state, turn_id=f_turn_id, judge_result=f_judge, path_id=follow.get("target_path_id"))
@@ -340,6 +449,7 @@ def main() -> None:
         )
     else:
         eval_state = initialize_eval_state(graph, target_model=target_model)
+        _ensure_eval_state_defaults(eval_state, graph)
         trajectory = {"paper_id": graph["paper_id"], "target_model": target_model, "turns": []}
         turn_no = 0
         completed_question_ids = set()
@@ -367,11 +477,11 @@ def main() -> None:
                 question_type=q.get("question_type"),
                 targets=",".join(q.get("target_kc_ids", [])),
             )
-            history_text = "\n".join([f"{t['turn_id']} Q:{t['question_text']} A:{t['model_answer']}" for t in trajectory["turns"]])
-            if turn_no == 1:
-                model_input = f"[paper text]\n{paper_text}\n\nQuestion:\n{q['question_text']}"
-            else:
-                model_input = f"[dialogue history]\n{history_text}\n\nCurrent Question:\n{q['question_text']}"
+            model_input = _build_eval_prompt(
+                paper_text=paper_text,
+                dialogue_history=_dialogue_history_text(trajectory["turns"]),
+                question_text=q["question_text"],
+            )
 
             with span("target model answer", turn=turn_id):
                 answer, answer_mode = _build_model_answer(client, use_online_eval, model_input, target_kcs)
@@ -386,9 +496,14 @@ def main() -> None:
                     use_online_judge=use_online_eval,
                     dialogue_summary=dsum,
                     related_forbidden_claims=rel_forbidden,
+                    question_type=q["question_type"],
                 )
             judge_result = _normalize_judge_result_for_turn(judge_result, answer, q["question_type"])
-            next_action = choose_next_action(eval_state, judge_result)
+            next_action = _choose_next_action_for_turn(
+                eval_state,
+                judge_result,
+                {"question_type": q["question_type"], "macro_id": q.get("macro_id")},
+            )
             judge_result["next_action"] = next_action
             state_update = apply_judge_result(eval_state, turn_id=turn_id, judge_result=judge_result, path_id=q.get("path_id"))
 
@@ -426,12 +541,19 @@ def main() -> None:
             last_targets = target_kcs
             seen_follow_keys = set()
             while follow_depth < 3 and not eval_state["global_state"]["failed"]:
-                follow_action = choose_next_action(eval_state, last_judge)
-                if follow_action not in {"detail_followup", "hallucination_followup"}:
+                follow_action = _choose_next_action_for_turn(eval_state, last_judge, last_turn)
+                if not _is_immediate_followup(follow_action):
                     break
                 if max_turns and turn_no >= max_turns:
                     break
-                follow_targets = _select_followup_target_kcs(follow_action, last_judge, by_kc, last_targets)
+                follow_targets = _select_followup_target_kcs(
+                    follow_action,
+                    last_judge,
+                    by_kc,
+                    last_targets,
+                    last_turn=last_turn,
+                    trajectory=trajectory,
+                )
                 follow_key = (follow_action, tuple(k["kc_id"] for k in follow_targets))
                 if follow_key in seen_follow_keys:
                     break
@@ -445,12 +567,19 @@ def main() -> None:
                 )
                 if not follow:
                     break
+                log(
+                    "immediate follow-up scheduled",
+                    action=follow_action,
+                    source_turn=last_turn.get("turn_id"),
+                    targets=",".join(k["kc_id"] for k in follow_targets),
+                )
                 turn_no, last_turn, last_targets = _run_followup_turn(
                     follow,
                     by_kc,
                     trajectory,
                     eval_state,
                     graph,
+                    paper_text,
                     client,
                     use_online_eval,
                     turn_no,
@@ -471,18 +600,27 @@ def main() -> None:
         return
 
     try:
-        # Guidance-aligned quotas: misleading 1-2 times, review 1-2 times near end.
+        # End-of-dialogue review checks: keep these out of per-macro follow-up chains.
         end_targets = []
         if trajectory["turns"] and not (max_turns and turn_no >= max_turns):
-            last_turn = trajectory["turns"][-1]
-            tks = [by_kc[k] for k in last_turn.get("target_kc_ids", []) if k in by_kc]
-            if eval_state["global_state"]["misleading_question_count"] < 1:
-                q = generate_followup_question("misleading_followup", last_turn, tks, client, allow_offline_fallback=allow_offline_fallback)
+            needed_reviews = max(
+                0,
+                _review_target_at_end() - eval_state["global_state"].get("review_question_count", 0),
+            )
+            review_sources = [
+                t
+                for t in reversed(trajectory["turns"])
+                if t.get("question_type") in {"main", "multi_hop_reasoning"}
+            ]
+            if not review_sources:
+                review_sources = [trajectory["turns"][-1]]
+            for idx, source_turn in enumerate(review_sources[:needed_reviews], start=1):
+                tks = [by_kc[k] for k in source_turn.get("target_kc_ids", []) if k in by_kc]
+                if not tks:
+                    continue
+                q = generate_followup_question("review_followup", source_turn, tks, client, allow_offline_fallback=allow_offline_fallback)
                 if q:
-                    end_targets.append(q)
-            if eval_state["global_state"]["review_question_count"] < 1:
-                q = generate_followup_question("review_followup", last_turn, tks, client, allow_offline_fallback=allow_offline_fallback)
-                if q:
+                    q["question_id"] = f"{source_turn['question_id']}_R{idx}"
                     end_targets.append(q)
 
         for follow in end_targets:
@@ -496,6 +634,7 @@ def main() -> None:
                 trajectory,
                 eval_state,
                 graph,
+                paper_text,
                 client,
                 use_online_eval,
                 turn_no,

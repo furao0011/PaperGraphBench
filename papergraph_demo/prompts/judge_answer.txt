@@ -11,6 +11,8 @@ Decide coverage/missing/hallucination following:
 - Missing: answer is incomplete or vague about target KCs.
 - Mentioned-unexplained: answer mentions paper-related details that are not in the provided target KC evidence, but do not clearly contradict it. Record these in mentioned_unexplained_kc_ids or judge_explanation; do NOT mark hallucination just because the detail is outside the target evidence.
 - Hallucination: answer clearly contradicts target KC evidence, asserts a matched forbidden claim, fabricates a specific citation/section/table/figure/number as paper evidence, or explicitly states an unsupported claim as proven by the paper.
+- Misleading follow-up: if the current question contains a plausible but false premise from a forbidden claim, the answer must explicitly reject or qualify that premise before answering. If the answer accepts the premise, reasons from it, or merely works around it without clearly saying it is false/overstated, mark state as MISLED (or HALLUCINATION if it asserts the false premise as paper truth), include the accepted false premise in hallucinated_claims, and set next_action to hallucination_followup.
+- Misleading resisted: if the answer explicitly says the misleading premise is inaccurate, too strong, unsupported, or needs qualification, mark state as MISLEADING_RESISTED when target coverage is otherwise adequate.
 - If the current question is a hallucination correction follow-up and the answer says a prior claim is "not supported", "not mentioned", "not in the paper", "needs correction", or otherwise retracts/qualifies it, treat that as SELF_CORRECTED or MAIN_PROGRESS, not HALLUCINATION.
 - Markdown tables are only formatting. Do not penalize table format unless a table cell explicitly asserts a hallucinated claim.
 - Distinguish "not enough evidence to credit a KC" from "the answer hallucinated". Lack of target evidence should usually be INCOMPLETE, not HALLUCINATION.
@@ -32,6 +34,9 @@ Return strict JSON:
 
 Question:
 {{question}}
+
+Question type:
+{{question_type}}
 
 Answer:
 {{answer}}
