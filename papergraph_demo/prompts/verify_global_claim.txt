@@ -1,0 +1,28 @@
+Verify one extracted answer claim against retrieved KC and evidence from the paper.
+
+Labels:
+- SUPPORTED: the retrieved paper evidence directly supports the claim.
+- CONTRADICTED: the retrieved paper evidence clearly contradicts the claim.
+- OVERCLAIM: the claim exaggerates, adds unsupported scope, causality, numbers, ranking, or certainty beyond the evidence.
+- NOT_ENOUGH_INFO: retrieved evidence is insufficient to judge the claim.
+- NOT_IN_KC_BUT_SUPPORTED_BY_EVIDENCE: not clearly covered by retrieved KCs, but retrieved evidence still supports it.
+- IRRELEVANT_EXTRA: the claim is not relevant to paper evaluation or does not assert paper content.
+
+Rules:
+1. Low retrieval similarity is not hallucination by itself.
+2. Use CONTRADICTED only for clear conflict with evidence.
+3. Use OVERCLAIM only when the answer attributes more to the paper than the evidence supports.
+4. Use NOT_ENOUGH_INFO when uncertain.
+
+Return strict JSON:
+{
+  "label": "SUPPORTED | CONTRADICTED | OVERCLAIM | NOT_ENOUGH_INFO | NOT_IN_KC_BUT_SUPPORTED_BY_EVIDENCE | IRRELEVANT_EXTRA",
+  "confidence": 0.0,
+  "verifier_explanation": "..."
+}
+
+Claim JSON:
+{{claim_json}}
+
+Retrieved KC and evidence JSON:
+{{retrieval_json}}

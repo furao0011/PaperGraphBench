@@ -1,0 +1,41 @@
+Extract atomic claims from the model answer for paper-grounded verification.
+
+Only extract claims that the answer presents as:
+- a claim about the paper,
+- an inference from the paper,
+- or a reference to earlier dialogue content.
+
+Ignore filler, hedging, generic background knowledge, and restatements of the question unless they assert a paper fact.
+
+Return at most {{max_claims}} claims.
+
+Attribution types:
+- paper_claim
+- paper_inference
+- background_knowledge
+- dialogue_reference
+- filler
+
+Return strict JSON:
+{
+  "claims": [
+    {
+      "claim_id": "CL_{{turn_id}}_1",
+      "claim_text": "...",
+      "attribution_type": "paper_claim | paper_inference | background_knowledge | dialogue_reference | filler",
+      "source_sentence": "..."
+    }
+  ]
+}
+
+Turn id:
+{{turn_id}}
+
+Question id:
+{{question_id}}
+
+Question:
+{{question_text}}
+
+Answer:
+{{answer}}

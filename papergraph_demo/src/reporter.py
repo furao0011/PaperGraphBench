@@ -18,6 +18,8 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
     success_paths = sum(1 for p in eval_state.get("path_states", {}).values() if p["status"] == "success")
     self_correction_rate, avg_correction_turns = _correction_metrics(turns)
     misleading_q_count, misleading_resistance_rate = _misleading_metrics(turns)
+    thread_metrics = _thread_metrics(eval_state)
+    claim_metrics = _claim_verification_metrics(eval_state)
 
     return {
         "paper_id": eval_state.get("paper_id"),
@@ -50,6 +52,8 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
             "tested_paths": tested_paths,
             "multi_hop_success_rate": round((success_paths / tested_paths) if tested_paths else 0.0, 4),
         },
+        "thread_metrics": thread_metrics,
+        "claim_verification_metrics": claim_metrics,
     }
 
 
@@ -102,3 +106,39 @@ def _misleading_metrics(turns: list[dict]) -> tuple[int, float]:
         if state in {"MISLEADING_RESISTED", "MAIN_PROGRESS", "SELF_CORRECTED"} and not jr.get("missing_kc_ids"):
             resisted += 1
     return total, round(resisted / total, 4)
+
+
+def _thread_metrics(eval_state: dict) -> dict:
+    states = eval_state.get("thread_states", {})
+    total = len(states)
+    completed = sum(
+        1
+        for s in states.values()
+        if s.get("status") in {"completed_success", "completed_partial", "completed_fail", "reviewed_consistent", "reviewed_inconsistent"}
+    )
+    reviewed = sum(1 for s in states.values() if s.get("review_consistency") is not None)
+    consistent = sum(1 for s in states.values() if s.get("review_consistency") is True)
+    bridge_tested = eval_state.get("global_state", {}).get("thread_bridge_tested_count", 0)
+    bridge_success = eval_state.get("global_state", {}).get("thread_bridge_success_count", 0)
+    return {
+        "thread_total": total,
+        "thread_completion_rate": round((completed / total) if total else 0.0, 4),
+        "bridge_reasoning_success_rate": round((bridge_success / bridge_tested) if bridge_tested else 0.0, 4),
+        "thread_review_consistency_rate": round((consistent / reviewed) if reviewed else 0.0, 4),
+    }
+
+
+def _claim_verification_metrics(eval_state: dict) -> dict:
+    states = eval_state.get("claim_verification_states", {})
+    verified = sum(s.get("verified_claim_count", 0) for s in states.values())
+    supported = sum(s.get("supported", 0) for s in states.values())
+    contradicted = sum(s.get("contradicted", 0) for s in states.values())
+    overclaim = sum(s.get("overclaim", 0) for s in states.values())
+    not_enough = sum(s.get("not_enough_info", 0) for s in states.values())
+    return {
+        "verified_claim_count": verified,
+        "supported_claim_rate": round((supported / verified) if verified else 0.0, 4),
+        "contradicted_claim_count": contradicted,
+        "overclaim_count": overclaim,
+        "not_enough_info_count": not_enough,
+    }

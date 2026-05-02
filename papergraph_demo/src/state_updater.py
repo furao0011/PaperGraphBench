@@ -158,6 +158,33 @@ def apply_judge_result(
     }
 
 
+def apply_claim_verification_results(eval_state: dict, turn_id: str, results: list[dict]) -> dict:
+    labels: dict[str, int] = {}
+    for item in results:
+        label = str(item.get("label", "NOT_ENOUGH_INFO"))
+        labels[label] = labels.get(label, 0) + 1
+    summary = {
+        "verified_claim_count": len(results),
+        "supported": labels.get("SUPPORTED", 0) + labels.get("NOT_IN_KC_BUT_SUPPORTED_BY_EVIDENCE", 0),
+        "contradicted": labels.get("CONTRADICTED", 0),
+        "overclaim": labels.get("OVERCLAIM", 0),
+        "not_enough_info": labels.get("NOT_ENOUGH_INFO", 0),
+        "labels": labels,
+    }
+    eval_state.setdefault("claim_verification_states", {})[turn_id] = summary
+    global_state = eval_state.setdefault("global_state", {})
+    global_state["global_overclaim_count"] = global_state.get("global_overclaim_count", 0) + summary["overclaim"]
+    global_state["global_contradicted_claim_count"] = (
+        global_state.get("global_contradicted_claim_count", 0) + summary["contradicted"]
+    )
+    global_state["not_enough_info_claim_count"] = (
+        global_state.get("not_enough_info_claim_count", 0) + summary["not_enough_info"]
+    )
+    if summary["contradicted"] or summary["overclaim"]:
+        global_state["hallucination_count"] = global_state.get("hallucination_count", 0) + summary["contradicted"] + summary["overclaim"]
+    return summary
+
+
 def _apply_macro_update(
     eval_state: dict,
     turn_id: str,
