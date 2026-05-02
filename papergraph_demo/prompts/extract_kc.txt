@@ -1,17 +1,16 @@
 You are a paper evaluation data constructor.
 Extract 3-5 candidate Knowledge Components (KCs) from the paper section below.
 
+Macro context:
+{{macro_context_json}}
+
 Rules:
 1) Each KC must be a testable claim, not an entity name.
 2) Each KC must be supported by evidence from the text.
 3) Keep KCs atomic and evaluable.
 4) Avoid pure background facts.
 5) Do not infer content that is not explicitly supported by this section.
-6) Assign each KC to one macro:
-   - M1: research problem, motivation, prior-work gap
-   - M2: proposed method, dataset construction, module, mechanism
-   - M3: experiment setup, result, analysis, ablation, case study
-   - M4: conclusion, limitation, contribution, future/open evidence
+6) Assign each KC to exactly one macro_id from the Macro context. Do not invent macro IDs.
 7) Use English in all generated fields.
 
 Return strict JSON:
@@ -20,8 +19,8 @@ Return strict JSON:
     {
       "claim": "...",
       "evidence": "...",
-      "macro_id": "M1 | M2 | M3 | M4",
-      "type": "problem | method | mechanism | dataset | experiment | result | conclusion | limitation",
+      "macro_id": "M1",
+      "type": "problem | method | mechanism | dataset | experiment | result | conclusion | limitation | background | central_claim | algorithm | analysis",
       "importance": "critical | normal"
     }
   ]

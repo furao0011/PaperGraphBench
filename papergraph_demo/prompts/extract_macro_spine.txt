@@ -1,0 +1,58 @@
+You are constructing a Macro Spine for paper-understanding evaluation.
+
+Paper ID:
+{{paper_id}}
+
+Paper sections:
+{{sections_json}}
+
+Target macro count:
+{{macro_target_count}}
+
+Allowed macro count range:
+{{macro_min_count}} to {{macro_max_count}}
+
+Allowed roles:
+{{allowed_roles}}
+
+Task:
+Extract the ordered reasoning spine required to understand the paper.
+
+Rules:
+1) A Macro is not a copied section title. It is one argument stage in the paper's reading and reasoning flow.
+2) Each Macro must be grounded in one or more input sections.
+3) Macro IDs must be consecutive and ordered: M1, M2, M3, ...
+4) Each Macro must include role, summary, source_sections, expected_reader_question, prerequisite_macro_ids, next_macro_ids, and importance.
+5) source_sections must use section titles or section_ids exactly as provided in the input.
+6) Use only roles from the allowed role list.
+7) importance must be "critical" or "normal".
+8) Macro edges must express reading or reasoning dependencies between Macros.
+9) Use English in all generated fields.
+10) Return strict JSON only.
+
+Return schema:
+{
+  "macro_nodes": [
+    {
+      "macro_id": "M1",
+      "order": 1,
+      "title": "...",
+      "role": "problem_motivation",
+      "summary": "...",
+      "source_sections": ["Abstract", "1 Introduction"],
+      "expected_reader_question": "...",
+      "prerequisite_macro_ids": [],
+      "next_macro_ids": ["M2"],
+      "importance": "critical"
+    }
+  ],
+  "macro_edges": [
+    {
+      "source": "M1",
+      "target": "M2",
+      "relation": "motivates",
+      "description": "..."
+    }
+  ]
+}
+

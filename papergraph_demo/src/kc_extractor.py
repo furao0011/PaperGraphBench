@@ -4,6 +4,7 @@ from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from src.model_client import OpenAICompatClient
+from src.macro_extractor import macro_context_for_prompt
 from src.prompt_loader import load_prompt, render_prompt
 from src.progress import log, span
 
@@ -163,12 +164,20 @@ def extract_kcs(paper_text: str) -> list[dict]:
     return kcs
 
 
-def extract_kcs_with_online_fallback(paper_text: str, client: OpenAICompatClient | None) -> list[dict]:
+def extract_kcs_with_online_fallback(
+    paper_text: str,
+    client: OpenAICompatClient | None,
+    macro_spine: dict | None = None,
+) -> list[dict]:
     if client and client.is_ready():
         try:
             system_prompt = "You are an accurate information extraction assistant."
             tpl = load_prompt("extract_kc.txt")
-            user_prompt = render_prompt(tpl, paper_text=paper_text[:30000])
+            user_prompt = render_prompt(
+                tpl,
+                paper_text=paper_text[:30000],
+                macro_context_json=_macro_context_json(macro_spine),
+            )
             result = client.chat_json(system_prompt=system_prompt, user_prompt=user_prompt)
             items = result.get("kcs", [])
             parsed: list[dict] = []
@@ -190,6 +199,7 @@ def extract_kcs_by_sections_with_online_fallback(
     sections: list[dict],
     client: OpenAICompatClient | None,
     allow_offline_fallback: bool = False,
+    macro_spine: dict | None = None,
 ) -> list[dict]:
     """
     Guidance Step 2/3:
@@ -200,13 +210,18 @@ def extract_kcs_by_sections_with_online_fallback(
     if client and client.is_ready() and sections:
         candidates: list[dict] = []
         tpl = load_prompt("extract_kc.txt")
+        macro_context_json = _macro_context_json(macro_spine)
 
         picked_sections = _pick_sections_for_extraction(sections)
         log("KC extraction sections selected", count=len(picked_sections))
 
         def run_one(sec: dict) -> list[dict]:
             log("KC extraction section queued", section_id=sec.get("section_id"), title=sec.get("title"))
-            user_prompt = render_prompt(tpl, paper_text=sec["text"][:8000])
+            user_prompt = render_prompt(
+                tpl,
+                paper_text=sec["text"][:8000],
+                macro_context_json=macro_context_json,
+            )
             with span("KC extraction section", section_id=sec.get("section_id")):
                 result = client.chat_json(
                     system_prompt="You extract 3-5 evaluable KCs from one section.",
@@ -361,3 +376,15 @@ def _pick_sections_for_extraction(sections: list[dict]) -> list[dict]:
                 break
 
     return sorted(picked, key=lambda s: s["_section_index"])
+
+
+def _macro_context_json(macro_spine: dict | None) -> str:
+    if not macro_spine:
+        return "[]"
+    return json_dumps(macro_context_for_prompt(macro_spine))
+
+
+def json_dumps(payload: object) -> str:
+    import json
+
+    return json.dumps(payload, ensure_ascii=False, indent=2)

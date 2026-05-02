@@ -21,16 +21,19 @@ ALLOWED_RELATIONS = {"motivates", "solves", "mechanism_of", "tested_by", "explai
 MACRO_IDS = ["M1", "M2", "M3", "M4"]
 
 
-def _infer_type(claim: str, macro_id: str) -> str:
+def _infer_type(claim: str, macro_role: str = "") -> str:
     c = claim.lower()
-    if macro_id == "M1":
+    role = macro_role.lower()
+    if "problem" in role or "motivation" in role or "limitation" in role:
         return "problem"
-    if macro_id == "M2":
+    if "method" in role or "mechanism" in role or "module" in role:
         if "module" in c or "mechanism" in c:
             return "mechanism"
         return "method"
-    if macro_id == "M3":
+    if "experiment" in role or "result" in role or "ablation" in role or "analysis" in role:
         return "result"
+    if "dataset" in role or "resource" in role:
+        return "dataset"
     return "conclusion"
 
 
@@ -86,8 +89,12 @@ def _build_kc_nodes(
     kcs: list[dict],
     client: OpenAICompatClient | None = None,
     allow_offline_fallback: bool = False,
+    macro_spine: dict | None = None,
 ) -> tuple[list[dict], dict[str, list[str]]]:
-    groups = {"M1": [], "M2": [], "M3": [], "M4": []}
+    macro_nodes = _macro_nodes_from_spine(macro_spine)
+    macro_ids = [m["macro_id"] for m in macro_nodes] or MACRO_IDS
+    macro_by_id = {m["macro_id"]: m for m in macro_nodes}
+    groups = {macro_id: [] for macro_id in macro_ids}
     kc_nodes: list[dict] = []
     online_budget = _resolve_online_budget(len(kcs))
     if not allow_offline_fallback:
@@ -102,8 +109,8 @@ def _build_kc_nodes(
         with ThreadPoolExecutor(max_workers=max_workers) as ex:
             for idx, kc in enumerate(kcs[:online_budget]):
                 claim = kc["claim"].strip()
-                macro_id = _valid_macro_id(kc.get("macro_id")) or _assign_macro_id(claim, kc.get("section", ""))
-                kc_type = _valid_kc_type(kc.get("type")) or _infer_type(claim, macro_id)
+                macro_id = _resolve_kc_macro_id(kc, claim, macro_ids, allow_offline_fallback)
+                kc_type = _valid_kc_type(kc.get("type")) or _infer_type(claim, macro_by_id.get(macro_id, {}).get("role", ""))
                 importance = _valid_importance(kc.get("importance")) or ("critical" if macro_id in {"M1", "M2"} else "normal")
                 fut = ex.submit(
                     build_kc_rubric,
@@ -127,8 +134,8 @@ def _build_kc_nodes(
 
     for idx, kc in enumerate(kcs):
         claim = kc["claim"].strip()
-        macro_id = _valid_macro_id(kc.get("macro_id")) or _assign_macro_id(claim, kc.get("section", ""))
-        kc_type = _valid_kc_type(kc.get("type")) or _infer_type(claim, macro_id)
+        macro_id = _resolve_kc_macro_id(kc, claim, macro_ids, allow_offline_fallback)
+        kc_type = _valid_kc_type(kc.get("type")) or _infer_type(claim, macro_by_id.get(macro_id, {}).get("role", ""))
         importance = _valid_importance(kc.get("importance")) or ("critical" if macro_id in {"M1", "M2"} else "normal")
         must_1 = _short_label(claim)
         node = {
@@ -157,18 +164,36 @@ def _build_kc_nodes(
         node.update(rubric)
         kc_nodes.append(node)
         groups[macro_id].append(kc["kc_id"])
-    _rebalance_macro_minimum(kc_nodes, groups)
     return kc_nodes, groups
 
 
-def _valid_macro_id(value: object) -> str | None:
+def _valid_macro_id(value: object, macro_ids: list[str]) -> str | None:
     text = str(value or "").strip()
-    return text if text in MACRO_IDS else None
+    return text if text in macro_ids else None
+
+
+def _resolve_kc_macro_id(
+    kc: dict,
+    claim: str,
+    macro_ids: list[str],
+    allow_offline_fallback: bool,
+) -> str:
+    macro_id = _valid_macro_id(kc.get("macro_id"), macro_ids)
+    if macro_id:
+        return macro_id
+    if not allow_offline_fallback:
+        raise ValueError(
+            f"KC {kc.get('kc_id')} references invalid macro_id={kc.get('macro_id')!r}. "
+            f"Allowed macro IDs: {macro_ids}"
+        )
+    if set(MACRO_IDS).issubset(set(macro_ids)):
+        return _assign_macro_id(claim, kc.get("section", ""))
+    return macro_ids[0]
 
 
 def _valid_kc_type(value: object) -> str | None:
     text = str(value or "").strip()
-    return text if text in {"problem", "method", "mechanism", "dataset", "experiment", "result", "conclusion", "limitation"} else None
+    return text if text in {"problem", "method", "mechanism", "dataset", "experiment", "result", "conclusion", "limitation", "background", "central_claim", "algorithm", "analysis"} else None
 
 
 def _valid_importance(value: object) -> str | None:
@@ -366,20 +391,36 @@ def build_master_graph(
     kcs: list[dict],
     client: OpenAICompatClient | None = None,
     allow_offline_fallback: bool = False,
+    macro_spine: dict | None = None,
 ) -> dict:
-    kc_nodes, groups = _build_kc_nodes(kcs, client=client, allow_offline_fallback=allow_offline_fallback)
-    log("KC nodes built", count=len(kc_nodes), m1=len(groups["M1"]), m2=len(groups["M2"]), m3=len(groups["M3"]), m4=len(groups["M4"]))
+    macro_source_nodes = _macro_nodes_from_spine(macro_spine)
+    kc_nodes, groups = _build_kc_nodes(
+        kcs,
+        client=client,
+        allow_offline_fallback=allow_offline_fallback,
+        macro_spine=macro_spine,
+    )
+    log(
+        "KC nodes built",
+        count=len(kc_nodes),
+        macro_counts=json.dumps({mid: len(ids) for mid, ids in groups.items()}, ensure_ascii=False),
+    )
     macro_nodes = []
-    for macro_id in MACRO_IDS:
-        meta = MACRO_META[macro_id]
+    for macro in macro_source_nodes:
+        macro_id = macro["macro_id"]
         macro_nodes.append(
             {
                 "macro_id": macro_id,
-                "title": meta["title"],
-                "role": meta["role"],
-                "summary": meta["summary"],
+                "order": macro.get("order"),
+                "title": macro.get("title", macro_id),
+                "role": macro.get("role", ""),
+                "summary": macro.get("summary", ""),
+                "source_sections": macro.get("source_sections", []),
+                "expected_reader_question": macro.get("expected_reader_question", ""),
                 "kc_ids": groups[macro_id],
-                "prerequisite_macro_ids": [] if macro_id == "M1" else [f"M{int(macro_id[1]) - 1}"],
+                "prerequisite_macro_ids": macro.get("prerequisite_macro_ids", []),
+                "next_macro_ids": macro.get("next_macro_ids", []),
+                "importance": macro.get("importance", "normal"),
             }
         )
     edges = _build_reasoning_edges_online(kc_nodes, macro_nodes, client)
@@ -397,11 +438,36 @@ def build_master_graph(
         "paper_id": paper_id,
         "paper_title": paper_id,
         "paper_text_path": paper_text_path,
+        "macro_spine_path": "data/graphs/macro_spine.json" if macro_spine else None,
         "macro_nodes": macro_nodes,
+        "macro_edges": macro_spine.get("macro_edges", []) if macro_spine else [],
         "kc_nodes": kc_nodes,
         "reasoning_edges": edges,
         "reasoning_paths": paths,
     }
+
+
+def _macro_nodes_from_spine(macro_spine: dict | None) -> list[dict]:
+    if macro_spine and macro_spine.get("macro_nodes"):
+        return sorted(macro_spine["macro_nodes"], key=lambda item: int(item.get("order") or 0))
+    out = []
+    for idx, macro_id in enumerate(MACRO_IDS, start=1):
+        meta = MACRO_META[macro_id]
+        out.append(
+            {
+                "macro_id": macro_id,
+                "order": idx,
+                "title": meta["title"],
+                "role": meta["role"],
+                "summary": meta["summary"],
+                "source_sections": [],
+                "expected_reader_question": "",
+                "prerequisite_macro_ids": [] if macro_id == "M1" else [f"M{int(macro_id[1]) - 1}"],
+                "next_macro_ids": [] if macro_id == "M4" else [f"M{int(macro_id[1]) + 1}"],
+                "importance": "critical" if macro_id in {"M1", "M2"} else "normal",
+            }
+        )
+    return out
 
 
 def _validate_reasoning_paths(paths: list[dict], kc_nodes: list[dict]) -> list[dict]:

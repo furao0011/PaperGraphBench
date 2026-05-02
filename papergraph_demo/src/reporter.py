@@ -9,7 +9,7 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
     critical_total = len(critical_states)
     critical_lit = sum(1 for v in critical_states if v["status"] in {"lit", "corrected"})
 
-    macro_total = 4
+    macro_total = len(eval_state.get("macro_states", {}))
     macro_completion = _macro_completion(eval_state, trajectory)
     turns = trajectory.get("turns", [])
     hall_count = eval_state["global_state"]["hallucination_count"]
@@ -30,7 +30,7 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
         "coverage_metrics": {
             "graph_coverage_rate": round((lit / total) if total else 0.0, 4),
             "critical_kc_coverage_rate": round((critical_lit / critical_total) if critical_total else 0.0, 4),
-            "macro_completion_rate": round(macro_completion / macro_total, 4),
+            "macro_completion_rate": round((macro_completion / macro_total) if macro_total else 0.0, 4),
         },
         "hallucination_metrics": {
             "hallucination_count": hall_count,
