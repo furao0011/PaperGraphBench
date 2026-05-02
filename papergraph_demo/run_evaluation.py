@@ -46,6 +46,7 @@ def _turn_number(turn_id: str) -> int:
 
 
 def _save_eval_artifacts(graph: dict, eval_state: dict, trajectory: dict, checkpoint_path: Path) -> None:
+    _reconcile_actual_transitions(trajectory)
     report = build_report(eval_state, trajectory)
     _write_json(TRAJ_PATH, trajectory)
     _write_json(REPORT_PATH, report)
@@ -68,6 +69,44 @@ def _save_eval_artifacts(graph: dict, eval_state: dict, trajectory: dict, checkp
             "eval_state": eval_state,
         },
     )
+
+
+def _action_for_question_type(question_type: str) -> str:
+    return {
+        "detail_followup": "detail_followup",
+        "hallucination_followup": "hallucination_followup",
+        "misleading_followup": "misleading_followup",
+        "review_followup": "review_followup",
+        "multi_hop_reasoning": "multi_hop_question",
+        "main": "next_main_question",
+    }.get(question_type, "next_main_question")
+
+
+def _append_turn(trajectory: dict, turn: dict) -> None:
+    turns = trajectory.setdefault("turns", [])
+    if turns:
+        previous = turns[-1]
+        previous["actual_next_turn_id"] = turn.get("turn_id")
+        previous["actual_next_question_id"] = turn.get("question_id")
+        previous["actual_next_question_type"] = turn.get("question_type")
+        previous["actual_next_action"] = _action_for_question_type(turn.get("question_type", ""))
+    turns.append(turn)
+
+
+def _reconcile_actual_transitions(trajectory: dict) -> None:
+    turns = trajectory.get("turns", [])
+    for idx, turn in enumerate(turns):
+        if idx + 1 >= len(turns):
+            turn.pop("actual_next_turn_id", None)
+            turn.pop("actual_next_question_id", None)
+            turn.pop("actual_next_question_type", None)
+            turn.pop("actual_next_action", None)
+            continue
+        nxt = turns[idx + 1]
+        turn["actual_next_turn_id"] = nxt.get("turn_id")
+        turn["actual_next_question_id"] = nxt.get("question_id")
+        turn["actual_next_question_type"] = nxt.get("question_type")
+        turn["actual_next_action"] = _action_for_question_type(nxt.get("question_type", ""))
 
 
 def _load_eval_checkpoint(checkpoint_path: Path, graph: dict, target_model: str) -> tuple[dict, dict, int, set[str]] | None:
@@ -302,6 +341,13 @@ def _choose_next_action_for_turn(eval_state: dict, judge_result: dict, turn: dic
     return base_action
 
 
+def _apply_effective_next_action(eval_state: dict, judge_result: dict, turn: dict) -> str:
+    next_action = _choose_next_action_for_turn(eval_state, judge_result, turn)
+    judge_result["next_action"] = next_action
+    judge_result["policy_next_action"] = next_action
+    return next_action
+
+
 def _normalize_judge_result_for_turn(judge_result: dict, answer: str, question_type: str) -> dict:
     if judge_result.get("state") == "INCOMPLETE" and not judge_result.get("missing_kc_ids"):
         fixed = dict(judge_result)
@@ -373,6 +419,11 @@ def _run_followup_turn(
         )
     f_judge = _normalize_judge_result_for_turn(f_judge, f_answer, follow["question_type"])
     f_state_update = apply_judge_result(eval_state, turn_id=f_turn_id, judge_result=f_judge, path_id=follow.get("target_path_id"))
+    _apply_effective_next_action(
+        eval_state,
+        f_judge,
+        {"question_type": follow["question_type"], "macro_id": follow.get("macro_id")},
+    )
     turn = {
         "turn_id": f_turn_id,
         "question_id": follow["question_id"],
@@ -386,7 +437,7 @@ def _run_followup_turn(
         "judge_result": f_judge,
         "state_update": f_state_update,
     }
-    trajectory["turns"].append(turn)
+    _append_turn(trajectory, turn)
     log(
         "follow-up turn judged",
         turn=f_turn_id,
@@ -499,15 +550,15 @@ def main() -> None:
                     question_type=q["question_type"],
                 )
             judge_result = _normalize_judge_result_for_turn(judge_result, answer, q["question_type"])
-            next_action = _choose_next_action_for_turn(
+            state_update = apply_judge_result(eval_state, turn_id=turn_id, judge_result=judge_result, path_id=q.get("path_id"))
+            next_action = _apply_effective_next_action(
                 eval_state,
                 judge_result,
                 {"question_type": q["question_type"], "macro_id": q.get("macro_id")},
             )
-            judge_result["next_action"] = next_action
-            state_update = apply_judge_result(eval_state, turn_id=turn_id, judge_result=judge_result, path_id=q.get("path_id"))
 
-            trajectory["turns"].append(
+            _append_turn(
+                trajectory,
                 {
                     "turn_id": turn_id,
                     "question_id": q["question_id"],
@@ -520,7 +571,7 @@ def main() -> None:
                     "answer_mode": answer_mode,
                     "judge_result": judge_result,
                     "state_update": state_update,
-                }
+                },
             )
             completed_question_ids.add(q["question_id"])
             _save_eval_artifacts(graph, eval_state, trajectory, checkpoint_path)
@@ -541,7 +592,9 @@ def main() -> None:
             last_targets = target_kcs
             seen_follow_keys = set()
             while follow_depth < 3 and not eval_state["global_state"]["failed"]:
-                follow_action = _choose_next_action_for_turn(eval_state, last_judge, last_turn)
+                follow_action = last_judge.get("policy_next_action") or last_judge.get("next_action")
+                if not follow_action:
+                    follow_action = _apply_effective_next_action(eval_state, last_judge, last_turn)
                 if not _is_immediate_followup(follow_action):
                     break
                 if max_turns and turn_no >= max_turns:
