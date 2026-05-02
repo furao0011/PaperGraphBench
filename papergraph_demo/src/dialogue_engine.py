@@ -100,3 +100,73 @@ def generate_followup_question(
         "target_path_id": last_turn.get("target_path_id"),
         "question_text": question_text,
     }
+
+
+def generate_thread_question(
+    thread_turn: dict,
+    target_kcs: list[dict],
+    related_turns: list[dict],
+    dialogue_summary: str,
+    client: OpenAICompatClient | None = None,
+    allow_offline_fallback: bool = False,
+) -> dict:
+    if not target_kcs:
+        raise ValueError("Thread question requires at least one target KC.")
+
+    question_text = str(thread_turn.get("question_text", "")).strip()
+    if client and client.is_ready() and not question_text:
+        try:
+            tpl = load_prompt("generate_thread_question.txt")
+            out = client.chat_json(
+                system_prompt="You generate one concise cross-turn reasoning question for paper evaluation.",
+                user_prompt=render_prompt(
+                    tpl,
+                    thread_turn_json=json.dumps(thread_turn, ensure_ascii=False),
+                    target_kcs_json=json.dumps(target_kcs, ensure_ascii=False),
+                    related_turns_json=json.dumps(_compact_related_turns(related_turns), ensure_ascii=False),
+                    dialogue_summary=dialogue_summary,
+                ),
+                temperature=0.2,
+            )
+            question_text = str(out.get("question_text", "")).strip()
+        except Exception as exc:
+            if not allow_offline_fallback:
+                raise RuntimeError(
+                    f"Online thread question generation failed for {thread_turn.get('thread_turn_id')}: "
+                    f"{type(exc).__name__}: {exc}"
+                ) from exc
+
+    if not question_text:
+        if not allow_offline_fallback:
+            raise RuntimeError(
+                f"Online thread question generation failed for {thread_turn.get('thread_turn_id')} "
+                "and offline fallback is disabled."
+            )
+        claims = "; ".join(k.get("full_claim", k.get("kc_id", "")) for k in target_kcs[:3])
+        question_text = f"{thread_turn.get('question_goal', 'Connect the relevant paper claims')}: {claims}"
+
+    return {
+        "question_id": thread_turn.get("question_id") or f"Q_{thread_turn.get('thread_turn_id')}",
+        "question_type": thread_turn.get("question_type", "thread_question"),
+        "thread_id": thread_turn.get("thread_id"),
+        "thread_turn_id": thread_turn.get("thread_turn_id"),
+        "thread_role": thread_turn.get("thread_role"),
+        "macro_id": thread_turn.get("preferred_macro_id") or thread_turn.get("macro_id"),
+        "target_kc_ids": [k["kc_id"] for k in target_kcs],
+        "question_goal": thread_turn.get("question_goal", ""),
+        "trigger_condition": thread_turn.get("trigger_condition", {}),
+        "question_text": question_text,
+    }
+
+
+def _compact_related_turns(turns: list[dict]) -> list[dict]:
+    return [
+        {
+            "turn_id": t.get("turn_id"),
+            "question_type": t.get("question_type"),
+            "question_text": t.get("question_text"),
+            "model_answer": t.get("model_answer"),
+            "covered_kc_ids": t.get("judge_result", {}).get("covered_kc_ids", []),
+        }
+        for t in turns[-6:]
+    ]

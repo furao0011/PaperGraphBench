@@ -8,6 +8,8 @@ def choose_next_action(eval_state: dict, judge_result: dict) -> str:
         return "end_failed"
     if judge_result.get("missing_kc_ids"):
         return "detail_followup"
+    if _thread_turn_available(eval_state):
+        return "thread_question"
     if _available_reasoning_path_exists(eval_state):
         return "multi_hop_question"
     return "next_main_question"
@@ -26,5 +28,12 @@ def _available_reasoning_path_exists(eval_state: dict) -> bool:
             if kc_states.get(kc_id, {}).get("status") in {"lit", "corrected"}
         )
         if len(sequence) >= 3 and lit_count >= 2:
+            return True
+    return False
+
+
+def _thread_turn_available(eval_state: dict) -> bool:
+    for thread in eval_state.get("thread_states", {}).values():
+        if thread.get("status") == "bridge_ready":
             return True
     return False

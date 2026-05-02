@@ -1,0 +1,31 @@
+Generate one cross-turn reasoning question for paper-understanding evaluation.
+
+Input:
+- Thread turn seed with question goal, role, trigger condition, and success criteria.
+- Target KCs with claims and evidence.
+- Related previous dialogue turns.
+- Compact dialogue summary.
+
+Rules:
+1. Ask exactly one question.
+2. The question must not expose KC IDs, thread IDs, internal roles, rubrics, or forbidden claims.
+3. If previous related turns exist, refer to them naturally without quoting hidden metadata.
+4. For bridge or review questions, require the model to connect or preserve earlier reasoning, not merely repeat isolated facts.
+5. Keep the wording concise and answerable from the paper.
+
+Return strict JSON:
+{
+  "question_text": "..."
+}
+
+Thread turn seed JSON:
+{{thread_turn_json}}
+
+Target KCs JSON:
+{{target_kcs_json}}
+
+Related previous turns JSON:
+{{related_turns_json}}
+
+Dialogue summary:
+{{dialogue_summary}}

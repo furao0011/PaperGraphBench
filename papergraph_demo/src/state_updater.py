@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from src.thread_scheduler import record_thread_step_result
+
 
 def initialize_eval_state(master_graph: dict, target_model: str) -> dict:
     kc_states = {}
@@ -31,32 +33,72 @@ def initialize_eval_state(master_graph: dict, target_model: str) -> dict:
         "path_states": path_states,
         "macro_states": {
             macro.get("macro_id"): {
+                "status": "not_started",
+                "main_question_asked": False,
+                "covered_kc_ids": [],
+                "missing_kc_ids": [],
+                "related_turns": [],
                 "misleading_question_count": 0,
+                "bank_kc_count": macro.get("bank_kc_count", len(macro.get("kc_ids", []))),
+                "active_kc_count": len(macro.get("kc_ids", [])),
             }
             for macro in master_graph.get("macro_nodes", [])
             if macro.get("macro_id")
         },
+        "thread_states": {
+            thread.get("thread_id"): {
+                "status": "not_started",
+                "completed_steps": [],
+                "current_step": None,
+                "success": None,
+                "failure_reason": None,
+                "related_turns": [],
+                "bridge_success": None,
+                "review_consistency": None,
+            }
+            for thread in master_graph.get("reasoning_threads", [])
+            if thread.get("thread_id")
+        },
+        "claim_verification_states": {},
         "global_state": {
             "turn_count": 0,
             "hallucination_count": 0,
             "misleading_question_count": 0,
             "review_question_count": 0,
+            "global_overclaim_count": 0,
+            "global_contradicted_claim_count": 0,
+            "not_enough_info_claim_count": 0,
+            "thread_bridge_tested_count": 0,
+            "thread_bridge_success_count": 0,
             "failed": False,
             "failure_reason": None,
         },
     }
 
 
-def apply_judge_result(eval_state: dict, turn_id: str, judge_result: dict, path_id: str | None = None) -> dict:
+def apply_judge_result(
+    eval_state: dict,
+    turn_id: str,
+    judge_result: dict,
+    path_id: str | None = None,
+    macro_id: str | None = None,
+    question_type: str | None = None,
+    thread_id: str | None = None,
+    thread_step_id: str | None = None,
+) -> dict:
     lit = []
     missing = []
     for kc_id in judge_result.get("covered_kc_ids", []):
+        if kc_id not in eval_state["kc_states"]:
+            continue
         s = eval_state["kc_states"][kc_id]
         s["status"] = "lit"
         s["covered_by_turns"].append(turn_id)
         s["confidence"] = judge_result.get("confidence", 0.7)
         lit.append(kc_id)
     for kc_id in judge_result.get("missing_kc_ids", []):
+        if kc_id not in eval_state["kc_states"]:
+            continue
         s = eval_state["kc_states"][kc_id]
         if s["status"] == "unlit":
             s["status"] = "missing"
@@ -65,6 +107,8 @@ def apply_judge_result(eval_state: dict, turn_id: str, judge_result: dict, path_
     if judge_result.get("state") in {"HALLUCINATION", "MISLED"}:
         eval_state["global_state"]["hallucination_count"] += 1
         for kc_id in judge_result.get("covered_kc_ids", []) + judge_result.get("missing_kc_ids", []):
+            if kc_id not in eval_state["kc_states"]:
+                continue
             s = eval_state["kc_states"][kc_id]
             s["hallucination_history"].append(turn_id)
             s["status"] = "hallucinated"
@@ -76,6 +120,8 @@ def apply_judge_result(eval_state: dict, turn_id: str, judge_result: dict, path_
                 eval_state["global_state"]["failure_reason"] = f"REFUSE_TO_CORRECT:{kc_id}"
     else:
         for kc_id in judge_result.get("covered_kc_ids", []):
+            if kc_id not in eval_state["kc_states"]:
+                continue
             s = eval_state["kc_states"][kc_id]
             if s["correction_status"] == "uncorrected":
                 s["correction_status"] = "corrected"
@@ -89,5 +135,70 @@ def apply_judge_result(eval_state: dict, turn_id: str, judge_result: dict, path_
         else:
             status = "success"
         eval_state["path_states"][path_id].update({"status": status, "tested_by_turn": turn_id, "result": status})
+    macro_update = _apply_macro_update(eval_state, turn_id, macro_id, question_type, lit, missing)
+    thread_update = record_thread_step_result(
+        eval_state,
+        thread_id=thread_id,
+        step_id=thread_step_id,
+        turn_id=turn_id,
+        question_type=question_type or "",
+        judge_result=judge_result,
+    )
+    if question_type == "thread_bridge_question":
+        eval_state["global_state"]["thread_bridge_tested_count"] += 1
+        if thread_update.get("bridge_success") is True:
+            eval_state["global_state"]["thread_bridge_success_count"] += 1
     eval_state["global_state"]["turn_count"] += 1
-    return {"lit_kc": lit, "missing_kc": missing, "failed": eval_state["global_state"]["failed"]}
+    return {
+        "lit_kc": lit,
+        "missing_kc": missing,
+        "macro_update": macro_update,
+        "thread_update": thread_update,
+        "failed": eval_state["global_state"]["failed"],
+    }
+
+
+def _apply_macro_update(
+    eval_state: dict,
+    turn_id: str,
+    macro_id: str | None,
+    question_type: str | None,
+    lit: list[str],
+    missing: list[str],
+) -> dict:
+    if not macro_id:
+        return {}
+    state = eval_state.setdefault("macro_states", {}).setdefault(
+        macro_id,
+        {
+            "status": "not_started",
+            "main_question_asked": False,
+            "covered_kc_ids": [],
+            "missing_kc_ids": [],
+            "related_turns": [],
+            "misleading_question_count": 0,
+            "bank_kc_count": 0,
+            "active_kc_count": 0,
+        },
+    )
+    state["status"] = "in_progress"
+    if question_type in {"main", "macro_main_question"}:
+        state["main_question_asked"] = True
+    if turn_id not in state.setdefault("related_turns", []):
+        state["related_turns"].append(turn_id)
+    for kc_id in lit:
+        if kc_id not in state.setdefault("covered_kc_ids", []):
+            state["covered_kc_ids"].append(kc_id)
+        if kc_id in state.setdefault("missing_kc_ids", []):
+            state["missing_kc_ids"].remove(kc_id)
+    for kc_id in missing:
+        if kc_id not in state.setdefault("missing_kc_ids", []):
+            state["missing_kc_ids"].append(kc_id)
+    if state.get("active_kc_count") and len(state.get("covered_kc_ids", [])) >= state["active_kc_count"]:
+        state["status"] = "completed"
+    return {
+        "macro_id": macro_id,
+        "status": state.get("status"),
+        "covered_kc_ids": state.get("covered_kc_ids", []),
+        "missing_kc_ids": state.get("missing_kc_ids", []),
+    }

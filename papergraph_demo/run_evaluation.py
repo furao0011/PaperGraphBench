@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 
 from src.config import load_settings
-from src.dialogue_engine import generate_followup_question
+from src.dialogue_engine import generate_followup_question, generate_thread_question
 from src.judge import judge_answer_with_online_fallback
 from src.mermaid_exporter import export_final_state_mermaid
 from src.model_client import ModelConfig, OpenAICompatClient
@@ -14,6 +14,12 @@ from src.progress import log, span
 from src.question_generator import normalize_question_bundle
 from src.reporter import build_report
 from src.state_updater import apply_judge_result, initialize_eval_state
+from src.thread_scheduler import (
+    THREAD_QUESTION_TYPES,
+    completed_thread_step_ids,
+    ensure_thread_states,
+    get_ready_thread_turn,
+)
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -56,8 +62,9 @@ def _save_eval_artifacts(graph: dict, eval_state: dict, trajectory: dict, checkp
     completed_question_ids = [
         t.get("question_id")
         for t in trajectory.get("turns", [])
-        if t.get("question_type") in {"main", "multi_hop_reasoning"}
+        if t.get("question_type") in {"main", "macro_main_question", "multi_hop_reasoning"}
     ]
+    completed_thread_steps = sorted(completed_thread_step_ids(eval_state))
     _write_json(
         checkpoint_path,
         {
@@ -65,6 +72,11 @@ def _save_eval_artifacts(graph: dict, eval_state: dict, trajectory: dict, checkp
             "target_model": trajectory.get("target_model"),
             "turn_no": max((_turn_number(t.get("turn_id", "")) for t in trajectory.get("turns", [])), default=0),
             "completed_question_ids": completed_question_ids,
+            "completed_thread_step_ids": completed_thread_steps,
+            "scheduler_state": {
+                "completed_thread_step_ids": completed_thread_steps,
+                "last_turn_id": trajectory.get("turns", [{}])[-1].get("turn_id") if trajectory.get("turns") else None,
+            },
             "trajectory": trajectory,
             "eval_state": eval_state,
         },
@@ -79,6 +91,12 @@ def _action_for_question_type(question_type: str) -> str:
         "review_followup": "review_followup",
         "multi_hop_reasoning": "multi_hop_question",
         "main": "next_main_question",
+        "macro_main_question": "next_main_question",
+        "thread_premise_question": "thread_question",
+        "thread_evidence_question": "thread_question",
+        "thread_bridge_question": "thread_question",
+        "thread_review_question": "thread_question",
+        "thread_question": "thread_question",
     }.get(question_type, "next_main_question")
 
 
@@ -109,7 +127,7 @@ def _reconcile_actual_transitions(trajectory: dict) -> None:
         turn["actual_next_action"] = _action_for_question_type(nxt.get("question_type", ""))
 
 
-def _load_eval_checkpoint(checkpoint_path: Path, graph: dict, target_model: str) -> tuple[dict, dict, int, set[str]] | None:
+def _load_eval_checkpoint(checkpoint_path: Path, graph: dict, target_model: str) -> tuple[dict, dict, int, set[str], set[str]] | None:
     if not checkpoint_path.exists():
         return None
     data = json.loads(checkpoint_path.read_text(encoding="utf-8"))
@@ -128,11 +146,14 @@ def _load_eval_checkpoint(checkpoint_path: Path, graph: dict, target_model: str)
         completed = {
             t.get("question_id")
             for t in trajectory.get("turns", [])
-            if t.get("question_type") in {"main", "multi_hop_reasoning"} and t.get("question_id")
+            if t.get("question_type") in {"main", "macro_main_question", "multi_hop_reasoning"} and t.get("question_id")
         }
     _ensure_eval_state_defaults(eval_state, graph)
     _rebuild_macro_misleading_counts(eval_state, trajectory)
-    return eval_state, trajectory, turn_no, completed
+    completed_thread_steps = {sid for sid in data.get("completed_thread_step_ids", []) if sid}
+    if not completed_thread_steps:
+        completed_thread_steps = completed_thread_step_ids(eval_state)
+    return eval_state, trajectory, turn_no, completed, completed_thread_steps
 
 
 def _ensure_eval_state_defaults(eval_state: dict, graph: dict) -> None:
@@ -142,10 +163,24 @@ def _ensure_eval_state_defaults(eval_state: dict, graph: dict) -> None:
         if not macro_id:
             continue
         eval_state["macro_states"].setdefault(macro_id, {})
+        eval_state["macro_states"][macro_id].setdefault("status", "not_started")
+        eval_state["macro_states"][macro_id].setdefault("main_question_asked", False)
+        eval_state["macro_states"][macro_id].setdefault("covered_kc_ids", [])
+        eval_state["macro_states"][macro_id].setdefault("missing_kc_ids", [])
+        eval_state["macro_states"][macro_id].setdefault("related_turns", [])
         eval_state["macro_states"][macro_id].setdefault("misleading_question_count", 0)
+        eval_state["macro_states"][macro_id].setdefault("bank_kc_count", macro.get("bank_kc_count", len(macro.get("kc_ids", []))))
+        eval_state["macro_states"][macro_id].setdefault("active_kc_count", len(macro.get("kc_ids", [])))
+    ensure_thread_states(eval_state, graph.get("reasoning_threads", []))
+    eval_state.setdefault("claim_verification_states", {})
     eval_state.setdefault("global_state", {})
     eval_state["global_state"].setdefault("misleading_question_count", 0)
     eval_state["global_state"].setdefault("review_question_count", 0)
+    eval_state["global_state"].setdefault("global_overclaim_count", 0)
+    eval_state["global_state"].setdefault("global_contradicted_claim_count", 0)
+    eval_state["global_state"].setdefault("not_enough_info_claim_count", 0)
+    eval_state["global_state"].setdefault("thread_bridge_tested_count", 0)
+    eval_state["global_state"].setdefault("thread_bridge_success_count", 0)
 
 
 def _rebuild_macro_misleading_counts(eval_state: dict, trajectory: dict) -> None:
@@ -334,7 +369,7 @@ def _choose_next_action_for_turn(eval_state: dict, judge_result: dict, turn: dic
     question_type = turn.get("question_type")
     if (
         macro_id
-        and question_type not in {"review_followup", "multi_hop_reasoning"}
+        and question_type not in {"review_followup", "multi_hop_reasoning", *THREAD_QUESTION_TYPES}
         and _macro_misleading_count(eval_state, macro_id) < _misleading_target_per_macro()
     ):
         return "misleading_followup"
@@ -418,7 +453,14 @@ def _run_followup_turn(
             question_type=follow["question_type"],
         )
     f_judge = _normalize_judge_result_for_turn(f_judge, f_answer, follow["question_type"])
-    f_state_update = apply_judge_result(eval_state, turn_id=f_turn_id, judge_result=f_judge, path_id=follow.get("target_path_id"))
+    f_state_update = apply_judge_result(
+        eval_state,
+        turn_id=f_turn_id,
+        judge_result=f_judge,
+        path_id=follow.get("target_path_id"),
+        macro_id=follow.get("macro_id"),
+        question_type=follow.get("question_type"),
+    )
     _apply_effective_next_action(
         eval_state,
         f_judge,
@@ -451,6 +493,128 @@ def _run_followup_turn(
     return turn_no, turn, tks
 
 
+def _related_thread_turns(eval_state: dict, trajectory: dict, thread_id: str | None) -> list[dict]:
+    if not thread_id:
+        return []
+    ids = set(
+        eval_state.get("thread_states", {})
+        .get(thread_id, {})
+        .get("related_turns", [])
+    )
+    return [t for t in trajectory.get("turns", []) if t.get("turn_id") in ids]
+
+
+def _run_thread_turn(
+    seed: dict,
+    by_kc: dict[str, dict],
+    trajectory: dict,
+    eval_state: dict,
+    graph: dict,
+    paper_text: str,
+    client: OpenAICompatClient,
+    use_online_eval: bool,
+    turn_no: int,
+    allow_offline_fallback: bool,
+) -> tuple[int, dict | None]:
+    target_kcs = [by_kc[k] for k in seed.get("target_kc_ids", []) if k in by_kc]
+    if not target_kcs:
+        return turn_no, None
+    related_turns = _related_thread_turns(eval_state, trajectory, seed.get("thread_id"))
+    question = generate_thread_question(
+        seed,
+        target_kcs,
+        related_turns,
+        _dialogue_summary(trajectory.get("turns", [])),
+        client,
+        allow_offline_fallback=allow_offline_fallback,
+    )
+    turn_no += 1
+    turn_id = f"T{turn_no}"
+    log(
+        "thread turn started",
+        turn=turn_id,
+        question_id=question.get("question_id"),
+        question_type=question.get("question_type"),
+        thread_id=question.get("thread_id"),
+        thread_step=question.get("thread_turn_id"),
+        targets=",".join(question.get("target_kc_ids", [])),
+    )
+    model_input = _build_eval_prompt(
+        paper_text=paper_text,
+        dialogue_history=_dialogue_history_text(trajectory["turns"]),
+        question_text=question["question_text"],
+    )
+    with span("target model answer", turn=turn_id):
+        answer, answer_mode = _build_model_answer(client, use_online_eval, model_input, target_kcs)
+    rel_forbidden = _related_forbidden_claims(graph, question.get("target_kc_ids", []), question.get("target_path_id"))
+    thread_context = {
+        "thread_id": question.get("thread_id"),
+        "thread_turn_id": question.get("thread_turn_id"),
+        "thread_role": question.get("thread_role"),
+        "question_goal": question.get("question_goal"),
+        "trigger_condition": question.get("trigger_condition", {}),
+        "success_criteria": seed.get("success_criteria", []),
+        "related_turn_ids": [t.get("turn_id") for t in related_turns],
+    }
+    with span("judge thread answer", turn=turn_id):
+        judge_result = judge_answer_with_online_fallback(
+            question["question_text"],
+            answer,
+            target_kcs,
+            client,
+            use_online_judge=use_online_eval,
+            dialogue_summary=_dialogue_summary(trajectory["turns"]),
+            related_forbidden_claims=rel_forbidden,
+            question_type=question["question_type"],
+            thread_context=thread_context,
+        )
+    judge_result = _normalize_judge_result_for_turn(judge_result, answer, question["question_type"])
+    state_update = apply_judge_result(
+        eval_state,
+        turn_id=turn_id,
+        judge_result=judge_result,
+        path_id=question.get("target_path_id"),
+        macro_id=question.get("macro_id"),
+        question_type=question.get("question_type"),
+        thread_id=question.get("thread_id"),
+        thread_step_id=question.get("thread_turn_id"),
+    )
+    _apply_effective_next_action(
+        eval_state,
+        judge_result,
+        {"question_type": question["question_type"], "macro_id": question.get("macro_id")},
+    )
+    turn = {
+        "turn_id": turn_id,
+        "question_id": question["question_id"],
+        "question_type": question["question_type"],
+        "macro_id": question.get("macro_id"),
+        "thread_id": question.get("thread_id"),
+        "thread_turn_id": question.get("thread_turn_id"),
+        "thread_role": question.get("thread_role"),
+        "question_text": question["question_text"],
+        "target_kc_ids": question["target_kc_ids"],
+        "target_path_id": question.get("target_path_id"),
+        "model_answer": answer,
+        "answer_mode": answer_mode,
+        "judge_result": judge_result,
+        "state_update": state_update,
+    }
+    _append_turn(trajectory, turn)
+    log(
+        "thread turn judged",
+        turn=turn_id,
+        state=judge_result.get("state"),
+        next_action=judge_result.get("next_action"),
+        thread_id=question.get("thread_id"),
+        thread_step=question.get("thread_turn_id"),
+        covered=len(judge_result.get("covered_kc_ids", [])),
+        missing=len(judge_result.get("missing_kc_ids", [])),
+        answer_mode=answer_mode,
+    )
+    return turn_no, turn
+
+
 def main() -> None:
     settings = load_settings(BASE_DIR.parent)
     use_online_eval = _env_bool("USE_ONLINE_EVAL")
@@ -481,7 +645,8 @@ def main() -> None:
     log(
         "evaluation inputs ready",
         kcs=len(by_kc),
-        main_questions=len(questions.get("main_questions", [])),
+        main_questions=len(questions.get("macro_main_questions", questions.get("main_questions", []))),
+        thread_question_seeds=len(questions.get("thread_question_seeds", [])),
         multi_hop_questions=len(questions.get("multi_hop_questions", [])),
         paper_chars=len(paper_text),
     )
@@ -491,11 +656,12 @@ def main() -> None:
         raise RuntimeError("Formal evaluation requires USE_ONLINE_EVAL=true and configured API_KEY/BASE_URL/LLM_MODEL. Set ALLOW_MOCK_EVAL=true only for local debugging.")
     checkpoint = _load_eval_checkpoint(checkpoint_path, graph, target_model) if resume and not restart else None
     if checkpoint:
-        eval_state, trajectory, turn_no, completed_question_ids = checkpoint
+        eval_state, trajectory, turn_no, completed_question_ids, completed_thread_step_ids = checkpoint
         log(
             "evaluation checkpoint loaded",
             turns=len(trajectory.get("turns", [])),
             completed_questions=len(completed_question_ids),
+            completed_thread_steps=len(completed_thread_step_ids),
             checkpoint=checkpoint_path,
         )
     else:
@@ -504,9 +670,11 @@ def main() -> None:
         trajectory = {"paper_id": graph["paper_id"], "target_model": target_model, "turns": []}
         turn_no = 0
         completed_question_ids = set()
+        completed_thread_step_ids = set()
     max_turns = int(os.getenv("EVAL_MAX_TURNS", "0") or "0")
 
-    queue = questions.get("main_questions", []) + questions.get("multi_hop_questions", [])
+    macro_queue = questions.get("macro_main_questions") or questions.get("main_questions", [])
+    queue = macro_queue + questions.get("multi_hop_questions", [])
     if completed_question_ids:
         queue = [q for q in queue if q.get("question_id") not in completed_question_ids]
     log("evaluation queue prepared", questions=len(queue), max_turns=max_turns, starting_turn=turn_no)
@@ -550,7 +718,14 @@ def main() -> None:
                     question_type=q["question_type"],
                 )
             judge_result = _normalize_judge_result_for_turn(judge_result, answer, q["question_type"])
-            state_update = apply_judge_result(eval_state, turn_id=turn_id, judge_result=judge_result, path_id=q.get("path_id"))
+            state_update = apply_judge_result(
+                eval_state,
+                turn_id=turn_id,
+                judge_result=judge_result,
+                path_id=q.get("path_id"),
+                macro_id=q.get("macro_id"),
+                question_type=q.get("question_type"),
+            )
             next_action = _apply_effective_next_action(
                 eval_state,
                 judge_result,
@@ -643,6 +818,30 @@ def main() -> None:
                 _save_eval_artifacts(graph, eval_state, trajectory, checkpoint_path)
                 last_judge = last_turn["judge_result"]
                 follow_depth += 1
+
+            thread_budget = _bounded_env_int("EVAL_THREAD_TURNS_PER_CHECK", 1, 1, 3)
+            while thread_budget > 0 and not eval_state["global_state"]["failed"]:
+                if max_turns and turn_no >= max_turns:
+                    break
+                seed = get_ready_thread_turn(eval_state, graph.get("reasoning_threads", []), review_stage=False)
+                if not seed:
+                    break
+                turn_no, thread_turn = _run_thread_turn(
+                    seed,
+                    by_kc,
+                    trajectory,
+                    eval_state,
+                    graph,
+                    paper_text,
+                    client,
+                    use_online_eval,
+                    turn_no,
+                    allow_offline_fallback,
+                )
+                if not thread_turn:
+                    break
+                _save_eval_artifacts(graph, eval_state, trajectory, checkpoint_path)
+                thread_budget -= 1
             if eval_state["global_state"]["failed"]:
                 log("evaluation failed", reason=eval_state["global_state"].get("failure_reason"))
                 break
@@ -693,6 +892,28 @@ def main() -> None:
                 turn_no,
                 allow_offline_fallback,
             )
+            _save_eval_artifacts(graph, eval_state, trajectory, checkpoint_path)
+
+        while not eval_state["global_state"]["failed"]:
+            if max_turns and turn_no >= max_turns:
+                break
+            seed = get_ready_thread_turn(eval_state, graph.get("reasoning_threads", []), review_stage=True)
+            if not seed:
+                break
+            turn_no, thread_turn = _run_thread_turn(
+                seed,
+                by_kc,
+                trajectory,
+                eval_state,
+                graph,
+                paper_text,
+                client,
+                use_online_eval,
+                turn_no,
+                allow_offline_fallback,
+            )
+            if not thread_turn:
+                break
             _save_eval_artifacts(graph, eval_state, trajectory, checkpoint_path)
     except KeyboardInterrupt:
         _save_eval_artifacts(graph, eval_state, trajectory, checkpoint_path)

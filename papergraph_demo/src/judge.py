@@ -9,11 +9,17 @@ from src.prompt_loader import load_prompt, render_prompt
 
 JUDGE_PROMPTS = {
     "main": "judge_main_answer.txt",
+    "macro_main_question": "judge_main_answer.txt",
     "detail_followup": "judge_main_answer.txt",
     "review_followup": "judge_review_answer.txt",
     "misleading_followup": "judge_misleading_answer.txt",
     "hallucination_followup": "judge_hallucination_answer.txt",
     "multi_hop_reasoning": "judge_multi_hop_answer.txt",
+    "thread_premise_question": "judge_thread_answer.txt",
+    "thread_evidence_question": "judge_thread_answer.txt",
+    "thread_bridge_question": "judge_thread_answer.txt",
+    "thread_review_question": "judge_thread_answer.txt",
+    "thread_question": "judge_thread_answer.txt",
 }
 
 def judge_answer(question_text: str, answer: str, target_kcs: list[dict]) -> dict:
@@ -73,6 +79,7 @@ def judge_answer_with_online_fallback(
     dialogue_summary: str = "",
     related_forbidden_claims: list[dict] | None = None,
     question_type: str = "main",
+    thread_context: dict | None = None,
 ) -> dict:
     if use_online_judge and client and client.is_ready():
         try:
@@ -84,6 +91,7 @@ def judge_answer_with_online_fallback(
                 answer=answer,
                 target_kcs_json=json.dumps(target_kcs, ensure_ascii=False),
                 dialogue_summary=dialogue_summary,
+                thread_context_json=json.dumps(thread_context or {}, ensure_ascii=False),
                 related_forbidden_claims_json=json.dumps(related_forbidden_claims or [], ensure_ascii=False),
             )
             result = client.chat_json(
@@ -92,8 +100,9 @@ def judge_answer_with_online_fallback(
             )
             if "state" in result and "next_action" in result:
                 return result
-        except Exception:
-            pass
+            raise RuntimeError(f"Online judge returned invalid JSON schema for question_type={question_type}.")
+        except Exception as exc:
+            raise RuntimeError(f"Online judge failed for question_type={question_type}: {type(exc).__name__}: {exc}") from exc
     return judge_answer(question_text, answer, target_kcs)
 
 
