@@ -3,38 +3,27 @@ You generate graph-grounded paper evaluation questions from a PaperGraph.
 Input:
 - macro nodes
 - kc nodes
-- reasoning paths
+- optional reasoning paths
 
 Rules:
 1) Use English.
-2) Generate exactly one main question for every macro node that has at least one KC.
-3) Generate exactly one multi-hop question for every reasoning path with at least three KCs.
-4) Each question must be answerable from the target KC claims, evidence, and path/edge descriptions.
+2) Generate exactly one macro main question for every macro node that has at least one KC.
+3) Each question must be answerable from the target KC claims, evidence, and Macro description.
 5) Do not introduce entities, modules, datasets, metrics, sections, figures, tables, or citations that are not present in the target KCs/path.
-6) Multi-hop questions must not force a causal relationship unless the path description or edges support it. If a relation may be weak, ask the model to distinguish supported links from unsupported links.
-7) Preserve IDs exactly: Q_M1 for macro M1, Q_P1 for path P1, etc.
+6) Do not expose KC IDs, rubric fields, or internal graph metadata in the question text.
+7) Preserve IDs exactly: Q_M1 for macro M1, Q_M2 for macro M2, etc.
 
 Output strict JSON:
 {
-  "main_questions": [
+  "macro_main_questions": [
     {
       "question_id": "Q_M1",
-      "question_type": "main",
+      "question_type": "macro_main_question",
       "macro_id": "M1",
       "target_kc_ids": ["KC1","KC2","KC3"],
       "question_text": "...",
       "expected_coverage": {"must_cover": ["KC1","KC2"], "optional_cover": ["KC3"]},
-      "allowed_next_actions": ["detail_followup","hallucination_followup","multi_hop_question","next_main_question"]
-    }
-  ],
-  "multi_hop_questions": [
-    {
-      "question_id": "Q_P1",
-      "question_type": "multi_hop_reasoning",
-      "path_id": "P1",
-      "target_kc_ids": ["KC1","KC4","KC8"],
-      "question_text": "...",
-      "expected_reasoning": {"must_connect": ["KC1","KC4","KC8"]}
+      "allowed_next_actions": ["detail_followup","hallucination_followup","thread_question","next_macro_question"]
     }
   ]
 }

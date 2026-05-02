@@ -59,11 +59,16 @@ def main() -> None:
         return
     log(
         "questions generated",
-        main=len(bundle.get("main_questions", [])),
-        multi_hop=len(bundle.get("multi_hop_questions", [])),
+        macro_main=len(bundle.get("macro_main_questions", [])),
+        thread_seeds=len(bundle.get("thread_question_seeds", [])),
     )
     payload = {
         "paper_id": graph.get("paper_id", "unknown"),
+        "schema_version": "v1",
+        "macro_main_questions": bundle["macro_main_questions"],
+        "thread_question_seeds": bundle["thread_question_seeds"],
+        "review_question_seeds": bundle["review_question_seeds"],
+        # Compatibility aliases for the current v0 evaluation runner.
         "main_questions": bundle["main_questions"],
         "multi_hop_questions": bundle["multi_hop_questions"],
         "reserved_followup_templates": bundle["reserved_followup_templates"],
