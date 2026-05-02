@@ -108,15 +108,17 @@ def _build_kc_nodes(
         log("rubric generation started", online_budget=online_budget, workers=max_workers)
         with ThreadPoolExecutor(max_workers=max_workers) as ex:
             for idx, kc in enumerate(kcs[:online_budget]):
-                claim = kc["claim"].strip()
+                claim = _kc_claim(kc)
                 macro_id = _resolve_kc_macro_id(kc, claim, macro_ids, allow_offline_fallback)
                 kc_type = _valid_kc_type(kc.get("type")) or _infer_type(claim, macro_by_id.get(macro_id, {}).get("role", ""))
                 importance = _valid_importance(kc.get("importance")) or ("critical" if macro_id in {"M1", "M2"} else "normal")
+                if _has_rubric(kc):
+                    continue
                 fut = ex.submit(
                     build_kc_rubric,
                     kc["kc_id"],
                     claim,
-                    kc["evidence"],
+                    _kc_evidence_text(kc),
                     kc_type,
                     importance,
                     client,
@@ -133,7 +135,7 @@ def _build_kc_nodes(
                     pass
 
     for idx, kc in enumerate(kcs):
-        claim = kc["claim"].strip()
+        claim = _kc_claim(kc)
         macro_id = _resolve_kc_macro_id(kc, claim, macro_ids, allow_offline_fallback)
         kc_type = _valid_kc_type(kc.get("type")) or _infer_type(claim, macro_by_id.get(macro_id, {}).get("role", ""))
         importance = _valid_importance(kc.get("importance")) or ("critical" if macro_id in {"M1", "M2"} else "normal")
@@ -148,14 +150,14 @@ def _build_kc_nodes(
             "section": kc.get("section", ""),
             "section_id": kc.get("section_id", ""),
         }
-        rubric = rubric_cache.get(kc["kc_id"])
+        rubric = _existing_rubric(kc) or rubric_cache.get(kc["kc_id"])
         if not rubric and not allow_offline_fallback:
             raise RuntimeError(f"Online rubric generation failed for {kc['kc_id']} and offline fallback is disabled.")
         if not rubric:
             rubric = build_kc_rubric(
                 kc_id=kc["kc_id"],
                 full_claim=claim,
-                evidence_text=kc["evidence"],
+                evidence_text=_kc_evidence_text(kc),
                 kc_type=kc_type,
                 importance=node["importance"],
                 client=client if idx < online_budget else None,
@@ -170,6 +172,42 @@ def _build_kc_nodes(
 def _valid_macro_id(value: object, macro_ids: list[str]) -> str | None:
     text = str(value or "").strip()
     return text if text in macro_ids else None
+
+
+def _kc_claim(kc: dict) -> str:
+    claim = str(kc.get("claim") or kc.get("full_claim") or "").strip()
+    if not claim:
+        raise ValueError(f"KC {kc.get('kc_id')} has no claim/full_claim.")
+    return claim
+
+
+def _kc_evidence_text(kc: dict) -> str:
+    if kc.get("evidence_text"):
+        return str(kc["evidence_text"])
+    evidence = kc.get("evidence")
+    if isinstance(evidence, str):
+        return evidence
+    if isinstance(evidence, list):
+        texts = [str(item.get("text", "")).strip() for item in evidence if isinstance(item, dict)]
+        return "\n".join(t for t in texts if t)
+    return _kc_claim(kc)
+
+
+def _has_rubric(kc: dict) -> bool:
+    return bool(kc.get("must_include") and kc.get("acceptable_variants"))
+
+
+def _existing_rubric(kc: dict) -> dict | None:
+    if not _has_rubric(kc):
+        return None
+    return {
+        "must_include": kc.get("must_include", []),
+        "acceptable_variants": kc.get("acceptable_variants", []),
+        "forbidden_claims": kc.get("forbidden_claims", []),
+        "evidence": kc.get("evidence", []),
+        "importance": kc.get("importance", "normal"),
+        "type": kc.get("type", "method"),
+    }
 
 
 def _resolve_kc_macro_id(
@@ -392,6 +430,8 @@ def build_master_graph(
     client: OpenAICompatClient | None = None,
     allow_offline_fallback: bool = False,
     macro_spine: dict | None = None,
+    kc_bank_path: str | None = None,
+    active_kc_path: str | None = None,
 ) -> dict:
     macro_source_nodes = _macro_nodes_from_spine(macro_spine)
     kc_nodes, groups = _build_kc_nodes(
@@ -439,9 +479,12 @@ def build_master_graph(
         "paper_title": paper_id,
         "paper_text_path": paper_text_path,
         "macro_spine_path": "data/graphs/macro_spine.json" if macro_spine else None,
+        "kc_bank_path": kc_bank_path,
+        "active_kc_path": active_kc_path,
         "macro_nodes": macro_nodes,
         "macro_edges": macro_spine.get("macro_edges", []) if macro_spine else [],
         "kc_nodes": kc_nodes,
+        "active_kc_ids": [kc["kc_id"] for kc in kc_nodes],
         "reasoning_edges": edges,
         "reasoning_paths": paths,
     }

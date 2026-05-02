@@ -1,3 +1,4 @@
+import json
 import os
 import re
 from collections import Counter
@@ -206,6 +207,46 @@ def extract_kcs_by_sections_with_online_fallback(
     - Extract 3-5 candidate KCs per section (parallel online calls)
     - Deduplicate and keep 12-18
     """
+    candidates = extract_kc_candidates_by_sections(
+        sections,
+        client,
+        allow_offline_fallback=allow_offline_fallback,
+        macro_spine=macro_spine,
+    )
+    selected = _select_diverse_candidates(candidates, MAX_KC)
+    if len(selected) < MIN_KC and not allow_offline_fallback:
+        raise RuntimeError(
+            f"Online KC extraction returned only {len(selected)} valid KCs; required at least {MIN_KC}."
+        )
+    out = []
+    for i, c in enumerate(selected[:MAX_KC], start=1):
+        out.append(
+            {
+                "kc_id": f"KC{i}",
+                "claim": c["claim"],
+                "evidence": c["evidence"],
+                "section": c.get("section", ""),
+                "section_id": c.get("section_id", ""),
+                "macro_id": c.get("macro_id", ""),
+                "type": c.get("type", ""),
+                "importance": c.get("importance", ""),
+            }
+        )
+    return out
+
+
+def extract_kc_candidates_by_sections(
+    sections: list[dict],
+    client: OpenAICompatClient | None,
+    allow_offline_fallback: bool = False,
+    macro_spine: dict | None = None,
+) -> list[dict]:
+    """
+    v1 candidate pool extraction:
+    - Extract 3-5 candidate KCs per selected section.
+    - Keep all normalized unique candidates up to KC_BANK_MAX.
+    - Do not pad missing KCs in strict online mode.
+    """
     online_errors: list[str] = []
     if client and client.is_ready() and sections:
         candidates: list[dict] = []
@@ -265,7 +306,6 @@ def extract_kcs_by_sections_with_online_fallback(
 
         if candidates:
             candidates.sort(key=lambda c: (c.get("section_index", 0), c.get("claim", "")))
-            # Deduplicate by normalized claim and keep highest diversity.
             uniq = []
             seen = set()
             for c in candidates:
@@ -274,18 +314,14 @@ def extract_kcs_by_sections_with_online_fallback(
                     continue
                 seen.add(norm)
                 uniq.append(c)
-            selected = _select_diverse_candidates(uniq, MAX_KC)
+            bank_limit = int(os.getenv("KC_BANK_MAX", "120") or "120")
+            selected = _select_diverse_candidates(uniq, bank_limit)
             log("KC extraction candidates selected", unique=len(uniq), selected=len(selected))
-            if len(selected) < MIN_KC:
-                joined = "\n".join(sec["text"] for sec in sections)
-                fill_claims = _keyword_fallback_claims(joined, MIN_KC - len(selected))
-                for fc in fill_claims:
-                    selected.append({"claim": fc, "evidence": joined[:300], "section": "fallback"})
             out = []
-            for i, c in enumerate(selected[:MAX_KC], start=1):
+            for i, c in enumerate(selected, start=1):
                 out.append(
                     {
-                        "kc_id": f"KC{i}",
+                        "candidate_id": f"C{i}",
                         "claim": c["claim"],
                         "evidence": c["evidence"],
                         "section": c.get("section", ""),
@@ -295,7 +331,7 @@ def extract_kcs_by_sections_with_online_fallback(
                         "importance": c.get("importance", ""),
                     }
                 )
-            if len(out) >= MIN_KC:
+            if out:
                 return out
 
     if not allow_offline_fallback:
@@ -304,7 +340,20 @@ def extract_kcs_by_sections_with_online_fallback(
 
     # fallback: collapse sections to full text local extractor
     merged = "\n\n".join(s.get("text", "") for s in sections)
-    return extract_kcs(merged)
+    return [
+        {
+            "candidate_id": f"C{i}",
+            "claim": kc["claim"],
+            "evidence": kc["evidence"],
+            "section": "fallback",
+            "section_id": "",
+            "section_index": i,
+            "macro_id": kc.get("macro_id", ""),
+            "type": kc.get("type", ""),
+            "importance": kc.get("importance", ""),
+        }
+        for i, kc in enumerate(extract_kcs(merged), start=1)
+    ]
 
 
 def _select_diverse_candidates(candidates: list[dict], limit: int) -> list[dict]:
@@ -381,10 +430,4 @@ def _pick_sections_for_extraction(sections: list[dict]) -> list[dict]:
 def _macro_context_json(macro_spine: dict | None) -> str:
     if not macro_spine:
         return "[]"
-    return json_dumps(macro_context_for_prompt(macro_spine))
-
-
-def json_dumps(payload: object) -> str:
-    import json
-
-    return json.dumps(payload, ensure_ascii=False, indent=2)
+    return json.dumps(macro_context_for_prompt(macro_spine), ensure_ascii=False, indent=2)

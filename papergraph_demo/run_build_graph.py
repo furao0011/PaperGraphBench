@@ -2,9 +2,11 @@ import json
 import os
 from pathlib import Path
 
+from src.active_kc_selector import select_active_kcs
 from src.config import load_settings
 from src.graph_builder import build_master_graph
-from src.kc_extractor import extract_kcs_by_sections_with_online_fallback
+from src.kc_bank_builder import build_kc_bank
+from src.kc_extractor import extract_kc_candidates_by_sections
 from src.macro_extractor import extract_macro_spine
 from src.mermaid_exporter import export_master_graph_mermaid
 from src.model_client import ModelConfig, OpenAICompatClient
@@ -19,6 +21,8 @@ GRAPH_PATH = BASE_DIR / "data" / "graphs" / "master_graph.json"
 MASTER_MMD_PATH = BASE_DIR / "data" / "graphs" / "master_graph.mmd"
 SECTIONS_PATH = BASE_DIR / "data" / "graphs" / "sections.json"
 MACRO_SPINE_PATH = BASE_DIR / "data" / "graphs" / "macro_spine.json"
+KC_BANK_PATH = BASE_DIR / "data" / "graphs" / "kc_bank.json"
+ACTIVE_KC_PATH = BASE_DIR / "data" / "graphs" / "active_kc.json"
 
 
 def main() -> None:
@@ -67,22 +71,38 @@ def main() -> None:
         macro_spine = extract_macro_spine(paper_id, sections, client)
     MACRO_SPINE_PATH.write_text(json.dumps(macro_spine, ensure_ascii=False, indent=2), encoding="utf-8")
     log("macro spine written", path=MACRO_SPINE_PATH)
-    with span("extract KCs", sections=len(sections)):
-        kcs = extract_kcs_by_sections_with_online_fallback(
+    with span("extract KC candidates", sections=len(sections)):
+        kc_candidates = extract_kc_candidates_by_sections(
             sections,
             client,
             allow_offline_fallback=allow_offline_fallback,
             macro_spine=macro_spine,
         )
-    log("KCs extracted", count=len(kcs))
-    with span("build master graph", kcs=len(kcs)):
+    log("KC candidates extracted", count=len(kc_candidates))
+    with span("build KC Bank", candidates=len(kc_candidates)):
+        kc_bank = build_kc_bank(
+            paper_id=paper_id,
+            candidates=kc_candidates,
+            macro_spine=macro_spine,
+            client=client,
+            allow_offline_fallback=allow_offline_fallback,
+        )
+    KC_BANK_PATH.write_text(json.dumps(kc_bank, ensure_ascii=False, indent=2), encoding="utf-8")
+    log("KC Bank written", path=KC_BANK_PATH, kcs=len(kc_bank.get("kc_nodes", [])))
+    with span("select Active KCs", bank_kcs=len(kc_bank.get("kc_nodes", []))):
+        active_kc = select_active_kcs(kc_bank, macro_spine)
+    ACTIVE_KC_PATH.write_text(json.dumps(active_kc, ensure_ascii=False, indent=2), encoding="utf-8")
+    log("Active KCs written", path=ACTIVE_KC_PATH, active=len(active_kc.get("active_kc_ids", [])))
+    with span("build master graph", kcs=len(active_kc.get("kc_nodes", []))):
         graph = build_master_graph(
             paper_id=paper_id,
             paper_text_path=paper_text_path,
-            kcs=kcs,
+            kcs=active_kc["kc_nodes"],
             client=client,
             allow_offline_fallback=allow_offline_fallback,
             macro_spine=macro_spine,
+            kc_bank_path="data/graphs/kc_bank.json",
+            active_kc_path="data/graphs/active_kc.json",
         )
     log(
         "master graph ready",
@@ -101,6 +121,8 @@ def main() -> None:
     log("graph artifacts written", graph=GRAPH_PATH, mermaid=MASTER_MMD_PATH)
     print(f"Sections written: {SECTIONS_PATH}")
     print(f"Macro spine generated: {MACRO_SPINE_PATH}")
+    print(f"KC Bank generated: {KC_BANK_PATH}")
+    print(f"Active KC generated: {ACTIVE_KC_PATH}")
     print(f"Master graph generated: {GRAPH_PATH}")
 
 
