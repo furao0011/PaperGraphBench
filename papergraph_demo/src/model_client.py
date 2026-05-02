@@ -15,6 +15,8 @@ class ModelConfig:
     api_key: str
     base_url: str
     llm_model: str
+    embed_base_url: str = ""
+    embed_model: str = ""
     timeout_s: int = 300
     max_retries: int = 2
     retry_sleep_s: float = 5.0
@@ -26,6 +28,8 @@ class OpenAICompatClient:
             api_key=cfg.api_key,
             base_url=cfg.base_url,
             llm_model=cfg.llm_model,
+            embed_base_url=cfg.embed_base_url or os.getenv("EMBED_BASE_URL", ""),
+            embed_model=cfg.embed_model or os.getenv("EMBED_MODEL", ""),
             timeout_s=_env_int("PAPERGRAPH_LLM_TIMEOUT_S", _env_int("LLM_TIMEOUT_S", cfg.timeout_s)),
             max_retries=_env_nonnegative_int(
                 "PAPERGRAPH_LLM_MAX_RETRIES",
@@ -39,6 +43,9 @@ class OpenAICompatClient:
 
     def is_ready(self) -> bool:
         return bool(self.cfg.api_key and self.cfg.base_url and self.cfg.llm_model)
+
+    def embeddings_ready(self) -> bool:
+        return bool(self.cfg.api_key and self.cfg.embed_base_url and self.cfg.embed_model)
 
     def chat_json(
         self,
@@ -87,6 +94,25 @@ class OpenAICompatClient:
         body = self._post_json(url, payload, timeout_s)
         result = json.loads(body)
         return result["choices"][0]["message"]["content"]
+
+    def embed_texts(self, texts: list[str], timeout_s: int | None = None) -> list[list[float]]:
+        if not self.embeddings_ready():
+            raise RuntimeError("Embedding client is not configured. Check API_KEY/EMBED_BASE_URL/EMBED_MODEL.")
+        url = self.cfg.embed_base_url.rstrip("/") + "/embeddings"
+        payload = {
+            "model": self.cfg.embed_model,
+            "input": texts,
+        }
+        body = self._post_json(url, payload, timeout_s)
+        result = json.loads(body)
+        data = result.get("data", [])
+        if len(data) != len(texts):
+            raise RuntimeError(f"Embedding response count mismatch: expected {len(texts)}, got {len(data)}.")
+        ordered = sorted(data, key=lambda item: item.get("index", 0))
+        embeddings = [item.get("embedding") for item in ordered]
+        if not all(isinstance(vec, list) and vec for vec in embeddings):
+            raise RuntimeError("Embedding response contains empty or invalid vectors.")
+        return embeddings
 
     def _post_json(self, url: str, payload: dict[str, Any], timeout_s: int | None) -> str:
         timeout = timeout_s if timeout_s is not None else self.cfg.timeout_s

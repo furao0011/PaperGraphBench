@@ -10,6 +10,7 @@ class Settings:
     api_key: str = ""
     base_url: str = ""
     llm_model: str = ""
+    embed_base_url: str = ""
     embed_model: str = ""
     working_dir: str = "./working"
     embed_dim: int = 1024
@@ -50,6 +51,7 @@ def load_settings(project_root: Path) -> Settings:
         api_key=os.getenv("API_KEY", ""),
         base_url=os.getenv("BASE_URL", ""),
         llm_model=os.getenv("LLM_MODEL", ""),
+        embed_base_url=os.getenv("EMBED_BASE_URL", ""),
         embed_model=os.getenv("EMBED_MODEL", ""),
         working_dir=os.getenv("WORKING_DIR", "./working"),
         embed_dim=_to_int("EMBED_DIM", 1024),

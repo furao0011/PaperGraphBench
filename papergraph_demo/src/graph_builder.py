@@ -306,6 +306,14 @@ def _build_reasoning_edges(kc_nodes: list[dict], groups: dict[str, list[str]]) -
             }
         )
 
+    macro_order = list(groups.keys())
+    if not set(MACRO_IDS).issubset(set(groups)):
+        for left, right in zip(macro_order, macro_order[1:]):
+            for a in groups.get(left, [])[:2]:
+                for b in groups.get(right, [])[:2]:
+                    add(a, b, "motivates", "Earlier Macro claim supports the later Macro claim.")
+        return edges
+
     for a in groups["M1"][:3]:
         for b in groups["M2"][:3]:
             add(a, b, "motivates", "Problem claim motivates method design.")
@@ -398,6 +406,31 @@ def _build_reasoning_edges_online(kc_nodes: list[dict], macro_nodes: list[dict],
         return None
 
 
+def build_reasoning_edges_for_kcs(
+    kc_nodes: list[dict],
+    macro_nodes: list[dict],
+    client: OpenAICompatClient | None,
+    allow_offline_fallback: bool = False,
+) -> list[dict]:
+    edges = _build_reasoning_edges_online(kc_nodes, macro_nodes, client)
+    if not edges and not allow_offline_fallback:
+        raise RuntimeError("Online reasoning edge generation failed and offline fallback is disabled.")
+    if edges:
+        _ensure_edge_forbidden_claims(edges, kc_nodes)
+        return edges
+    groups = {
+        macro["macro_id"]: [
+            kc["kc_id"]
+            for kc in kc_nodes
+            if kc.get("macro_id") == macro.get("macro_id")
+        ]
+        for macro in macro_nodes
+    }
+    fallback_edges = _build_reasoning_edges(kc_nodes, groups)
+    _ensure_edge_forbidden_claims(fallback_edges, kc_nodes)
+    return fallback_edges
+
+
 def _build_reasoning_paths_online(
     kc_nodes: list[dict],
     macro_nodes: list[dict],
@@ -432,6 +465,7 @@ def build_master_graph(
     macro_spine: dict | None = None,
     kc_bank_path: str | None = None,
     active_kc_path: str | None = None,
+    precomputed_reasoning_edges: list[dict] | None = None,
 ) -> dict:
     macro_source_nodes = _macro_nodes_from_spine(macro_spine)
     kc_nodes, groups = _build_kc_nodes(
@@ -463,12 +497,15 @@ def build_master_graph(
                 "importance": macro.get("importance", "normal"),
             }
         )
-    edges = _build_reasoning_edges_online(kc_nodes, macro_nodes, client)
-    if not edges and not allow_offline_fallback:
-        raise RuntimeError("Online reasoning edge generation failed and offline fallback is disabled.")
+    active_ids = {kc["kc_id"] for kc in kc_nodes}
+    edges = _filter_precomputed_edges(precomputed_reasoning_edges, active_ids)
     if not edges:
-        edges = _build_reasoning_edges(kc_nodes, groups)
-    _ensure_edge_forbidden_claims(edges, kc_nodes)
+        edges = build_reasoning_edges_for_kcs(
+            kc_nodes,
+            macro_nodes,
+            client,
+            allow_offline_fallback=allow_offline_fallback,
+        )
     paths = _build_reasoning_paths_online(kc_nodes, macro_nodes, edges, client)
     if not paths and not allow_offline_fallback:
         raise RuntimeError("Online reasoning path generation failed and offline fallback is disabled.")
@@ -488,6 +525,21 @@ def build_master_graph(
         "reasoning_edges": edges,
         "reasoning_paths": paths,
     }
+
+
+def _filter_precomputed_edges(edges: list[dict] | None, active_ids: set[str]) -> list[dict]:
+    if not edges:
+        return []
+    filtered = []
+    for edge in edges:
+        source = edge.get("source")
+        target = edge.get("target")
+        if source not in active_ids or target not in active_ids:
+            continue
+        item = dict(edge)
+        item["edge_id"] = f"E{len(filtered) + 1}"
+        filtered.append(item)
+    return filtered
 
 
 def _macro_nodes_from_spine(macro_spine: dict | None) -> list[dict]:

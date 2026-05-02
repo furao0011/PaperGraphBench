@@ -1,0 +1,98 @@
+You construct cross-turn Reasoning Threads for dynamic paper evaluation.
+
+Input graph context:
+{{graph_context_json}}
+
+Target thread count:
+{{thread_target}}
+
+Allowed thread count range:
+{{thread_min}} to {{thread_max}}
+
+Task:
+Build cross-turn reasoning threads from the Macro Spine, Active KCs, reasoning edges, and reasoning paths.
+
+Rules:
+1) Each thread must span at least two Macros.
+2) Each thread must use only active KC IDs, Macro IDs, and edge IDs from the input.
+3) Each thread must contain 3-4 planned turns.
+4) A thread is not a single multi-hop question. It must establish earlier premise/evidence and later ask for a bridge.
+5) Include one bridge_reasoning step with required_lit_kc_ids.
+6) Include one review_consistency step with trigger_condition.at_review_stage = true.
+7) Use only these thread_type values:
+   - problem_to_method
+   - method_to_result
+   - module_to_ablation
+   - claim_to_limitation
+8) Use only these planned turn roles:
+   - establish_premise
+   - establish_evidence
+   - bridge_reasoning
+   - review_consistency
+9) Thread IDs must be consecutive: RT1, RT2, ...
+10) Step IDs must be consecutive inside each thread: RT1_STEP1, RT1_STEP2, ...
+11) Do not expose KC IDs in question_goal wording; question_goal may reference the kind of claim conceptually.
+12) Use English in all generated fields.
+13) Return strict JSON only.
+
+Return schema:
+{
+  "threads": [
+    {
+      "thread_id": "RT1",
+      "thread_type": "method_to_result",
+      "description": "Test whether the model can connect a method mechanism to an experimental result.",
+      "macro_sequence": ["M2", "M5"],
+      "kc_sequence": ["KC3", "KC14", "KC21"],
+      "edge_sequence": ["E2", "E7"],
+      "planned_turns": [
+        {
+          "thread_turn_id": "RT1_STEP1",
+          "role": "establish_premise",
+          "preferred_macro_id": "M2",
+          "target_kc_ids": ["KC3"],
+          "question_goal": "Ask the model to explain the relevant method mechanism.",
+          "trigger_condition": {
+            "macro_reached": "M2"
+          }
+        },
+        {
+          "thread_turn_id": "RT1_STEP2",
+          "role": "establish_evidence",
+          "preferred_macro_id": "M5",
+          "target_kc_ids": ["KC14"],
+          "question_goal": "Ask the model to explain the relevant experimental evidence.",
+          "trigger_condition": {
+            "macro_reached": "M5"
+          }
+        },
+        {
+          "thread_turn_id": "RT1_STEP3",
+          "role": "bridge_reasoning",
+          "preferred_macro_id": "M5",
+          "target_kc_ids": ["KC3", "KC14", "KC21"],
+          "question_goal": "Ask the model to connect the earlier mechanism to the later evidence.",
+          "trigger_condition": {
+            "required_lit_kc_ids": ["KC3", "KC14"]
+          }
+        },
+        {
+          "thread_turn_id": "RT1_STEP4",
+          "role": "review_consistency",
+          "preferred_macro_id": null,
+          "target_kc_ids": ["KC3", "KC14"],
+          "question_goal": "Check whether the model preserves the same mechanism-evidence relation at review time.",
+          "trigger_condition": {
+            "at_review_stage": true
+          }
+        }
+      ],
+      "success_criteria": [
+        "The model recalls the earlier premise correctly.",
+        "The model connects the premise to the later evidence.",
+        "The model does not introduce a conflicting explanation."
+      ]
+    }
+  ]
+}
+

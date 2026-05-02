@@ -1,0 +1,50 @@
+You are a paper evaluation graph constructor.
+
+Macro Spine:
+{{macro_spine_json}}
+
+Candidate KC nodes:
+{{kc_nodes_json}}
+
+Task:
+For each KC, judge only two subjective metrics:
+
+1) claim_specificity_score:
+Does this KC express a concrete claim rather than a vague topic?
+
+Scoring:
+1 = almost only a keyword or vague concept; not an evaluable claim
+2 = meaningful but too broad; lacks a clear judgement
+3 = a basic claim, but still somewhat generic
+4 = clear claim with specific object, action, or relation
+5 = very specific claim with clear causal, mechanistic, contrastive, or experimental meaning
+
+2) questionability_score:
+Is this KC suitable for generating paper-understanding questions, follow-ups, or cross-turn reasoning questions?
+
+Scoring:
+1 = hard to generate an effective question around it
+2 = possible to ask, but low value and likely just paraphrase
+3 = suitable for ordinary comprehension questions
+4 = suitable for mainline questions, detail follow-ups, or contrast questions
+5 = highly suitable for dynamic questions, including follow-up, multi-hop, misleading, or review questions
+
+Rules:
+- Return one score object for every input KC.
+- Scores must be integers from 1 to 5.
+- Do not score macro centrality, evidence quality, or graph connectivity.
+- Use the claim and evidence, but do not invent paper content.
+- Return strict JSON only.
+
+Return schema:
+{
+  "scores": [
+    {
+      "kc_id": "KC1",
+      "claim_specificity_score": 1,
+      "questionability_score": 1,
+      "reason": "One short reason."
+    }
+  ]
+}
+
