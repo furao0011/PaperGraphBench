@@ -10,7 +10,7 @@ from src.kc_bank_builder import build_kc_bank
 from src.kc_bank_builder import finalize_kc_bank_scores
 from src.kc_extractor import extract_kc_candidates_by_sections
 from src.macro_extractor import extract_macro_spine
-from src.mermaid_exporter import export_master_graph_mermaid
+from src.mermaid_exporter import export_macro_spine_mermaid, export_master_graph_mermaid, export_reasoning_threads_mermaid
 from src.model_client import ModelConfig, OpenAICompatClient
 from src.paper_parser import load_paper_text, load_paper_text_from_dir, split_into_sections
 from src.progress import log, span
@@ -22,6 +22,8 @@ PAPER_PATH = BASE_DIR / "data" / "papers" / "demo_paper.md"
 PAPER_DIR_PATH = BASE_DIR.parent / "util_example" / "output1"
 GRAPH_PATH = BASE_DIR / "data" / "graphs" / "master_graph.json"
 MASTER_MMD_PATH = BASE_DIR / "data" / "graphs" / "master_graph.mmd"
+MACRO_SPINE_MMD_PATH = BASE_DIR / "data" / "graphs" / "macro_spine.mmd"
+REASONING_THREADS_MMD_PATH = BASE_DIR / "data" / "graphs" / "reasoning_threads.mmd"
 SECTIONS_PATH = BASE_DIR / "data" / "graphs" / "sections.json"
 MACRO_SPINE_PATH = BASE_DIR / "data" / "graphs" / "macro_spine.json"
 KC_CANDIDATES_PATH = BASE_DIR / "data" / "graphs" / "kc_candidates.json"
@@ -185,6 +187,7 @@ def main() -> None:
         _write_build_checkpoint(checkpoint_path, paper_id, "reasoning_threads", resume=resume, restart=restart)
     graph["reasoning_threads_path"] = "data/graphs/reasoning_threads.json"
     graph["reasoning_threads"] = reasoning_threads.get("threads", [])
+    _annotate_macro_bank_counts(graph, kc_bank, active_kc)
     log(
         "master graph ready",
         macros=len(graph.get("macro_nodes", [])),
@@ -196,6 +199,8 @@ def main() -> None:
 
     _write_json(GRAPH_PATH, graph)
     MASTER_MMD_PATH.write_text(export_master_graph_mermaid(graph), encoding="utf-8")
+    MACRO_SPINE_MMD_PATH.write_text(export_macro_spine_mermaid(macro_spine), encoding="utf-8")
+    REASONING_THREADS_MMD_PATH.write_text(export_reasoning_threads_mermaid(reasoning_threads), encoding="utf-8")
     _write_build_checkpoint(checkpoint_path, paper_id, "completed", resume=resume, restart=restart)
     log("graph artifacts written", graph=GRAPH_PATH, mermaid=MASTER_MMD_PATH)
     print(f"Sections written: {SECTIONS_PATH}")
@@ -216,6 +221,22 @@ def _macro_nodes_with_bank_kcs(macro_spine: dict, kc_bank: dict) -> list[dict]:
         item["kc_ids"] = by_macro.get(macro.get("macro_id"), [])
         out.append(item)
     return out
+
+
+def _annotate_macro_bank_counts(graph: dict, kc_bank: dict, active_kc: dict) -> None:
+    bank_counts: dict[str, int] = {}
+    for kc in kc_bank.get("kc_nodes", []):
+        macro_id = kc.get("macro_id")
+        if macro_id:
+            bank_counts[macro_id] = bank_counts.get(macro_id, 0) + 1
+    active_counts = {
+        macro_id: len(kc_ids)
+        for macro_id, kc_ids in active_kc.get("macro_active_kcs", {}).items()
+    }
+    for macro in graph.get("macro_nodes", []):
+        macro_id = macro.get("macro_id")
+        macro["bank_kc_count"] = bank_counts.get(macro_id, 0)
+        macro["active_kc_count"] = active_counts.get(macro_id, len(macro.get("kc_ids", [])))
 
 
 def _env_bool(name: str, default: bool = False) -> bool:
@@ -294,6 +315,8 @@ def _write_build_checkpoint(
                 "reasoning_threads": str(REASONING_THREADS_PATH),
                 "master_graph": str(GRAPH_PATH),
                 "master_mermaid": str(MASTER_MMD_PATH),
+                "macro_spine_mermaid": str(MACRO_SPINE_MMD_PATH),
+                "reasoning_threads_mermaid": str(REASONING_THREADS_MMD_PATH),
             },
         },
     )

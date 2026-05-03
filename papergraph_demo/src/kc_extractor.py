@@ -243,7 +243,7 @@ def extract_kc_candidates_by_sections(
 ) -> list[dict]:
     """
     v1 candidate pool extraction:
-    - Extract 3-5 candidate KCs per selected section.
+    - Extract 3-5 candidate KCs per section/chunk.
     - Keep all normalized unique candidates up to KC_BANK_MAX.
     - Do not pad missing KCs in strict online mode.
     """
@@ -254,23 +254,25 @@ def extract_kc_candidates_by_sections(
         macro_context_json = _macro_context_json(macro_spine)
 
         picked_sections = _pick_sections_for_extraction(sections)
-        log("KC extraction sections selected", count=len(picked_sections))
+        extraction_units = _chunk_sections_for_extraction(picked_sections)
+        log("KC extraction sections selected", sections=len(picked_sections), chunks=len(extraction_units))
 
         def run_one(sec: dict) -> list[dict]:
-            log("KC extraction section queued", section_id=sec.get("section_id"), title=sec.get("title"))
+            log("KC extraction chunk queued", section_id=sec.get("section_id"), chunk_id=sec.get("chunk_id"), title=sec.get("title"))
             user_prompt = render_prompt(
                 tpl,
-                paper_text=sec["text"][:8000],
+                paper_text=sec["text"],
                 macro_context_json=macro_context_json,
             )
-            with span("KC extraction section", section_id=sec.get("section_id")):
+            with span("KC extraction chunk", section_id=sec.get("section_id"), chunk_id=sec.get("chunk_id")):
                 result = client.chat_json(
-                    system_prompt="You extract 3-5 evaluable KCs from one section.",
+                    system_prompt="You extract 3-5 evaluable KCs from one paper section or section chunk.",
                     user_prompt=user_prompt,
                 )
             items = result.get("kcs", [])
+            per_chunk_limit = _env_int("KC_PER_EXTRACTION_CHUNK", 5, minimum=1)
             out = []
-            for it in items[:5]:
+            for it in items[:per_chunk_limit]:
                 claim = str(it.get("claim", "")).strip()
                 evidence = str(it.get("evidence", "")).strip() or sec["text"][:300]
                 if claim:
@@ -280,32 +282,38 @@ def extract_kc_candidates_by_sections(
                             "evidence": evidence,
                             "section": sec["title"],
                             "section_id": sec.get("section_id", ""),
+                            "source_chunk_id": sec.get("chunk_id", sec.get("section_id", "")),
                             "section_index": sec.get("_section_index", 0),
+                            "chunk_index": sec.get("_chunk_index", 0),
                             "macro_id": str(it.get("macro_id", "")).strip(),
                             "type": str(it.get("type", "")).strip(),
                             "importance": str(it.get("importance", "")).strip(),
                         }
                     )
-            log("KC extraction section parsed", section_id=sec.get("section_id"), candidates=len(out))
+            log("KC extraction chunk parsed", section_id=sec.get("section_id"), chunk_id=sec.get("chunk_id"), candidates=len(out))
             return out
 
-        max_workers = min(int(os.getenv("ONLINE_KC_WORKERS", "4")), max(1, len(picked_sections)))
+        max_workers = min(int(os.getenv("ONLINE_KC_WORKERS", "4")), max(1, len(extraction_units)))
         futures = {}
         with ThreadPoolExecutor(max_workers=max_workers) as ex:
-            for sec in picked_sections:
-                futures[ex.submit(run_one, sec)] = sec["section_id"]
+            for sec in extraction_units:
+                futures[ex.submit(run_one, sec)] = sec.get("chunk_id") or sec["section_id"]
             for fut in as_completed(futures):
                 try:
                     section_items = fut.result()
                     candidates.extend(section_items)
-                    log("KC extraction section completed", section_id=futures[fut], total_candidates=len(candidates))
+                    log("KC extraction chunk completed", chunk_id=futures[fut], total_candidates=len(candidates))
                 except Exception as exc:
                     online_errors.append(f"{futures[fut]}: {type(exc).__name__}: {exc}")
-                    log("KC extraction section error", section_id=futures[fut], error=f"{type(exc).__name__}: {exc}")
+                    log("KC extraction chunk error", chunk_id=futures[fut], error=f"{type(exc).__name__}: {exc}")
                     continue
 
+        if online_errors and not allow_offline_fallback:
+            detail = "; ".join(online_errors[:5])
+            raise RuntimeError(f"Online KC extraction failed for one or more chunks: {detail}")
+
         if candidates:
-            candidates.sort(key=lambda c: (c.get("section_index", 0), c.get("claim", "")))
+            candidates.sort(key=lambda c: (c.get("section_index", 0), c.get("chunk_index", 0), c.get("claim", "")))
             uniq = []
             seen = set()
             for c in candidates:
@@ -326,6 +334,7 @@ def extract_kc_candidates_by_sections(
                         "evidence": c["evidence"],
                         "section": c.get("section", ""),
                         "section_id": c.get("section_id", ""),
+                        "source_chunk_id": c.get("source_chunk_id", c.get("section_id", "")),
                         "macro_id": c.get("macro_id", ""),
                         "type": c.get("type", ""),
                         "importance": c.get("importance", ""),
@@ -376,7 +385,7 @@ def _select_diverse_candidates(candidates: list[dict], limit: int) -> list[dict]
 
 
 def _pick_sections_for_extraction(sections: list[dict]) -> list[dict]:
-    section_limit = int(os.getenv("ONLINE_SECTION_LIMIT", "12"))
+    section_limit = _env_int("ONLINE_SECTION_LIMIT", 0, minimum=0)
     indexed = [
         {**sec, "_section_index": idx}
         for idx, sec in enumerate(sections)
@@ -425,6 +434,76 @@ def _pick_sections_for_extraction(sections: list[dict]) -> list[dict]:
                 break
 
     return sorted(picked, key=lambda s: s["_section_index"])
+
+
+def _chunk_sections_for_extraction(sections: list[dict]) -> list[dict]:
+    chunk_limit = _env_int("KC_EXTRACTION_CHUNK_CHARS", 7000, minimum=1000)
+    overlap = _env_int("KC_EXTRACTION_CHUNK_OVERLAP_CHARS", 600, minimum=0)
+    units: list[dict] = []
+    for sec in sections:
+        text = sec.get("text", "").strip()
+        if len(text) <= chunk_limit:
+            units.append({**sec, "chunk_id": sec.get("section_id", ""), "_chunk_index": 0})
+            continue
+        chunks = _chunk_text(text, chunk_limit, overlap)
+        for idx, chunk in enumerate(chunks, start=1):
+            units.append(
+                {
+                    **sec,
+                    "text": chunk,
+                    "chunk_id": f"{sec.get('section_id', 'S')}_C{idx}",
+                    "_chunk_index": idx - 1,
+                }
+            )
+    return units
+
+
+def _chunk_text(text: str, limit: int, overlap: int) -> list[str]:
+    paragraphs = [p.strip() for p in re.split(r"\n\s*\n", text) if p.strip()]
+    chunks: list[str] = []
+    current = ""
+    for paragraph in paragraphs:
+        if len(paragraph) > limit:
+            if current:
+                chunks.append(current.strip())
+                current = ""
+            chunks.extend(_hard_chunk(paragraph, limit, overlap))
+            continue
+        if current and len(current) + len(paragraph) + 2 > limit:
+            chunks.append(current.strip())
+            tail = current[-overlap:].strip() if overlap > 0 else ""
+            current = (tail + "\n\n" + paragraph).strip() if tail else paragraph
+        else:
+            current = (current + "\n\n" + paragraph).strip() if current else paragraph
+    if current:
+        chunks.append(current.strip())
+    return chunks
+
+
+def _hard_chunk(text: str, limit: int, overlap: int) -> list[str]:
+    out = []
+    start = 0
+    while start < len(text):
+        end = min(len(text), start + limit)
+        if end < len(text):
+            split = max(text.rfind(". ", start, end), text.rfind("\n", start, end))
+            if split > start + limit // 2:
+                end = split + 1
+        out.append(text[start:end].strip())
+        if end >= len(text):
+            break
+        next_start = max(0, end - overlap) if overlap > 0 else end
+        start = next_start if next_start > start else end
+    return [chunk for chunk in out if chunk]
+
+
+def _env_int(name: str, default: int, minimum: int = 0) -> int:
+    raw = os.getenv(name)
+    try:
+        value = int(raw) if raw is not None and raw.strip() else default
+    except ValueError:
+        return default
+    return max(minimum, value)
 
 
 def _macro_context_json(macro_spine: dict | None) -> str:

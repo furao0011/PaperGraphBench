@@ -72,6 +72,9 @@ def initialize_eval_state(master_graph: dict, target_model: str) -> dict:
             "thread_bridge_success_count": 0,
             "failed": False,
             "failure_reason": None,
+            "evaluation_status": "not_started",
+            "completion_reason": None,
+            "completed_at_turn": None,
         },
     }
 

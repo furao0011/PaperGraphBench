@@ -6,6 +6,7 @@ from src.config import load_settings
 from src.dialogue_engine import generate_followup_question
 from src.eval_artifacts import load_eval_checkpoint, save_eval_artifacts
 from src.eval_turn_runner import EvaluationTurnRunner, select_followup_target_kcs
+from src.mermaid_exporter import export_final_thread_state_mermaid
 from src.model_client import ModelConfig, OpenAICompatClient
 from src.paper_parser import load_paper_text, load_paper_text_from_dir
 from src.policy_controller import choose_next_action
@@ -26,6 +27,7 @@ TRAJ_PATH = BASE_DIR / "data" / "outputs" / "dialogue_trajectory.json"
 REPORT_PATH = BASE_DIR / "data" / "outputs" / "evaluation_report.json"
 STATE_PATH = BASE_DIR / "data" / "graphs" / "eval_state_graph.json"
 FINAL_MMD_PATH = BASE_DIR / "data" / "graphs" / "final_state_graph.mmd"
+FINAL_THREAD_MMD_PATH = BASE_DIR / "data" / "graphs" / "final_thread_state_graph.mmd"
 EVAL_CHECKPOINT_PATH = BASE_DIR / "data" / "outputs" / "evaluation_checkpoint.json"
 CLAIM_LOG_PATH = BASE_DIR / "data" / "outputs" / "claim_verification_log.json"
 
@@ -48,6 +50,7 @@ def _save_eval_artifacts(graph: dict, eval_state: dict, trajectory: dict, checkp
         STATE_PATH,
         FINAL_MMD_PATH,
     )
+    FINAL_THREAD_MMD_PATH.write_text(export_final_thread_state_mermaid(graph, eval_state), encoding="utf-8")
 
 
 def _ensure_eval_state_defaults(eval_state: dict, graph: dict) -> None:
@@ -75,6 +78,9 @@ def _ensure_eval_state_defaults(eval_state: dict, graph: dict) -> None:
     eval_state["global_state"].setdefault("not_enough_info_claim_count", 0)
     eval_state["global_state"].setdefault("thread_bridge_tested_count", 0)
     eval_state["global_state"].setdefault("thread_bridge_success_count", 0)
+    eval_state["global_state"].setdefault("evaluation_status", "not_started")
+    eval_state["global_state"].setdefault("completion_reason", None)
+    eval_state["global_state"].setdefault("completed_at_turn", None)
 
 
 def _rebuild_macro_misleading_counts(eval_state: dict, trajectory: dict) -> None:
@@ -190,6 +196,33 @@ def _apply_effective_next_action(eval_state: dict, judge_result: dict, turn: dic
     return next_action
 
 
+def _mark_evaluation_running(eval_state: dict) -> None:
+    global_state = eval_state.setdefault("global_state", {})
+    if global_state.get("evaluation_status") not in {"completed", "failed"}:
+        global_state["evaluation_status"] = "running"
+        global_state["completion_reason"] = None
+        global_state["completed_at_turn"] = None
+
+
+def _mark_evaluation_finished(eval_state: dict, status: str, reason: str, turn_no: int) -> None:
+    global_state = eval_state.setdefault("global_state", {})
+    global_state["evaluation_status"] = status
+    global_state["completion_reason"] = reason
+    global_state["completed_at_turn"] = turn_no
+    if status == "failed":
+        global_state["failed"] = True
+        global_state["failure_reason"] = global_state.get("failure_reason") or reason
+
+
+def _final_evaluation_status(eval_state: dict, turn_no: int, max_turns: int) -> tuple[str, str]:
+    global_state = eval_state.get("global_state", {})
+    if global_state.get("failed"):
+        return "failed", global_state.get("failure_reason") or "failed"
+    if max_turns and turn_no >= max_turns:
+        return "stopped_by_max_turns", f"EVAL_MAX_TURNS reached: {max_turns}"
+    return "completed", "all scheduled macro, follow-up, thread, and review turns finished"
+
+
 def main() -> None:
     settings = load_settings(BASE_DIR.parent)
     use_online_eval = _env_bool("USE_ONLINE_EVAL")
@@ -255,6 +288,7 @@ def main() -> None:
         completed_question_ids = set()
         completed_thread_step_ids = set()
     max_turns = int(os.getenv("EVAL_MAX_TURNS", "0") or "0")
+    _mark_evaluation_running(eval_state)
     runner = EvaluationTurnRunner(
         graph=graph,
         by_kc=by_kc,
@@ -364,6 +398,7 @@ def main() -> None:
                 log("evaluation failed", reason=eval_state["global_state"].get("failure_reason"))
                 break
     except KeyboardInterrupt:
+        _mark_evaluation_finished(eval_state, "interrupted", "KeyboardInterrupt", turn_no)
         _save_eval_artifacts(graph, eval_state, trajectory, checkpoint_path)
         log("evaluation interrupted; checkpoint saved", turns=len(trajectory.get("turns", [])), checkpoint=checkpoint_path)
         print(f"Evaluation interrupted. Checkpoint saved: {checkpoint_path}")
@@ -424,11 +459,14 @@ def main() -> None:
                 break
             _save_eval_artifacts(graph, eval_state, trajectory, checkpoint_path)
     except KeyboardInterrupt:
+        _mark_evaluation_finished(eval_state, "interrupted", "KeyboardInterrupt", turn_no)
         _save_eval_artifacts(graph, eval_state, trajectory, checkpoint_path)
         log("evaluation interrupted; checkpoint saved", turns=len(trajectory.get("turns", [])), checkpoint=checkpoint_path)
         print(f"Evaluation interrupted. Checkpoint saved: {checkpoint_path}")
         return
 
+    final_status, final_reason = _final_evaluation_status(eval_state, turn_no, max_turns)
+    _mark_evaluation_finished(eval_state, final_status, final_reason, turn_no)
     _save_eval_artifacts(graph, eval_state, trajectory, checkpoint_path)
     log(
         "evaluation artifacts written",
