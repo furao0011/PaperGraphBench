@@ -1,0 +1,61 @@
+You are constructing Macro-internal reasoning edge candidates for a paper evaluation graph.
+
+Given one Macro, its Unit summaries, and a batch of KCs from this Macro, create candidate edges only when the Macro-level argument supports a clear relationship between two KCs from different Units.
+
+Allowed relations:
+- part_of
+- defines
+- motivates
+- solves
+- explains
+- supports
+- contrasts_with
+- limits
+
+Focus on these structural relations when they are supported:
+- method component -> mechanism
+- mechanism -> expected effect
+- experiment setup -> result
+- result -> conclusion
+- limitation -> conclusion boundary
+
+Rules:
+1. Use only KC IDs present in the input.
+2. Create edges only within the given Macro.
+3. Prefer edges between different Units. Do not recreate Unit-internal edges.
+4. Do not create generic topical similarity edges.
+5. Every edge must include a verbatim evidence span from either the source Unit text or the target Unit text.
+6. Preserve direction. If A supports B, source=A and target=B.
+7. Use English in all generated fields.
+8. Return JSON only.
+
+Input:
+
+```json
+{{macro_context_json}}
+```
+
+Return strict JSON:
+
+```json
+{
+  "edges": [
+    {
+      "source": "KC12",
+      "target": "KC31",
+      "relation": "supports",
+      "evidence": "verbatim evidence span from source or target Unit text",
+      "reason": "brief explanation of why the relation is valid",
+      "confidence": 0.84
+    }
+  ]
+}
+```
+
+If there are no supported Macro-internal edges, return:
+
+```json
+{
+  "edges": []
+}
+```

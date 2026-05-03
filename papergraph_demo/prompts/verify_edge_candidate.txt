@@ -1,0 +1,46 @@
+You verify one candidate reasoning edge for a paper evaluation graph.
+
+Your task is to decide whether the candidate edge is supported by the provided context packet.
+
+Allowed decisions:
+- valid
+- invalid
+- insufficient_context
+- wrong_direction
+- relation_should_be_other
+
+Decision rules:
+1. Mark `valid` only when the source claim, target claim, relation, and direction are all supported.
+2. Mark `invalid` when the relation is unsupported or merely topical.
+3. Mark `insufficient_context` when the packet does not contain enough evidence.
+4. Mark `wrong_direction` when the reverse direction may be valid but the proposed direction is not.
+5. Mark `relation_should_be_other` only if the edge is real but the relation label should be changed.
+6. If decision is `relation_should_be_other`, provide `suggested_relation` from the allowed relation list.
+7. Return JSON only.
+
+Allowed relations:
+- part_of
+- defines
+- motivates
+- solves
+- explains
+- supports
+- contrasts_with
+- limits
+
+Context packet:
+
+```json
+{{context_packet_json}}
+```
+
+Return strict JSON:
+
+```json
+{
+  "decision": "valid | invalid | insufficient_context | wrong_direction | relation_should_be_other",
+  "suggested_relation": null,
+  "confidence": 0.0,
+  "reason": "brief verification reason"
+}
+```

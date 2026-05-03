@@ -1,0 +1,53 @@
+You are constructing local reasoning edges inside one paper Extraction Unit.
+
+Given the Unit source text and all KCs extracted from this Unit, create candidate edges only when the Unit text supports a clear relationship between two KCs.
+
+Allowed relations:
+- part_of
+- defines
+- motivates
+- solves
+- explains
+- supports
+- contrasts_with
+- limits
+
+Rules:
+1. Use only KC IDs present in the input.
+2. Create edges only between KCs from this same Unit.
+3. Do not create generic topical similarity edges.
+4. Every edge must be supported by a verbatim evidence span from the Unit source_text.
+5. Preserve direction. If A explains B, source=A and target=B.
+6. Use English in all generated fields.
+7. Return JSON only.
+
+Input:
+
+```json
+{{unit_context_json}}
+```
+
+Return strict JSON:
+
+```json
+{
+  "edges": [
+    {
+      "source": "KC12",
+      "target": "KC13",
+      "relation": "explains",
+      "evidence": "verbatim evidence span from the Unit source_text",
+      "reason": "brief explanation of why the relation is valid",
+      "confidence": 0.84
+    }
+  ]
+}
+```
+
+If there are no supported local edges, return:
+
+```json
+{
+  "edges": []
+}
+```

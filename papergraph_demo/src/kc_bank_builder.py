@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 import math
 import os
+import re
+import unicodedata
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from src.model_client import OpenAICompatClient
@@ -49,8 +51,8 @@ def build_kc_bank(
     if not macro_by_id:
         raise ValueError("KC Bank construction requires a non-empty Macro Spine.")
 
-    max_bank = _env_int("KC_BANK_MAX", 120, minimum=1)
-    selected_candidates = candidates[:max_bank]
+    max_bank = _env_int("KC_BANK_MAX", 0, minimum=0)
+    selected_candidates = candidates if max_bank <= 0 else candidates[:max_bank]
     nodes = []
     for idx, candidate in enumerate(selected_candidates, start=1):
         macro_id = str(candidate.get("macro_id", "")).strip()
@@ -69,11 +71,13 @@ def build_kc_bank(
             {
                 "kc_id": kc_id,
                 "source_candidate_id": candidate.get("candidate_id", f"C{idx}"),
+                "unit_id": candidate.get("unit_id", ""),
+                "source_window_id": candidate.get("source_window_id", ""),
                 "macro_id": macro_id,
                 "type": kc_type,
                 "source_section": candidate.get("section", ""),
                 "source_section_id": candidate.get("section_id", ""),
-                "source_span_ids": [candidate.get("section_id", "")] if candidate.get("section_id") else [],
+                "source_span_ids": _source_span_ids(candidate),
                 "short_label": _short_label(claim),
                 "claim": claim,
                 "full_claim": claim,
@@ -85,6 +89,9 @@ def build_kc_bank(
                         "text": evidence_text,
                     }
                 ],
+                "claim_strength": str(candidate.get("claim_strength", "")).strip(),
+                "scope": candidate.get("scope", {}),
+                "related_terms": _string_list(candidate.get("related_terms", [])),
                 "importance": importance,
                 "importance_scores": {},
                 "llm_scores_raw": {},
@@ -96,11 +103,19 @@ def build_kc_bank(
             }
         )
 
+    duplicate_summary = _attach_duplicate_metadata(nodes)
     _attach_evidence_quality(nodes, client)
     _attach_llm_subjective_scores(nodes, macro_spine, client)
     _attach_rubrics(nodes, client, allow_offline_fallback)
-    log("KC Bank built", candidates=len(candidates), bank_kcs=len(nodes), dedupe_or_merge="disabled")
-    return {"paper_id": paper_id, "kc_nodes": nodes}
+    log(
+        "KC Bank built",
+        candidates=len(candidates),
+        bank_kcs=len(nodes),
+        semantic_merge="disabled",
+        duplicate_groups=duplicate_summary["duplicate_group_count"],
+        duplicate_kcs=duplicate_summary["duplicate_kc_count"],
+    )
+    return {"paper_id": paper_id, "kc_nodes": nodes, "duplicate_summary": duplicate_summary}
 
 
 def finalize_kc_bank_scores(
@@ -218,6 +233,116 @@ def _attach_rubrics(
             log("KC Bank rubric generated", kc_id=node["kc_id"])
 
 
+def _attach_duplicate_metadata(nodes: list[dict]) -> dict:
+    for node in nodes:
+        node["similarity_group_id"] = None
+        node["near_duplicate_kc_ids"] = []
+        node["dedup_status"] = "unique"
+        node["duplicate_match_type"] = "none"
+
+    parent = {node["kc_id"]: node["kc_id"] for node in nodes}
+    group_has_near_match: dict[str, bool] = {}
+
+    def find(kc_id: str) -> str:
+        while parent[kc_id] != kc_id:
+            parent[kc_id] = parent[parent[kc_id]]
+            kc_id = parent[kc_id]
+        return kc_id
+
+    def union(left: str, right: str, near_match: bool) -> None:
+        left_root = find(left)
+        right_root = find(right)
+        if left_root == right_root:
+            group_has_near_match[left_root] = group_has_near_match.get(left_root, False) or near_match
+            return
+        keep, move = sorted([left_root, right_root])
+        parent[move] = keep
+        group_has_near_match[keep] = (
+            group_has_near_match.get(left_root, False)
+            or group_has_near_match.get(right_root, False)
+            or near_match
+        )
+
+    normalized_claims = {
+        node["kc_id"]: _normalize_claim_for_duplicate_check(node.get("full_claim", ""))
+        for node in nodes
+    }
+    token_sets = {
+        node["kc_id"]: set(normalized_claims[node["kc_id"]].split())
+        for node in nodes
+    }
+
+    exact_buckets: dict[str, list[str]] = {}
+    for node in nodes:
+        norm = normalized_claims[node["kc_id"]]
+        if norm:
+            exact_buckets.setdefault(norm, []).append(node["kc_id"])
+    for bucket in exact_buckets.values():
+        if len(bucket) <= 1:
+            continue
+        first = bucket[0]
+        for kc_id in bucket[1:]:
+            union(first, kc_id, near_match=False)
+
+    threshold = _env_float("KC_NEAR_DUPLICATE_JACCARD", 0.92, minimum=0.5, maximum=1.0)
+    min_tokens = _env_int("KC_NEAR_DUPLICATE_MIN_TOKENS", 5, minimum=1)
+    by_id = {node["kc_id"]: node for node in nodes}
+    for idx, left in enumerate(nodes):
+        left_id = left["kc_id"]
+        left_tokens = token_sets[left_id]
+        if len(left_tokens) < min_tokens:
+            continue
+        for right in nodes[idx + 1 :]:
+            right_id = right["kc_id"]
+            if find(left_id) == find(right_id):
+                continue
+            if left.get("macro_id") != right.get("macro_id"):
+                continue
+            right_tokens = token_sets[right_id]
+            if len(right_tokens) < min_tokens:
+                continue
+            if _token_jaccard(left_tokens, right_tokens) >= threshold:
+                union(left_id, right_id, near_match=True)
+
+    groups: dict[str, list[str]] = {}
+    for node in nodes:
+        groups.setdefault(find(node["kc_id"]), []).append(node["kc_id"])
+    duplicate_groups = [sorted(values, key=_kc_sort_key) for values in groups.values() if len(values) > 1]
+
+    exact_group_count = 0
+    near_group_count = 0
+    for idx, kc_ids in enumerate(sorted(duplicate_groups, key=lambda ids: _kc_sort_key(ids[0])), start=1):
+        group_id = f"SG{idx}"
+        root = find(kc_ids[0])
+        has_near = group_has_near_match.get(root, False)
+        if has_near:
+            near_group_count += 1
+            status = "preserved_near_duplicate"
+            match_type = "near_exact_token_jaccard"
+        else:
+            exact_group_count += 1
+            status = "preserved_exact_duplicate"
+            match_type = "exact_normalized_claim"
+        for kc_id in kc_ids:
+            node = by_id[kc_id]
+            node["similarity_group_id"] = group_id
+            node["near_duplicate_kc_ids"] = [other for other in kc_ids if other != kc_id]
+            node["dedup_status"] = status
+            node["duplicate_match_type"] = match_type
+
+    duplicate_kc_count = sum(len(group) for group in duplicate_groups)
+    return {
+        "semantic_merge_enabled": False,
+        "duplicate_group_count": len(duplicate_groups),
+        "exact_duplicate_group_count": exact_group_count,
+        "near_duplicate_group_count": near_group_count,
+        "duplicate_kc_count": duplicate_kc_count,
+        "unique_kc_count": len(nodes) - duplicate_kc_count,
+        "near_duplicate_jaccard_threshold": threshold,
+        "near_duplicate_min_tokens": min_tokens,
+    }
+
+
 def _macro_centrality_scores(macro_spine: dict) -> dict[str, float]:
     macro_ids = [m["macro_id"] for m in macro_spine.get("macro_nodes", [])]
     neighbors = {macro_id: [] for macro_id in macro_ids}
@@ -325,6 +450,43 @@ def _valid_importance(value: object) -> str | None:
     return text if text in {"critical", "normal"} else None
 
 
+def _source_span_ids(candidate: dict) -> list[str]:
+    out = []
+    for key in ("unit_id", "source_chunk_id", "section_id", "candidate_id"):
+        value = str(candidate.get(key, "")).strip()
+        if value and value not in out:
+            out.append(value)
+    return out
+
+
+def _string_list(values: object) -> list[str]:
+    if not isinstance(values, list):
+        return []
+    out = []
+    for value in values:
+        text = str(value).strip()
+        if text:
+            out.append(text)
+    return out
+
+
+def _normalize_claim_for_duplicate_check(text: object) -> str:
+    normalized = unicodedata.normalize("NFKC", str(text or "")).lower()
+    tokens = re.findall(r"[a-z0-9]+", normalized)
+    return " ".join(tokens)
+
+
+def _token_jaccard(left: set[str], right: set[str]) -> float:
+    if not left or not right:
+        return 0.0
+    return len(left & right) / len(left | right)
+
+
+def _kc_sort_key(kc_id: str) -> tuple[int, str]:
+    match = re.search(r"(\d+)$", kc_id)
+    return (int(match.group(1)) if match else 10**9, kc_id)
+
+
 def _infer_type_from_macro(role: str) -> str:
     r = role.lower()
     if "problem" in r or "motivation" in r:
@@ -348,3 +510,11 @@ def _env_int(name: str, default: int, minimum: int = 0) -> int:
         value = default
     return max(minimum, value)
 
+
+def _env_float(name: str, default: float, minimum: float, maximum: float) -> float:
+    raw = os.getenv(name)
+    try:
+        value = float(raw) if raw is not None and raw.strip() else default
+    except ValueError:
+        value = default
+    return max(minimum, min(maximum, value))

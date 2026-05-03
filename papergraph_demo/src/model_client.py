@@ -30,7 +30,7 @@ class OpenAICompatClient:
             api_key=cfg.api_key,
             base_url=cfg.base_url,
             llm_model=cfg.llm_model,
-            embed_api_key=cfg.embed_api_key or os.getenv("EMBED_API_KEY", "") or os.getenv("DASHSCOPE_API_KEY", ""),
+            embed_api_key=cfg.embed_api_key or os.getenv("EMBED_API_KEY", ""),
             embed_base_url=cfg.embed_base_url or os.getenv("EMBED_BASE_URL", ""),
             embed_model=cfg.embed_model or os.getenv("EMBED_MODEL", ""),
             timeout_s=_env_int("PAPERGRAPH_LLM_TIMEOUT_S", _env_int("LLM_TIMEOUT_S", cfg.timeout_s)),

@@ -1,0 +1,63 @@
+You are constructing cross-Macro Thread candidate edges for a paper evaluation graph.
+
+Given the Macro Spine, KCs, and already verified lower-layer edges, propose candidate edges that can support multi-step reasoning threads across the paper.
+
+Allowed relations:
+- part_of
+- defines
+- motivates
+- solves
+- explains
+- supports
+- contrasts_with
+- limits
+
+Useful thread patterns:
+- problem -> method
+- method -> mechanism
+- method or mechanism -> experiment result
+- module -> ablation
+- claim -> limitation
+- baseline -> comparison result
+
+Rules:
+1. Use only KC IDs present in the input.
+2. Prefer cross-Macro edges. Do not recreate Unit-internal or Macro-internal edges.
+3. Do not create generic topical similarity edges.
+4. Every edge must include a verbatim evidence span from either the source KC Unit text or the target KC Unit text.
+5. Preserve direction according to the reasoning pattern.
+6. Use the lower-layer verified edges as hints, not as permission to invent unsupported edges.
+7. Use English in all generated fields.
+8. Return JSON only.
+
+Input:
+
+```json
+{{thread_context_json}}
+```
+
+Return strict JSON:
+
+```json
+{
+  "edges": [
+    {
+      "source": "KC12",
+      "target": "KC31",
+      "relation": "supports",
+      "thread_pattern": "method_to_result",
+      "evidence": "verbatim evidence span from source or target Unit text",
+      "reason": "brief explanation of why this edge can support a reasoning thread",
+      "confidence": 0.84
+    }
+  ]
+}
+```
+
+If there are no supported Thread candidate edges, return:
+
+```json
+{
+  "edges": []
+}
+```

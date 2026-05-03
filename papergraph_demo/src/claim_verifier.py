@@ -30,11 +30,16 @@ def verify_global_claims(turn: dict, kc_bank: dict, client: OpenAICompatClient) 
         return []
     if not client or not client.is_ready():
         raise RuntimeError("Global claim verification requires a configured online model client.")
+    if not client.embeddings_ready():
+        raise RuntimeError(
+            "Global claim verification requires a configured embedding client: "
+            "set EMBED_API_KEY, EMBED_BASE_URL, and EMBED_MODEL."
+        )
     extracted = extract_atomic_claims(turn, client)
     claims = verifiable_claims(extracted)
     results = []
     for claim in claims:
-        retrieval = retrieve_kc_and_evidence(claim, kc_bank)
+        retrieval = retrieve_kc_and_evidence(claim, kc_bank, client)
         results.append(_verify_one_claim(claim, retrieval, client))
     return results
 

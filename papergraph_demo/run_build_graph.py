@@ -4,6 +4,14 @@ from pathlib import Path
 
 from src.active_kc_selector import select_active_kcs
 from src.config import load_settings
+from src.edge_candidate_builder import (
+    build_adjacent_macro_edge_candidates,
+    build_macro_edge_candidates,
+    build_thread_candidate_edges,
+    build_unit_edge_candidates,
+)
+from src.edge_verifier import verify_edge_candidates
+from src.extraction_unit_builder import decompose_extraction_units
 from src.graph_builder import build_master_graph
 from src.graph_builder import build_reasoning_edges_for_kcs
 from src.kc_bank_builder import build_kc_bank
@@ -15,6 +23,7 @@ from src.model_client import ModelConfig, OpenAICompatClient
 from src.paper_parser import load_paper_text, load_paper_text_from_dir, split_into_sections
 from src.progress import log, span
 from src.reasoning_thread_builder import build_reasoning_threads
+from src.unit_kc_extractor import extract_kc_candidates_by_units
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -26,8 +35,15 @@ MACRO_SPINE_MMD_PATH = BASE_DIR / "data" / "graphs" / "macro_spine.mmd"
 REASONING_THREADS_MMD_PATH = BASE_DIR / "data" / "graphs" / "reasoning_threads.mmd"
 SECTIONS_PATH = BASE_DIR / "data" / "graphs" / "sections.json"
 MACRO_SPINE_PATH = BASE_DIR / "data" / "graphs" / "macro_spine.json"
+EXTRACTION_UNITS_PATH = BASE_DIR / "data" / "graphs" / "extraction_units.json"
 KC_CANDIDATES_PATH = BASE_DIR / "data" / "graphs" / "kc_candidates.json"
 KC_BANK_PATH = BASE_DIR / "data" / "graphs" / "kc_bank.json"
+EDGE_CANDIDATE_UNITS_PATH = BASE_DIR / "data" / "graphs" / "edge_candidate_units.json"
+EDGE_CANDIDATE_MACRO_PATH = BASE_DIR / "data" / "graphs" / "edge_candidate_macro.json"
+EDGE_CANDIDATE_CROSS_MACRO_PATH = BASE_DIR / "data" / "graphs" / "edge_candidate_cross_macro.json"
+EDGE_CANDIDATE_THREAD_PATH = BASE_DIR / "data" / "graphs" / "edge_candidate_thread.json"
+VERIFIED_EDGES_PATH = BASE_DIR / "data" / "graphs" / "verified_edges.json"
+EDGE_VERIFICATION_LOG_PATH = BASE_DIR / "data" / "graphs" / "edge_verification_log.json"
 BANK_EDGES_PATH = BASE_DIR / "data" / "graphs" / "kc_bank_reasoning_edges.json"
 ACTIVE_KC_PATH = BASE_DIR / "data" / "graphs" / "active_kc.json"
 REASONING_THREADS_PATH = BASE_DIR / "data" / "graphs" / "reasoning_threads.json"
@@ -97,20 +113,70 @@ def main() -> None:
         _write_build_checkpoint(checkpoint_path, paper_id, "macro_spine", resume=resume, restart=restart)
     log("macro spine ready", path=MACRO_SPINE_PATH)
 
+    extraction_units_enabled = _env_bool("EXTRACTION_UNIT_ENABLED", True)
+    extraction_units = None
+    if extraction_units_enabled:
+        extraction_units = _load_resumable_json(
+            EXTRACTION_UNITS_PATH,
+            paper_id,
+            resume,
+            restart,
+            "Extraction Units",
+        )
+        if not extraction_units:
+            with span("decompose extraction units", sections=len(sections)):
+                extraction_units = decompose_extraction_units(paper_id, sections, client)
+            _write_json(EXTRACTION_UNITS_PATH, extraction_units)
+            _write_build_checkpoint(checkpoint_path, paper_id, "extraction_units", resume=resume, restart=restart)
+        log("Extraction Units ready", path=EXTRACTION_UNITS_PATH, units=len(extraction_units.get("units", [])))
+    else:
+        log("Extraction Unit decomposition disabled", env="EXTRACTION_UNIT_ENABLED")
+
+    kc_extraction_source = os.getenv("KC_EXTRACTION_SOURCE", "unit").strip().lower() or "unit"
+    if kc_extraction_source not in {"unit", "section"}:
+        raise ValueError("KC_EXTRACTION_SOURCE must be 'unit' or 'section'.")
+    if kc_extraction_source == "unit" and not extraction_units:
+        raise RuntimeError("KC_EXTRACTION_SOURCE=unit requires EXTRACTION_UNIT_ENABLED=true.")
+
     kc_candidates_payload = _load_resumable_json(KC_CANDIDATES_PATH, paper_id, resume, restart, "KC candidates")
+    if kc_candidates_payload and kc_candidates_payload.get("extraction_source") != kc_extraction_source:
+        log(
+            "resume artifact ignored due to KC extraction source mismatch",
+            path=KC_CANDIDATES_PATH,
+            artifact_source=kc_candidates_payload.get("extraction_source"),
+            requested_source=kc_extraction_source,
+        )
+        kc_candidates_payload = None
     if kc_candidates_payload:
         kc_candidates = kc_candidates_payload["kc_candidates"]
     else:
-        with span("extract KC candidates", sections=len(sections)):
-            kc_candidates = extract_kc_candidates_by_sections(
-                sections,
-                client,
-                allow_offline_fallback=allow_offline_fallback,
-                macro_spine=macro_spine,
-            )
-        _write_json(KC_CANDIDATES_PATH, {"paper_id": paper_id, "kc_candidates": kc_candidates})
+        if kc_extraction_source == "unit":
+            with span("extract KC candidates from units", units=len(extraction_units.get("units", []))):
+                kc_candidates_payload = extract_kc_candidates_by_units(
+                    extraction_units,
+                    macro_spine,
+                    client,
+                    return_metadata=True,
+                )
+                kc_candidates = kc_candidates_payload["kc_candidates"]
+        else:
+            with span("extract KC candidates from sections", sections=len(sections)):
+                kc_candidates = extract_kc_candidates_by_sections(
+                    sections,
+                    client,
+                    allow_offline_fallback=allow_offline_fallback,
+                    macro_spine=macro_spine,
+                )
+            kc_candidates_payload = {
+                "paper_id": paper_id,
+                "extraction_source": kc_extraction_source,
+                "kc_candidates": kc_candidates,
+            }
+        kc_candidates_payload["paper_id"] = paper_id
+        kc_candidates_payload["extraction_source"] = kc_extraction_source
+        _write_json(KC_CANDIDATES_PATH, kc_candidates_payload)
         _write_build_checkpoint(checkpoint_path, paper_id, "kc_candidates", resume=resume, restart=restart)
-    log("KC candidates ready", count=len(kc_candidates))
+    log("KC candidates ready", source=kc_extraction_source, count=len(kc_candidates))
 
     kc_bank = _load_resumable_json(KC_BANK_PATH, paper_id, resume, restart, "KC Bank")
     if not kc_bank:
@@ -124,6 +190,195 @@ def main() -> None:
             )
         _write_json(KC_BANK_PATH, kc_bank)
         _write_build_checkpoint(checkpoint_path, paper_id, "kc_bank_base", resume=resume, restart=restart)
+
+    edge_candidates_for_base_verification: list[dict] = []
+    requested_base_edge_layers: list[str] = []
+    edge_layer_enabled = (
+        _env_bool("EDGE_UNIT_ENABLED", True)
+        or _env_bool("EDGE_MACRO_INTERNAL_ENABLED", True)
+        or _env_bool("EDGE_ADJACENT_MACRO_ENABLED", True)
+        or _env_bool("EDGE_THREAD_CANDIDATE_ENABLED", True)
+    )
+    if edge_layer_enabled and not extraction_units:
+        raise RuntimeError("v2 edge construction requires extraction_units.json.")
+
+    if _env_bool("EDGE_UNIT_ENABLED", True):
+        requested_base_edge_layers.append("unit")
+        unit_edge_candidates_payload = _load_resumable_json(
+            EDGE_CANDIDATE_UNITS_PATH,
+            paper_id,
+            resume,
+            restart,
+            "Unit edge candidates",
+        )
+        if unit_edge_candidates_payload:
+            unit_edge_candidates = unit_edge_candidates_payload["edge_candidates"]
+        else:
+            with span("build Unit edge candidates", bank_kcs=len(kc_bank.get("kc_nodes", []))):
+                unit_edge_candidates_payload = build_unit_edge_candidates(
+                    paper_id=paper_id,
+                    kc_bank=kc_bank,
+                    extraction_units=extraction_units,
+                    client=client,
+                )
+                unit_edge_candidates = unit_edge_candidates_payload["edge_candidates"]
+            _write_json(EDGE_CANDIDATE_UNITS_PATH, unit_edge_candidates_payload)
+            _write_build_checkpoint(checkpoint_path, paper_id, "edge_candidate_units", resume=resume, restart=restart)
+        edge_candidates_for_base_verification.extend(unit_edge_candidates)
+    else:
+        log("Unit edge construction disabled", env="EDGE_UNIT_ENABLED")
+
+    if _env_bool("EDGE_MACRO_INTERNAL_ENABLED", True):
+        requested_base_edge_layers.append("macro")
+        macro_edge_candidates_payload = _load_resumable_json(
+            EDGE_CANDIDATE_MACRO_PATH,
+            paper_id,
+            resume,
+            restart,
+            "Macro edge candidates",
+        )
+        if macro_edge_candidates_payload:
+            macro_edge_candidates = macro_edge_candidates_payload["edge_candidates"]
+        else:
+            with span("build Macro edge candidates", bank_kcs=len(kc_bank.get("kc_nodes", []))):
+                macro_edge_candidates_payload = build_macro_edge_candidates(
+                    paper_id=paper_id,
+                    kc_bank=kc_bank,
+                    macro_spine=macro_spine,
+                    extraction_units=extraction_units,
+                    client=client,
+                )
+                macro_edge_candidates = macro_edge_candidates_payload["edge_candidates"]
+            _write_json(EDGE_CANDIDATE_MACRO_PATH, macro_edge_candidates_payload)
+            _write_build_checkpoint(checkpoint_path, paper_id, "edge_candidate_macro", resume=resume, restart=restart)
+        edge_candidates_for_base_verification.extend(macro_edge_candidates)
+    else:
+        log("Macro internal edge construction disabled", env="EDGE_MACRO_INTERNAL_ENABLED")
+
+    if _env_bool("EDGE_ADJACENT_MACRO_ENABLED", True):
+        requested_base_edge_layers.append("adjacent_macro")
+        adjacent_edge_candidates_payload = _load_resumable_json(
+            EDGE_CANDIDATE_CROSS_MACRO_PATH,
+            paper_id,
+            resume,
+            restart,
+            "Adjacent Macro edge candidates",
+        )
+        if adjacent_edge_candidates_payload:
+            adjacent_edge_candidates = adjacent_edge_candidates_payload["edge_candidates"]
+        else:
+            with span("build Adjacent Macro edge candidates", bank_kcs=len(kc_bank.get("kc_nodes", []))):
+                adjacent_edge_candidates_payload = build_adjacent_macro_edge_candidates(
+                    paper_id=paper_id,
+                    kc_bank=kc_bank,
+                    macro_spine=macro_spine,
+                    extraction_units=extraction_units,
+                    client=client,
+                )
+                adjacent_edge_candidates = adjacent_edge_candidates_payload["edge_candidates"]
+            _write_json(EDGE_CANDIDATE_CROSS_MACRO_PATH, adjacent_edge_candidates_payload)
+            _write_build_checkpoint(checkpoint_path, paper_id, "edge_candidate_cross_macro", resume=resume, restart=restart)
+        edge_candidates_for_base_verification.extend(adjacent_edge_candidates)
+    else:
+        log("Adjacent Macro edge construction disabled", env="EDGE_ADJACENT_MACRO_ENABLED")
+
+    thread_edges_enabled = _env_bool("EDGE_THREAD_CANDIDATE_ENABLED", True)
+    requested_edge_layers = sorted(set(requested_base_edge_layers + (["thread"] if thread_edges_enabled else [])))
+    if requested_edge_layers:
+        verified_edges_payload = _load_resumable_json(
+            VERIFIED_EDGES_PATH,
+            paper_id,
+            resume,
+            restart,
+            "verified edges",
+        )
+        if verified_edges_payload and verified_edges_payload.get("source_layers") != requested_edge_layers:
+            log(
+                "resume artifact ignored due to verified edge layer mismatch",
+                path=VERIFIED_EDGES_PATH,
+                artifact_layers=verified_edges_payload.get("source_layers"),
+                requested_layers=requested_edge_layers,
+            )
+            verified_edges_payload = None
+        if not verified_edges_payload:
+            with span("verify base edge candidates", candidates=len(edge_candidates_for_base_verification)):
+                base_verification_payload = verify_edge_candidates(
+                    paper_id=paper_id,
+                    edge_candidates=edge_candidates_for_base_verification,
+                    kc_bank=kc_bank,
+                    extraction_units=extraction_units,
+                    client=client,
+                )
+            verified_edges = base_verification_payload["verified_edges"]
+            verification_log = base_verification_payload["verification_log"]
+            summary = dict(base_verification_payload["summary"])
+
+            if thread_edges_enabled:
+                thread_edge_candidates_payload = _load_resumable_json(
+                    EDGE_CANDIDATE_THREAD_PATH,
+                    paper_id,
+                    resume,
+                    restart,
+                    "Thread edge candidates",
+                )
+                if thread_edge_candidates_payload:
+                    thread_edge_candidates = thread_edge_candidates_payload["edge_candidates"]
+                else:
+                    with span("build Thread candidate edges", verified_edges=len(verified_edges)):
+                        thread_edge_candidates_payload = build_thread_candidate_edges(
+                            paper_id=paper_id,
+                            kc_bank=kc_bank,
+                            macro_spine=macro_spine,
+                            extraction_units=extraction_units,
+                            verified_edges=verified_edges,
+                            client=client,
+                        )
+                        thread_edge_candidates = thread_edge_candidates_payload["edge_candidates"]
+                    _write_json(EDGE_CANDIDATE_THREAD_PATH, thread_edge_candidates_payload)
+                    _write_build_checkpoint(checkpoint_path, paper_id, "edge_candidate_thread", resume=resume, restart=restart)
+
+                with span("verify Thread edge candidates", candidates=len(thread_edge_candidates)):
+                    thread_verification_payload = verify_edge_candidates(
+                        paper_id=paper_id,
+                        edge_candidates=thread_edge_candidates,
+                        kc_bank=kc_bank,
+                        extraction_units=extraction_units,
+                        client=client,
+                    )
+                verified_edges = _renumber_verified_edges(
+                    verified_edges + thread_verification_payload["verified_edges"]
+                )
+                verification_log = verification_log + thread_verification_payload["verification_log"]
+                summary = _merge_edge_verification_summaries(
+                    summary,
+                    thread_verification_payload["summary"],
+                )
+            else:
+                log("Thread candidate edge construction disabled", env="EDGE_THREAD_CANDIDATE_ENABLED")
+
+            verified_edges_payload = {
+                "paper_id": paper_id,
+                "source_layers": requested_edge_layers,
+                "verified_edges": verified_edges,
+                "summary": summary,
+            }
+            _write_json(VERIFIED_EDGES_PATH, verified_edges_payload)
+            _write_json(
+                EDGE_VERIFICATION_LOG_PATH,
+                {
+                    "paper_id": paper_id,
+                    "source_layers": requested_edge_layers,
+                    "verification_log": verification_log,
+                    "summary": summary,
+                },
+            )
+            _write_build_checkpoint(checkpoint_path, paper_id, "verified_edges", resume=resume, restart=restart)
+        log(
+            "verified edges ready",
+            layers=",".join(requested_edge_layers),
+            candidates=verified_edges_payload.get("summary", {}).get("candidate_count", 0),
+            verified=len(verified_edges_payload.get("verified_edges", [])),
+        )
 
     bank_edges_payload = _load_resumable_json(BANK_EDGES_PATH, paper_id, resume, restart, "KC Bank reasoning edges")
     if bank_edges_payload:
@@ -205,6 +460,8 @@ def main() -> None:
     log("graph artifacts written", graph=GRAPH_PATH, mermaid=MASTER_MMD_PATH)
     print(f"Sections written: {SECTIONS_PATH}")
     print(f"Macro spine generated: {MACRO_SPINE_PATH}")
+    if _env_bool("EXTRACTION_UNIT_ENABLED", True):
+        print(f"Extraction Units generated: {EXTRACTION_UNITS_PATH}")
     print(f"KC Bank generated: {KC_BANK_PATH}")
     print(f"Active KC generated: {ACTIVE_KC_PATH}")
     print(f"Reasoning threads generated: {REASONING_THREADS_PATH}")
@@ -291,6 +548,23 @@ def _sync_active_flags(kc_bank: dict, active_kc: dict) -> None:
         flags.setdefault("usable_for_claim_verification", True)
 
 
+def _renumber_verified_edges(edges: list[dict]) -> list[dict]:
+    out = []
+    for idx, edge in enumerate(edges, start=1):
+        item = dict(edge)
+        item["edge_id"] = f"E{idx}"
+        out.append(item)
+    return out
+
+
+def _merge_edge_verification_summaries(left: dict, right: dict) -> dict:
+    return {
+        "candidate_count": int(left.get("candidate_count", 0)) + int(right.get("candidate_count", 0)),
+        "verified_count": int(left.get("verified_count", 0)) + int(right.get("verified_count", 0)),
+        "rejected_count": int(left.get("rejected_count", 0)) + int(right.get("rejected_count", 0)),
+    }
+
+
 def _write_build_checkpoint(
     path: Path,
     paper_id: str,
@@ -308,8 +582,15 @@ def _write_build_checkpoint(
             "artifacts": {
                 "sections": str(SECTIONS_PATH),
                 "macro_spine": str(MACRO_SPINE_PATH),
+                "extraction_units": str(EXTRACTION_UNITS_PATH),
                 "kc_candidates": str(KC_CANDIDATES_PATH),
                 "kc_bank": str(KC_BANK_PATH),
+                "edge_candidate_units": str(EDGE_CANDIDATE_UNITS_PATH),
+                "edge_candidate_macro": str(EDGE_CANDIDATE_MACRO_PATH),
+                "edge_candidate_cross_macro": str(EDGE_CANDIDATE_CROSS_MACRO_PATH),
+                "edge_candidate_thread": str(EDGE_CANDIDATE_THREAD_PATH),
+                "verified_edges": str(VERIFIED_EDGES_PATH),
+                "edge_verification_log": str(EDGE_VERIFICATION_LOG_PATH),
                 "kc_bank_reasoning_edges": str(BANK_EDGES_PATH),
                 "active_kc": str(ACTIVE_KC_PATH),
                 "reasoning_threads": str(REASONING_THREADS_PATH),

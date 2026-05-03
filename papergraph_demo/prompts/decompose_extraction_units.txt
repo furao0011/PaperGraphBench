@@ -1,0 +1,50 @@
+You are a paper knowledge-graph constructor. You are given one paper section or one section window.
+
+Your task is not to extract Knowledge Components yet. Your task is to divide the input text into Extraction Units.
+Each Extraction Unit should be a short but semantically complete local argumentative span that is suitable for later full KC extraction.
+
+Requirements:
+1. Cover all content in the input that has evaluation value.
+2. Do not split mechanically by paragraph. You may merge consecutive paragraphs or split dense paragraphs when needed.
+3. Every Unit must include `source_text`, and `source_text` must be copied from the input text.
+4. Units must preserve the original reading order.
+5. Do not assume a fixed category set, but you may assign several `related_categories` to each Unit.
+6. Do not extract KCs in this stage.
+7. If a span is noise, author metadata, references, or has no evaluation value, skip it and explain why.
+8. Return JSON only. Do not add commentary outside JSON.
+
+Unit guidance:
+- A short section may contain only one Unit.
+- A dense section may contain many Units.
+- UNIT_MAX_CHARS_SOFT={{unit_max_chars_soft}} is only a soft hint. Do not break semantic completeness just to satisfy this value.
+
+Input:
+
+```json
+{{window_json}}
+```
+
+Return JSON:
+
+```json
+{
+  "units": [
+    {
+      "unit_title": "short descriptive title",
+      "unit_summary": "one sentence summary",
+      "source_text": "verbatim source span from the input text",
+      "start_hint": "first characters of the source span",
+      "end_hint": "last characters of the source span",
+      "related_categories": ["method", "mechanism"],
+      "coverage_note": "what this unit covers",
+      "expected_kc_density": "low | medium | high"
+    }
+  ],
+  "skipped_spans": [
+    {
+      "reason": "why this span has no evaluation value",
+      "text_preview": "short preview"
+    }
+  ]
+}
+```

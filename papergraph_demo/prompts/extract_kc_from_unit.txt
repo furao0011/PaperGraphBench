@@ -1,0 +1,93 @@
+You are a paper-evaluation graph constructor. You are given one Extraction Unit.
+
+Extract all evaluable Knowledge Components from this Unit.
+Do not impose a fixed quantity limit. If the Unit contains a claim that can be asked about, judged, or verified, extract it.
+
+KC requirements:
+1. Each KC must be a concrete claim, not just an entity name or keyword.
+2. Each KC must be supported by evidence in the Unit `source_text`.
+3. The `evidence` field must be a verbatim span from the Unit `source_text`.
+4. Each KC must be usable for question answering evaluation or claim verification.
+5. Keep KCs atomic, but do not fragment one complete argument into meaningless pieces.
+6. Annotate every KC with `claim_strength` and `scope`.
+7. Do not invent KCs to increase the count.
+8. `macro_id` must be selected from the Macro context. Do not invent macro IDs.
+9. Use English in all generated fields.
+10. Return JSON only. Do not add commentary outside JSON.
+
+Extractable content includes, but is not limited to:
+- evaluable claims
+- method component claims
+- mechanism explanation claims
+- experiment setup claims
+- experiment result claims
+- ablation or comparison claims
+- conclusion scope claims
+- limitation or unproven-claim claims
+
+`claim_strength` must be one of:
+- explicit
+- experimentally_supported
+- partially_supported
+- author_hypothesis
+- plausible_inference
+- limitation_or_missing_evidence
+
+`type` must be one of:
+- problem
+- method
+- mechanism
+- dataset
+- experiment
+- result
+- conclusion
+- limitation
+- background
+- central_claim
+- algorithm
+- analysis
+
+Macro context:
+
+```json
+{{macro_context_json}}
+```
+
+Extraction Unit:
+
+```json
+{{unit_json}}
+```
+
+Return strict JSON:
+
+```json
+{
+  "kcs": [
+    {
+      "claim": "...",
+      "evidence": "verbatim evidence span from source_text",
+      "macro_id": "M1",
+      "type": "method",
+      "importance": "critical | normal",
+      "claim_strength": "explicit",
+      "scope": {
+        "task": "paper_setting | not_specified | ...",
+        "dataset": "not_specified | dataset_name | ...",
+        "generality": "limited_to_claim_context | limited_to_reported_experiments | broad_paper_claim | ..."
+      },
+      "related_terms": ["term1", "term2"]
+    }
+  ],
+  "empty_reason": ""
+}
+```
+
+If this Unit has no evaluable KC, return:
+
+```json
+{
+  "kcs": [],
+  "empty_reason": "..."
+}
+```

@@ -50,7 +50,7 @@ def load_settings(project_root: Path) -> Settings:
             return default
     return Settings(
         api_key=os.getenv("API_KEY", ""),
-        embed_api_key=os.getenv("EMBED_API_KEY", "") or os.getenv("DASHSCOPE_API_KEY", ""),
+        embed_api_key=os.getenv("EMBED_API_KEY", ""),
         base_url=os.getenv("BASE_URL", ""),
         llm_model=os.getenv("LLM_MODEL", ""),
         embed_base_url=os.getenv("EMBED_BASE_URL", ""),
