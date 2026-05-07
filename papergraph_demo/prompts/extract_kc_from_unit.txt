@@ -5,8 +5,8 @@ Do not impose a fixed quantity limit. If the Unit contains a claim that can be a
 
 KC requirements:
 1. Each KC must be a concrete claim, not just an entity name or keyword.
-2. Each KC must be supported by evidence in the Unit `source_text`.
-3. The `evidence` field must be a verbatim span from the Unit `source_text`.
+2. Each KC must be supported by evidence in the Unit `source_paragraphs`.
+3. Each KC must include `evidence_paragraph_ids` selected from the Unit paragraph list. Do not rewrite evidence text.
 4. Each KC must be usable for question answering evaluation or claim verification.
 5. Keep KCs atomic, but do not fragment one complete argument into meaningless pieces.
 6. Annotate every KC with `claim_strength` and `scope`.
@@ -66,7 +66,7 @@ Return strict JSON:
   "kcs": [
     {
       "claim": "...",
-      "evidence": "verbatim evidence span from source_text",
+      "evidence_paragraph_ids": ["P1"],
       "macro_id": "M1",
       "type": "method",
       "importance": "critical | normal",

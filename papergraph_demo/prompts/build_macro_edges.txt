@@ -24,7 +24,7 @@ Rules:
 2. Create edges only within the given Macro.
 3. Prefer edges between different Units. Do not recreate Unit-internal edges.
 4. Do not create generic topical similarity edges.
-5. Every edge must include a verbatim evidence span from either the source Unit text or the target Unit text.
+5. Every edge must include `evidence_unit_id` and `evidence_paragraph_ids` selected from either the source Unit paragraphs or the target Unit paragraphs. Do not rewrite evidence text.
 6. Preserve direction. If A supports B, source=A and target=B.
 7. Use English in all generated fields.
 8. Return JSON only.
@@ -44,7 +44,8 @@ Return strict JSON:
       "source": "KC12",
       "target": "KC31",
       "relation": "supports",
-      "evidence": "verbatim evidence span from source or target Unit text",
+      "evidence_unit_id": "U_S4_001",
+      "evidence_paragraph_ids": ["P1"],
       "reason": "brief explanation of why the relation is valid",
       "confidence": 0.84
     }

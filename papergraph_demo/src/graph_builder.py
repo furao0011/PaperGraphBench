@@ -466,6 +466,8 @@ def build_master_graph(
     kc_bank_path: str | None = None,
     active_kc_path: str | None = None,
     precomputed_reasoning_edges: list[dict] | None = None,
+    reasoning_edge_source: str = "legacy",
+    edge_coverage_report_path: str | None = None,
 ) -> dict:
     macro_source_nodes = _macro_nodes_from_spine(macro_spine)
     kc_nodes, groups = _build_kc_nodes(
@@ -500,17 +502,28 @@ def build_master_graph(
     active_ids = {kc["kc_id"] for kc in kc_nodes}
     edges = _filter_precomputed_edges(precomputed_reasoning_edges, active_ids)
     if not edges:
+        if reasoning_edge_source == "verified":
+            raise RuntimeError("Master Graph v2 requires verified reasoning edges for the selected Active KCs.")
         edges = build_reasoning_edges_for_kcs(
             kc_nodes,
             macro_nodes,
             client,
             allow_offline_fallback=allow_offline_fallback,
         )
-    paths = _build_reasoning_paths_online(kc_nodes, macro_nodes, edges, client)
-    if not paths and not allow_offline_fallback:
-        raise RuntimeError("Online reasoning path generation failed and offline fallback is disabled.")
-    if not paths:
-        paths = _build_reasoning_paths(groups)
+    if reasoning_edge_source == "verified":
+        paths = _build_reasoning_paths_from_verified_edges(kc_nodes, edges)
+        if not paths:
+            raise RuntimeError("Master Graph v2 could not derive any three-KC reasoning paths from verified edges.")
+    else:
+        paths = _build_reasoning_paths_online(kc_nodes, macro_nodes, edges, client)
+        if not paths and not allow_offline_fallback:
+            raise RuntimeError("Online reasoning path generation failed and offline fallback is disabled.")
+        if not paths:
+            paths = _build_reasoning_paths(groups)
+    diagnostics = {
+        "reasoning_edge_source": reasoning_edge_source,
+        "edge_coverage_report_path": edge_coverage_report_path,
+    }
     return {
         "paper_id": paper_id,
         "paper_title": paper_id,
@@ -524,6 +537,7 @@ def build_master_graph(
         "active_kc_ids": [kc["kc_id"] for kc in kc_nodes],
         "reasoning_edges": edges,
         "reasoning_paths": paths,
+        "diagnostics": diagnostics,
     }
 
 
@@ -540,6 +554,88 @@ def _filter_precomputed_edges(edges: list[dict] | None, active_ids: set[str]) ->
         item["edge_id"] = f"E{len(filtered) + 1}"
         filtered.append(item)
     return filtered
+
+
+def _build_reasoning_paths_from_verified_edges(kc_nodes: list[dict], edges: list[dict]) -> list[dict]:
+    by_kc = {kc["kc_id"]: kc for kc in kc_nodes}
+    outgoing: dict[str, list[dict]] = {kc_id: [] for kc_id in by_kc}
+    for edge in edges:
+        source = edge.get("source")
+        target = edge.get("target")
+        if source in outgoing and target in by_kc and source != target:
+            outgoing[source].append(edge)
+
+    paths = []
+    seen_sequences = set()
+    ordered_edges = sorted(edges, key=lambda edge: _edge_sort_key(str(edge.get("edge_id", ""))))
+    for first in ordered_edges:
+        mid = first.get("target")
+        if mid not in outgoing:
+            continue
+        for second in sorted(outgoing[mid], key=lambda edge: _edge_sort_key(str(edge.get("edge_id", "")))):
+            seq = [first.get("source"), mid, second.get("target")]
+            if len(set(seq)) < 3 or any(kc_id not in by_kc for kc_id in seq):
+                continue
+            macro_seq = [by_kc[kc_id].get("macro_id") for kc_id in seq]
+            if len(set(macro_seq)) < 2:
+                continue
+            key = tuple(seq)
+            if key in seen_sequences:
+                continue
+            seen_sequences.add(key)
+            path_id = f"P{len(paths) + 1}"
+            paths.append(
+                {
+                    "path_id": path_id,
+                    "pattern": _verified_path_pattern([first, second], macro_seq),
+                    "kc_sequence": seq,
+                    "supporting_edge_ids": [first.get("edge_id"), second.get("edge_id")],
+                    "description": _verified_path_description([first, second]),
+                    "trigger_condition": {
+                        "required_lit_kc": seq[:2],
+                        "target_kc": seq[2],
+                    },
+                    "forbidden_claims": [],
+                }
+            )
+            if len(paths) >= _reasoning_path_limit():
+                return paths
+    return paths
+
+
+def _verified_path_pattern(edges: list[dict], macro_seq: list[str]) -> str:
+    thread_patterns = [str(edge.get("thread_pattern") or "").strip() for edge in edges]
+    thread_patterns = [pattern for pattern in thread_patterns if pattern]
+    if thread_patterns:
+        return thread_patterns[0]
+    relations = [str(edge.get("relation") or "supports").strip() for edge in edges]
+    if len(set(macro_seq)) >= 3:
+        return "verified_cross_macro_chain"
+    return "verified_relation_chain_" + "_".join(relations[:2])
+
+
+def _verified_path_description(edges: list[dict]) -> str:
+    parts = []
+    for edge in edges:
+        relation = edge.get("relation", "supports")
+        source = edge.get("source")
+        target = edge.get("target")
+        parts.append(f"{source} {relation} {target}")
+    return "Verified edge chain: " + "; ".join(parts) + "."
+
+
+def _reasoning_path_limit() -> int:
+    raw = os.getenv("REASONING_PATH_TARGET", "5")
+    try:
+        value = int(raw)
+    except ValueError:
+        value = 5
+    return max(1, min(20, value))
+
+
+def _edge_sort_key(edge_id: str) -> tuple[int, str]:
+    match = re.search(r"(\d+)$", edge_id)
+    return (int(match.group(1)) if match else 10**9, edge_id)
 
 
 def _macro_nodes_from_spine(macro_spine: dict | None) -> list[dict]:

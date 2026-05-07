@@ -306,6 +306,7 @@ def _unit_contexts(kc_bank: dict, extraction_units: dict) -> list[dict]:
                 "unit_title": unit.get("unit_title", ""),
                 "unit_summary": unit.get("unit_summary", ""),
                 "source_text": unit.get("source_text", ""),
+                "source_paragraphs": _paragraphs_from_source(unit.get("source_text", "")),
                 "kc_nodes": [
                     {
                         "kc_id": kc.get("kc_id"),
@@ -369,6 +370,7 @@ def _macro_contexts(kc_bank: dict, macro_spine: dict, extraction_units: dict) ->
                             "unit_title": units_by_id.get(unit_id, {}).get("unit_title", ""),
                             "unit_summary": units_by_id.get(unit_id, {}).get("unit_summary", ""),
                             "source_text": units_by_id.get(unit_id, {}).get("source_text", ""),
+                            "source_paragraphs": _paragraphs_from_source(units_by_id.get(unit_id, {}).get("source_text", "")),
                         }
                         for unit_id in sorted(batch_unit_ids, key=lambda uid: _unit_order_key(units_by_id.get(uid, {})))
                     ],
@@ -478,7 +480,7 @@ def _normalize_unit_edges(context: dict, result: dict) -> list[dict]:
     if not isinstance(raw_edges, list):
         raise ValueError(f"Unit {context['unit_id']} edge response must contain edges list.")
     valid_kc_ids = {kc["kc_id"] for kc in context["kc_nodes"]}
-    source_text = str(context.get("source_text", "")).strip()
+    paragraph_by_id = _paragraph_by_id(context.get("source_paragraphs", []))
     edges = []
     for idx, item in enumerate(raw_edges, start=1):
         if not isinstance(item, dict):
@@ -486,13 +488,16 @@ def _normalize_unit_edges(context: dict, result: dict) -> list[dict]:
         source = str(item.get("source", "")).strip()
         target = str(item.get("target", "")).strip()
         relation = str(item.get("relation", "")).strip()
-        evidence = str(item.get("evidence", "")).strip()
+        evidence_paragraph_ids = _string_list(item.get("evidence_paragraph_ids", []))
         if source not in valid_kc_ids or target not in valid_kc_ids or source == target:
             raise ValueError(f"Unit {context['unit_id']} edge #{idx} references invalid source/target.")
         if relation not in ALLOWED_EDGE_RELATIONS:
             raise ValueError(f"Unit {context['unit_id']} edge #{idx} has invalid relation={relation!r}.")
-        if not evidence or not _text_in_source(evidence, source_text):
-            raise ValueError(f"Unit {context['unit_id']} edge #{idx} evidence is not found in source_text.")
+        evidence, normalized_evidence_ids = _source_text_from_paragraph_ids(
+            f"Unit {context['unit_id']} edge #{idx}",
+            evidence_paragraph_ids,
+            paragraph_by_id,
+        )
         edges.append(
             {
                 "source_layer": "unit",
@@ -502,6 +507,11 @@ def _normalize_unit_edges(context: dict, result: dict) -> list[dict]:
                 "target": target,
                 "relation": relation,
                 "evidence": evidence,
+                "evidence_paragraph_ids": normalized_evidence_ids,
+                "evidence_paragraph_ids_original": evidence_paragraph_ids,
+                "evidence_paragraph_id_normalization": (
+                    "as_provided" if normalized_evidence_ids == evidence_paragraph_ids else "expanded_to_contiguous_range"
+                ),
                 "reason": str(item.get("reason", "")).strip(),
                 "confidence": _confidence(item.get("confidence", 0.0)),
             }
@@ -519,6 +529,11 @@ def _normalize_macro_edges(context: dict, result: dict) -> list[dict]:
         for item in context.get("unit_summaries", [])
         if item.get("unit_id")
     }
+    unit_paragraphs = {
+        item["unit_id"]: _paragraph_by_id(item.get("source_paragraphs", []))
+        for item in context.get("unit_summaries", [])
+        if item.get("unit_id")
+    }
     edges = []
     for idx, item in enumerate(raw_edges, start=1):
         if not isinstance(item, dict):
@@ -526,7 +541,8 @@ def _normalize_macro_edges(context: dict, result: dict) -> list[dict]:
         source = str(item.get("source", "")).strip()
         target = str(item.get("target", "")).strip()
         relation = str(item.get("relation", "")).strip()
-        evidence = str(item.get("evidence", "")).strip()
+        evidence_unit_id = str(item.get("evidence_unit_id", "")).strip()
+        evidence_paragraph_ids = _string_list(item.get("evidence_paragraph_ids", []))
         if source not in kcs_by_id or target not in kcs_by_id or source == target:
             raise ValueError(f"Macro batch {context['batch_id']} edge #{idx} references invalid source/target.")
         source_unit_id = str(kcs_by_id[source].get("unit_id", "")).strip()
@@ -535,13 +551,17 @@ def _normalize_macro_edges(context: dict, result: dict) -> list[dict]:
             raise ValueError(f"Macro batch {context['batch_id']} edge #{idx} must connect different Units.")
         if relation not in ALLOWED_EDGE_RELATIONS:
             raise ValueError(f"Macro batch {context['batch_id']} edge #{idx} has invalid relation={relation!r}.")
-        if not evidence or not (
-            _text_in_source(evidence, unit_texts.get(source_unit_id, ""))
-            or _text_in_source(evidence, unit_texts.get(target_unit_id, ""))
-        ):
+        if evidence_unit_id not in {source_unit_id, target_unit_id}:
             raise ValueError(
-                f"Macro batch {context['batch_id']} edge #{idx} evidence is not found in source or target Unit text."
+                f"Macro batch {context['batch_id']} edge #{idx} evidence_unit_id must be source or target Unit."
             )
+        evidence, normalized_evidence_ids = _source_text_from_paragraph_ids(
+            f"Macro batch {context['batch_id']} edge #{idx}",
+            evidence_paragraph_ids,
+            unit_paragraphs.get(evidence_unit_id, {}),
+        )
+        if not _text_in_source(evidence, unit_texts.get(evidence_unit_id, "")):
+            raise ValueError(f"Macro batch {context['batch_id']} edge #{idx} evidence is not found in evidence Unit text.")
         edges.append(
             {
                 "source_layer": "macro",
@@ -554,10 +574,16 @@ def _normalize_macro_edges(context: dict, result: dict) -> list[dict]:
                 "unit_id": None,
                 "source_unit_id": source_unit_id,
                 "target_unit_id": target_unit_id,
+                "evidence_unit_id": evidence_unit_id,
                 "source": source,
                 "target": target,
                 "relation": relation,
                 "evidence": evidence,
+                "evidence_paragraph_ids": normalized_evidence_ids,
+                "evidence_paragraph_ids_original": evidence_paragraph_ids,
+                "evidence_paragraph_id_normalization": (
+                    "as_provided" if normalized_evidence_ids == evidence_paragraph_ids else "expanded_to_contiguous_range"
+                ),
                 "reason": str(item.get("reason", "")).strip(),
                 "confidence": _confidence(item.get("confidence", 0.0)),
             }
@@ -572,6 +598,10 @@ def _normalize_adjacent_macro_edges(context: dict, result: dict) -> list[dict]:
     source_kcs = {kc["kc_id"]: kc for kc in context["source_kc_nodes"]}
     target_kcs = {kc["kc_id"]: kc for kc in context["target_kc_nodes"]}
     unit_texts = {item["unit_id"]: item.get("source_text", "") for item in context.get("unit_texts", [])}
+    unit_paragraphs = {
+        item["unit_id"]: _paragraph_by_id(item.get("source_paragraphs", []))
+        for item in context.get("unit_texts", [])
+    }
     edges = []
     for idx, item in enumerate(raw_edges, start=1):
         if not isinstance(item, dict):
@@ -579,7 +609,8 @@ def _normalize_adjacent_macro_edges(context: dict, result: dict) -> list[dict]:
         source = str(item.get("source", "")).strip()
         target = str(item.get("target", "")).strip()
         relation = str(item.get("relation", "")).strip()
-        evidence = str(item.get("evidence", "")).strip()
+        evidence_unit_id = str(item.get("evidence_unit_id", "")).strip()
+        evidence_paragraph_ids = _string_list(item.get("evidence_paragraph_ids", []))
         if source not in source_kcs or target not in target_kcs:
             raise ValueError(
                 f"Adjacent Macro {context['macro_pair_id']} edge #{idx} must go from source Macro KC to target Macro KC."
@@ -588,13 +619,17 @@ def _normalize_adjacent_macro_edges(context: dict, result: dict) -> list[dict]:
             raise ValueError(f"Adjacent Macro {context['macro_pair_id']} edge #{idx} has invalid relation={relation!r}.")
         source_unit_id = str(source_kcs[source].get("unit_id", "")).strip()
         target_unit_id = str(target_kcs[target].get("unit_id", "")).strip()
-        if not evidence or not (
-            _text_in_source(evidence, unit_texts.get(source_unit_id, ""))
-            or _text_in_source(evidence, unit_texts.get(target_unit_id, ""))
-        ):
+        if evidence_unit_id not in {source_unit_id, target_unit_id}:
             raise ValueError(
-                f"Adjacent Macro {context['macro_pair_id']} edge #{idx} evidence is not found in source or target Unit text."
+                f"Adjacent Macro {context['macro_pair_id']} edge #{idx} evidence_unit_id must be source or target Unit."
             )
+        evidence, normalized_evidence_ids = _source_text_from_paragraph_ids(
+            f"Adjacent Macro {context['macro_pair_id']} edge #{idx}",
+            evidence_paragraph_ids,
+            unit_paragraphs.get(evidence_unit_id, {}),
+        )
+        if not _text_in_source(evidence, unit_texts.get(evidence_unit_id, "")):
+            raise ValueError(f"Adjacent Macro {context['macro_pair_id']} edge #{idx} evidence is not found in evidence Unit text.")
         edges.append(
             {
                 "source_layer": "adjacent_macro",
@@ -604,10 +639,16 @@ def _normalize_adjacent_macro_edges(context: dict, result: dict) -> list[dict]:
                 "target_macro_id": context["target_macro"]["macro_id"],
                 "source_unit_id": source_unit_id,
                 "target_unit_id": target_unit_id,
+                "evidence_unit_id": evidence_unit_id,
                 "source": source,
                 "target": target,
                 "relation": relation,
                 "evidence": evidence,
+                "evidence_paragraph_ids": normalized_evidence_ids,
+                "evidence_paragraph_ids_original": evidence_paragraph_ids,
+                "evidence_paragraph_id_normalization": (
+                    "as_provided" if normalized_evidence_ids == evidence_paragraph_ids else "expanded_to_contiguous_range"
+                ),
                 "reason": str(item.get("reason", "")).strip(),
                 "confidence": _confidence(item.get("confidence", 0.0)),
             }
@@ -621,6 +662,10 @@ def _normalize_thread_edges(context: dict, result: dict) -> list[dict]:
         raise ValueError("Thread candidate edge response must contain edges list.")
     kcs_by_id = {kc["kc_id"]: kc for kc in context["kc_nodes"]}
     unit_texts = {item["unit_id"]: item.get("source_text", "") for item in context.get("unit_texts", [])}
+    unit_paragraphs = {
+        item["unit_id"]: _paragraph_by_id(item.get("source_paragraphs", []))
+        for item in context.get("unit_texts", [])
+    }
     edges = []
     for idx, item in enumerate(raw_edges, start=1):
         if not isinstance(item, dict):
@@ -628,7 +673,8 @@ def _normalize_thread_edges(context: dict, result: dict) -> list[dict]:
         source = str(item.get("source", "")).strip()
         target = str(item.get("target", "")).strip()
         relation = str(item.get("relation", "")).strip()
-        evidence = str(item.get("evidence", "")).strip()
+        evidence_unit_id = str(item.get("evidence_unit_id", "")).strip()
+        evidence_paragraph_ids = _string_list(item.get("evidence_paragraph_ids", []))
         if source not in kcs_by_id or target not in kcs_by_id or source == target:
             raise ValueError(f"Thread candidate edge #{idx} references invalid source/target.")
         source_macro_id = str(kcs_by_id[source].get("macro_id", "")).strip()
@@ -639,13 +685,17 @@ def _normalize_thread_edges(context: dict, result: dict) -> list[dict]:
             raise ValueError(f"Thread candidate edge #{idx} has invalid relation={relation!r}.")
         source_unit_id = str(kcs_by_id[source].get("unit_id", "")).strip()
         target_unit_id = str(kcs_by_id[target].get("unit_id", "")).strip()
-        if not evidence or not (
-            _text_in_source(evidence, unit_texts.get(source_unit_id, ""))
-            or _text_in_source(evidence, unit_texts.get(target_unit_id, ""))
-        ):
+        if evidence_unit_id not in {source_unit_id, target_unit_id}:
             raise ValueError(
-                f"Thread candidate edge #{idx} evidence is not found in source or target Unit text."
+                f"Thread candidate edge #{idx} evidence_unit_id must be source or target Unit."
             )
+        evidence, normalized_evidence_ids = _source_text_from_paragraph_ids(
+            f"Thread candidate edge #{idx}",
+            evidence_paragraph_ids,
+            unit_paragraphs.get(evidence_unit_id, {}),
+        )
+        if not _text_in_source(evidence, unit_texts.get(evidence_unit_id, "")):
+            raise ValueError(f"Thread candidate edge #{idx} evidence is not found in evidence Unit text.")
         edges.append(
             {
                 "source_layer": "thread",
@@ -655,10 +705,16 @@ def _normalize_thread_edges(context: dict, result: dict) -> list[dict]:
                 "target_macro_id": target_macro_id,
                 "source_unit_id": source_unit_id,
                 "target_unit_id": target_unit_id,
+                "evidence_unit_id": evidence_unit_id,
                 "source": source,
                 "target": target,
                 "relation": relation,
                 "evidence": evidence,
+                "evidence_paragraph_ids": normalized_evidence_ids,
+                "evidence_paragraph_ids_original": evidence_paragraph_ids,
+                "evidence_paragraph_id_normalization": (
+                    "as_provided" if normalized_evidence_ids == evidence_paragraph_ids else "expanded_to_contiguous_range"
+                ),
                 "reason": str(item.get("reason", "")).strip(),
                 "confidence": _confidence(item.get("confidence", 0.0)),
             }
@@ -806,6 +862,7 @@ def _unit_text_packets(unit_ids: set[str], units_by_id: dict[str, dict]) -> list
             "unit_title": units_by_id.get(unit_id, {}).get("unit_title", ""),
             "unit_summary": units_by_id.get(unit_id, {}).get("unit_summary", ""),
             "source_text": units_by_id.get(unit_id, {}).get("source_text", ""),
+            "source_paragraphs": _paragraphs_from_source(units_by_id.get(unit_id, {}).get("source_text", "")),
         }
         for unit_id in sorted(unit_ids, key=lambda uid: _unit_order_key(units_by_id.get(uid, {})))
         if unit_id in units_by_id
@@ -836,6 +893,50 @@ def _unit_order_key(unit: dict) -> tuple[int, int, str]:
     )
 
 
+def _paragraphs_from_source(source_text: object) -> list[dict]:
+    paragraphs = [paragraph.strip() for paragraph in re.split(r"\n\s*\n", str(source_text or "")) if paragraph.strip()]
+    if not paragraphs and str(source_text or "").strip():
+        paragraphs = [str(source_text).strip()]
+    return [
+        {
+            "paragraph_id": f"P{idx}",
+            "text": paragraph,
+        }
+        for idx, paragraph in enumerate(paragraphs, start=1)
+    ]
+
+
+def _paragraph_by_id(paragraphs: object) -> dict[str, dict]:
+    if not isinstance(paragraphs, list):
+        return {}
+    return {
+        str(paragraph.get("paragraph_id", "")).strip(): paragraph
+        for paragraph in paragraphs
+        if isinstance(paragraph, dict) and str(paragraph.get("paragraph_id", "")).strip()
+    }
+
+
+def _source_text_from_paragraph_ids(
+    label: str,
+    paragraph_ids: list[str],
+    paragraph_by_id: dict[str, dict],
+) -> tuple[str, list[str]]:
+    if not paragraph_ids:
+        raise ValueError(f"{label} must include evidence_paragraph_ids.")
+    unknown = [paragraph_id for paragraph_id in paragraph_ids if paragraph_id not in paragraph_by_id]
+    if unknown:
+        raise ValueError(f"{label} references unknown evidence_paragraph_ids: {unknown}")
+    positions = sorted({int(paragraph_id[1:]) for paragraph_id in paragraph_ids})
+    normalized_ids = [f"P{position}" for position in range(positions[0], positions[-1] + 1)]
+    missing = [paragraph_id for paragraph_id in normalized_ids if paragraph_id not in paragraph_by_id]
+    if missing:
+        raise ValueError(f"{label} contiguous evidence range references missing paragraph IDs: {missing}")
+    source_text = "\n\n".join(str(paragraph_by_id[paragraph_id].get("text", "")).strip() for paragraph_id in normalized_ids)
+    if not source_text.strip():
+        raise ValueError(f"{label} evidence paragraphs are empty.")
+    return source_text, normalized_ids
+
+
 def _text_in_source(text: str, source_text: str) -> bool:
     needle = _normalize_ws(text)
     haystack = _normalize_ws(source_text)
@@ -844,6 +945,12 @@ def _text_in_source(text: str, source_text: str) -> bool:
 
 def _normalize_ws(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
+
+
+def _string_list(values: object) -> list[str]:
+    if not isinstance(values, list):
+        return []
+    return [str(value).strip() for value in values if str(value).strip()]
 
 
 def _confidence(value: object) -> float:

@@ -10,6 +10,7 @@ from src.edge_candidate_builder import (
     build_thread_candidate_edges,
     build_unit_edge_candidates,
 )
+from src.edge_coverage_report import build_edge_coverage_report
 from src.edge_verifier import verify_edge_candidates
 from src.extraction_unit_builder import decompose_extraction_units
 from src.graph_builder import build_master_graph
@@ -44,6 +45,7 @@ EDGE_CANDIDATE_CROSS_MACRO_PATH = BASE_DIR / "data" / "graphs" / "edge_candidate
 EDGE_CANDIDATE_THREAD_PATH = BASE_DIR / "data" / "graphs" / "edge_candidate_thread.json"
 VERIFIED_EDGES_PATH = BASE_DIR / "data" / "graphs" / "verified_edges.json"
 EDGE_VERIFICATION_LOG_PATH = BASE_DIR / "data" / "graphs" / "edge_verification_log.json"
+EDGE_COVERAGE_REPORT_PATH = BASE_DIR / "data" / "graphs" / "edge_coverage_report.json"
 BANK_EDGES_PATH = BASE_DIR / "data" / "graphs" / "kc_bank_reasoning_edges.json"
 ACTIVE_KC_PATH = BASE_DIR / "data" / "graphs" / "active_kc.json"
 REASONING_THREADS_PATH = BASE_DIR / "data" / "graphs" / "reasoning_threads.json"
@@ -179,6 +181,13 @@ def main() -> None:
     log("KC candidates ready", source=kc_extraction_source, count=len(kc_candidates))
 
     kc_bank = _load_resumable_json(KC_BANK_PATH, paper_id, resume, restart, "KC Bank")
+    if kc_bank and not _kc_bank_matches_requested_source(kc_bank, kc_extraction_source):
+        log(
+            "resume artifact ignored due to KC Bank source mismatch",
+            path=KC_BANK_PATH,
+            requested_source=kc_extraction_source,
+        )
+        kc_bank = None
     if not kc_bank:
         with span("build KC Bank", candidates=len(kc_candidates)):
             kc_bank = build_kc_bank(
@@ -199,6 +208,11 @@ def main() -> None:
         or _env_bool("EDGE_ADJACENT_MACRO_ENABLED", True)
         or _env_bool("EDGE_THREAD_CANDIDATE_ENABLED", True)
     )
+    graph_edge_source = os.getenv("GRAPH_REASONING_EDGE_SOURCE", "verified").strip().lower() or "verified"
+    if graph_edge_source not in {"verified", "legacy"}:
+        raise ValueError("GRAPH_REASONING_EDGE_SOURCE must be 'verified' or 'legacy'.")
+    if graph_edge_source == "verified" and not edge_layer_enabled:
+        raise RuntimeError("GRAPH_REASONING_EDGE_SOURCE=verified requires at least one EDGE_* construction layer.")
     if edge_layer_enabled and not extraction_units:
         raise RuntimeError("v2 edge construction requires extraction_units.json.")
 
@@ -284,6 +298,7 @@ def main() -> None:
 
     thread_edges_enabled = _env_bool("EDGE_THREAD_CANDIDATE_ENABLED", True)
     requested_edge_layers = sorted(set(requested_base_edge_layers + (["thread"] if thread_edges_enabled else [])))
+    verified_edges_payload = None
     if requested_edge_layers:
         verified_edges_payload = _load_resumable_json(
             VERIFIED_EDGES_PATH,
@@ -380,29 +395,84 @@ def main() -> None:
             verified=len(verified_edges_payload.get("verified_edges", [])),
         )
 
-    bank_edges_payload = _load_resumable_json(BANK_EDGES_PATH, paper_id, resume, restart, "KC Bank reasoning edges")
-    if bank_edges_payload:
-        bank_edges = bank_edges_payload["reasoning_edges"]
-    else:
-        with span("build KC Bank reasoning edges", bank_kcs=len(kc_bank.get("kc_nodes", []))):
-            bank_edges = build_reasoning_edges_for_kcs(
-                kc_bank["kc_nodes"],
-                _macro_nodes_with_bank_kcs(macro_spine, kc_bank),
-                client,
-                allow_offline_fallback=allow_offline_fallback,
+    if graph_edge_source == "verified":
+        if not verified_edges_payload:
+            raise RuntimeError("GRAPH_REASONING_EDGE_SOURCE=verified requires verified_edges.json.")
+        graph_reasoning_edges = verified_edges_payload.get("verified_edges", [])
+        if not graph_reasoning_edges:
+            raise RuntimeError("verified_edges.json contains no verified edges; cannot build v2 Master Graph.")
+        coverage_report = _load_resumable_json(
+            EDGE_COVERAGE_REPORT_PATH,
+            paper_id,
+            resume,
+            restart,
+            "edge coverage report",
+        )
+        if coverage_report and coverage_report.get("verified_edge_count") != len(graph_reasoning_edges):
+            log(
+                "resume artifact ignored due to edge coverage count mismatch",
+                path=EDGE_COVERAGE_REPORT_PATH,
+                artifact_edges=coverage_report.get("verified_edge_count"),
+                verified_edges=len(graph_reasoning_edges),
             )
-        _write_json(BANK_EDGES_PATH, {"paper_id": paper_id, "reasoning_edges": bank_edges})
-        _write_build_checkpoint(checkpoint_path, paper_id, "kc_bank_reasoning_edges", resume=resume, restart=restart)
+            coverage_report = None
+        if not coverage_report:
+            with span("build edge coverage report", verified_edges=len(graph_reasoning_edges)):
+                coverage_report = build_edge_coverage_report(
+                    paper_id=paper_id,
+                    macro_spine=macro_spine,
+                    kc_bank=kc_bank,
+                    verified_edges=graph_reasoning_edges,
+                )
+            _write_json(EDGE_COVERAGE_REPORT_PATH, coverage_report)
+            _write_build_checkpoint(checkpoint_path, paper_id, "edge_coverage_report", resume=resume, restart=restart)
+        log(
+            "edge coverage report ready",
+            path=EDGE_COVERAGE_REPORT_PATH,
+            empty_macro_pairs=len(coverage_report.get("empty_macro_pairs", [])),
+            isolated_kcs=coverage_report.get("kc_coverage", {}).get("isolated_kc_count", 0),
+        )
+    else:
+        coverage_report = None
+        bank_edges_payload = _load_resumable_json(BANK_EDGES_PATH, paper_id, resume, restart, "KC Bank reasoning edges")
+        if bank_edges_payload:
+            graph_reasoning_edges = bank_edges_payload["reasoning_edges"]
+        else:
+            with span("build KC Bank reasoning edges", bank_kcs=len(kc_bank.get("kc_nodes", []))):
+                graph_reasoning_edges = build_reasoning_edges_for_kcs(
+                    kc_bank["kc_nodes"],
+                    _macro_nodes_with_bank_kcs(macro_spine, kc_bank),
+                    client,
+                    allow_offline_fallback=allow_offline_fallback,
+                )
+            _write_json(BANK_EDGES_PATH, {"paper_id": paper_id, "reasoning_edges": graph_reasoning_edges})
+            _write_build_checkpoint(checkpoint_path, paper_id, "kc_bank_reasoning_edges", resume=resume, restart=restart)
 
-    if not _kc_bank_has_final_scores(kc_bank):
-        finalize_kc_bank_scores(kc_bank, macro_spine, bank_edges)
+    score_signature = _score_signature(graph_edge_source, graph_reasoning_edges)
+    if not _kc_bank_has_final_scores(kc_bank) or kc_bank.get("score_metadata", {}).get("graph_signature") != score_signature:
+        finalize_kc_bank_scores(kc_bank, macro_spine, graph_reasoning_edges)
+        kc_bank["score_metadata"] = {
+            "reasoning_edge_source": graph_edge_source,
+            "graph_signature": score_signature,
+            "reasoning_edge_count": len(graph_reasoning_edges),
+            "edge_coverage_report_path": "data/graphs/edge_coverage_report.json" if coverage_report else None,
+        }
         _write_json(KC_BANK_PATH, kc_bank)
         _write_build_checkpoint(checkpoint_path, paper_id, "kc_bank_scored", resume=resume, restart=restart)
 
     active_kc = _load_resumable_json(ACTIVE_KC_PATH, paper_id, resume, restart, "Active KC")
+    if active_kc and active_kc.get("source_score_signature") != score_signature:
+        log(
+            "resume artifact ignored due to Active KC score signature mismatch",
+            path=ACTIVE_KC_PATH,
+            requested_score_signature=score_signature,
+        )
+        active_kc = None
     if not active_kc:
         with span("select Active KCs", bank_kcs=len(kc_bank.get("kc_nodes", []))):
             active_kc = select_active_kcs(kc_bank, macro_spine)
+        active_kc["source_score_signature"] = score_signature
+        active_kc["reasoning_edge_source"] = graph_edge_source
         _write_json(KC_BANK_PATH, kc_bank)
         _write_json(ACTIVE_KC_PATH, active_kc)
         _write_build_checkpoint(checkpoint_path, paper_id, "active_kc", resume=resume, restart=restart)
@@ -412,22 +482,56 @@ def main() -> None:
     log("Active KCs ready", path=ACTIVE_KC_PATH, active=len(active_kc.get("active_kc_ids", [])))
 
     graph = _load_resumable_json(GRAPH_PATH, paper_id, resume, restart, "master graph")
+    graph_kc_source = os.getenv(
+        "MASTER_GRAPH_KC_SOURCE",
+        "bank" if graph_edge_source == "verified" else "active",
+    ).strip().lower() or "bank"
+    if graph_kc_source not in {"bank", "active"}:
+        raise ValueError("MASTER_GRAPH_KC_SOURCE must be 'bank' or 'active'.")
+    graph_kcs = kc_bank["kc_nodes"] if graph_kc_source == "bank" else active_kc["kc_nodes"]
+    if graph and graph.get("diagnostics", {}).get("graph_signature") != _master_graph_signature(
+        graph_edge_source,
+        graph_kc_source,
+        graph_kcs,
+        graph_reasoning_edges,
+    ):
+        log(
+            "resume artifact ignored due to Master Graph signature mismatch",
+            path=GRAPH_PATH,
+            edge_source=graph_edge_source,
+        )
+        graph = None
     if not graph:
-        with span("build master graph", kcs=len(active_kc.get("kc_nodes", []))):
+        with span("build master graph", kcs=len(graph_kcs)):
             graph = build_master_graph(
                 paper_id=paper_id,
                 paper_text_path=paper_text_path,
-                kcs=active_kc["kc_nodes"],
+                kcs=graph_kcs,
                 client=client,
                 allow_offline_fallback=allow_offline_fallback,
                 macro_spine=macro_spine,
                 kc_bank_path="data/graphs/kc_bank.json",
                 active_kc_path="data/graphs/active_kc.json",
-                precomputed_reasoning_edges=bank_edges,
+                precomputed_reasoning_edges=graph_reasoning_edges,
+                reasoning_edge_source=graph_edge_source,
+                edge_coverage_report_path="data/graphs/edge_coverage_report.json" if coverage_report else None,
             )
+            graph.setdefault("diagnostics", {})["graph_signature"] = _master_graph_signature(
+                graph_edge_source,
+                graph_kc_source,
+                graph_kcs,
+                graph_reasoning_edges,
+            )
+            graph["diagnostics"]["master_graph_kc_source"] = graph_kc_source
         _write_build_checkpoint(checkpoint_path, paper_id, "master_graph_base", resume=resume, restart=restart)
 
     reasoning_threads = _load_resumable_json(REASONING_THREADS_PATH, paper_id, resume, restart, "reasoning threads")
+    if reasoning_threads and reasoning_threads.get("source_graph_signature") != graph.get("diagnostics", {}).get("graph_signature"):
+        log(
+            "resume artifact ignored due to Reasoning Thread graph signature mismatch",
+            path=REASONING_THREADS_PATH,
+        )
+        reasoning_threads = None
     if not reasoning_threads:
         with span("build reasoning threads", paths=len(graph.get("reasoning_paths", []))):
             reasoning_threads = build_reasoning_threads(
@@ -438,6 +542,7 @@ def main() -> None:
                 reasoning_paths=graph.get("reasoning_paths", []),
                 client=client,
             )
+        reasoning_threads["source_graph_signature"] = graph.get("diagnostics", {}).get("graph_signature")
         _write_json(REASONING_THREADS_PATH, reasoning_threads)
         _write_build_checkpoint(checkpoint_path, paper_id, "reasoning_threads", resume=resume, restart=restart)
     graph["reasoning_threads_path"] = "data/graphs/reasoning_threads.json"
@@ -463,6 +568,8 @@ def main() -> None:
     if _env_bool("EXTRACTION_UNIT_ENABLED", True):
         print(f"Extraction Units generated: {EXTRACTION_UNITS_PATH}")
     print(f"KC Bank generated: {KC_BANK_PATH}")
+    if graph_edge_source == "verified":
+        print(f"Edge coverage report generated: {EDGE_COVERAGE_REPORT_PATH}")
     print(f"Active KC generated: {ACTIVE_KC_PATH}")
     print(f"Reasoning threads generated: {REASONING_THREADS_PATH}")
     print(f"Master graph generated: {GRAPH_PATH}")
@@ -538,6 +645,43 @@ def _kc_bank_has_final_scores(kc_bank: dict) -> bool:
     return bool(kc_bank.get("kc_nodes"))
 
 
+def _kc_bank_matches_requested_source(kc_bank: dict, source: str) -> bool:
+    nodes = kc_bank.get("kc_nodes", [])
+    if not nodes:
+        return False
+    if source == "unit":
+        return all(str(node.get("unit_id", "")).strip() for node in nodes)
+    return True
+
+
+def _score_signature(edge_source: str, reasoning_edges: list[dict]) -> dict:
+    return {
+        "reasoning_edge_source": edge_source,
+        "edge_ids": [edge.get("edge_id") for edge in reasoning_edges],
+        "edge_count": len(reasoning_edges),
+        "edge_sources": [
+            [
+                edge.get("edge_id"),
+                edge.get("source"),
+                edge.get("target"),
+                edge.get("relation"),
+                edge.get("source_layer"),
+            ]
+            for edge in reasoning_edges
+        ],
+    }
+
+
+def _master_graph_signature(edge_source: str, kc_source: str, graph_kcs: list[dict], reasoning_edges: list[dict]) -> dict:
+    return {
+        "reasoning_edge_source": edge_source,
+        "master_graph_kc_source": kc_source,
+        "graph_kc_ids": [kc.get("kc_id") for kc in graph_kcs],
+        "edge_ids": [edge.get("edge_id") for edge in reasoning_edges],
+        "edge_count": len(reasoning_edges),
+    }
+
+
 def _sync_active_flags(kc_bank: dict, active_kc: dict) -> None:
     active_ids = set(active_kc.get("active_kc_ids", []))
     for node in kc_bank.get("kc_nodes", []):
@@ -591,6 +735,7 @@ def _write_build_checkpoint(
                 "edge_candidate_thread": str(EDGE_CANDIDATE_THREAD_PATH),
                 "verified_edges": str(VERIFIED_EDGES_PATH),
                 "edge_verification_log": str(EDGE_VERIFICATION_LOG_PATH),
+                "edge_coverage_report": str(EDGE_COVERAGE_REPORT_PATH),
                 "kc_bank_reasoning_edges": str(BANK_EDGES_PATH),
                 "active_kc": str(ACTIVE_KC_PATH),
                 "reasoning_threads": str(REASONING_THREADS_PATH),

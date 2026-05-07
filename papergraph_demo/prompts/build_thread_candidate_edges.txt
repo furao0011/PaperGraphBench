@@ -24,7 +24,7 @@ Rules:
 1. Use only KC IDs present in the input.
 2. Prefer cross-Macro edges. Do not recreate Unit-internal or Macro-internal edges.
 3. Do not create generic topical similarity edges.
-4. Every edge must include a verbatim evidence span from either the source KC Unit text or the target KC Unit text.
+4. Every edge must include `evidence_unit_id` and `evidence_paragraph_ids` selected from either the source KC Unit paragraphs or the target KC Unit paragraphs. Do not rewrite evidence text.
 5. Preserve direction according to the reasoning pattern.
 6. Use the lower-layer verified edges as hints, not as permission to invent unsupported edges.
 7. Use English in all generated fields.
@@ -46,7 +46,8 @@ Return strict JSON:
       "target": "KC31",
       "relation": "supports",
       "thread_pattern": "method_to_result",
-      "evidence": "verbatim evidence span from source or target Unit text",
+      "evidence_unit_id": "U_S4_001",
+      "evidence_paragraph_ids": ["P1"],
       "reason": "brief explanation of why this edge can support a reasoning thread",
       "confidence": 0.84
     }

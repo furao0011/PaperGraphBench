@@ -16,7 +16,7 @@ Rules:
 1. Use only KC IDs present in the input.
 2. Create edges only between KCs from this same Unit.
 3. Do not create generic topical similarity edges.
-4. Every edge must be supported by a verbatim evidence span from the Unit source_text.
+4. Every edge must include `evidence_paragraph_ids` selected from the Unit source_paragraphs. Do not rewrite evidence text.
 5. Preserve direction. If A explains B, source=A and target=B.
 6. Use English in all generated fields.
 7. Return JSON only.
@@ -36,7 +36,7 @@ Return strict JSON:
       "source": "KC12",
       "target": "KC13",
       "relation": "explains",
-      "evidence": "verbatim evidence span from the Unit source_text",
+      "evidence_paragraph_ids": ["P1"],
       "reason": "brief explanation of why the relation is valid",
       "confidence": 0.84
     }

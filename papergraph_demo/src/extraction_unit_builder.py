@@ -199,12 +199,13 @@ def _split_long_paragraph(text: str, limit: int) -> list[str]:
 
 
 def _window_prompt_payload(window: dict) -> dict:
+    paragraphs = _window_paragraphs(str(window.get("text", "")))
     return {
         "section_id": window.get("section_id"),
         "section_title": window.get("section_title"),
         "source_window_id": window.get("source_window_id"),
         "window_order": window.get("window_order"),
-        "text": window.get("text"),
+        "paragraphs": paragraphs,
     }
 
 
@@ -219,16 +220,24 @@ def _normalize_window_result(window: dict, result: dict) -> tuple[list[dict], li
         raise ValueError("Extraction Unit response skipped_spans must be a list.")
 
     units = []
+    paragraphs = _window_paragraphs(str(window.get("text", "")))
+    paragraph_by_id = {paragraph["paragraph_id"]: paragraph for paragraph in paragraphs}
     for order, item in enumerate(raw_units, start=1):
         if not isinstance(item, dict):
             raise ValueError(f"Extraction Unit #{order} must be an object.")
-        source_text = str(item.get("source_text", "")).strip()
-        if not source_text:
-            raise ValueError(f"Extraction Unit #{order} in {window['source_window_id']} must include source_text.")
-        if not _source_text_matches_window(source_text, str(window.get("text", ""))):
+        paragraph_ids = _string_list(item.get("paragraph_ids", []))
+        if not paragraph_ids:
             raise ValueError(
-                f"Extraction Unit #{order} in {window['source_window_id']} source_text is not found in the source window."
+                f"Extraction Unit #{order} in {window['source_window_id']} must include paragraph_ids."
             )
+        original_paragraph_ids = paragraph_ids
+        paragraph_ids = _normalize_paragraph_ids_to_contiguous_range(
+            window["source_window_id"],
+            order,
+            paragraph_ids,
+            paragraph_by_id,
+        )
+        source_text = "\n\n".join(paragraph_by_id[paragraph_id]["text"] for paragraph_id in paragraph_ids)
         unit_title = str(item.get("unit_title", "")).strip()
         unit_summary = str(item.get("unit_summary", "")).strip()
         coverage_note = str(item.get("coverage_note", "")).strip()
@@ -251,6 +260,11 @@ def _normalize_window_result(window: dict, result: dict) -> tuple[list[dict], li
                 "unit_title": unit_title,
                 "unit_summary": unit_summary,
                 "source_text": source_text,
+                "paragraph_ids": paragraph_ids,
+                "paragraph_ids_original": original_paragraph_ids,
+                "paragraph_id_normalization": (
+                    "as_provided" if paragraph_ids == original_paragraph_ids else "expanded_to_contiguous_range"
+                ),
                 "start_hint": str(item.get("start_hint") or source_text[:100]).strip(),
                 "end_hint": str(item.get("end_hint") or source_text[-100:]).strip(),
                 "related_categories": _string_list(item.get("related_categories", [])),
@@ -315,6 +329,35 @@ def _source_text_matches_window(source_text: str, window_text: str) -> bool:
     source_norm = _normalize_ws(source_text)
     window_norm = _normalize_ws(window_text)
     return bool(source_norm and source_norm in window_norm)
+
+
+def _window_paragraphs(text: str) -> list[dict]:
+    paragraphs = [paragraph.strip() for paragraph in re.split(r"\n\s*\n", text) if paragraph.strip()]
+    if not paragraphs and text.strip():
+        paragraphs = [text.strip()]
+    return [
+        {
+            "paragraph_id": f"P{idx}",
+            "text": paragraph,
+        }
+        for idx, paragraph in enumerate(paragraphs, start=1)
+    ]
+
+
+def _normalize_paragraph_ids_to_contiguous_range(
+    window_id: str,
+    unit_order: int,
+    paragraph_ids: list[str],
+    paragraph_by_id: dict[str, dict],
+) -> list[str]:
+    unknown = [paragraph_id for paragraph_id in paragraph_ids if paragraph_id not in paragraph_by_id]
+    if unknown:
+        raise ValueError(
+            f"Extraction Unit #{unit_order} in {window_id} references unknown paragraph_ids: {unknown}"
+        )
+    positions = sorted({int(paragraph_id[1:]) for paragraph_id in paragraph_ids})
+    expected = list(range(positions[0], positions[-1] + 1))
+    return [f"P{position}" for position in expected]
 
 
 def _normalize_ws(text: str) -> str:

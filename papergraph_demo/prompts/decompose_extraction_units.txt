@@ -6,7 +6,7 @@ Each Extraction Unit should be a short but semantically complete local argumenta
 Requirements:
 1. Cover all content in the input that has evaluation value.
 2. Do not split mechanically by paragraph. You may merge consecutive paragraphs or split dense paragraphs when needed.
-3. Every Unit must include `source_text`, and `source_text` must be copied from the input text.
+3. Every Unit must include consecutive `paragraph_ids` copied from the input paragraph list.
 4. Units must preserve the original reading order.
 5. Do not assume a fixed category set, but you may assign several `related_categories` to each Unit.
 6. Do not extract KCs in this stage.
@@ -24,6 +24,9 @@ Input:
 {{window_json}}
 ```
 
+The input contains numbered `paragraphs`. For each Extraction Unit, select consecutive `paragraph_ids` from this list.
+Do not rewrite source text. The program will assemble `source_text` from the selected paragraph IDs.
+
 Return JSON:
 
 ```json
@@ -32,7 +35,7 @@ Return JSON:
     {
       "unit_title": "short descriptive title",
       "unit_summary": "one sentence summary",
-      "source_text": "verbatim source span from the input text",
+      "paragraph_ids": ["P1", "P2"],
       "start_hint": "first characters of the source span",
       "end_hint": "last characters of the source span",
       "related_categories": ["method", "mechanism"],

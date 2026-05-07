@@ -166,7 +166,7 @@ def _unit_prompt_payload(unit: dict) -> dict:
         "unit_summary": unit.get("unit_summary"),
         "related_categories": unit.get("related_categories", []),
         "expected_kc_density": unit.get("expected_kc_density"),
-        "source_text": unit.get("source_text"),
+        "source_paragraphs": _unit_paragraphs(str(unit.get("source_text", ""))),
     }
 
 
@@ -190,16 +190,24 @@ def _normalize_unit_result(
         return [], empty_reason
 
     source_text = str(unit.get("source_text", "")).strip()
+    evidence_paragraphs = _unit_paragraphs(source_text)
+    evidence_paragraph_by_id = {paragraph["paragraph_id"]: paragraph for paragraph in evidence_paragraphs}
     out = []
     for idx, item in enumerate(raw_kcs, start=1):
         if not isinstance(item, dict):
             raise ValueError(f"KC #{idx} in unit {unit.get('unit_id')} must be an object.")
         claim = str(item.get("claim", "")).strip()
-        evidence = str(item.get("evidence", "")).strip()
-        if not claim or not evidence:
-            raise ValueError(f"KC #{idx} in unit {unit.get('unit_id')} must include claim and evidence.")
-        if not _text_in_source(evidence, source_text):
-            raise ValueError(f"KC #{idx} in unit {unit.get('unit_id')} evidence is not found in source_text.")
+        evidence_paragraph_ids = _string_list(item.get("evidence_paragraph_ids", []))
+        if not claim or not evidence_paragraph_ids:
+            raise ValueError(f"KC #{idx} in unit {unit.get('unit_id')} must include claim and evidence_paragraph_ids.")
+        original_evidence_paragraph_ids = evidence_paragraph_ids
+        evidence_paragraph_ids = _normalize_evidence_paragraph_ids_to_contiguous_range(
+            str(unit.get("unit_id")),
+            idx,
+            evidence_paragraph_ids,
+            evidence_paragraph_by_id,
+        )
+        evidence = "\n\n".join(evidence_paragraph_by_id[paragraph_id]["text"] for paragraph_id in evidence_paragraph_ids)
         macro_id = str(item.get("macro_id", "")).strip()
         if macro_id not in macro_ids:
             raise ValueError(f"KC #{idx} in unit {unit.get('unit_id')} references invalid macro_id={macro_id!r}.")
@@ -221,6 +229,13 @@ def _normalize_unit_result(
             {
                 "claim": claim,
                 "evidence": evidence,
+                "evidence_paragraph_ids": evidence_paragraph_ids,
+                "evidence_paragraph_ids_original": original_evidence_paragraph_ids,
+                "evidence_paragraph_id_normalization": (
+                    "as_provided"
+                    if evidence_paragraph_ids == original_evidence_paragraph_ids
+                    else "expanded_to_contiguous_range"
+                ),
                 "macro_id": macro_id,
                 "type": kc_type,
                 "importance": importance,
@@ -252,6 +267,35 @@ def _text_in_source(text: str, source_text: str) -> bool:
     needle = _normalize_ws(text)
     haystack = _normalize_ws(source_text)
     return bool(needle and needle in haystack)
+
+
+def _unit_paragraphs(source_text: str) -> list[dict]:
+    paragraphs = [paragraph.strip() for paragraph in re.split(r"\n\s*\n", source_text) if paragraph.strip()]
+    if not paragraphs and source_text.strip():
+        paragraphs = [source_text.strip()]
+    return [
+        {
+            "paragraph_id": f"P{idx}",
+            "text": paragraph,
+        }
+        for idx, paragraph in enumerate(paragraphs, start=1)
+    ]
+
+
+def _normalize_evidence_paragraph_ids_to_contiguous_range(
+    unit_id: str,
+    kc_index: int,
+    paragraph_ids: list[str],
+    paragraph_by_id: dict[str, dict],
+) -> list[str]:
+    unknown = [paragraph_id for paragraph_id in paragraph_ids if paragraph_id not in paragraph_by_id]
+    if unknown:
+        raise ValueError(
+            f"KC #{kc_index} in unit {unit_id} references unknown evidence_paragraph_ids: {unknown}"
+        )
+    positions = sorted({int(paragraph_id[1:]) for paragraph_id in paragraph_ids})
+    expected = list(range(positions[0], positions[-1] + 1))
+    return [f"P{position}" for position in expected]
 
 
 def _normalize_ws(text: str) -> str:
