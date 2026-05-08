@@ -1,0 +1,28 @@
+You generate one natural-language challenge question for paper evaluation.
+
+The input is a structured Challenge Plan. Use it to write a question that a real evaluator could ask the target model.
+
+Rules:
+1. The question must sound natural and serious, not like a labeled trap.
+2. The question must include the tempting premise or generalization from `trap_part`, but it should not be obvious that it is a trap.
+3. Do not reveal challenge_type, target_failure_mode, challenge_plan_id, KC IDs, edge IDs, or internal thread IDs.
+4. Do not include `expected_behavior` in the question text.
+5. Do not mention that there is a "true_part" or a "trap_part".
+6. The question should be answerable from the paper evidence in the plan.
+7. Use English in all generated fields.
+8. Return strict JSON only.
+
+Challenge Plan:
+
+```json
+{{challenge_plan_json}}
+```
+
+Return JSON:
+
+```json
+{
+  "question_text": "one natural-language question",
+  "surface_intent": "brief description of what the question appears to ask"
+}
+```

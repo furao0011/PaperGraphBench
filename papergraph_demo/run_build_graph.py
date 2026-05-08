@@ -28,6 +28,7 @@ from src.unit_kc_extractor import extract_kc_candidates_by_units
 
 
 BASE_DIR = Path(__file__).resolve().parent
+MASTER_GRAPH_BUILDER_VERSION = "v2_kc_metadata"
 PAPER_PATH = BASE_DIR / "data" / "papers" / "demo_paper.md"
 PAPER_DIR_PATH = BASE_DIR.parent / "util_example" / "output1"
 GRAPH_PATH = BASE_DIR / "data" / "graphs" / "master_graph.json"
@@ -682,6 +683,7 @@ def _score_signature(edge_source: str, reasoning_edges: list[dict]) -> dict:
 
 def _master_graph_signature(edge_source: str, kc_source: str, graph_kcs: list[dict], reasoning_edges: list[dict]) -> dict:
     return {
+        "master_graph_builder_version": MASTER_GRAPH_BUILDER_VERSION,
         "reasoning_edge_source": edge_source,
         "master_graph_kc_source": kc_source,
         "graph_kc_ids": [kc.get("kc_id") for kc in graph_kcs],

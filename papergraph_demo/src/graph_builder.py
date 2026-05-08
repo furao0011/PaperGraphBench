@@ -142,13 +142,30 @@ def _build_kc_nodes(
         must_1 = _short_label(claim)
         node = {
             "kc_id": kc["kc_id"],
+            "source_candidate_id": kc.get("source_candidate_id", ""),
+            "unit_id": kc.get("unit_id", ""),
+            "source_window_id": kc.get("source_window_id", ""),
             "macro_id": macro_id,
             "type": kc_type,
             "short_label": must_1,
             "full_claim": claim,
+            "claim": claim,
             "importance": importance,
             "section": kc.get("section", ""),
             "section_id": kc.get("section_id", ""),
+            "source_section": kc.get("source_section", kc.get("section", "")),
+            "source_section_id": kc.get("source_section_id", kc.get("section_id", "")),
+            "source_span_ids": kc.get("source_span_ids", []),
+            "claim_strength": kc.get("claim_strength", ""),
+            "scope": kc.get("scope", {}),
+            "related_terms": kc.get("related_terms", []),
+            "similarity_group_id": kc.get("similarity_group_id"),
+            "near_duplicate_kc_ids": kc.get("near_duplicate_kc_ids", []),
+            "dedup_status": kc.get("dedup_status", "unique"),
+            "duplicate_match_type": kc.get("duplicate_match_type", "none"),
+            "importance_scores": kc.get("importance_scores", {}),
+            "llm_scores_raw": kc.get("llm_scores_raw", {}),
+            "flags": kc.get("flags", {}),
         }
         rubric = _existing_rubric(kc) or rubric_cache.get(kc["kc_id"])
         if not rubric and not allow_offline_fallback:
