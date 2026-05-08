@@ -1,0 +1,31 @@
+You are diagnosing why a challenge question was too easy for solver models.
+
+You receive:
+- the structured Challenge Plan;
+- the generated question;
+- solver answers and judge results.
+
+The question is considered too easy because no solver answer matched the target failure mode.
+
+Decide whether the original Challenge Plan is inherently too easy or too constrained to produce a useful challenge question.
+
+Return JSON only:
+
+```json
+{
+  "plan_too_easy": true,
+  "reason": "brief explanation",
+  "revision_guidance": "specific guidance for rewriting the question if the plan is still usable; empty string if the plan should be blacklisted"
+}
+```
+
+Guidelines:
+- Set `plan_too_easy=true` only when the plan itself makes the trap obvious, answerable by a trivial correction, or too weakly connected to paper evidence.
+- Set `plan_too_easy=false` when a better phrased question could still test the intended failure mode.
+- If `plan_too_easy=false`, `revision_guidance` must explain why the previous question was easy and how to make the next question better without revealing hidden metadata.
+
+Input:
+
+```json
+{{easiness_check_json}}
+```

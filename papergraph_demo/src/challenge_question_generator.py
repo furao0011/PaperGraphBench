@@ -107,7 +107,28 @@ def generate_raw_challenge_questions(
     }
 
 
-def _generate_one(plan: dict, client: OpenAICompatClient, tpl: str) -> dict:
+def generate_challenge_question_for_plan(
+    plan: dict,
+    client: OpenAICompatClient,
+    question_id: str,
+    revision_feedback: str = "",
+) -> dict:
+    if not client or not client.is_ready():
+        raise RuntimeError("Challenge question generation requires a configured online model client.")
+    if not str(question_id).strip():
+        raise ValueError("generate_challenge_question_for_plan requires a non-empty question_id.")
+    tpl = load_prompt("generate_challenge_question.txt")
+    raw = _generate_one(plan, client, tpl, revision_feedback=revision_feedback)
+    raw["question_id"] = question_id
+    return _normalize_question(plan, raw, 0)
+
+
+def _generate_one(
+    plan: dict,
+    client: OpenAICompatClient,
+    tpl: str,
+    revision_feedback: str = "",
+) -> dict:
     plan_id = plan["challenge_plan_id"]
     prompt_plan = _prompt_plan(plan)
     with span("generate raw challenge question", plan_id=plan_id, challenge_type=plan.get("challenge_type")):
@@ -116,6 +137,7 @@ def _generate_one(plan: dict, client: OpenAICompatClient, tpl: str) -> dict:
             user_prompt=render_prompt(
                 tpl,
                 challenge_plan_json=json.dumps(prompt_plan, ensure_ascii=False, indent=2),
+                revision_feedback=revision_feedback.strip() or "None.",
             ),
             temperature=0.2,
         )

@@ -1,0 +1,30 @@
+You are validating whether a generated challenge question is usable for paper evaluation.
+
+You receive:
+- a structured Challenge Plan, which contains hidden construction intent;
+- a generated natural-language question.
+
+Judge only whether this question is usable before solver testing.
+
+Usable means:
+1. The question is natural and serious.
+2. The question does not expose hidden labels, internal IDs, or evaluation metadata.
+3. The question follows the Challenge Plan's intended target failure mode.
+4. The question can be answered from the paper evidence implied by the plan.
+5. The question is not ambiguous in a way that makes the target failure mode impossible to judge.
+
+Return JSON only:
+
+```json
+{
+  "usable": true,
+  "reason": "brief explanation",
+  "revision_guidance": "concrete guidance for rewriting if unusable; empty string if usable"
+}
+```
+
+Input:
+
+```json
+{{usability_check_json}}
+```

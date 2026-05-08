@@ -14,6 +14,31 @@ from src.prompt_loader import load_prompt, render_prompt
 FAILURE_MODES = {"overclaim", "wrong_relation", "false_premise", "other", "none"}
 
 
+def challenge_solver_configs(default_model: str) -> list[dict]:
+    return _solver_configs(default_model)
+
+
+def run_single_challenge_question_trials(
+    question: dict,
+    client: OpenAICompatClient,
+    paper_text: str,
+) -> dict:
+    if not client or not client.is_ready():
+        raise RuntimeError("Challenge filtering requires a configured online model client.")
+    if not isinstance(paper_text, str) or not paper_text.strip():
+        raise ValueError("Challenge trial requires non-empty full paper text.")
+    solvers = _solver_configs(client.cfg.llm_model)
+    return _normalize_trial_bundle(
+        question,
+        _run_question_trials(question, solvers, client, paper_text),
+        solvers,
+    )
+
+
+def question_with_filter_metadata(question: dict, bundle: dict) -> dict:
+    return _question_with_filter_metadata(question, bundle)
+
+
 def filter_challenge_questions(
     raw_questions: dict,
     client: OpenAICompatClient,

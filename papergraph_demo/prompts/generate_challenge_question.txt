@@ -18,6 +18,12 @@ Challenge Plan:
 {{challenge_plan_json}}
 ```
 
+Revision feedback:
+
+```text
+{{revision_feedback}}
+```
+
 Return JSON:
 
 ```json

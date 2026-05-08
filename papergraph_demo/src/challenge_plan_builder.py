@@ -34,8 +34,14 @@ def build_challenge_plans(graph: dict) -> dict:
         for edge in reasoning_edges
         if edge.get("edge_id")
     }
-    per_type_limit = _env_positive_int("CHALLENGE_PLAN_PER_TYPE_LIMIT", 12)
-    total_target = _env_positive_int("CHALLENGE_PLAN_TARGET", 30)
+    per_type_limit = _env_positive_int(
+        "CHALLENGE_PLAN_POOL_PER_TYPE_LIMIT",
+        _env_positive_int("CHALLENGE_PLAN_PER_TYPE_LIMIT", 12),
+    )
+    total_target = _env_positive_int(
+        "CHALLENGE_PLAN_POOL_TARGET",
+        _env_positive_int("CHALLENGE_PLAN_TARGET", 30),
+    )
 
     by_type = {
         "overclaim_challenge": _dedupe_plans(_overclaim_plans(by_kc, active_ids, per_type_limit))[:per_type_limit],

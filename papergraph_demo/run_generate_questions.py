@@ -2,9 +2,8 @@ import json
 import os
 from pathlib import Path
 
-from src.challenge_filter import filter_challenge_questions
+from src.challenge_loop import build_challenge_questions_loop
 from src.challenge_plan_builder import build_challenge_plans
-from src.challenge_question_generator import generate_raw_challenge_questions
 from src.config import load_settings
 from src.model_client import ModelConfig, OpenAICompatClient
 from src.paper_context import load_full_paper_text
@@ -18,8 +17,7 @@ QUESTION_PATH = BASE_DIR / "data" / "questions" / "question_templates.json"
 QUESTION_CACHE_PATH = BASE_DIR / "data" / "questions" / "question_generation_cache.json"
 CHALLENGE_PLAN_PATH = BASE_DIR / "data" / "questions" / "challenge_plans.json"
 CHALLENGE_QUESTION_RAW_PATH = BASE_DIR / "data" / "questions" / "challenge_questions_raw.json"
-CHALLENGE_QUESTION_CACHE_PATH = BASE_DIR / "data" / "questions" / "challenge_question_generation_cache.json"
-CHALLENGE_FILTER_CACHE_PATH = BASE_DIR / "data" / "questions" / "challenge_filter_cache.json"
+CHALLENGE_LOOP_CACHE_PATH = BASE_DIR / "data" / "questions" / "challenge_loop_cache.json"
 CHALLENGE_SOLVER_TRIALS_PATH = BASE_DIR / "data" / "questions" / "challenge_solver_trials.json"
 CHALLENGE_QUESTION_FILTERED_PATH = BASE_DIR / "data" / "questions" / "challenge_questions_filtered.json"
 CHALLENGE_QUESTION_HUMAN_REVIEW_PATH = BASE_DIR / "data" / "questions" / "challenge_questions_need_human_review.json"
@@ -42,10 +40,7 @@ def main() -> None:
     resume = _env_bool("PAPERGRAPH_RESUME") or _env_bool("QUESTION_RESUME")
     restart = _env_bool("PAPERGRAPH_RESTART") or _env_bool("QUESTION_RESTART")
     cache_path = Path(os.getenv("QUESTION_CACHE_PATH", str(QUESTION_CACHE_PATH)))
-    challenge_question_cache_path = Path(
-        os.getenv("CHALLENGE_QUESTION_CACHE_PATH", str(CHALLENGE_QUESTION_CACHE_PATH))
-    )
-    challenge_filter_cache_path = Path(os.getenv("CHALLENGE_FILTER_CACHE_PATH", str(CHALLENGE_FILTER_CACHE_PATH)))
+    challenge_loop_cache_path = Path(os.getenv("CHALLENGE_LOOP_CACHE_PATH", str(CHALLENGE_LOOP_CACHE_PATH)))
     client = OpenAICompatClient(
         ModelConfig(settings.api_key, settings.base_url, settings.llm_model)
     )
@@ -70,75 +65,73 @@ def main() -> None:
         path=CHALLENGE_PLAN_PATH,
         plans=challenge_plans.get("summary", {}).get("plan_count", 0),
     )
-    with span("generate raw challenge questions"):
-        raw_challenge_questions = generate_raw_challenge_questions(
+    with span("build challenge questions by loop"):
+        challenge_loop_result = build_challenge_questions_loop(
             challenge_plans=challenge_plans,
             client=client,
-            cache_path=challenge_question_cache_path,
-            resume=resume,
-            restart=restart,
-        )
-    CHALLENGE_QUESTION_RAW_PATH.write_text(
-        json.dumps(raw_challenge_questions, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
-    log(
-        "raw challenge questions generated",
-        path=CHALLENGE_QUESTION_RAW_PATH,
-        questions=raw_challenge_questions.get("summary", {}).get("raw_question_count", 0),
-    )
-    with span("filter challenge questions"):
-        challenge_filter_result = filter_challenge_questions(
-            raw_questions=raw_challenge_questions,
-            client=client,
-            cache_path=challenge_filter_cache_path,
             paper_text=paper_text,
+            cache_path=challenge_loop_cache_path,
             resume=resume,
             restart=restart,
         )
+    raw_challenge_questions = {
+        "paper_id": challenge_loop_result["paper_id"],
+        "schema_version": challenge_loop_result["schema_version"],
+        "source_challenge_plan_signature": challenge_loop_result["source_challenge_plan_signature"],
+        "challenge_loop_signature": challenge_loop_result["challenge_loop_signature"],
+        "challenge_questions_raw": challenge_loop_result["challenge_questions_raw"],
+        "summary": {
+            "raw_question_count": challenge_loop_result["summary"]["raw_question_count"],
+            "by_type": challenge_loop_result["summary"].get("by_type", {}),
+        },
+    }
+    _write_json(CHALLENGE_QUESTION_RAW_PATH, raw_challenge_questions)
     _write_json(
         CHALLENGE_SOLVER_TRIALS_PATH,
         {
-            "paper_id": challenge_filter_result["paper_id"],
-            "schema_version": challenge_filter_result["schema_version"],
-            "source_raw_question_signature": challenge_filter_result["source_raw_question_signature"],
-            "solver_configs": challenge_filter_result["solver_configs"],
-            "solver_trials": challenge_filter_result["solver_trials"],
-            "summary": challenge_filter_result["summary"],
+            "paper_id": challenge_loop_result["paper_id"],
+            "schema_version": challenge_loop_result["schema_version"],
+            "challenge_loop_signature": challenge_loop_result["challenge_loop_signature"],
+            "solver_configs": challenge_loop_result["solver_configs"],
+            "solver_trials": challenge_loop_result["solver_trials"],
+            "summary": challenge_loop_result["summary"],
         },
     )
     _write_json(
         CHALLENGE_QUESTION_FILTERED_PATH,
         {
-            "paper_id": challenge_filter_result["paper_id"],
-            "schema_version": challenge_filter_result["schema_version"],
-            "challenge_questions_filtered": challenge_filter_result["challenge_questions_filtered"],
-            "summary": challenge_filter_result["summary"],
+            "paper_id": challenge_loop_result["paper_id"],
+            "schema_version": challenge_loop_result["schema_version"],
+            "challenge_questions_filtered": challenge_loop_result["challenge_questions_filtered"],
+            "summary": challenge_loop_result["summary"],
         },
     )
     _write_json(
         CHALLENGE_QUESTION_HUMAN_REVIEW_PATH,
         {
-            "paper_id": challenge_filter_result["paper_id"],
-            "schema_version": challenge_filter_result["schema_version"],
-            "challenge_questions_need_human_review": challenge_filter_result["challenge_questions_need_human_review"],
-            "summary": challenge_filter_result["summary"],
+            "paper_id": challenge_loop_result["paper_id"],
+            "schema_version": challenge_loop_result["schema_version"],
+            "challenge_questions_need_human_review": challenge_loop_result["challenge_questions_need_human_review"],
+            "summary": challenge_loop_result["summary"],
         },
     )
     _write_json(
         CHALLENGE_QUESTION_REJECTED_PATH,
         {
-            "paper_id": challenge_filter_result["paper_id"],
-            "schema_version": challenge_filter_result["schema_version"],
-            "challenge_questions_rejected": challenge_filter_result["challenge_questions_rejected"],
-            "summary": challenge_filter_result["summary"],
+            "paper_id": challenge_loop_result["paper_id"],
+            "schema_version": challenge_loop_result["schema_version"],
+            "challenge_questions_rejected": challenge_loop_result["challenge_questions_rejected"],
+            "blacklisted_plan_ids": challenge_loop_result["blacklisted_plan_ids"],
+            "loop_events": challenge_loop_result["loop_events"],
+            "summary": challenge_loop_result["summary"],
         },
     )
     log(
-        "challenge questions filtered",
-        filtered=challenge_filter_result["summary"]["filtered_count"],
-        human_review=challenge_filter_result["summary"]["human_review_count"],
-        rejected=challenge_filter_result["summary"]["rejected_count"],
+        "challenge loop complete",
+        filtered=challenge_loop_result["summary"]["filtered_count"],
+        human_review=challenge_loop_result["summary"]["human_review_count"],
+        rejected=challenge_loop_result["summary"]["rejected_count"],
+        stop_reason=challenge_loop_result["summary"]["stop_reason"],
     )
     try:
         with span("generate questions"):
@@ -168,8 +161,8 @@ def main() -> None:
         "challenge_question_raw_summary": raw_challenge_questions.get("summary", {}),
         "challenge_questions_filtered_path": "data/questions/challenge_questions_filtered.json",
         "challenge_solver_trials_path": "data/questions/challenge_solver_trials.json",
-        "challenge_filter_summary": challenge_filter_result.get("summary", {}),
-        "challenge_questions": challenge_filter_result["challenge_questions_filtered"],
+        "challenge_filter_summary": challenge_loop_result.get("summary", {}),
+        "challenge_questions": challenge_loop_result["challenge_questions_filtered"],
         "challenge_scheduler_config": {
             "macro_level_enabled": True,
             "thread_level_enabled": True,
