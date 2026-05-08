@@ -8,7 +8,7 @@ from src.eval_artifacts import load_eval_checkpoint, save_eval_artifacts
 from src.eval_turn_runner import EvaluationTurnRunner, select_followup_target_kcs
 from src.mermaid_exporter import export_final_thread_state_mermaid
 from src.model_client import ModelConfig, OpenAICompatClient
-from src.paper_parser import load_paper_text, load_paper_text_from_dir
+from src.paper_context import load_full_paper_text
 from src.policy_controller import choose_next_action
 from src.progress import log, span
 from src.question_generator import normalize_question_bundle
@@ -106,18 +106,6 @@ def _rebuild_macro_misleading_counts(eval_state: dict, trajectory: dict) -> None
     eval_state.setdefault("global_state", {})["misleading_question_count"] = max(current_total, total)
     current_reviews = eval_state["global_state"].get("review_question_count", 0)
     eval_state["global_state"]["review_question_count"] = max(current_reviews, review_total)
-
-
-def _load_full_paper_text(graph: dict) -> str:
-    paper_path = Path(graph.get("paper_text_path", ""))
-    if paper_path.is_dir():
-        text = load_paper_text_from_dir(paper_path)
-    elif paper_path.is_file():
-        text = load_paper_text(paper_path)
-    else:
-        text = "\n".join(k["full_claim"] for k in graph.get("kc_nodes", []))
-    limit = int(os.getenv("EVAL_PAPER_CHAR_LIMIT", "0") or "0")
-    return text[:limit] if limit > 0 else text
 
 
 def _load_kc_bank(graph: dict) -> dict:
@@ -250,7 +238,7 @@ def main() -> None:
     by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", [])}
     kc_bank = _load_kc_bank(graph)
     with span("load paper text"):
-        paper_text = _load_full_paper_text(graph)
+        paper_text = load_full_paper_text(graph, BASE_DIR)
     log(
         "evaluation inputs ready",
         kcs=len(by_kc),

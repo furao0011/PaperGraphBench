@@ -56,13 +56,14 @@ class OpenAICompatClient:
         user_prompt: str,
         temperature: float = 0.2,
         timeout_s: int | None = None,
+        model: str | None = None,
     ) -> dict:
         if not self.is_ready():
             raise RuntimeError("Model client is not configured. Check API_KEY/BASE_URL/LLM_MODEL.")
 
         url = self.cfg.base_url.rstrip("/") + "/chat/completions"
         payload = {
-            "model": self.cfg.llm_model,
+            "model": model or self.cfg.llm_model,
             "temperature": temperature,
             "messages": [
                 {"role": "system", "content": system_prompt},
@@ -81,13 +82,14 @@ class OpenAICompatClient:
         user_prompt: str,
         temperature: float = 0.2,
         timeout_s: int | None = None,
+        model: str | None = None,
     ) -> str:
         if not self.is_ready():
             raise RuntimeError("Model client is not configured. Check API_KEY/BASE_URL/LLM_MODEL.")
 
         url = self.cfg.base_url.rstrip("/") + "/chat/completions"
         payload = {
-            "model": self.cfg.llm_model,
+            "model": model or self.cfg.llm_model,
             "temperature": temperature,
             "messages": [
                 {"role": "system", "content": system_prompt},
