@@ -112,6 +112,35 @@ def build_edge_coverage_report(
     }
 
 
+def attach_reasoning_path_coverage(report: dict, reasoning_paths: list[dict]) -> dict:
+    path_pattern_counts: dict[str, int] = {}
+    supporting_edge_counts: dict[str, int] = {}
+    paths_without_supporting_edges = []
+    for path in reasoning_paths:
+        path_id = str(path.get("path_id", "")).strip()
+        pattern = str(path.get("pattern") or "unknown").strip()
+        path_pattern_counts[pattern] = path_pattern_counts.get(pattern, 0) + 1
+        supporting_edge_ids = [
+            str(edge_id).strip()
+            for edge_id in path.get("supporting_edge_ids", [])
+            if str(edge_id).strip()
+        ]
+        if not supporting_edge_ids:
+            paths_without_supporting_edges.append(path_id)
+        for edge_id in supporting_edge_ids:
+            supporting_edge_counts[edge_id] = supporting_edge_counts.get(edge_id, 0) + 1
+    item = dict(report)
+    item["reasoning_path_pattern_coverage"] = dict(sorted(path_pattern_counts.items()))
+    item["reasoning_path_count"] = len(reasoning_paths)
+    item["reasoning_path_supporting_edge_reuse"] = dict(sorted(supporting_edge_counts.items()))
+    item["paths_without_supporting_edges"] = paths_without_supporting_edges
+    item["thread_pattern_edge_coverage_note"] = (
+        "This field counts only verified edges produced by the Thread candidate edge layer. "
+        "Reasoning paths and Reasoning Threads are reported separately because they can be derived from lower-layer verified edges."
+    )
+    return item
+
+
 def _macro_pairs(macro_spine: dict) -> list[tuple[str, str, dict]]:
     pairs = []
     seen = set()

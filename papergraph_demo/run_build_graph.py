@@ -10,7 +10,7 @@ from src.edge_candidate_builder import (
     build_thread_candidate_edges,
     build_unit_edge_candidates,
 )
-from src.edge_coverage_report import build_edge_coverage_report
+from src.edge_coverage_report import attach_reasoning_path_coverage, build_edge_coverage_report
 from src.edge_verifier import verify_edge_candidates
 from src.extraction_unit_builder import decompose_extraction_units
 from src.graph_builder import build_master_graph
@@ -524,9 +524,16 @@ def main() -> None:
             )
             graph["diagnostics"]["master_graph_kc_source"] = graph_kc_source
         _write_build_checkpoint(checkpoint_path, paper_id, "master_graph_base", resume=resume, restart=restart)
+    if coverage_report:
+        coverage_report = attach_reasoning_path_coverage(coverage_report, graph.get("reasoning_paths", []))
+        _write_json(EDGE_COVERAGE_REPORT_PATH, coverage_report)
 
     reasoning_threads = _load_resumable_json(REASONING_THREADS_PATH, paper_id, resume, restart, "reasoning threads")
-    if reasoning_threads and reasoning_threads.get("source_graph_signature") != graph.get("diagnostics", {}).get("graph_signature"):
+    if reasoning_threads and (
+        reasoning_threads.get("source_graph_signature") != graph.get("diagnostics", {}).get("graph_signature")
+        or reasoning_threads.get("thread_builder_version") != "v2_verified_edges"
+        or not _reasoning_threads_have_v2_steps(reasoning_threads)
+    ):
         log(
             "resume artifact ignored due to Reasoning Thread graph signature mismatch",
             path=REASONING_THREADS_PATH,
@@ -541,6 +548,7 @@ def main() -> None:
                 reasoning_edges=graph.get("reasoning_edges", []),
                 reasoning_paths=graph.get("reasoning_paths", []),
                 client=client,
+                edge_coverage_report=coverage_report,
             )
         reasoning_threads["source_graph_signature"] = graph.get("diagnostics", {}).get("graph_signature")
         _write_json(REASONING_THREADS_PATH, reasoning_threads)
@@ -680,6 +688,21 @@ def _master_graph_signature(edge_source: str, kc_source: str, graph_kcs: list[di
         "edge_ids": [edge.get("edge_id") for edge in reasoning_edges],
         "edge_count": len(reasoning_edges),
     }
+
+
+def _reasoning_threads_have_v2_steps(reasoning_threads: dict) -> bool:
+    threads = reasoning_threads.get("threads", [])
+    if not threads:
+        return False
+    for thread in threads:
+        if not thread.get("edge_sequence"):
+            return False
+        for step in thread.get("planned_turns", []):
+            if "supporting_edge_ids" not in step or not step.get("expected_reasoning"):
+                return False
+            if step.get("role") == "bridge_reasoning" and not step.get("supporting_edge_ids"):
+                return False
+    return True
 
 
 def _sync_active_flags(kc_bank: dict, active_kc: dict) -> None:

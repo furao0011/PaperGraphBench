@@ -10,14 +10,14 @@ Allowed thread count range:
 {{thread_min}} to {{thread_max}}
 
 Task:
-Build cross-turn reasoning threads from the Macro Spine, Active KCs, reasoning edges, and reasoning paths.
+Build cross-turn reasoning threads from the Macro Spine, Active KCs, verified active edges, verified active paths, and edge coverage diagnostics.
 
 Rules:
 1) Each thread must span at least two Macros.
-2) Each thread must use only active KC IDs, Macro IDs, and edge IDs from the input.
+2) Each thread must use only active KC IDs, Macro IDs, and verified edge IDs from the input.
 3) Each thread must contain 3-4 planned turns.
 4) A thread is not a single multi-hop question. It must establish earlier premise/evidence and later ask for a bridge.
-5) Include one bridge_reasoning step with required_lit_kc_ids.
+5) Include one bridge_reasoning step with required_lit_kc_ids and supporting_edge_ids.
 6) Include one review_consistency step with trigger_condition.at_review_stage = true.
 7) Use only these thread_type values:
    - problem_to_method
@@ -31,9 +31,13 @@ Rules:
    - review_consistency
 9) Thread IDs must be consecutive: RT1, RT2, ...
 10) Step IDs must be consecutive inside each thread: RT1_STEP1, RT1_STEP2, ...
-11) Do not expose KC IDs in question_goal wording; question_goal may reference the kind of claim conceptually.
-12) Use English in all generated fields.
-13) Return strict JSON only.
+11) Every planned turn must include supporting_edge_ids. It may be empty except for bridge_reasoning.
+12) Every planned turn must include expected_reasoning.
+13) Prefer verified_active_paths when they exist, but you may build a thread from verified_active_edges directly.
+14) Use edge_coverage_report to avoid overusing already well-covered areas when there are viable alternatives.
+15) Do not expose KC IDs in question_goal wording; question_goal may reference the kind of claim conceptually.
+16) Use English in all generated fields.
+17) Return strict JSON only.
 
 Return schema:
 {
@@ -51,7 +55,9 @@ Return schema:
           "role": "establish_premise",
           "preferred_macro_id": "M2",
           "target_kc_ids": ["KC3"],
+          "supporting_edge_ids": [],
           "question_goal": "Ask the model to explain the relevant method mechanism.",
+          "expected_reasoning": "The answer should establish the source claim needed by the later bridge.",
           "trigger_condition": {
             "macro_reached": "M2"
           }
@@ -61,7 +67,9 @@ Return schema:
           "role": "establish_evidence",
           "preferred_macro_id": "M5",
           "target_kc_ids": ["KC14"],
+          "supporting_edge_ids": ["E7"],
           "question_goal": "Ask the model to explain the relevant experimental evidence.",
+          "expected_reasoning": "The answer should establish the evidence claim that the bridge will connect to the premise.",
           "trigger_condition": {
             "macro_reached": "M5"
           }
@@ -71,7 +79,9 @@ Return schema:
           "role": "bridge_reasoning",
           "preferred_macro_id": "M5",
           "target_kc_ids": ["KC3", "KC14", "KC21"],
+          "supporting_edge_ids": ["E2", "E7"],
           "question_goal": "Ask the model to connect the earlier mechanism to the later evidence.",
+          "expected_reasoning": "The answer should use the verified edge chain to connect the premise to the evidence without inventing a new relation.",
           "trigger_condition": {
             "required_lit_kc_ids": ["KC3", "KC14"]
           }
@@ -81,7 +91,9 @@ Return schema:
           "role": "review_consistency",
           "preferred_macro_id": null,
           "target_kc_ids": ["KC3", "KC14"],
+          "supporting_edge_ids": ["E2"],
           "question_goal": "Check whether the model preserves the same mechanism-evidence relation at review time.",
+          "expected_reasoning": "The answer should remain consistent with the verified relation used earlier in the thread.",
           "trigger_condition": {
             "at_review_stage": true
           }
@@ -95,4 +107,3 @@ Return schema:
     }
   ]
 }
-
