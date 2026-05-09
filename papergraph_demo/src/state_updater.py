@@ -1,5 +1,11 @@
 from __future__ import annotations
 
+from src.challenge_scheduler import record_challenge_result
+from src.evaluation_hallucination_state import (
+    ensure_hallucination_state,
+    no_gameover_on_unresolved_hallucination,
+    record_structured_judge_state,
+)
 from src.thread_scheduler import record_thread_step_result
 
 
@@ -38,7 +44,6 @@ def initialize_eval_state(master_graph: dict, target_model: str) -> dict:
                 "covered_kc_ids": [],
                 "missing_kc_ids": [],
                 "related_turns": [],
-                "misleading_question_count": 0,
                 "bank_kc_count": macro.get("bank_kc_count", len(macro.get("kc_ids", []))),
                 "active_kc_count": len(macro.get("kc_ids", [])),
             }
@@ -60,16 +65,46 @@ def initialize_eval_state(master_graph: dict, target_model: str) -> dict:
             if thread.get("thread_id")
         },
         "claim_verification_states": {},
+        "hallucination_events": {},
+        "coverage_gaps": {},
+        "stage_tasks": {},
+        "macro_stage_status": {
+            macro.get("macro_id"): {
+                "status": "not_started",
+                "main_done": False,
+                "repair_done": False,
+                "thread_done": False,
+                "challenge_done": False,
+                "pending_task_ids": [],
+                "running_task_ids": [],
+                "completed_task_ids": [],
+                "exhausted_task_ids": [],
+                "cancelled_task_ids": [],
+            }
+            for macro in master_graph.get("macro_nodes", [])
+            if macro.get("macro_id")
+        },
         "global_state": {
             "turn_count": 0,
             "hallucination_count": 0,
-            "misleading_question_count": 0,
+            "hallucination_event_count": 0,
+            "hallucination_event_resolved_count": 0,
+            "hallucination_event_exhausted_count": 0,
+            "coverage_gap_count": 0,
+            "coverage_gap_resolved_count": 0,
+            "coverage_gap_exhausted_count": 0,
             "review_question_count": 0,
             "global_overclaim_count": 0,
             "global_contradicted_claim_count": 0,
             "not_enough_info_claim_count": 0,
             "thread_bridge_tested_count": 0,
             "thread_bridge_success_count": 0,
+            "challenge_question_count": 0,
+            "challenge_failure_count": 0,
+            "challenge_resisted_count": 0,
+            "stage_task_count": 0,
+            "stage_task_completed_count": 0,
+            "stage_task_exhausted_count": 0,
             "failed": False,
             "failure_reason": None,
             "evaluation_status": "not_started",
@@ -88,7 +123,9 @@ def apply_judge_result(
     question_type: str | None = None,
     thread_id: str | None = None,
     thread_step_id: str | None = None,
+    question: dict | None = None,
 ) -> dict:
+    ensure_hallucination_state(eval_state)
     lit = []
     missing = []
     for kc_id in judge_result.get("covered_kc_ids", []):
@@ -117,7 +154,7 @@ def apply_judge_result(
             s["status"] = "hallucinated"
             s["same_hallucination_followed_up_times"] += 1
             s["correction_status"] = "uncorrected"
-            if s["same_hallucination_followed_up_times"] >= 2:
+            if not no_gameover_on_unresolved_hallucination() and s["same_hallucination_followed_up_times"] >= 2:
                 s["status"] = "failed"
                 eval_state["global_state"]["failed"] = True
                 eval_state["global_state"]["failure_reason"] = f"REFUSE_TO_CORRECT:{kc_id}"
@@ -151,12 +188,27 @@ def apply_judge_result(
         eval_state["global_state"]["thread_bridge_tested_count"] += 1
         if thread_update.get("bridge_success") is True:
             eval_state["global_state"]["thread_bridge_success_count"] += 1
+    challenge_update = record_challenge_result(
+        eval_state,
+        question=question or {"question_type": question_type, "macro_id": macro_id},
+        turn_id=turn_id,
+        judge_result=judge_result,
+    )
+    structured_update = record_structured_judge_state(
+        eval_state,
+        turn_id=turn_id,
+        judge_result=judge_result,
+        macro_id=macro_id,
+        question_type=question_type,
+    )
     eval_state["global_state"]["turn_count"] += 1
     return {
         "lit_kc": lit,
         "missing_kc": missing,
         "macro_update": macro_update,
         "thread_update": thread_update,
+        "challenge_update": challenge_update,
+        "structured_update": structured_update,
         "failed": eval_state["global_state"]["failed"],
     }
 
@@ -166,12 +218,14 @@ def apply_claim_verification_results(eval_state: dict, turn_id: str, results: li
     for item in results:
         label = str(item.get("label", "NOT_ENOUGH_INFO"))
         labels[label] = labels.get(label, 0) + 1
+    supported_kc_ids = _apply_supported_claim_lighting(eval_state, turn_id, results)
     summary = {
         "verified_claim_count": len(results),
         "supported": labels.get("SUPPORTED", 0) + labels.get("NOT_IN_KC_BUT_SUPPORTED_BY_EVIDENCE", 0),
         "contradicted": labels.get("CONTRADICTED", 0),
         "overclaim": labels.get("OVERCLAIM", 0),
         "not_enough_info": labels.get("NOT_ENOUGH_INFO", 0),
+        "supported_kc_ids": supported_kc_ids,
         "labels": labels,
     }
     eval_state.setdefault("claim_verification_states", {})[turn_id] = summary
@@ -186,6 +240,46 @@ def apply_claim_verification_results(eval_state: dict, turn_id: str, results: li
     if summary["contradicted"] or summary["overclaim"]:
         global_state["hallucination_count"] = global_state.get("hallucination_count", 0) + summary["contradicted"] + summary["overclaim"]
     return summary
+
+
+def _apply_supported_claim_lighting(eval_state: dict, turn_id: str, results: list[dict]) -> list[str]:
+    supported_labels = {"SUPPORTED", "NOT_IN_KC_BUT_SUPPORTED_BY_EVIDENCE"}
+    lit: list[str] = []
+    for item in results:
+        if item.get("label") not in supported_labels:
+            continue
+        for kc_id in item.get("supporting_kc_ids") or item.get("matched_kc_ids") or item.get("retrieved_kc_ids") or []:
+            if kc_id not in eval_state.get("kc_states", {}):
+                continue
+            state = eval_state["kc_states"][kc_id]
+            if turn_id not in state.setdefault("covered_by_turns", []):
+                state["covered_by_turns"].append(turn_id)
+            state["confidence"] = max(float(state.get("confidence", 0.0) or 0.0), float(item.get("confidence", 0.0) or 0.0))
+            if state.get("status") in {"unlit", "missing"}:
+                state["status"] = "lit"
+            macro_id = state.get("macro_id")
+            if macro_id:
+                macro_state = eval_state.setdefault("macro_states", {}).setdefault(
+                    macro_id,
+                    {
+                        "status": "not_started",
+                        "main_question_asked": False,
+                        "covered_kc_ids": [],
+                        "missing_kc_ids": [],
+                        "related_turns": [],
+                        "bank_kc_count": 0,
+                        "active_kc_count": 0,
+                    },
+                )
+                if kc_id not in macro_state.setdefault("covered_kc_ids", []):
+                    macro_state["covered_kc_ids"].append(kc_id)
+                if kc_id in macro_state.setdefault("missing_kc_ids", []):
+                    macro_state["missing_kc_ids"].remove(kc_id)
+                if turn_id not in macro_state.setdefault("related_turns", []):
+                    macro_state["related_turns"].append(turn_id)
+            if kc_id not in lit:
+                lit.append(kc_id)
+    return lit
 
 
 def _apply_macro_update(
@@ -206,7 +300,6 @@ def _apply_macro_update(
             "covered_kc_ids": [],
             "missing_kc_ids": [],
             "related_turns": [],
-            "misleading_question_count": 0,
             "bank_kc_count": 0,
             "active_kc_count": 0,
         },

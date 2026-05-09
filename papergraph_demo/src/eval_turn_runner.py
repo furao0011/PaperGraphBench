@@ -7,7 +7,10 @@ from typing import Callable
 from src.claim_verifier import append_claim_verification_log, claim_verification_enabled, verify_global_claims
 from src.dialogue_engine import generate_thread_question
 from src.eval_artifacts import append_turn
+from src.evaluation_hallucination_state import record_hallucination_events
+from src.evaluation_task_queue import attach_recommended_stage_tasks
 from src.judge import judge_answer_with_online_fallback
+from src.judge_result_normalizer import normalize_after_global_claim_verification, normalize_judge_result
 from src.model_client import OpenAICompatClient
 from src.progress import log, span
 from src.state_updater import apply_claim_verification_results, apply_judge_result
@@ -59,7 +62,8 @@ class EvaluationTurnRunner:
         )
         answer, answer_mode = self._answer_turn(turn_id, question["question_text"], trajectory, target_kcs)
         judge_result = self._judge_turn(turn_id, question, answer, target_kcs, trajectory)
-        judge_result = normalize_judge_result_for_turn(judge_result, answer, question["question_type"])
+        turn_context = _turn_context(turn_id, question)
+        judge_result = normalize_judge_result(judge_result, turn_context)
         state_update = apply_judge_result(
             eval_state,
             turn_id=turn_id,
@@ -67,17 +71,22 @@ class EvaluationTurnRunner:
             path_id=question.get("path_id"),
             macro_id=question.get("macro_id"),
             question_type=question.get("question_type"),
+            question=question,
         )
         next_action = apply_effective_next_action(
             eval_state,
             judge_result,
-            {"question_type": question["question_type"], "macro_id": question.get("macro_id")},
+            turn_context,
         )
         turn = {
             "turn_id": turn_id,
             "question_id": question["question_id"],
             "question_type": question["question_type"],
             "macro_id": question.get("macro_id"),
+            "challenge_type": question.get("challenge_type"),
+            "challenge_trigger": question.get("challenge_trigger"),
+            "target_failure_mode": question.get("target_failure_mode"),
+            "expected_behavior": question.get("expected_behavior"),
             "question_text": question["question_text"],
             "target_kc_ids": question["target_kc_ids"],
             "target_path_id": question.get("path_id"),
@@ -89,13 +98,14 @@ class EvaluationTurnRunner:
         self._apply_global_claim_verification(turn, eval_state)
         append_turn(trajectory, turn)
         log(
-            "turn judged",
+            "evaluation turn recorded",
             turn=turn_id,
-            state=judge_result.get("state"),
-            next_action=next_action,
-            covered=len(judge_result.get("covered_kc_ids", [])),
-            missing=len(judge_result.get("missing_kc_ids", [])),
-            hallucinations=len(judge_result.get("hallucinated_claims", [])),
+            question_type=question.get("question_type"),
+            judge_state=judge_result.get("state"),
+            coverage=_coverage_summary(judge_result),
+            hallucination_events=_hallucination_event_summary(judge_result),
+            stage_tasks=_stage_task_summary(judge_result),
+            challenge_result=_challenge_result_summary(judge_result),
             answer_mode=answer_mode,
         )
         return turn_no, turn, target_kcs, next_action
@@ -120,19 +130,13 @@ class EvaluationTurnRunner:
             question_type=follow.get("question_type"),
             targets=",".join(follow.get("target_kc_ids", [])),
         )
-        if follow["question_type"] == "misleading_followup":
-            eval_state["global_state"]["misleading_question_count"] += 1
-            macro_id = follow.get("macro_id")
-            if macro_id:
-                eval_state.setdefault("macro_states", {}).setdefault(macro_id, {})
-                current = eval_state["macro_states"][macro_id].get("misleading_question_count", 0)
-                eval_state["macro_states"][macro_id]["misleading_question_count"] = current + 1
         if follow["question_type"] == "review_followup":
             eval_state["global_state"]["review_question_count"] += 1
 
         answer, answer_mode = self._answer_turn(turn_id, follow["question_text"], trajectory, target_kcs)
         judge_result = self._judge_turn(turn_id, follow, answer, target_kcs, trajectory)
-        judge_result = normalize_judge_result_for_turn(judge_result, answer, follow["question_type"])
+        turn_context = _turn_context(turn_id, follow)
+        judge_result = normalize_judge_result(judge_result, turn_context)
         state_update = apply_judge_result(
             eval_state,
             turn_id=turn_id,
@@ -140,11 +144,12 @@ class EvaluationTurnRunner:
             path_id=follow.get("target_path_id"),
             macro_id=follow.get("macro_id"),
             question_type=follow.get("question_type"),
+            question=follow,
         )
         apply_effective_next_action(
             eval_state,
             judge_result,
-            {"question_type": follow["question_type"], "macro_id": follow.get("macro_id")},
+            turn_context,
         )
         turn = {
             "turn_id": turn_id,
@@ -162,13 +167,13 @@ class EvaluationTurnRunner:
         self._apply_global_claim_verification(turn, eval_state)
         append_turn(trajectory, turn)
         log(
-            "follow-up turn judged",
+            "repair/review turn recorded",
             turn=turn_id,
-            state=judge_result.get("state"),
-            next_action=judge_result.get("next_action"),
-            covered=len(judge_result.get("covered_kc_ids", [])),
-            missing=len(judge_result.get("missing_kc_ids", [])),
-            hallucinations=len(judge_result.get("hallucinated_claims", [])),
+            question_type=follow.get("question_type"),
+            judge_state=judge_result.get("state"),
+            coverage=_coverage_summary(judge_result),
+            hallucination_events=_hallucination_event_summary(judge_result),
+            stage_tasks=_stage_task_summary(judge_result),
             answer_mode=answer_mode,
         )
         return turn_no, turn, target_kcs
@@ -215,7 +220,8 @@ class EvaluationTurnRunner:
             "related_turn_ids": [t.get("turn_id") for t in related_turns],
         }
         judge_result = self._judge_turn(turn_id, question, answer, target_kcs, trajectory, thread_context)
-        judge_result = normalize_judge_result_for_turn(judge_result, answer, question["question_type"])
+        turn_context = _turn_context(turn_id, question)
+        judge_result = normalize_judge_result(judge_result, turn_context)
         state_update = apply_judge_result(
             eval_state,
             turn_id=turn_id,
@@ -225,11 +231,12 @@ class EvaluationTurnRunner:
             question_type=question.get("question_type"),
             thread_id=question.get("thread_id"),
             thread_step_id=question.get("thread_turn_id"),
+            question=question,
         )
         apply_effective_next_action(
             eval_state,
             judge_result,
-            {"question_type": question["question_type"], "macro_id": question.get("macro_id")},
+            turn_context,
         )
         turn = {
             "turn_id": turn_id,
@@ -250,14 +257,15 @@ class EvaluationTurnRunner:
         self._apply_global_claim_verification(turn, eval_state)
         append_turn(trajectory, turn)
         log(
-            "thread turn judged",
+            "thread stage turn recorded",
             turn=turn_id,
-            state=judge_result.get("state"),
-            next_action=judge_result.get("next_action"),
+            judge_state=judge_result.get("state"),
             thread_id=question.get("thread_id"),
             thread_step=question.get("thread_turn_id"),
-            covered=len(judge_result.get("covered_kc_ids", [])),
-            missing=len(judge_result.get("missing_kc_ids", [])),
+            coverage=_coverage_summary(judge_result),
+            hallucination_events=_hallucination_event_summary(judge_result),
+            thread_result=_thread_result_summary(judge_result),
+            stage_tasks=_stage_task_summary(judge_result),
             answer_mode=answer_mode,
         )
         return turn_no, turn
@@ -281,6 +289,7 @@ class EvaluationTurnRunner:
         thread_context: dict | None = None,
     ) -> dict:
         with span("judge answer", turn=turn_id):
+            judge_context = _question_context(question, thread_context)
             return judge_answer_with_online_fallback(
                 question["question_text"],
                 answer,
@@ -294,7 +303,7 @@ class EvaluationTurnRunner:
                     question.get("path_id") or question.get("target_path_id"),
                 ),
                 question_type=question["question_type"],
-                thread_context=thread_context,
+                thread_context=judge_context,
             )
 
     def _apply_global_claim_verification(self, turn: dict, eval_state: dict) -> None:
@@ -310,13 +319,42 @@ class EvaluationTurnRunner:
             turn_id=turn["turn_id"],
             results=results,
         )
+        _apply_supported_claims_to_judge_result(
+            turn["judge_result"],
+            turn["state_update"]["claim_verification_update"].get("supported_kc_ids", []),
+        )
         append_claim_verification_log(self.claim_log_path, results)
         risky = [r for r in results if r.get("label") in {"CONTRADICTED", "OVERCLAIM"}]
         if risky:
-            turn["judge_result"]["global_claim_verification"] = results
-            turn["judge_result"]["state"] = "GLOBAL_OVERCLAIM"
-            turn["judge_result"]["next_action"] = "hallucination_followup"
-            turn["judge_result"]["policy_next_action"] = "hallucination_followup"
+            turn_context = _turn_context_from_turn(turn)
+            turn["judge_result"] = normalize_after_global_claim_verification(
+                turn["judge_result"],
+                turn_context,
+                results,
+            )
+            attach_recommended_stage_tasks(
+                turn["judge_result"],
+                turn_context,
+                "hallucination_followup",
+            )
+            previous_structured_update = turn.get("state_update", {}).get("structured_update", {})
+            previous_event_ids = previous_structured_update.get("hallucination_event_ids", [])
+            added_event_ids = [
+                event["event_id"]
+                for event in record_hallucination_events(eval_state, turn["judge_result"])
+            ]
+            turn["state_update"]["structured_update"] = {
+                "hallucination_event_ids": list(dict.fromkeys(previous_event_ids + added_event_ids)),
+                "coverage_gap_id": previous_structured_update.get("coverage_gap_id"),
+            }
+        else:
+            turn_context = _turn_context_from_turn(turn)
+            turn["judge_result"] = normalize_judge_result(turn["judge_result"], turn_context)
+            attach_recommended_stage_tasks(
+                turn["judge_result"],
+                turn_context,
+                _repair_action_from_judge_result(turn["judge_result"]),
+            )
 
     def _related_thread_turns(self, eval_state: dict, trajectory: dict, thread_id: str | None) -> list[dict]:
         if not thread_id:
@@ -327,6 +365,66 @@ class EvaluationTurnRunner:
             .get("related_turns", [])
         )
         return [t for t in trajectory.get("turns", []) if t.get("turn_id") in ids]
+
+
+def _turn_context(turn_id: str, question: dict) -> dict:
+    return {
+        "turn_id": turn_id,
+        "question_id": question["question_id"],
+        "question_type": question["question_type"],
+        "macro_id": question.get("macro_id"),
+        "thread_id": question.get("thread_id"),
+        "thread_turn_id": question.get("thread_turn_id"),
+        "thread_role": question.get("thread_role"),
+        "target_kc_ids": question.get("target_kc_ids", []),
+        "target_path_id": question.get("path_id") or question.get("target_path_id"),
+        "challenge_type": question.get("challenge_type"),
+        "challenge_trigger": question.get("challenge_trigger"),
+        "target_failure_mode": question.get("target_failure_mode"),
+        "expected_behavior": question.get("expected_behavior"),
+    }
+
+
+def _turn_context_from_turn(turn: dict) -> dict:
+    return {
+        "turn_id": turn["turn_id"],
+        "question_id": turn["question_id"],
+        "question_type": turn["question_type"],
+        "macro_id": turn.get("macro_id"),
+        "thread_id": turn.get("thread_id"),
+        "thread_turn_id": turn.get("thread_turn_id"),
+        "thread_role": turn.get("thread_role"),
+        "target_kc_ids": turn.get("target_kc_ids", []),
+        "target_path_id": turn.get("target_path_id"),
+        "challenge_type": turn.get("challenge_type"),
+        "challenge_trigger": turn.get("challenge_trigger"),
+        "target_failure_mode": turn.get("target_failure_mode"),
+        "expected_behavior": turn.get("expected_behavior"),
+    }
+
+
+def _apply_supported_claims_to_judge_result(judge_result: dict, supported_kc_ids: list[str]) -> None:
+    if not supported_kc_ids:
+        return
+    supported_set = set(supported_kc_ids)
+    covered = list(dict.fromkeys(list(judge_result.get("covered_kc_ids", [])) + supported_kc_ids))
+    missing = [kc_id for kc_id in judge_result.get("missing_kc_ids", []) if kc_id not in supported_set]
+    judge_result["covered_kc_ids"] = covered
+    judge_result["missing_kc_ids"] = missing
+    coverage = judge_result.setdefault("coverage", {})
+    coverage["covered_kc_ids"] = covered
+    coverage["missing_kc_ids"] = missing
+    coverage["coverage_complete"] = not missing
+    if judge_result.get("state") == "INCOMPLETE" and not missing:
+        judge_result["state"] = "MAIN_PROGRESS"
+
+
+def _repair_action_from_judge_result(judge_result: dict) -> str:
+    if judge_result.get("state") in {"HALLUCINATION", "MISLED", "GLOBAL_OVERCLAIM"}:
+        return "hallucination_followup"
+    if judge_result.get("missing_kc_ids"):
+        return "detail_followup"
+    return "next_main_question"
 
 
 def select_followup_target_kcs(
@@ -341,41 +439,10 @@ def select_followup_target_kcs(
         ids = judge_result.get("missing_kc_ids", [])
     elif action == "hallucination_followup":
         ids = judge_result.get("covered_kc_ids", []) + judge_result.get("missing_kc_ids", [])
-    elif action == "misleading_followup" and last_turn and trajectory:
-        macro_id = last_turn.get("macro_id")
-        used = {
-            kid
-            for turn in trajectory.get("turns", [])
-            if turn.get("question_type") == "misleading_followup" and turn.get("macro_id") == macro_id
-            for kid in turn.get("target_kc_ids", [])
-        }
-        macro_kcs = [
-            kc
-            for kc in by_kc.values()
-            if kc.get("macro_id") == macro_id and kc.get("kc_id") not in used
-        ]
-        fallback_ids = {k.get("kc_id") for k in fallback_kcs}
-        candidates = [k for k in fallback_kcs if k.get("kc_id") not in used]
-        candidates.extend(k for k in macro_kcs if k.get("kc_id") not in fallback_ids)
-        return candidates[:1] or fallback_kcs[:1]
     else:
         ids = []
     selected = [by_kc[kid] for kid in ids if kid in by_kc]
     return selected or fallback_kcs[:1]
-
-
-def normalize_judge_result_for_turn(judge_result: dict, answer: str, question_type: str) -> dict:
-    if judge_result.get("state") == "INCOMPLETE" and not judge_result.get("missing_kc_ids"):
-        fixed = dict(judge_result)
-        fixed["state"] = "MAIN_PROGRESS"
-        fixed["next_action"] = "next_main_question"
-        explanation = fixed.get("judge_explanation", "")
-        fixed["judge_explanation"] = (
-            explanation
-            + " Normalized: all target KCs were covered; incompleteness only concerned off-target material."
-        ).strip()
-        return fixed
-    return judge_result
 
 
 def dialogue_summary(turns: list[dict], keep_last: int = 4) -> str:
@@ -429,6 +496,58 @@ def build_model_answer(
     raise RuntimeError("Online evaluation requires a configured model and USE_ONLINE_EVAL=true. Set ALLOW_MOCK_EVAL=true only for local debugging.")
 
 
+def _coverage_summary(judge_result: dict) -> str:
+    covered = len(judge_result.get("covered_kc_ids", []))
+    missing = len(judge_result.get("missing_kc_ids", []))
+    complete = judge_result.get("coverage", {}).get("coverage_complete")
+    return f"covered={covered},missing={missing},complete={complete}"
+
+
+def _hallucination_event_summary(judge_result: dict) -> str:
+    events = judge_result.get("hallucination_events", []) or []
+    if not events:
+        return "none"
+    by_type: dict[str, int] = {}
+    for event in events:
+        key = event.get("hallucination_type") or "unknown"
+        by_type[key] = by_type.get(key, 0) + 1
+    return ",".join(f"{key}:{value}" for key, value in sorted(by_type.items()))
+
+
+def _stage_task_summary(judge_result: dict) -> str:
+    tasks = judge_result.get("recommended_stage_tasks", []) or []
+    if not tasks:
+        return "none"
+    by_type: dict[str, int] = {}
+    for task in tasks:
+        key = task.get("task_type") or "unknown"
+        by_type[key] = by_type.get(key, 0) + 1
+    return ",".join(f"{key}:{value}" for key, value in sorted(by_type.items()))
+
+
+def _thread_result_summary(judge_result: dict) -> str:
+    result = judge_result.get("thread_result") or {}
+    if not result:
+        return "none"
+    return "success={success},partial={partial},failed={failed},path={path}".format(
+        success=result.get("success"),
+        partial=result.get("partial"),
+        failed=result.get("failed"),
+        path=result.get("reasoning_path_result"),
+    )
+
+
+def _challenge_result_summary(judge_result: dict) -> str:
+    result = judge_result.get("challenge_result") or {}
+    if not result:
+        return "none"
+    return "resisted={resisted},failed={failed},incomplete={incomplete}".format(
+        resisted=result.get("resisted"),
+        failed=result.get("failed"),
+        incomplete=result.get("incomplete"),
+    )
+
+
 def related_forbidden_claims(graph: dict, target_kc_ids: list[str], path_id: str | None) -> list[dict]:
     out: list[dict] = []
     tset = set(target_kc_ids)
@@ -441,3 +560,22 @@ def related_forbidden_claims(graph: dict, target_kc_ids: list[str], path_id: str
                 out.extend(p.get("forbidden_claims", []))
                 break
     return out
+
+
+def _question_context(question: dict, base_context: dict | None) -> dict:
+    context = dict(base_context or {})
+    if question.get("question_type") == "challenge_question":
+        context.update(
+            {
+                "challenge_type": question.get("challenge_type"),
+                "target_failure_mode": question.get("target_failure_mode"),
+                "expected_behavior": question.get("expected_behavior"),
+                "surface_intent": question.get("surface_intent"),
+                "evidence": question.get("evidence", []),
+                "challenge_trigger": question.get("challenge_trigger"),
+                "needs_human_review": question.get("needs_human_review", False),
+                "all_solvers_failed": question.get("all_solvers_failed", False),
+                "solver_trial_summary": question.get("solver_trial_summary", {}),
+            }
+        )
+    return context

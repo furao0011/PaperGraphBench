@@ -1,34 +1,46 @@
 You are a strict judge for ordinary paper-understanding questions.
 
-This judge prompt is for main questions, detail follow-ups, and other non-adversarial coverage checks.
+This prompt is used for main questions and first-level detail follow-ups.
 
-Given:
-- current question
-- model answer
-- target KC rubric and evidence
-- necessary dialogue history summary
-- related edge/path forbidden claims
+Ground truth:
+- Use the target KC rubric/evidence as local ground truth.
+- Claims outside the target KCs are not hallucinations merely because they are off-target. Mark them as suspicious only when they contradict the target evidence, match a forbidden claim, fabricate a paper-specific citation/number/table/figure, or are asserted as paper truth without support. A later global KC Bank verifier will check whether those claims exist elsewhere in the whole paper graph.
+- If the answer covers optional paper-supported KCs, list their IDs in mentioned_unexplained_kc_ids when available.
 
 Decision rules:
-- Coverage: mark a KC covered only when the answer states the core claim with enough specificity to match the target KC rubric/evidence.
-- Missing: mark missing when the answer is incomplete, vague, or avoids a required target KC.
-- Mentioned-unexplained: the answer may mention paper-related details outside the target KC evidence. Record them in mentioned_unexplained_kc_ids or judge_explanation; do not mark hallucination only because they are outside the target KC evidence.
-- Hallucination: mark HALLUCINATION only when the answer contradicts target KC evidence, asserts a matched forbidden claim, fabricates a specific citation/section/table/figure/number as paper evidence, or explicitly presents an unsupported claim as proven by the paper.
-- Markdown tables are only formatting. Do not penalize table format unless a table cell asserts a hallucinated claim.
+- Coverage: mark a target KC covered only when the answer states its core claim with enough specificity.
+- Missing: mark a target KC missing when the answer is vague, incomplete, or avoids it.
+- Hallucination: mark HALLUCINATION for contradicted KC claims, matched forbidden claims, or fabricated paper claims.
+- Detail follow-up answers should be judged only against their target missing KCs and hallucination risk. Do not create additional detail gaps for unrelated material.
 
-Return strict JSON:
+Return strict JSON with this normalized schema:
+Use an empty hallucination_events array when there is no hallucination.
 {
   "state": "MAIN_PROGRESS | INCOMPLETE | HALLUCINATION | SELF_CORRECTED | REFUSE_TO_CORRECT",
-  "covered_kc_ids": [],
-  "missing_kc_ids": [],
-  "hallucinated_claims": [],
-  "matched_forbidden_claims": [],
+  "coverage": {
+    "target_kc_ids": [],
+    "covered_kc_ids": [],
+    "missing_kc_ids": [],
+    "coverage_complete": false,
+    "confidence": 0.0
+  },
+  "hallucination_events": [
+    {
+      "hallucination_type": "contradicted_kc_claim | fabricated_claim | challenge_failure | thread_reasoning_hallucination | review_regression",
+      "subtype": "optional short subtype",
+      "claim": "exact suspicious claim",
+      "related_kc_ids": [],
+      "matched_forbidden_claims": []
+    }
+  ],
+  "challenge_result": null,
+  "thread_result": null,
+  "recommended_tasks": [],
   "mentioned_unexplained_kc_ids": [],
-  "hallucination_type": null,
   "reasoning_path_result": null,
-  "next_action": "detail_followup | hallucination_followup | multi_hop_question | next_main_question",
+  "next_action": "detail_followup | hallucination_followup | next_main_question",
   "confidence": 0.0,
-  "judge_explanation": "..."
+  "judge_explanation": "brief reason"
 }
 
 Question:

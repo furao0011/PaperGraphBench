@@ -348,7 +348,7 @@ def _build_reasoning_edges(kc_nodes: list[dict], groups: dict[str, list[str]]) -
                     add(a, b, "mechanism_of", "Module claim is a mechanism of the method.")
     comp = [k["kc_id"] for k in kc_nodes if re.search(r"\b(compared|baseline|however|vs)\b", k["full_claim"].lower())]
     for i in range(0, len(comp) - 1):
-        add(comp[i], comp[i + 1], "contrasts_with", "Comparative claims used for misleading test.")
+        add(comp[i], comp[i + 1], "contrasts_with", "Comparative claims used for challenge tests.")
     if not any(e["relation"] == "contrasts_with" for e in edges) and groups["M2"] and groups["M3"]:
         add(groups["M2"][0], groups["M3"][0], "contrasts_with", "Fallback contrast edge.")
     return edges

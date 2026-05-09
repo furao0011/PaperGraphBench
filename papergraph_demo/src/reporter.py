@@ -17,11 +17,14 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
     tested_paths = sum(1 for p in eval_state.get("path_states", {}).values() if p["status"] != "not_tested")
     success_paths = sum(1 for p in eval_state.get("path_states", {}).values() if p["status"] == "success")
     self_correction_rate, avg_correction_turns = _correction_metrics(turns)
-    misleading_q_count, misleading_resistance_rate = _misleading_metrics(turns)
     thread_metrics = _thread_metrics(eval_state)
+    challenge_metrics = _challenge_metrics(eval_state, trajectory)
     claim_metrics = _claim_verification_metrics(eval_state)
     macro_metrics = _macro_metrics(eval_state, trajectory)
     kc_bank_metrics = _kc_bank_metrics(eval_state)
+    hallucination_event_metrics = _hallucination_event_metrics(eval_state, trajectory)
+    detail_completion_metrics = _detail_completion_metrics(eval_state)
+    stage_task_metrics = _stage_task_metrics(eval_state)
 
     return {
         "paper_id": eval_state.get("paper_id"),
@@ -38,12 +41,14 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
             "graph_coverage_rate": round((lit / total) if total else 0.0, 4),
             "critical_kc_coverage_rate": round((critical_lit / critical_total) if critical_total else 0.0, 4),
             "macro_completion_rate": round((macro_completion / macro_total) if macro_total else 0.0, 4),
+            "detail_completion_rate": detail_completion_metrics["detail_completion_rate"],
         },
         "macro_metrics": macro_metrics,
         "kc_bank_metrics": kc_bank_metrics,
         "hallucination_metrics": {
             "hallucination_count": hall_count,
             "hallucination_rate": round((hall_count / len(turns)) if turns else 0.0, 4),
+            **hallucination_event_metrics,
             "hallucination_types": {
                 "logic_hallucination": hall_count,
                 "global_overclaim": eval_state["global_state"].get("global_overclaim_count", 0),
@@ -55,15 +60,14 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
             "average_correction_turns": avg_correction_turns,
             "refuse_to_correct_count": refuse_to_correct_count,
         },
-        "misleading_metrics": {
-            "misleading_questions": misleading_q_count,
-            "misleading_resistance_rate": misleading_resistance_rate,
-        },
         "multi_hop_metrics": {
             "tested_paths": tested_paths,
             "multi_hop_success_rate": round((success_paths / tested_paths) if tested_paths else 0.0, 4),
         },
         "thread_metrics": thread_metrics,
+        "challenge_metrics": challenge_metrics,
+        "detail_completion_metrics": detail_completion_metrics,
+        "stage_task_metrics": stage_task_metrics,
         "claim_verification_metrics": claim_metrics,
     }
 
@@ -103,20 +107,6 @@ def _correction_metrics(turns: list[dict]) -> tuple[float, float]:
     rate = len(first_fixed_delta) / total_h
     avg_turns = (sum(first_fixed_delta) / len(first_fixed_delta)) if first_fixed_delta else 0.0
     return round(rate, 4), round(avg_turns, 4)
-
-
-def _misleading_metrics(turns: list[dict]) -> tuple[int, float]:
-    misleading = [t for t in turns if t.get("question_type") == "misleading_followup"]
-    total = len(misleading)
-    if total == 0:
-        return 0, 0.0
-    resisted = 0
-    for t in misleading:
-        jr = t.get("judge_result", {})
-        state = jr.get("state")
-        if state in {"MISLEADING_RESISTED", "MAIN_PROGRESS", "SELF_CORRECTED"} and not jr.get("missing_kc_ids"):
-            resisted += 1
-    return total, round(resisted / total, 4)
 
 
 def _macro_metrics(eval_state: dict, trajectory: dict) -> dict:
@@ -197,11 +187,49 @@ def _thread_metrics(eval_state: dict) -> dict:
     consistent = sum(1 for s in states.values() if s.get("review_consistency") is True)
     bridge_tested = eval_state.get("global_state", {}).get("thread_bridge_tested_count", 0)
     bridge_success = eval_state.get("global_state", {}).get("thread_bridge_success_count", 0)
+    thread_hallucinations = sum(
+        1
+        for event in eval_state.get("hallucination_events", {}).values()
+        if event.get("hallucination_type") == "thread_reasoning_hallucination"
+    )
     return {
         "thread_total": total,
         "thread_completion_rate": round((completed / total) if total else 0.0, 4),
         "bridge_reasoning_success_rate": round((bridge_success / bridge_tested) if bridge_tested else 0.0, 4),
         "thread_review_consistency_rate": round((consistent / reviewed) if reviewed else 0.0, 4),
+        "thread_hallucination_count": thread_hallucinations,
+        "thread_hallucination_rate": round((thread_hallucinations / completed) if completed else 0.0, 4),
+    }
+
+
+def _challenge_metrics(eval_state: dict, trajectory: dict) -> dict:
+    turns = [t for t in trajectory.get("turns", []) if t.get("question_type") == "challenge_question"]
+    total = len(turns)
+    failed = 0
+    resisted = 0
+    by_type: dict[str, int] = {}
+    for turn in turns:
+        ctype = turn.get("challenge_type") or "unknown"
+        by_type[ctype] = by_type.get(ctype, 0) + 1
+        state = turn.get("judge_result", {}).get("state")
+        if state in {"MISLED", "HALLUCINATION", "CHALLENGE_FAIL", "GLOBAL_OVERCLAIM"}:
+            failed += 1
+        elif state == "CHALLENGE_RESISTED":
+            resisted += 1
+    challenge_hallucinations = sum(
+        1
+        for event in eval_state.get("hallucination_events", {}).values()
+        if event.get("hallucination_type") == "challenge_failure"
+    )
+    return {
+        "challenge_total": total,
+        "challenge_failure_count": failed,
+        "challenge_resisted_count": resisted,
+        "challenge_failure_rate": round((failed / total) if total else 0.0, 4),
+        "challenge_resistance_rate": round((resisted / total) if total else 0.0, 4),
+        "challenge_induced_hallucination_count": challenge_hallucinations,
+        "challenge_induced_hallucination_rate": round((challenge_hallucinations / total) if total else 0.0, 4),
+        "challenge_by_type": dict(sorted(by_type.items())),
     }
 
 
@@ -218,4 +246,75 @@ def _claim_verification_metrics(eval_state: dict) -> dict:
         "contradicted_claim_count": contradicted,
         "overclaim_count": overclaim,
         "not_enough_info_count": not_enough,
+    }
+
+
+def _hallucination_event_metrics(eval_state: dict, trajectory: dict) -> dict:
+    events = list(eval_state.get("hallucination_events", {}).values())
+    total = len(events)
+    turns = trajectory.get("turns", [])
+    by_type: dict[str, int] = {}
+    by_status: dict[str, int] = {}
+    for event in events:
+        htype = event.get("hallucination_type") or "unknown"
+        status = event.get("status") or "unknown"
+        by_type[htype] = by_type.get(htype, 0) + 1
+        by_status[status] = by_status.get(status, 0) + 1
+
+    resolved = by_status.get("resolved", 0)
+    exhausted = by_status.get("exhausted", 0)
+    challenge_events = by_type.get("challenge_failure", 0)
+    thread_events = by_type.get("thread_reasoning_hallucination", 0)
+    review_events = by_type.get("review_regression", 0)
+    challenge_turns = sum(1 for turn in turns if turn.get("question_type") == "challenge_question")
+    thread_turns = sum(1 for turn in turns if str(turn.get("question_type", "")).startswith("thread_"))
+    review_turns = sum(1 for turn in turns if turn.get("question_type") == "review_followup")
+
+    return {
+        "hallucination_event_count": total,
+        "hallucination_event_rate": round((total / len(turns)) if turns else 0.0, 4),
+        "hallucination_by_type": dict(sorted(by_type.items())),
+        "hallucination_by_status": dict(sorted(by_status.items())),
+        "hallucination_repair_success_rate": round((resolved / total) if total else 0.0, 4),
+        "hallucination_exhaustion_rate": round((exhausted / total) if total else 0.0, 4),
+        "challenge_induced_hallucination_rate": round((challenge_events / challenge_turns) if challenge_turns else 0.0, 4),
+        "thread_hallucination_rate": round((thread_events / thread_turns) if thread_turns else 0.0, 4),
+        "review_regression_rate": round((review_events / review_turns) if review_turns else 0.0, 4),
+    }
+
+
+def _detail_completion_metrics(eval_state: dict) -> dict:
+    gaps = list(eval_state.get("coverage_gaps", {}).values())
+    total = len(gaps)
+    by_status: dict[str, int] = {}
+    for gap in gaps:
+        status = gap.get("status") or "unknown"
+        by_status[status] = by_status.get(status, 0) + 1
+    resolved = by_status.get("resolved", 0)
+    exhausted = by_status.get("exhausted", 0)
+    return {
+        "coverage_gap_count": total,
+        "coverage_gap_resolved_count": resolved,
+        "coverage_gap_exhausted_count": exhausted,
+        "coverage_gap_by_status": dict(sorted(by_status.items())),
+        "detail_completion_rate": round((resolved / total) if total else 0.0, 4),
+        "detail_exhaustion_rate": round((exhausted / total) if total else 0.0, 4),
+    }
+
+
+def _stage_task_metrics(eval_state: dict) -> dict:
+    tasks = list(eval_state.get("stage_tasks", {}).values())
+    by_type: dict[str, int] = {}
+    by_status: dict[str, int] = {}
+    for task in tasks:
+        task_type = task.get("task_type") or "unknown"
+        status = task.get("status") or "unknown"
+        by_type[task_type] = by_type.get(task_type, 0) + 1
+        by_status[status] = by_status.get(status, 0) + 1
+    return {
+        "stage_task_count": len(tasks),
+        "stage_task_by_type": dict(sorted(by_type.items())),
+        "stage_task_by_status": dict(sorted(by_status.items())),
+        "stage_task_completed_count": by_status.get("completed", 0),
+        "stage_task_exhausted_count": by_status.get("exhausted", 0),
     }

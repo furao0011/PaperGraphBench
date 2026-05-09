@@ -27,7 +27,7 @@ Scoring:
 2 = possible to ask, but low value and likely just paraphrase
 3 = suitable for ordinary comprehension questions
 4 = suitable for mainline questions, detail follow-ups, or contrast questions
-5 = highly suitable for dynamic questions, including follow-up, multi-hop, misleading, or review questions
+5 = highly suitable for dynamic questions, including follow-up, multi-hop, challenge, or review questions
 
 Rules:
 - Return one score object for every input KC.
@@ -47,4 +47,3 @@ Return schema:
     }
   ]
 }
-

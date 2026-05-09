@@ -95,12 +95,11 @@ def build_challenge_questions_loop(
                 accepted = question_with_filter_metadata(question, trial_bundle)
                 accepted["accepted_by_challenge_loop"] = True
                 accepted["filter_reason"] = "matched_target_failure"
-                state["accepted_questions"].append(accepted)
                 if trial_bundle["wrong_count"] == trial_bundle["solver_count"]:
-                    review_item = dict(accepted)
-                    review_item["needs_human_review"] = True
-                    review_item["all_solvers_failed"] = True
-                    state["human_review_questions"].append(review_item)
+                    accepted["needs_human_review"] = True
+                    accepted["all_solvers_failed"] = True
+                    state["human_review_questions"].append(dict(accepted))
+                state["accepted_questions"].append(accepted)
                 state["used_plan_ids"].append(plan_id)
                 state["loop_events"].append(
                     {

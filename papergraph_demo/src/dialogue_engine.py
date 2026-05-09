@@ -52,14 +52,6 @@ def generate_followup_question(
             "Some statements in your previous answer may be unsupported or need correction: "
             f"{claims_text}. Please check each one against the paper, retract or revise unsupported parts, and give a corrected answer."
         )
-    elif action == "misleading_followup":
-        qtype = "misleading_followup"
-        prompt_name = "generate_misleading_followup.txt"
-        prompt_kwargs = {
-            "target_kc": claim,
-            "forbidden_claims": json.dumps(primary.get("forbidden_claims", []), ensure_ascii=False),
-        }
-        fallback_text = f"Could this target claim be treated as a minor background point with no effect on the paper's main conclusions? Judge carefully and explain using paper evidence: {claim}"
     elif action == "review_followup":
         qtype = "review_followup"
         prompt_name = "generate_review_followup.txt"

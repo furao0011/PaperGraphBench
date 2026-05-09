@@ -1,38 +1,48 @@
 You are a strict judge for a cross-turn reasoning thread in a paper-understanding evaluation.
 
-Given:
-- current thread question
-- model answer
-- target KCs and evidence
-- necessary dialogue history summary
-- thread context
-- related edge/path forbidden claims
+Thread questions are first-level tasks, not children of detail or hallucination follow-ups.
 
 Decision rules:
-- Coverage: mark target KCs covered only when the answer states the core claim with enough specificity.
-- Premise reuse: for bridge and review questions, check whether the answer correctly reuses earlier established premise/evidence from the dialogue summary.
-- Connection: for bridge questions, check whether the answer builds the requested relation among target KCs instead of listing isolated facts.
-- Consistency: for review questions, check whether the answer contradicts earlier turns.
-- Hallucination: mark HALLUCINATION only for unsupported paper claims, matched forbidden claims, fabricated citations/numbers, or contradictions with target evidence.
+- Coverage: mark target KCs covered only when the answer states their core claims with enough specificity.
+- Premise reuse: for bridge/review questions, check whether the answer correctly reuses earlier established premises from the dialogue summary.
+- Connection: for bridge questions, require the requested relation among KCs instead of isolated facts.
+- Hallucination: mark HALLUCINATION for contradicted KC claims, matched forbidden claims, fabricated paper citations/numbers, or unsupported claims presented as paper truth. Off-target claims can later be checked by the global KC Bank verifier.
+- If both hallucination and missing detail appear, hallucination has priority in state and next_action.
 
-Return strict JSON:
+Return strict JSON with this normalized schema:
+Use an empty hallucination_events array when there is no hallucination.
 {
   "state": "THREAD_PROGRESS | THREAD_FAIL | INCOMPLETE | HALLUCINATION",
-  "thread_step_result": "premise_established | evidence_established | bridge_success | bridge_fail | review_consistent | review_inconsistent | null",
-  "covered_kc_ids": [],
-  "missing_kc_ids": [],
-  "used_previous_premise": false,
-  "connected_kc_ids": [],
-  "missing_connection": [],
-  "contradicted_previous_turns": [],
-  "hallucinated_claims": [],
-  "matched_forbidden_claims": [],
+  "coverage": {
+    "target_kc_ids": [],
+    "covered_kc_ids": [],
+    "missing_kc_ids": [],
+    "coverage_complete": false,
+    "confidence": 0.0
+  },
+  "hallucination_events": [
+    {
+      "hallucination_type": "thread_reasoning_hallucination",
+      "subtype": "optional short subtype",
+      "claim": "exact suspicious claim",
+      "related_kc_ids": [],
+      "matched_forbidden_claims": []
+    }
+  ],
+  "challenge_result": null,
+  "thread_result": {
+    "thread_step_result": "premise_established | evidence_established | bridge_success | bridge_fail | review_consistent | review_inconsistent | null",
+    "used_previous_premise": false,
+    "connected_kc_ids": [],
+    "missing_connection": [],
+    "contradicted_previous_turns": []
+  },
+  "recommended_tasks": [],
   "mentioned_unexplained_kc_ids": [],
-  "hallucination_type": null,
-  "reasoning_path_result": null,
+  "reasoning_path_result": "success | partial | fail | null",
   "next_action": "detail_followup | hallucination_followup | next_thread_or_macro_question",
   "confidence": 0.0,
-  "judge_explanation": "..."
+  "judge_explanation": "brief reason"
 }
 
 Question:

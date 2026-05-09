@@ -1,33 +1,40 @@
 You are a strict judge for a multi-hop reasoning question in a paper-understanding evaluation.
 
-Given:
-- current multi-hop question
-- model answer
-- target KC sequence and evidence
-- dialogue history summary
-- related edge/path forbidden claims
-
 Decision rules:
-- The answer must cover the target KCs and explain the relation among them.
-- Do not require a causal relation unless the target path/edge evidence supports causality.
-- If the answer distinguishes supported links from unsupported links, that can be correct.
-- Mark MULTI_HOP_SUCCESS when the answer covers the required KCs and gives a supported reasoning connection.
-- Mark MULTI_HOP_FAIL when the answer covers isolated facts but fails to connect them, forces an unsupported relation, or contradicts path evidence.
-- Mark HALLUCINATION if it asserts a forbidden or fabricated relation as paper truth.
+- The answer must cover the target KCs and explain the requested relation among them.
+- Do not require causality unless the target path or edge evidence supports causality.
+- Mark MULTI_HOP_SUCCESS when required KCs are covered and the reasoning connection is supported.
+- Mark MULTI_HOP_FAIL when the answer lists isolated facts, forces an unsupported relation, or contradicts path evidence.
+- Mark HALLUCINATION if it asserts a forbidden, contradicted, or fabricated relation as paper truth.
 
-Return strict JSON:
+Return strict JSON with this normalized schema:
+Use an empty hallucination_events array when there is no hallucination.
 {
   "state": "MULTI_HOP_SUCCESS | MULTI_HOP_FAIL | INCOMPLETE | HALLUCINATION",
-  "covered_kc_ids": [],
-  "missing_kc_ids": [],
-  "hallucinated_claims": [],
-  "matched_forbidden_claims": [],
+  "coverage": {
+    "target_kc_ids": [],
+    "covered_kc_ids": [],
+    "missing_kc_ids": [],
+    "coverage_complete": false,
+    "confidence": 0.0
+  },
+  "hallucination_events": [
+    {
+      "hallucination_type": "thread_reasoning_hallucination",
+      "subtype": "optional short subtype",
+      "claim": "exact suspicious claim",
+      "related_kc_ids": [],
+      "matched_forbidden_claims": []
+    }
+  ],
+  "challenge_result": null,
+  "thread_result": null,
+  "recommended_tasks": [],
   "mentioned_unexplained_kc_ids": [],
-  "hallucination_type": null,
   "reasoning_path_result": "success | partial | fail | null",
   "next_action": "detail_followup | hallucination_followup | next_main_question",
   "confidence": 0.0,
-  "judge_explanation": "..."
+  "judge_explanation": "brief reason"
 }
 
 Question:

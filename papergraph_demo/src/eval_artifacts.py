@@ -48,7 +48,7 @@ def load_eval_checkpoint(
     graph: dict,
     target_model: str,
     ensure_defaults,
-    rebuild_counts,
+    rebuild_turn_counts,
 ) -> tuple[dict, dict, int, set[str], set[str]] | None:
     if not checkpoint_path.exists():
         return None
@@ -71,7 +71,7 @@ def load_eval_checkpoint(
             if t.get("question_type") in {"main", "macro_main_question", "multi_hop_reasoning"} and t.get("question_id")
         }
     ensure_defaults(eval_state, graph)
-    rebuild_counts(eval_state, trajectory)
+    rebuild_turn_counts(eval_state, trajectory)
     completed_thread_steps = {sid for sid in data.get("completed_thread_step_ids", []) if sid}
     if not completed_thread_steps:
         completed_thread_steps = completed_thread_step_ids(eval_state)
@@ -123,7 +123,6 @@ def action_for_question_type(question_type: str) -> str:
     return {
         "detail_followup": "detail_followup",
         "hallucination_followup": "hallucination_followup",
-        "misleading_followup": "misleading_followup",
         "review_followup": "review_followup",
         "multi_hop_reasoning": "multi_hop_question",
         "main": "next_main_question",

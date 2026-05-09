@@ -12,7 +12,6 @@ JUDGE_PROMPTS = {
     "macro_main_question": "judge_main_answer.txt",
     "detail_followup": "judge_main_answer.txt",
     "review_followup": "judge_review_answer.txt",
-    "misleading_followup": "judge_misleading_answer.txt",
     "hallucination_followup": "judge_hallucination_answer.txt",
     "multi_hop_reasoning": "judge_multi_hop_answer.txt",
     "thread_premise_question": "judge_thread_answer.txt",
@@ -20,6 +19,7 @@ JUDGE_PROMPTS = {
     "thread_bridge_question": "judge_thread_answer.txt",
     "thread_review_question": "judge_thread_answer.txt",
     "thread_question": "judge_thread_answer.txt",
+    "challenge_question": "judge_challenge_eval_answer.txt",
 }
 
 def judge_answer(question_text: str, answer: str, target_kcs: list[dict]) -> dict:
@@ -98,9 +98,14 @@ def judge_answer_with_online_fallback(
                 system_prompt="You are an accurate paper-evaluation judge.",
                 user_prompt=user_prompt,
             )
-            if "state" in result and "next_action" in result:
+            required = {"state", "coverage", "hallucination_events", "recommended_tasks", "next_action"}
+            if required.issubset(result.keys()):
                 return result
-            raise RuntimeError(f"Online judge returned invalid JSON schema for question_type={question_type}.")
+            missing = sorted(required - set(result.keys()))
+            raise RuntimeError(
+                f"Online judge returned invalid normalized JSON schema for question_type={question_type}; "
+                f"missing={missing}."
+            )
         except Exception as exc:
             raise RuntimeError(f"Online judge failed for question_type={question_type}: {type(exc).__name__}: {exc}") from exc
     return judge_answer(question_text, answer, target_kcs)

@@ -84,12 +84,19 @@ def _verify_one_claim(claim: dict, retrieval: dict, client: OpenAICompatClient) 
     label = str(result.get("label", "NOT_ENOUGH_INFO")).strip()
     if label not in SUPPORTED_LABELS:
         raise RuntimeError(f"Global claim verifier returned unsupported label: {label}")
+    retrieved_kc_ids = [kc.get("kc_id") for kc in retrieval.get("retrieved_kcs", []) if kc.get("kc_id")]
+    supporting_kc_ids = retrieved_kc_ids if label in {"SUPPORTED", "NOT_IN_KC_BUT_SUPPORTED_BY_EVIDENCE"} else []
+    contradicted_kc_ids = retrieved_kc_ids if label == "CONTRADICTED" else []
     return {
         "claim_id": claim.get("claim_id"),
         "turn_id": claim.get("turn_id"),
+        "claim": claim.get("claim_text"),
         "claim_text": claim.get("claim_text"),
         "attribution_type": claim.get("attribution_type"),
-        "retrieved_kc_ids": [kc.get("kc_id") for kc in retrieval.get("retrieved_kcs", [])],
+        "retrieved_kc_ids": retrieved_kc_ids,
+        "matched_kc_ids": retrieved_kc_ids,
+        "supporting_kc_ids": supporting_kc_ids,
+        "contradicted_kc_ids": contradicted_kc_ids,
         "retrieved_span_ids": [
             span.get("span_id")
             for span in retrieval.get("retrieved_evidence", [])

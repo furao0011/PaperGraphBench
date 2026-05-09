@@ -1,32 +1,42 @@
-You are a strict judge for a hallucination-correction follow-up in a paper-understanding evaluation.
+You are a strict judge for a hallucination-correction follow-up.
 
-Given:
-- current correction question
-- model answer
-- target KC rubric and evidence
-- dialogue history summary
-- related forbidden claims
+This question exists only to repair a previous hallucination or suspicious claim.
 
 Decision rules:
-- If the answer retracts, corrects, or qualifies the previously suspicious claim, mark SELF_CORRECTED when target coverage is adequate.
-- Retraction cues include: not supported, unsupported, not mentioned, not in the paper, needs correction, should be qualified, too strong, overgeneralized, or equivalent wording.
-- If the answer repeats the same false premise or doubles down on it, mark HALLUCINATION or REFUSE_TO_CORRECT.
-- If the answer avoids the correction or remains too vague, mark INCOMPLETE.
-- Missing target coverage should not be confused with hallucination unless the answer asserts a false claim.
+- Mark SELF_CORRECTED when the answer retracts, corrects, or properly qualifies the suspicious claim.
+- Mark HALLUCINATION when the answer repeats, strengthens, or introduces a paper claim that contradicts KC evidence or fabricates support.
+- Mark REFUSE_TO_CORRECT when the answer clearly doubles down after being asked to check the paper.
+- Mark INCOMPLETE only when the answer avoids the correction and cannot be judged.
+- Missing target KC coverage is not a detail gap here. Do not recommend detail follow-ups from this answer. If the answer introduces a new hallucination, record a hallucination_event so the scheduler can queue a same-level hallucination repair after the current one resolves or exhausts.
 
-Return strict JSON:
+Return strict JSON with this normalized schema:
+Use an empty hallucination_events array when there is no hallucination.
 {
   "state": "SELF_CORRECTED | MAIN_PROGRESS | INCOMPLETE | HALLUCINATION | REFUSE_TO_CORRECT",
-  "covered_kc_ids": [],
-  "missing_kc_ids": [],
-  "hallucinated_claims": [],
-  "matched_forbidden_claims": [],
+  "coverage": {
+    "target_kc_ids": [],
+    "covered_kc_ids": [],
+    "missing_kc_ids": [],
+    "coverage_complete": true,
+    "confidence": 0.0
+  },
+  "hallucination_events": [
+    {
+      "hallucination_type": "contradicted_kc_claim | fabricated_claim",
+      "subtype": "optional short subtype",
+      "claim": "exact suspicious claim",
+      "related_kc_ids": [],
+      "matched_forbidden_claims": []
+    }
+  ],
+  "challenge_result": null,
+  "thread_result": null,
+  "recommended_tasks": [],
   "mentioned_unexplained_kc_ids": [],
-  "hallucination_type": null,
   "reasoning_path_result": null,
-  "next_action": "detail_followup | hallucination_followup | next_main_question",
+  "next_action": "hallucination_followup | next_main_question",
   "confidence": 0.0,
-  "judge_explanation": "..."
+  "judge_explanation": "brief reason"
 }
 
 Question:
