@@ -7,6 +7,14 @@ from src.thread_scheduler import ensure_thread_states
 
 def ensure_eval_state_defaults(eval_state: dict, graph: dict) -> None:
     eval_state.setdefault("macro_states", {})
+    default_active_ids = set()
+    for macro in graph.get("macro_nodes", []):
+        kc_ids = list(macro.get("kc_ids", []))
+        active_count = int(macro.get("active_kc_count") or min(3, len(kc_ids)) or 0)
+        default_active_ids.update(kc_ids[:active_count])
+    for kc_id, state in eval_state.get("kc_states", {}).items():
+        state.setdefault("globally_supported_by_turns", [])
+        state.setdefault("is_active_target", kc_id in default_active_ids)
     for macro in graph.get("macro_nodes", []):
         macro_id = macro.get("macro_id")
         if not macro_id:
@@ -16,12 +24,20 @@ def ensure_eval_state_defaults(eval_state: dict, graph: dict) -> None:
         eval_state["macro_states"][macro_id].setdefault("main_question_asked", False)
         eval_state["macro_states"][macro_id].setdefault("covered_kc_ids", [])
         eval_state["macro_states"][macro_id].setdefault("missing_kc_ids", [])
+        eval_state["macro_states"][macro_id].setdefault(
+            "target_kc_ids",
+            list(macro.get("kc_ids", []))[: int(macro.get("active_kc_count") or min(3, len(macro.get("kc_ids", []))) or 0)],
+        )
+        eval_state["macro_states"][macro_id].setdefault("bank_kc_ids", list(macro.get("kc_ids", [])))
         eval_state["macro_states"][macro_id].setdefault("related_turns", [])
         eval_state["macro_states"][macro_id].setdefault(
             "bank_kc_count",
             macro.get("bank_kc_count", len(macro.get("kc_ids", []))),
         )
-        eval_state["macro_states"][macro_id].setdefault("active_kc_count", len(macro.get("kc_ids", [])))
+        eval_state["macro_states"][macro_id].setdefault(
+            "active_kc_count",
+            macro.get("active_kc_count", len(eval_state["macro_states"][macro_id].get("target_kc_ids", []))),
+        )
     ensure_thread_states(eval_state, graph.get("reasoning_threads", []))
     ensure_task_state(eval_state, graph)
     ensure_hallucination_state(eval_state)

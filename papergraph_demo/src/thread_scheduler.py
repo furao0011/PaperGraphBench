@@ -103,20 +103,17 @@ def record_thread_step_result(
     if state.get("status") == "not_started":
         state["status"] = "in_progress"
 
-    result = judge_result.get("thread_step_result")
-    failed = judge_result.get("state") in {"HALLUCINATION", "MISLED", "THREAD_FAIL"}
+    thread_result = judge_result.get("thread_result") or {}
+    result = judge_result.get("thread_step_result") or thread_result.get("reasoning_path_result")
+    failed = judge_result.get("state") in {"HALLUCINATION", "MISLED", "GLOBAL_OVERCLAIM", "REFUSE_TO_CORRECT", "THREAD_FAIL"}
     missing = bool(judge_result.get("missing_kc_ids"))
 
     if question_type == "thread_bridge_question":
-        success = result == "bridge_success" or (
-            judge_result.get("used_previous_premise") is True and not failed and not missing
-        )
+        success = bool(thread_result.get("success")) or result == "bridge_success"
         state["bridge_success"] = success
         state["status"] = "completed_success" if success else "completed_partial"
     elif question_type == "thread_review_question":
-        consistent = result == "review_consistent" or (
-            not judge_result.get("contradicted_previous_turns") and not failed
-        )
+        consistent = bool(thread_result.get("success")) or result == "review_consistent"
         state["review_consistency"] = consistent
         state["status"] = "reviewed_consistent" if consistent else "reviewed_inconsistent"
         state["success"] = bool(state.get("bridge_success")) and consistent

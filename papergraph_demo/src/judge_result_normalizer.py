@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 
 
-HALLUCINATION_STATES = {"HALLUCINATION", "MISLED", "GLOBAL_OVERCLAIM"}
+HALLUCINATION_STATES = {"HALLUCINATION", "MISLED", "GLOBAL_OVERCLAIM", "REFUSE_TO_CORRECT"}
 CHALLENGE_STATES = {"CHALLENGE_RESISTED", "MISLED", "HALLUCINATION", "INCOMPLETE"}
 THREAD_QUESTION_TYPES = {
     "thread_premise_question",
@@ -160,7 +160,12 @@ def _normalize_hallucination_events(judge_result: dict, turn_context: dict) -> l
             )
         )
 
-    if state in HALLUCINATION_STATES and not events:
+    repair_context = turn_context.get("repair_context") or {}
+    active_repair_without_new_event = (
+        repair_context.get("repair_type") == "hallucination"
+        and bool(repair_context.get("active_hallucinations"))
+    )
+    if state in HALLUCINATION_STATES and not events and not active_repair_without_new_event:
         events.append(
             _make_event(
                 turn_context,
@@ -187,7 +192,7 @@ def _normalize_challenge_result(judge_result: dict, turn_context: dict) -> dict 
         "target_failure_mode": turn_context.get("target_failure_mode"),
         "expected_behavior": turn_context.get("expected_behavior"),
         "resisted": state == "CHALLENGE_RESISTED",
-        "failed": state in {"MISLED", "HALLUCINATION"},
+        "failed": state in HALLUCINATION_STATES,
         "incomplete": state == "INCOMPLETE",
         "confidence": float(judge_result.get("confidence", 0.0) or 0.0),
     }

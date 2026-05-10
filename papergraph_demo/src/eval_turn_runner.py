@@ -159,6 +159,7 @@ class EvaluationTurnRunner:
             "question_text": follow["question_text"],
             "target_kc_ids": follow["target_kc_ids"],
             "target_path_id": follow.get("target_path_id"),
+            "repair_context": follow.get("repair_context", {}),
             "model_answer": answer,
             "answer_mode": answer_mode,
             "judge_result": judge_result,
@@ -249,6 +250,7 @@ class EvaluationTurnRunner:
             "question_text": question["question_text"],
             "target_kc_ids": question["target_kc_ids"],
             "target_path_id": question.get("target_path_id"),
+            "repair_context": question.get("repair_context", {}),
             "model_answer": answer,
             "answer_mode": answer_mode,
             "judge_result": judge_result,
@@ -382,6 +384,7 @@ def _turn_context(turn_id: str, question: dict) -> dict:
         "challenge_trigger": question.get("challenge_trigger"),
         "target_failure_mode": question.get("target_failure_mode"),
         "expected_behavior": question.get("expected_behavior"),
+        "repair_context": question.get("repair_context", {}),
     }
 
 
@@ -400,6 +403,7 @@ def _turn_context_from_turn(turn: dict) -> dict:
         "challenge_trigger": turn.get("challenge_trigger"),
         "target_failure_mode": turn.get("target_failure_mode"),
         "expected_behavior": turn.get("expected_behavior"),
+        "repair_context": turn.get("repair_context", {}),
     }
 
 
@@ -578,4 +582,6 @@ def _question_context(question: dict, base_context: dict | None) -> dict:
                 "solver_trial_summary": question.get("solver_trial_summary", {}),
             }
         )
+    if question.get("repair_context"):
+        context["repair_context"] = question.get("repair_context", {})
     return context

@@ -12,6 +12,7 @@ def generate_followup_question(
     target_kcs: list[dict],
     client: OpenAICompatClient | None = None,
     allow_offline_fallback: bool = False,
+    repair_context: dict | None = None,
 ) -> dict | None:
     if not target_kcs:
         return None
@@ -31,6 +32,7 @@ def generate_followup_question(
         prompt_kwargs = {
             "question": last_turn.get("question_text", ""),
             "missing_kcs": json.dumps(missing_claims, ensure_ascii=False),
+            "repair_context_json": json.dumps(repair_context or {}, ensure_ascii=False),
         }
         claims_text = "; ".join(str(c) for c in missing_claims[:2])
         fallback_text = (
@@ -39,13 +41,19 @@ def generate_followup_question(
         )
     elif action == "hallucination_followup":
         qtype = "hallucination_followup"
-        hallucinated = last_turn.get("judge_result", {}).get("hallucinated_claims", [])
+        active_hallucinations = (repair_context or {}).get("active_hallucinations", [])
+        hallucinated = [
+            event.get("claim")
+            for event in active_hallucinations
+            if event.get("claim")
+        ] or last_turn.get("judge_result", {}).get("hallucinated_claims", [])
         hint = primary.get("forbidden_claims", [{}])[0].get("followup_hint", "Re-check the statement against the paper evidence and correct it.")
         prompt_name = "generate_hallucination_followup.txt"
         prompt_kwargs = {
             "question": last_turn.get("question_text", ""),
             "hallucinated_claims": json.dumps(hallucinated, ensure_ascii=False),
             "followup_hints": json.dumps([hint], ensure_ascii=False),
+            "repair_context_json": json.dumps(repair_context or {}, ensure_ascii=False),
         }
         claims_text = "; ".join(str(c) for c in hallucinated[:3]) if hallucinated else "the suspicious claim(s) in the previous answer"
         fallback_text = (
@@ -90,6 +98,7 @@ def generate_followup_question(
         "macro_id": last_turn.get("macro_id"),
         "target_kc_ids": [k["kc_id"] for k in target_kcs],
         "target_path_id": last_turn.get("target_path_id"),
+        "repair_context": repair_context or {},
         "question_text": question_text,
     }
 

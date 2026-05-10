@@ -10,18 +10,22 @@ from src.thread_scheduler import record_thread_step_result
 
 
 def initialize_eval_state(master_graph: dict, target_model: str) -> dict:
+    default_active_by_macro = _default_active_kc_ids_by_macro(master_graph)
     kc_states = {}
     for kc in master_graph.get("kc_nodes", []):
+        macro_id = kc.get("macro_id")
         kc_states[kc["kc_id"]] = {
             "status": "unlit",
             "covered_by_turns": [],
+            "globally_supported_by_turns": [],
             "missed_by_turns": [],
             "confidence": 0.0,
             "hallucination_history": [],
             "correction_status": "not_needed",
             "same_hallucination_followed_up_times": 0,
             "importance": kc.get("importance", "normal"),
-            "macro_id": kc.get("macro_id"),
+            "macro_id": macro_id,
+            "is_active_target": kc["kc_id"] in default_active_by_macro.get(macro_id, []),
         }
     path_states = {}
     for path in master_graph.get("reasoning_paths", []):
@@ -43,9 +47,14 @@ def initialize_eval_state(master_graph: dict, target_model: str) -> dict:
                 "main_question_asked": False,
                 "covered_kc_ids": [],
                 "missing_kc_ids": [],
+                "target_kc_ids": list(default_active_by_macro.get(macro.get("macro_id"), [])),
+                "bank_kc_ids": list(macro.get("kc_ids", [])),
                 "related_turns": [],
                 "bank_kc_count": macro.get("bank_kc_count", len(macro.get("kc_ids", []))),
-                "active_kc_count": len(macro.get("kc_ids", [])),
+                "active_kc_count": macro.get(
+                    "active_kc_count",
+                    len(default_active_by_macro.get(macro.get("macro_id"), [])) or len(macro.get("kc_ids", [])),
+                ),
             }
             for macro in master_graph.get("macro_nodes", [])
             if macro.get("macro_id")
@@ -144,7 +153,7 @@ def apply_judge_result(
             s["status"] = "missing"
         s["missed_by_turns"].append(turn_id)
         missing.append(kc_id)
-    if judge_result.get("state") in {"HALLUCINATION", "MISLED"}:
+    if judge_result.get("state") in {"HALLUCINATION", "MISLED", "GLOBAL_OVERCLAIM", "REFUSE_TO_CORRECT"}:
         eval_state["global_state"]["hallucination_count"] += 1
         for kc_id in judge_result.get("covered_kc_ids", []) + judge_result.get("missing_kc_ids", []):
             if kc_id not in eval_state["kc_states"]:
@@ -168,14 +177,22 @@ def apply_judge_result(
                 s["status"] = "corrected"
             s["same_hallucination_followed_up_times"] = 0
     if path_id:
-        if judge_result.get("state") in {"HALLUCINATION", "MISLED"}:
+        if judge_result.get("state") in {"HALLUCINATION", "MISLED", "GLOBAL_OVERCLAIM", "REFUSE_TO_CORRECT"}:
             status = "fail"
         elif missing:
             status = "partial"
         else:
             status = "success"
         eval_state["path_states"][path_id].update({"status": status, "tested_by_turn": turn_id, "result": status})
-    macro_update = _apply_macro_update(eval_state, turn_id, macro_id, question_type, lit, missing)
+    macro_update = _apply_macro_update(
+        eval_state,
+        turn_id,
+        macro_id,
+        question_type,
+        lit,
+        missing,
+        question.get("target_kc_ids", []) if question else [],
+    )
     thread_update = record_thread_step_result(
         eval_state,
         thread_id=thread_id,
@@ -254,9 +271,13 @@ def _apply_supported_claim_lighting(eval_state: dict, turn_id: str, results: lis
             state = eval_state["kc_states"][kc_id]
             if turn_id not in state.setdefault("covered_by_turns", []):
                 state["covered_by_turns"].append(turn_id)
+            if turn_id not in state.setdefault("globally_supported_by_turns", []):
+                state["globally_supported_by_turns"].append(turn_id)
             state["confidence"] = max(float(state.get("confidence", 0.0) or 0.0), float(item.get("confidence", 0.0) or 0.0))
-            if state.get("status") in {"unlit", "missing"}:
+            if state.get("status") != "failed":
                 state["status"] = "lit"
+                if state.get("correction_status") == "uncorrected":
+                    state["correction_status"] = "corrected"
             macro_id = state.get("macro_id")
             if macro_id:
                 macro_state = eval_state.setdefault("macro_states", {}).setdefault(
@@ -266,6 +287,8 @@ def _apply_supported_claim_lighting(eval_state: dict, turn_id: str, results: lis
                         "main_question_asked": False,
                         "covered_kc_ids": [],
                         "missing_kc_ids": [],
+                        "target_kc_ids": [],
+                        "bank_kc_ids": [],
                         "related_turns": [],
                         "bank_kc_count": 0,
                         "active_kc_count": 0,
@@ -289,6 +312,7 @@ def _apply_macro_update(
     question_type: str | None,
     lit: list[str],
     missing: list[str],
+    target_kc_ids: list[str] | None,
 ) -> dict:
     if not macro_id:
         return {}
@@ -299,6 +323,8 @@ def _apply_macro_update(
             "main_question_asked": False,
             "covered_kc_ids": [],
             "missing_kc_ids": [],
+            "target_kc_ids": [],
+            "bank_kc_ids": [],
             "related_turns": [],
             "bank_kc_count": 0,
             "active_kc_count": 0,
@@ -307,6 +333,10 @@ def _apply_macro_update(
     state["status"] = "in_progress"
     if question_type in {"main", "macro_main_question"}:
         state["main_question_asked"] = True
+        targets = list(dict.fromkeys(kc_id for kc_id in (target_kc_ids or []) if kc_id))
+        if targets:
+            state["target_kc_ids"] = targets
+            state["active_kc_count"] = len(targets)
     if turn_id not in state.setdefault("related_turns", []):
         state["related_turns"].append(turn_id)
     for kc_id in lit:
@@ -317,11 +347,28 @@ def _apply_macro_update(
     for kc_id in missing:
         if kc_id not in state.setdefault("missing_kc_ids", []):
             state["missing_kc_ids"].append(kc_id)
-    if state.get("active_kc_count") and len(state.get("covered_kc_ids", [])) >= state["active_kc_count"]:
+    target_ids = set(state.get("target_kc_ids", []) or [])
+    if target_ids:
+        if target_ids <= set(state.get("covered_kc_ids", [])):
+            state["status"] = "completed"
+    elif state.get("active_kc_count") and len(state.get("covered_kc_ids", [])) >= state["active_kc_count"]:
         state["status"] = "completed"
     return {
         "macro_id": macro_id,
         "status": state.get("status"),
         "covered_kc_ids": state.get("covered_kc_ids", []),
         "missing_kc_ids": state.get("missing_kc_ids", []),
+        "target_kc_ids": state.get("target_kc_ids", []),
     }
+
+
+def _default_active_kc_ids_by_macro(master_graph: dict) -> dict[str, list[str]]:
+    out: dict[str, list[str]] = {}
+    for macro in master_graph.get("macro_nodes", []):
+        macro_id = macro.get("macro_id")
+        if not macro_id:
+            continue
+        kc_ids = list(macro.get("kc_ids", []))
+        active_count = int(macro.get("active_kc_count") or min(3, len(kc_ids)) or 0)
+        out[macro_id] = kc_ids[:active_count] if active_count else []
+    return out

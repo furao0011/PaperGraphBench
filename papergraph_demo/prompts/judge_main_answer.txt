@@ -12,6 +12,7 @@ Decision rules:
 - Missing: mark a target KC missing when the answer is vague, incomplete, or avoids it.
 - Hallucination: mark HALLUCINATION for contradicted KC claims, matched forbidden claims, or fabricated paper claims.
 - Detail follow-up answers should be judged only against their target missing KCs and hallucination risk. Do not create additional detail gaps for unrelated material.
+- If structured context contains repair_context.remaining_kc_ids, judge detail coverage against that dynamic remaining set.
 
 Return strict JSON with this normalized schema:
 Use an empty hallucination_events array when there is no hallucination.
@@ -60,3 +61,6 @@ Dialogue summary:
 
 Related forbidden claims:
 {{related_forbidden_claims_json}}
+
+Structured context JSON:
+{{thread_context_json}}

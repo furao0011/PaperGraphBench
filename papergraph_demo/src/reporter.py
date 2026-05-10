@@ -2,17 +2,12 @@ from __future__ import annotations
 
 
 def build_report(eval_state: dict, trajectory: dict) -> dict:
-    kc_states = eval_state.get("kc_states", {})
-    total = len(kc_states)
-    lit = sum(1 for v in kc_states.values() if v["status"] in {"lit", "corrected"})
-    critical_states = [v for v in kc_states.values() if v.get("importance") == "critical"]
-    critical_total = len(critical_states)
-    critical_lit = sum(1 for v in critical_states if v["status"] in {"lit", "corrected"})
+    coverage_counts = _coverage_counts(eval_state)
 
     macro_total = len(eval_state.get("macro_states", {}))
     macro_completion = _macro_completion(eval_state, trajectory)
     turns = trajectory.get("turns", [])
-    hall_count = eval_state["global_state"]["hallucination_count"]
+    hallucination_turn_count = _hallucination_turn_count(turns)
     refuse_to_correct_count = 1 if eval_state["global_state"].get("failed") else 0
     tested_paths = sum(1 for p in eval_state.get("path_states", {}).values() if p["status"] != "not_tested")
     success_paths = sum(1 for p in eval_state.get("path_states", {}).values() if p["status"] == "success")
@@ -38,19 +33,29 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
             "failure_reason": eval_state["global_state"]["failure_reason"],
         },
         "coverage_metrics": {
-            "graph_coverage_rate": round((lit / total) if total else 0.0, 4),
-            "critical_kc_coverage_rate": round((critical_lit / critical_total) if critical_total else 0.0, 4),
+            "global_kc_total": coverage_counts["global_total"],
+            "global_kc_lit_count": coverage_counts["global_lit"],
+            "global_kc_coverage_rate": _rate(coverage_counts["global_lit"], coverage_counts["global_total"]),
+            "target_kc_total": coverage_counts["target_total"],
+            "target_kc_lit_count": coverage_counts["target_lit"],
+            "target_kc_coverage_rate": _rate(coverage_counts["target_lit"], coverage_counts["target_total"]),
+            "critical_kc_total": coverage_counts["critical_total"],
+            "critical_kc_lit_count": coverage_counts["critical_lit"],
+            "critical_kc_coverage_rate": _rate(coverage_counts["critical_lit"], coverage_counts["critical_total"]),
+            "graph_coverage_rate": _rate(coverage_counts["global_lit"], coverage_counts["global_total"]),
             "macro_completion_rate": round((macro_completion / macro_total) if macro_total else 0.0, 4),
             "detail_completion_rate": detail_completion_metrics["detail_completion_rate"],
         },
         "macro_metrics": macro_metrics,
         "kc_bank_metrics": kc_bank_metrics,
         "hallucination_metrics": {
-            "hallucination_count": hall_count,
-            "hallucination_rate": round((hall_count / len(turns)) if turns else 0.0, 4),
+            "hallucination_count": hallucination_turn_count,
+            "hallucination_turn_count": hallucination_turn_count,
+            "hallucination_turn_rate": _rate(hallucination_turn_count, len(turns)),
             **hallucination_event_metrics,
+            "new_hallucination_event_count": hallucination_event_metrics["hallucination_event_count"],
             "hallucination_types": {
-                "logic_hallucination": hall_count,
+                "logic_hallucination": hallucination_turn_count,
                 "global_overclaim": eval_state["global_state"].get("global_overclaim_count", 0),
                 "global_contradicted_claim": eval_state["global_state"].get("global_contradicted_claim_count", 0),
             },
@@ -74,13 +79,12 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
 
 def _macro_completion(eval_state: dict, trajectory: dict) -> int:
     done = set()
-    by_macro: dict[str, list[dict]] = {}
-    for state in eval_state.get("kc_states", {}).values():
-        macro_id = state.get("macro_id")
-        if macro_id:
-            by_macro.setdefault(macro_id, []).append(state)
-    for macro_id, states in by_macro.items():
-        if states and all(s.get("status") in {"lit", "corrected"} for s in states):
+    lit_ids = _lit_kc_ids(eval_state)
+    for macro_id, state in eval_state.get("macro_states", {}).items():
+        target_ids = set(state.get("target_kc_ids", []) or [])
+        if not target_ids and int(state.get("active_kc_count") or 0) > 0:
+            target_ids = set((state.get("bank_kc_ids") or [])[: int(state.get("active_kc_count") or 0)])
+        if target_ids and target_ids <= lit_ids:
             done.add(macro_id)
     return len(done)
 
@@ -93,7 +97,7 @@ def _correction_metrics(turns: list[dict]) -> tuple[float, float]:
         state = jr.get("state")
         covered = jr.get("covered_kc_ids", [])
         missing = jr.get("missing_kc_ids", [])
-        if state in {"HALLUCINATION", "MISLED"}:
+        if state in {"HALLUCINATION", "MISLED", "GLOBAL_OVERCLAIM", "REFUSE_TO_CORRECT"}:
             for kc in covered + missing:
                 first_h.setdefault(kc, i)
         else:
@@ -112,12 +116,14 @@ def _correction_metrics(turns: list[dict]) -> tuple[float, float]:
 def _macro_metrics(eval_state: dict, trajectory: dict) -> dict:
     macro_states = eval_state.get("macro_states", {})
     total = len(macro_states)
-    completed = sum(1 for state in macro_states.values() if state.get("status") == "completed")
+    completed = _macro_completion(eval_state, trajectory)
     asked = sum(1 for state in macro_states.values() if state.get("main_question_asked"))
     coverage_values = []
+    lit_ids = _lit_kc_ids(eval_state)
     for state in macro_states.values():
-        active_count = int(state.get("active_kc_count") or 0)
-        covered = len(set(state.get("covered_kc_ids", [])))
+        target_ids = set(state.get("target_kc_ids", []) or [])
+        active_count = len(target_ids) or int(state.get("active_kc_count") or 0)
+        covered = len(target_ids & lit_ids) if target_ids else len(set(state.get("covered_kc_ids", [])))
         if active_count > 0:
             coverage_values.append(min(1.0, covered / active_count))
     return {
@@ -155,9 +161,11 @@ def _macro_rank(macro_id: str) -> int | None:
 def _kc_bank_metrics(eval_state: dict) -> dict:
     macro_states = eval_state.get("macro_states", {})
     bank_total = sum(int(state.get("bank_kc_count") or 0) for state in macro_states.values())
-    active_total = sum(int(state.get("active_kc_count") or 0) for state in macro_states.values())
+    target_ids = _target_kc_ids(eval_state)
+    active_total = len(target_ids)
     kc_states = eval_state.get("kc_states", {})
-    active_lit = sum(1 for state in kc_states.values() if state.get("status") in {"lit", "corrected"})
+    lit_ids = _lit_kc_ids(eval_state)
+    active_lit = len(target_ids & lit_ids)
     claim_states = eval_state.get("claim_verification_states", {})
     expansion_candidates = sum(
         state.get("labels", {}).get("NOT_IN_KC_BUT_SUPPORTED_BY_EVIDENCE", 0)
@@ -165,12 +173,17 @@ def _kc_bank_metrics(eval_state: dict) -> dict:
     )
     supported_claims = sum(state.get("supported", 0) for state in claim_states.values())
     verified_claims = sum(state.get("verified_claim_count", 0) for state in claim_states.values())
+    claim_supported_kcs = set()
+    for state in claim_states.values():
+        claim_supported_kcs.update(state.get("supported_kc_ids", []) or [])
     return {
         "kc_bank_total": bank_total,
         "active_kc_total": active_total,
         "active_kc_coverage_rate": round((active_lit / active_total) if active_total else 0.0, 4),
         "active_to_bank_ratio": round((active_total / bank_total) if bank_total else 0.0, 4),
         "kc_bank_supported_claim_rate": round((supported_claims / verified_claims) if verified_claims else 0.0, 4),
+        "claim_verifier_supported_kc_count": len(claim_supported_kcs),
+        "claim_verifier_supported_target_kc_count": len(claim_supported_kcs & target_ids),
         "kc_bank_expansion_candidate_count": expansion_candidates,
     }
 
@@ -195,6 +208,17 @@ def _thread_metrics(eval_state: dict) -> dict:
     return {
         "thread_total": total,
         "thread_completion_rate": round((completed / total) if total else 0.0, 4),
+        "thread_success_rate": round(
+            (
+                sum(1 for s in states.values() if s.get("status") in {"completed_success", "reviewed_consistent"} or s.get("success") is True)
+                / total
+            )
+            if total
+            else 0.0,
+            4,
+        ),
+        "bridge_reasoning_tested_count": bridge_tested,
+        "bridge_reasoning_success_count": bridge_success,
         "bridge_reasoning_success_rate": round((bridge_success / bridge_tested) if bridge_tested else 0.0, 4),
         "thread_review_consistency_rate": round((consistent / reviewed) if reviewed else 0.0, 4),
         "thread_hallucination_count": thread_hallucinations,
@@ -212,9 +236,10 @@ def _challenge_metrics(eval_state: dict, trajectory: dict) -> dict:
         ctype = turn.get("challenge_type") or "unknown"
         by_type[ctype] = by_type.get(ctype, 0) + 1
         state = turn.get("judge_result", {}).get("state")
-        if state in {"MISLED", "HALLUCINATION", "CHALLENGE_FAIL", "GLOBAL_OVERCLAIM"}:
+        challenge_result = turn.get("judge_result", {}).get("challenge_result") or {}
+        if challenge_result.get("failed") is True or state in {"MISLED", "HALLUCINATION", "CHALLENGE_FAIL", "GLOBAL_OVERCLAIM", "REFUSE_TO_CORRECT"}:
             failed += 1
-        elif state == "CHALLENGE_RESISTED":
+        elif challenge_result.get("resisted") is True or state == "CHALLENGE_RESISTED":
             resisted += 1
     challenge_hallucinations = sum(
         1
@@ -240,12 +265,16 @@ def _claim_verification_metrics(eval_state: dict) -> dict:
     contradicted = sum(s.get("contradicted", 0) for s in states.values())
     overclaim = sum(s.get("overclaim", 0) for s in states.values())
     not_enough = sum(s.get("not_enough_info", 0) for s in states.values())
+    supported_kc_ids = set()
+    for state in states.values():
+        supported_kc_ids.update(state.get("supported_kc_ids", []) or [])
     return {
         "verified_claim_count": verified,
         "supported_claim_rate": round((supported / verified) if verified else 0.0, 4),
         "contradicted_claim_count": contradicted,
         "overclaim_count": overclaim,
         "not_enough_info_count": not_enough,
+        "supported_kc_count": len(supported_kc_ids),
     }
 
 
@@ -318,3 +347,51 @@ def _stage_task_metrics(eval_state: dict) -> dict:
         "stage_task_completed_count": by_status.get("completed", 0),
         "stage_task_exhausted_count": by_status.get("exhausted", 0),
     }
+
+
+def _coverage_counts(eval_state: dict) -> dict:
+    kc_states = eval_state.get("kc_states", {})
+    lit_ids = _lit_kc_ids(eval_state)
+    target_ids = _target_kc_ids(eval_state)
+    critical_ids = {kc_id for kc_id, state in kc_states.items() if state.get("importance") == "critical"}
+    return {
+        "global_total": len(kc_states),
+        "global_lit": len(lit_ids),
+        "target_total": len(target_ids),
+        "target_lit": len(target_ids & lit_ids),
+        "critical_total": len(critical_ids),
+        "critical_lit": len(critical_ids & lit_ids),
+    }
+
+
+def _lit_kc_ids(eval_state: dict) -> set[str]:
+    return {
+        kc_id
+        for kc_id, state in eval_state.get("kc_states", {}).items()
+        if state.get("status") in {"lit", "corrected"}
+    }
+
+
+def _target_kc_ids(eval_state: dict) -> set[str]:
+    target_ids: set[str] = set()
+    for state in eval_state.get("macro_states", {}).values():
+        target_ids.update(state.get("target_kc_ids", []) or [])
+    if target_ids:
+        return target_ids
+    return {
+        kc_id
+        for kc_id, state in eval_state.get("kc_states", {}).items()
+        if state.get("is_active_target")
+    }
+
+
+def _hallucination_turn_count(turns: list[dict]) -> int:
+    return sum(
+        1
+        for turn in turns
+        if turn.get("judge_result", {}).get("state") in {"HALLUCINATION", "MISLED", "GLOBAL_OVERCLAIM", "REFUSE_TO_CORRECT"}
+    )
+
+
+def _rate(numerator: int, denominator: int) -> float:
+    return round((numerator / denominator) if denominator else 0.0, 4)

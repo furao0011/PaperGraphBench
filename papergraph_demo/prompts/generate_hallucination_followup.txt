@@ -5,8 +5,10 @@ Rules:
 - Frame the listed claims as possible unsupported claims from the previous answer.
 - Ask the model to check each claim against the paper, retract unsupported parts, and restate the corrected answer.
 - Do not introduce a new wrong premise. The goal is correction of the suspicious claim already present in the answer.
+- If repair_context_json contains active_hallucinations, make the question focus on those active hallucination claims. Do not broaden the repair target.
 Input:
 Question: {{question}}
 Hallucinated claims: {{hallucinated_claims}}
 Followup hints: {{followup_hints}}
+Repair context JSON: {{repair_context_json}}
 Output JSON: {"question_text":"..."}

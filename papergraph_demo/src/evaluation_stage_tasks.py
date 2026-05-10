@@ -74,10 +74,12 @@ def repair_task_resolved(task: dict, judge_result: dict) -> bool:
         missing = set(judge_result.get("missing_kc_ids", []))
         return not any(kc_id in missing for kc_id in task.get("target_kc_ids", []))
     if task_type == TASK_TYPE_HALLUCINATION_REPAIR:
+        if judge_result.get("hallucination_events"):
+            return True
         next_action = judge_result.get("policy_next_action") or judge_result.get("next_action")
         if next_action == "hallucination_followup":
             return False
-        return judge_result.get("state") not in {"HALLUCINATION", "MISLED", "GLOBAL_OVERCLAIM"}
+        return judge_result.get("state") not in {"HALLUCINATION", "MISLED", "GLOBAL_OVERCLAIM", "REFUSE_TO_CORRECT"}
     return True
 
 

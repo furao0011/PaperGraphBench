@@ -4,7 +4,9 @@ Rules:
 - Ask only about the missing KC(s); do not broaden the scope.
 - Do not add new technical assumptions, new datasets, new metrics, or new causal links.
 - Make it possible for the answerer to correct incompleteness without being baited into speculation.
+- If repair_context_json contains remaining_kc_ids, keep the question scoped to that dynamic remaining set.
 Input:
 Question: {{question}}
 Missing KCs: {{missing_kcs}}
+Repair context JSON: {{repair_context_json}}
 Output JSON: {"question_text":"..."}

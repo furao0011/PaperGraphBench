@@ -68,10 +68,11 @@ def build_repair_tasks_from_judge_result(
 
     action = next_action or judge_result.get("policy_next_action") or judge_result.get("next_action")
     tasks: list[dict] = []
+    repair_context = turn.get("repair_context") or {}
+    in_hallucination_repair = repair_context.get("repair_type") == "hallucination"
     has_hallucination = (
-        action == "hallucination_followup"
-        or _is_hallucination_state(judge_result.get("state"))
-        or bool(judge_result.get("hallucination_events"))
+        bool(judge_result.get("hallucination_events"))
+        or (not in_hallucination_repair and (action == "hallucination_followup" or _is_hallucination_state(judge_result.get("state"))))
     )
     if has_hallucination:
         tasks.append(
@@ -80,6 +81,7 @@ def build_repair_tasks_from_judge_result(
                 turn=turn,
                 target_kc_ids=_target_kc_ids_for_hallucination(judge_result, turn),
                 hallucination_event_ids=_hallucination_event_ids(judge_result),
+                repair_context=_hallucination_repair_context(judge_result, turn),
                 max_turns=_env_int("MAX_HALLUCINATION_FOLLOWUPS_PER_EVENT", 3),
                 ordinal=len(tasks) + 1,
                 source_action=action,
@@ -92,6 +94,7 @@ def build_repair_tasks_from_judge_result(
                 turn=turn,
                 target_kc_ids=list(judge_result.get("missing_kc_ids", [])),
                 hallucination_event_ids=[],
+                repair_context=_detail_repair_context(judge_result, turn),
                 max_turns=_env_int("MAX_DETAIL_FOLLOWUPS_PER_TASK", 3),
                 ordinal=len(tasks) + 1,
                 source_action=action,
@@ -220,6 +223,7 @@ def _make_task(
     turn: dict,
     target_kc_ids: list[str],
     hallucination_event_ids: list[str],
+    repair_context: dict,
     max_turns: int,
     ordinal: int,
     source_action: str | None,
@@ -242,6 +246,7 @@ def _make_task(
         "source_action": source_action,
         "target_kc_ids": target_kc_ids,
         "hallucination_event_ids": hallucination_event_ids,
+        "repair_context": repair_context,
         "priority": TASK_PRIORITIES[task_type],
         "max_turns": max_turns,
         "current_turns": 0,
@@ -258,6 +263,40 @@ def _target_kc_ids_for_hallucination(judge_result: dict, turn: dict) -> list[str
     return list(dict.fromkeys(ids))
 
 
+def _hallucination_repair_context(judge_result: dict, turn: dict) -> dict:
+    events = [dict(event) for event in judge_result.get("hallucination_events", []) or []]
+    return {
+        "repair_type": "hallucination",
+        "root_turn_id": turn.get("turn_id"),
+        "root_question_id": turn.get("question_id"),
+        "root_question_type": turn.get("question_type"),
+        "active_hallucinations": [
+            {
+                "event_id": event.get("event_id"),
+                "hallucination_type": event.get("hallucination_type"),
+                "subtype": event.get("subtype"),
+                "claim": event.get("claim"),
+                "related_kc_ids": event.get("related_kc_ids", []),
+                "matched_forbidden_claims": event.get("matched_forbidden_claims", []),
+            }
+            for event in events
+        ],
+        "attempted_turn_ids": [],
+    }
+
+
+def _detail_repair_context(judge_result: dict, turn: dict) -> dict:
+    missing = list(dict.fromkeys(judge_result.get("missing_kc_ids", []) or []))
+    return {
+        "repair_type": "detail",
+        "root_turn_id": turn.get("turn_id"),
+        "root_question_id": turn.get("question_id"),
+        "root_question_type": turn.get("question_type"),
+        "remaining_kc_ids": missing,
+        "covered_during_repair": [],
+    }
+
+
 def _hallucination_event_ids(judge_result: dict) -> list[str]:
     ids = list(judge_result.get("hallucination_event_ids", []) or [])
     ids.extend(
@@ -269,7 +308,7 @@ def _hallucination_event_ids(judge_result: dict) -> list[str]:
 
 
 def _is_hallucination_state(state: str | None) -> bool:
-    return state in {"HALLUCINATION", "MISLED", "GLOBAL_OVERCLAIM"}
+    return state in {"HALLUCINATION", "MISLED", "GLOBAL_OVERCLAIM", "REFUSE_TO_CORRECT"}
 
 
 def _move_task_between_lists(macro_status: dict, task_id: str, status: str) -> None:

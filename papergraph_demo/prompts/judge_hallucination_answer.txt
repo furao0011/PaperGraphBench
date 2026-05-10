@@ -8,6 +8,7 @@ Decision rules:
 - Mark REFUSE_TO_CORRECT when the answer clearly doubles down after being asked to check the paper.
 - Mark INCOMPLETE only when the answer avoids the correction and cannot be judged.
 - Missing target KC coverage is not a detail gap here. Do not recommend detail follow-ups from this answer. If the answer introduces a new hallucination, record a hallucination_event so the scheduler can queue a same-level hallucination repair after the current one resolves or exhausts.
+- The structured context may contain repair_context.active_hallucinations. If the answer repeats or strengthens that same active hallucination, mark HALLUCINATION but do not create a new hallucination_event for the same repair target. Only create hallucination_events for different newly introduced hallucinations.
 
 Return strict JSON with this normalized schema:
 Use an empty hallucination_events array when there is no hallucination.
@@ -56,3 +57,6 @@ Dialogue summary:
 
 Related forbidden claims:
 {{related_forbidden_claims_json}}
+
+Structured context JSON:
+{{thread_context_json}}

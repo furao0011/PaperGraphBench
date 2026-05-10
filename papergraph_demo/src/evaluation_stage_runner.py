@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from collections.abc import Callable
 
 from src.challenge_scheduler import get_macro_challenge, get_thread_challenge
@@ -191,6 +190,7 @@ class EvaluationStageRunner:
             targets,
             self.client,
             allow_offline_fallback=self.allow_offline_fallback,
+            repair_context=task.get("repair_context", {}),
         )
         if not follow:
             self._mark_task_exhausted(task["task_id"], turn_id=None)
@@ -217,7 +217,10 @@ class EvaluationStageRunner:
         self.save_artifacts(self.eval_state, self.trajectory, turn_no)
         record_stage_task_turn(self.eval_state, task["task_id"], follow_turn["turn_id"])
         self._mark_task_followed_up(task["task_id"], follow_turn["turn_id"])
-        self._enqueue_repair_tasks_from_turn(follow_turn, source_task_type=task.get("task_type"))
+        self._enqueue_repair_tasks_from_turn(
+            follow_turn,
+            source_task_type=task.get("task_type"),
+        )
         self._settle_repair_task(task["task_id"], follow_turn)
         return turn_no
 
@@ -230,6 +233,18 @@ class EvaluationStageRunner:
         if not stage_task_has_budget(task):
             self._mark_task_exhausted(task_id, follow_turn["turn_id"])
             return
+        if task.get("task_type") == TASK_TYPE_DETAIL_COMPLETION:
+            remaining = [
+                kc_id
+                for kc_id in task.get("target_kc_ids", [])
+                if kc_id in set(judge_result.get("missing_kc_ids", []))
+            ]
+            task["target_kc_ids"] = remaining
+            task.setdefault("repair_context", {})["remaining_kc_ids"] = remaining
+            task.setdefault("repair_context", {}).setdefault("covered_during_repair", [])
+            for kc_id in judge_result.get("covered_kc_ids", []):
+                if kc_id not in task["repair_context"]["covered_during_repair"]:
+                    task["repair_context"]["covered_during_repair"].append(kc_id)
         task["source_turn_id"] = follow_turn["turn_id"]
         task["source_question_id"] = follow_turn["question_id"]
         update_stage_task_status(self.eval_state, task_id, "pending")
@@ -344,11 +359,15 @@ class EvaluationStageRunner:
                 end_targets.append(follow)
         return end_targets
 
-    def _enqueue_repair_tasks_from_turn(self, turn: dict, source_task_type: str | None = None) -> None:
-        if source_task_type == TASK_TYPE_DETAIL_COMPLETION:
-            return
+    def _enqueue_repair_tasks_from_turn(
+        self,
+        turn: dict,
+        source_task_type: str | None = None,
+    ) -> None:
         tasks = turn.get("judge_result", {}).get("recommended_stage_tasks", [])
         if source_task_type == TASK_TYPE_HALLUCINATION_REPAIR:
+            tasks = [task for task in tasks if task.get("task_type") == TASK_TYPE_HALLUCINATION_REPAIR]
+        elif source_task_type == TASK_TYPE_DETAIL_COMPLETION:
             tasks = [task for task in tasks if task.get("task_type") == TASK_TYPE_HALLUCINATION_REPAIR]
         if tasks:
             attach_coverage_gap_ids(tasks, turn)
