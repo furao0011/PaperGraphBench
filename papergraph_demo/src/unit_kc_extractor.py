@@ -24,6 +24,7 @@ VALID_KC_TYPES = {
     "central_claim",
     "algorithm",
     "analysis",
+    "motivation",
 }
 
 VALID_IMPORTANCE = {"critical", "normal"}

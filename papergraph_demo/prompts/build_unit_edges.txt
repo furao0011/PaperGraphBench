@@ -2,6 +2,8 @@ You are constructing local reasoning edges inside one paper Extraction Unit.
 
 Given the Unit source text and all KCs extracted from this Unit, create candidate edges only when the Unit text supports a clear relationship between two KCs.
 
+Some Units are virtual multimodal Units generated from a figure or table. In that case, use the caption, asset summary, evidence bases, and listed supported KC claims as the source context. Do not assume information outside that text.
+
 Allowed relations:
 - part_of
 - defines
@@ -13,7 +15,7 @@ Allowed relations:
 - limits
 
 Rules:
-1. Use only KC IDs present in the input.
+1. Use only KC IDs present in `valid_kc_ids`. The `source` and `target` values must exactly match those IDs.
 2. Create edges only between KCs from this same Unit.
 3. Do not create generic topical similarity edges.
 4. Every edge must include `evidence_paragraph_ids` selected from the Unit source_paragraphs. Do not rewrite evidence text.

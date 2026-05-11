@@ -159,6 +159,16 @@ def _build_kc_nodes(
             "claim_strength": kc.get("claim_strength", ""),
             "scope": kc.get("scope", {}),
             "related_terms": kc.get("related_terms", []),
+            "modality": kc.get("modality", {"is_multimodal": False}),
+            "asset_id": kc.get("asset_id"),
+            "asset_type": kc.get("asset_type"),
+            "asset_caption": kc.get("asset_caption"),
+            "asset_summary": kc.get("asset_summary"),
+            "asset_evidence_basis": kc.get("asset_evidence_basis"),
+            "asset_source_basis": kc.get("asset_source_basis", []),
+            "asset_possible_misreadings": kc.get("asset_possible_misreadings", []),
+            "asset_needs_review": kc.get("asset_needs_review", False),
+            "asset_confidence": kc.get("asset_confidence"),
             "similarity_group_id": kc.get("similarity_group_id"),
             "near_duplicate_kc_ids": kc.get("near_duplicate_kc_ids", []),
             "dedup_status": kc.get("dedup_status", "unique"),
@@ -248,7 +258,7 @@ def _resolve_kc_macro_id(
 
 def _valid_kc_type(value: object) -> str | None:
     text = str(value or "").strip()
-    return text if text in {"problem", "method", "mechanism", "dataset", "experiment", "result", "conclusion", "limitation", "background", "central_claim", "algorithm", "analysis"} else None
+    return text if text in {"problem", "method", "mechanism", "dataset", "experiment", "result", "conclusion", "limitation", "background", "central_claim", "algorithm", "analysis", "motivation"} else None
 
 
 def _valid_importance(value: object) -> str | None:

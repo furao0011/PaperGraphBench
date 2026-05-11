@@ -2,6 +2,8 @@ You are constructing Macro-internal reasoning edge candidates for a paper evalua
 
 Given one Macro, its Unit summaries, and a batch of KCs from this Macro, create candidate edges only when the Macro-level argument supports a clear relationship between two KCs from different Units.
 
+Some Units may be virtual multimodal Units generated from figures or tables. Their source text contains the asset caption, asset summary, evidence bases, and supported KC claims. Use only that provided text as evidence.
+
 Allowed relations:
 - part_of
 - defines
@@ -20,7 +22,7 @@ Focus on these structural relations when they are supported:
 - limitation -> conclusion boundary
 
 Rules:
-1. Use only KC IDs present in the input.
+1. Use only KC IDs present in `valid_kc_ids`. The `source` and `target` values must exactly match those IDs. If no pair among those IDs is supported, return an empty `edges` list.
 2. Create edges only within the given Macro.
 3. Prefer edges between different Units. Do not recreate Unit-internal edges.
 4. Do not create generic topical similarity edges.

@@ -46,6 +46,7 @@ Extractable content includes, but is not limited to:
 - central_claim
 - algorithm
 - analysis
+- motivation
 
 Macro context:
 

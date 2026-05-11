@@ -1,0 +1,54 @@
+You explain one figure asset from a paper so it can become graph evidence.
+
+Input JSON:
+{{asset_json}}
+
+The image is attached to this message. Inspect the image together with the caption and metadata.
+
+Return strict JSON with this schema:
+{
+  "summary": "one concise paragraph describing what the figure shows",
+  "key_elements": [
+    {
+      "name": "visible element, component, panel, or entity",
+      "role": "its role in the figure"
+    }
+  ],
+  "relations": [
+    {
+      "source": "element name",
+      "target": "element name",
+      "relation": "visible relation such as flows_to, contains, compares, supports"
+    }
+  ],
+  "supported_claims": [
+    {
+      "claim": "atomic claim supported by the figure",
+      "support_level": "visually_indicated",
+      "evidence_basis": "caption, visible label, panel, arrow, layout, or visual cue",
+      "scope": {
+        "generality": "limited_to_asset",
+        "asset_id": "..."
+      }
+    }
+  ],
+  "possible_misreadings": [
+    {
+      "claim": "plausible but unsupported or wrong reading",
+      "why_wrong": "why the figure/caption does not support it"
+    }
+  ],
+  "limitations": ["limitations of what this figure can prove"],
+  "needs_review": false,
+  "confidence": 0.0
+}
+
+Rules:
+- Separate what is visually indicated from what is only caption-supported.
+- support_level must be exactly one of: visually_indicated, visible_label, caption_supported, contextual_interpretation.
+- Do not combine multiple support levels in one string.
+- Do not turn a qualitative or illustrative figure into quantitative evidence.
+- If the image is unclear, cropped, unreadable, or inconsistent with the caption, set needs_review=true and explain the limitation.
+- possible_misreadings should be useful for future challenge questions.
+- confidence must be between 0 and 1.
+- Return JSON only.

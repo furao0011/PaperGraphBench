@@ -36,16 +36,19 @@ def build_unit_edge_candidates(
 
     def run_one(context: dict) -> tuple[str, list[dict]]:
         unit_id = context["unit_id"]
+        user_prompt = render_prompt(
+            tpl,
+            unit_context_json=json.dumps(context, ensure_ascii=False, indent=2),
+        )
         with span("build unit edge candidates", unit_id=unit_id, kcs=len(context["kc_nodes"])):
-            result = client.chat_json(
+            edges = _chat_json_with_validation_retry(
+                client=client,
                 system_prompt="You construct local reasoning edge candidates for paper KCs. Return JSON only.",
-                user_prompt=render_prompt(
-                    tpl,
-                    unit_context_json=json.dumps(context, ensure_ascii=False, indent=2),
-                ),
-                temperature=0.1,
+                user_prompt=user_prompt,
+                normalize=lambda result: _normalize_unit_edges(context, result),
+                label=f"Unit {unit_id} edge candidates",
             )
-        return unit_id, _normalize_unit_edges(context, result)
+        return unit_id, edges
 
     with ThreadPoolExecutor(max_workers=max_workers) as ex:
         futures = {ex.submit(run_one, context): context for context in unit_contexts}
@@ -112,21 +115,24 @@ def build_macro_edge_candidates(
 
     def run_one(context: dict) -> tuple[str, list[dict]]:
         batch_id = context["batch_id"]
+        user_prompt = render_prompt(
+            tpl,
+            macro_context_json=json.dumps(context, ensure_ascii=False, indent=2),
+        )
         with span(
             "build macro edge candidates",
             macro_id=context["macro_id"],
             batch_id=batch_id,
             kcs=len(context["kc_nodes"]),
         ):
-            result = client.chat_json(
+            edges = _chat_json_with_validation_retry(
+                client=client,
                 system_prompt="You construct Macro-internal reasoning edge candidates for paper KCs. Return JSON only.",
-                user_prompt=render_prompt(
-                    tpl,
-                    macro_context_json=json.dumps(context, ensure_ascii=False, indent=2),
-                ),
-                temperature=0.1,
+                user_prompt=user_prompt,
+                normalize=lambda result: _normalize_macro_edges(context, result),
+                label=f"Macro batch {batch_id} edge candidates",
             )
-        return batch_id, _normalize_macro_edges(context, result)
+        return batch_id, edges
 
     with ThreadPoolExecutor(max_workers=max_workers) as ex:
         futures = {ex.submit(run_one, context): context for context in macro_contexts}
@@ -193,16 +199,19 @@ def build_adjacent_macro_edge_candidates(
 
     def run_one(context: dict) -> tuple[str, list[dict]]:
         pair_id = context["macro_pair_id"]
+        user_prompt = render_prompt(
+            tpl,
+            adjacent_macro_context_json=json.dumps(context, ensure_ascii=False, indent=2),
+        )
         with span("build adjacent macro edge candidates", macro_pair_id=pair_id):
-            result = client.chat_json(
+            edges = _chat_json_with_validation_retry(
+                client=client,
                 system_prompt="You construct adjacent-Macro reasoning edge candidates for paper KCs. Return JSON only.",
-                user_prompt=render_prompt(
-                    tpl,
-                    adjacent_macro_context_json=json.dumps(context, ensure_ascii=False, indent=2),
-                ),
-                temperature=0.1,
+                user_prompt=user_prompt,
+                normalize=lambda result: _normalize_adjacent_macro_edges(context, result),
+                label=f"Adjacent Macro {pair_id} edge candidates",
             )
-        return pair_id, _normalize_adjacent_macro_edges(context, result)
+        return pair_id, edges
 
     with ThreadPoolExecutor(max_workers=max_workers) as ex:
         futures = {ex.submit(run_one, context): context for context in contexts}
@@ -259,18 +268,21 @@ def build_thread_candidate_edges(
         }
 
     tpl = load_prompt("build_thread_candidate_edges.txt")
+    user_prompt = render_prompt(
+        tpl,
+        thread_context_json=json.dumps(context, ensure_ascii=False, indent=2),
+    )
     with span("build thread candidate edges", kcs=len(context["kc_nodes"]), verified_edges=len(verified_edges)):
-        result = client.chat_json(
+        result_edges = _chat_json_with_validation_retry(
+            client=client,
             system_prompt="You construct cross-Macro Thread candidate edges for paper KCs. Return JSON only.",
-            user_prompt=render_prompt(
-                tpl,
-                thread_context_json=json.dumps(context, ensure_ascii=False, indent=2),
-            ),
-            temperature=0.1,
+            user_prompt=user_prompt,
+            normalize=lambda result: _normalize_thread_edges(context, result),
+            label="Thread candidate edges",
         )
     candidates = []
     seen = set()
-    for edge in _normalize_thread_edges(context, result):
+    for edge in result_edges:
         key = (edge["source"], edge["target"], edge["relation"], edge.get("thread_pattern", ""))
         if key in seen:
             continue
@@ -301,13 +313,17 @@ def _unit_contexts(kc_bank: dict, extraction_units: dict) -> list[dict]:
         if not unit or len(kcs) < 2:
             continue
         contexts.append(
-            {
-                "unit_id": unit_id,
-                "unit_title": unit.get("unit_title", ""),
-                "unit_summary": unit.get("unit_summary", ""),
-                "source_text": unit.get("source_text", ""),
-                "source_paragraphs": _paragraphs_from_source(unit.get("source_text", "")),
-                "kc_nodes": [
+                {
+                    "unit_id": unit_id,
+                    "unit_title": unit.get("unit_title", ""),
+                    "unit_summary": unit.get("unit_summary", ""),
+                    "source_text": unit.get("source_text", ""),
+                    "source_paragraphs": _paragraphs_from_source(unit.get("source_text", "")),
+                    "valid_kc_ids": [
+                        kc.get("kc_id")
+                        for kc in sorted(kcs, key=lambda item: _kc_sort_key(str(item.get("kc_id", ""))))
+                    ],
+                    "kc_nodes": [
                     {
                         "kc_id": kc.get("kc_id"),
                         "macro_id": kc.get("macro_id"),
@@ -315,8 +331,13 @@ def _unit_contexts(kc_bank: dict, extraction_units: dict) -> list[dict]:
                         "claim_strength": kc.get("claim_strength"),
                         "scope": kc.get("scope"),
                         "full_claim": kc.get("full_claim"),
-                        "evidence_text": kc.get("evidence_text"),
+                        "evidence_text": _edge_context_evidence_text(kc),
                         "related_terms": kc.get("related_terms", []),
+                        "modality": kc.get("modality", {"is_multimodal": False}),
+                        "asset_id": kc.get("asset_id"),
+                        "asset_type": kc.get("asset_type"),
+                        "asset_caption": kc.get("asset_caption"),
+                        "asset_summary": kc.get("asset_summary"),
                     }
                     for kc in sorted(kcs, key=lambda item: _kc_sort_key(str(item.get("kc_id", ""))))
                 ],
@@ -364,6 +385,7 @@ def _macro_contexts(kc_bank: dict, macro_spine: dict, extraction_units: dict) ->
                     "macro_title": macro.get("title", ""),
                     "macro_role": macro.get("role", ""),
                     "macro_summary": macro.get("summary", ""),
+                    "valid_kc_ids": [kc.get("kc_id") for kc in batch],
                     "unit_summaries": [
                         {
                             "unit_id": unit_id,
@@ -383,8 +405,13 @@ def _macro_contexts(kc_bank: dict, macro_spine: dict, extraction_units: dict) ->
                             "claim_strength": kc.get("claim_strength"),
                             "scope": kc.get("scope"),
                             "full_claim": kc.get("full_claim"),
-                            "evidence_text": kc.get("evidence_text"),
+                            "evidence_text": _edge_context_evidence_text(kc),
                             "related_terms": kc.get("related_terms", []),
+                            "modality": kc.get("modality", {"is_multimodal": False}),
+                            "asset_id": kc.get("asset_id"),
+                            "asset_type": kc.get("asset_type"),
+                            "asset_caption": kc.get("asset_caption"),
+                            "asset_summary": kc.get("asset_summary"),
                         }
                         for kc in batch
                     ],
@@ -424,6 +451,8 @@ def _adjacent_macro_contexts(kc_bank: dict, macro_spine: dict, extraction_units:
                 "macro_edge_description": macro_edge.get("description", ""),
                 "source_macro": _macro_packet(source_macro),
                 "target_macro": _macro_packet(target_macro),
+                "valid_source_kc_ids": [kc.get("kc_id") for kc in source_kcs],
+                "valid_target_kc_ids": [kc.get("kc_id") for kc in target_kcs],
                 "source_kc_nodes": [_kc_context_packet(kc) for kc in source_kcs],
                 "target_kc_nodes": [_kc_context_packet(kc) for kc in target_kcs],
                 "unit_texts": _unit_text_packets(unit_ids, units_by_id),
@@ -451,6 +480,7 @@ def _thread_context(
             "macro_edges": macro_spine.get("macro_edges", []),
         },
         "kc_nodes": [_kc_context_packet(kc) for kc in kc_nodes],
+        "valid_kc_ids": [kc.get("kc_id") for kc in kc_nodes],
         "verified_edge_hints": [
             {
                 "edge_id": edge.get("edge_id"),
@@ -473,6 +503,40 @@ def _thread_context(
             "baseline_to_comparison_result",
         ],
     }
+
+
+def _chat_json_with_validation_retry(
+    client: OpenAICompatClient,
+    system_prompt: str,
+    user_prompt: str,
+    normalize,
+    label: str,
+) -> list[dict]:
+    errors = []
+    for attempt in range(1, 3):
+        prompt = user_prompt
+        if errors:
+            prompt = (
+                user_prompt
+                + "\n\nYour previous response failed validation with this error:\n"
+                + errors[-1]
+                + "\nReturn corrected strict JSON only. Do not include invalid KC IDs, invalid relation labels, or evidence_unit_id values outside the source/target Units."
+            )
+        try:
+            result = client.chat_json(
+                system_prompt=system_prompt,
+                user_prompt=prompt,
+                temperature=0.0 if attempt == 2 else 0.1,
+            )
+            return normalize(result)
+        except Exception as exc:
+            message = f"{type(exc).__name__}: {exc}"
+            errors.append(message)
+            if attempt == 1:
+                log("edge candidate validation retry", label=label, error=message)
+                continue
+            raise RuntimeError(f"{label} failed validation after retry: {message}") from exc
+    raise RuntimeError(f"{label} failed validation without producing a result.")
 
 
 def _normalize_unit_edges(context: dict, result: dict) -> list[dict]:
@@ -544,7 +608,10 @@ def _normalize_macro_edges(context: dict, result: dict) -> list[dict]:
         evidence_unit_id = str(item.get("evidence_unit_id", "")).strip()
         evidence_paragraph_ids = _string_list(item.get("evidence_paragraph_ids", []))
         if source not in kcs_by_id or target not in kcs_by_id or source == target:
-            raise ValueError(f"Macro batch {context['batch_id']} edge #{idx} references invalid source/target.")
+            raise ValueError(
+                f"Macro batch {context['batch_id']} edge #{idx} references invalid source/target "
+                f"source={source!r} target={target!r}; valid_kc_ids={sorted(kcs_by_id)}."
+            )
         source_unit_id = str(kcs_by_id[source].get("unit_id", "")).strip()
         target_unit_id = str(kcs_by_id[target].get("unit_id", "")).strip()
         if not source_unit_id or not target_unit_id or source_unit_id == target_unit_id:
@@ -850,9 +917,22 @@ def _kc_context_packet(kc: dict) -> dict:
         "claim_strength": kc.get("claim_strength"),
         "scope": kc.get("scope"),
         "full_claim": kc.get("full_claim"),
-        "evidence_text": kc.get("evidence_text"),
+        "evidence_text": _edge_context_evidence_text(kc),
         "related_terms": kc.get("related_terms", []),
+        "modality": kc.get("modality", {"is_multimodal": False}),
+        "asset_id": kc.get("asset_id"),
+        "asset_type": kc.get("asset_type"),
+        "asset_caption": kc.get("asset_caption"),
+        "asset_summary": kc.get("asset_summary"),
     }
+
+
+def _edge_context_evidence_text(kc: dict) -> str:
+    if bool(kc.get("modality", {}).get("is_multimodal")):
+        evidence_basis = str(kc.get("asset_evidence_basis") or "").strip()
+        if evidence_basis:
+            return evidence_basis
+    return str(kc.get("evidence_text") or "").strip()
 
 
 def _unit_text_packets(unit_ids: set[str], units_by_id: dict[str, dict]) -> list[dict]:

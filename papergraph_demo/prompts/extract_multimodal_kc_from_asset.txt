@@ -1,0 +1,36 @@
+You extract evaluable Knowledge Component candidates from one multimodal asset explanation.
+
+Input JSON:
+{{asset_explanation_json}}
+
+Return strict JSON with this schema:
+{
+  "kcs": [
+    {
+      "claim": "atomic evaluable claim supported by this asset",
+      "evidence_basis": "caption/table cell/visual cue/summary basis",
+      "type": "table_result | table_comparison | table_ablation | visual_component | visual_mechanism | visual_pipeline | chart_trend | multimodal_limitation",
+      "importance": "critical | normal",
+      "claim_strength": "direct_table_value | computed_comparison | caption_supported | contextual_interpretation | visually_indicated | visible_label",
+      "scope": {
+        "generality": "limited_to_asset",
+        "asset_id": "..."
+      },
+      "related_terms": ["term"]
+    }
+  ],
+  "empty_reason": ""
+}
+
+Rules:
+- Use only the provided asset explanation.
+- Prefer specific, assessable claims over broad summaries.
+- Do not create KCs from possible_misreadings; those are traps, not supported claims.
+- Each KC must be directly tied to one supported_claim or limitation in the asset explanation.
+- Return at most 4 KCs for one asset.
+- Return at most 1 multimodal_limitation KC for one asset.
+- type must be exactly one of the allowed type strings.
+- claim_strength must be exactly one of the allowed strength strings.
+- scope.asset_id must match the input asset_id.
+- If there are no useful KCs, return kcs=[] and a non-empty empty_reason.
+- Return JSON only.

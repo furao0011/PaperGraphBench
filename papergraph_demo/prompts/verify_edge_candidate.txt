@@ -2,6 +2,8 @@ You verify one candidate reasoning edge for a paper evaluation graph.
 
 Your task is to decide whether the candidate edge is supported by the provided context packet.
 
+The packet may contain virtual multimodal Units derived from figures or tables. Treat their caption, asset summary, evidence bases, and supported KC claims as the available evidence. Do not require raw pixels when the proposed relation is between prepared multimodal KCs and their textual asset evidence.
+
 Allowed decisions:
 - valid
 - invalid

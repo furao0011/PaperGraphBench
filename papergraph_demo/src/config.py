@@ -13,6 +13,9 @@ class Settings:
     llm_model: str = ""
     embed_base_url: str = ""
     embed_model: str = ""
+    vision_api_key: str = ""
+    vision_base_url: str = ""
+    vision_model: str = ""
     working_dir: str = "./working"
     embed_dim: int = 1024
     embed_max_tokens: int = 8192
@@ -55,6 +58,9 @@ def load_settings(project_root: Path) -> Settings:
         llm_model=os.getenv("LLM_MODEL", ""),
         embed_base_url=os.getenv("EMBED_BASE_URL", ""),
         embed_model=os.getenv("EMBED_MODEL", ""),
+        vision_api_key=os.getenv("VISION_API_KEY", ""),
+        vision_base_url=os.getenv("VISION_BASE_URL", ""),
+        vision_model=os.getenv("VISION_MODEL", ""),
         working_dir=os.getenv("WORKING_DIR", "./working"),
         embed_dim=_to_int("EMBED_DIM", 1024),
         embed_max_tokens=_to_int("EMBED_MAX_TOKENS", 8192),

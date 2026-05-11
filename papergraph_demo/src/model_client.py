@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import base64
 import json
+import mimetypes
 import os
 import time
 import urllib.request
@@ -99,6 +101,45 @@ class OpenAICompatClient:
         body = self._post_json(url, payload, timeout_s)
         result = json.loads(body)
         return result["choices"][0]["message"]["content"]
+
+    def chat_json_with_images(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        image_paths: list[str],
+        temperature: float = 0.2,
+        timeout_s: int | None = None,
+        model: str | None = None,
+    ) -> dict:
+        if not self.is_ready():
+            raise RuntimeError("Vision model client is not configured. Check VISION/EMBED API configuration.")
+        if not image_paths:
+            raise ValueError("chat_json_with_images requires at least one image path.")
+
+        url = self.cfg.base_url.rstrip("/") + "/chat/completions"
+        content: list[dict[str, Any]] = [{"type": "text", "text": user_prompt}]
+        for image_path in image_paths:
+            content.append(
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": _image_data_url(image_path),
+                    },
+                }
+            )
+        payload = {
+            "model": model or self.cfg.llm_model,
+            "temperature": temperature,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": content},
+            ],
+            "response_format": {"type": "json_object"},
+        }
+        body = self._post_json(url, payload, timeout_s)
+        result = json.loads(body)
+        content_text = result["choices"][0]["message"]["content"]
+        return json.loads(content_text)
 
     def embed_texts(self, texts: list[str], timeout_s: int | None = None) -> list[list[float]]:
         if not self.embeddings_ready():
@@ -216,3 +257,12 @@ def _env_float(name: str, default: float) -> float:
     except ValueError:
         return default
     return value if value >= 0 else default
+
+
+def _image_data_url(image_path: str) -> str:
+    if not image_path:
+        raise ValueError("Image path must be non-empty.")
+    mime_type = mimetypes.guess_type(image_path)[0] or "application/octet-stream"
+    with open(image_path, "rb") as fh:
+        encoded = base64.b64encode(fh.read()).decode("ascii")
+    return f"data:{mime_type};base64,{encoded}"

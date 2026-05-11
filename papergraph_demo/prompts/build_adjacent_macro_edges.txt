@@ -2,6 +2,8 @@ You are constructing adjacent-Macro reasoning edge candidates for a paper evalua
 
 Given a directed Macro edge and representative KCs from the source and target Macros, create candidate edges that explain how the paper's main argument progresses from the source Macro to the target Macro.
 
+Some representative KCs may come from virtual multimodal Units generated from figures or tables. Their source text contains the asset caption, asset summary, evidence bases, and supported KC claims. Use only that provided text as evidence.
+
 Allowed relations:
 - part_of
 - defines
@@ -18,7 +20,7 @@ Typical adjacent-Macro progressions:
 - experiment/result Macro -> conclusion/limitation Macro
 
 Rules:
-1. Use only KC IDs present in the input.
+1. Use only KC IDs present in `valid_source_kc_ids` and `valid_target_kc_ids`. The `source` must exactly match one ID from `valid_source_kc_ids`; the `target` must exactly match one ID from `valid_target_kc_ids`.
 2. Source KC must come from the source Macro, and target KC must come from the target Macro.
 3. Do not create generic topical similarity edges.
 4. Every edge must include `evidence_unit_id` and `evidence_paragraph_ids` selected from either the source KC Unit paragraphs or the target KC Unit paragraphs. Do not rewrite evidence text.

@@ -1,0 +1,40 @@
+You explain one table asset from a paper so it can become graph evidence.
+
+Input JSON:
+{{asset_json}}
+
+Return strict JSON with this schema:
+{
+  "summary": "one concise paragraph describing what the table reports",
+  "supported_claims": [
+    {
+      "claim": "atomic claim supported by the table",
+      "support_level": "direct_table_value",
+      "evidence_basis": "row/column/caption basis",
+      "scope": {
+        "generality": "limited_to_asset",
+        "asset_id": "..."
+      }
+    }
+  ],
+  "possible_misreadings": [
+    {
+      "claim": "plausible but unsupported or overgeneralized reading",
+      "why_wrong": "why the table does not support it"
+    }
+  ],
+  "limitations": ["limitations of what this table can prove"],
+  "needs_review": false,
+  "confidence": 0.0
+}
+
+Rules:
+- Use only the caption, table markdown/grid, and asset metadata in the input.
+- Do not infer facts outside the table.
+- Every supported_claim must be specific and evidence-backed.
+- support_level must be exactly one of: direct_table_value, computed_comparison, caption_supported, contextual_interpretation.
+- Do not combine multiple support levels in one string.
+- Prefer direct table claims over vague paper-summary claims.
+- possible_misreadings should be useful for future challenge questions.
+- confidence must be between 0 and 1.
+- Return JSON only.

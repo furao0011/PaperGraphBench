@@ -26,6 +26,15 @@ VALID_KC_TYPES = {
     "central_claim",
     "algorithm",
     "analysis",
+    "motivation",
+    "table_result",
+    "table_comparison",
+    "table_ablation",
+    "visual_component",
+    "visual_mechanism",
+    "visual_pipeline",
+    "chart_trend",
+    "multimodal_limitation",
 }
 
 
@@ -55,53 +64,7 @@ def build_kc_bank(
     selected_candidates = candidates if max_bank <= 0 else candidates[:max_bank]
     nodes = []
     for idx, candidate in enumerate(selected_candidates, start=1):
-        macro_id = str(candidate.get("macro_id", "")).strip()
-        if macro_id not in macro_by_id:
-            raise ValueError(f"KC candidate {candidate.get('candidate_id')} references invalid macro_id={macro_id!r}.")
-        claim = str(candidate.get("claim", "")).strip()
-        if not claim:
-            raise ValueError(f"KC candidate {candidate.get('candidate_id')} has empty claim.")
-        evidence_text = str(candidate.get("evidence", "")).strip() or claim
-        kc_type = _valid_type(candidate.get("type")) or _infer_type_from_macro(macro_by_id[macro_id].get("role", ""))
-        importance = _valid_importance(candidate.get("importance")) or macro_by_id[macro_id].get("importance", "normal")
-        if importance not in {"critical", "normal"}:
-            importance = "normal"
-        kc_id = f"KC{idx}"
-        nodes.append(
-            {
-                "kc_id": kc_id,
-                "source_candidate_id": candidate.get("candidate_id", f"C{idx}"),
-                "unit_id": candidate.get("unit_id", ""),
-                "source_window_id": candidate.get("source_window_id", ""),
-                "macro_id": macro_id,
-                "type": kc_type,
-                "source_section": candidate.get("section", ""),
-                "source_section_id": candidate.get("section_id", ""),
-                "source_span_ids": _source_span_ids(candidate),
-                "short_label": _short_label(claim),
-                "claim": claim,
-                "full_claim": claim,
-                "evidence_text": evidence_text,
-                "evidence": [
-                    {
-                        "section": candidate.get("section", ""),
-                        "span_id": candidate.get("section_id", "") or candidate.get("candidate_id", f"C{idx}"),
-                        "text": evidence_text,
-                    }
-                ],
-                "claim_strength": str(candidate.get("claim_strength", "")).strip(),
-                "scope": candidate.get("scope", {}),
-                "related_terms": _string_list(candidate.get("related_terms", [])),
-                "importance": importance,
-                "importance_scores": {},
-                "llm_scores_raw": {},
-                "flags": {
-                    "active_for_question_generation": False,
-                    "active_for_core_metrics": False,
-                    "usable_for_claim_verification": True,
-                },
-            }
-        )
+        nodes.append(_candidate_to_node(candidate, idx, macro_by_id))
 
     duplicate_summary = _attach_duplicate_metadata(nodes)
     _attach_evidence_quality(nodes, client)
@@ -116,6 +79,65 @@ def build_kc_bank(
         duplicate_kcs=duplicate_summary["duplicate_kc_count"],
     )
     return {"paper_id": paper_id, "kc_nodes": nodes, "duplicate_summary": duplicate_summary}
+
+
+def append_kc_candidates_to_bank(
+    kc_bank: dict,
+    candidates: list[dict],
+    macro_spine: dict,
+    client: OpenAICompatClient,
+    allow_offline_fallback: bool = False,
+) -> dict:
+    if not candidates:
+        raise ValueError("Cannot append KC Bank nodes from an empty candidate pool.")
+    if not client or not client.is_ready():
+        raise RuntimeError("KC Bank extension requires a configured online LLM client.")
+    if not client.embeddings_ready():
+        raise RuntimeError("KC Bank extension requires EMBED_MODEL and a configured embeddings endpoint.")
+    macro_by_id = {
+        m["macro_id"]: m
+        for m in macro_spine.get("macro_nodes", [])
+        if m.get("macro_id")
+    }
+    if not macro_by_id:
+        raise ValueError("KC Bank extension requires a non-empty Macro Spine.")
+
+    existing_nodes = kc_bank.get("kc_nodes", [])
+    if not isinstance(existing_nodes, list) or not existing_nodes:
+        raise ValueError("KC Bank extension requires a non-empty existing kc_nodes list.")
+    existing_candidate_ids = {
+        str(node.get("source_candidate_id", "")).strip()
+        for node in existing_nodes
+        if str(node.get("source_candidate_id", "")).strip()
+    }
+    new_candidates = [
+        candidate
+        for candidate in candidates
+        if str(candidate.get("candidate_id", "")).strip() not in existing_candidate_ids
+    ]
+    if not new_candidates:
+        raise ValueError("No new KC candidates to append; all candidate IDs already exist in KC Bank.")
+
+    start_idx = len(existing_nodes) + 1
+    new_nodes = [
+        _candidate_to_node(candidate, start_idx + offset, macro_by_id)
+        for offset, candidate in enumerate(new_candidates)
+    ]
+    _attach_evidence_quality(new_nodes, client)
+    _attach_llm_subjective_scores(new_nodes, macro_spine, client)
+    _attach_rubrics(new_nodes, client, allow_offline_fallback)
+    kc_bank["kc_nodes"] = existing_nodes + new_nodes
+    kc_bank["duplicate_summary"] = _attach_duplicate_metadata(kc_bank["kc_nodes"])
+    kc_bank.pop("score_metadata", None)
+    kc_bank.setdefault("extension_metadata", {})["last_appended_candidate_count"] = len(new_candidates)
+    kc_bank["extension_metadata"]["final_scores_stale"] = True
+    kc_bank["extension_metadata"]["stale_reason"] = "multimodal_kc_candidates_appended"
+    log(
+        "KC Bank extended",
+        appended=len(new_nodes),
+        total=len(kc_bank.get("kc_nodes", [])),
+    )
+    return kc_bank
 
 
 def finalize_kc_bank_scores(
@@ -143,6 +165,59 @@ def finalize_kc_bank_scores(
         )
         scores["final_importance_score"] = round(final_score, 4)
         node["scores"] = scores
+
+
+def _candidate_to_node(candidate: dict, idx: int, macro_by_id: dict[str, dict]) -> dict:
+    macro_id = str(candidate.get("macro_id", "")).strip()
+    if macro_id not in macro_by_id:
+        raise ValueError(f"KC candidate {candidate.get('candidate_id')} references invalid macro_id={macro_id!r}.")
+    claim = str(candidate.get("claim", "")).strip()
+    if not claim:
+        raise ValueError(f"KC candidate {candidate.get('candidate_id')} has empty claim.")
+    evidence_text = str(candidate.get("evidence", "")).strip() or claim
+    evidence_items = _candidate_evidence_items(candidate, evidence_text, idx)
+    kc_type = _valid_type(candidate.get("type")) or _infer_type_from_macro(macro_by_id[macro_id].get("role", ""))
+    importance = _valid_importance(candidate.get("importance")) or macro_by_id[macro_id].get("importance", "normal")
+    if importance not in {"critical", "normal"}:
+        importance = "normal"
+    return {
+        "kc_id": f"KC{idx}",
+        "source_candidate_id": candidate.get("candidate_id", f"C{idx}"),
+        "unit_id": candidate.get("unit_id", ""),
+        "source_window_id": candidate.get("source_window_id", ""),
+        "macro_id": macro_id,
+        "type": kc_type,
+        "source_section": candidate.get("section", ""),
+        "source_section_id": candidate.get("section_id", ""),
+        "source_span_ids": _source_span_ids(candidate),
+        "short_label": _short_label(claim),
+        "claim": claim,
+        "full_claim": claim,
+        "evidence_text": evidence_text,
+        "evidence": evidence_items,
+        "claim_strength": str(candidate.get("claim_strength", "")).strip(),
+        "scope": candidate.get("scope", {}),
+        "related_terms": _string_list(candidate.get("related_terms", [])),
+        "modality": candidate.get("modality", {"is_multimodal": False}),
+        "asset_id": candidate.get("asset_id"),
+        "asset_type": candidate.get("asset_type"),
+        "asset_caption": candidate.get("asset_caption"),
+        "asset_summary": candidate.get("asset_summary"),
+        "asset_evidence_basis": candidate.get("asset_evidence_basis"),
+        "asset_source_basis": candidate.get("asset_source_basis", []),
+        "asset_possible_misreadings": candidate.get("asset_possible_misreadings", []),
+        "asset_needs_review": candidate.get("asset_needs_review", False),
+        "asset_confidence": candidate.get("asset_confidence"),
+        "candidate_forbidden_claims": candidate.get("forbidden_claims", []),
+        "importance": importance,
+        "importance_scores": {},
+        "llm_scores_raw": {},
+        "flags": {
+            "active_for_question_generation": False,
+            "active_for_core_metrics": False,
+            "usable_for_claim_verification": True,
+        },
+    }
 
 
 def _attach_evidence_quality(nodes: list[dict], client: OpenAICompatClient) -> None:
@@ -229,8 +304,37 @@ def _attach_rubrics(
             ] = node
         for fut in as_completed(futures):
             node = futures[fut]
-            node.update(fut.result())
+            _attach_rubric_result(node, fut.result())
             log("KC Bank rubric generated", kc_id=node["kc_id"])
+
+
+def _attach_rubric_result(node: dict, rubric: dict) -> None:
+    canonical_evidence = node.get("evidence", [])
+    candidate_forbidden = node.get("candidate_forbidden_claims", [])
+    rubric_evidence = rubric.pop("evidence", None)
+    rubric_forbidden = rubric.pop("forbidden_claims", [])
+    node.update(rubric)
+    node["evidence"] = canonical_evidence
+    if rubric_evidence:
+        node["rubric_evidence"] = rubric_evidence
+    node["forbidden_claims"] = _merge_forbidden_claims(candidate_forbidden, rubric_forbidden)
+
+
+def _merge_forbidden_claims(left: object, right: object) -> list[dict]:
+    merged = []
+    seen = set()
+    for collection in (left, right):
+        if not isinstance(collection, list):
+            continue
+        for item in collection:
+            if not isinstance(item, dict):
+                continue
+            key = (str(item.get("claim_id", "")).strip(), str(item.get("claim", "")).strip())
+            if key in seen:
+                continue
+            seen.add(key)
+            merged.append(item)
+    return merged
 
 
 def _attach_duplicate_metadata(nodes: list[dict]) -> dict:
@@ -457,6 +561,29 @@ def _source_span_ids(candidate: dict) -> list[str]:
         if value and value not in out:
             out.append(value)
     return out
+
+
+def _candidate_evidence_items(candidate: dict, evidence_text: str, idx: int) -> list[dict]:
+    raw_items = candidate.get("evidence_items")
+    if raw_items is not None:
+        if not isinstance(raw_items, list) or not raw_items:
+            raise ValueError(f"KC candidate {candidate.get('candidate_id')} evidence_items must be a non-empty list when provided.")
+        out = []
+        for item_idx, item in enumerate(raw_items, start=1):
+            if not isinstance(item, dict):
+                raise ValueError(f"KC candidate {candidate.get('candidate_id')} evidence_items[{item_idx}] must be an object.")
+            text = str(item.get("text", "")).strip()
+            if not text:
+                raise ValueError(f"KC candidate {candidate.get('candidate_id')} evidence_items[{item_idx}] has empty text.")
+            out.append(dict(item))
+        return out
+    return [
+        {
+            "section": candidate.get("section", ""),
+            "span_id": candidate.get("section_id", "") or candidate.get("candidate_id", f"C{idx}"),
+            "text": evidence_text,
+        }
+    ]
 
 
 def _string_list(values: object) -> list[str]:

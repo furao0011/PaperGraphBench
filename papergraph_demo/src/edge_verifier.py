@@ -247,12 +247,25 @@ def _kc_packet(kc: dict) -> dict:
     return {
         "kc_id": kc.get("kc_id"),
         "claim": kc.get("full_claim") or kc.get("claim"),
-        "evidence": kc.get("evidence_text"),
+        "evidence": _edge_context_evidence_text(kc),
         "unit_id": kc.get("unit_id"),
         "macro_id": kc.get("macro_id"),
         "claim_strength": kc.get("claim_strength"),
         "scope": kc.get("scope"),
+        "modality": kc.get("modality", {"is_multimodal": False}),
+        "asset_id": kc.get("asset_id"),
+        "asset_type": kc.get("asset_type"),
+        "asset_caption": kc.get("asset_caption"),
+        "asset_summary": kc.get("asset_summary"),
     }
+
+
+def _edge_context_evidence_text(kc: dict) -> str:
+    if bool(kc.get("modality", {}).get("is_multimodal")):
+        evidence_basis = str(kc.get("asset_evidence_basis") or "").strip()
+        if evidence_basis:
+            return evidence_basis
+    return str(kc.get("evidence_text") or "").strip()
 
 
 def _available_context(

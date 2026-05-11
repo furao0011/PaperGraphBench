@@ -1,0 +1,39 @@
+You are given one consecutive OCR HTML island from a paper markdown file.
+
+The island boundary is already correct: all blocks in this group appeared consecutively in the source markdown, and normal text outside the group means a new island. Your task is only to identify the asset structure inside this island.
+
+Input JSON:
+{{group_json}}
+
+Return strict JSON with this schema:
+{
+  "group_assets": [
+    {
+      "asset_local_id": "A1",
+      "asset_type": "table | figure | mixed | noise",
+      "modality_class": "evidential | explanatory | unknown",
+      "subtype_hint": "main_result_table | ablation_table | dataset_statistics_table | framework_diagram | pipeline_diagram | chart | qualitative_example | unknown",
+      "caption": "caption text if present, otherwise empty string",
+      "caption_kind": "table | figure | null",
+      "caption_number": "number string if present, otherwise null",
+      "source_block_ids": ["all block ids used by this asset"],
+      "media_block_ids": ["table/image block ids used by this asset"],
+      "table_block_ids": ["table block ids, if any"],
+      "image_block_ids": ["image block ids, if any"],
+      "description_from_html": "short description based only on table text, img paths, caption text, and other HTML text in this island",
+      "notes": "ambiguities or empty string"
+    }
+  ],
+  "group_notes": "short notes about this island"
+}
+
+Rules:
+- Do not use any block outside this island.
+- Do not guess image visual content; image files are not visible here. For images, use only caption text, image path, and surrounding HTML text inside this island.
+- Tables may use the visible table HTML text and caption.
+- If one caption describes several consecutive images, return one figure asset with multiple image_block_ids.
+- If one island contains both table and figure content that belong to different assets, return multiple group_assets.
+- If a block is decorative/noise and contains no table/image evidence, use asset_type="noise" or omit it from source_block_ids.
+- Every non-noise asset must include at least one media_block_id.
+- Do not add claims, KC ids, or evaluation questions here. This step is only structural extraction.
+- Return JSON only.

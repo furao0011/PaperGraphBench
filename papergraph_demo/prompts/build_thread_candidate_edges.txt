@@ -2,6 +2,8 @@ You are constructing cross-Macro Thread candidate edges for a paper evaluation g
 
 Given the Macro Spine, KCs, and already verified lower-layer edges, propose candidate edges that can support multi-step reasoning threads across the paper.
 
+Some KCs may come from virtual multimodal Units generated from figures or tables. Their source text contains the asset caption, asset summary, evidence bases, and supported KC claims. Use only that provided text as evidence.
+
 Allowed relations:
 - part_of
 - defines
@@ -21,7 +23,7 @@ Useful thread patterns:
 - baseline -> comparison result
 
 Rules:
-1. Use only KC IDs present in the input.
+1. Use only KC IDs present in `valid_kc_ids`. The `source` and `target` values must exactly match those IDs.
 2. Prefer cross-Macro edges. Do not recreate Unit-internal or Macro-internal edges.
 3. Do not create generic topical similarity edges.
 4. Every edge must include `evidence_unit_id` and `evidence_paragraph_ids` selected from either the source KC Unit paragraphs or the target KC Unit paragraphs. Do not rewrite evidence text.

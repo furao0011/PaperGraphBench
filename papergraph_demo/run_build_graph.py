@@ -17,18 +17,28 @@ from src.graph_builder import build_master_graph
 from src.graph_builder import build_reasoning_edges_for_kcs
 from src.kc_bank_builder import build_kc_bank
 from src.kc_bank_builder import finalize_kc_bank_scores
+from src.kc_bank_builder import append_kc_candidates_to_bank
 from src.kc_extractor import extract_kc_candidates_by_sections
 from src.macro_extractor import extract_macro_spine
 from src.mermaid_exporter import export_macro_spine_mermaid, export_master_graph_mermaid, export_reasoning_threads_mermaid
 from src.model_client import ModelConfig, OpenAICompatClient
-from src.paper_parser import load_paper_text, load_paper_text_from_dir, split_into_sections
+from src.multimodal_asset_grouper import group_multimodal_assets
+from src.multimodal_asset_normalizer import normalize_multimodal_assets
+from src.multimodal_explainer import build_vision_client, explain_multimodal_assets
+from src.multimodal_html_group_analyzer import analyze_multimodal_html_groups
+from src.multimodal_kc_extractor import extract_multimodal_kc_candidates
+from src.multimodal_unit_builder import augment_extraction_units_with_multimodal_units
+from src.paper_block_aligner import align_blocks_to_sections
+from src.paper_block_parser import load_paper_bundle_from_dir, load_paper_bundle_from_file
+from src.paper_parser import split_into_sections
 from src.progress import log, span
 from src.reasoning_thread_builder import build_reasoning_threads
 from src.unit_kc_extractor import extract_kc_candidates_by_units
 
 
 BASE_DIR = Path(__file__).resolve().parent
-MASTER_GRAPH_BUILDER_VERSION = "v2_kc_metadata"
+MASTER_GRAPH_BUILDER_VERSION = "v3_multimodal_kc_metadata"
+EDGE_ARTIFACT_SIGNATURE_VERSION = "v1_multimodal_virtual_units"
 PAPER_PATH = BASE_DIR / "data" / "papers" / "demo_paper.md"
 PAPER_DIR_PATH = BASE_DIR.parent / "util_example" / "output1"
 GRAPH_PATH = BASE_DIR / "data" / "graphs" / "master_graph.json"
@@ -51,6 +61,12 @@ BANK_EDGES_PATH = BASE_DIR / "data" / "graphs" / "kc_bank_reasoning_edges.json"
 ACTIVE_KC_PATH = BASE_DIR / "data" / "graphs" / "active_kc.json"
 REASONING_THREADS_PATH = BASE_DIR / "data" / "graphs" / "reasoning_threads.json"
 BUILD_CHECKPOINT_PATH = BASE_DIR / "data" / "graphs" / "build_graph_checkpoint.json"
+MULTIMODAL_DIR = BASE_DIR / "data" / "multimodal"
+PAPER_BLOCKS_PATH = MULTIMODAL_DIR / "paper_blocks.json"
+MULTIMODAL_ASSET_GROUPS_PATH = MULTIMODAL_DIR / "multimodal_asset_groups.json"
+MULTIMODAL_ASSETS_PATH = MULTIMODAL_DIR / "multimodal_assets.json"
+MULTIMODAL_ASSET_EXPLANATIONS_PATH = MULTIMODAL_DIR / "multimodal_asset_explanations.json"
+MULTIMODAL_KC_CANDIDATES_PATH = MULTIMODAL_DIR / "multimodal_kc_candidates.json"
 
 
 def main() -> None:
@@ -64,13 +80,15 @@ def main() -> None:
     if input_dir.exists():
         log("loading paper from directory", input_dir=input_dir)
         with span("load paper directory"):
-            paper_text = load_paper_text_from_dir(input_dir)
+            paper_bundle = load_paper_bundle_from_dir(input_dir)
+            paper_text = paper_bundle["clean_text"]
         paper_id = input_dir.name
         paper_text_path = str(input_dir)
     elif input_file.exists():
         log("loading paper from file", input_file=input_file)
         with span("load paper file"):
-            paper_text = load_paper_text(input_file)
+            paper_bundle = load_paper_bundle_from_file(input_file)
+            paper_text = paper_bundle["clean_text"]
         paper_id = input_file.stem
         paper_text_path = str(input_file)
     else:
@@ -79,6 +97,7 @@ def main() -> None:
         )
 
     allow_offline_fallback = _env_bool("ALLOW_OFFLINE_FALLBACK")
+    multimodal_enabled = _env_bool("MULTIMODAL_ENABLED")
     resume = _env_bool("PAPERGRAPH_RESUME") or _env_bool("BUILD_GRAPH_RESUME")
     restart = _env_bool("PAPERGRAPH_RESTART") or _env_bool("BUILD_GRAPH_RESTART")
     checkpoint_path = Path(os.getenv("BUILD_GRAPH_CHECKPOINT_PATH", str(BUILD_CHECKPOINT_PATH)))
@@ -108,6 +127,27 @@ def main() -> None:
         _write_build_checkpoint(checkpoint_path, paper_id, "sections", resume=resume, restart=restart)
     log("sections ready", count=len(sections))
 
+    paper_blocks_payload = None
+    if multimodal_enabled:
+        with span("align paper blocks to sections", blocks=len(paper_bundle.get("blocks", []))):
+            paper_blocks_payload = align_blocks_to_sections(
+                paper_id=paper_id,
+                blocks=paper_bundle.get("blocks", []),
+                sections=sections,
+            )
+        _write_json(PAPER_BLOCKS_PATH, paper_blocks_payload)
+        diagnostics = paper_blocks_payload.get("diagnostics", {})
+        if diagnostics.get("image_path_missing_count", 0):
+            raise RuntimeError(f"Multimodal image path diagnostics failed: {diagnostics}")
+        log(
+            "multimodal paper blocks ready",
+            path=PAPER_BLOCKS_PATH,
+            blocks=paper_blocks_payload.get("summary", {}).get("block_count", 0),
+            diagnostics=diagnostics,
+        )
+    else:
+        log("multimodal block parsing disabled", env="MULTIMODAL_ENABLED")
+
     macro_spine = _load_resumable_json(MACRO_SPINE_PATH, paper_id, resume, restart, "macro spine")
     if not macro_spine:
         with span("extract macro spine", sections=len(sections)):
@@ -115,6 +155,54 @@ def main() -> None:
         _write_json(MACRO_SPINE_PATH, macro_spine)
         _write_build_checkpoint(checkpoint_path, paper_id, "macro_spine", resume=resume, restart=restart)
     log("macro spine ready", path=MACRO_SPINE_PATH)
+
+    multimodal_asset_groups_payload = None
+    multimodal_assets_payload = None
+    multimodal_asset_explanations_payload = None
+    if multimodal_enabled:
+        if paper_blocks_payload is None:
+            raise RuntimeError("MULTIMODAL_ENABLED=true requires aligned paper blocks.")
+        with span("group multimodal assets", blocks=len(paper_blocks_payload.get("blocks", []))):
+            multimodal_asset_groups_payload = group_multimodal_assets(
+                paper_id=paper_id,
+                blocks=paper_blocks_payload.get("blocks", []),
+                sections=sections,
+            )
+        with span("analyze multimodal HTML groups", groups=len(multimodal_asset_groups_payload.get("asset_groups", []))):
+            multimodal_asset_groups_payload = analyze_multimodal_html_groups(
+                paper_id=paper_id,
+                asset_groups=multimodal_asset_groups_payload,
+                client=client,
+            )
+        _write_json(MULTIMODAL_ASSET_GROUPS_PATH, multimodal_asset_groups_payload)
+        with span("normalize multimodal assets", groups=len(multimodal_asset_groups_payload.get("asset_groups", []))):
+            multimodal_assets_payload = normalize_multimodal_assets(
+                paper_id=paper_id,
+                asset_groups=multimodal_asset_groups_payload,
+                macro_spine=macro_spine,
+            )
+        _write_json(MULTIMODAL_ASSETS_PATH, multimodal_assets_payload)
+        with span("explain multimodal assets", assets=len(multimodal_assets_payload.get("assets", []))):
+            vision_client = build_vision_client(
+                embed_api_key=settings.embed_api_key,
+                vision_api_key=settings.vision_api_key,
+                vision_base_url=settings.vision_base_url,
+                vision_model=settings.vision_model,
+            )
+            multimodal_asset_explanations_payload = explain_multimodal_assets(
+                paper_id=paper_id,
+                assets_payload=multimodal_assets_payload,
+                text_client=client,
+                vision_client=vision_client,
+            )
+        _write_json(MULTIMODAL_ASSET_EXPLANATIONS_PATH, multimodal_asset_explanations_payload)
+        log(
+            "multimodal assets ready",
+            groups=multimodal_asset_groups_payload.get("summary", {}).get("asset_group_count", 0),
+            assets=multimodal_assets_payload.get("summary", {}).get("asset_count", 0),
+            explanations=multimodal_asset_explanations_payload.get("summary", {}).get("asset_explanation_count", 0),
+            macro_unresolved=multimodal_assets_payload.get("summary", {}).get("macro_unresolved_count", 0),
+        )
 
     extraction_units_enabled = _env_bool("EXTRACTION_UNIT_ENABLED", True)
     extraction_units = None
@@ -140,14 +228,21 @@ def main() -> None:
         raise ValueError("KC_EXTRACTION_SOURCE must be 'unit' or 'section'.")
     if kc_extraction_source == "unit" and not extraction_units:
         raise RuntimeError("KC_EXTRACTION_SOURCE=unit requires EXTRACTION_UNIT_ENABLED=true.")
+    multimodal_kc_enabled = multimodal_enabled and _env_bool("MULTIMODAL_KC_ENABLED", True)
+    requested_kc_extraction_source = (
+        f"{kc_extraction_source}+multimodal" if multimodal_kc_enabled else kc_extraction_source
+    )
 
     kc_candidates_payload = _load_resumable_json(KC_CANDIDATES_PATH, paper_id, resume, restart, "KC candidates")
-    if kc_candidates_payload and kc_candidates_payload.get("extraction_source") != kc_extraction_source:
+    if kc_candidates_payload and kc_candidates_payload.get("extraction_source") not in {
+        kc_extraction_source,
+        requested_kc_extraction_source,
+    }:
         log(
             "resume artifact ignored due to KC extraction source mismatch",
             path=KC_CANDIDATES_PATH,
             artifact_source=kc_candidates_payload.get("extraction_source"),
-            requested_source=kc_extraction_source,
+            requested_source=requested_kc_extraction_source,
         )
         kc_candidates_payload = None
     if kc_candidates_payload:
@@ -179,7 +274,55 @@ def main() -> None:
         kc_candidates_payload["extraction_source"] = kc_extraction_source
         _write_json(KC_CANDIDATES_PATH, kc_candidates_payload)
         _write_build_checkpoint(checkpoint_path, paper_id, "kc_candidates", resume=resume, restart=restart)
+
+    if multimodal_kc_enabled:
+        already_has_multimodal = bool(kc_candidates_payload.get("multimodal_kc_enabled"))
+        if not already_has_multimodal:
+            if multimodal_asset_explanations_payload is None:
+                if not MULTIMODAL_ASSET_EXPLANATIONS_PATH.exists():
+                    raise FileNotFoundError(
+                        f"MULTIMODAL_KC_ENABLED=true requires asset explanations: {MULTIMODAL_ASSET_EXPLANATIONS_PATH}"
+                    )
+                multimodal_asset_explanations_payload = json.loads(
+                    MULTIMODAL_ASSET_EXPLANATIONS_PATH.read_text(encoding="utf-8")
+                )
+            with span(
+                "extract multimodal KC candidates",
+                assets=multimodal_asset_explanations_payload.get("summary", {}).get("asset_explanation_count", 0),
+            ):
+                multimodal_kc_candidates_payload = extract_multimodal_kc_candidates(
+                    paper_id=paper_id,
+                    asset_explanations_payload=multimodal_asset_explanations_payload,
+                    client=client,
+                )
+            _write_json(MULTIMODAL_KC_CANDIDATES_PATH, multimodal_kc_candidates_payload)
+            multimodal_candidates = multimodal_kc_candidates_payload["kc_candidates"]
+            kc_candidates = kc_candidates + multimodal_candidates
+            kc_candidates_payload["kc_candidates"] = kc_candidates
+            kc_candidates_payload["multimodal_kc_enabled"] = True
+            kc_candidates_payload["multimodal_kc_candidates_path"] = "data/multimodal/multimodal_kc_candidates.json"
+            kc_candidates_payload["multimodal_candidate_count"] = len(multimodal_candidates)
+            kc_candidates_payload["extraction_source"] = f"{kc_extraction_source}+multimodal"
+            _write_json(KC_CANDIDATES_PATH, kc_candidates_payload)
+            _write_build_checkpoint(checkpoint_path, paper_id, "multimodal_kc_candidates", resume=resume, restart=restart)
+        log(
+            "multimodal KC candidates ready",
+            enabled=True,
+            multimodal_count=kc_candidates_payload.get("multimodal_candidate_count", 0),
+        )
+    elif kc_candidates_payload.get("multimodal_kc_enabled"):
+        kc_candidates = [
+            candidate
+            for candidate in kc_candidates
+            if not candidate.get("modality", {}).get("is_multimodal")
+        ]
+        kc_candidates_payload["kc_candidates"] = kc_candidates
+        kc_candidates_payload["multimodal_kc_enabled"] = False
+        kc_candidates_payload["multimodal_candidate_count"] = 0
+        kc_candidates_payload["extraction_source"] = kc_extraction_source
+        _write_json(KC_CANDIDATES_PATH, kc_candidates_payload)
     log("KC candidates ready", source=kc_extraction_source, count=len(kc_candidates))
+    kc_candidates_signature = _kc_candidates_signature(kc_candidates)
 
     kc_bank = _load_resumable_json(KC_BANK_PATH, paper_id, resume, restart, "KC Bank")
     if kc_bank and not _kc_bank_matches_requested_source(kc_bank, kc_extraction_source):
@@ -189,6 +332,29 @@ def main() -> None:
             requested_source=kc_extraction_source,
         )
         kc_bank = None
+    if kc_bank and kc_bank.get("kc_candidates_signature") != kc_candidates_signature:
+        log(
+            "resume artifact ignored due to KC candidate signature mismatch",
+            path=KC_BANK_PATH,
+        )
+        kc_bank = None
+    if kc_bank and multimodal_kc_enabled and not _kc_bank_has_multimodal_kcs(kc_bank):
+        multimodal_candidates_for_bank = [
+            candidate
+            for candidate in kc_candidates
+            if candidate.get("modality", {}).get("is_multimodal")
+        ]
+        with span("append multimodal KCs to KC Bank", candidates=len(multimodal_candidates_for_bank)):
+            kc_bank = append_kc_candidates_to_bank(
+                kc_bank=kc_bank,
+                candidates=multimodal_candidates_for_bank,
+                macro_spine=macro_spine,
+                client=client,
+                allow_offline_fallback=allow_offline_fallback,
+            )
+        kc_bank["kc_candidates_signature"] = kc_candidates_signature
+        _write_json(KC_BANK_PATH, kc_bank)
+        _write_build_checkpoint(checkpoint_path, paper_id, "kc_bank_multimodal_extension", resume=resume, restart=restart)
     if not kc_bank:
         with span("build KC Bank", candidates=len(kc_candidates)):
             kc_bank = build_kc_bank(
@@ -198,8 +364,18 @@ def main() -> None:
                 client=client,
                 allow_offline_fallback=allow_offline_fallback,
             )
+        kc_bank["kc_candidates_signature"] = kc_candidates_signature
         _write_json(KC_BANK_PATH, kc_bank)
         _write_build_checkpoint(checkpoint_path, paper_id, "kc_bank_base", resume=resume, restart=restart)
+
+    edge_extraction_units = augment_extraction_units_with_multimodal_units(extraction_units, kc_bank)
+    kc_bank_signature = _kc_bank_signature(kc_bank)
+    log(
+        "edge extraction units ready",
+        base_units=len(extraction_units.get("units", [])),
+        units=len(edge_extraction_units.get("units", [])),
+        multimodal_units=edge_extraction_units.get("metadata", {}).get("multimodal_virtual_unit_count", 0),
+    )
 
     edge_candidates_for_base_verification: list[dict] = []
     requested_base_edge_layers: list[str] = []
@@ -226,6 +402,13 @@ def main() -> None:
             restart,
             "Unit edge candidates",
         )
+        if not _payload_has_kc_bank_signature(
+            unit_edge_candidates_payload,
+            kc_bank_signature,
+            "Unit edge candidates",
+            EDGE_CANDIDATE_UNITS_PATH,
+        ):
+            unit_edge_candidates_payload = None
         if unit_edge_candidates_payload:
             unit_edge_candidates = unit_edge_candidates_payload["edge_candidates"]
         else:
@@ -233,10 +416,11 @@ def main() -> None:
                 unit_edge_candidates_payload = build_unit_edge_candidates(
                     paper_id=paper_id,
                     kc_bank=kc_bank,
-                    extraction_units=extraction_units,
+                    extraction_units=edge_extraction_units,
                     client=client,
                 )
                 unit_edge_candidates = unit_edge_candidates_payload["edge_candidates"]
+                unit_edge_candidates_payload["kc_bank_signature"] = kc_bank_signature
             _write_json(EDGE_CANDIDATE_UNITS_PATH, unit_edge_candidates_payload)
             _write_build_checkpoint(checkpoint_path, paper_id, "edge_candidate_units", resume=resume, restart=restart)
         edge_candidates_for_base_verification.extend(unit_edge_candidates)
@@ -252,6 +436,13 @@ def main() -> None:
             restart,
             "Macro edge candidates",
         )
+        if not _payload_has_kc_bank_signature(
+            macro_edge_candidates_payload,
+            kc_bank_signature,
+            "Macro edge candidates",
+            EDGE_CANDIDATE_MACRO_PATH,
+        ):
+            macro_edge_candidates_payload = None
         if macro_edge_candidates_payload:
             macro_edge_candidates = macro_edge_candidates_payload["edge_candidates"]
         else:
@@ -260,10 +451,11 @@ def main() -> None:
                     paper_id=paper_id,
                     kc_bank=kc_bank,
                     macro_spine=macro_spine,
-                    extraction_units=extraction_units,
+                    extraction_units=edge_extraction_units,
                     client=client,
                 )
                 macro_edge_candidates = macro_edge_candidates_payload["edge_candidates"]
+                macro_edge_candidates_payload["kc_bank_signature"] = kc_bank_signature
             _write_json(EDGE_CANDIDATE_MACRO_PATH, macro_edge_candidates_payload)
             _write_build_checkpoint(checkpoint_path, paper_id, "edge_candidate_macro", resume=resume, restart=restart)
         edge_candidates_for_base_verification.extend(macro_edge_candidates)
@@ -279,6 +471,13 @@ def main() -> None:
             restart,
             "Adjacent Macro edge candidates",
         )
+        if not _payload_has_kc_bank_signature(
+            adjacent_edge_candidates_payload,
+            kc_bank_signature,
+            "Adjacent Macro edge candidates",
+            EDGE_CANDIDATE_CROSS_MACRO_PATH,
+        ):
+            adjacent_edge_candidates_payload = None
         if adjacent_edge_candidates_payload:
             adjacent_edge_candidates = adjacent_edge_candidates_payload["edge_candidates"]
         else:
@@ -287,10 +486,11 @@ def main() -> None:
                     paper_id=paper_id,
                     kc_bank=kc_bank,
                     macro_spine=macro_spine,
-                    extraction_units=extraction_units,
+                    extraction_units=edge_extraction_units,
                     client=client,
                 )
                 adjacent_edge_candidates = adjacent_edge_candidates_payload["edge_candidates"]
+                adjacent_edge_candidates_payload["kc_bank_signature"] = kc_bank_signature
             _write_json(EDGE_CANDIDATE_CROSS_MACRO_PATH, adjacent_edge_candidates_payload)
             _write_build_checkpoint(checkpoint_path, paper_id, "edge_candidate_cross_macro", resume=resume, restart=restart)
         edge_candidates_for_base_verification.extend(adjacent_edge_candidates)
@@ -308,6 +508,13 @@ def main() -> None:
             restart,
             "verified edges",
         )
+        if not _payload_has_kc_bank_signature(
+            verified_edges_payload,
+            kc_bank_signature,
+            "verified edges",
+            VERIFIED_EDGES_PATH,
+        ):
+            verified_edges_payload = None
         if verified_edges_payload and verified_edges_payload.get("source_layers") != requested_edge_layers:
             log(
                 "resume artifact ignored due to verified edge layer mismatch",
@@ -322,7 +529,7 @@ def main() -> None:
                     paper_id=paper_id,
                     edge_candidates=edge_candidates_for_base_verification,
                     kc_bank=kc_bank,
-                    extraction_units=extraction_units,
+                    extraction_units=edge_extraction_units,
                     client=client,
                 )
             verified_edges = base_verification_payload["verified_edges"]
@@ -337,6 +544,22 @@ def main() -> None:
                     restart,
                     "Thread edge candidates",
                 )
+                if not _payload_has_kc_bank_signature(
+                    thread_edge_candidates_payload,
+                    kc_bank_signature,
+                    "Thread edge candidates",
+                    EDGE_CANDIDATE_THREAD_PATH,
+                ):
+                    thread_edge_candidates_payload = None
+                if thread_edge_candidates_payload and thread_edge_candidates_payload.get(
+                    "verified_edge_signature"
+                ) != _verified_edge_signature(verified_edges):
+                    log(
+                        "resume artifact ignored due to verified edge signature mismatch",
+                        label="Thread edge candidates",
+                        path=EDGE_CANDIDATE_THREAD_PATH,
+                    )
+                    thread_edge_candidates_payload = None
                 if thread_edge_candidates_payload:
                     thread_edge_candidates = thread_edge_candidates_payload["edge_candidates"]
                 else:
@@ -345,11 +568,13 @@ def main() -> None:
                             paper_id=paper_id,
                             kc_bank=kc_bank,
                             macro_spine=macro_spine,
-                            extraction_units=extraction_units,
+                            extraction_units=edge_extraction_units,
                             verified_edges=verified_edges,
                             client=client,
                         )
                         thread_edge_candidates = thread_edge_candidates_payload["edge_candidates"]
+                        thread_edge_candidates_payload["kc_bank_signature"] = kc_bank_signature
+                        thread_edge_candidates_payload["verified_edge_signature"] = _verified_edge_signature(verified_edges)
                     _write_json(EDGE_CANDIDATE_THREAD_PATH, thread_edge_candidates_payload)
                     _write_build_checkpoint(checkpoint_path, paper_id, "edge_candidate_thread", resume=resume, restart=restart)
 
@@ -358,7 +583,7 @@ def main() -> None:
                         paper_id=paper_id,
                         edge_candidates=thread_edge_candidates,
                         kc_bank=kc_bank,
-                        extraction_units=extraction_units,
+                        extraction_units=edge_extraction_units,
                         client=client,
                     )
                 verified_edges = _renumber_verified_edges(
@@ -375,6 +600,7 @@ def main() -> None:
             verified_edges_payload = {
                 "paper_id": paper_id,
                 "source_layers": requested_edge_layers,
+                "kc_bank_signature": kc_bank_signature,
                 "verified_edges": verified_edges,
                 "summary": summary,
             }
@@ -384,6 +610,7 @@ def main() -> None:
                 {
                     "paper_id": paper_id,
                     "source_layers": requested_edge_layers,
+                    "kc_bank_signature": kc_bank_signature,
                     "verification_log": verification_log,
                     "summary": summary,
                 },
@@ -436,6 +663,13 @@ def main() -> None:
     else:
         coverage_report = None
         bank_edges_payload = _load_resumable_json(BANK_EDGES_PATH, paper_id, resume, restart, "KC Bank reasoning edges")
+        if not _payload_has_kc_bank_signature(
+            bank_edges_payload,
+            kc_bank_signature,
+            "KC Bank reasoning edges",
+            BANK_EDGES_PATH,
+        ):
+            bank_edges_payload = None
         if bank_edges_payload:
             graph_reasoning_edges = bank_edges_payload["reasoning_edges"]
         else:
@@ -446,7 +680,14 @@ def main() -> None:
                     client,
                     allow_offline_fallback=allow_offline_fallback,
                 )
-            _write_json(BANK_EDGES_PATH, {"paper_id": paper_id, "reasoning_edges": graph_reasoning_edges})
+            _write_json(
+                BANK_EDGES_PATH,
+                {
+                    "paper_id": paper_id,
+                    "kc_bank_signature": kc_bank_signature,
+                    "reasoning_edges": graph_reasoning_edges,
+                },
+            )
             _write_build_checkpoint(checkpoint_path, paper_id, "kc_bank_reasoning_edges", resume=resume, restart=restart)
 
     score_signature = _score_signature(graph_edge_source, graph_reasoning_edges)
@@ -457,7 +698,11 @@ def main() -> None:
             "graph_signature": score_signature,
             "reasoning_edge_count": len(graph_reasoning_edges),
             "edge_coverage_report_path": "data/graphs/edge_coverage_report.json" if coverage_report else None,
+            "kc_bank_signature": kc_bank_signature,
         }
+        if isinstance(kc_bank.get("extension_metadata"), dict):
+            kc_bank["extension_metadata"]["final_scores_stale"] = False
+            kc_bank["extension_metadata"]["stale_reason"] = None
         _write_json(KC_BANK_PATH, kc_bank)
         _write_build_checkpoint(checkpoint_path, paper_id, "kc_bank_scored", resume=resume, restart=restart)
 
@@ -525,6 +770,17 @@ def main() -> None:
             )
             graph["diagnostics"]["master_graph_kc_source"] = graph_kc_source
         _write_build_checkpoint(checkpoint_path, paper_id, "master_graph_base", resume=resume, restart=restart)
+    if multimodal_enabled:
+        graph["multimodal_assets_path"] = "data/multimodal/multimodal_assets.json"
+        graph["multimodal_asset_groups_path"] = "data/multimodal/multimodal_asset_groups.json"
+        graph["multimodal_asset_explanations_path"] = "data/multimodal/multimodal_asset_explanations.json"
+        graph.setdefault("diagnostics", {})["multimodal_enabled"] = True
+        graph["diagnostics"]["multimodal_summary"] = (
+            multimodal_assets_payload.get("summary", {}) if multimodal_assets_payload else {}
+        )
+        graph["diagnostics"]["multimodal_explanation_summary"] = (
+            multimodal_asset_explanations_payload.get("summary", {}) if multimodal_asset_explanations_payload else {}
+        )
     if coverage_report:
         coverage_report = attach_reasoning_path_coverage(coverage_report, graph.get("reasoning_paths", []))
         _write_json(EDGE_COVERAGE_REPORT_PATH, coverage_report)
@@ -574,6 +830,11 @@ def main() -> None:
     log("graph artifacts written", graph=GRAPH_PATH, mermaid=MASTER_MMD_PATH)
     print(f"Sections written: {SECTIONS_PATH}")
     print(f"Macro spine generated: {MACRO_SPINE_PATH}")
+    if multimodal_enabled:
+        print(f"Paper blocks generated: {PAPER_BLOCKS_PATH}")
+        print(f"Multimodal asset groups generated: {MULTIMODAL_ASSET_GROUPS_PATH}")
+        print(f"Multimodal assets generated: {MULTIMODAL_ASSETS_PATH}")
+        print(f"Multimodal asset explanations generated: {MULTIMODAL_ASSET_EXPLANATIONS_PATH}")
     if _env_bool("EXTRACTION_UNIT_ENABLED", True):
         print(f"Extraction Units generated: {EXTRACTION_UNITS_PATH}")
     print(f"KC Bank generated: {KC_BANK_PATH}")
@@ -661,6 +922,85 @@ def _kc_bank_matches_requested_source(kc_bank: dict, source: str) -> bool:
     if source == "unit":
         return all(str(node.get("unit_id", "")).strip() for node in nodes)
     return True
+
+
+def _kc_bank_has_multimodal_kcs(kc_bank: dict) -> bool:
+    return any(
+        bool(node.get("modality", {}).get("is_multimodal"))
+        for node in kc_bank.get("kc_nodes", [])
+        if isinstance(node, dict)
+    )
+
+
+def _kc_candidates_signature(candidates: list[dict]) -> dict:
+    return {
+        "signature_version": "v1_kc_candidates",
+        "candidate_count": len(candidates),
+        "candidate_refs": [
+            {
+                "candidate_id": candidate.get("candidate_id"),
+                "unit_id": candidate.get("unit_id"),
+                "source_window_id": candidate.get("source_window_id"),
+                "macro_id": candidate.get("macro_id"),
+                "type": candidate.get("type"),
+                "asset_id": candidate.get("asset_id"),
+                "asset_type": candidate.get("asset_type"),
+                "is_multimodal": bool(candidate.get("modality", {}).get("is_multimodal")),
+                "claim": candidate.get("claim"),
+            }
+            for candidate in candidates
+        ],
+    }
+
+
+def _kc_bank_signature(kc_bank: dict) -> dict:
+    nodes = kc_bank.get("kc_nodes", [])
+    return {
+        "signature_version": EDGE_ARTIFACT_SIGNATURE_VERSION,
+        "kc_count": len(nodes),
+        "kc_refs": [
+            {
+                "kc_id": node.get("kc_id"),
+                "source_candidate_id": node.get("source_candidate_id"),
+                "unit_id": node.get("unit_id"),
+                "macro_id": node.get("macro_id"),
+                "type": node.get("type"),
+                "asset_id": node.get("asset_id"),
+                "asset_type": node.get("asset_type"),
+                "is_multimodal": bool(node.get("modality", {}).get("is_multimodal")),
+            }
+            for node in nodes
+        ],
+    }
+
+
+def _payload_has_kc_bank_signature(payload: dict | None, expected_signature: dict, label: str, path: Path) -> bool:
+    if payload is None:
+        return False
+    if payload.get("kc_bank_signature") == expected_signature:
+        return True
+    log(
+        "resume artifact ignored due to KC Bank signature mismatch",
+        label=label,
+        path=path,
+    )
+    return False
+
+
+def _verified_edge_signature(edges: list[dict]) -> dict:
+    return {
+        "edge_count": len(edges),
+        "edge_refs": [
+            [
+                edge.get("edge_id"),
+                edge.get("source"),
+                edge.get("target"),
+                edge.get("relation"),
+                edge.get("source_layer"),
+            ]
+            for edge in edges
+        ],
+    }
 
 
 def _score_signature(edge_source: str, reasoning_edges: list[dict]) -> dict:
