@@ -11,6 +11,7 @@ Rules:
 6. The question should be answerable from the paper evidence in the plan.
 7. Use English in all generated fields.
 8. Return strict JSON only.
+9. If `modality_pool` is `multimodal` or the plan contains `asset_references`, write the question as a natural figure/table question. Use the provided asset description and evidence; do not invent visual details beyond the plan. The original figure/table will be attached during evaluation.
 
 Challenge Plan:
 

@@ -131,17 +131,35 @@ def _generate_one(
 ) -> dict:
     plan_id = plan["challenge_plan_id"]
     prompt_plan = _prompt_plan(plan)
+    user_prompt = render_prompt(
+        tpl,
+        challenge_plan_json=json.dumps(prompt_plan, ensure_ascii=False, indent=2),
+        revision_feedback=revision_feedback.strip() or "None.",
+    )
+    errors = []
     with span("generate raw challenge question", plan_id=plan_id, challenge_type=plan.get("challenge_type")):
-        result = client.chat_json(
-            system_prompt="You generate natural paper-evaluation challenge questions. Return JSON only.",
-            user_prompt=render_prompt(
-                tpl,
-                challenge_plan_json=json.dumps(prompt_plan, ensure_ascii=False, indent=2),
-                revision_feedback=revision_feedback.strip() or "None.",
-            ),
-            temperature=0.2,
-        )
-    return _normalize_question(plan, result, 0)
+        for attempt in range(1, 3):
+            prompt = user_prompt
+            if errors:
+                prompt = (
+                    user_prompt
+                    + "\n\nYour previous response failed validation:\n"
+                    + errors[-1]
+                    + "\nRewrite the question without exposing KC IDs, edge IDs, challenge plan IDs, or internal labels. Return strict JSON only."
+                )
+            try:
+                result = client.chat_json(
+                    system_prompt="You generate natural paper-evaluation challenge questions. Return JSON only.",
+                    user_prompt=prompt,
+                    temperature=0.0 if attempt == 2 else 0.2,
+                )
+                return _normalize_question(plan, result, 0)
+            except Exception as exc:
+                errors.append(f"{type(exc).__name__}: {exc}")
+                if attempt == 1:
+                    continue
+                raise
+    raise RuntimeError(f"Challenge question generation failed for {plan_id}.")
 
 
 def _prompt_plan(plan: dict) -> dict:
@@ -155,6 +173,8 @@ def _prompt_plan(plan: dict) -> dict:
         "target_failure_mode": plan.get("target_failure_mode"),
         "evidence": plan.get("evidence", []),
         "metadata": plan.get("metadata", {}),
+        "modality_pool": plan.get("modality_pool", plan.get("metadata", {}).get("modality_pool", "text")),
+        "asset_references": plan.get("metadata", {}).get("asset_references", []),
     }
 
 
@@ -178,6 +198,10 @@ def _normalize_question(plan: dict, raw: dict, ordinal: int) -> dict:
         "target_thread_id": source.get("thread_id"),
         "target_thread_turn_id": source.get("thread_turn_id"),
         "target_macro_ids": source.get("macro_ids", []),
+        "target_asset_ids": source.get("asset_ids", []),
+        "modality_pool": plan.get("modality_pool", plan.get("metadata", {}).get("modality_pool", "text")),
+        "requires_multimodal_input": bool(plan.get("metadata", {}).get("asset_references")),
+        "asset_references": plan.get("metadata", {}).get("asset_references", []),
         "expected_behavior": plan.get("expected_behavior", ""),
         "target_failure_mode": plan.get("target_failure_mode", ""),
         "evidence": plan.get("evidence", []),
@@ -211,6 +235,8 @@ def _challenge_plan_signature(challenge_plans: dict) -> dict:
                 plan.get("target_failure_mode"),
                 plan.get("source", {}).get("kc_ids", []),
                 plan.get("source", {}).get("edge_ids", []),
+                plan.get("source", {}).get("asset_ids", []),
+                plan.get("modality_pool", plan.get("metadata", {}).get("modality_pool", "text")),
                 plan.get("trap_part", ""),
             ]
             for plan in plans

@@ -14,23 +14,28 @@ from src.prompt_loader import load_prompt, render_prompt
 FAILURE_MODES = {"overclaim", "wrong_relation", "false_premise", "other", "none"}
 
 
-def challenge_solver_configs(default_model: str) -> list[dict]:
-    return _solver_configs(default_model)
+def challenge_solver_configs(default_model: str, provider: str = "common_api") -> list[dict]:
+    return _solver_configs(default_model, provider=provider)
 
 
 def run_single_challenge_question_trials(
     question: dict,
     client: OpenAICompatClient,
     paper_text: str,
+    solver_client: OpenAICompatClient | None = None,
 ) -> dict:
     if not client or not client.is_ready():
         raise RuntimeError("Challenge filtering requires a configured online model client.")
     if not isinstance(paper_text, str) or not paper_text.strip():
         raise ValueError("Challenge trial requires non-empty full paper text.")
-    solvers = _solver_configs(client.cfg.llm_model)
+    solver_runtime = solver_client or client
+    solvers = _solver_configs(
+        solver_runtime.cfg.llm_model,
+        provider="vision_api" if _requires_multimodal_input(question) else "common_api",
+    )
     return _normalize_trial_bundle(
         question,
-        _run_question_trials(question, solvers, client, paper_text),
+        _run_question_trials(question, solvers, client, paper_text, solver_client=solver_runtime),
         solvers,
     )
 
@@ -145,22 +150,39 @@ def filter_challenge_questions(
     }
 
 
-def _solver_configs(default_model: str) -> list[dict]:
-    count = _env_positive_int("CHALLENGE_SOLVER_COUNT", 3)
-    models = _text_list(os.getenv("CHALLENGE_SOLVER_MODELS", ""))
+def _solver_configs(default_model: str, provider: str = "common_api") -> list[dict]:
+    if provider == "vision_api":
+        count = _env_positive_int(
+            "MULTIMODAL_CHALLENGE_SOLVER_COUNT",
+            _env_positive_int("CHALLENGE_SOLVER_COUNT", 3),
+        )
+        models = _text_list(os.getenv("MULTIMODAL_CHALLENGE_SOLVER_MODELS", ""))
+        temperature = _env_float(
+            "MULTIMODAL_CHALLENGE_SOLVER_TEMPERATURE",
+            _env_float("CHALLENGE_SOLVER_TEMPERATURE", 1.5),
+        )
+        timeout_s = _env_positive_int(
+            "MULTIMODAL_CHALLENGE_SOLVER_TIMEOUT_S",
+            _env_positive_int("VISION_TIMEOUT_S", 180),
+        )
+    else:
+        count = _env_positive_int("CHALLENGE_SOLVER_COUNT", 3)
+        models = _text_list(os.getenv("CHALLENGE_SOLVER_MODELS", ""))
+        temperature = _env_float("CHALLENGE_SOLVER_TEMPERATURE", 1.5)
+        timeout_s = _env_nonnegative_int("CHALLENGE_SOLVER_TIMEOUT_S", 0)
     if not models:
         models = [default_model for _ in range(count)]
     if len(models) != count:
         raise ValueError(
-            f"CHALLENGE_SOLVER_MODELS must provide exactly {count} values when CHALLENGE_SOLVER_COUNT={count}."
+            f"Solver model list must provide exactly {count} values for provider={provider}."
         )
-    temperature = _env_float("CHALLENGE_SOLVER_TEMPERATURE", 1.5)
     return [
         {
             "solver_id": f"solver_{idx}",
-            "provider": "common_api",
+            "provider": provider,
             "model": models[idx - 1],
             "temperature": temperature,
+            "timeout_s": timeout_s,
         }
         for idx in range(1, count + 1)
     ]
@@ -171,13 +193,20 @@ def _run_question_trials(
     solvers: list[dict],
     client: OpenAICompatClient,
     paper_text: str,
+    solver_client: OpenAICompatClient | None = None,
 ) -> dict:
     trials_by_id = {}
     judge_tpl = load_prompt("judge_challenge_answer.txt")
-    workers = min(_env_positive_int("CHALLENGE_SOLVER_WORKERS", len(solvers)), len(solvers))
+    solver_runtime = solver_client or client
+    if any(solver.get("provider") == "vision_api" for solver in solvers):
+        worker_default = _env_positive_int("CHALLENGE_SOLVER_WORKERS", len(solvers))
+        workers = _env_positive_int("MULTIMODAL_CHALLENGE_SOLVER_WORKERS", worker_default)
+    else:
+        workers = _env_positive_int("CHALLENGE_SOLVER_WORKERS", len(solvers))
+    workers = min(workers, len(solvers))
     with ThreadPoolExecutor(max_workers=workers) as ex:
         futures = {
-            ex.submit(_run_single_solver_trial, question, solver, client, paper_text, judge_tpl): solver
+            ex.submit(_run_single_solver_trial, question, solver, client, paper_text, judge_tpl, solver_runtime): solver
             for solver in solvers
         }
         for fut in as_completed(futures):
@@ -192,12 +221,13 @@ def _run_question_trials(
 def _run_single_solver_trial(
     question: dict,
     solver: dict,
-    client: OpenAICompatClient,
+    judge_client: OpenAICompatClient,
     paper_text: str,
     judge_tpl: str,
+    solver_client: OpenAICompatClient,
 ) -> dict:
-    answer = _solve_question(question, solver, client, paper_text)
-    judge_result = _judge_solver_answer(question, solver, answer, client, judge_tpl)
+    answer = _solve_question(question, solver, solver_client, paper_text)
+    judge_result = _judge_solver_answer(question, solver, answer, judge_client, judge_tpl)
     return {
         "solver_id": solver["solver_id"],
         "provider": solver["provider"],
@@ -209,16 +239,29 @@ def _run_single_solver_trial(
 
 
 def _solve_question(question: dict, solver: dict, client: OpenAICompatClient, paper_text: str) -> str:
-    prompt = _build_solver_eval_prompt(paper_text, question["question_text"])
+    prompt = _build_solver_eval_prompt(paper_text, question)
+    image_paths = _question_image_paths(question)
     with span("challenge solver answer", question_id=question["question_id"], solver_id=solver["solver_id"]):
-        answer = client.chat_text(
-            system_prompt=(
-                "Answer the paper-evaluation question based only on the provided original paper and dialogue context."
-            ),
-            user_prompt=prompt,
-            temperature=float(solver["temperature"]),
-            model=solver["model"],
+        system_prompt = (
+            "Answer the paper-evaluation question based only on the provided original paper, attached figure/table assets, and dialogue context."
         )
+        if _requires_multimodal_input(question) and image_paths:
+            answer = client.chat_text_with_images(
+                system_prompt=system_prompt,
+                user_prompt=prompt,
+                image_paths=image_paths,
+                temperature=float(solver["temperature"]),
+                model=solver["model"],
+                timeout_s=int(solver.get("timeout_s") or 0) or None,
+            )
+        else:
+            answer = client.chat_text(
+                system_prompt=system_prompt,
+                user_prompt=prompt,
+                temperature=float(solver["temperature"]),
+                model=solver["model"],
+                timeout_s=int(solver.get("timeout_s") or 0) or None,
+            )
     answer = answer.strip()
     if not answer:
         raise ValueError(f"Solver {solver['solver_id']} returned an empty answer for {question['question_id']}.")
@@ -355,16 +398,59 @@ def _raw_question_signature(raw_questions: dict, solvers: list[dict], paper_text
     }
 
 
-def _build_solver_eval_prompt(paper_text: str, question_text: str) -> str:
+def _build_solver_eval_prompt(paper_text: str, question: dict) -> str:
+    asset_context = _asset_context_for_prompt(question)
     return (
         "```original paper\n"
         f"{paper_text}\n"
         "```\n\n"
+        f"{asset_context}"
         "[dialogue history]\n"
         "No previous turns.\n\n"
         "[current question]\n"
-        f"{question_text}"
+        f"{question['question_text']}"
     )
+
+
+def _requires_multimodal_input(question: dict) -> bool:
+    return bool(question.get("requires_multimodal_input") or question.get("asset_references"))
+
+
+def _question_image_paths(question: dict) -> list[str]:
+    paths = []
+    for ref in question.get("asset_references", []):
+        for attachment in ref.get("attachments", []):
+            if attachment.get("type") == "image" and str(attachment.get("path", "")).strip():
+                paths.append(str(attachment["path"]).strip())
+    return paths
+
+
+def _asset_context_for_prompt(question: dict) -> str:
+    refs = question.get("asset_references", [])
+    if not refs:
+        return ""
+    lines = ["[attached multimodal assets]"]
+    for ref in refs:
+        lines.append(f"- asset_id: {ref.get('asset_id')}")
+        lines.append(f"  asset_type: {ref.get('asset_type')}")
+        if str(ref.get("caption") or "").strip():
+            lines.append(f"  caption: {ref.get('caption')}")
+        if str(ref.get("summary") or "").strip():
+            lines.append(f"  summary: {ref.get('summary')}")
+        evidence_bases = ref.get("evidence_bases", [])
+        if evidence_bases:
+            lines.append("  evidence_bases:")
+            for basis in evidence_bases:
+                lines.append(f"    - {basis}")
+        for attachment in ref.get("attachments", []):
+            if attachment.get("type") == "table_markdown":
+                lines.append("  table_markdown:")
+                lines.append("```markdown")
+                lines.append(str(attachment.get("content") or ""))
+                lines.append("```")
+            elif attachment.get("type") == "image":
+                lines.append(f"  image_path: {attachment.get('path')}")
+    return "\n".join(lines) + "\n\n"
 
 
 def _text_list(raw: str) -> list[str]:
@@ -411,6 +497,19 @@ def _env_positive_int(name: str, default: int) -> int:
         raise ValueError(f"{name} must be a positive integer, got {raw!r}.") from exc
     if value <= 0:
         raise ValueError(f"{name} must be a positive integer, got {value}.")
+    return value
+
+
+def _env_nonnegative_int(name: str, default: int) -> int:
+    raw = os.getenv(name)
+    if raw is None or raw.strip() == "":
+        return default
+    try:
+        value = int(raw)
+    except ValueError as exc:
+        raise ValueError(f"{name} must be a non-negative integer, got {raw!r}.") from exc
+    if value < 0:
+        raise ValueError(f"{name} must be a non-negative integer, got {value}.")
     return value
 
 

@@ -141,6 +141,43 @@ class OpenAICompatClient:
         content_text = result["choices"][0]["message"]["content"]
         return json.loads(content_text)
 
+    def chat_text_with_images(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        image_paths: list[str],
+        temperature: float = 0.2,
+        timeout_s: int | None = None,
+        model: str | None = None,
+    ) -> str:
+        if not self.is_ready():
+            raise RuntimeError("Vision model client is not configured. Check VISION/EMBED API configuration.")
+        if not image_paths:
+            raise ValueError("chat_text_with_images requires at least one image path.")
+
+        url = self.cfg.base_url.rstrip("/") + "/chat/completions"
+        content: list[dict[str, Any]] = [{"type": "text", "text": user_prompt}]
+        for image_path in image_paths:
+            content.append(
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": _image_data_url(image_path),
+                    },
+                }
+            )
+        payload = {
+            "model": model or self.cfg.llm_model,
+            "temperature": temperature,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": content},
+            ],
+        }
+        body = self._post_json(url, payload, timeout_s)
+        result = json.loads(body)
+        return result["choices"][0]["message"]["content"]
+
     def embed_texts(self, texts: list[str], timeout_s: int | None = None) -> list[list[float]]:
         if not self.embeddings_ready():
             raise RuntimeError("Embedding client is not configured. Check EMBED_API_KEY/EMBED_BASE_URL/EMBED_MODEL.")

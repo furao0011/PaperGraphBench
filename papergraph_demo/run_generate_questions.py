@@ -6,6 +6,12 @@ from src.challenge_loop import build_challenge_questions_loop
 from src.challenge_plan_builder import build_challenge_plans
 from src.config import load_settings
 from src.model_client import ModelConfig, OpenAICompatClient
+from src.multimodal_explainer import build_vision_client
+from src.multimodal_question_assets import (
+    attach_asset_references_to_challenge_plans,
+    attach_asset_references_to_questions,
+    load_multimodal_asset_index,
+)
 from src.paper_context import load_full_paper_text
 from src.progress import log, span
 from src.question_generator import generate_questions_cached
@@ -48,6 +54,12 @@ def main() -> None:
         raise RuntimeError("Online question generation requires API_KEY, BASE_URL, and LLM_MODEL. Set ALLOW_OFFLINE_FALLBACK=true only for local debugging.")
     log("loading master graph", path=GRAPH_PATH)
     graph = json.loads(GRAPH_PATH.read_text(encoding="utf-8"))
+    asset_index = load_multimodal_asset_index(graph, BASE_DIR)
+    by_kc = {
+        kc["kc_id"]: kc
+        for kc in graph.get("kc_nodes", [])
+        if kc.get("kc_id")
+    }
     with span("load paper text for challenge filtering"):
         paper_text = load_full_paper_text(graph, BASE_DIR)
     log(
@@ -57,7 +69,11 @@ def main() -> None:
         paths=len(graph.get("reasoning_paths", [])),
         paper_chars=len(paper_text),
     )
-    challenge_plans = build_challenge_plans(graph)
+    challenge_plans = attach_asset_references_to_challenge_plans(
+        build_challenge_plans(graph),
+        by_kc,
+        asset_index,
+    )
     CHALLENGE_PLAN_PATH.parent.mkdir(parents=True, exist_ok=True)
     CHALLENGE_PLAN_PATH.write_text(json.dumps(challenge_plans, ensure_ascii=False, indent=2), encoding="utf-8")
     log(
@@ -65,15 +81,67 @@ def main() -> None:
         path=CHALLENGE_PLAN_PATH,
         plans=challenge_plans.get("summary", {}).get("plan_count", 0),
     )
-    with span("build challenge questions by loop"):
-        challenge_loop_result = build_challenge_questions_loop(
-            challenge_plans=challenge_plans,
+    text_challenge_plans = _challenge_plan_subset(challenge_plans, "text")
+    multimodal_challenge_plans = _challenge_plan_subset(challenge_plans, "multimodal")
+    with span("build text challenge questions by loop"):
+        text_loop_result = build_challenge_questions_loop(
+            challenge_plans=text_challenge_plans,
             client=client,
             paper_text=paper_text,
-            cache_path=challenge_loop_cache_path,
+            cache_path=_pool_cache_path(challenge_loop_cache_path, "text"),
             resume=resume,
             restart=restart,
         )
+    multimodal_loop_result = _empty_challenge_loop_result(multimodal_challenge_plans)
+    if multimodal_challenge_plans.get("challenge_plans"):
+        vision_client = build_vision_client(
+            embed_api_key=settings.embed_api_key,
+            vision_api_key=settings.vision_api_key,
+            vision_base_url=settings.vision_base_url,
+            vision_model=settings.vision_model,
+        )
+        multimodal_target = _env_positive_int(
+            "MULTIMODAL_CHALLENGE_ACCEPT_TARGET",
+            min(3, len(multimodal_challenge_plans["challenge_plans"])),
+        )
+        with span("build multimodal challenge questions by loop"):
+            multimodal_loop_result = build_challenge_questions_loop(
+                challenge_plans=multimodal_challenge_plans,
+                client=client,
+                paper_text=paper_text,
+                cache_path=_pool_cache_path(challenge_loop_cache_path, "multimodal"),
+                resume=resume,
+                restart=restart,
+                target_count=multimodal_target,
+                solver_client=vision_client,
+            )
+        if not multimodal_loop_result.get("challenge_questions_filtered"):
+            raise RuntimeError("Multimodal challenge pool produced no accepted challenge questions.")
+    challenge_loop_result = _merge_challenge_loop_results(
+        challenge_plans,
+        text_loop_result,
+        multimodal_loop_result,
+    )
+    challenge_loop_result["challenge_questions_raw"] = attach_asset_references_to_questions(
+        challenge_loop_result["challenge_questions_raw"],
+        by_kc,
+        asset_index,
+    )
+    challenge_loop_result["challenge_questions_filtered"] = attach_asset_references_to_questions(
+        challenge_loop_result["challenge_questions_filtered"],
+        by_kc,
+        asset_index,
+    )
+    challenge_loop_result["challenge_questions_need_human_review"] = attach_asset_references_to_questions(
+        challenge_loop_result["challenge_questions_need_human_review"],
+        by_kc,
+        asset_index,
+    )
+    challenge_loop_result["challenge_questions_rejected"] = attach_asset_references_to_questions(
+        challenge_loop_result["challenge_questions_rejected"],
+        by_kc,
+        asset_index,
+    )
     raw_challenge_questions = {
         "paper_id": challenge_loop_result["paper_id"],
         "schema_version": challenge_loop_result["schema_version"],
@@ -83,6 +151,7 @@ def main() -> None:
         "summary": {
             "raw_question_count": challenge_loop_result["summary"]["raw_question_count"],
             "by_type": challenge_loop_result["summary"].get("by_type", {}),
+            "by_modality_pool": challenge_loop_result["summary"].get("by_modality_pool", {}),
         },
     }
     _write_json(CHALLENGE_QUESTION_RAW_PATH, raw_challenge_questions)
@@ -143,6 +212,21 @@ def main() -> None:
                 restart=restart,
                 allow_offline_fallback=allow_offline_fallback,
             )
+            bundle["macro_main_questions"] = attach_asset_references_to_questions(
+                bundle["macro_main_questions"],
+                by_kc,
+                asset_index,
+            )
+            bundle["thread_question_seeds"] = attach_asset_references_to_questions(
+                bundle["thread_question_seeds"],
+                by_kc,
+                asset_index,
+            )
+            bundle["main_questions"] = attach_asset_references_to_questions(
+                bundle["main_questions"],
+                by_kc,
+                asset_index,
+            )
     except KeyboardInterrupt:
         log("question generation interrupted; cache saved", cache=cache_path)
         print(f"Question generation interrupted. Cache saved: {cache_path}")
@@ -190,6 +274,147 @@ def _write_json(path: Path, payload: dict) -> None:
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(path)
+
+
+def _challenge_plan_subset(challenge_plans: dict, pool: str) -> dict:
+    plans = [
+        plan
+        for plan in challenge_plans.get("challenge_plans", [])
+        if str(plan.get("modality_pool") or plan.get("metadata", {}).get("modality_pool") or "text") == pool
+    ]
+    return {
+        "paper_id": challenge_plans.get("paper_id", "unknown"),
+        "schema_version": challenge_plans.get("schema_version", "v2"),
+        "plan_builder": challenge_plans.get("plan_builder", ""),
+        "source_graph_signature": challenge_plans.get("source_graph_signature"),
+        "modality_pool": pool,
+        "challenge_plans": plans,
+        "summary": {
+            "plan_count": len(plans),
+            "by_type": _count_by_type(plans),
+            "by_modality_pool": {pool: len(plans)},
+        },
+    }
+
+
+def _pool_cache_path(path: Path, pool: str) -> Path:
+    return path.with_name(f"{path.stem}_{pool}{path.suffix}")
+
+
+def _empty_challenge_loop_result(challenge_plans: dict) -> dict:
+    return {
+        "paper_id": challenge_plans.get("paper_id", "unknown"),
+        "schema_version": "v2",
+        "source_challenge_plan_signature": {
+            "paper_id": challenge_plans.get("paper_id", "unknown"),
+            "schema_version": challenge_plans.get("schema_version"),
+            "source_graph_signature": challenge_plans.get("source_graph_signature"),
+            "plan_ids": [],
+            "plan_sources": [],
+        },
+        "challenge_loop_signature": {},
+        "solver_configs": [],
+        "plan_order": [],
+        "blacklisted_plan_ids": [],
+        "challenge_questions_raw": [],
+        "solver_trials": [],
+        "challenge_questions_filtered": [],
+        "challenge_questions_need_human_review": [],
+        "challenge_questions_rejected": [],
+        "loop_events": [],
+        "summary": {
+            "plan_pool_count": 0,
+            "target_count": 0,
+            "max_attempts_per_plan": 0,
+            "raw_question_count": 0,
+            "solver_trial_count": 0,
+            "filtered_count": 0,
+            "human_review_count": 0,
+            "rejected_count": 0,
+            "blacklisted_plan_count": 0,
+            "by_type": {},
+            "by_modality_pool": {},
+            "stop_reason": "no_plans",
+        },
+    }
+
+
+def _merge_challenge_loop_results(challenge_plans: dict, text_result: dict, multimodal_result: dict) -> dict:
+    raw_questions = text_result["challenge_questions_raw"] + multimodal_result["challenge_questions_raw"]
+    filtered = text_result["challenge_questions_filtered"] + multimodal_result["challenge_questions_filtered"]
+    human_review = text_result["challenge_questions_need_human_review"] + multimodal_result["challenge_questions_need_human_review"]
+    rejected = text_result["challenge_questions_rejected"] + multimodal_result["challenge_questions_rejected"]
+    solver_trials = text_result["solver_trials"] + multimodal_result["solver_trials"]
+    return {
+        "paper_id": challenge_plans.get("paper_id", "unknown"),
+        "schema_version": "v2",
+        "source_challenge_plan_signature": {
+            "text": text_result.get("source_challenge_plan_signature"),
+            "multimodal": multimodal_result.get("source_challenge_plan_signature"),
+        },
+        "challenge_loop_signature": {
+            "text": text_result.get("challenge_loop_signature"),
+            "multimodal": multimodal_result.get("challenge_loop_signature"),
+        },
+        "solver_configs": text_result.get("solver_configs") or multimodal_result.get("solver_configs") or [],
+        "plan_order": text_result.get("plan_order", []) + multimodal_result.get("plan_order", []),
+        "blacklisted_plan_ids": text_result.get("blacklisted_plan_ids", []) + multimodal_result.get("blacklisted_plan_ids", []),
+        "challenge_questions_raw": raw_questions,
+        "solver_trials": solver_trials,
+        "challenge_questions_filtered": filtered,
+        "challenge_questions_need_human_review": human_review,
+        "challenge_questions_rejected": rejected,
+        "loop_events": text_result.get("loop_events", []) + multimodal_result.get("loop_events", []),
+        "summary": {
+            "plan_pool_count": len(challenge_plans.get("challenge_plans", [])),
+            "target_count": int(text_result["summary"].get("target_count", 0)) + int(multimodal_result["summary"].get("target_count", 0)),
+            "max_attempts_per_plan": max(
+                int(text_result["summary"].get("max_attempts_per_plan", 0)),
+                int(multimodal_result["summary"].get("max_attempts_per_plan", 0)),
+            ),
+            "raw_question_count": len(raw_questions),
+            "solver_trial_count": len(solver_trials),
+            "filtered_count": len(filtered),
+            "human_review_count": len(human_review),
+            "rejected_count": len(rejected),
+            "blacklisted_plan_count": len(text_result.get("blacklisted_plan_ids", [])) + len(multimodal_result.get("blacklisted_plan_ids", [])),
+            "by_type": _count_by_type(filtered),
+            "by_modality_pool": _count_by_modality_pool(filtered),
+            "stop_reason": {
+                "text": text_result["summary"].get("stop_reason"),
+                "multimodal": multimodal_result["summary"].get("stop_reason"),
+            },
+        },
+    }
+
+
+def _count_by_type(items: list[dict]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for item in items:
+        key = str(item.get("challenge_type") or "unknown")
+        counts[key] = counts.get(key, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def _count_by_modality_pool(items: list[dict]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for item in items:
+        key = str(item.get("modality_pool") or "text")
+        counts[key] = counts.get(key, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def _env_positive_int(name: str, default: int) -> int:
+    raw = os.getenv(name)
+    if raw is None or raw.strip() == "":
+        return default
+    try:
+        value = int(raw)
+    except ValueError as exc:
+        raise ValueError(f"{name} must be a positive integer, got {raw!r}.") from exc
+    if value <= 0:
+        raise ValueError(f"{name} must be a positive integer, got {value}.")
+    return value
 
 
 if __name__ == "__main__":

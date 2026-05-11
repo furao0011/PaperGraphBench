@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import os
 
+from src.multimodal_question_assets import asset_references_for_kcs
+
 
 CHALLENGE_TYPES = {
     "overclaim_challenge",
@@ -14,13 +16,13 @@ def build_challenge_plans(graph: dict) -> dict:
     kc_nodes = graph.get("kc_nodes", [])
     reasoning_edges = graph.get("reasoning_edges", [])
     reasoning_threads = graph.get("reasoning_threads", [])
-    active_ids = set(graph.get("active_kc_ids", []))
+    active_ids = {
+        kc["kc_id"]
+        for kc in kc_nodes
+        if kc.get("kc_id") and kc.get("flags", {}).get("active_for_question_generation")
+    }
     if not active_ids:
-        active_ids = {
-            kc["kc_id"]
-            for kc in kc_nodes
-            if kc.get("flags", {}).get("active_for_question_generation")
-        }
+        active_ids = set(graph.get("active_kc_ids", []))
     if not active_ids:
         raise ValueError("Challenge Plan Builder requires active_kc_ids or active KC flags in master_graph.json.")
 
@@ -34,6 +36,12 @@ def build_challenge_plans(graph: dict) -> dict:
         for edge in reasoning_edges
         if edge.get("edge_id")
     }
+    multimodal_ids = {
+        kc["kc_id"]
+        for kc in kc_nodes
+        if kc.get("kc_id") and bool(kc.get("modality", {}).get("is_multimodal"))
+    }
+    text_active_ids = {kc_id for kc_id in active_ids if kc_id not in multimodal_ids}
     per_type_limit = _env_positive_int(
         "CHALLENGE_PLAN_POOL_PER_TYPE_LIMIT",
         _env_positive_int("CHALLENGE_PLAN_PER_TYPE_LIMIT", 12),
@@ -44,14 +52,22 @@ def build_challenge_plans(graph: dict) -> dict:
     )
 
     by_type = {
-        "overclaim_challenge": _dedupe_plans(_overclaim_plans(by_kc, active_ids, per_type_limit))[:per_type_limit],
+        "overclaim_challenge": _dedupe_plans(_overclaim_plans(by_kc, text_active_ids, per_type_limit))[:per_type_limit],
         "wrong_relation_challenge": _dedupe_plans(
             _wrong_relation_plans_from_threads(reasoning_threads, by_edge, by_kc, per_type_limit)
-            + _wrong_relation_plans_from_edges(by_edge, by_kc, active_ids, per_type_limit)
+            + _wrong_relation_plans_from_edges(by_edge, by_kc, text_active_ids, per_type_limit)
         )[:per_type_limit],
-        "false_premise_challenge": _dedupe_plans(_false_premise_plans(by_kc, active_ids, per_type_limit))[:per_type_limit],
+        "false_premise_challenge": _dedupe_plans(_false_premise_plans(by_kc, text_active_ids, per_type_limit))[:per_type_limit],
     }
-    unique = _balanced_plan_order(by_type, total_target)
+    text_plans = _with_modality_pool(_balanced_plan_order(by_type, total_target), "text")
+    multimodal_limit = _env_nonnegative_int("MULTIMODAL_CHALLENGE_PLAN_LIMIT", 12)
+    multimodal_plans = _with_modality_pool(
+        _multimodal_challenge_plans(by_kc, by_edge, multimodal_ids, multimodal_limit),
+        "multimodal",
+    )
+    if multimodal_ids and not multimodal_plans:
+        raise RuntimeError("Multimodal KCs exist, but multimodal challenge plan generation produced no plans.")
+    unique = text_plans + multimodal_plans
     for idx, plan in enumerate(unique, start=1):
         plan["challenge_plan_id"] = f"CHP_{idx:04d}"
         _validate_plan(plan, by_kc, by_edge)
@@ -65,6 +81,10 @@ def build_challenge_plans(graph: dict) -> dict:
         "summary": {
             "plan_count": len(unique),
             "by_type": _count_by_type(unique),
+            "by_modality_pool": _count_by_modality_pool(unique),
+            "text_plan_count": len(text_plans),
+            "multimodal_plan_count": len(multimodal_plans),
+            "multimodal_plan_limit": multimodal_limit,
         },
     }
 
@@ -215,6 +235,8 @@ def _wrong_relation_plan(
         ]
     )
     macro_ids = _ordered_unique([by_kc[kc_id].get("macro_id") for kc_id in kc_ids if by_kc[kc_id].get("macro_id")])
+    asset_ids = _ordered_unique([by_kc[kc_id].get("asset_id") for kc_id in kc_ids if by_kc[kc_id].get("asset_id")])
+    asset_refs = asset_references_for_kcs([by_kc[kc_id] for kc_id in kc_ids if kc_id in by_kc])
     edge_descriptions = [
         f"{edge.get('source')} {edge.get('relation')} {edge.get('target')}"
         for edge in edges
@@ -228,6 +250,7 @@ def _wrong_relation_plan(
             "thread_id": thread_id,
             "thread_turn_id": thread_turn_id,
             "macro_ids": macro_ids,
+            "asset_ids": asset_ids,
         },
         "true_part": "Verified relation chain: " + "; ".join(edge_descriptions) + ".",
         "trap_part": "The answer reverses, weakens, or replaces the verified relation chain.",
@@ -237,6 +260,7 @@ def _wrong_relation_plan(
         "metadata": {
             "relations": [edge.get("relation") for edge in edges],
             "edge_source_layers": [edge.get("source_layer") for edge in edges],
+            "asset_references": asset_refs,
         },
     }
 
@@ -282,6 +306,101 @@ def _false_premise_plans(by_kc: dict[str, dict], active_ids: set[str], limit: in
     return plans
 
 
+def _multimodal_challenge_plans(
+    by_kc: dict[str, dict],
+    by_edge: dict[str, dict],
+    multimodal_ids: set[str],
+    limit: int,
+) -> list[dict]:
+    plans = []
+    multimodal_kcs = sorted(
+        (by_kc[kc_id] for kc_id in multimodal_ids if kc_id in by_kc),
+        key=_kc_rank_key,
+        reverse=True,
+    )
+    for kc in multimodal_kcs:
+        if _limit_reached(plans, limit):
+            return plans
+        plan = _multimodal_false_premise_plan(kc) or _multimodal_overclaim_plan(kc)
+        plans.append(plan)
+    for edge in sorted(by_edge.values(), key=lambda item: _edge_sort_key(str(item.get("edge_id", "")))):
+        if _limit_reached(plans, limit):
+            return plans
+        if edge.get("source") not in multimodal_ids and edge.get("target") not in multimodal_ids:
+            continue
+        source = by_kc.get(edge.get("source"))
+        target = by_kc.get(edge.get("target"))
+        if not source or not target:
+            continue
+        plans.append(
+            _wrong_relation_plan(
+                edges=[edge],
+                by_kc=by_kc,
+                thread_id=None,
+                thread_turn_id=None,
+                expected_behavior="The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+            )
+        )
+    return plans
+
+
+def _multimodal_false_premise_plan(kc: dict) -> dict | None:
+    false_claim = ""
+    why_wrong = ""
+    for item in kc.get("asset_possible_misreadings", []):
+        if isinstance(item, dict):
+            false_claim = str(item.get("claim", "")).strip()
+            why_wrong = str(item.get("why_wrong", "")).strip()
+        else:
+            false_claim = str(item or "").strip()
+            why_wrong = "The claim is listed as a possible misreading of the asset."
+        if false_claim:
+            break
+    if not false_claim:
+        for item in kc.get("forbidden_claims", []):
+            if not isinstance(item, dict):
+                continue
+            false_claim = str(item.get("claim", "")).strip()
+            why_wrong = str(item.get("why_wrong", "")).strip()
+            if false_claim:
+                break
+    if not false_claim:
+        return None
+    return {
+        "challenge_plan_id": "",
+        "challenge_type": "false_premise_challenge",
+        "source": _kc_source(kc),
+        "true_part": kc.get("full_claim", ""),
+        "trap_part": false_claim,
+        "expected_behavior": why_wrong or "The model should reject the visual/table misreading and restate the asset-supported claim.",
+        "target_failure_mode": "false_premise",
+        "evidence": _kc_evidence_items([kc]),
+        "metadata": _multimodal_metadata(kc, {"false_premise_source": "asset_possible_misreading"}),
+    }
+
+
+def _multimodal_overclaim_plan(kc: dict) -> dict:
+    asset_type = str(kc.get("asset_type") or "asset").strip()
+    scope = kc.get("scope") if isinstance(kc.get("scope"), dict) else {}
+    return {
+        "challenge_plan_id": "",
+        "challenge_type": "overclaim_challenge",
+        "source": _kc_source(kc),
+        "true_part": kc.get("full_claim", ""),
+        "trap_part": (
+            f"The {asset_type} should be treated as proving a broader claim beyond the recorded asset scope "
+            f"and beyond the paper context."
+        ),
+        "expected_behavior": (
+            "The model should answer using the attached figure/table and the prepared asset description, "
+            f"while respecting the recorded scope={scope}."
+        ),
+        "target_failure_mode": "overclaim",
+        "evidence": _kc_evidence_items([kc]),
+        "metadata": _multimodal_metadata(kc, {"claim_strength": kc.get("claim_strength"), "scope": scope}),
+    }
+
+
 def _validate_plan(plan: dict, by_kc: dict[str, dict], by_edge: dict[str, dict]) -> None:
     challenge_type = plan.get("challenge_type")
     if challenge_type not in CHALLENGE_TYPES:
@@ -309,6 +428,27 @@ def _validate_plan(plan: dict, by_kc: dict[str, dict], by_edge: dict[str, dict])
         raise ValueError(f"False-premise plan {plan.get('challenge_plan_id')} must locate the false premise.")
 
 
+def _kc_source(kc: dict) -> dict:
+    return {
+        "kc_ids": [kc["kc_id"]],
+        "edge_ids": [],
+        "thread_id": None,
+        "thread_turn_id": None,
+        "macro_ids": [kc.get("macro_id")],
+        "asset_ids": [kc.get("asset_id")] if kc.get("asset_id") else [],
+    }
+
+
+def _multimodal_metadata(kc: dict, extra: dict | None = None) -> dict:
+    metadata = {
+        "modality_pool": "multimodal",
+        "asset_references": asset_references_for_kcs([kc]),
+    }
+    if extra:
+        metadata.update(extra)
+    return metadata
+
+
 def _kc_evidence_items(kcs: list[dict]) -> list[dict]:
     out = []
     for kc in kcs:
@@ -321,10 +461,30 @@ def _kc_evidence_items(kcs: list[dict]) -> list[dict]:
                             "kc_id": kc.get("kc_id"),
                             "text": _truncate(str(item.get("text", "")).strip()),
                             "span_id": item.get("span_id"),
+                            "asset_id": kc.get("asset_id"),
+                            "asset_type": kc.get("asset_type"),
                         }
                     )
         elif str(evidence).strip():
-            out.append({"kc_id": kc.get("kc_id"), "text": _truncate(str(evidence).strip())})
+            out.append(
+                {
+                    "kc_id": kc.get("kc_id"),
+                    "text": _truncate(str(evidence).strip()),
+                    "asset_id": kc.get("asset_id"),
+                    "asset_type": kc.get("asset_type"),
+                }
+            )
+        if bool(kc.get("modality", {}).get("is_multimodal")):
+            basis = str(kc.get("asset_evidence_basis") or "").strip()
+            if basis:
+                out.append(
+                    {
+                        "kc_id": kc.get("kc_id"),
+                        "text": _truncate(f"Asset evidence basis: {basis}"),
+                        "asset_id": kc.get("asset_id"),
+                        "asset_type": kc.get("asset_type"),
+                    }
+                )
     return out
 
 
@@ -365,6 +525,15 @@ def _dedupe_plans(plans: list[dict]) -> list[dict]:
     return out
 
 
+def _with_modality_pool(plans: list[dict], pool: str) -> list[dict]:
+    for plan in plans:
+        plan["modality_pool"] = pool
+        metadata = plan.setdefault("metadata", {})
+        if isinstance(metadata, dict):
+            metadata.setdefault("modality_pool", pool)
+    return plans
+
+
 def _balanced_plan_order(by_type: dict[str, list[dict]], total_target: int) -> list[dict]:
     order = [
         "overclaim_challenge",
@@ -393,6 +562,18 @@ def _count_by_type(plans: list[dict]) -> dict[str, int]:
     for plan in plans:
         counts[plan["challenge_type"]] = counts.get(plan["challenge_type"], 0) + 1
     return counts
+
+
+def _count_by_modality_pool(plans: list[dict]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for plan in plans:
+        pool = str(plan.get("modality_pool") or plan.get("metadata", {}).get("modality_pool") or "text")
+        counts[pool] = counts.get(pool, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def _limit_reached(plans: list[dict], limit: int) -> bool:
+    return limit > 0 and len(plans) >= limit
 
 
 def _ordered_unique(items: list) -> list:
@@ -438,4 +619,17 @@ def _env_positive_int(name: str, default: int) -> int:
         raise ValueError(f"{name} must be a positive integer, got {raw!r}.") from exc
     if value <= 0:
         raise ValueError(f"{name} must be a positive integer, got {value}.")
+    return value
+
+
+def _env_nonnegative_int(name: str, default: int) -> int:
+    raw = os.getenv(name)
+    if raw is None or raw.strip() == "":
+        return default
+    try:
+        value = int(raw)
+    except ValueError as exc:
+        raise ValueError(f"{name} must be a non-negative integer, got {raw!r}.") from exc
+    if value < 0:
+        raise ValueError(f"{name} must be a non-negative integer, got {value}.")
     return value

@@ -15,11 +15,15 @@ def select_active_kcs(kc_bank: dict, macro_spine: dict) -> dict:
     per_macro_min = _bounded_env_int("ACTIVE_KC_MIN_PER_MACRO", 2, 1, active_target)
     critical_macro_min = _bounded_env_int("ACTIVE_KC_CRITICAL_MIN_PER_MACRO", 3, per_macro_min, active_target)
     threshold = _env_float("ACTIVE_KC_THRESHOLD", 0.65, 0.0, 1.0)
+    include_multimodal = _env_bool("ACTIVE_KC_INCLUDE_MULTIMODAL", False)
+    candidate_nodes = nodes if include_multimodal else [node for node in nodes if not _is_multimodal(node)]
+    if not candidate_nodes:
+        raise ValueError("Active KC selection has no eligible text KCs. Set ACTIVE_KC_INCLUDE_MULTIMODAL=true only if multimodal active KCs are intended.")
 
     macro_nodes = macro_spine.get("macro_nodes", [])
     macro_by_id = {m["macro_id"]: m for m in macro_nodes if m.get("macro_id")}
     by_macro: dict[str, list[dict]] = {macro_id: [] for macro_id in macro_by_id}
-    for node in nodes:
+    for node in candidate_nodes:
         macro_id = node.get("macro_id")
         if macro_id not in by_macro:
             raise ValueError(f"KC {node.get('kc_id')} references macro not in Macro Spine: {macro_id}")
@@ -29,7 +33,7 @@ def select_active_kcs(kc_bank: dict, macro_spine: dict) -> dict:
     selected_set: set[str] = set()
     macro_active: dict[str, list[str]] = {macro_id: [] for macro_id in macro_by_id}
 
-    threshold_candidates = [node for node in sorted(nodes, key=_score, reverse=True) if _score(node) >= threshold]
+    threshold_candidates = [node for node in sorted(candidate_nodes, key=_score, reverse=True) if _score(node) >= threshold]
     for node in threshold_candidates:
         _add(node, selected_ids, selected_set, macro_active)
 
@@ -52,7 +56,7 @@ def select_active_kcs(kc_bank: dict, macro_spine: dict) -> dict:
     if len(selected_ids) > active_target:
         selected_ids = _truncate_preserving_macro_minimum(
             selected_ids,
-            {node["kc_id"]: node for node in nodes},
+            {node["kc_id"]: node for node in candidate_nodes},
             macro_by_id,
             per_macro_min,
             critical_macro_min,
@@ -61,7 +65,7 @@ def select_active_kcs(kc_bank: dict, macro_spine: dict) -> dict:
         selected_set = set(selected_ids)
         macro_active = {macro_id: [] for macro_id in macro_by_id}
         for kc_id in selected_ids:
-            node = next(n for n in nodes if n["kc_id"] == kc_id)
+            node = next(n for n in candidate_nodes if n["kc_id"] == kc_id)
             macro_active[node["macro_id"]].append(kc_id)
 
     active_nodes = []
@@ -80,6 +84,7 @@ def select_active_kcs(kc_bank: dict, macro_spine: dict) -> dict:
             "active_kc_threshold": threshold,
             "min_per_macro": per_macro_min,
             "critical_min_per_macro": critical_macro_min,
+            "include_multimodal": include_multimodal,
         },
         "macro_active_kcs": macro_active,
         "kc_nodes": active_nodes,
@@ -104,6 +109,10 @@ def _add(
 
 def _score(node: dict) -> float:
     return float(node.get("importance_scores", node.get("scores", {})).get("final_importance_score", 0.0))
+
+
+def _is_multimodal(node: dict) -> bool:
+    return bool(node.get("modality", {}).get("is_multimodal"))
 
 
 def _truncate_preserving_macro_minimum(
@@ -158,3 +167,10 @@ def _bounded_env_int(name: str, default: int, minimum: int, maximum: int) -> int
     except ValueError:
         value = default
     return max(minimum, min(maximum, value))
+
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    raw = os.getenv(name)
+    if raw is None or raw.strip() == "":
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}

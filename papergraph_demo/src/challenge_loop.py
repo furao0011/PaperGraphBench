@@ -24,6 +24,8 @@ def build_challenge_questions_loop(
     cache_path: Path,
     resume: bool = False,
     restart: bool = False,
+    target_count: int | None = None,
+    solver_client: OpenAICompatClient | None = None,
 ) -> dict:
     if not client or not client.is_ready():
         raise RuntimeError("Challenge loop requires a configured online model client.")
@@ -34,9 +36,13 @@ def build_challenge_questions_loop(
         raise ValueError("Challenge loop requires non-empty challenge_plans.")
 
     plan_by_id = _plan_by_id(plans)
-    target_count = _env_positive_int("CHALLENGE_ACCEPT_TARGET", 10)
+    target_count = target_count or _env_positive_int("CHALLENGE_ACCEPT_TARGET", 10)
     max_attempts_per_plan = _env_positive_int("CHALLENGE_MAX_ATTEMPTS_PER_PLAN", 3)
-    solver_configs = challenge_solver_configs(client.cfg.llm_model)
+    solver_runtime = solver_client or client
+    solver_configs = challenge_solver_configs(
+        solver_runtime.cfg.llm_model,
+        provider="vision_api" if solver_client else "common_api",
+    )
     signature = _loop_signature(challenge_plans, solver_configs, paper_text, target_count, max_attempts_per_plan)
     state = _load_cache(cache_path) if resume and not restart else {}
     if state.get("challenge_loop_signature") != signature:
@@ -89,7 +95,12 @@ def build_challenge_questions_loop(
                 log("challenge question unusable", plan_id=plan_id, question_id=question_id)
                 continue
 
-            trial_bundle = run_single_challenge_question_trials(question, client, paper_text)
+            trial_bundle = run_single_challenge_question_trials(
+                question,
+                client,
+                paper_text,
+                solver_client=solver_runtime,
+            )
             state["solver_trials"].append(trial_bundle)
             if trial_bundle["matched_target_failure_count"] > 0:
                 accepted = question_with_filter_metadata(question, trial_bundle)
@@ -304,6 +315,7 @@ def _result_from_state(challenge_plans: dict, state: dict, solver_configs: list[
             "rejected_count": len(rejected),
             "blacklisted_plan_count": len(state["blacklisted_plan_ids"]),
             "by_type": _count_by_type(accepted),
+            "by_modality_pool": _count_by_modality_pool(accepted),
             "stop_reason": _stop_reason(challenge_plans, state),
         },
     }
@@ -375,6 +387,8 @@ def _challenge_plan_signature(challenge_plans: dict) -> dict:
                 plan.get("target_failure_mode"),
                 plan.get("source", {}).get("kc_ids", []),
                 plan.get("source", {}).get("edge_ids", []),
+                plan.get("source", {}).get("asset_ids", []),
+                plan.get("modality_pool", plan.get("metadata", {}).get("modality_pool", "text")),
                 plan.get("trap_part", ""),
             ]
             for plan in plans
@@ -393,6 +407,8 @@ def _prompt_plan(plan: dict) -> dict:
         "target_failure_mode": plan.get("target_failure_mode"),
         "evidence": plan.get("evidence", []),
         "metadata": plan.get("metadata", {}),
+        "modality_pool": plan.get("modality_pool", plan.get("metadata", {}).get("modality_pool", "text")),
+        "asset_references": plan.get("metadata", {}).get("asset_references", []),
     }
 
 
@@ -413,6 +429,14 @@ def _count_by_type(questions: list[dict]) -> dict[str, int]:
     for question in questions:
         challenge_type = question.get("challenge_type", "unknown")
         counts[challenge_type] = counts.get(challenge_type, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def _count_by_modality_pool(questions: list[dict]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for question in questions:
+        pool = str(question.get("modality_pool") or "text")
+        counts[pool] = counts.get(pool, 0) + 1
     return dict(sorted(counts.items()))
 
 

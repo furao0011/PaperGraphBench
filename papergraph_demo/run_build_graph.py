@@ -37,7 +37,7 @@ from src.unit_kc_extractor import extract_kc_candidates_by_units
 
 
 BASE_DIR = Path(__file__).resolve().parent
-MASTER_GRAPH_BUILDER_VERSION = "v3_multimodal_kc_metadata"
+MASTER_GRAPH_BUILDER_VERSION = "v4_text_active_policy"
 EDGE_ARTIFACT_SIGNATURE_VERSION = "v1_multimodal_virtual_units"
 PAPER_PATH = BASE_DIR / "data" / "papers" / "demo_paper.md"
 PAPER_DIR_PATH = BASE_DIR.parent / "util_example" / "output1"
@@ -712,6 +712,16 @@ def main() -> None:
             "resume artifact ignored due to Active KC score signature mismatch",
             path=ACTIVE_KC_PATH,
             requested_score_signature=score_signature,
+        )
+        active_kc = None
+    if active_kc and active_kc.get("selection_policy", {}).get("include_multimodal") != _env_bool(
+        "ACTIVE_KC_INCLUDE_MULTIMODAL",
+        False,
+    ):
+        log(
+            "resume artifact ignored due to Active KC multimodal policy mismatch",
+            path=ACTIVE_KC_PATH,
+            include_multimodal=_env_bool("ACTIVE_KC_INCLUDE_MULTIMODAL", False),
         )
         active_kc = None
     if not active_kc:

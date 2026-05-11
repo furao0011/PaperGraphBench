@@ -12,6 +12,8 @@ Rules:
 5) Do not introduce entities, modules, datasets, metrics, sections, figures, tables, or citations that are not present in the target KCs/path.
 6) Do not expose KC IDs, rubric fields, or internal graph metadata in the question text.
 7) Preserve IDs exactly: Q_M1 for macro M1, Q_M2 for macro M2, etc.
+8) If target KCs contain `modality.is_multimodal=true`, write the question as a natural question about the referenced figure/table. Use the provided caption, asset summary, evidence basis, and KC claims; do not invent visual details beyond those fields.
+9) The image/table itself will be attached during evaluation, so the question may refer to "the figure" or "the table" without asking the model to infer unseen content.
 
 Output strict JSON:
 {

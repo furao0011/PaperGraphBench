@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 from src.model_client import OpenAICompatClient
+from src.multimodal_question_assets import attach_asset_references
 from src.progress import log, span
 from src.prompt_loader import load_prompt, render_prompt
 
@@ -100,8 +102,13 @@ def generate_questions_cached(
 
 def normalize_question_bundle(graph: dict, result: dict) -> dict:
     valid_kc_ids = {k["kc_id"] for k in graph.get("kc_nodes", [])}
+    by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", [])}
     macro_targets = {
-        m["macro_id"]: [kid for kid in m.get("kc_ids", []) if kid in valid_kc_ids]
+        m["macro_id"]: [
+            kid
+            for kid in m.get("kc_ids", [])
+            if kid in valid_kc_ids and _question_kc_allowed(by_kc.get(kid, {}))
+        ]
         for m in graph.get("macro_nodes", [])
     }
     raw_macro_questions = result.get("macro_main_questions", result.get("main_questions", []))
@@ -130,7 +137,14 @@ def normalize_question_bundle(graph: dict, result: dict) -> dict:
 
 def _generate_one_macro_main_question(graph: dict, macro: dict, client: OpenAICompatClient) -> dict:
     macro_id = macro["macro_id"]
-    target_ids = set(macro.get("kc_ids", []))
+    by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", [])}
+    target_ids = {
+        kc_id
+        for kc_id in macro.get("kc_ids", [])
+        if kc_id in by_kc and _question_kc_allowed(by_kc[kc_id])
+    }
+    if not target_ids:
+        raise RuntimeError(f"Macro {macro_id} has no eligible text KCs for main question generation.")
     subgraph = {
         "paper_id": graph.get("paper_id", "unknown"),
         "macro_nodes": [macro],
@@ -187,15 +201,20 @@ def _generate_one_multi_hop_question(graph: dict, path: dict, client: OpenAIComp
 
 def _normalize_macro_main_question(graph: dict, macro_id: str, source: dict) -> dict:
     valid_kc_ids = {k["kc_id"] for k in graph.get("kc_nodes", [])}
+    by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", [])}
     macro = next((m for m in graph.get("macro_nodes", []) if m.get("macro_id") == macro_id), None)
     if not macro:
         raise ValueError(f"Unknown macro id in question cache: {macro_id}")
-    target_ids = [kid for kid in macro.get("kc_ids", []) if kid in valid_kc_ids]
+    target_ids = [
+        kid
+        for kid in macro.get("kc_ids", [])
+        if kid in valid_kc_ids and _question_kc_allowed(by_kc.get(kid, {}))
+    ]
     targets = [kid for kid in source.get("target_kc_ids", []) if kid in target_ids] or target_ids[: min(3, len(target_ids))]
     question_text = str(source.get("question_text", "")).strip()
     if not question_text:
         raise ValueError(f"Empty main question text for {macro_id}")
-    return {
+    question = {
         "question_id": f"Q_{macro_id}",
         "question_type": "macro_main_question",
         "macro_id": macro_id,
@@ -212,6 +231,7 @@ def _normalize_macro_main_question(graph: dict, macro_id: str, source: dict) -> 
             "next_macro_question",
         ],
     }
+    return attach_asset_references(question, by_kc)
 
 
 def _normalize_multi_hop_question(graph: dict, path_id: str, source: dict) -> dict:
@@ -219,13 +239,14 @@ def _normalize_multi_hop_question(graph: dict, path_id: str, source: dict) -> di
     if not path:
         raise ValueError(f"Unknown path id in question cache: {path_id}")
     valid_kc_ids = {k["kc_id"] for k in graph.get("kc_nodes", [])}
+    by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", [])}
     seq = [kid for kid in path.get("kc_sequence", [])[:3] if kid in valid_kc_ids]
     if len(seq) < 3:
         raise ValueError(f"Path {path_id} has fewer than three valid KCs.")
     question_text = str(source.get("question_text", "")).strip()
     if not question_text:
         raise ValueError(f"Empty multi-hop question text for {path_id}")
-    return {
+    question = {
         "question_id": f"Q_{path_id}",
         "question_type": "multi_hop_reasoning",
         "path_id": path_id,
@@ -233,12 +254,23 @@ def _normalize_multi_hop_question(graph: dict, path_id: str, source: dict) -> di
         "question_text": question_text,
         "expected_reasoning": {"must_connect": seq},
     }
+    return attach_asset_references(question, by_kc)
 
 
 def _graph_signature(graph: dict) -> dict:
     return {
         "paper_id": graph.get("paper_id", "unknown"),
+        "question_main_include_multimodal": _env_bool("QUESTION_MAIN_INCLUDE_MULTIMODAL", False),
         "kc_ids": [k.get("kc_id") for k in graph.get("kc_nodes", [])],
+        "kc_asset_refs": [
+            [
+                k.get("kc_id"),
+                k.get("asset_id"),
+                k.get("asset_type"),
+                bool(k.get("modality", {}).get("is_multimodal")),
+            ]
+            for k in graph.get("kc_nodes", [])
+        ],
         "macro_ids": [m.get("macro_id") for m in graph.get("macro_nodes", [])],
         "path_ids": [p.get("path_id") for p in graph.get("reasoning_paths", [])],
         "thread_ids": [t.get("thread_id") for t in graph.get("reasoning_threads", [])],
@@ -291,6 +323,19 @@ def _legacy_main_question(question: dict) -> dict:
     return legacy
 
 
+def _question_kc_allowed(kc: dict) -> bool:
+    if _env_bool("QUESTION_MAIN_INCLUDE_MULTIMODAL", False):
+        return True
+    return not bool(kc.get("modality", {}).get("is_multimodal"))
+
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    raw = os.getenv(name)
+    if raw is None or raw.strip() == "":
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+
 def _load_question_cache(path: Path) -> dict:
     if not path.exists():
         return {}
@@ -311,7 +356,11 @@ def _debug_question_bundle(graph: dict) -> dict:
     by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", [])}
     macro_main_questions = []
     for macro in graph.get("macro_nodes", []):
-        target_ids = macro.get("kc_ids", [])[: min(3, len(macro.get("kc_ids", [])))]
+        target_ids = [
+            kc_id
+            for kc_id in macro.get("kc_ids", [])
+            if kc_id in by_kc and _question_kc_allowed(by_kc[kc_id])
+        ][: min(3, len(macro.get("kc_ids", [])))]
         if not target_ids:
             continue
         claims = "; ".join(by_kc.get(kid, {}).get("full_claim", kid) for kid in target_ids)
@@ -331,6 +380,7 @@ def _debug_question_bundle(graph: dict) -> dict:
                 ],
             }
         )
+        attach_asset_references(macro_main_questions[-1], by_kc)
 
     return {
         "macro_main_questions": macro_main_questions,
