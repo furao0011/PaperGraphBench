@@ -107,6 +107,47 @@ def attach_asset_references_to_challenge_plans(
     return updated
 
 
+def question_requires_multimodal_input(question: dict) -> bool:
+    return bool(question.get("requires_multimodal_input") or question.get("asset_references"))
+
+
+def question_image_paths(question: dict) -> list[str]:
+    paths = []
+    for ref in question.get("asset_references", []):
+        for attachment in ref.get("attachments", []):
+            if attachment.get("type") == "image" and str(attachment.get("path", "")).strip():
+                paths.append(str(attachment["path"]).strip())
+    return paths
+
+
+def asset_context_for_prompt(question: dict) -> str:
+    refs = question.get("asset_references", [])
+    if not refs:
+        return ""
+    lines = ["[attached multimodal assets]"]
+    for ref in refs:
+        lines.append(f"- asset_id: {ref.get('asset_id')}")
+        lines.append(f"  asset_type: {ref.get('asset_type')}")
+        if str(ref.get("caption") or "").strip():
+            lines.append(f"  caption: {ref.get('caption')}")
+        if str(ref.get("summary") or "").strip():
+            lines.append(f"  summary: {ref.get('summary')}")
+        evidence_bases = ref.get("evidence_bases", [])
+        if evidence_bases:
+            lines.append("  evidence_bases:")
+            for basis in evidence_bases:
+                lines.append(f"    - {basis}")
+        for attachment in ref.get("attachments", []):
+            if attachment.get("type") == "table_markdown":
+                lines.append("  table_markdown:")
+                lines.append("```markdown")
+                lines.append(str(attachment.get("content") or ""))
+                lines.append("```")
+            elif attachment.get("type") == "image":
+                lines.append(f"  image_path: {attachment.get('path')}")
+    return "\n".join(lines) + "\n\n"
+
+
 def _input_kind(asset_type: object) -> str:
     text = str(asset_type or "").strip().lower()
     if text == "figure":

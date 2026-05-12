@@ -76,7 +76,11 @@ class OpenAICompatClient:
         body = self._post_json(url, payload, timeout_s)
         result = json.loads(body)
         content = result["choices"][0]["message"]["content"]
-        return json.loads(content)
+        try:
+            return json.loads(content)
+        except json.JSONDecodeError as exc:
+            preview = str(content)[:500]
+            raise ValueError(f"Model returned invalid JSON content: {preview!r}") from exc
 
     def chat_text(
         self,
@@ -139,7 +143,11 @@ class OpenAICompatClient:
         body = self._post_json(url, payload, timeout_s)
         result = json.loads(body)
         content_text = result["choices"][0]["message"]["content"]
-        return json.loads(content_text)
+        try:
+            return json.loads(content_text)
+        except json.JSONDecodeError as exc:
+            preview = str(content_text)[:500]
+            raise ValueError(f"Vision model returned invalid JSON content: {preview!r}") from exc
 
     def chat_text_with_images(
         self,

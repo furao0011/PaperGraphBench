@@ -18,7 +18,7 @@ def generate_questions_with_online_fallback(
     if client and client.is_ready():
         try:
             tpl = load_prompt("generate_questions.txt")
-            user_prompt = render_prompt(tpl, graph_json=json.dumps(graph, ensure_ascii=False))
+            user_prompt = render_prompt(tpl, graph_json=json.dumps(_main_question_graph(graph), ensure_ascii=False))
             result = client.chat_json(
                 system_prompt="You generate graph-grounded paper evaluation questions. Return JSON only.",
                 user_prompt=user_prompt,
@@ -67,7 +67,7 @@ def generate_questions_cached(
     macro_main_questions = []
     for macro in graph.get("macro_nodes", []):
         macro_id = macro.get("macro_id")
-        if not macro_id or not macro.get("kc_ids"):
+        if not macro_id or not _macro_main_target_ids(graph, macro):
             continue
         cached = cache["macro_main_questions"].get(macro_id)
         if cached:
@@ -101,14 +101,8 @@ def generate_questions_cached(
 
 
 def normalize_question_bundle(graph: dict, result: dict) -> dict:
-    valid_kc_ids = {k["kc_id"] for k in graph.get("kc_nodes", [])}
-    by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", [])}
     macro_targets = {
-        m["macro_id"]: [
-            kid
-            for kid in m.get("kc_ids", [])
-            if kid in valid_kc_ids and _question_kc_allowed(by_kc.get(kid, {}))
-        ]
+        m["macro_id"]: _macro_main_target_ids(graph, m)
         for m in graph.get("macro_nodes", [])
     }
     raw_macro_questions = result.get("macro_main_questions", result.get("main_questions", []))
@@ -138,16 +132,12 @@ def normalize_question_bundle(graph: dict, result: dict) -> dict:
 def _generate_one_macro_main_question(graph: dict, macro: dict, client: OpenAICompatClient) -> dict:
     macro_id = macro["macro_id"]
     by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", [])}
-    target_ids = {
-        kc_id
-        for kc_id in macro.get("kc_ids", [])
-        if kc_id in by_kc and _question_kc_allowed(by_kc[kc_id])
-    }
+    target_ids = _macro_main_target_ids(graph, macro)
     if not target_ids:
         raise RuntimeError(f"Macro {macro_id} has no eligible text KCs for main question generation.")
     subgraph = {
         "paper_id": graph.get("paper_id", "unknown"),
-        "macro_nodes": [macro],
+        "macro_nodes": [dict(macro, kc_ids=target_ids, active_kc_ids=target_ids)],
         "kc_nodes": [k for k in graph.get("kc_nodes", []) if k.get("kc_id") in target_ids],
         "reasoning_paths": [],
     }
@@ -168,6 +158,38 @@ def _generate_one_macro_main_question(graph: dict, macro: dict, client: OpenAICo
     if not source:
         raise RuntimeError(f"Online question generation returned no macro main question for {macro_id}.")
     return _normalize_macro_main_question(graph, macro_id, source)
+
+
+def _main_question_graph(graph: dict) -> dict:
+    target_ids_by_macro = {
+        macro.get("macro_id"): _macro_main_target_ids(graph, macro)
+        for macro in graph.get("macro_nodes", [])
+        if macro.get("macro_id")
+    }
+    target_ids = {
+        kc_id
+        for ids in target_ids_by_macro.values()
+        for kc_id in ids
+    }
+    return {
+        "paper_id": graph.get("paper_id", "unknown"),
+        "macro_nodes": [
+            dict(
+                macro,
+                kc_ids=target_ids_by_macro.get(macro.get("macro_id"), []),
+                active_kc_ids=target_ids_by_macro.get(macro.get("macro_id"), []),
+            )
+            for macro in graph.get("macro_nodes", [])
+            if macro.get("macro_id") in target_ids_by_macro
+        ],
+        "kc_nodes": [
+            kc
+            for kc in graph.get("kc_nodes", [])
+            if kc.get("kc_id") in target_ids
+        ],
+        "reasoning_paths": [],
+        "reasoning_threads": graph.get("reasoning_threads", []),
+    }
 
 
 def _generate_one_multi_hop_question(graph: dict, path: dict, client: OpenAICompatClient) -> dict:
@@ -200,16 +222,11 @@ def _generate_one_multi_hop_question(graph: dict, path: dict, client: OpenAIComp
 
 
 def _normalize_macro_main_question(graph: dict, macro_id: str, source: dict) -> dict:
-    valid_kc_ids = {k["kc_id"] for k in graph.get("kc_nodes", [])}
     by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", [])}
     macro = next((m for m in graph.get("macro_nodes", []) if m.get("macro_id") == macro_id), None)
     if not macro:
         raise ValueError(f"Unknown macro id in question cache: {macro_id}")
-    target_ids = [
-        kid
-        for kid in macro.get("kc_ids", [])
-        if kid in valid_kc_ids and _question_kc_allowed(by_kc.get(kid, {}))
-    ]
+    target_ids = _macro_main_target_ids(graph, macro)
     targets = [kid for kid in source.get("target_kc_ids", []) if kid in target_ids] or target_ids[: min(3, len(target_ids))]
     question_text = str(source.get("question_text", "")).strip()
     if not question_text:
@@ -260,7 +277,13 @@ def _normalize_multi_hop_question(graph: dict, path_id: str, source: dict) -> di
 def _graph_signature(graph: dict) -> dict:
     return {
         "paper_id": graph.get("paper_id", "unknown"),
+        "question_target_policy_version": "v2_active_kcs",
         "question_main_include_multimodal": _env_bool("QUESTION_MAIN_INCLUDE_MULTIMODAL", False),
+        "active_kc_ids": graph.get("active_kc_ids", []),
+        "macro_active_kc_ids": [
+            [m.get("macro_id"), m.get("active_kc_ids", [])]
+            for m in graph.get("macro_nodes", [])
+        ],
         "kc_ids": [k.get("kc_id") for k in graph.get("kc_nodes", [])],
         "kc_asset_refs": [
             [
@@ -329,6 +352,26 @@ def _question_kc_allowed(kc: dict) -> bool:
     return not bool(kc.get("modality", {}).get("is_multimodal"))
 
 
+def _macro_main_target_ids(graph: dict, macro: dict) -> list[str]:
+    by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", []) if k.get("kc_id")}
+    macro_id = macro.get("macro_id")
+    active_ids = list(macro.get("active_kc_ids") or [])
+    if not active_ids:
+        active_ids = [
+            kc_id
+            for kc_id in macro.get("kc_ids", [])
+            if kc_id in by_kc and by_kc[kc_id].get("flags", {}).get("active_for_question_generation")
+        ]
+    target_ids = [
+        kc_id
+        for kc_id in active_ids
+        if kc_id in by_kc and _question_kc_allowed(by_kc[kc_id])
+    ]
+    if not target_ids:
+        raise RuntimeError(f"Macro {macro_id} has no active text KCs for main question generation.")
+    return target_ids
+
+
 def _env_bool(name: str, default: bool = False) -> bool:
     raw = os.getenv(name)
     if raw is None or raw.strip() == "":
@@ -356,11 +399,7 @@ def _debug_question_bundle(graph: dict) -> dict:
     by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", [])}
     macro_main_questions = []
     for macro in graph.get("macro_nodes", []):
-        target_ids = [
-            kc_id
-            for kc_id in macro.get("kc_ids", [])
-            if kc_id in by_kc and _question_kc_allowed(by_kc[kc_id])
-        ][: min(3, len(macro.get("kc_ids", [])))]
+        target_ids = _macro_main_target_ids(graph, macro)
         if not target_ids:
             continue
         claims = "; ".join(by_kc.get(kid, {}).get("full_claim", kid) for kid in target_ids)

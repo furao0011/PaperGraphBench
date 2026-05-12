@@ -495,6 +495,7 @@ def build_master_graph(
     precomputed_reasoning_edges: list[dict] | None = None,
     reasoning_edge_source: str = "legacy",
     edge_coverage_report_path: str | None = None,
+    active_kc_ids: list[str] | None = None,
 ) -> dict:
     macro_source_nodes = _macro_nodes_from_spine(macro_spine)
     kc_nodes, groups = _build_kc_nodes(
@@ -508,9 +509,24 @@ def build_master_graph(
         count=len(kc_nodes),
         macro_counts=json.dumps({mid: len(ids) for mid, ids in groups.items()}, ensure_ascii=False),
     )
+    graph_kc_ids = {kc["kc_id"] for kc in kc_nodes}
+    if active_kc_ids is None:
+        active_id_list = [
+            kc["kc_id"]
+            for kc in kc_nodes
+            if kc.get("flags", {}).get("active_for_question_generation")
+        ]
+    else:
+        missing_active_ids = [kc_id for kc_id in active_kc_ids if kc_id not in graph_kc_ids]
+        if missing_active_ids:
+            raise ValueError(f"Active KC ids are not present in graph KC nodes: {missing_active_ids[:10]}")
+        active_id_list = list(dict.fromkeys(active_kc_ids))
+    active_id_set = set(active_id_list)
+
     macro_nodes = []
     for macro in macro_source_nodes:
         macro_id = macro["macro_id"]
+        macro_kc_ids = groups[macro_id]
         macro_nodes.append(
             {
                 "macro_id": macro_id,
@@ -520,14 +536,14 @@ def build_master_graph(
                 "summary": macro.get("summary", ""),
                 "source_sections": macro.get("source_sections", []),
                 "expected_reader_question": macro.get("expected_reader_question", ""),
-                "kc_ids": groups[macro_id],
+                "kc_ids": macro_kc_ids,
+                "active_kc_ids": [kc_id for kc_id in macro_kc_ids if kc_id in active_id_set],
                 "prerequisite_macro_ids": macro.get("prerequisite_macro_ids", []),
                 "next_macro_ids": macro.get("next_macro_ids", []),
                 "importance": macro.get("importance", "normal"),
             }
         )
-    active_ids = {kc["kc_id"] for kc in kc_nodes}
-    edges = _filter_precomputed_edges(precomputed_reasoning_edges, active_ids)
+    edges = _filter_precomputed_edges(precomputed_reasoning_edges, graph_kc_ids)
     if not edges:
         if reasoning_edge_source == "verified":
             raise RuntimeError("Master Graph v2 requires verified reasoning edges for the selected Active KCs.")
@@ -561,7 +577,7 @@ def build_master_graph(
         "macro_nodes": macro_nodes,
         "macro_edges": macro_spine.get("macro_edges", []) if macro_spine else [],
         "kc_nodes": kc_nodes,
-        "active_kc_ids": [kc["kc_id"] for kc in kc_nodes],
+        "active_kc_ids": active_id_list,
         "reasoning_edges": edges,
         "reasoning_paths": paths,
         "diagnostics": diagnostics,

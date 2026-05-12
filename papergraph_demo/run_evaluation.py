@@ -41,6 +41,23 @@ def _env_bool(name: str, default: bool = False) -> bool:
     return raw.strip().lower() in {"1", "true", "yes", "on"}
 
 
+def _required_env(name: str) -> str:
+    value = os.getenv(name, "").strip()
+    if not value:
+        raise RuntimeError(f"Formal evaluation requires {name} for the evaluated target model.")
+    return value
+
+
+def _build_eval_target_client() -> OpenAICompatClient:
+    return OpenAICompatClient(
+        ModelConfig(
+            api_key=_required_env("EVAL_TARGET_API_KEY"),
+            base_url=_required_env("EVAL_TARGET_BASE_URL"),
+            llm_model=_required_env("EVAL_TARGET_MODEL"),
+        )
+    )
+
+
 def _save_eval_artifacts(graph: dict, eval_state: dict, trajectory: dict, checkpoint_path: Path) -> None:
     save_eval_artifacts(
         graph,
@@ -66,11 +83,15 @@ def main() -> None:
     resume = _env_bool("PAPERGRAPH_RESUME") or _env_bool("EVAL_RESUME")
     restart = _env_bool("PAPERGRAPH_RESTART") or _env_bool("EVAL_RESTART")
     checkpoint_path = Path(os.getenv("EVAL_CHECKPOINT_PATH", str(EVAL_CHECKPOINT_PATH)))
-    target_model = settings.llm_model or "mock-model"
+    client = OpenAICompatClient(ModelConfig(settings.api_key, settings.base_url, settings.llm_model))
+    target_client = _build_eval_target_client() if use_online_eval else client
+    target_model = target_client.cfg.llm_model if target_client and target_client.is_ready() else "mock-model"
     log(
         "evaluation configuration loaded",
         use_online_eval=use_online_eval,
         allow_mock_eval=allow_mock_eval,
+        judge_model=settings.llm_model,
+        target_model=target_model,
         resume=resume,
         restart=restart,
         checkpoint=checkpoint_path,
@@ -94,9 +115,10 @@ def main() -> None:
         paper_chars=len(paper_text),
     )
 
-    client = OpenAICompatClient(ModelConfig(settings.api_key, settings.base_url, settings.llm_model))
     if (not use_online_eval or not client.is_ready()) and not allow_mock_eval:
         raise RuntimeError("Formal evaluation requires USE_ONLINE_EVAL=true and configured API_KEY/BASE_URL/LLM_MODEL. Set ALLOW_MOCK_EVAL=true only for local debugging.")
+    if use_online_eval and not allow_mock_eval and not target_client.is_ready():
+        raise RuntimeError("Formal evaluation requires configured EVAL_TARGET_API_KEY/EVAL_TARGET_BASE_URL/EVAL_TARGET_MODEL for the evaluated model.")
     checkpoint = load_eval_checkpoint(
         checkpoint_path,
         graph,
@@ -128,6 +150,7 @@ def main() -> None:
         by_kc=by_kc,
         paper_text=paper_text,
         client=client,
+        target_client=target_client,
         use_online_eval=use_online_eval,
         allow_offline_fallback=allow_offline_fallback,
         kc_bank=kc_bank,

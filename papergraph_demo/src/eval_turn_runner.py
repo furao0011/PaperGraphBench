@@ -12,6 +12,7 @@ from src.evaluation_task_queue import attach_recommended_stage_tasks
 from src.judge import judge_answer_with_online_fallback
 from src.judge_result_normalizer import normalize_after_global_claim_verification, normalize_judge_result
 from src.model_client import OpenAICompatClient
+from src.multimodal_question_assets import asset_context_for_prompt, question_image_paths
 from src.progress import log, span
 from src.state_updater import apply_claim_verification_results, apply_judge_result
 
@@ -26,6 +27,7 @@ class EvaluationTurnRunner:
         by_kc: dict[str, dict],
         paper_text: str,
         client: OpenAICompatClient,
+        target_client: OpenAICompatClient,
         use_online_eval: bool,
         allow_offline_fallback: bool,
         kc_bank: dict,
@@ -35,6 +37,7 @@ class EvaluationTurnRunner:
         self.by_kc = by_kc
         self.paper_text = paper_text
         self.client = client
+        self.target_client = target_client
         self.use_online_eval = use_online_eval
         self.allow_offline_fallback = allow_offline_fallback
         self.kc_bank = kc_bank
@@ -60,7 +63,7 @@ class EvaluationTurnRunner:
             question_type=question.get("question_type"),
             targets=",".join(question.get("target_kc_ids", [])),
         )
-        answer, answer_mode = self._answer_turn(turn_id, question["question_text"], trajectory, target_kcs)
+        answer, answer_mode = self._answer_turn(turn_id, question, trajectory, target_kcs)
         judge_result = self._judge_turn(turn_id, question, answer, target_kcs, trajectory)
         turn_context = _turn_context(turn_id, question)
         judge_result = normalize_judge_result(judge_result, turn_context)
@@ -92,6 +95,7 @@ class EvaluationTurnRunner:
             "target_path_id": question.get("path_id"),
             "model_answer": answer,
             "answer_mode": answer_mode,
+            "multimodal_input": _turn_multimodal_input(question),
             "judge_result": judge_result,
             "state_update": state_update,
         }
@@ -133,7 +137,7 @@ class EvaluationTurnRunner:
         if follow["question_type"] == "review_followup":
             eval_state["global_state"]["review_question_count"] += 1
 
-        answer, answer_mode = self._answer_turn(turn_id, follow["question_text"], trajectory, target_kcs)
+        answer, answer_mode = self._answer_turn(turn_id, follow, trajectory, target_kcs)
         judge_result = self._judge_turn(turn_id, follow, answer, target_kcs, trajectory)
         turn_context = _turn_context(turn_id, follow)
         judge_result = normalize_judge_result(judge_result, turn_context)
@@ -162,6 +166,7 @@ class EvaluationTurnRunner:
             "repair_context": follow.get("repair_context", {}),
             "model_answer": answer,
             "answer_mode": answer_mode,
+            "multimodal_input": _turn_multimodal_input(follow),
             "judge_result": judge_result,
             "state_update": state_update,
         }
@@ -210,7 +215,7 @@ class EvaluationTurnRunner:
             thread_step=question.get("thread_turn_id"),
             targets=",".join(question.get("target_kc_ids", [])),
         )
-        answer, answer_mode = self._answer_turn(turn_id, question["question_text"], trajectory, target_kcs)
+        answer, answer_mode = self._answer_turn(turn_id, question, trajectory, target_kcs)
         thread_context = {
             "thread_id": question.get("thread_id"),
             "thread_turn_id": question.get("thread_turn_id"),
@@ -253,6 +258,7 @@ class EvaluationTurnRunner:
             "repair_context": question.get("repair_context", {}),
             "model_answer": answer,
             "answer_mode": answer_mode,
+            "multimodal_input": _turn_multimodal_input(question),
             "judge_result": judge_result,
             "state_update": state_update,
         }
@@ -272,14 +278,22 @@ class EvaluationTurnRunner:
         )
         return turn_no, turn
 
-    def _answer_turn(self, turn_id: str, question_text: str, trajectory: dict, target_kcs: list[dict]) -> tuple[str, str]:
+    def _answer_turn(self, turn_id: str, question: dict, trajectory: dict, target_kcs: list[dict]) -> tuple[str, str]:
+        image_paths = question_image_paths(question)
         model_input = build_eval_prompt(
             paper_text=self.paper_text,
             dialogue_history=dialogue_history_text(trajectory["turns"]),
-            question_text=question_text,
+            question_text=question["question_text"],
+            asset_context=asset_context_for_prompt(question),
         )
         with span("target model answer", turn=turn_id):
-            return build_model_answer(self.client, self.use_online_eval, model_input, target_kcs)
+            return build_model_answer(
+                client=self.target_client,
+                use_online_eval=self.use_online_eval,
+                prompt=model_input,
+                target_kcs=target_kcs,
+                image_paths=image_paths,
+            )
 
     def _judge_turn(
         self,
@@ -470,11 +484,12 @@ def dialogue_history_text(turns: list[dict]) -> str:
     )
 
 
-def build_eval_prompt(paper_text: str, dialogue_history: str, question_text: str) -> str:
+def build_eval_prompt(paper_text: str, dialogue_history: str, question_text: str, asset_context: str = "") -> str:
     return (
         "```original paper\n"
         f"{paper_text}\n"
         "```\n\n"
+        f"{asset_context}"
         "[dialogue history]\n"
         f"{dialogue_history}\n\n"
         "[current question]\n"
@@ -487,17 +502,36 @@ def build_model_answer(
     use_online_eval: bool,
     prompt: str,
     target_kcs: list[dict],
+    image_paths: list[str] | None = None,
 ) -> tuple[str, str]:
+    image_paths = image_paths or []
     if use_online_eval and client and client.is_ready():
-        ans = client.chat_text(
-            system_prompt="Answer the paper-evaluation question based only on the provided original paper and dialogue context.",
-            user_prompt=prompt,
-        )
-        return ans, "online"
+        system_prompt = "Answer the paper-evaluation question based only on the provided original paper, attached figure/table assets, and dialogue context."
+        if image_paths:
+            ans = client.chat_text_with_images(
+                system_prompt=system_prompt,
+                user_prompt=prompt,
+                image_paths=image_paths,
+            )
+            return ans, "online_target_multimodal"
+        ans = client.chat_text(system_prompt=system_prompt, user_prompt=prompt)
+        return ans, "online_target_text"
     if os.getenv("ALLOW_MOCK_EVAL", "false").lower() in {"1", "true", "yes", "on"}:
         joined = "; ".join(k["full_claim"] for k in target_kcs[:2])
         return f"Based on the paper, {joined}", "mock"
     raise RuntimeError("Online evaluation requires a configured model and USE_ONLINE_EVAL=true. Set ALLOW_MOCK_EVAL=true only for local debugging.")
+
+
+def _turn_multimodal_input(question: dict) -> dict:
+    return {
+        "requires_multimodal_input": bool(question.get("requires_multimodal_input") or question.get("asset_references")),
+        "image_paths": question_image_paths(question),
+        "asset_ids": [
+            ref.get("asset_id")
+            for ref in question.get("asset_references", [])
+            if ref.get("asset_id")
+        ],
+    }
 
 
 def _coverage_summary(judge_result: dict) -> str:

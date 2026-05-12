@@ -7,14 +7,15 @@ from src.thread_scheduler import ensure_thread_states
 
 def ensure_eval_state_defaults(eval_state: dict, graph: dict) -> None:
     eval_state.setdefault("macro_states", {})
-    default_active_ids = set()
-    for macro in graph.get("macro_nodes", []):
-        kc_ids = list(macro.get("kc_ids", []))
-        active_count = int(macro.get("active_kc_count") or min(3, len(kc_ids)) or 0)
-        default_active_ids.update(kc_ids[:active_count])
+    active_by_macro = _active_kc_ids_by_macro(graph)
+    default_active_ids = {
+        kc_id
+        for kc_ids in active_by_macro.values()
+        for kc_id in kc_ids
+    }
     for kc_id, state in eval_state.get("kc_states", {}).items():
         state.setdefault("globally_supported_by_turns", [])
-        state.setdefault("is_active_target", kc_id in default_active_ids)
+        state["is_active_target"] = kc_id in default_active_ids
     for macro in graph.get("macro_nodes", []):
         macro_id = macro.get("macro_id")
         if not macro_id:
@@ -24,19 +25,18 @@ def ensure_eval_state_defaults(eval_state: dict, graph: dict) -> None:
         eval_state["macro_states"][macro_id].setdefault("main_question_asked", False)
         eval_state["macro_states"][macro_id].setdefault("covered_kc_ids", [])
         eval_state["macro_states"][macro_id].setdefault("missing_kc_ids", [])
-        eval_state["macro_states"][macro_id].setdefault(
-            "target_kc_ids",
-            list(macro.get("kc_ids", []))[: int(macro.get("active_kc_count") or min(3, len(macro.get("kc_ids", []))) or 0)],
-        )
+        active_targets = list(active_by_macro.get(macro_id, []))
+        current_targets = list(eval_state["macro_states"][macro_id].get("target_kc_ids", []) or [])
+        if not current_targets or any(kc_id not in active_targets for kc_id in current_targets):
+            eval_state["macro_states"][macro_id]["target_kc_ids"] = active_targets
         eval_state["macro_states"][macro_id].setdefault("bank_kc_ids", list(macro.get("kc_ids", [])))
         eval_state["macro_states"][macro_id].setdefault("related_turns", [])
         eval_state["macro_states"][macro_id].setdefault(
             "bank_kc_count",
             macro.get("bank_kc_count", len(macro.get("kc_ids", []))),
         )
-        eval_state["macro_states"][macro_id].setdefault(
-            "active_kc_count",
-            macro.get("active_kc_count", len(eval_state["macro_states"][macro_id].get("target_kc_ids", []))),
+        eval_state["macro_states"][macro_id]["active_kc_count"] = len(
+            eval_state["macro_states"][macro_id].get("target_kc_ids", [])
         )
     ensure_thread_states(eval_state, graph.get("reasoning_threads", []))
     ensure_task_state(eval_state, graph)
@@ -70,6 +70,34 @@ def rebuild_eval_turn_counts(eval_state: dict, trajectory: dict) -> None:
             review_total += 1
     current_reviews = eval_state["global_state"].get("review_question_count", 0)
     eval_state["global_state"]["review_question_count"] = max(current_reviews, review_total)
+
+
+def _active_kc_ids_by_macro(graph: dict) -> dict[str, list[str]]:
+    by_kc = {
+        kc.get("kc_id"): kc
+        for kc in graph.get("kc_nodes", [])
+        if kc.get("kc_id")
+    }
+    active_id_set = set(graph.get("active_kc_ids", []))
+    out: dict[str, list[str]] = {}
+    for macro in graph.get("macro_nodes", []):
+        macro_id = macro.get("macro_id")
+        if not macro_id:
+            continue
+        active_ids = [
+            kc_id
+            for kc_id in macro.get("active_kc_ids", [])
+            if kc_id in by_kc
+        ]
+        if not active_ids:
+            active_ids = [
+                kc_id
+                for kc_id in macro.get("kc_ids", [])
+                if kc_id in active_id_set
+                or by_kc.get(kc_id, {}).get("flags", {}).get("active_for_question_generation")
+            ]
+        out[macro_id] = active_ids
+    return out
 
 
 def mark_evaluation_running(eval_state: dict) -> None:

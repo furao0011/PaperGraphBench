@@ -37,7 +37,7 @@ from src.unit_kc_extractor import extract_kc_candidates_by_units
 
 
 BASE_DIR = Path(__file__).resolve().parent
-MASTER_GRAPH_BUILDER_VERSION = "v4_text_active_policy"
+MASTER_GRAPH_BUILDER_VERSION = "v5_active_target_ids"
 EDGE_ARTIFACT_SIGNATURE_VERSION = "v1_multimodal_virtual_units"
 PAPER_PATH = BASE_DIR / "data" / "papers" / "demo_paper.md"
 PAPER_DIR_PATH = BASE_DIR.parent / "util_example" / "output1"
@@ -750,6 +750,7 @@ def main() -> None:
         graph_kc_source,
         graph_kcs,
         graph_reasoning_edges,
+        active_kc.get("active_kc_ids", []),
     ):
         log(
             "resume artifact ignored due to Master Graph signature mismatch",
@@ -771,12 +772,14 @@ def main() -> None:
                 precomputed_reasoning_edges=graph_reasoning_edges,
                 reasoning_edge_source=graph_edge_source,
                 edge_coverage_report_path="data/graphs/edge_coverage_report.json" if coverage_report else None,
+                active_kc_ids=active_kc.get("active_kc_ids", []),
             )
             graph.setdefault("diagnostics", {})["graph_signature"] = _master_graph_signature(
                 graph_edge_source,
                 graph_kc_source,
                 graph_kcs,
                 graph_reasoning_edges,
+                active_kc.get("active_kc_ids", []),
             )
             graph["diagnostics"]["master_graph_kc_source"] = graph_kc_source
         _write_build_checkpoint(checkpoint_path, paper_id, "master_graph_base", resume=resume, restart=restart)
@@ -880,7 +883,10 @@ def _annotate_macro_bank_counts(graph: dict, kc_bank: dict, active_kc: dict) -> 
     for macro in graph.get("macro_nodes", []):
         macro_id = macro.get("macro_id")
         macro["bank_kc_count"] = bank_counts.get(macro_id, 0)
-        macro["active_kc_count"] = active_counts.get(macro_id, len(macro.get("kc_ids", [])))
+        active_ids = list(active_kc.get("macro_active_kcs", {}).get(macro_id, []))
+        macro["active_kc_ids"] = active_ids
+        macro["active_kc_count"] = active_counts.get(macro_id, len(active_ids))
+    graph["active_kc_ids"] = list(active_kc.get("active_kc_ids", []))
 
 
 def _env_bool(name: str, default: bool = False) -> bool:
@@ -1031,12 +1037,19 @@ def _score_signature(edge_source: str, reasoning_edges: list[dict]) -> dict:
     }
 
 
-def _master_graph_signature(edge_source: str, kc_source: str, graph_kcs: list[dict], reasoning_edges: list[dict]) -> dict:
+def _master_graph_signature(
+    edge_source: str,
+    kc_source: str,
+    graph_kcs: list[dict],
+    reasoning_edges: list[dict],
+    active_kc_ids: list[str],
+) -> dict:
     return {
         "master_graph_builder_version": MASTER_GRAPH_BUILDER_VERSION,
         "reasoning_edge_source": edge_source,
         "master_graph_kc_source": kc_source,
         "graph_kc_ids": [kc.get("kc_id") for kc in graph_kcs],
+        "active_kc_ids": list(active_kc_ids),
         "edge_ids": [edge.get("edge_id") for edge in reasoning_edges],
         "edge_count": len(reasoning_edges),
     }

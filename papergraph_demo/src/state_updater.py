@@ -53,7 +53,7 @@ def initialize_eval_state(master_graph: dict, target_model: str) -> dict:
                 "bank_kc_count": macro.get("bank_kc_count", len(macro.get("kc_ids", []))),
                 "active_kc_count": macro.get(
                     "active_kc_count",
-                    len(default_active_by_macro.get(macro.get("macro_id"), [])) or len(macro.get("kc_ids", [])),
+                    len(default_active_by_macro.get(macro.get("macro_id"), [])),
                 ),
             }
             for macro in master_graph.get("macro_nodes", [])
@@ -364,11 +364,27 @@ def _apply_macro_update(
 
 def _default_active_kc_ids_by_macro(master_graph: dict) -> dict[str, list[str]]:
     out: dict[str, list[str]] = {}
+    active_id_set = set(master_graph.get("active_kc_ids", []))
+    by_kc = {
+        kc.get("kc_id"): kc
+        for kc in master_graph.get("kc_nodes", [])
+        if kc.get("kc_id")
+    }
     for macro in master_graph.get("macro_nodes", []):
         macro_id = macro.get("macro_id")
         if not macro_id:
             continue
-        kc_ids = list(macro.get("kc_ids", []))
-        active_count = int(macro.get("active_kc_count") or min(3, len(kc_ids)) or 0)
-        out[macro_id] = kc_ids[:active_count] if active_count else []
+        macro_active_ids = [
+            kc_id
+            for kc_id in macro.get("active_kc_ids", [])
+            if kc_id in by_kc
+        ]
+        if not macro_active_ids:
+            macro_active_ids = [
+                kc_id
+                for kc_id in macro.get("kc_ids", [])
+                if kc_id in active_id_set
+                or by_kc.get(kc_id, {}).get("flags", {}).get("active_for_question_generation")
+            ]
+        out[macro_id] = macro_active_ids
     return out

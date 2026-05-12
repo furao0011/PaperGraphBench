@@ -82,8 +82,6 @@ def _macro_completion(eval_state: dict, trajectory: dict) -> int:
     lit_ids = _lit_kc_ids(eval_state)
     for macro_id, state in eval_state.get("macro_states", {}).items():
         target_ids = set(state.get("target_kc_ids", []) or [])
-        if not target_ids and int(state.get("active_kc_count") or 0) > 0:
-            target_ids = set((state.get("bank_kc_ids") or [])[: int(state.get("active_kc_count") or 0)])
         if target_ids and target_ids <= lit_ids:
             done.add(macro_id)
     return len(done)
