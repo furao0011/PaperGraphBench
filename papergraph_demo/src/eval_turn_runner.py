@@ -95,6 +95,8 @@ class EvaluationTurnRunner:
             "target_path_id": question.get("path_id"),
             "model_answer": answer,
             "answer_mode": answer_mode,
+            "requires_multimodal_input": _turn_requires_multimodal_input(question),
+            "asset_references": _turn_asset_references(question),
             "multimodal_input": _turn_multimodal_input(question),
             "judge_result": judge_result,
             "state_update": state_update,
@@ -166,6 +168,8 @@ class EvaluationTurnRunner:
             "repair_context": follow.get("repair_context", {}),
             "model_answer": answer,
             "answer_mode": answer_mode,
+            "requires_multimodal_input": _turn_requires_multimodal_input(follow),
+            "asset_references": _turn_asset_references(follow),
             "multimodal_input": _turn_multimodal_input(follow),
             "judge_result": judge_result,
             "state_update": state_update,
@@ -258,6 +262,8 @@ class EvaluationTurnRunner:
             "repair_context": question.get("repair_context", {}),
             "model_answer": answer,
             "answer_mode": answer_mode,
+            "requires_multimodal_input": _turn_requires_multimodal_input(question),
+            "asset_references": _turn_asset_references(question),
             "multimodal_input": _turn_multimodal_input(question),
             "judge_result": judge_result,
             "state_update": state_update,
@@ -399,6 +405,9 @@ def _turn_context(turn_id: str, question: dict) -> dict:
         "target_failure_mode": question.get("target_failure_mode"),
         "expected_behavior": question.get("expected_behavior"),
         "repair_context": question.get("repair_context", {}),
+        "requires_multimodal_input": _turn_requires_multimodal_input(question),
+        "asset_references": _turn_asset_references(question),
+        "multimodal_input": _turn_multimodal_input(question),
     }
 
 
@@ -418,6 +427,9 @@ def _turn_context_from_turn(turn: dict) -> dict:
         "target_failure_mode": turn.get("target_failure_mode"),
         "expected_behavior": turn.get("expected_behavior"),
         "repair_context": turn.get("repair_context", {}),
+        "requires_multimodal_input": _turn_requires_multimodal_input(turn),
+        "asset_references": _turn_asset_references(turn),
+        "multimodal_input": turn.get("multimodal_input") or _turn_multimodal_input(turn),
     }
 
 
@@ -523,15 +535,25 @@ def build_model_answer(
 
 
 def _turn_multimodal_input(question: dict) -> dict:
+    refs = _turn_asset_references(question)
     return {
-        "requires_multimodal_input": bool(question.get("requires_multimodal_input") or question.get("asset_references")),
+        "requires_multimodal_input": _turn_requires_multimodal_input(question),
         "image_paths": question_image_paths(question),
         "asset_ids": [
             ref.get("asset_id")
-            for ref in question.get("asset_references", [])
+            for ref in refs
             if ref.get("asset_id")
         ],
     }
+
+
+def _turn_requires_multimodal_input(question: dict) -> bool:
+    return bool(question.get("requires_multimodal_input") or _turn_asset_references(question))
+
+
+def _turn_asset_references(question: dict) -> list[dict]:
+    refs = question.get("asset_references") or []
+    return [dict(ref) for ref in refs if isinstance(ref, dict)]
 
 
 def _coverage_summary(judge_result: dict) -> str:

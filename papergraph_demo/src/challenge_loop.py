@@ -26,6 +26,7 @@ def build_challenge_questions_loop(
     restart: bool = False,
     target_count: int | None = None,
     solver_client: OpenAICompatClient | None = None,
+    question_id_prefix: str = "CHQ",
 ) -> dict:
     if not client or not client.is_ready():
         raise RuntimeError("Challenge loop requires a configured online model client.")
@@ -44,6 +45,7 @@ def build_challenge_questions_loop(
         provider="vision_api" if solver_client else "common_api",
     )
     signature = _loop_signature(challenge_plans, solver_configs, paper_text, target_count, max_attempts_per_plan)
+    signature["question_id_prefix"] = question_id_prefix
     state = _load_cache(cache_path) if resume and not restart else {}
     if state.get("challenge_loop_signature") != signature:
         state = _initial_state(challenge_plans, signature, plans, target_count, max_attempts_per_plan)
@@ -59,7 +61,7 @@ def build_challenge_questions_loop(
         plan_id = plan["challenge_plan_id"]
         feedback = state["revision_feedback_by_plan_id"].get(plan_id, "")
         attempt = int(state["attempts_by_plan_id"].get(plan_id, 0)) + 1
-        question_id = f"CHQ_{int(state['next_question_index']):04d}"
+        question_id = f"{question_id_prefix}_{int(state['next_question_index']):04d}"
         state["next_question_index"] = int(state["next_question_index"]) + 1
         state["attempts_by_plan_id"][plan_id] = attempt
 

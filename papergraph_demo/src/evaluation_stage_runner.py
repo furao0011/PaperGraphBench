@@ -195,6 +195,7 @@ class EvaluationStageRunner:
         if not follow:
             self._mark_task_exhausted(task["task_id"], turn_id=None)
             return turn_no
+        self._attach_repair_multimodal_context(follow, task, source_turn)
         log(
             "repair task scheduled",
             task=task["task_id"],
@@ -365,10 +366,15 @@ class EvaluationStageRunner:
         source_task_type: str | None = None,
     ) -> None:
         tasks = turn.get("judge_result", {}).get("recommended_stage_tasks", [])
-        if source_task_type == TASK_TYPE_HALLUCINATION_REPAIR:
-            tasks = [task for task in tasks if task.get("task_type") == TASK_TYPE_HALLUCINATION_REPAIR]
-        elif source_task_type == TASK_TYPE_DETAIL_COMPLETION:
-            tasks = [task for task in tasks if task.get("task_type") == TASK_TYPE_HALLUCINATION_REPAIR]
+        if source_task_type in {TASK_TYPE_HALLUCINATION_REPAIR, TASK_TYPE_DETAIL_COMPLETION}:
+            if tasks:
+                log(
+                    "repair task recommendations kept within active task budget",
+                    source_turn=turn.get("turn_id"),
+                    source_task_type=source_task_type,
+                    task_types=_task_type_summary(tasks),
+                )
+            return
         if tasks:
             attach_coverage_gap_ids(tasks, turn)
             added = enqueue_stage_tasks(self.eval_state, tasks)
@@ -393,6 +399,21 @@ class EvaluationStageRunner:
             if turn.get("turn_id") == turn_id:
                 return turn
         return None
+
+    def _attach_repair_multimodal_context(self, follow: dict, task: dict, source_turn: dict) -> None:
+        refs = _asset_references_from_context(task.get("repair_context"))
+        if not refs:
+            refs = _asset_references_from_turn(source_turn)
+        if not refs:
+            root_turn = self._turn_by_id((task.get("repair_context") or {}).get("root_turn_id"))
+            refs = _asset_references_from_turn(root_turn or {})
+        if not refs:
+            return
+        follow["requires_multimodal_input"] = True
+        follow["asset_references"] = refs
+        repair_context = follow.setdefault("repair_context", {})
+        repair_context["requires_multimodal_input"] = True
+        repair_context["asset_references"] = refs
 
     def _should_stop(self, turn_no: int) -> bool:
         if self.eval_state["global_state"]["failed"]:
@@ -430,3 +451,15 @@ def _task_type_summary(tasks: list[dict]) -> str:
         key = task.get("task_type") or "unknown"
         by_type[key] = by_type.get(key, 0) + 1
     return ",".join(f"{key}:{value}" for key, value in sorted(by_type.items()))
+
+
+def _asset_references_from_context(context: dict | None) -> list[dict]:
+    if not isinstance(context, dict):
+        return []
+    refs = context.get("asset_references") or []
+    return [dict(ref) for ref in refs if isinstance(ref, dict)]
+
+
+def _asset_references_from_turn(turn: dict) -> list[dict]:
+    refs = turn.get("asset_references") or (turn.get("repair_context") or {}).get("asset_references") or []
+    return [dict(ref) for ref in refs if isinstance(ref, dict)]

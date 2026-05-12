@@ -60,7 +60,7 @@ def build_challenge_plans(graph: dict) -> dict:
         "false_premise_challenge": _dedupe_plans(_false_premise_plans(by_kc, text_active_ids, per_type_limit))[:per_type_limit],
     }
     text_plans = _with_modality_pool(_balanced_plan_order(by_type, total_target), "text")
-    multimodal_limit = _env_nonnegative_int("MULTIMODAL_CHALLENGE_PLAN_LIMIT", 12)
+    multimodal_limit = _env_nonnegative_int("MULTIMODAL_CHALLENGE_PLAN_LIMIT", 30)
     multimodal_plans = _with_modality_pool(
         _multimodal_challenge_plans(by_kc, by_edge, multimodal_ids, multimodal_limit),
         "multimodal",
@@ -318,7 +318,25 @@ def _multimodal_challenge_plans(
         key=_kc_rank_key,
         reverse=True,
     )
+    figure_plan_min = _env_nonnegative_int("MULTIMODAL_CHALLENGE_FIGURE_PLAN_MIN", 0)
+    if figure_plan_min > limit:
+        raise ValueError(
+            f"MULTIMODAL_CHALLENGE_FIGURE_PLAN_MIN={figure_plan_min} exceeds MULTIMODAL_CHALLENGE_PLAN_LIMIT={limit}."
+        )
+    figure_kcs = [kc for kc in multimodal_kcs if str(kc.get("asset_type") or "").strip().lower() == "figure"]
+    if figure_plan_min and len(figure_kcs) < figure_plan_min:
+        raise RuntimeError(
+            f"Multimodal challenge plan quota requires {figure_plan_min} figure KCs, but only {len(figure_kcs)} are available."
+        )
+    for kc in figure_kcs[:figure_plan_min]:
+        if _limit_reached(plans, limit):
+            return plans
+        plan = _multimodal_false_premise_plan(kc) or _multimodal_overclaim_plan(kc)
+        plans.append(plan)
+    used_kc_ids = {plan.get("source", {}).get("kc_ids", [None])[0] for plan in plans}
     for kc in multimodal_kcs:
+        if kc.get("kc_id") in used_kc_ids:
+            continue
         if _limit_reached(plans, limit):
             return plans
         plan = _multimodal_false_premise_plan(kc) or _multimodal_overclaim_plan(kc)

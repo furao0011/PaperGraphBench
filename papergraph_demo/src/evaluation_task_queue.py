@@ -265,7 +265,7 @@ def _target_kc_ids_for_hallucination(judge_result: dict, turn: dict) -> list[str
 
 def _hallucination_repair_context(judge_result: dict, turn: dict) -> dict:
     events = [dict(event) for event in judge_result.get("hallucination_events", []) or []]
-    return {
+    context = {
         "repair_type": "hallucination",
         "root_turn_id": turn.get("turn_id"),
         "root_question_id": turn.get("question_id"),
@@ -283,11 +283,12 @@ def _hallucination_repair_context(judge_result: dict, turn: dict) -> dict:
         ],
         "attempted_turn_ids": [],
     }
+    return _with_multimodal_repair_context(context, turn)
 
 
 def _detail_repair_context(judge_result: dict, turn: dict) -> dict:
     missing = list(dict.fromkeys(judge_result.get("missing_kc_ids", []) or []))
-    return {
+    context = {
         "repair_type": "detail",
         "root_turn_id": turn.get("turn_id"),
         "root_question_id": turn.get("question_id"),
@@ -295,6 +296,24 @@ def _detail_repair_context(judge_result: dict, turn: dict) -> dict:
         "remaining_kc_ids": missing,
         "covered_during_repair": [],
     }
+    return _with_multimodal_repair_context(context, turn)
+
+
+def _with_multimodal_repair_context(context: dict, turn: dict) -> dict:
+    refs = _asset_references_from_turn(turn)
+    if not refs:
+        return context
+    context["requires_multimodal_input"] = True
+    context["asset_references"] = refs
+    multimodal_input = turn.get("multimodal_input")
+    if isinstance(multimodal_input, dict):
+        context["multimodal_input"] = dict(multimodal_input)
+    return context
+
+
+def _asset_references_from_turn(turn: dict) -> list[dict]:
+    refs = turn.get("asset_references") or (turn.get("repair_context") or {}).get("asset_references") or []
+    return [dict(ref) for ref in refs if isinstance(ref, dict)]
 
 
 def _hallucination_event_ids(judge_result: dict) -> list[str]:

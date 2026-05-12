@@ -37,6 +37,90 @@ def _env_bool(name: str, default: bool = False) -> bool:
     return raw.strip().lower() in {"1", "true", "yes", "on"}
 
 
+def _build_multimodal_challenge_questions_with_quotas(
+    multimodal_challenge_plans: dict,
+    client: OpenAICompatClient,
+    paper_text: str,
+    cache_path: Path,
+    resume: bool,
+    restart: bool,
+    target_count: int,
+    figure_min: int,
+    solver_client: OpenAICompatClient,
+) -> dict:
+    figure_plans = _challenge_plan_asset_subset(multimodal_challenge_plans, "figure")
+    if len(figure_plans.get("challenge_plans", [])) < figure_min:
+        raise RuntimeError(
+            f"Multimodal challenge quota requires at least {figure_min} figure plans, "
+            f"but only {len(figure_plans.get('challenge_plans', []))} are available."
+        )
+    figure_result = build_challenge_questions_loop(
+        challenge_plans=figure_plans,
+        client=client,
+        paper_text=paper_text,
+        cache_path=_pool_cache_path(cache_path, "multimodal_figure"),
+        resume=resume,
+        restart=restart,
+        target_count=figure_min,
+        solver_client=solver_client,
+        question_id_prefix="CHQF",
+    )
+    accepted_figure_count = _accepted_asset_type_count(figure_result, "figure")
+    if accepted_figure_count < figure_min:
+        raise RuntimeError(
+            f"Multimodal challenge figure quota unmet: required {figure_min}, accepted {accepted_figure_count}."
+        )
+
+    remaining_target = max(0, target_count - len(figure_result.get("challenge_questions_filtered", [])))
+    if remaining_target == 0:
+        return _merge_named_challenge_loop_results(
+            multimodal_challenge_plans,
+            {"figure": figure_result},
+        )
+
+    other_plans = _challenge_plan_excluding_plan_ids(
+        multimodal_challenge_plans,
+        {
+            question.get("source_plan_id")
+            for question in figure_result.get("challenge_questions_filtered", [])
+            if question.get("source_plan_id")
+        },
+    )
+    if not other_plans.get("challenge_plans"):
+        raise RuntimeError("Multimodal challenge quota requires more accepted questions, but no remaining plans are available.")
+    other_result = build_challenge_questions_loop(
+        challenge_plans=other_plans,
+        client=client,
+        paper_text=paper_text,
+        cache_path=_pool_cache_path(cache_path, "multimodal_remaining"),
+        resume=resume,
+        restart=restart,
+        target_count=remaining_target,
+        solver_client=solver_client,
+        question_id_prefix="CHQM",
+    )
+    return _merge_named_challenge_loop_results(
+        multimodal_challenge_plans,
+        {
+            "figure": figure_result,
+            "remaining": other_result,
+        },
+    )
+
+
+def _validate_multimodal_challenge_quotas(result: dict, target_count: int, figure_min: int) -> None:
+    accepted = result.get("challenge_questions_filtered", [])
+    if len(accepted) < target_count:
+        raise RuntimeError(
+            f"Multimodal challenge quota unmet: required {target_count} accepted questions, got {len(accepted)}."
+        )
+    figure_count = _accepted_asset_type_count(result, "figure")
+    if figure_count < figure_min:
+        raise RuntimeError(
+            f"Multimodal challenge figure quota unmet: required {figure_min}, accepted {figure_count}."
+        )
+
+
 def main() -> None:
     if not GRAPH_PATH.exists():
         raise FileNotFoundError(f"Master graph not found: {GRAPH_PATH}")
@@ -102,21 +186,26 @@ def main() -> None:
         )
         multimodal_target = _env_positive_int(
             "MULTIMODAL_CHALLENGE_ACCEPT_TARGET",
-            min(3, len(multimodal_challenge_plans["challenge_plans"])),
+            min(5, len(multimodal_challenge_plans["challenge_plans"])),
         )
+        figure_min = _env_positive_int("MULTIMODAL_CHALLENGE_FIGURE_ACCEPT_MIN", 2)
         with span("build multimodal challenge questions by loop"):
-            multimodal_loop_result = build_challenge_questions_loop(
-                challenge_plans=multimodal_challenge_plans,
+            multimodal_loop_result = _build_multimodal_challenge_questions_with_quotas(
+                multimodal_challenge_plans=multimodal_challenge_plans,
                 client=client,
                 paper_text=paper_text,
-                cache_path=_pool_cache_path(challenge_loop_cache_path, "multimodal"),
+                cache_path=challenge_loop_cache_path,
                 resume=resume,
                 restart=restart,
                 target_count=multimodal_target,
+                figure_min=figure_min,
                 solver_client=vision_client,
             )
-        if not multimodal_loop_result.get("challenge_questions_filtered"):
-            raise RuntimeError("Multimodal challenge pool produced no accepted challenge questions.")
+        _validate_multimodal_challenge_quotas(
+            multimodal_loop_result,
+            target_count=multimodal_target,
+            figure_min=figure_min,
+        )
     challenge_loop_result = _merge_challenge_loop_results(
         challenge_plans,
         text_loop_result,
@@ -297,6 +386,41 @@ def _challenge_plan_subset(challenge_plans: dict, pool: str) -> dict:
     }
 
 
+def _challenge_plan_asset_subset(challenge_plans: dict, asset_type: str) -> dict:
+    plans = [
+        plan
+        for plan in challenge_plans.get("challenge_plans", [])
+        if asset_type in _challenge_plan_asset_types(plan)
+    ]
+    return _challenge_plan_subset_from_list(challenge_plans, plans, f"{challenge_plans.get('modality_pool', 'multimodal')}_{asset_type}")
+
+
+def _challenge_plan_excluding_plan_ids(challenge_plans: dict, excluded_plan_ids: set[str]) -> dict:
+    plans = [
+        plan
+        for plan in challenge_plans.get("challenge_plans", [])
+        if plan.get("challenge_plan_id") not in excluded_plan_ids
+    ]
+    return _challenge_plan_subset_from_list(challenge_plans, plans, challenge_plans.get("modality_pool", "multimodal"))
+
+
+def _challenge_plan_subset_from_list(challenge_plans: dict, plans: list[dict], pool: str) -> dict:
+    return {
+        "paper_id": challenge_plans.get("paper_id", "unknown"),
+        "schema_version": challenge_plans.get("schema_version", "v2"),
+        "plan_builder": challenge_plans.get("plan_builder", ""),
+        "source_graph_signature": challenge_plans.get("source_graph_signature"),
+        "modality_pool": pool,
+        "challenge_plans": plans,
+        "summary": {
+            "plan_count": len(plans),
+            "by_type": _count_by_type(plans),
+            "by_modality_pool": _count_by_modality_pool(plans),
+            "by_asset_type": _count_plan_asset_types(plans),
+        },
+    }
+
+
 def _pool_cache_path(path: Path, pool: str) -> Path:
     return path.with_name(f"{path.stem}_{pool}{path.suffix}")
 
@@ -388,6 +512,56 @@ def _merge_challenge_loop_results(challenge_plans: dict, text_result: dict, mult
     }
 
 
+def _merge_named_challenge_loop_results(challenge_plans: dict, results: dict[str, dict]) -> dict:
+    ordered_results = list(results.values())
+    raw_questions = [item for result in ordered_results for item in result.get("challenge_questions_raw", [])]
+    filtered = [item for result in ordered_results for item in result.get("challenge_questions_filtered", [])]
+    human_review = [item for result in ordered_results for item in result.get("challenge_questions_need_human_review", [])]
+    rejected = [item for result in ordered_results for item in result.get("challenge_questions_rejected", [])]
+    solver_trials = [item for result in ordered_results for item in result.get("solver_trials", [])]
+    return {
+        "paper_id": challenge_plans.get("paper_id", "unknown"),
+        "schema_version": "v2",
+        "source_challenge_plan_signature": {
+            key: result.get("source_challenge_plan_signature")
+            for key, result in results.items()
+        },
+        "challenge_loop_signature": {
+            key: result.get("challenge_loop_signature")
+            for key, result in results.items()
+        },
+        "solver_configs": next((result.get("solver_configs") for result in ordered_results if result.get("solver_configs")), []),
+        "plan_order": [item for result in ordered_results for item in result.get("plan_order", [])],
+        "blacklisted_plan_ids": [item for result in ordered_results for item in result.get("blacklisted_plan_ids", [])],
+        "challenge_questions_raw": raw_questions,
+        "solver_trials": solver_trials,
+        "challenge_questions_filtered": filtered,
+        "challenge_questions_need_human_review": human_review,
+        "challenge_questions_rejected": rejected,
+        "loop_events": [item for result in ordered_results for item in result.get("loop_events", [])],
+        "summary": {
+            "plan_pool_count": len(challenge_plans.get("challenge_plans", [])),
+            "target_count": sum(int(result.get("summary", {}).get("target_count", 0)) for result in ordered_results),
+            "max_attempts_per_plan": max(
+                [int(result.get("summary", {}).get("max_attempts_per_plan", 0)) for result in ordered_results] or [0]
+            ),
+            "raw_question_count": len(raw_questions),
+            "solver_trial_count": len(solver_trials),
+            "filtered_count": len(filtered),
+            "human_review_count": len(human_review),
+            "rejected_count": len(rejected),
+            "blacklisted_plan_count": sum(len(result.get("blacklisted_plan_ids", [])) for result in ordered_results),
+            "by_type": _count_by_type(filtered),
+            "by_modality_pool": _count_by_modality_pool(filtered),
+            "by_asset_type": _count_question_asset_types(filtered),
+            "stop_reason": {
+                key: result.get("summary", {}).get("stop_reason")
+                for key, result in results.items()
+            },
+        },
+    }
+
+
 def _count_by_type(items: list[dict]) -> dict[str, int]:
     counts: dict[str, int] = {}
     for item in items:
@@ -402,6 +576,46 @@ def _count_by_modality_pool(items: list[dict]) -> dict[str, int]:
         key = str(item.get("modality_pool") or "text")
         counts[key] = counts.get(key, 0) + 1
     return dict(sorted(counts.items()))
+
+
+def _count_plan_asset_types(plans: list[dict]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for plan in plans:
+        for asset_type in _challenge_plan_asset_types(plan):
+            counts[asset_type] = counts.get(asset_type, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def _count_question_asset_types(questions: list[dict]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for question in questions:
+        for asset_type in _challenge_question_asset_types(question):
+            counts[asset_type] = counts.get(asset_type, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def _accepted_asset_type_count(result: dict, asset_type: str) -> int:
+    return sum(
+        1
+        for question in result.get("challenge_questions_filtered", [])
+        if asset_type in _challenge_question_asset_types(question)
+    )
+
+
+def _challenge_plan_asset_types(plan: dict) -> set[str]:
+    return {
+        str(ref.get("asset_type") or "").strip().lower()
+        for ref in plan.get("metadata", {}).get("asset_references", [])
+        if str(ref.get("asset_type") or "").strip()
+    }
+
+
+def _challenge_question_asset_types(question: dict) -> set[str]:
+    return {
+        str(ref.get("asset_type") or "").strip().lower()
+        for ref in question.get("asset_references", [])
+        if str(ref.get("asset_type") or "").strip()
+    }
 
 
 def _env_positive_int(name: str, default: int) -> int:
