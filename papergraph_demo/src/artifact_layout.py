@@ -97,12 +97,15 @@ class PaperArtifactLayout:
 
 
 def safe_paper_id(value: str) -> str:
-    safe = re.sub(r"[^A-Za-z0-9._-]+", "_", value.strip())
-    return safe.strip("._-") or "Storybench"
+    safe = re.sub(r"[^\w._-]+", "_", value.strip())
+    return safe.strip("._-")
 
 
 def paper_data_root(base_dir: Path, paper_id: str) -> Path:
-    return base_dir / "data" / safe_paper_id(paper_id)
+    safe = safe_paper_id(paper_id)
+    if not safe:
+        raise ValueError("paper_id is required for paper-scoped artifacts.")
+    return base_dir / "data" / safe
 
 
 def final_artifact_path(base_dir: Path, paper_id: str, artifact_name: str) -> Path:

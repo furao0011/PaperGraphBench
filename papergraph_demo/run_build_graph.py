@@ -42,7 +42,6 @@ BASE_DIR = Path(__file__).resolve().parent
 MASTER_GRAPH_BUILDER_VERSION = "v5_active_target_ids"
 EDGE_ARTIFACT_SIGNATURE_VERSION = "v1_multimodal_virtual_units"
 PAPER_PATH = BASE_DIR / "data" / "papers" / "demo_paper.md"
-PAPER_DIR_PATH = BASE_DIR.parent / "util_example" / "output1"
 RAW_PAPER_ROOT = BASE_DIR.parent / "rawPaper"
 PAPER_TEXT_DIR = BASE_DIR / "data" / "papers"
 PAPER_CLEAN_TEXT_PATH = PAPER_TEXT_DIR / "paper_clean_text.md"
@@ -109,14 +108,14 @@ def _layout_paths(layout: PaperArtifactLayout) -> tuple[Path, ...]:
     )
 
 
-def _resolve_input_dir(requested_paper_id: str) -> Path:
+def _resolve_input_dir(requested_paper_id: str) -> Path | None:
     explicit = os.getenv("PAPER_INPUT_DIR", "").strip()
     if explicit:
         return Path(explicit)
     if requested_paper_id:
         raw_root = _env_path("RAW_PAPER_ROOT", RAW_PAPER_ROOT)
         return raw_root / requested_paper_id
-    return PAPER_DIR_PATH
+    return None
 
 
 def main() -> None:
@@ -136,25 +135,32 @@ def main() -> None:
 
     requested_paper_id = safe_paper_id(os.getenv("PAPER_ID", ""))
     input_dir = _resolve_input_dir(requested_paper_id)
-    input_file = _env_path("PAPER_INPUT_FILE", PAPER_PATH)
+    input_file = os.getenv("PAPER_INPUT_FILE", "").strip()
 
-    if input_dir.exists():
-        log("loading Storybench from directory", input_dir=input_dir)
-        with span("load Storybench directory"):
+    if input_dir is not None and input_dir.exists():
+        log("loading paper from directory", input_dir=input_dir)
+        with span("load paper directory"):
             paper_bundle = load_paper_bundle_from_dir(input_dir)
             paper_text = paper_bundle["clean_text"]
         paper_id = requested_paper_id or safe_paper_id(input_dir.name)
+        if not paper_id:
+            raise RuntimeError("PAPER_ID is required when PAPER_INPUT_DIR has no valid paper id name.")
         raw_paper_path = str(input_dir)
-    elif input_file.exists():
-        log("loading Storybench from file", input_file=input_file)
-        with span("load Storybench file"):
-            paper_bundle = load_paper_bundle_from_file(input_file)
+    elif input_file and Path(input_file).exists():
+        input_file_path = Path(input_file)
+        log("loading paper from file", input_file=input_file_path)
+        with span("load paper file"):
+            paper_bundle = load_paper_bundle_from_file(input_file_path)
             paper_text = paper_bundle["clean_text"]
-        paper_id = requested_paper_id or safe_paper_id(input_file.stem)
-        raw_paper_path = str(input_file)
+        paper_id = requested_paper_id or safe_paper_id(input_file_path.stem)
+        if not paper_id:
+            raise RuntimeError("PAPER_ID is required when PAPER_INPUT_FILE has no valid paper id stem.")
+        raw_paper_path = str(input_file_path)
     else:
+        checked_dir = str(input_dir) if input_dir is not None else "<not set>"
         raise FileNotFoundError(
-            f"No valid input found. Checked directory: {input_dir}, file: {input_file}"
+            "No valid input found. Run OCR into rawPaper/<paper_id>/ and set PAPER_ID, "
+            f"or set PAPER_INPUT_DIR/PAPER_INPUT_FILE explicitly. Checked directory: {checked_dir}, file: {input_file}"
         )
 
     allow_offline_fallback = _env_bool("ALLOW_OFFLINE_FALLBACK")

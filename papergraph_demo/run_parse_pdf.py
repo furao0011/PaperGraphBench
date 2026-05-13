@@ -14,7 +14,7 @@ from src.config import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
-DEFAULT_PDF_INPUT_DIR = PROJECT_ROOT / "Storybench"
+DEFAULT_PDF_INPUT_DIR = PROJECT_ROOT / "pdfInput"
 DEFAULT_RAW_PAPER_ROOT = PROJECT_ROOT / "rawPaper"
 
 
@@ -34,6 +34,8 @@ def main() -> None:
 
     for pdf_path in pdf_paths:
         paper_id = fixed_paper_id or safe_paper_id(pdf_path.stem)
+        if not paper_id:
+            raise ValueError(f"Cannot derive paper_id from PDF filename: {pdf_path.name}. Set PAPER_ID for a single PDF.")
         output_dir = (raw_root / paper_id).resolve()
         _prepare_output_dir(output_dir, raw_root, overwrite)
         result = _call_paddle_ocr(api_url, token, pdf_path, timeout_s)

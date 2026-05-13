@@ -181,6 +181,8 @@ def _validate_multimodal_challenge_quotas(result: dict, target_count: int, figur
 def main() -> None:
     settings = load_settings(BASE_DIR.parent)
     layout = _apply_paper_layout_from_env()
+    if layout is None:
+        raise RuntimeError("PAPER_ID is required. Use the paper_id produced by OCR under rawPaper/<paper_id>/.")
     graph_override = os.getenv("PAPERGRAPH_GRAPH_PATH", "").strip()
     if graph_override:
         global GRAPH_PATH

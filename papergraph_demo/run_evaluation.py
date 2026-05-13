@@ -106,7 +106,9 @@ def _save_eval_artifacts(graph: dict, eval_state: dict, trajectory: dict, checkp
 
 def main() -> None:
     settings = load_settings(BASE_DIR.parent)
-    _apply_paper_layout_from_env()
+    layout = _apply_paper_layout_from_env()
+    if layout is None:
+        raise RuntimeError("PAPER_ID is required. Use the paper_id produced by OCR under rawPaper/<paper_id>/.")
     graph_override = os.getenv("PAPERGRAPH_GRAPH_PATH", "").strip()
     question_override = os.getenv("PAPERGRAPH_QUESTION_PATH", "").strip()
     if graph_override:
