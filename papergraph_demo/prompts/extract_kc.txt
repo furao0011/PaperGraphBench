@@ -20,7 +20,7 @@ Return strict JSON:
       "claim": "...",
       "evidence": "...",
       "macro_id": "M1",
-      "type": "problem | method | mechanism | dataset | experiment | result | conclusion | limitation | background | central_claim | algorithm | analysis | motivation",
+      "type": "problem | method | mechanism | dataset | experiment | evaluation | ablation | result | conclusion | limitation | background | central_claim | algorithm | analysis | motivation",
       "importance": "critical | normal"
     }
   ]

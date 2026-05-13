@@ -7,35 +7,11 @@ import re
 import unicodedata
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+from src.kc_type_registry import VALID_KC_TYPES, valid_kc_type
 from src.model_client import OpenAICompatClient
 from src.progress import log
 from src.prompt_loader import load_prompt, render_prompt
 from src.rubric_builder import build_kc_rubric
-
-
-VALID_KC_TYPES = {
-    "problem",
-    "method",
-    "mechanism",
-    "dataset",
-    "experiment",
-    "result",
-    "conclusion",
-    "limitation",
-    "background",
-    "central_claim",
-    "algorithm",
-    "analysis",
-    "motivation",
-    "table_result",
-    "table_comparison",
-    "table_ablation",
-    "visual_component",
-    "visual_mechanism",
-    "visual_pipeline",
-    "chart_trend",
-    "multimodal_limitation",
-}
 
 
 def build_kc_bank(
@@ -576,8 +552,7 @@ def _short_label(claim: str) -> str:
 
 
 def _valid_type(value: object) -> str | None:
-    text = str(value or "").strip()
-    return text if text in VALID_KC_TYPES else None
+    return valid_kc_type(value, VALID_KC_TYPES)
 
 
 def _valid_importance(value: object) -> str | None:

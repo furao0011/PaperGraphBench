@@ -1,0 +1,33 @@
+You repair invalid Knowledge Component type labels.
+
+Allowed `type` values:
+
+```json
+{{allowed_types_json}}
+```
+
+Invalid type values found in the previous response:
+
+```json
+{{invalid_types_json}}
+```
+
+Extraction Unit context:
+
+```json
+{{unit_json}}
+```
+
+Previous KC extraction result:
+
+```json
+{{kc_result_json}}
+```
+
+Rules:
+1. Return the same JSON schema with top-level `kcs` and `empty_reason`.
+2. Preserve the number and order of KCs.
+3. Do not change claims, evidence_paragraph_ids, macro_id, importance, claim_strength, scope, related_terms, or empty_reason.
+4. Only replace invalid `type` values with the closest allowed type from the whitelist.
+5. Do not invent a new type string.
+6. Return strict JSON only.

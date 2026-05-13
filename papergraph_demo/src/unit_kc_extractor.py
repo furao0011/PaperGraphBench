@@ -6,26 +6,11 @@ import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from src.macro_extractor import macro_context_for_prompt
+from src.kc_type_registry import TEXT_KC_TYPES, valid_kc_type
 from src.model_client import OpenAICompatClient
 from src.progress import log, span
 from src.prompt_loader import load_prompt, render_prompt
 
-
-VALID_KC_TYPES = {
-    "problem",
-    "method",
-    "mechanism",
-    "dataset",
-    "experiment",
-    "result",
-    "conclusion",
-    "limitation",
-    "background",
-    "central_claim",
-    "algorithm",
-    "analysis",
-    "motivation",
-}
 
 VALID_IMPORTANCE = {"critical", "normal"}
 
@@ -37,6 +22,14 @@ VALID_CLAIM_STRENGTH = {
     "plausible_inference",
     "limitation_or_missing_evidence",
 }
+
+
+class InvalidKCTypeError(ValueError):
+    def __init__(self, unit_id: str, kc_index: int, invalid_type: str) -> None:
+        self.unit_id = unit_id
+        self.kc_index = kc_index
+        self.invalid_type = invalid_type
+        super().__init__(f"KC #{kc_index} in unit {unit_id} has invalid type={invalid_type!r}.")
 
 
 def extract_kc_candidates_by_units(
@@ -61,10 +54,12 @@ def extract_kc_candidates_by_units(
         raise ValueError("Unit-level KC extraction requires a non-empty Macro Spine.")
 
     tpl = load_prompt("extract_kc_from_unit.txt")
+    type_repair_tpl = load_prompt("repair_kc_types.txt")
     macro_context_json = json.dumps(macro_context_for_prompt(macro_spine), ensure_ascii=False, indent=2)
     unit_limit = _env_nonnegative_int("KC_PER_UNIT_LIMIT", 0)
     hard_cap = _env_nonnegative_int("KC_PER_UNIT_HARD_CAP", 20)
     response_cap = _effective_response_cap(unit_limit, hard_cap)
+    type_repair_attempts = _env_nonnegative_int("KC_TYPE_REPAIR_ATTEMPTS", 1)
     max_workers = min(_env_positive_int("UNIT_KC_WORKERS", 4), len(units))
     errors: list[str] = []
     candidates_by_unit: dict[str, list[dict]] = {}
@@ -89,11 +84,14 @@ def extract_kc_candidates_by_units(
                 user_prompt=user_prompt,
                 temperature=0.1,
             )
-        unit_candidates, empty_reason = _normalize_unit_result(
+        unit_candidates, empty_reason = _normalize_unit_result_with_type_repair(
             unit=unit,
             result=result,
             macro_ids=macro_ids,
             response_cap=response_cap,
+            client=client,
+            repair_template=type_repair_tpl,
+            max_repair_attempts=type_repair_attempts,
         )
         return unit_id, unit_candidates, empty_reason
 
@@ -212,9 +210,10 @@ def _normalize_unit_result(
         macro_id = str(item.get("macro_id", "")).strip()
         if macro_id not in macro_ids:
             raise ValueError(f"KC #{idx} in unit {unit.get('unit_id')} references invalid macro_id={macro_id!r}.")
-        kc_type = str(item.get("type", "")).strip()
-        if kc_type not in VALID_KC_TYPES:
-            raise ValueError(f"KC #{idx} in unit {unit.get('unit_id')} has invalid type={kc_type!r}.")
+        raw_kc_type = str(item.get("type", "")).strip()
+        kc_type = valid_kc_type(raw_kc_type, TEXT_KC_TYPES)
+        if kc_type is None:
+            raise InvalidKCTypeError(str(unit.get("unit_id")), idx, raw_kc_type)
         importance = str(item.get("importance", "")).strip()
         if importance not in VALID_IMPORTANCE:
             raise ValueError(f"KC #{idx} in unit {unit.get('unit_id')} has invalid importance={importance!r}.")
@@ -246,6 +245,107 @@ def _normalize_unit_result(
             }
         )
     return out, empty_reason
+
+
+def _normalize_unit_result_with_type_repair(
+    unit: dict,
+    result: dict,
+    macro_ids: set[str],
+    response_cap: int,
+    client: OpenAICompatClient,
+    repair_template: str,
+    max_repair_attempts: int,
+) -> tuple[list[dict], str]:
+    current = result
+    for attempt in range(max_repair_attempts + 1):
+        try:
+            return _normalize_unit_result(unit, current, macro_ids, response_cap)
+        except InvalidKCTypeError as exc:
+            if attempt >= max_repair_attempts:
+                raise
+            invalid_types = _invalid_kc_types(current)
+            if not invalid_types:
+                invalid_types = [exc.invalid_type]
+            log(
+                "unit KC type repair retry",
+                unit_id=str(unit.get("unit_id")),
+                invalid_types=",".join(invalid_types),
+                attempt=attempt + 1,
+                max_attempts=max_repair_attempts,
+            )
+            current = _repair_unit_kc_types(
+                unit=unit,
+                result=current,
+                invalid_types=invalid_types,
+                client=client,
+                repair_template=repair_template,
+            )
+    raise RuntimeError(f"Unit {unit.get('unit_id')} type repair did not produce a result.")
+
+
+def _repair_unit_kc_types(
+    unit: dict,
+    result: dict,
+    invalid_types: list[str],
+    client: OpenAICompatClient,
+    repair_template: str,
+) -> dict:
+    repaired = client.chat_json(
+        system_prompt="You repair invalid KC type labels by mapping them to the closest allowed type. Return JSON only.",
+        user_prompt=render_prompt(
+            repair_template,
+            allowed_types_json=json.dumps(sorted(TEXT_KC_TYPES), ensure_ascii=False, indent=2),
+            invalid_types_json=json.dumps(invalid_types, ensure_ascii=False, indent=2),
+            unit_json=json.dumps(_unit_prompt_payload(unit), ensure_ascii=False, indent=2),
+            kc_result_json=json.dumps(result, ensure_ascii=False, indent=2),
+        ),
+        temperature=0.0,
+    )
+    return _validate_type_only_repair(result, repaired, str(unit.get("unit_id")))
+
+
+def _validate_type_only_repair(original: dict, repaired: dict, unit_id: str) -> dict:
+    original_kcs = original.get("kcs", [])
+    repaired_kcs = repaired.get("kcs", [])
+    if not isinstance(original_kcs, list) or not isinstance(repaired_kcs, list):
+        raise ValueError(f"KC type repair for unit {unit_id} must preserve a kcs list.")
+    if len(original_kcs) != len(repaired_kcs):
+        raise ValueError(
+            f"KC type repair for unit {unit_id} changed KC count from {len(original_kcs)} to {len(repaired_kcs)}."
+        )
+    checked_kcs = []
+    for idx, (original_item, repaired_item) in enumerate(zip(original_kcs, repaired_kcs), start=1):
+        if not isinstance(original_item, dict) or not isinstance(repaired_item, dict):
+            raise ValueError(f"KC type repair for unit {unit_id} item #{idx} must be an object.")
+        for key, original_value in original_item.items():
+            if key == "type":
+                continue
+            if repaired_item.get(key) != original_value:
+                raise ValueError(f"KC type repair for unit {unit_id} changed non-type field {key!r} on KC #{idx}.")
+        repaired_type = str(repaired_item.get("type", "")).strip()
+        if valid_kc_type(repaired_type, TEXT_KC_TYPES) is None:
+            raise InvalidKCTypeError(unit_id, idx, repaired_type)
+        checked = dict(original_item)
+        checked["type"] = repaired_type
+        checked_kcs.append(checked)
+    return {
+        "kcs": checked_kcs,
+        "empty_reason": original.get("empty_reason", ""),
+    }
+
+
+def _invalid_kc_types(result: dict) -> list[str]:
+    raw_kcs = result.get("kcs", [])
+    if not isinstance(raw_kcs, list):
+        return []
+    invalid = []
+    for item in raw_kcs:
+        if not isinstance(item, dict):
+            continue
+        kc_type = str(item.get("type", "")).strip()
+        if kc_type and valid_kc_type(kc_type, TEXT_KC_TYPES) is None and kc_type not in invalid:
+            invalid.append(kc_type)
+    return invalid
 
 
 def _normalize_scope(scope: dict) -> dict:

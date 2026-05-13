@@ -4,6 +4,8 @@ import json
 import os
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
+from src.kc_type_registry import TEXT_KC_TYPES, valid_kc_type
 from src.model_client import OpenAICompatClient
 from src.prompt_loader import load_prompt, render_prompt
 from src.progress import log, span
@@ -257,8 +259,7 @@ def _resolve_kc_macro_id(
 
 
 def _valid_kc_type(value: object) -> str | None:
-    text = str(value or "").strip()
-    return text if text in {"problem", "method", "mechanism", "dataset", "experiment", "result", "conclusion", "limitation", "background", "central_claim", "algorithm", "analysis", "motivation"} else None
+    return valid_kc_type(value, TEXT_KC_TYPES)
 
 
 def _valid_importance(value: object) -> str | None:

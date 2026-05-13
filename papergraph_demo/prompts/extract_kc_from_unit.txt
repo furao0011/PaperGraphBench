@@ -39,6 +39,8 @@ Extractable content includes, but is not limited to:
 - mechanism
 - dataset
 - experiment
+- evaluation
+- ablation
 - result
 - conclusion
 - limitation

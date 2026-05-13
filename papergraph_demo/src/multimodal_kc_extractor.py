@@ -4,21 +4,11 @@ import json
 import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+from src.kc_type_registry import MULTIMODAL_KC_TYPES, valid_kc_type
 from src.model_client import OpenAICompatClient
 from src.progress import log, span
 from src.prompt_loader import load_prompt, render_prompt
 
-
-VALID_TYPES = {
-    "table_result",
-    "table_comparison",
-    "table_ablation",
-    "visual_component",
-    "visual_mechanism",
-    "visual_pipeline",
-    "chart_trend",
-    "multimodal_limitation",
-}
 
 VALID_IMPORTANCE = {"critical", "normal"}
 
@@ -178,13 +168,14 @@ def _normalize_asset_result(explanation: dict, result: dict) -> tuple[list[dict]
             raise ValueError(f"KC #{idx} for asset {asset_id} must be an object.")
         claim = str(item.get("claim", "")).strip()
         evidence_basis = str(item.get("evidence_basis", "")).strip()
-        kc_type = str(item.get("type", "")).strip()
+        raw_kc_type = str(item.get("type", "")).strip()
+        kc_type = valid_kc_type(raw_kc_type, MULTIMODAL_KC_TYPES)
         importance = str(item.get("importance", "")).strip()
         claim_strength = str(item.get("claim_strength", "")).strip()
         if not claim or not evidence_basis:
             raise ValueError(f"KC #{idx} for asset {asset_id} must include claim and evidence_basis.")
-        if kc_type not in VALID_TYPES:
-            raise ValueError(f"KC #{idx} for asset {asset_id} has invalid type={kc_type!r}.")
+        if kc_type is None:
+            raise ValueError(f"KC #{idx} for asset {asset_id} has invalid type={raw_kc_type!r}.")
         if importance not in VALID_IMPORTANCE:
             raise ValueError(f"KC #{idx} for asset {asset_id} has invalid importance={importance!r}.")
         if claim_strength not in VALID_CLAIM_STRENGTH:
