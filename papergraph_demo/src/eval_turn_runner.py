@@ -74,6 +74,8 @@ class EvaluationTurnRunner:
             path_id=question.get("path_id"),
             macro_id=question.get("macro_id"),
             question_type=question.get("question_type"),
+            thread_id=question.get("thread_id") or question.get("target_thread_id"),
+            thread_step_id=question.get("thread_turn_id") or question.get("target_thread_turn_id"),
             question=question,
         )
         next_action = apply_effective_next_action(
@@ -86,13 +88,18 @@ class EvaluationTurnRunner:
             "question_id": question["question_id"],
             "question_type": question["question_type"],
             "macro_id": question.get("macro_id"),
+            "thread_id": question.get("thread_id") or question.get("target_thread_id"),
+            "thread_turn_id": question.get("thread_turn_id") or question.get("target_thread_turn_id"),
+            "thread_role": question.get("thread_role"),
             "challenge_type": question.get("challenge_type"),
+            "challenge_scope": question.get("challenge_scope"),
             "challenge_trigger": question.get("challenge_trigger"),
             "target_failure_mode": question.get("target_failure_mode"),
             "expected_behavior": question.get("expected_behavior"),
             "question_text": question["question_text"],
             "target_kc_ids": question["target_kc_ids"],
             "target_path_id": question.get("path_id"),
+            "question_metadata": _question_metadata(question),
             "model_answer": answer,
             "answer_mode": answer_mode,
             "requires_multimodal_input": _turn_requires_multimodal_input(question),
@@ -165,6 +172,7 @@ class EvaluationTurnRunner:
             "question_text": follow["question_text"],
             "target_kc_ids": follow["target_kc_ids"],
             "target_path_id": follow.get("target_path_id"),
+            "question_metadata": _question_metadata(follow),
             "repair_context": follow.get("repair_context", {}),
             "model_answer": answer,
             "answer_mode": answer_mode,
@@ -259,6 +267,7 @@ class EvaluationTurnRunner:
             "question_text": question["question_text"],
             "target_kc_ids": question["target_kc_ids"],
             "target_path_id": question.get("target_path_id"),
+            "question_metadata": _question_metadata(question),
             "repair_context": question.get("repair_context", {}),
             "model_answer": answer,
             "answer_mode": answer_mode,
@@ -404,6 +413,7 @@ def _turn_context(turn_id: str, question: dict) -> dict:
         "challenge_trigger": question.get("challenge_trigger"),
         "target_failure_mode": question.get("target_failure_mode"),
         "expected_behavior": question.get("expected_behavior"),
+        "modality_pool": question.get("modality_pool"),
         "repair_context": question.get("repair_context", {}),
         "requires_multimodal_input": _turn_requires_multimodal_input(question),
         "asset_references": _turn_asset_references(question),
@@ -426,6 +436,7 @@ def _turn_context_from_turn(turn: dict) -> dict:
         "challenge_trigger": turn.get("challenge_trigger"),
         "target_failure_mode": turn.get("target_failure_mode"),
         "expected_behavior": turn.get("expected_behavior"),
+        "modality_pool": turn.get("modality_pool") or turn.get("question_metadata", {}).get("modality_pool"),
         "repair_context": turn.get("repair_context", {}),
         "requires_multimodal_input": _turn_requires_multimodal_input(turn),
         "asset_references": _turn_asset_references(turn),
@@ -498,7 +509,7 @@ def dialogue_history_text(turns: list[dict]) -> str:
 
 def build_eval_prompt(paper_text: str, dialogue_history: str, question_text: str, asset_context: str = "") -> str:
     return (
-        "```original paper\n"
+        "```original Storybench\n"
         f"{paper_text}\n"
         "```\n\n"
         f"{asset_context}"
@@ -518,7 +529,7 @@ def build_model_answer(
 ) -> tuple[str, str]:
     image_paths = image_paths or []
     if use_online_eval and client and client.is_ready():
-        system_prompt = "Answer the paper-evaluation question based only on the provided original paper, attached figure/table assets, and dialogue context."
+        system_prompt = "Answer the Storybench-evaluation question based only on the provided original Storybench, attached figure/table assets, and dialogue context."
         if image_paths:
             ans = client.chat_text_with_images(
                 system_prompt=system_prompt,
@@ -530,7 +541,7 @@ def build_model_answer(
         return ans, "online_target_text"
     if os.getenv("ALLOW_MOCK_EVAL", "false").lower() in {"1", "true", "yes", "on"}:
         joined = "; ".join(k["full_claim"] for k in target_kcs[:2])
-        return f"Based on the paper, {joined}", "mock"
+        return f"Based on the Storybench, {joined}", "mock"
     raise RuntimeError("Online evaluation requires a configured model and USE_ONLINE_EVAL=true. Set ALLOW_MOCK_EVAL=true only for local debugging.")
 
 
@@ -554,6 +565,51 @@ def _turn_requires_multimodal_input(question: dict) -> bool:
 def _turn_asset_references(question: dict) -> list[dict]:
     refs = question.get("asset_references") or []
     return [dict(ref) for ref in refs if isinstance(ref, dict)]
+
+
+def _question_metadata(question: dict) -> dict:
+    fields = [
+        "macro_id",
+        "thread_id",
+        "thread_turn_id",
+        "thread_role",
+        "thread_type",
+        "challenge_type",
+        "challenge_trigger",
+        "source_plan_id",
+        "source_challenge_plan_id",
+        "target_thread_id",
+        "target_thread_turn_id",
+        "target_failure_mode",
+        "expected_behavior",
+        "surface_intent",
+        "modality_pool",
+        "target_asset_ids",
+        "needs_human_review",
+        "all_solvers_failed",
+        "target_path_id",
+        "path_id",
+    ]
+    metadata = {
+        field: question.get(field)
+        for field in fields
+        if _has_metadata_value(question.get(field))
+    }
+    metadata["target_kc_ids"] = list(question.get("target_kc_ids", []))
+    metadata["requires_multimodal_input"] = _turn_requires_multimodal_input(question)
+    metadata["asset_ids"] = [
+        ref.get("asset_id")
+        for ref in _turn_asset_references(question)
+        if ref.get("asset_id")
+    ]
+    metadata["image_paths"] = question_image_paths(question)
+    if question.get("solver_trial_summary"):
+        metadata["solver_trial_summary"] = question.get("solver_trial_summary")
+    return metadata
+
+
+def _has_metadata_value(value: object) -> bool:
+    return value is not None and value != "" and value != [] and value != {}
 
 
 def _coverage_summary(judge_result: dict) -> str:
@@ -624,15 +680,17 @@ def related_forbidden_claims(graph: dict, target_kc_ids: list[str], path_id: str
 
 def _question_context(question: dict, base_context: dict | None) -> dict:
     context = dict(base_context or {})
-    if question.get("question_type") == "challenge_question":
+    if question.get("question_type") in {"challenge_question", "thread_challenge_question"}:
         context.update(
             {
+                "challenge_scope": question.get("challenge_scope", "macro"),
                 "challenge_type": question.get("challenge_type"),
                 "target_failure_mode": question.get("target_failure_mode"),
                 "expected_behavior": question.get("expected_behavior"),
                 "surface_intent": question.get("surface_intent"),
                 "evidence": question.get("evidence", []),
                 "challenge_trigger": question.get("challenge_trigger"),
+                "canonical_thread_context": question.get("canonical_thread_context", {}),
                 "needs_human_review": question.get("needs_human_review", False),
                 "all_solvers_failed": question.get("all_solvers_failed", False),
                 "solver_trial_summary": question.get("solver_trial_summary", {}),

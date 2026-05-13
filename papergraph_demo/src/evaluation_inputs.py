@@ -22,10 +22,17 @@ def repair_questions_for_graph(graph: dict, questions: dict) -> dict:
     normalized = normalize_question_bundle(graph, questions)
     for key in (
         "challenge_questions",
+        "thread_challenge_questions",
         "challenge_scheduler_config",
         "challenge_questions_filtered_path",
         "challenge_solver_trials_path",
         "challenge_filter_summary",
+        "thread_challenge_plans_path",
+        "thread_challenge_plan_summary",
+        "thread_challenge_questions_raw_path",
+        "thread_challenge_questions_filtered_path",
+        "thread_challenge_solver_trials_path",
+        "thread_challenge_filter_summary",
     ):
         if key in questions:
             normalized[key] = questions[key]

@@ -10,13 +10,23 @@ def load_full_paper_text(
     graph: dict,
     base_dir: Path,
     limit_env: str = "EVAL_PAPER_CHAR_LIMIT",
+    prefer_evaluation_context: bool | None = None,
 ) -> str:
-    raw_path = str(graph.get("paper_text_path", "")).strip()
+    if prefer_evaluation_context is None:
+        prefer_evaluation_context = _env_bool("EVAL_USE_MULTIMODAL_PAPER_CONTEXT", False)
+    evaluation_path = str(graph.get("evaluation_paper_text_path") or "").strip()
+    raw_path = evaluation_path if prefer_evaluation_context else ""
     if not raw_path:
-        raise FileNotFoundError("master_graph.json must include paper_text_path for full-paper evaluation context.")
+        raw_path = str(graph.get("paper_text_path", "")).strip()
+    if not raw_path:
+        raise FileNotFoundError(
+            "master_graph.json must include evaluation_paper_text_path or paper_text_path for full-Storybench evaluation context."
+        )
 
     paper_path = _resolve_paper_path(Path(raw_path), base_dir)
-    if paper_path.is_dir():
+    if raw_path == evaluation_path and paper_path.is_file():
+        text = paper_path.read_text(encoding="utf-8")
+    elif paper_path.is_dir():
         text = load_paper_text_from_dir(paper_path)
     elif paper_path.is_file():
         text = load_paper_text(paper_path)
@@ -52,3 +62,10 @@ def _env_nonnegative_int(name: str, default: int) -> int:
     if value < 0:
         raise ValueError(f"{name} must be a non-negative integer, got {value}.")
     return value
+
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    raw = os.getenv(name)
+    if raw is None or raw.strip() == "":
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}

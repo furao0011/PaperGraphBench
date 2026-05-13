@@ -43,7 +43,7 @@ def build_unit_edge_candidates(
         with span("build unit edge candidates", unit_id=unit_id, kcs=len(context["kc_nodes"])):
             edges = _chat_json_with_validation_retry(
                 client=client,
-                system_prompt="You construct local reasoning edge candidates for paper KCs. Return JSON only.",
+                system_prompt="You construct local reasoning edge candidates for Storybench KCs. Return JSON only.",
                 user_prompt=user_prompt,
                 normalize=lambda result: _normalize_unit_edges(context, result),
                 label=f"Unit {unit_id} edge candidates",
@@ -127,7 +127,7 @@ def build_macro_edge_candidates(
         ):
             edges = _chat_json_with_validation_retry(
                 client=client,
-                system_prompt="You construct Macro-internal reasoning edge candidates for paper KCs. Return JSON only.",
+                system_prompt="You construct Macro-internal reasoning edge candidates for Storybench KCs. Return JSON only.",
                 user_prompt=user_prompt,
                 normalize=lambda result: _normalize_macro_edges(context, result),
                 label=f"Macro batch {batch_id} edge candidates",
@@ -206,7 +206,7 @@ def build_adjacent_macro_edge_candidates(
         with span("build adjacent macro edge candidates", macro_pair_id=pair_id):
             edges = _chat_json_with_validation_retry(
                 client=client,
-                system_prompt="You construct adjacent-Macro reasoning edge candidates for paper KCs. Return JSON only.",
+                system_prompt="You construct adjacent-Macro reasoning edge candidates for Storybench KCs. Return JSON only.",
                 user_prompt=user_prompt,
                 normalize=lambda result: _normalize_adjacent_macro_edges(context, result),
                 label=f"Adjacent Macro {pair_id} edge candidates",
@@ -275,7 +275,7 @@ def build_thread_candidate_edges(
     with span("build thread candidate edges", kcs=len(context["kc_nodes"]), verified_edges=len(verified_edges)):
         result_edges = _chat_json_with_validation_retry(
             client=client,
-            system_prompt="You construct cross-Macro Thread candidate edges for paper KCs. Return JSON only.",
+            system_prompt="You construct cross-Macro Thread candidate edges for Storybench KCs. Return JSON only.",
             user_prompt=user_prompt,
             normalize=lambda result: _normalize_thread_edges(context, result),
             label="Thread candidate edges",

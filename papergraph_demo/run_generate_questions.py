@@ -2,6 +2,7 @@ import json
 import os
 from pathlib import Path
 
+from src.artifact_layout import PaperArtifactLayout
 from src.challenge_loop import build_challenge_questions_loop
 from src.challenge_plan_builder import build_challenge_plans
 from src.config import load_settings
@@ -15,6 +16,7 @@ from src.multimodal_question_assets import (
 from src.paper_context import load_full_paper_text
 from src.progress import log, span
 from src.question_generator import generate_questions_cached
+from src.thread_challenge_plan_builder import build_thread_challenge_plans
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -28,6 +30,54 @@ CHALLENGE_SOLVER_TRIALS_PATH = BASE_DIR / "data" / "questions" / "challenge_solv
 CHALLENGE_QUESTION_FILTERED_PATH = BASE_DIR / "data" / "questions" / "challenge_questions_filtered.json"
 CHALLENGE_QUESTION_HUMAN_REVIEW_PATH = BASE_DIR / "data" / "questions" / "challenge_questions_need_human_review.json"
 CHALLENGE_QUESTION_REJECTED_PATH = BASE_DIR / "data" / "questions" / "challenge_questions_rejected.json"
+THREAD_CHALLENGE_PLAN_PATH = BASE_DIR / "data" / "questions" / "thread_challenge_plans.json"
+THREAD_CHALLENGE_QUESTION_RAW_PATH = BASE_DIR / "data" / "questions" / "thread_challenge_questions_raw.json"
+THREAD_CHALLENGE_LOOP_CACHE_PATH = BASE_DIR / "data" / "questions" / "thread_challenge_loop_cache.json"
+THREAD_CHALLENGE_SOLVER_TRIALS_PATH = BASE_DIR / "data" / "questions" / "thread_challenge_solver_trials.json"
+THREAD_CHALLENGE_QUESTION_FILTERED_PATH = BASE_DIR / "data" / "questions" / "thread_challenge_questions_filtered.json"
+THREAD_CHALLENGE_QUESTION_HUMAN_REVIEW_PATH = BASE_DIR / "data" / "questions" / "thread_challenge_questions_need_human_review.json"
+THREAD_CHALLENGE_QUESTION_REJECTED_PATH = BASE_DIR / "data" / "questions" / "thread_challenge_questions_rejected.json"
+
+
+def _apply_paper_layout_from_env() -> PaperArtifactLayout | None:
+    paper_id = os.getenv("PAPER_ID", "").strip()
+    if not paper_id:
+        return None
+    layout = PaperArtifactLayout(BASE_DIR, paper_id)
+    _configure_layout_paths(layout)
+    return layout
+
+
+def _configure_layout_paths(layout: PaperArtifactLayout) -> None:
+    global GRAPH_PATH, QUESTION_PATH, QUESTION_CACHE_PATH, CHALLENGE_PLAN_PATH
+    global CHALLENGE_QUESTION_RAW_PATH, CHALLENGE_LOOP_CACHE_PATH, CHALLENGE_SOLVER_TRIALS_PATH
+    global CHALLENGE_QUESTION_FILTERED_PATH, CHALLENGE_QUESTION_HUMAN_REVIEW_PATH
+    global CHALLENGE_QUESTION_REJECTED_PATH
+    global THREAD_CHALLENGE_PLAN_PATH, THREAD_CHALLENGE_QUESTION_RAW_PATH, THREAD_CHALLENGE_LOOP_CACHE_PATH
+    global THREAD_CHALLENGE_SOLVER_TRIALS_PATH, THREAD_CHALLENGE_QUESTION_FILTERED_PATH
+    global THREAD_CHALLENGE_QUESTION_HUMAN_REVIEW_PATH, THREAD_CHALLENGE_QUESTION_REJECTED_PATH
+
+    GRAPH_PATH = layout.final("master_graph")
+    QUESTION_PATH = layout.final("question_templates")
+    QUESTION_CACHE_PATH = layout.cache_file("questions", "question_generation_cache")
+    CHALLENGE_PLAN_PATH = layout.cache_file("questions", "challenge_plans")
+    CHALLENGE_QUESTION_RAW_PATH = layout.cache_file("questions", "challenge_questions_raw")
+    CHALLENGE_LOOP_CACHE_PATH = layout.cache_file("questions", "challenge_loop_cache")
+    CHALLENGE_SOLVER_TRIALS_PATH = layout.cache_file("questions", "challenge_solver_trials")
+    CHALLENGE_QUESTION_FILTERED_PATH = layout.cache_file("questions", "challenge_questions_filtered")
+    CHALLENGE_QUESTION_HUMAN_REVIEW_PATH = layout.cache_file("questions", "challenge_questions_need_human_review")
+    CHALLENGE_QUESTION_REJECTED_PATH = layout.cache_file("questions", "challenge_questions_rejected")
+    THREAD_CHALLENGE_PLAN_PATH = layout.cache_file("questions", "thread_challenge_plans")
+    THREAD_CHALLENGE_QUESTION_RAW_PATH = layout.cache_file("questions", "thread_challenge_questions_raw")
+    THREAD_CHALLENGE_LOOP_CACHE_PATH = layout.cache_file("questions", "thread_challenge_loop_cache")
+    THREAD_CHALLENGE_SOLVER_TRIALS_PATH = layout.cache_file("questions", "thread_challenge_solver_trials")
+    THREAD_CHALLENGE_QUESTION_FILTERED_PATH = layout.cache_file("questions", "thread_challenge_questions_filtered")
+    THREAD_CHALLENGE_QUESTION_HUMAN_REVIEW_PATH = layout.cache_file("questions", "thread_challenge_questions_need_human_review")
+    THREAD_CHALLENGE_QUESTION_REJECTED_PATH = layout.cache_file("questions", "thread_challenge_questions_rejected")
+
+
+def _rel(path: Path) -> str:
+    return path.resolve().relative_to(BASE_DIR.resolve()).as_posix()
 
 
 def _env_bool(name: str, default: bool = False) -> bool:
@@ -35,6 +85,13 @@ def _env_bool(name: str, default: bool = False) -> bool:
     if raw is None:
         return default
     return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _env_path(name: str, default: Path) -> Path:
+    raw = os.getenv(name)
+    if raw is None or not raw.strip():
+        return default
+    return Path(raw.strip())
 
 
 def _build_multimodal_challenge_questions_with_quotas(
@@ -122,15 +179,20 @@ def _validate_multimodal_challenge_quotas(result: dict, target_count: int, figur
 
 
 def main() -> None:
+    settings = load_settings(BASE_DIR.parent)
+    layout = _apply_paper_layout_from_env()
+    graph_override = os.getenv("PAPERGRAPH_GRAPH_PATH", "").strip()
+    if graph_override:
+        global GRAPH_PATH
+        GRAPH_PATH = Path(graph_override)
     if not GRAPH_PATH.exists():
         raise FileNotFoundError(f"Master graph not found: {GRAPH_PATH}")
 
-    settings = load_settings(BASE_DIR.parent)
     allow_offline_fallback = _env_bool("ALLOW_OFFLINE_FALLBACK")
     resume = _env_bool("PAPERGRAPH_RESUME") or _env_bool("QUESTION_RESUME")
     restart = _env_bool("PAPERGRAPH_RESTART") or _env_bool("QUESTION_RESTART")
-    cache_path = Path(os.getenv("QUESTION_CACHE_PATH", str(QUESTION_CACHE_PATH)))
-    challenge_loop_cache_path = Path(os.getenv("CHALLENGE_LOOP_CACHE_PATH", str(CHALLENGE_LOOP_CACHE_PATH)))
+    cache_path = _env_path("QUESTION_CACHE_PATH", QUESTION_CACHE_PATH)
+    challenge_loop_cache_path = _env_path("CHALLENGE_LOOP_CACHE_PATH", CHALLENGE_LOOP_CACHE_PATH)
     client = OpenAICompatClient(
         ModelConfig(settings.api_key, settings.base_url, settings.llm_model)
     )
@@ -144,8 +206,8 @@ def main() -> None:
         for kc in graph.get("kc_nodes", [])
         if kc.get("kc_id")
     }
-    with span("load paper text for challenge filtering"):
-        paper_text = load_full_paper_text(graph, BASE_DIR)
+    with span("load clean Storybench text for challenge solver trials"):
+        paper_text = load_full_paper_text(graph, BASE_DIR, prefer_evaluation_context=False)
     log(
         "master graph loaded",
         kcs=len(graph.get("kc_nodes", [])),
@@ -291,6 +353,75 @@ def main() -> None:
         rejected=challenge_loop_result["summary"]["rejected_count"],
         stop_reason=challenge_loop_result["summary"]["stop_reason"],
     )
+    thread_challenge_plans = {
+        "paper_id": graph.get("paper_id", "unknown"),
+        "schema_version": "v1",
+        "challenge_scope": "thread",
+        "challenge_plans": [],
+        "summary": {"plan_count": 0},
+    }
+    thread_challenge_loop_result = _empty_challenge_loop_result(thread_challenge_plans)
+    if _env_bool("THREAD_CHALLENGE_ENABLED", True):
+        thread_challenge_plans = build_thread_challenge_plans(graph, asset_index=asset_index)
+        thread_challenge_plans = attach_asset_references_to_challenge_plans(
+            thread_challenge_plans,
+            by_kc,
+            asset_index,
+        )
+        _write_json(THREAD_CHALLENGE_PLAN_PATH, thread_challenge_plans)
+        log(
+            "thread challenge plans generated",
+            path=THREAD_CHALLENGE_PLAN_PATH,
+            plans=thread_challenge_plans.get("summary", {}).get("plan_count", 0),
+        )
+        if thread_challenge_plans.get("challenge_plans"):
+            thread_target = _env_positive_int(
+                "THREAD_CHALLENGE_ACCEPT_TARGET",
+                min(8, len(thread_challenge_plans["challenge_plans"])),
+            )
+            with span("build thread challenge questions by loop"):
+                thread_challenge_loop_result = build_challenge_questions_loop(
+                    challenge_plans=thread_challenge_plans,
+                    client=client,
+                    paper_text=paper_text,
+                    cache_path=THREAD_CHALLENGE_LOOP_CACHE_PATH,
+                    resume=resume,
+                    restart=restart,
+                    target_count=thread_target,
+                    question_id_prefix="TCQ",
+                )
+            thread_challenge_loop_result["challenge_questions_raw"] = attach_asset_references_to_questions(
+                thread_challenge_loop_result["challenge_questions_raw"],
+                by_kc,
+                asset_index,
+            )
+            thread_challenge_loop_result["challenge_questions_filtered"] = attach_asset_references_to_questions(
+                thread_challenge_loop_result["challenge_questions_filtered"],
+                by_kc,
+                asset_index,
+            )
+            thread_challenge_loop_result["challenge_questions_need_human_review"] = attach_asset_references_to_questions(
+                thread_challenge_loop_result["challenge_questions_need_human_review"],
+                by_kc,
+                asset_index,
+            )
+            thread_challenge_loop_result["challenge_questions_rejected"] = attach_asset_references_to_questions(
+                thread_challenge_loop_result["challenge_questions_rejected"],
+                by_kc,
+                asset_index,
+            )
+        _write_thread_challenge_outputs(thread_challenge_loop_result)
+        log(
+            "thread challenge loop complete",
+            filtered=thread_challenge_loop_result["summary"]["filtered_count"],
+            human_review=thread_challenge_loop_result["summary"]["human_review_count"],
+            rejected=thread_challenge_loop_result["summary"]["rejected_count"],
+            stop_reason=thread_challenge_loop_result["summary"]["stop_reason"],
+        )
+    else:
+        _write_json(THREAD_CHALLENGE_PLAN_PATH, thread_challenge_plans)
+        _write_thread_challenge_outputs(thread_challenge_loop_result)
+        log("thread challenge generation skipped", env="THREAD_CHALLENGE_ENABLED")
     try:
         with span("generate questions"):
             bundle = generate_questions_cached(
@@ -328,17 +459,25 @@ def main() -> None:
     payload = {
         "paper_id": graph.get("paper_id", "unknown"),
         "schema_version": "v1",
-        "challenge_plans_path": "data/questions/challenge_plans.json",
+        "challenge_plans_path": _rel(CHALLENGE_PLAN_PATH),
         "challenge_plan_summary": challenge_plans.get("summary", {}),
-        "challenge_questions_raw_path": "data/questions/challenge_questions_raw.json",
+        "challenge_questions_raw_path": _rel(CHALLENGE_QUESTION_RAW_PATH),
         "challenge_question_raw_summary": raw_challenge_questions.get("summary", {}),
-        "challenge_questions_filtered_path": "data/questions/challenge_questions_filtered.json",
-        "challenge_solver_trials_path": "data/questions/challenge_solver_trials.json",
+        "challenge_questions_filtered_path": _rel(CHALLENGE_QUESTION_FILTERED_PATH),
+        "challenge_solver_trials_path": _rel(CHALLENGE_SOLVER_TRIALS_PATH),
         "challenge_filter_summary": challenge_loop_result.get("summary", {}),
         "challenge_questions": challenge_loop_result["challenge_questions_filtered"],
+        "thread_challenge_plans_path": _rel(THREAD_CHALLENGE_PLAN_PATH),
+        "thread_challenge_plan_summary": thread_challenge_plans.get("summary", {}),
+        "thread_challenge_questions_raw_path": _rel(THREAD_CHALLENGE_QUESTION_RAW_PATH),
+        "thread_challenge_questions_filtered_path": _rel(THREAD_CHALLENGE_QUESTION_FILTERED_PATH),
+        "thread_challenge_solver_trials_path": _rel(THREAD_CHALLENGE_SOLVER_TRIALS_PATH),
+        "thread_challenge_filter_summary": thread_challenge_loop_result.get("summary", {}),
+        "thread_challenge_questions": thread_challenge_loop_result["challenge_questions_filtered"],
         "challenge_scheduler_config": {
             "macro_level_enabled": True,
             "thread_level_enabled": True,
+            "thread_challenge_enabled": _env_bool("THREAD_CHALLENGE_ENABLED", True),
         },
         "macro_main_questions": bundle["macro_main_questions"],
         "thread_question_seeds": bundle["thread_question_seeds"],
@@ -355,6 +494,8 @@ def main() -> None:
     print(f"Challenge plans generated: {CHALLENGE_PLAN_PATH}")
     print(f"Raw challenge questions generated: {CHALLENGE_QUESTION_RAW_PATH}")
     print(f"Filtered challenge questions generated: {CHALLENGE_QUESTION_FILTERED_PATH}")
+    print(f"Thread challenge plans generated: {THREAD_CHALLENGE_PLAN_PATH}")
+    print(f"Filtered thread challenge questions generated: {THREAD_CHALLENGE_QUESTION_FILTERED_PATH}")
     print(f"Question templates generated: {QUESTION_PATH}")
 
 
@@ -363,6 +504,64 @@ def _write_json(path: Path, payload: dict) -> None:
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(path)
+
+
+def _write_thread_challenge_outputs(loop_result: dict) -> None:
+    _write_json(
+        THREAD_CHALLENGE_QUESTION_RAW_PATH,
+        {
+            "paper_id": loop_result["paper_id"],
+            "schema_version": loop_result["schema_version"],
+            "source_challenge_plan_signature": loop_result["source_challenge_plan_signature"],
+            "challenge_loop_signature": loop_result["challenge_loop_signature"],
+            "thread_challenge_questions_raw": loop_result["challenge_questions_raw"],
+            "summary": {
+                "raw_question_count": loop_result["summary"]["raw_question_count"],
+                "by_type": loop_result["summary"].get("by_type", {}),
+                "by_modality_pool": loop_result["summary"].get("by_modality_pool", {}),
+            },
+        },
+    )
+    _write_json(
+        THREAD_CHALLENGE_SOLVER_TRIALS_PATH,
+        {
+            "paper_id": loop_result["paper_id"],
+            "schema_version": loop_result["schema_version"],
+            "challenge_loop_signature": loop_result["challenge_loop_signature"],
+            "solver_configs": loop_result["solver_configs"],
+            "solver_trials": loop_result["solver_trials"],
+            "summary": loop_result["summary"],
+        },
+    )
+    _write_json(
+        THREAD_CHALLENGE_QUESTION_FILTERED_PATH,
+        {
+            "paper_id": loop_result["paper_id"],
+            "schema_version": loop_result["schema_version"],
+            "thread_challenge_questions_filtered": loop_result["challenge_questions_filtered"],
+            "summary": loop_result["summary"],
+        },
+    )
+    _write_json(
+        THREAD_CHALLENGE_QUESTION_HUMAN_REVIEW_PATH,
+        {
+            "paper_id": loop_result["paper_id"],
+            "schema_version": loop_result["schema_version"],
+            "thread_challenge_questions_need_human_review": loop_result["challenge_questions_need_human_review"],
+            "summary": loop_result["summary"],
+        },
+    )
+    _write_json(
+        THREAD_CHALLENGE_QUESTION_REJECTED_PATH,
+        {
+            "paper_id": loop_result["paper_id"],
+            "schema_version": loop_result["schema_version"],
+            "thread_challenge_questions_rejected": loop_result["challenge_questions_rejected"],
+            "blacklisted_plan_ids": loop_result["blacklisted_plan_ids"],
+            "loop_events": loop_result["loop_events"],
+            "summary": loop_result["summary"],
+        },
+    )
 
 
 def _challenge_plan_subset(challenge_plans: dict, pool: str) -> dict:

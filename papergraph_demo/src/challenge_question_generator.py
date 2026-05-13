@@ -15,9 +15,15 @@ INTERNAL_LABELS = {
     "overclaim_challenge",
     "wrong_relation_challenge",
     "false_premise_challenge",
+    "thread_wrong_bridge_challenge",
+    "thread_overclaim_challenge",
+    "thread_premise_mutation_challenge",
     "overclaim",
     "wrong_relation",
     "false_premise",
+    "thread_wrong_bridge",
+    "thread_overclaim",
+    "thread_premise_mutation",
     "target_failure_mode",
     "challenge_type",
     "expected_behavior",
@@ -50,7 +56,6 @@ def generate_raw_challenge_questions(
         _write_json(cache_path, cache)
     cache.setdefault("questions_by_plan_id", {})
 
-    tpl = load_prompt("generate_challenge_question.txt")
     max_workers = min(_env_positive_int("CHALLENGE_QUESTION_WORKERS", 4), len(plans))
     completed: dict[str, dict] = {}
     futures = {}
@@ -70,7 +75,7 @@ def generate_raw_challenge_questions(
                 except Exception:
                     cache["questions_by_plan_id"].pop(plan_id, None)
                     _write_json(cache_path, cache)
-            futures[ex.submit(_generate_one, plan, client, tpl)] = plan
+            futures[ex.submit(_generate_one, plan, client, _generation_prompt_for_plan(plan))] = plan
 
         for fut in as_completed(futures):
             plan = futures[fut]
@@ -149,7 +154,7 @@ def _generate_one(
                 )
             try:
                 result = client.chat_json(
-                    system_prompt="You generate natural paper-evaluation challenge questions. Return JSON only.",
+                    system_prompt="You generate natural Storybench-evaluation challenge questions. Return JSON only.",
                     user_prompt=prompt,
                     temperature=0.0 if attempt == 2 else 0.2,
                 )
@@ -165,8 +170,13 @@ def _generate_one(
 def _prompt_plan(plan: dict) -> dict:
     return {
         "challenge_plan_id": plan.get("challenge_plan_id"),
+        "challenge_scope": plan.get("challenge_scope", "macro"),
         "challenge_type": plan.get("challenge_type"),
+        "thread_id": plan.get("thread_id"),
+        "thread_type": plan.get("thread_type"),
+        "preferred_insert_after_step": plan.get("preferred_insert_after_step"),
         "source": plan.get("source", {}),
+        "canonical_thread_context": plan.get("canonical_thread_context", {}),
         "true_part": plan.get("true_part"),
         "trap_part": plan.get("trap_part"),
         "expected_behavior": plan.get("expected_behavior"),
@@ -174,7 +184,7 @@ def _prompt_plan(plan: dict) -> dict:
         "evidence": plan.get("evidence", []),
         "metadata": plan.get("metadata", {}),
         "modality_pool": plan.get("modality_pool", plan.get("metadata", {}).get("modality_pool", "text")),
-        "asset_references": plan.get("metadata", {}).get("asset_references", []),
+        "asset_references": plan.get("asset_references") or plan.get("metadata", {}).get("asset_references", []),
     }
 
 
@@ -187,9 +197,14 @@ def _normalize_question(plan: dict, raw: dict, ordinal: int) -> dict:
     _assert_no_internal_labels(question_text, plan)
     source = plan.get("source", {})
     question_id = f"CHQ_{ordinal:04d}" if ordinal else str(raw.get("question_id") or "").strip()
+    challenge_scope = str(plan.get("challenge_scope") or "macro").strip()
+    asset_references = plan.get("asset_references") or plan.get("metadata", {}).get("asset_references", [])
     return {
         "question_id": question_id,
+        "question_type": "thread_challenge_question" if challenge_scope == "thread" else "challenge_question",
         "source_plan_id": plan.get("challenge_plan_id"),
+        "source_challenge_plan_id": plan.get("challenge_plan_id"),
+        "challenge_scope": challenge_scope,
         "challenge_type": plan.get("challenge_type"),
         "question_text": question_text,
         "surface_intent": str(raw.get("surface_intent", "")).strip(),
@@ -197,15 +212,27 @@ def _normalize_question(plan: dict, raw: dict, ordinal: int) -> dict:
         "target_edge_ids": source.get("edge_ids", []),
         "target_thread_id": source.get("thread_id"),
         "target_thread_turn_id": source.get("thread_turn_id"),
+        "thread_id": source.get("thread_id") if challenge_scope == "thread" else None,
+        "thread_turn_id": source.get("thread_turn_id") if challenge_scope == "thread" else None,
+        "thread_role": "thread_challenge" if challenge_scope == "thread" else None,
+        "insert_after_step": plan.get("preferred_insert_after_step"),
+        "canonical_thread_context": plan.get("canonical_thread_context", {}),
+        "synthetic_thread_history": plan.get("metadata", {}).get("synthetic_thread_history", {}),
         "target_macro_ids": source.get("macro_ids", []),
         "target_asset_ids": source.get("asset_ids", []),
         "modality_pool": plan.get("modality_pool", plan.get("metadata", {}).get("modality_pool", "text")),
-        "requires_multimodal_input": bool(plan.get("metadata", {}).get("asset_references")),
-        "asset_references": plan.get("metadata", {}).get("asset_references", []),
+        "requires_multimodal_input": bool(asset_references),
+        "asset_references": asset_references,
         "expected_behavior": plan.get("expected_behavior", ""),
         "target_failure_mode": plan.get("target_failure_mode", ""),
         "evidence": plan.get("evidence", []),
     }
+
+
+def _generation_prompt_for_plan(plan: dict) -> str:
+    if str(plan.get("challenge_scope") or "").strip() == "thread":
+        return load_prompt("generate_thread_challenge_question.txt")
+    return load_prompt("generate_challenge_question.txt")
 
 
 def _assert_no_internal_labels(question_text: str, plan: dict) -> None:
@@ -231,8 +258,11 @@ def _challenge_plan_signature(challenge_plans: dict) -> dict:
         "plan_sources": [
             [
                 plan.get("challenge_plan_id"),
+                plan.get("challenge_scope", "macro"),
                 plan.get("challenge_type"),
                 plan.get("target_failure_mode"),
+                plan.get("thread_id"),
+                plan.get("preferred_insert_after_step"),
                 plan.get("source", {}).get("kc_ids", []),
                 plan.get("source", {}).get("edge_ids", []),
                 plan.get("source", {}).get("asset_ids", []),

@@ -20,6 +20,7 @@ JUDGE_PROMPTS = {
     "thread_review_question": "judge_thread_answer.txt",
     "thread_question": "judge_thread_answer.txt",
     "challenge_question": "judge_challenge_eval_answer.txt",
+    "thread_challenge_question": "judge_thread_challenge_answer.txt",
 }
 
 def judge_answer(question_text: str, answer: str, target_kcs: list[dict]) -> dict:
@@ -95,7 +96,7 @@ def judge_answer_with_online_fallback(
                 related_forbidden_claims_json=json.dumps(related_forbidden_claims or [], ensure_ascii=False),
             )
             result = client.chat_json(
-                system_prompt="You are an accurate paper-evaluation judge.",
+                system_prompt="You are an accurate Storybench-evaluation judge.",
                 user_prompt=user_prompt,
             )
             required = {"state", "coverage", "hallucination_events", "recommended_tasks", "next_action"}

@@ -22,7 +22,7 @@ class ModelConfig:
     embed_base_url: str = ""
     embed_model: str = ""
     timeout_s: int = 300
-    max_retries: int = 2
+    max_retries: int = 4
     retry_sleep_s: float = 5.0
 
 
@@ -73,14 +73,7 @@ class OpenAICompatClient:
             ],
             "response_format": {"type": "json_object"},
         }
-        body = self._post_json(url, payload, timeout_s)
-        result = json.loads(body)
-        content = result["choices"][0]["message"]["content"]
-        try:
-            return json.loads(content)
-        except json.JSONDecodeError as exc:
-            preview = str(content)[:500]
-            raise ValueError(f"Model returned invalid JSON content: {preview!r}") from exc
+        return self._chat_json_payload(url, payload, timeout_s, "Model")
 
     def chat_text(
         self,
@@ -140,14 +133,7 @@ class OpenAICompatClient:
             ],
             "response_format": {"type": "json_object"},
         }
-        body = self._post_json(url, payload, timeout_s)
-        result = json.loads(body)
-        content_text = result["choices"][0]["message"]["content"]
-        try:
-            return json.loads(content_text)
-        except json.JSONDecodeError as exc:
-            preview = str(content_text)[:500]
-            raise ValueError(f"Vision model returned invalid JSON content: {preview!r}") from exc
+        return self._chat_json_payload(url, payload, timeout_s, "Vision model")
 
     def chat_text_with_images(
         self,
@@ -245,28 +231,66 @@ class OpenAICompatClient:
             except urllib.error.HTTPError as exc:
                 detail = exc.read().decode("utf-8", errors="replace")
                 last_exc = RuntimeError(f"HTTP {exc.code} {exc.reason}: {detail}")
-                if attempt >= attempts:
+                if attempt >= attempts or not _is_retryable_http_status(exc.code):
                     break
+                sleep_s = _retry_sleep_s(self.cfg.retry_sleep_s, attempt)
                 log(
                     "model request retry",
                     attempt=attempt,
                     attempts=attempts,
                     timeout_s=timeout,
                     error=str(last_exc),
+                    sleep_s=round(sleep_s, 2),
                 )
-                time.sleep(max(0.0, self.cfg.retry_sleep_s))
+                time.sleep(sleep_s)
             except Exception as exc:
                 last_exc = exc
                 if attempt >= attempts:
                     break
+                sleep_s = _retry_sleep_s(self.cfg.retry_sleep_s, attempt)
                 log(
                     "model request retry",
                     attempt=attempt,
                     attempts=attempts,
                     timeout_s=timeout,
                     error=f"{type(exc).__name__}: {exc}",
+                    sleep_s=round(sleep_s, 2),
                 )
-                time.sleep(max(0.0, self.cfg.retry_sleep_s))
+                time.sleep(sleep_s)
+        assert last_exc is not None
+        raise last_exc
+
+    def _chat_json_payload(
+        self,
+        url: str,
+        payload: dict[str, Any],
+        timeout_s: int | None,
+        label: str,
+    ) -> dict:
+        attempts = max(1, self.cfg.max_retries + 1)
+        last_exc: Exception | None = None
+        for attempt in range(1, attempts + 1):
+            body = self._post_json(url, payload, timeout_s)
+            try:
+                result = json.loads(body)
+                content = result["choices"][0]["message"]["content"]
+                if content is None or not str(content).strip():
+                    raise ValueError(f"{label} returned empty JSON content.")
+                return json.loads(content)
+            except (KeyError, IndexError, TypeError, ValueError, json.JSONDecodeError) as exc:
+                last_exc = _normalize_json_response_error(label, body, exc)
+                if attempt >= attempts:
+                    break
+                sleep_s = _retry_sleep_s(self.cfg.retry_sleep_s, attempt)
+                log(
+                    "model JSON response retry",
+                    attempt=attempt,
+                    attempts=attempts,
+                    timeout_s=timeout_s if timeout_s is not None else self.cfg.timeout_s,
+                    error=f"{type(last_exc).__name__}: {last_exc}",
+                    sleep_s=round(sleep_s, 2),
+                )
+                time.sleep(sleep_s)
         assert last_exc is not None
         raise last_exc
 
@@ -302,6 +326,25 @@ def _env_float(name: str, default: float) -> float:
     except ValueError:
         return default
     return value if value >= 0 else default
+
+
+def _is_retryable_http_status(status_code: int) -> bool:
+    return status_code == 408 or status_code == 429 or status_code >= 500
+
+
+def _retry_sleep_s(base_sleep_s: float, attempt: int) -> float:
+    base = max(0.0, base_sleep_s)
+    return min(60.0, base * (2 ** max(0, attempt - 1)))
+
+
+def _normalize_json_response_error(label: str, body: str, exc: Exception) -> ValueError:
+    if isinstance(exc, json.JSONDecodeError):
+        preview = str(body)[:500]
+        return ValueError(f"{label} returned invalid JSON response body: {preview!r}")
+    if isinstance(exc, ValueError):
+        return ValueError(str(exc))
+    preview = str(body)[:500]
+    return ValueError(f"{label} response did not contain choices[0].message.content: {preview!r}")
 
 
 def _image_data_url(image_path: str) -> str:

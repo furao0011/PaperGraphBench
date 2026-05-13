@@ -36,8 +36,8 @@ def generate_followup_question(
         }
         claims_text = "; ".join(str(c) for c in missing_claims[:2])
         fallback_text = (
-            "Your previous answer missed target paper claim(s). "
-            f"Please answer only these missing claims using paper evidence, without adding unsupported details: {claims_text}"
+            "Your previous answer missed target Storybench claim(s). "
+            f"Please answer only these missing claims using Storybench evidence, without adding unsupported details: {claims_text}"
         )
     elif action == "hallucination_followup":
         qtype = "hallucination_followup"
@@ -47,7 +47,7 @@ def generate_followup_question(
             for event in active_hallucinations
             if event.get("claim")
         ] or last_turn.get("judge_result", {}).get("hallucinated_claims", [])
-        hint = primary.get("forbidden_claims", [{}])[0].get("followup_hint", "Re-check the statement against the paper evidence and correct it.")
+        hint = primary.get("forbidden_claims", [{}])[0].get("followup_hint", "Re-check the statement against the Storybench evidence and correct it.")
         prompt_name = "generate_hallucination_followup.txt"
         prompt_kwargs = {
             "question": last_turn.get("question_text", ""),
@@ -58,7 +58,7 @@ def generate_followup_question(
         claims_text = "; ".join(str(c) for c in hallucinated[:3]) if hallucinated else "the suspicious claim(s) in the previous answer"
         fallback_text = (
             "Some statements in your previous answer may be unsupported or need correction: "
-            f"{claims_text}. Please check each one against the paper, retract or revise unsupported parts, and give a corrected answer."
+            f"{claims_text}. Please check each one against the Storybench, retract or revise unsupported parts, and give a corrected answer."
         )
     elif action == "review_followup":
         qtype = "review_followup"
@@ -67,7 +67,7 @@ def generate_followup_question(
             "target_kc": claim,
             "context": last_turn.get("question_text", ""),
         }
-        fallback_text = f"Review this target claim accurately and explain its role in the paper: {claim}"
+        fallback_text = f"Review this target claim accurately and explain its role in the Storybench: {claim}"
     else:
         return None
 
@@ -77,7 +77,7 @@ def generate_followup_question(
             tpl = load_prompt(prompt_name)
             user_prompt = render_prompt(tpl, **prompt_kwargs)
             out = client.chat_json(
-                system_prompt="You generate one concise follow-up question for paper evaluation.",
+                system_prompt="You generate one concise follow-up question for Storybench evaluation.",
                 user_prompt=user_prompt,
             )
             qtxt = str(out.get("question_text", "")).strip()
@@ -119,7 +119,7 @@ def generate_thread_question(
         try:
             tpl = load_prompt("generate_thread_question.txt")
             out = client.chat_json(
-                system_prompt="You generate one concise cross-turn reasoning question for paper evaluation.",
+                system_prompt="You generate one concise cross-turn reasoning question for Storybench evaluation.",
                 user_prompt=render_prompt(
                     tpl,
                     thread_turn_json=json.dumps(thread_turn, ensure_ascii=False),
@@ -144,7 +144,7 @@ def generate_thread_question(
                 "and offline fallback is disabled."
             )
         claims = "; ".join(k.get("full_claim", k.get("kc_id", "")) for k in target_kcs[:3])
-        question_text = f"{thread_turn.get('question_goal', 'Connect the relevant paper claims')}: {claims}"
+        question_text = f"{thread_turn.get('question_goal', 'Connect the relevant Storybench claims')}: {claims}"
 
     return {
         "question_id": thread_turn.get("question_id") or f"Q_{thread_turn.get('thread_turn_id')}",

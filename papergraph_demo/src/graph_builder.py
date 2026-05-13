@@ -11,8 +11,8 @@ from src.rubric_builder import build_kc_rubric
 
 
 MACRO_META = {
-    "M1": {"title": "Research Problem and Motivation", "role": "motivation", "summary": "Why the paper is needed and what gaps or problems motivate it."},
-    "M2": {"title": "Core Method and Mechanisms", "role": "method", "summary": "The paper's proposed method, dataset construction, modules, and mechanisms."},
+    "M1": {"title": "Research Problem and Motivation", "role": "motivation", "summary": "Why the Storybench is needed and what gaps or problems motivate it."},
+    "M2": {"title": "Core Method and Mechanisms", "role": "method", "summary": "The Storybench's proposed method, dataset construction, modules, and mechanisms."},
     "M3": {"title": "Experimental Design and Results", "role": "experiment", "summary": "Evaluation setup, empirical findings, analysis, and ablations."},
     "M4": {"title": "Conclusion, Limitations, and Open Evidence", "role": "conclusion", "summary": "Conclusions, contributions, limitations, and claims that remain under-validated."},
 }
@@ -403,7 +403,7 @@ def _build_reasoning_edges_online(kc_nodes: list[dict], macro_nodes: list[dict],
         user_prompt = render_prompt(tpl, graph_context_json=json.dumps(context, ensure_ascii=False))
         with span("generate reasoning edges", kcs=len(kc_nodes)):
             result = client.chat_json(
-                system_prompt="You are a strict graph-construction assistant for paper evaluation.",
+                system_prompt="You are a strict graph-construction assistant for Storybench evaluation.",
                 user_prompt=user_prompt,
             )
         edges = result.get("reasoning_edges", [])
@@ -745,7 +745,7 @@ def _normalize_forbidden_claims(items: list, owner_id: str) -> list[dict]:
                     "type": str(item.get("type") or "logic_hallucination"),
                     "severity": str(item.get("severity") or "high"),
                     "why_wrong": str(item.get("why_wrong") or "This claim is inconsistent with the graph evidence."),
-                    "followup_hint": str(item.get("followup_hint") or "Ask the model to restate the relation using the paper evidence."),
+                    "followup_hint": str(item.get("followup_hint") or "Ask the model to restate the relation using the Storybench evidence."),
                 }
             )
         elif isinstance(item, str) and item.strip():
@@ -756,7 +756,7 @@ def _normalize_forbidden_claims(items: list, owner_id: str) -> list[dict]:
                     "type": "logic_hallucination",
                     "severity": "high",
                     "why_wrong": "This claim is inconsistent with the reasoning edge/path.",
-                    "followup_hint": "Ask the model to compare the claim against the paper evidence.",
+                    "followup_hint": "Ask the model to compare the claim against the Storybench evidence.",
                 }
             )
     return normalized
@@ -779,7 +779,7 @@ def _ensure_edge_forbidden_claims(edges: list[dict], kc_nodes: list[dict]) -> No
                 "claim": f"The relation between {source_label} and {target_label} is the reverse of {relation}.",
                 "type": "wrong_relation",
                 "severity": "high",
-                "why_wrong": "The graph encodes a directed reasoning relation; reversing it changes the paper's argument structure.",
+                "why_wrong": "The graph encodes a directed reasoning relation; reversing it changes the Storybench's argument structure.",
                 "followup_hint": "Ask whether the source claim supports the target claim, or whether the answer has reversed the direction.",
             }
         ]

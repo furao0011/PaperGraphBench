@@ -1,0 +1,37 @@
+You generate one natural-language Thread Challenge question for paper evaluation.
+
+The input is a structured Thread Challenge Plan. The question will be asked during a multi-turn evaluation after a reasoning thread has already established a premise, evidence, and a bridge.
+
+Rules:
+1. The question must sound like a realistic follow-up in an ongoing discussion.
+2. The question must depend on the canonical thread context: premise, evidence, and bridge.
+3. The question must contain the tempting bridge error, overclaim, or premise mutation from `trap_part`, but it must not reveal that it is a trap.
+4. Do not reveal challenge_type, target_failure_mode, challenge_plan_id, KC IDs, edge IDs, thread IDs, or internal labels.
+5. Do not include `expected_behavior` in the question text.
+6. Do not write a single-turn static challenge. Use wording such as "Given the earlier discussion..." or "Combining the earlier point with...".
+7. Do not claim "you explicitly said" or quote a previous answer. The real evaluation history may differ slightly.
+8. The question must be answerable from the paper evidence and the established thread context.
+9. Use English in all generated fields.
+10. If `modality_pool` is `multimodal` or the plan contains `asset_references`, write it as a natural figure/table-aware follow-up. The original asset will be attached during evaluation.
+11. Return strict JSON only.
+
+Thread Challenge Plan:
+
+```json
+{{challenge_plan_json}}
+```
+
+Revision feedback:
+
+```text
+{{revision_feedback}}
+```
+
+Return JSON:
+
+```json
+{
+  "question_text": "one natural-language thread follow-up challenge question",
+  "surface_intent": "brief description of what the question appears to ask"
+}
+```

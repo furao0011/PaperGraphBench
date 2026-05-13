@@ -73,7 +73,7 @@ def summarize_claim_verifications(results: list[dict]) -> dict:
 def _verify_one_claim(claim: dict, retrieval: dict, client: OpenAICompatClient) -> dict:
     tpl = load_prompt("verify_global_claim.txt")
     result = client.chat_json(
-        system_prompt="You verify whether an answer claim is supported by the paper evidence. Return JSON only.",
+        system_prompt="You verify whether an answer claim is supported by the Storybench evidence. Return JSON only.",
         user_prompt=render_prompt(
             tpl,
             claim_json=json.dumps(claim, ensure_ascii=False),

@@ -252,7 +252,7 @@ def _attach_llm_subjective_scores(
         for node in nodes
     ]
     result = client.chat_json(
-        system_prompt="You score subjective KC quality for paper evaluation. Return JSON only.",
+        system_prompt="You score subjective KC quality for Storybench evaluation. Return JSON only.",
         user_prompt=render_prompt(
             tpl,
             macro_spine_json=json.dumps(macro_spine, ensure_ascii=False, indent=2),
@@ -288,24 +288,55 @@ def _attach_rubrics(
 ) -> None:
     workers = _env_int("RUBRIC_ONLINE_WORKERS", 4, minimum=1)
     futures = {}
+    failed: list[tuple[dict, Exception]] = []
     with ThreadPoolExecutor(max_workers=min(workers, len(nodes))) as ex:
         for node in nodes:
             futures[
                 ex.submit(
-                    build_kc_rubric,
-                    node["kc_id"],
-                    node["full_claim"],
-                    node["evidence_text"],
-                    node["type"],
-                    node["importance"],
+                    _build_rubric_for_node,
+                    node,
                     client,
                     allow_offline_fallback,
                 )
             ] = node
         for fut in as_completed(futures):
             node = futures[fut]
-            _attach_rubric_result(node, fut.result())
-            log("KC Bank rubric generated", kc_id=node["kc_id"])
+            try:
+                _attach_rubric_result(node, fut.result())
+                log("KC Bank rubric generated", kc_id=node["kc_id"])
+            except Exception as exc:
+                failed.append((node, exc))
+                log(
+                    "KC Bank rubric generation failed; queued for sequential retry",
+                    kc_id=node["kc_id"],
+                    error=f"{type(exc).__name__}: {exc}",
+                )
+    for node, first_exc in failed:
+        try:
+            _attach_rubric_result(node, _build_rubric_for_node(node, client, allow_offline_fallback))
+            log("KC Bank rubric generated after retry", kc_id=node["kc_id"])
+        except Exception as final_exc:
+            raise RuntimeError(
+                f"KC Bank rubric generation failed for {node['kc_id']} after batch retry. "
+                f"First error: {type(first_exc).__name__}: {first_exc}. "
+                f"Final error: {type(final_exc).__name__}: {final_exc}"
+            ) from final_exc
+
+
+def _build_rubric_for_node(
+    node: dict,
+    client: OpenAICompatClient,
+    allow_offline_fallback: bool,
+) -> dict:
+    return build_kc_rubric(
+        node["kc_id"],
+        node["full_claim"],
+        node["evidence_text"],
+        node["type"],
+        node["importance"],
+        client,
+        allow_offline_fallback,
+    )
 
 
 def _attach_rubric_result(node: dict, rubric: dict) -> None:

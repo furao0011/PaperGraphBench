@@ -7,7 +7,7 @@ def align_blocks_to_sections(paper_id: str, blocks: list[dict], sections: list[d
     if not isinstance(blocks, list):
         raise ValueError("blocks must be a list.")
     if not sections:
-        raise ValueError("Cannot align paper blocks without sections.")
+        raise ValueError("Cannot align Storybench blocks without sections.")
 
     section_by_title = {_norm(sec.get("title", "")): sec for sec in sections if sec.get("title")}
     section_by_id = {str(sec.get("section_id", "")).strip(): sec for sec in sections if sec.get("section_id")}

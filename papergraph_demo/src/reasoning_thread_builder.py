@@ -62,7 +62,7 @@ def build_reasoning_threads(
     tpl = load_prompt("build_reasoning_threads.txt")
     with span("generate reasoning threads", target=thread_target):
         result = client.chat_json(
-            system_prompt="You construct cross-turn reasoning threads for dynamic paper evaluation. Return JSON only.",
+            system_prompt="You construct cross-turn reasoning threads for dynamic Storybench evaluation. Return JSON only.",
             user_prompt=render_prompt(
                 tpl,
                 graph_context_json=json.dumps(graph_context, ensure_ascii=False, indent=2),

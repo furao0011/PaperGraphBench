@@ -2,6 +2,7 @@ import json
 import os
 from pathlib import Path
 
+from src.artifact_layout import PaperArtifactLayout
 from src.challenge_scheduler import ensure_challenge_states
 from src.config import load_settings
 from src.eval_artifacts import load_eval_checkpoint, save_eval_artifacts
@@ -34,6 +35,30 @@ EVAL_CHECKPOINT_PATH = BASE_DIR / "data" / "outputs" / "evaluation_checkpoint.js
 CLAIM_LOG_PATH = BASE_DIR / "data" / "outputs" / "claim_verification_log.json"
 
 
+def _apply_paper_layout_from_env() -> PaperArtifactLayout | None:
+    paper_id = os.getenv("PAPER_ID", "").strip()
+    if not paper_id:
+        return None
+    layout = PaperArtifactLayout(BASE_DIR, paper_id)
+    _configure_layout_paths(layout)
+    return layout
+
+
+def _configure_layout_paths(layout: PaperArtifactLayout) -> None:
+    global GRAPH_PATH, QUESTION_PATH, TRAJ_PATH, REPORT_PATH, STATE_PATH
+    global FINAL_MMD_PATH, FINAL_THREAD_MMD_PATH, EVAL_CHECKPOINT_PATH, CLAIM_LOG_PATH
+
+    GRAPH_PATH = layout.final("master_graph")
+    QUESTION_PATH = layout.final("question_templates")
+    TRAJ_PATH = layout.final("dialogue_trajectory")
+    REPORT_PATH = layout.final("evaluation_report")
+    STATE_PATH = layout.final("eval_state_graph")
+    FINAL_MMD_PATH = layout.cache_file("evaluation", "final_state_graph")
+    FINAL_THREAD_MMD_PATH = layout.cache_file("evaluation", "final_thread_state_graph")
+    EVAL_CHECKPOINT_PATH = layout.cache_file("evaluation", "evaluation_checkpoint")
+    CLAIM_LOG_PATH = layout.cache_file("evaluation", "claim_verification_log")
+
+
 def _env_bool(name: str, default: bool = False) -> bool:
     raw = os.getenv(name)
     if raw is None:
@@ -46,6 +71,13 @@ def _required_env(name: str) -> str:
     if not value:
         raise RuntimeError(f"Formal evaluation requires {name} for the evaluated target model.")
     return value
+
+
+def _env_path(name: str, default: Path) -> Path:
+    raw = os.getenv(name)
+    if raw is None or not raw.strip():
+        return default
+    return Path(raw.strip())
 
 
 def _build_eval_target_client() -> OpenAICompatClient:
@@ -74,6 +106,15 @@ def _save_eval_artifacts(graph: dict, eval_state: dict, trajectory: dict, checkp
 
 def main() -> None:
     settings = load_settings(BASE_DIR.parent)
+    _apply_paper_layout_from_env()
+    graph_override = os.getenv("PAPERGRAPH_GRAPH_PATH", "").strip()
+    question_override = os.getenv("PAPERGRAPH_QUESTION_PATH", "").strip()
+    if graph_override:
+        global GRAPH_PATH
+        GRAPH_PATH = Path(graph_override)
+    if question_override:
+        global QUESTION_PATH
+        QUESTION_PATH = Path(question_override)
     use_online_eval = _env_bool("USE_ONLINE_EVAL")
     allow_mock_eval = _env_bool("ALLOW_MOCK_EVAL")
     allow_offline_fallback = (
@@ -82,7 +123,7 @@ def main() -> None:
     )
     resume = _env_bool("PAPERGRAPH_RESUME") or _env_bool("EVAL_RESUME")
     restart = _env_bool("PAPERGRAPH_RESTART") or _env_bool("EVAL_RESTART")
-    checkpoint_path = Path(os.getenv("EVAL_CHECKPOINT_PATH", str(EVAL_CHECKPOINT_PATH)))
+    checkpoint_path = _env_path("EVAL_CHECKPOINT_PATH", EVAL_CHECKPOINT_PATH)
     client = OpenAICompatClient(ModelConfig(settings.api_key, settings.base_url, settings.llm_model))
     target_client = _build_eval_target_client() if use_online_eval else client
     target_model = target_client.cfg.llm_model if target_client and target_client.is_ready() else "mock-model"
@@ -102,7 +143,7 @@ def main() -> None:
     questions = repair_questions_for_graph(graph, json.loads(QUESTION_PATH.read_text(encoding="utf-8")))
     by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", [])}
     kc_bank = load_kc_bank(graph, BASE_DIR)
-    with span("load paper text"):
+    with span("load Storybench text"):
         paper_text = load_full_paper_text(graph, BASE_DIR)
     log(
         "evaluation inputs ready",
@@ -110,6 +151,7 @@ def main() -> None:
         main_questions=len(questions.get("macro_main_questions", questions.get("main_questions", []))),
         thread_question_seeds=len(questions.get("thread_question_seeds", [])),
         challenge_questions=len(questions.get("challenge_questions", [])),
+        thread_challenge_questions=len(questions.get("thread_challenge_questions", [])),
         legacy_path_questions=len(questions.get("multi_hop_questions", [])),
         kc_bank_kcs=len(kc_bank.get("kc_nodes", [])),
         paper_chars=len(paper_text),
@@ -144,7 +186,10 @@ def main() -> None:
         completed_thread_step_ids = set()
     max_turns = int(os.getenv("EVAL_MAX_TURNS", "0") or "0")
     mark_evaluation_running(eval_state)
-    ensure_challenge_states(eval_state, questions.get("challenge_questions", []))
+    ensure_challenge_states(
+        eval_state,
+        questions.get("challenge_questions", []) + questions.get("thread_challenge_questions", []),
+    )
     runner = EvaluationTurnRunner(
         graph=graph,
         by_kc=by_kc,

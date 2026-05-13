@@ -11,7 +11,16 @@ from src.progress import log, span
 from src.prompt_loader import load_prompt, render_prompt
 
 
-FAILURE_MODES = {"overclaim", "wrong_relation", "false_premise", "other", "none"}
+FAILURE_MODES = {
+    "overclaim",
+    "wrong_relation",
+    "false_premise",
+    "thread_overclaim",
+    "thread_wrong_bridge",
+    "thread_premise_mutation",
+    "other",
+    "none",
+}
 
 
 def challenge_solver_configs(default_model: str, provider: str = "common_api") -> list[dict]:
@@ -27,12 +36,10 @@ def run_single_challenge_question_trials(
     if not client or not client.is_ready():
         raise RuntimeError("Challenge filtering requires a configured online model client.")
     if not isinstance(paper_text, str) or not paper_text.strip():
-        raise ValueError("Challenge trial requires non-empty full paper text.")
+        raise ValueError("Challenge trial requires non-empty full Storybench text.")
     solver_runtime = solver_client or client
-    solvers = _solver_configs(
-        solver_runtime.cfg.llm_model,
-        provider="vision_api" if _requires_multimodal_input(question) else "common_api",
-    )
+    provider = "vision_api" if _requires_multimodal_input(question) else "thread_api" if _is_thread_challenge(question) else "common_api"
+    solvers = _solver_configs(solver_runtime.cfg.llm_model, provider=provider)
     return _normalize_trial_bundle(
         question,
         _run_question_trials(question, solvers, client, paper_text, solver_client=solver_runtime),
@@ -58,7 +65,7 @@ def filter_challenge_questions(
     if not isinstance(questions, list) or not questions:
         raise ValueError("Challenge filtering requires non-empty challenge_questions_raw.")
     if not isinstance(paper_text, str) or not paper_text.strip():
-        raise ValueError("Challenge filtering requires non-empty full paper text.")
+        raise ValueError("Challenge filtering requires non-empty full Storybench text.")
 
     solvers = _solver_configs(client.cfg.llm_model)
     signature = _raw_question_signature(raw_questions, solvers, paper_text)
@@ -165,6 +172,20 @@ def _solver_configs(default_model: str, provider: str = "common_api") -> list[di
             "MULTIMODAL_CHALLENGE_SOLVER_TIMEOUT_S",
             _env_positive_int("VISION_TIMEOUT_S", 180),
         )
+    elif provider == "thread_api":
+        count = _env_positive_int(
+            "THREAD_CHALLENGE_SOLVER_COUNT",
+            _env_positive_int("CHALLENGE_SOLVER_COUNT", 3),
+        )
+        models = _text_list(os.getenv("THREAD_CHALLENGE_SOLVER_MODELS", ""))
+        temperature = _env_float(
+            "THREAD_CHALLENGE_SOLVER_TEMPERATURE",
+            _env_float("CHALLENGE_SOLVER_TEMPERATURE", 1.5),
+        )
+        timeout_s = _env_nonnegative_int(
+            "THREAD_CHALLENGE_SOLVER_TIMEOUT_S",
+            _env_nonnegative_int("CHALLENGE_SOLVER_TIMEOUT_S", 0),
+        )
     else:
         count = _env_positive_int("CHALLENGE_SOLVER_COUNT", 3)
         models = _text_list(os.getenv("CHALLENGE_SOLVER_MODELS", ""))
@@ -201,6 +222,9 @@ def _run_question_trials(
     if any(solver.get("provider") == "vision_api" for solver in solvers):
         worker_default = _env_positive_int("CHALLENGE_SOLVER_WORKERS", len(solvers))
         workers = _env_positive_int("MULTIMODAL_CHALLENGE_SOLVER_WORKERS", worker_default)
+    elif any(solver.get("provider") == "thread_api" for solver in solvers):
+        worker_default = _env_positive_int("CHALLENGE_SOLVER_WORKERS", len(solvers))
+        workers = _env_positive_int("THREAD_CHALLENGE_SOLVER_WORKERS", worker_default)
     else:
         workers = _env_positive_int("CHALLENGE_SOLVER_WORKERS", len(solvers))
     workers = min(workers, len(solvers))
@@ -243,7 +267,7 @@ def _solve_question(question: dict, solver: dict, client: OpenAICompatClient, pa
     image_paths = _question_image_paths(question)
     with span("challenge solver answer", question_id=question["question_id"], solver_id=solver["solver_id"]):
         system_prompt = (
-            "Answer the paper-evaluation question based only on the provided original paper, attached figure/table assets, and dialogue context."
+            "Answer the Storybench-evaluation question based only on the provided original Storybench, attached figure/table assets, and dialogue context."
         )
         if _requires_multimodal_input(question) and image_paths:
             answer = client.chat_text_with_images(
@@ -287,7 +311,7 @@ def _judge_solver_answer(
     }
     with span("judge challenge answer", question_id=question["question_id"], solver_id=solver["solver_id"]):
         result = client.chat_json(
-            system_prompt="You judge challenge-question answers for paper evaluation. Return JSON only.",
+            system_prompt="You judge challenge-question answers for Storybench evaluation. Return JSON only.",
             user_prompt=render_prompt(
                 judge_tpl,
                 challenge_trial_json=json.dumps(payload, ensure_ascii=False, indent=2),
@@ -371,6 +395,10 @@ def _question_with_filter_metadata(question: dict, bundle: dict) -> dict:
         "wrong_count": bundle["wrong_count"],
         "matched_target_failure_count": bundle["matched_target_failure_count"],
         "solver_count": bundle["solver_count"],
+        "thread_context_used": bool(
+            isinstance(question.get("synthetic_thread_history"), dict)
+            and question.get("synthetic_thread_history", {}).get("thread_context_used")
+        ),
     }
     item["needs_human_review"] = False
     item["all_solvers_failed"] = False
@@ -400,13 +428,17 @@ def _raw_question_signature(raw_questions: dict, solvers: list[dict], paper_text
 
 def _build_solver_eval_prompt(paper_text: str, question: dict) -> str:
     asset_context = _asset_context_for_prompt(question)
+    synthetic_history = question.get("synthetic_thread_history")
+    if not isinstance(synthetic_history, dict):
+        synthetic_history = {}
+    history_text = str(synthetic_history.get("history_text") or "").strip() or "No previous turns."
     return (
-        "```original paper\n"
+        "```original Storybench\n"
         f"{paper_text}\n"
         "```\n\n"
         f"{asset_context}"
         "[dialogue history]\n"
-        "No previous turns.\n\n"
+        f"{history_text}\n\n"
         "[current question]\n"
         f"{question['question_text']}"
     )
@@ -414,6 +446,14 @@ def _build_solver_eval_prompt(paper_text: str, question: dict) -> str:
 
 def _requires_multimodal_input(question: dict) -> bool:
     return bool(question.get("requires_multimodal_input") or question.get("asset_references"))
+
+
+def _is_thread_challenge(question: dict) -> bool:
+    return (
+        question.get("question_type") == "thread_challenge_question"
+        or question.get("challenge_scope") == "thread"
+        or str(question.get("challenge_type") or "").startswith("thread_")
+    )
 
 
 def _question_image_paths(question: dict) -> list[str]:

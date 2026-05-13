@@ -69,6 +69,9 @@ def initialize_eval_state(master_graph: dict, target_model: str) -> dict:
                 "related_turns": [],
                 "bridge_success": None,
                 "review_consistency": None,
+                "thread_challenge_count": 0,
+                "thread_challenge_question_ids": [],
+                "thread_challenge_results": [],
             }
             for thread in master_graph.get("reasoning_threads", [])
             if thread.get("thread_id")
@@ -225,6 +228,7 @@ def apply_judge_result(
         "macro_update": macro_update,
         "thread_update": thread_update,
         "challenge_update": challenge_update,
+        "thread_challenge_update": challenge_update if question_type == "thread_challenge_question" else {},
         "structured_update": structured_update,
         "failed": eval_state["global_state"]["failed"],
     }

@@ -31,7 +31,7 @@ def build_challenge_questions_loop(
     if not client or not client.is_ready():
         raise RuntimeError("Challenge loop requires a configured online model client.")
     if not isinstance(paper_text, str) or not paper_text.strip():
-        raise ValueError("Challenge loop requires non-empty full paper text.")
+        raise ValueError("Challenge loop requires non-empty full Storybench text.")
     plans = challenge_plans.get("challenge_plans", [])
     if not isinstance(plans, list) or not plans:
         raise ValueError("Challenge loop requires non-empty challenge_plans.")
@@ -188,7 +188,7 @@ def _judge_question_usability(plan: dict, question: dict, client: OpenAICompatCl
         },
     }
     result = client.chat_json(
-        system_prompt="You validate challenge questions for paper evaluation. Return JSON only.",
+        system_prompt="You validate challenge questions for Storybench evaluation. Return JSON only.",
         user_prompt=render_prompt(
             tpl,
             usability_check_json=json.dumps(payload, ensure_ascii=False, indent=2),
@@ -221,7 +221,7 @@ def _judge_plan_easiness(
         "solver_trial": trial_bundle,
     }
     result = client.chat_json(
-        system_prompt="You diagnose failed challenge-question attempts for paper evaluation. Return JSON only.",
+        system_prompt="You diagnose failed challenge-question attempts for Storybench evaluation. Return JSON only.",
         user_prompt=render_prompt(
             tpl,
             easiness_check_json=json.dumps(payload, ensure_ascii=False, indent=2),
@@ -385,8 +385,11 @@ def _challenge_plan_signature(challenge_plans: dict) -> dict:
         "plan_sources": [
             [
                 plan.get("challenge_plan_id"),
+                plan.get("challenge_scope", "macro"),
                 plan.get("challenge_type"),
                 plan.get("target_failure_mode"),
+                plan.get("thread_id"),
+                plan.get("preferred_insert_after_step"),
                 plan.get("source", {}).get("kc_ids", []),
                 plan.get("source", {}).get("edge_ids", []),
                 plan.get("source", {}).get("asset_ids", []),
@@ -401,8 +404,13 @@ def _challenge_plan_signature(challenge_plans: dict) -> dict:
 def _prompt_plan(plan: dict) -> dict:
     return {
         "challenge_plan_id": plan.get("challenge_plan_id"),
+        "challenge_scope": plan.get("challenge_scope", "macro"),
         "challenge_type": plan.get("challenge_type"),
+        "thread_id": plan.get("thread_id"),
+        "thread_type": plan.get("thread_type"),
+        "preferred_insert_after_step": plan.get("preferred_insert_after_step"),
         "source": plan.get("source", {}),
+        "canonical_thread_context": plan.get("canonical_thread_context", {}),
         "true_part": plan.get("true_part"),
         "trap_part": plan.get("trap_part"),
         "expected_behavior": plan.get("expected_behavior"),
@@ -410,7 +418,7 @@ def _prompt_plan(plan: dict) -> dict:
         "evidence": plan.get("evidence", []),
         "metadata": plan.get("metadata", {}),
         "modality_pool": plan.get("modality_pool", plan.get("metadata", {}).get("modality_pool", "text")),
-        "asset_references": plan.get("metadata", {}).get("asset_references", []),
+        "asset_references": plan.get("asset_references") or plan.get("metadata", {}).get("asset_references", []),
     }
 
 

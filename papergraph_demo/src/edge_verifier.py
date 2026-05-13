@@ -56,7 +56,7 @@ def verify_edge_candidates(
     tpl = load_prompt("verify_edge_candidate.txt")
     max_workers = min(_env_positive_int("EDGE_VERIFY_WORKERS", 3), len(edge_candidates))
     logs_by_candidate: dict[str, dict] = {}
-    errors: list[str] = []
+    failed: list[tuple[dict, Exception]] = []
 
     def run_one(candidate: dict) -> tuple[str, dict]:
         candidate_edge_id = str(candidate.get("candidate_edge_id", "")).strip()
@@ -65,7 +65,7 @@ def verify_edge_candidates(
         context_packet = _context_packet(candidate, by_kc, by_unit)
         with span("verify edge candidate", candidate_edge_id=candidate_edge_id):
             result = client.chat_json(
-                system_prompt="You verify reasoning edges for a paper evaluation graph. Return JSON only.",
+                system_prompt="You verify reasoning edges for a Storybench evaluation graph. Return JSON only.",
                 user_prompt=render_prompt(
                     tpl,
                     context_packet_json=json.dumps(context_packet, ensure_ascii=False, indent=2),
@@ -88,11 +88,28 @@ def verify_edge_candidates(
                     decision=log_item.get("decision"),
                 )
             except Exception as exc:
-                errors.append(f"{candidate_edge_id}: {type(exc).__name__}: {exc}")
+                failed.append((candidate, exc))
                 log("edge verification error", candidate_edge_id=candidate_edge_id, error=f"{type(exc).__name__}: {exc}")
 
+    errors: list[str] = []
+    for candidate, first_exc in failed:
+        candidate_edge_id = str(candidate.get("candidate_edge_id", "")).strip()
+        try:
+            out_id, log_item = run_one(candidate)
+            logs_by_candidate[out_id] = log_item
+            log(
+                "edge candidate verified after retry",
+                candidate_edge_id=out_id,
+                decision=log_item.get("decision"),
+            )
+        except Exception as final_exc:
+            errors.append(
+                f"{candidate_edge_id}: first={type(first_exc).__name__}: {first_exc}; "
+                f"final={type(final_exc).__name__}: {final_exc}"
+            )
+
     if errors:
-        raise RuntimeError("Edge verification failed: " + "; ".join(errors[:5]))
+        raise RuntimeError("Edge verification failed after retry: " + "; ".join(errors[:5]))
 
     verification_log = [
         logs_by_candidate[candidate["candidate_edge_id"]]

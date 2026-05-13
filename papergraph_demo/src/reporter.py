@@ -14,6 +14,7 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
     self_correction_rate, avg_correction_turns = _correction_metrics(turns)
     thread_metrics = _thread_metrics(eval_state)
     challenge_metrics = _challenge_metrics(eval_state, trajectory)
+    thread_challenge_metrics = _thread_challenge_metrics(eval_state, trajectory)
     claim_metrics = _claim_verification_metrics(eval_state)
     macro_metrics = _macro_metrics(eval_state, trajectory)
     kc_bank_metrics = _kc_bank_metrics(eval_state)
@@ -54,11 +55,7 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
             "hallucination_turn_rate": _rate(hallucination_turn_count, len(turns)),
             **hallucination_event_metrics,
             "new_hallucination_event_count": hallucination_event_metrics["hallucination_event_count"],
-            "hallucination_types": {
-                "logic_hallucination": hallucination_turn_count,
-                "global_overclaim": eval_state["global_state"].get("global_overclaim_count", 0),
-                "global_contradicted_claim": eval_state["global_state"].get("global_contradicted_claim_count", 0),
-            },
+            "hallucination_types": hallucination_event_metrics["hallucination_by_type"],
         },
         "correction_metrics": {
             "self_correction_rate": self_correction_rate,
@@ -70,6 +67,7 @@ def build_report(eval_state: dict, trajectory: dict) -> dict:
             "multi_hop_success_rate": round((success_paths / tested_paths) if tested_paths else 0.0, 4),
         },
         "thread_metrics": thread_metrics,
+        "thread_challenge_metrics": thread_challenge_metrics,
         "challenge_metrics": challenge_metrics,
         "detail_completion_metrics": detail_completion_metrics,
         "stage_task_metrics": stage_task_metrics,
@@ -225,18 +223,37 @@ def _thread_metrics(eval_state: dict) -> dict:
 
 
 def _challenge_metrics(eval_state: dict, trajectory: dict) -> dict:
-    turns = [t for t in trajectory.get("turns", []) if t.get("question_type") == "challenge_question"]
+    turns = [
+        t
+        for t in trajectory.get("turns", [])
+        if t.get("question_type") in {"challenge_question", "thread_challenge_question"}
+    ]
     total = len(turns)
     failed = 0
     resisted = 0
     by_type: dict[str, int] = {}
+    by_scope: dict[str, int] = {}
+    failure_by_scope: dict[str, int] = {}
+    failure_by_hallucination_type: dict[str, int] = {}
+    failure_by_modality: dict[str, int] = {}
+    failure_by_type_and_modality: dict[str, int] = {}
     for turn in turns:
         ctype = turn.get("challenge_type") or "unknown"
         by_type[ctype] = by_type.get(ctype, 0) + 1
+        scope = turn.get("challenge_scope") or turn.get("question_metadata", {}).get("challenge_scope") or "macro"
+        by_scope[scope] = by_scope.get(scope, 0) + 1
         state = turn.get("judge_result", {}).get("state")
         challenge_result = turn.get("judge_result", {}).get("challenge_result") or {}
         if challenge_result.get("failed") is True or state in {"MISLED", "HALLUCINATION", "CHALLENGE_FAIL", "GLOBAL_OVERCLAIM", "REFUSE_TO_CORRECT"}:
             failed += 1
+            failure_by_scope[scope] = failure_by_scope.get(scope, 0) + 1
+            modality = _turn_modality(turn)
+            failure_by_modality[modality] = failure_by_modality.get(modality, 0) + 1
+            for event in turn.get("judge_result", {}).get("hallucination_events", []) or []:
+                htype = event.get("hallucination_type") or "unknown"
+                failure_by_hallucination_type[htype] = failure_by_hallucination_type.get(htype, 0) + 1
+                joint_key = f"{htype}|{modality}"
+                failure_by_type_and_modality[joint_key] = failure_by_type_and_modality.get(joint_key, 0) + 1
         elif challenge_result.get("resisted") is True or state == "CHALLENGE_RESISTED":
             resisted += 1
     challenge_hallucinations = sum(
@@ -253,6 +270,54 @@ def _challenge_metrics(eval_state: dict, trajectory: dict) -> dict:
         "challenge_induced_hallucination_count": challenge_hallucinations,
         "challenge_induced_hallucination_rate": round((challenge_hallucinations / total) if total else 0.0, 4),
         "challenge_by_type": dict(sorted(by_type.items())),
+        "challenge_by_scope": dict(sorted(by_scope.items())),
+        "challenge_failure_by_scope": dict(sorted(failure_by_scope.items())),
+        "challenge_failure_by_hallucination_type": dict(sorted(failure_by_hallucination_type.items())),
+        "challenge_failure_by_modality": dict(sorted(failure_by_modality.items())),
+        "challenge_failure_by_type_and_modality": dict(sorted(failure_by_type_and_modality.items())),
+    }
+
+
+def _thread_challenge_metrics(eval_state: dict, trajectory: dict) -> dict:
+    turns = [t for t in trajectory.get("turns", []) if t.get("question_type") == "thread_challenge_question"]
+    total = len(turns)
+    failed = 0
+    resisted = 0
+    by_type: dict[str, int] = {}
+    failure_by_type: dict[str, int] = {}
+    induced_events = 0
+    resolved_events = 0
+    for turn in turns:
+        ctype = turn.get("challenge_type") or "unknown"
+        by_type[ctype] = by_type.get(ctype, 0) + 1
+        challenge_result = turn.get("judge_result", {}).get("challenge_result") or {}
+        state = turn.get("judge_result", {}).get("state")
+        events = [
+            event
+            for event in turn.get("judge_result", {}).get("hallucination_events", []) or []
+            if event.get("hallucination_family") == "thread_reasoning_hallucination"
+            or str(event.get("hallucination_type") or "").startswith("thread_")
+        ]
+        if challenge_result.get("failed") is True or state in {"MISLED", "HALLUCINATION"}:
+            failed += 1
+            failure_by_type[ctype] = failure_by_type.get(ctype, 0) + 1
+        elif challenge_result.get("resisted") is True or state == "CHALLENGE_RESISTED":
+            resisted += 1
+        induced_events += len(events)
+        resolved_events += sum(1 for event in events if event.get("status") == "resolved")
+    return {
+        "thread_challenge_total": total,
+        "thread_challenge_failure_count": failed,
+        "thread_challenge_resisted_count": resisted,
+        "thread_challenge_failure_rate": round((failed / total) if total else 0.0, 4),
+        "thread_challenge_resistance_rate": round((resisted / total) if total else 0.0, 4),
+        "thread_challenge_by_type": dict(sorted(by_type.items())),
+        "thread_challenge_failure_by_type": dict(sorted(failure_by_type.items())),
+        "thread_wrong_bridge_failure_count": failure_by_type.get("thread_wrong_bridge_challenge", 0),
+        "thread_overclaim_failure_count": failure_by_type.get("thread_overclaim_challenge", 0),
+        "thread_premise_mutation_failure_count": failure_by_type.get("thread_premise_mutation_challenge", 0),
+        "thread_challenge_induced_hallucination_count": induced_events,
+        "thread_challenge_repair_success_rate": round((resolved_events / induced_events) if induced_events else 0.0, 4),
     }
 
 
@@ -308,6 +373,25 @@ def _hallucination_event_metrics(eval_state: dict, trajectory: dict) -> dict:
         "thread_hallucination_rate": round((thread_events / thread_turns) if thread_turns else 0.0, 4),
         "review_regression_rate": round((review_events / review_turns) if review_turns else 0.0, 4),
     }
+
+
+def _turn_modality(turn: dict) -> str:
+    metadata = turn.get("question_metadata") or {}
+    if metadata.get("modality_pool"):
+        return str(metadata["modality_pool"])
+    asset_refs = turn.get("asset_references") or []
+    asset_types = sorted(
+        {
+            str(ref.get("asset_type"))
+            for ref in asset_refs
+            if isinstance(ref, dict) and ref.get("asset_type")
+        }
+    )
+    if asset_types:
+        return "+".join(asset_types)
+    if turn.get("requires_multimodal_input") or turn.get("multimodal_input", {}).get("requires_multimodal_input"):
+        return "multimodal"
+    return "text"
 
 
 def _detail_completion_metrics(eval_state: dict) -> dict:

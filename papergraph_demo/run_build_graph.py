@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 
 from src.active_kc_selector import select_active_kcs
+from src.artifact_layout import PaperArtifactLayout, safe_paper_id
 from src.config import load_settings
 from src.edge_candidate_builder import (
     build_adjacent_macro_edge_candidates,
@@ -30,6 +31,7 @@ from src.multimodal_kc_extractor import extract_multimodal_kc_candidates
 from src.multimodal_unit_builder import augment_extraction_units_with_multimodal_units
 from src.paper_block_aligner import align_blocks_to_sections
 from src.paper_block_parser import load_paper_bundle_from_dir, load_paper_bundle_from_file
+from src.paper_eval_context_builder import build_eval_paper_context
 from src.paper_parser import split_into_sections
 from src.progress import log, span
 from src.reasoning_thread_builder import build_reasoning_threads
@@ -41,6 +43,10 @@ MASTER_GRAPH_BUILDER_VERSION = "v5_active_target_ids"
 EDGE_ARTIFACT_SIGNATURE_VERSION = "v1_multimodal_virtual_units"
 PAPER_PATH = BASE_DIR / "data" / "papers" / "demo_paper.md"
 PAPER_DIR_PATH = BASE_DIR.parent / "util_example" / "output1"
+RAW_PAPER_ROOT = BASE_DIR.parent / "rawPaper"
+PAPER_TEXT_DIR = BASE_DIR / "data" / "papers"
+PAPER_CLEAN_TEXT_PATH = PAPER_TEXT_DIR / "paper_clean_text.md"
+PAPER_EVAL_CONTEXT_PATH = PAPER_TEXT_DIR / "paper_eval_context.md"
 GRAPH_PATH = BASE_DIR / "data" / "graphs" / "master_graph.json"
 MASTER_MMD_PATH = BASE_DIR / "data" / "graphs" / "master_graph.mmd"
 MACRO_SPINE_MMD_PATH = BASE_DIR / "data" / "graphs" / "macro_spine.mmd"
@@ -69,28 +75,83 @@ MULTIMODAL_ASSET_EXPLANATIONS_PATH = MULTIMODAL_DIR / "multimodal_asset_explanat
 MULTIMODAL_KC_CANDIDATES_PATH = MULTIMODAL_DIR / "multimodal_kc_candidates.json"
 
 
+def _layout_paths(layout: PaperArtifactLayout) -> tuple[Path, ...]:
+    return (
+        layout.final("master_graph"),
+        layout.cache_file("graph_build", "master_graph_mermaid"),
+        layout.cache_file("graph_build", "macro_spine_mermaid"),
+        layout.cache_file("graph_build", "reasoning_threads_mermaid"),
+        layout.cache_file("graph_build", "sections"),
+        layout.cache_file("graph_build", "macro_spine"),
+        layout.cache_file("graph_build", "extraction_units"),
+        layout.cache_file("graph_build", "kc_candidates"),
+        layout.cache_file("graph_build", "kc_bank"),
+        layout.cache_file("graph_build", "edge_candidate_units"),
+        layout.cache_file("graph_build", "edge_candidate_macro"),
+        layout.cache_file("graph_build", "edge_candidate_cross_macro"),
+        layout.cache_file("graph_build", "edge_candidate_thread"),
+        layout.cache_file("graph_build", "verified_edges"),
+        layout.cache_file("graph_build", "edge_verification_log"),
+        layout.cache_file("graph_build", "edge_coverage_report"),
+        layout.cache_file("graph_build", "kc_bank_reasoning_edges"),
+        layout.cache_file("graph_build", "active_kc"),
+        layout.cache_file("graph_build", "reasoning_threads"),
+        layout.cache_file("graph_build", "build_graph_checkpoint"),
+        layout.cache_dir("multimodal"),
+        layout.cache_file("multimodal", "paper_blocks"),
+        layout.cache_file("multimodal", "multimodal_asset_groups"),
+        layout.final("multimodal_assets"),
+        layout.final("multimodal_asset_explanations"),
+        layout.cache_file("multimodal", "multimodal_kc_candidates"),
+        layout.root,
+        layout.final("paper_clean_text"),
+        layout.final("paper_eval_context"),
+    )
+
+
+def _resolve_input_dir(requested_paper_id: str) -> Path:
+    explicit = os.getenv("PAPER_INPUT_DIR", "").strip()
+    if explicit:
+        return Path(explicit)
+    if requested_paper_id:
+        raw_root = _env_path("RAW_PAPER_ROOT", RAW_PAPER_ROOT)
+        return raw_root / requested_paper_id
+    return PAPER_DIR_PATH
+
+
 def main() -> None:
+    global GRAPH_PATH, MASTER_MMD_PATH, MACRO_SPINE_MMD_PATH, REASONING_THREADS_MMD_PATH
+    global SECTIONS_PATH, MACRO_SPINE_PATH, EXTRACTION_UNITS_PATH, KC_CANDIDATES_PATH
+    global KC_BANK_PATH, EDGE_CANDIDATE_UNITS_PATH, EDGE_CANDIDATE_MACRO_PATH
+    global EDGE_CANDIDATE_CROSS_MACRO_PATH, EDGE_CANDIDATE_THREAD_PATH, VERIFIED_EDGES_PATH
+    global EDGE_VERIFICATION_LOG_PATH, EDGE_COVERAGE_REPORT_PATH, BANK_EDGES_PATH, ACTIVE_KC_PATH
+    global REASONING_THREADS_PATH, BUILD_CHECKPOINT_PATH, MULTIMODAL_DIR, PAPER_BLOCKS_PATH
+    global MULTIMODAL_ASSET_GROUPS_PATH, MULTIMODAL_ASSETS_PATH
+    global MULTIMODAL_ASSET_EXPLANATIONS_PATH, MULTIMODAL_KC_CANDIDATES_PATH
+    global PAPER_TEXT_DIR, PAPER_CLEAN_TEXT_PATH, PAPER_EVAL_CONTEXT_PATH
+
     project_root = BASE_DIR.parent
     settings = load_settings(project_root)
     log("build_graph configuration loaded", base_dir=BASE_DIR)
 
-    input_dir = Path(os.getenv("PAPER_INPUT_DIR", str(PAPER_DIR_PATH)))
-    input_file = Path(os.getenv("PAPER_INPUT_FILE", str(PAPER_PATH)))
+    requested_paper_id = safe_paper_id(os.getenv("PAPER_ID", ""))
+    input_dir = _resolve_input_dir(requested_paper_id)
+    input_file = _env_path("PAPER_INPUT_FILE", PAPER_PATH)
 
     if input_dir.exists():
-        log("loading paper from directory", input_dir=input_dir)
-        with span("load paper directory"):
+        log("loading Storybench from directory", input_dir=input_dir)
+        with span("load Storybench directory"):
             paper_bundle = load_paper_bundle_from_dir(input_dir)
             paper_text = paper_bundle["clean_text"]
-        paper_id = input_dir.name
-        paper_text_path = str(input_dir)
+        paper_id = requested_paper_id or safe_paper_id(input_dir.name)
+        raw_paper_path = str(input_dir)
     elif input_file.exists():
-        log("loading paper from file", input_file=input_file)
-        with span("load paper file"):
+        log("loading Storybench from file", input_file=input_file)
+        with span("load Storybench file"):
             paper_bundle = load_paper_bundle_from_file(input_file)
             paper_text = paper_bundle["clean_text"]
-        paper_id = input_file.stem
-        paper_text_path = str(input_file)
+        paper_id = requested_paper_id or safe_paper_id(input_file.stem)
+        raw_paper_path = str(input_file)
     else:
         raise FileNotFoundError(
             f"No valid input found. Checked directory: {input_dir}, file: {input_file}"
@@ -98,9 +159,42 @@ def main() -> None:
 
     allow_offline_fallback = _env_bool("ALLOW_OFFLINE_FALLBACK")
     multimodal_enabled = _env_bool("MULTIMODAL_ENABLED")
+    use_multimodal_eval_context = _env_bool("EVAL_USE_MULTIMODAL_PAPER_CONTEXT", False)
     resume = _env_bool("PAPERGRAPH_RESUME") or _env_bool("BUILD_GRAPH_RESUME")
     restart = _env_bool("PAPERGRAPH_RESTART") or _env_bool("BUILD_GRAPH_RESTART")
-    checkpoint_path = Path(os.getenv("BUILD_GRAPH_CHECKPOINT_PATH", str(BUILD_CHECKPOINT_PATH)))
+    layout = PaperArtifactLayout(BASE_DIR, paper_id)
+    (
+        GRAPH_PATH,
+        MASTER_MMD_PATH,
+        MACRO_SPINE_MMD_PATH,
+        REASONING_THREADS_MMD_PATH,
+        SECTIONS_PATH,
+        MACRO_SPINE_PATH,
+        EXTRACTION_UNITS_PATH,
+        KC_CANDIDATES_PATH,
+        KC_BANK_PATH,
+        EDGE_CANDIDATE_UNITS_PATH,
+        EDGE_CANDIDATE_MACRO_PATH,
+        EDGE_CANDIDATE_CROSS_MACRO_PATH,
+        EDGE_CANDIDATE_THREAD_PATH,
+        VERIFIED_EDGES_PATH,
+        EDGE_VERIFICATION_LOG_PATH,
+        EDGE_COVERAGE_REPORT_PATH,
+        BANK_EDGES_PATH,
+        ACTIVE_KC_PATH,
+        REASONING_THREADS_PATH,
+        BUILD_CHECKPOINT_PATH,
+        MULTIMODAL_DIR,
+        PAPER_BLOCKS_PATH,
+        MULTIMODAL_ASSET_GROUPS_PATH,
+        MULTIMODAL_ASSETS_PATH,
+        MULTIMODAL_ASSET_EXPLANATIONS_PATH,
+        MULTIMODAL_KC_CANDIDATES_PATH,
+        PAPER_TEXT_DIR,
+        PAPER_CLEAN_TEXT_PATH,
+        PAPER_EVAL_CONTEXT_PATH,
+    ) = _layout_paths(layout)
+    checkpoint_path = _env_path("BUILD_GRAPH_CHECKPOINT_PATH", BUILD_CHECKPOINT_PATH)
     client = OpenAICompatClient(
         ModelConfig(
             api_key=settings.api_key,
@@ -116,12 +210,15 @@ def main() -> None:
     log("build graph resume settings", resume=resume, restart=restart, checkpoint=checkpoint_path)
 
     SECTIONS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    PAPER_TEXT_DIR.mkdir(parents=True, exist_ok=True)
+    PAPER_CLEAN_TEXT_PATH.write_text(paper_text, encoding="utf-8")
+    paper_text_path = layout.rel(PAPER_CLEAN_TEXT_PATH)
 
     sections_payload = _load_resumable_json(SECTIONS_PATH, paper_id, resume, restart, "sections")
     if sections_payload:
         sections = sections_payload["sections"]
     else:
-        with span("split paper into sections", paper_chars=len(paper_text)):
+        with span("split Storybench into sections", paper_chars=len(paper_text)):
             sections = split_into_sections(paper_text)
         _write_json(SECTIONS_PATH, {"paper_id": paper_id, "sections": sections})
         _write_build_checkpoint(checkpoint_path, paper_id, "sections", resume=resume, restart=restart)
@@ -129,18 +226,21 @@ def main() -> None:
 
     paper_blocks_payload = None
     if multimodal_enabled:
-        with span("align paper blocks to sections", blocks=len(paper_bundle.get("blocks", []))):
-            paper_blocks_payload = align_blocks_to_sections(
-                paper_id=paper_id,
-                blocks=paper_bundle.get("blocks", []),
-                sections=sections,
-            )
-        _write_json(PAPER_BLOCKS_PATH, paper_blocks_payload)
+        paper_blocks_payload = _load_resumable_json(PAPER_BLOCKS_PATH, paper_id, resume, restart, "multimodal paper blocks")
+        if not paper_blocks_payload:
+            with span("align Storybench blocks to sections", blocks=len(paper_bundle.get("blocks", []))):
+                paper_blocks_payload = align_blocks_to_sections(
+                    paper_id=paper_id,
+                    blocks=paper_bundle.get("blocks", []),
+                    sections=sections,
+                )
+            _write_json(PAPER_BLOCKS_PATH, paper_blocks_payload)
+            _write_build_checkpoint(checkpoint_path, paper_id, "multimodal_paper_blocks", resume=resume, restart=restart)
         diagnostics = paper_blocks_payload.get("diagnostics", {})
         if diagnostics.get("image_path_missing_count", 0):
             raise RuntimeError(f"Multimodal image path diagnostics failed: {diagnostics}")
         log(
-            "multimodal paper blocks ready",
+            "multimodal Storybench blocks ready",
             path=PAPER_BLOCKS_PATH,
             blocks=paper_blocks_payload.get("summary", {}).get("block_count", 0),
             diagnostics=diagnostics,
@@ -161,48 +261,86 @@ def main() -> None:
     multimodal_asset_explanations_payload = None
     if multimodal_enabled:
         if paper_blocks_payload is None:
-            raise RuntimeError("MULTIMODAL_ENABLED=true requires aligned paper blocks.")
-        with span("group multimodal assets", blocks=len(paper_blocks_payload.get("blocks", []))):
-            multimodal_asset_groups_payload = group_multimodal_assets(
+            raise RuntimeError("MULTIMODAL_ENABLED=true requires aligned Storybench blocks.")
+        multimodal_asset_groups_payload = _load_resumable_json(
+            MULTIMODAL_ASSET_GROUPS_PATH,
+            paper_id,
+            resume,
+            restart,
+            "multimodal asset groups",
+        )
+        if not multimodal_asset_groups_payload:
+            with span("group multimodal assets", blocks=len(paper_blocks_payload.get("blocks", []))):
+                multimodal_asset_groups_payload = group_multimodal_assets(
+                    paper_id=paper_id,
+                    blocks=paper_blocks_payload.get("blocks", []),
+                    sections=sections,
+                )
+            with span("analyze multimodal HTML groups", groups=len(multimodal_asset_groups_payload.get("asset_groups", []))):
+                multimodal_asset_groups_payload = analyze_multimodal_html_groups(
+                    paper_id=paper_id,
+                    asset_groups=multimodal_asset_groups_payload,
+                    client=client,
+                )
+            _write_json(MULTIMODAL_ASSET_GROUPS_PATH, multimodal_asset_groups_payload)
+            _write_build_checkpoint(checkpoint_path, paper_id, "multimodal_asset_groups", resume=resume, restart=restart)
+        multimodal_assets_payload = _load_resumable_json(
+            MULTIMODAL_ASSETS_PATH,
+            paper_id,
+            resume,
+            restart,
+            "multimodal assets",
+        )
+        if not multimodal_assets_payload:
+            with span("normalize multimodal assets", groups=len(multimodal_asset_groups_payload.get("asset_groups", []))):
+                multimodal_assets_payload = normalize_multimodal_assets(
+                    paper_id=paper_id,
+                    asset_groups=multimodal_asset_groups_payload,
+                    macro_spine=macro_spine,
+                )
+            _write_json(MULTIMODAL_ASSETS_PATH, multimodal_assets_payload)
+            _write_build_checkpoint(checkpoint_path, paper_id, "multimodal_assets", resume=resume, restart=restart)
+        multimodal_asset_explanations_payload = _load_resumable_json(
+            MULTIMODAL_ASSET_EXPLANATIONS_PATH,
+            paper_id,
+            resume,
+            restart,
+            "multimodal asset explanations",
+        )
+        if not multimodal_asset_explanations_payload:
+            with span("explain multimodal assets", assets=len(multimodal_assets_payload.get("assets", []))):
+                vision_client = build_vision_client(
+                    embed_api_key=settings.embed_api_key,
+                    vision_api_key=settings.vision_api_key,
+                    vision_base_url=settings.vision_base_url,
+                    vision_model=settings.vision_model,
+                )
+                multimodal_asset_explanations_payload = explain_multimodal_assets(
+                    paper_id=paper_id,
+                    assets_payload=multimodal_assets_payload,
+                    text_client=client,
+                    vision_client=vision_client,
+                )
+            _write_json(MULTIMODAL_ASSET_EXPLANATIONS_PATH, multimodal_asset_explanations_payload)
+            _write_build_checkpoint(checkpoint_path, paper_id, "multimodal_asset_explanations", resume=resume, restart=restart)
+        with span("build evaluation Storybench context", blocks=len(paper_blocks_payload.get("blocks", []))):
+            eval_context_payload = build_eval_paper_context(
                 paper_id=paper_id,
                 blocks=paper_blocks_payload.get("blocks", []),
-                sections=sections,
-            )
-        with span("analyze multimodal HTML groups", groups=len(multimodal_asset_groups_payload.get("asset_groups", []))):
-            multimodal_asset_groups_payload = analyze_multimodal_html_groups(
-                paper_id=paper_id,
-                asset_groups=multimodal_asset_groups_payload,
-                client=client,
-            )
-        _write_json(MULTIMODAL_ASSET_GROUPS_PATH, multimodal_asset_groups_payload)
-        with span("normalize multimodal assets", groups=len(multimodal_asset_groups_payload.get("asset_groups", []))):
-            multimodal_assets_payload = normalize_multimodal_assets(
-                paper_id=paper_id,
-                asset_groups=multimodal_asset_groups_payload,
-                macro_spine=macro_spine,
-            )
-        _write_json(MULTIMODAL_ASSETS_PATH, multimodal_assets_payload)
-        with span("explain multimodal assets", assets=len(multimodal_assets_payload.get("assets", []))):
-            vision_client = build_vision_client(
-                embed_api_key=settings.embed_api_key,
-                vision_api_key=settings.vision_api_key,
-                vision_base_url=settings.vision_base_url,
-                vision_model=settings.vision_model,
-            )
-            multimodal_asset_explanations_payload = explain_multimodal_assets(
-                paper_id=paper_id,
                 assets_payload=multimodal_assets_payload,
-                text_client=client,
-                vision_client=vision_client,
+                explanations_payload=multimodal_asset_explanations_payload,
             )
-        _write_json(MULTIMODAL_ASSET_EXPLANATIONS_PATH, multimodal_asset_explanations_payload)
+        PAPER_EVAL_CONTEXT_PATH.write_text(eval_context_payload["text"], encoding="utf-8")
         log(
             "multimodal assets ready",
             groups=multimodal_asset_groups_payload.get("summary", {}).get("asset_group_count", 0),
             assets=multimodal_assets_payload.get("summary", {}).get("asset_count", 0),
             explanations=multimodal_asset_explanations_payload.get("summary", {}).get("asset_explanation_count", 0),
             macro_unresolved=multimodal_assets_payload.get("summary", {}).get("macro_unresolved_count", 0),
+            eval_context_inserted_assets=eval_context_payload.get("summary", {}).get("inserted_asset_count", 0),
         )
+    else:
+        PAPER_EVAL_CONTEXT_PATH.write_text(paper_text, encoding="utf-8")
 
     extraction_units_enabled = _env_bool("EXTRACTION_UNIT_ENABLED", True)
     extraction_units = None
@@ -300,7 +438,7 @@ def main() -> None:
             kc_candidates = kc_candidates + multimodal_candidates
             kc_candidates_payload["kc_candidates"] = kc_candidates
             kc_candidates_payload["multimodal_kc_enabled"] = True
-            kc_candidates_payload["multimodal_kc_candidates_path"] = "data/multimodal/multimodal_kc_candidates.json"
+            kc_candidates_payload["multimodal_kc_candidates_path"] = layout.rel(MULTIMODAL_KC_CANDIDATES_PATH)
             kc_candidates_payload["multimodal_candidate_count"] = len(multimodal_candidates)
             kc_candidates_payload["extraction_source"] = f"{kc_extraction_source}+multimodal"
             _write_json(KC_CANDIDATES_PATH, kc_candidates_payload)
@@ -697,7 +835,7 @@ def main() -> None:
             "reasoning_edge_source": graph_edge_source,
             "graph_signature": score_signature,
             "reasoning_edge_count": len(graph_reasoning_edges),
-            "edge_coverage_report_path": "data/graphs/edge_coverage_report.json" if coverage_report else None,
+            "edge_coverage_report_path": layout.rel(EDGE_COVERAGE_REPORT_PATH) if coverage_report else None,
             "kc_bank_signature": kc_bank_signature,
         }
         if isinstance(kc_bank.get("extension_metadata"), dict):
@@ -767,11 +905,11 @@ def main() -> None:
                 client=client,
                 allow_offline_fallback=allow_offline_fallback,
                 macro_spine=macro_spine,
-                kc_bank_path="data/graphs/kc_bank.json",
-                active_kc_path="data/graphs/active_kc.json",
+                kc_bank_path=layout.rel(KC_BANK_PATH),
+                active_kc_path=layout.rel(ACTIVE_KC_PATH),
                 precomputed_reasoning_edges=graph_reasoning_edges,
                 reasoning_edge_source=graph_edge_source,
-                edge_coverage_report_path="data/graphs/edge_coverage_report.json" if coverage_report else None,
+                edge_coverage_report_path=layout.rel(EDGE_COVERAGE_REPORT_PATH) if coverage_report else None,
                 active_kc_ids=active_kc.get("active_kc_ids", []),
             )
             graph.setdefault("diagnostics", {})["graph_signature"] = _master_graph_signature(
@@ -784,9 +922,9 @@ def main() -> None:
             graph["diagnostics"]["master_graph_kc_source"] = graph_kc_source
         _write_build_checkpoint(checkpoint_path, paper_id, "master_graph_base", resume=resume, restart=restart)
     if multimodal_enabled:
-        graph["multimodal_assets_path"] = "data/multimodal/multimodal_assets.json"
-        graph["multimodal_asset_groups_path"] = "data/multimodal/multimodal_asset_groups.json"
-        graph["multimodal_asset_explanations_path"] = "data/multimodal/multimodal_asset_explanations.json"
+        graph["multimodal_assets_path"] = layout.rel(MULTIMODAL_ASSETS_PATH)
+        graph["multimodal_asset_groups_path"] = layout.rel(MULTIMODAL_ASSET_GROUPS_PATH)
+        graph["multimodal_asset_explanations_path"] = layout.rel(MULTIMODAL_ASSET_EXPLANATIONS_PATH)
         graph.setdefault("diagnostics", {})["multimodal_enabled"] = True
         graph["diagnostics"]["multimodal_summary"] = (
             multimodal_assets_payload.get("summary", {}) if multimodal_assets_payload else {}
@@ -794,6 +932,11 @@ def main() -> None:
         graph["diagnostics"]["multimodal_explanation_summary"] = (
             multimodal_asset_explanations_payload.get("summary", {}) if multimodal_asset_explanations_payload else {}
         )
+    graph["paper_text_path"] = layout.rel(PAPER_CLEAN_TEXT_PATH)
+    graph["evaluation_paper_text_path"] = layout.rel(
+        PAPER_EVAL_CONTEXT_PATH if use_multimodal_eval_context else PAPER_CLEAN_TEXT_PATH
+    )
+    graph["raw_paper_path"] = raw_paper_path
     if coverage_report:
         coverage_report = attach_reasoning_path_coverage(coverage_report, graph.get("reasoning_paths", []))
         _write_json(EDGE_COVERAGE_REPORT_PATH, coverage_report)
@@ -823,7 +966,7 @@ def main() -> None:
         reasoning_threads["source_graph_signature"] = graph.get("diagnostics", {}).get("graph_signature")
         _write_json(REASONING_THREADS_PATH, reasoning_threads)
         _write_build_checkpoint(checkpoint_path, paper_id, "reasoning_threads", resume=resume, restart=restart)
-    graph["reasoning_threads_path"] = "data/graphs/reasoning_threads.json"
+    graph["reasoning_threads_path"] = layout.rel(REASONING_THREADS_PATH)
     graph["reasoning_threads"] = reasoning_threads.get("threads", [])
     _annotate_macro_bank_counts(graph, kc_bank, active_kc)
     log(
@@ -894,6 +1037,13 @@ def _env_bool(name: str, default: bool = False) -> bool:
     if raw is None:
         return default
     return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _env_path(name: str, default: Path) -> Path:
+    raw = os.getenv(name)
+    if raw is None or not raw.strip():
+        return default
+    return Path(raw.strip())
 
 
 def _write_json(path: Path, payload: dict) -> None:

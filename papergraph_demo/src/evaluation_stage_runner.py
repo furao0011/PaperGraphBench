@@ -1,7 +1,8 @@
 from __future__ import annotations
 from collections.abc import Callable
+import os
 
-from src.challenge_scheduler import get_macro_challenge, get_thread_challenge
+from src.challenge_scheduler import get_macro_challenge, get_ready_thread_challenge, get_thread_challenge
 from src.dialogue_engine import generate_followup_question
 from src.eval_turn_runner import EvaluationTurnRunner
 from src.evaluation_hallucination_state import (
@@ -253,7 +254,11 @@ class EvaluationStageRunner:
     def _run_thread_tasks(self, turn_no: int, review_stage: bool) -> int:
         thread_budget = 1 if review_stage else bounded_env_int("EVAL_THREAD_TURNS_PER_CHECK", 1, 1, 3)
         while thread_budget > 0 and not self._should_stop(turn_no):
-            seed = get_ready_thread_turn(self.eval_state, self.graph.get("reasoning_threads", []), review_stage=review_stage)
+            seed = get_ready_thread_turn(
+                self.eval_state,
+                self._eligible_reasoning_threads(),
+                review_stage=review_stage,
+            )
             if not seed:
                 break
             task_id = enqueue_anchor_task(
@@ -282,6 +287,18 @@ class EvaluationStageRunner:
             self._enqueue_repair_tasks_from_turn(thread_turn)
             turn_no = self._process_repair_queue(thread_turn.get("macro_id"), turn_no)
             if not review_stage:
+                if thread_turn.get("question_type") == "thread_bridge_question":
+                    turn_no = self._run_challenge_tasks(
+                        lambda thread_turn=thread_turn: get_ready_thread_challenge(
+                            self.eval_state,
+                            self.questions.get("thread_challenge_questions", []),
+                            thread_turn.get("thread_id"),
+                            thread_turn.get("thread_turn_id"),
+                            (thread_turn.get("judge_result", {}).get("thread_result") or {}).get("success"),
+                        ),
+                        turn_no,
+                        macro_id=thread_turn.get("macro_id"),
+                    )
                 turn_no = self._run_challenge_tasks(
                     lambda thread_id=thread_turn.get("thread_id"): get_thread_challenge(
                         self.eval_state,
@@ -293,6 +310,19 @@ class EvaluationStageRunner:
                 )
             thread_budget -= 1
         return turn_no
+
+    def _eligible_reasoning_threads(self) -> list[dict]:
+        threads = self.graph.get("reasoning_threads", [])
+        if not _env_bool("EVAL_THREAD_REQUIRE_ACCEPTED_CHALLENGE", True):
+            return threads
+        accepted_thread_ids = {
+            str(question.get("target_thread_id") or question.get("thread_id") or "").strip()
+            for question in self.questions.get("thread_challenge_questions", [])
+            if str(question.get("target_thread_id") or question.get("thread_id") or "").strip()
+        }
+        if not accepted_thread_ids:
+            return []
+        return [thread for thread in threads if thread.get("thread_id") in accepted_thread_ids]
 
     def _run_challenge_tasks(self, challenge_source, turn_no: int, macro_id: str | None) -> int:
         while not self._should_stop(turn_no):
@@ -463,3 +493,10 @@ def _asset_references_from_context(context: dict | None) -> list[dict]:
 def _asset_references_from_turn(turn: dict) -> list[dict]:
     refs = turn.get("asset_references") or (turn.get("repair_context") or {}).get("asset_references") or []
     return [dict(ref) for ref in refs if isinstance(ref, dict)]
+
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    raw = os.getenv(name)
+    if raw is None or raw.strip() == "":
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}

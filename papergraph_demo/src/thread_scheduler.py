@@ -27,6 +27,9 @@ def ensure_thread_states(eval_state: dict, threads: list[dict]) -> None:
                 "related_turns": [],
                 "bridge_success": None,
                 "review_consistency": None,
+                "thread_challenge_count": 0,
+                "thread_challenge_question_ids": [],
+                "thread_challenge_results": [],
             },
         )
         state.setdefault("status", "not_started")
@@ -37,6 +40,9 @@ def ensure_thread_states(eval_state: dict, threads: list[dict]) -> None:
         state.setdefault("related_turns", [])
         state.setdefault("bridge_success", None)
         state.setdefault("review_consistency", None)
+        state.setdefault("thread_challenge_count", 0)
+        state.setdefault("thread_challenge_question_ids", [])
+        state.setdefault("thread_challenge_results", [])
 
 
 def completed_thread_step_ids(eval_state: dict) -> set[str]:
@@ -77,6 +83,8 @@ def record_thread_step_result(
     question_type: str,
     judge_result: dict,
 ) -> dict:
+    if question_type == "thread_challenge_question":
+        return {}
     if not thread_id or not step_id:
         return {}
     state = eval_state.setdefault("thread_states", {}).setdefault(

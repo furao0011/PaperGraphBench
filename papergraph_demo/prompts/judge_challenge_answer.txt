@@ -13,6 +13,9 @@ Target failure modes:
 - overclaim: the answer over-generalizes beyond the paper's stated scope or evidence.
 - wrong_relation: the answer reverses, weakens, or replaces a verified relation.
 - false_premise: the answer accepts a false premise instead of rejecting or correcting it.
+- thread_overclaim: the answer over-generalizes an established thread bridge beyond the evidence.
+- thread_wrong_bridge: the answer accepts a wrong, reversed, or unsupported bridge between established thread facts.
+- thread_premise_mutation: the answer accepts a mutated premise instead of correcting it from the established thread context.
 
 Rules:
 1. Use the evidence and expected behavior as ground truth.
@@ -33,7 +36,7 @@ Return JSON:
 {
   "is_wrong": true,
   "matched_target_failure": true,
-  "failure_mode": "overclaim | wrong_relation | false_premise | other | none",
+  "failure_mode": "overclaim | wrong_relation | false_premise | thread_overclaim | thread_wrong_bridge | thread_premise_mutation | other | none",
   "confidence": 0.0,
   "reason": "brief judgment rationale"
 }

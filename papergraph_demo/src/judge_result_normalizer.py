@@ -12,6 +12,7 @@ THREAD_QUESTION_TYPES = {
     "thread_review_question",
     "thread_question",
 }
+THREAD_CHALLENGE_QUESTION_TYPE = "thread_challenge_question"
 
 
 def normalize_judge_result(judge_result: dict, turn_context: dict) -> dict:
@@ -113,8 +114,13 @@ def _normalize_hallucination_events(judge_result: dict, turn_context: dict) -> l
         event.setdefault("macro_id", turn_context.get("macro_id"))
         event.setdefault("source_question_id", turn_context.get("question_id"))
         event.setdefault("source_question_type", turn_context.get("question_type"))
-        event.setdefault("hallucination_type", _hallucination_type_for_question(question_type, state))
-        event.setdefault("subtype", judge_result.get("hallucination_type") or _state_subtype(state))
+        raw_hallucination_type = event.get("hallucination_type") or judge_result.get("hallucination_type")
+        event["hallucination_family"] = _hallucination_family_for_question(question_type, state)
+        event["hallucination_type"] = _hallucination_type_for_context(turn_context, state)
+        event.setdefault("subtype", raw_hallucination_type or _state_subtype(state))
+        if raw_hallucination_type and raw_hallucination_type != event["hallucination_type"]:
+            event["judge_hallucination_type"] = raw_hallucination_type
+        _attach_challenge_event_context(event, turn_context)
         event.setdefault("claim", "")
         event.setdefault("source", "judge_result.hallucination_events")
         event["related_kc_ids"] = _dedupe(event.get("related_kc_ids", []) or _related_kc_ids(judge_result, turn_context))
@@ -130,7 +136,8 @@ def _normalize_hallucination_events(judge_result: dict, turn_context: dict) -> l
             _make_event(
                 turn_context,
                 idx,
-                hallucination_type=_hallucination_type_for_question(question_type, state),
+                hallucination_type=_hallucination_type_for_context(turn_context, state),
+                hallucination_family=_hallucination_family_for_question(question_type, state),
                 subtype=judge_result.get("hallucination_type"),
                 claim=str(claim),
                 source="judge_result.hallucinated_claims",
@@ -148,6 +155,7 @@ def _normalize_hallucination_events(judge_result: dict, turn_context: dict) -> l
                 turn_context,
                 len(events) + 1,
                 hallucination_type="contradicted_kc_claim" if label == "CONTRADICTED" else "fabricated_claim",
+                hallucination_family="contradicted_kc_claim" if label == "CONTRADICTED" else "fabricated_claim",
                 subtype=label.lower(),
                 claim=str(claim_result.get("claim", "")),
                 source="global_claim_verification",
@@ -170,7 +178,8 @@ def _normalize_hallucination_events(judge_result: dict, turn_context: dict) -> l
             _make_event(
                 turn_context,
                 1,
-                hallucination_type=_hallucination_type_for_question(question_type, state),
+                hallucination_type=_hallucination_type_for_context(turn_context, state),
+                hallucination_family=_hallucination_family_for_question(question_type, state),
                 subtype=judge_result.get("hallucination_type") or _state_subtype(state),
                 claim=str(judge_result.get("judge_explanation", "") or state),
                 source="judge_state",
@@ -182,11 +191,12 @@ def _normalize_hallucination_events(judge_result: dict, turn_context: dict) -> l
 
 
 def _normalize_challenge_result(judge_result: dict, turn_context: dict) -> dict | None:
-    if turn_context.get("question_type") != "challenge_question":
+    if turn_context.get("question_type") not in {"challenge_question", THREAD_CHALLENGE_QUESTION_TYPE}:
         return None
     state = judge_result.get("state")
     return {
         "state": state,
+        "challenge_scope": turn_context.get("challenge_scope", "macro"),
         "challenge_type": turn_context.get("challenge_type"),
         "challenge_trigger": turn_context.get("challenge_trigger"),
         "target_failure_mode": turn_context.get("target_failure_mode"),
@@ -200,7 +210,7 @@ def _normalize_challenge_result(judge_result: dict, turn_context: dict) -> dict 
 
 def _normalize_thread_result(judge_result: dict, turn_context: dict) -> dict | None:
     question_type = turn_context.get("question_type")
-    if question_type not in THREAD_QUESTION_TYPES:
+    if question_type not in THREAD_QUESTION_TYPES and question_type != THREAD_CHALLENGE_QUESTION_TYPE:
         return None
     state = judge_result.get("state")
     missing = bool(judge_result.get("missing_kc_ids"))
@@ -222,6 +232,7 @@ def _make_event(
     turn_context: dict,
     ordinal: int,
     hallucination_type: str,
+    hallucination_family: str,
     subtype: str | None,
     claim: str,
     source: str,
@@ -230,12 +241,13 @@ def _make_event(
 ) -> dict:
     turn_id = str(turn_context["turn_id"])
     event_id = f"H_{_safe_id(turn_id)}_{ordinal}"
-    return {
+    event = {
         "event_id": event_id,
         "created_at_turn": turn_id,
         "macro_id": turn_context.get("macro_id"),
         "source_question_id": turn_context.get("question_id"),
         "source_question_type": turn_context.get("question_type"),
+        "hallucination_family": hallucination_family,
         "hallucination_type": hallucination_type,
         "subtype": subtype,
         "claim": claim,
@@ -247,9 +259,13 @@ def _make_event(
         "max_followups": int(turn_context.get("max_followups", 3) or 3),
         "resolved_at_turn": None,
     }
+    _attach_challenge_event_context(event, turn_context)
+    return event
 
 
-def _hallucination_type_for_question(question_type: str | None, state: str | None) -> str:
+def _hallucination_family_for_question(question_type: str | None, state: str | None) -> str:
+    if question_type == THREAD_CHALLENGE_QUESTION_TYPE:
+        return "thread_reasoning_hallucination"
     if question_type == "challenge_question" or state == "MISLED":
         return "challenge_failure"
     if question_type in THREAD_QUESTION_TYPES:
@@ -259,6 +275,65 @@ def _hallucination_type_for_question(question_type: str | None, state: str | Non
     if state == "GLOBAL_OVERCLAIM":
         return "fabricated_claim"
     return "contradicted_kc_claim"
+
+
+def _hallucination_type_for_context(turn_context: dict, state: str | None) -> str:
+    question_type = turn_context.get("question_type")
+    if question_type == THREAD_CHALLENGE_QUESTION_TYPE:
+        return _thread_challenge_hallucination_type(turn_context)
+    if question_type == "challenge_question" or state == "MISLED":
+        return _challenge_hallucination_type(turn_context)
+    return _hallucination_family_for_question(question_type, state)
+
+
+def _challenge_hallucination_type(turn_context: dict) -> str:
+    failure_mode = str(turn_context.get("target_failure_mode") or "").strip()
+    challenge_type = str(turn_context.get("challenge_type") or "").strip()
+    if failure_mode == "false_premise" or challenge_type == "false_premise_challenge":
+        return "challenge_false_premise_acceptance"
+    if failure_mode == "overclaim" or challenge_type == "overclaim_challenge":
+        return "challenge_overclaim_acceptance"
+    if failure_mode == "wrong_relation" or challenge_type == "wrong_relation_challenge":
+        return "challenge_wrong_relation_acceptance"
+    return "challenge_failure"
+
+
+def _thread_challenge_hallucination_type(turn_context: dict) -> str:
+    failure_mode = str(turn_context.get("target_failure_mode") or "").strip()
+    challenge_type = str(turn_context.get("challenge_type") or "").strip()
+    if failure_mode == "thread_wrong_bridge" or challenge_type == "thread_wrong_bridge_challenge":
+        return "thread_wrong_bridge_acceptance"
+    if failure_mode == "thread_overclaim" or challenge_type == "thread_overclaim_challenge":
+        return "thread_overclaim_acceptance"
+    if failure_mode == "thread_premise_mutation" or challenge_type == "thread_premise_mutation_challenge":
+        return "thread_premise_mutation_acceptance"
+    return "thread_reasoning_hallucination"
+
+
+def _attach_challenge_event_context(event: dict, turn_context: dict) -> None:
+    if event.get("hallucination_family") not in {"challenge_failure", "thread_reasoning_hallucination"}:
+        return
+    if turn_context.get("challenge_scope"):
+        event["challenge_scope"] = turn_context.get("challenge_scope")
+    if turn_context.get("thread_id"):
+        event["thread_id"] = turn_context.get("thread_id")
+    if turn_context.get("thread_turn_id"):
+        event["thread_turn_id"] = turn_context.get("thread_turn_id")
+    if turn_context.get("challenge_type"):
+        event["challenge_type"] = turn_context.get("challenge_type")
+    if turn_context.get("target_failure_mode"):
+        event["target_failure_mode"] = turn_context.get("target_failure_mode")
+    if turn_context.get("challenge_trigger"):
+        event["challenge_trigger"] = turn_context.get("challenge_trigger")
+    if turn_context.get("expected_behavior"):
+        event["expected_behavior"] = turn_context.get("expected_behavior")
+    event["requires_multimodal_input"] = bool(turn_context.get("requires_multimodal_input"))
+    if turn_context.get("modality_pool"):
+        event["modality_pool"] = turn_context.get("modality_pool")
+    asset_refs = turn_context.get("asset_references") or []
+    if asset_refs:
+        event["asset_ids"] = _dedupe([ref.get("asset_id") for ref in asset_refs if isinstance(ref, dict)])
+        event["asset_types"] = _dedupe([ref.get("asset_type") for ref in asset_refs if isinstance(ref, dict)])
 
 
 def _state_subtype(state: str | None) -> str | None:
