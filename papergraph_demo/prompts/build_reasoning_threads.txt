@@ -37,7 +37,10 @@ Rules:
 14) Use edge_coverage_report to avoid overusing already well-covered areas when there are viable alternatives.
 15) Do not expose KC IDs in question_goal wording; question_goal may reference the kind of claim conceptually.
 16) Use English in all generated fields.
-17) Return strict JSON only.
+17) edge_sequence must contain every supporting_edge_id used by planned_turns.
+18) kc_sequence must contain both endpoint KCs of every edge in edge_sequence and every target_kc_id used by planned_turns.
+19) macro_sequence must contain the Macro IDs of every KC in kc_sequence.
+20) Return strict JSON only.
 
 Return schema:
 {

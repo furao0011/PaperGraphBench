@@ -111,6 +111,7 @@ def _validate_threads(
         for edge in reasoning_edges
         if edge.get("edge_id")
     }
+    kc_by_id = {kc["kc_id"]: kc for kc in active_kc.get("kc_nodes", []) if kc.get("kc_id")}
     valid_edge_ids = set(edge_by_id)
     threads = []
     seen_thread_ids = set()
@@ -128,11 +129,7 @@ def _validate_threads(
         if thread_type not in ALLOWED_THREAD_TYPES:
             raise ValueError(f"{thread_id} has invalid thread_type={thread_type!r}.")
         macro_sequence = _valid_id_sequence(raw.get("macro_sequence", []), valid_macro_ids, f"{thread_id}.macro_sequence")
-        if len(set(macro_sequence)) < 2:
-            raise ValueError(f"{thread_id} must span at least two Macros.")
         kc_sequence = _valid_id_sequence(raw.get("kc_sequence", []), valid_kc_ids, f"{thread_id}.kc_sequence")
-        if len(kc_sequence) < 2:
-            raise ValueError(f"{thread_id} must contain at least two KCs.")
         edge_sequence = _valid_id_sequence(raw.get("edge_sequence", []), valid_edge_ids, f"{thread_id}.edge_sequence")
         planned_turns = _validate_planned_turns(
             thread_id,
@@ -147,6 +144,18 @@ def _validate_threads(
             raise ValueError(f"{thread_id} must include a bridge_reasoning planned turn.")
         if "review_consistency" not in roles:
             raise ValueError(f"{thread_id} must include a review_consistency planned turn.")
+        macro_sequence, kc_sequence, edge_sequence = _normalize_thread_sequences(
+            macro_sequence,
+            kc_sequence,
+            edge_sequence,
+            planned_turns,
+            kc_by_id,
+            edge_by_id,
+        )
+        if len(kc_sequence) < 2:
+            raise ValueError(f"{thread_id} must contain at least two KCs.")
+        if len(set(macro_sequence)) < 2:
+            raise ValueError(f"{thread_id} must span at least two Macros.")
         _validate_thread_edge_grounding(thread_id, kc_sequence, edge_sequence, planned_turns, edge_by_id)
         threads.append(
             {
@@ -300,7 +309,33 @@ def _validate_step_edge_targets(
         if missing:
             raise ValueError(f"{step_id} bridge target_kc_ids are not all grounded by supporting_edge_ids: {sorted(missing)}")
     elif not target_set.intersection(touched):
-        raise ValueError(f"{step_id} supporting_edge_ids do not touch any target_kc_ids.")
+            raise ValueError(f"{step_id} supporting_edge_ids do not touch any target_kc_ids.")
+
+
+def _normalize_thread_sequences(
+    macro_sequence: list[str],
+    kc_sequence: list[str],
+    edge_sequence: list[str],
+    planned_turns: list[dict],
+    kc_by_id: dict[str, dict],
+    edge_by_id: dict[str, dict],
+) -> tuple[list[str], list[str], list[str]]:
+    normalized_edges = _unique_preserve_order(edge_sequence)
+    for turn in planned_turns:
+        normalized_edges = _append_unique(normalized_edges, turn.get("supporting_edge_ids", []))
+
+    normalized_kcs = _unique_preserve_order(kc_sequence)
+    for edge_id in normalized_edges:
+        edge = edge_by_id[edge_id]
+        normalized_kcs = _append_unique(normalized_kcs, [edge.get("source"), edge.get("target")])
+    for turn in planned_turns:
+        normalized_kcs = _append_unique(normalized_kcs, turn.get("target_kc_ids", []))
+
+    normalized_macros = _unique_preserve_order(macro_sequence)
+    for kc_id in normalized_kcs:
+        macro_id = kc_by_id.get(kc_id, {}).get("macro_id")
+        normalized_macros = _append_unique(normalized_macros, [macro_id])
+    return normalized_macros, normalized_kcs, normalized_edges
 
 
 def _validate_thread_edge_grounding(
@@ -332,6 +367,31 @@ def _string_list(values: object) -> list[str]:
     if not isinstance(values, list):
         return []
     return [str(value).strip() for value in values if str(value).strip()]
+
+
+def _unique_preserve_order(values: list[str]) -> list[str]:
+    out = []
+    seen = set()
+    for value in values:
+        if value and value not in seen:
+            out.append(value)
+            seen.add(value)
+    return out
+
+
+def _append_unique(values: list[str], additions: object) -> list[str]:
+    out = list(values)
+    seen = set(out)
+    if not isinstance(additions, list):
+        return out
+    for raw in additions:
+        if raw is None:
+            continue
+        value = str(raw).strip()
+        if value and value not in seen:
+            out.append(value)
+            seen.add(value)
+    return out
 
 
 def _bounded_env_int(name: str, default: int, minimum: int, maximum: int) -> int:

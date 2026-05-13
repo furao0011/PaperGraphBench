@@ -32,6 +32,8 @@ def select_active_kcs(kc_bank: dict, macro_spine: dict) -> dict:
     selected_ids: list[str] = []
     selected_set: set[str] = set()
     macro_active: dict[str, list[str]] = {macro_id: [] for macro_id in macro_by_id}
+    macro_candidate_counts = {macro_id: len(items) for macro_id, items in by_macro.items()}
+    macro_coverage_notes: list[dict] = []
 
     threshold_candidates = [node for node in sorted(candidate_nodes, key=_score, reverse=True) if _score(node) >= threshold]
     for node in threshold_candidates:
@@ -40,11 +42,35 @@ def select_active_kcs(kc_bank: dict, macro_spine: dict) -> dict:
     for macro_id, macro in macro_by_id.items():
         candidates = sorted(by_macro.get(macro_id, []), key=_score, reverse=True)
         if not candidates:
-            raise ValueError(f"Macro {macro_id} has no KC candidates in KC Bank.")
-        required = critical_macro_min if macro.get("importance") == "critical" else per_macro_min
-        if len(candidates) < required:
-            raise ValueError(
-                f"Macro {macro_id} has only {len(candidates)} KC candidates; required at least {required}."
+            macro_coverage_notes.append(
+                {
+                    "macro_id": macro_id,
+                    "configured_minimum": _configured_macro_min(macro, per_macro_min, critical_macro_min),
+                    "available_candidates": 0,
+                    "effective_minimum": 0,
+                    "status": "skipped_no_candidates",
+                }
+            )
+            log("Active KC macro skipped", macro_id=macro_id, reason="no KC candidates")
+            continue
+        configured_required = _configured_macro_min(macro, per_macro_min, critical_macro_min)
+        required = min(configured_required, len(candidates))
+        if required < configured_required:
+            macro_coverage_notes.append(
+                {
+                    "macro_id": macro_id,
+                    "configured_minimum": configured_required,
+                    "available_candidates": len(candidates),
+                    "effective_minimum": required,
+                    "status": "candidate_shortfall",
+                }
+            )
+            log(
+                "Active KC macro candidate shortfall",
+                macro_id=macro_id,
+                configured_minimum=configured_required,
+                available_candidates=len(candidates),
+                effective_minimum=required,
             )
         current = len(macro_active.get(macro_id, []))
         for node in candidates:
@@ -58,6 +84,7 @@ def select_active_kcs(kc_bank: dict, macro_spine: dict) -> dict:
             selected_ids,
             {node["kc_id"]: node for node in candidate_nodes},
             macro_by_id,
+            macro_candidate_counts,
             per_macro_min,
             critical_macro_min,
             active_target,
@@ -84,8 +111,10 @@ def select_active_kcs(kc_bank: dict, macro_spine: dict) -> dict:
             "active_kc_threshold": threshold,
             "min_per_macro": per_macro_min,
             "critical_min_per_macro": critical_macro_min,
+            "effective_min_per_macro": "min(configured_minimum, available_macro_kc_candidates)",
             "include_multimodal": include_multimodal,
         },
+        "macro_coverage_notes": macro_coverage_notes,
         "macro_active_kcs": macro_active,
         "kc_nodes": active_nodes,
     }
@@ -115,17 +144,22 @@ def _is_multimodal(node: dict) -> bool:
     return bool(node.get("modality", {}).get("is_multimodal"))
 
 
+def _configured_macro_min(macro: dict, per_macro_min: int, critical_macro_min: int) -> int:
+    return critical_macro_min if macro.get("importance") == "critical" else per_macro_min
+
+
 def _truncate_preserving_macro_minimum(
     selected_ids: list[str],
     by_id: dict[str, dict],
     macro_by_id: dict[str, dict],
+    macro_candidate_counts: dict[str, int],
     per_macro_min: int,
     critical_macro_min: int,
     active_target: int,
 ) -> list[str]:
     minimum_total = sum(
-        critical_macro_min if macro.get("importance") == "critical" else per_macro_min
-        for macro in macro_by_id.values()
+        min(_configured_macro_min(macro, per_macro_min, critical_macro_min), macro_candidate_counts.get(macro_id, 0))
+        for macro_id, macro in macro_by_id.items()
     )
     if active_target < minimum_total:
         raise ValueError(
@@ -134,7 +168,10 @@ def _truncate_preserving_macro_minimum(
     locked: list[str] = []
     locked_set: set[str] = set()
     for macro_id, macro in macro_by_id.items():
-        required = critical_macro_min if macro.get("importance") == "critical" else per_macro_min
+        required = min(
+            _configured_macro_min(macro, per_macro_min, critical_macro_min),
+            macro_candidate_counts.get(macro_id, 0),
+        )
         macro_candidates = sorted(
             [by_id[kc_id] for kc_id in selected_ids if by_id[kc_id].get("macro_id") == macro_id],
             key=_score,
