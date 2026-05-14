@@ -33,6 +33,7 @@ FINAL_MMD_PATH = BASE_DIR / "data" / "graphs" / "final_state_graph.mmd"
 FINAL_THREAD_MMD_PATH = BASE_DIR / "data" / "graphs" / "final_thread_state_graph.mmd"
 EVAL_CHECKPOINT_PATH = BASE_DIR / "data" / "outputs" / "evaluation_checkpoint.json"
 CLAIM_LOG_PATH = BASE_DIR / "data" / "outputs" / "claim_verification_log.json"
+DEFAULT_EVAL_RESULT_ROOT = BASE_DIR.parent / "eval_result"
 
 
 def _apply_paper_layout_from_env() -> PaperArtifactLayout | None:
@@ -91,6 +92,7 @@ def _build_eval_target_client() -> OpenAICompatClient:
 
 
 def _save_eval_artifacts(graph: dict, eval_state: dict, trajectory: dict, checkpoint_path: Path) -> None:
+    public_result_root = _env_path("EVAL_RESULT_ROOT", DEFAULT_EVAL_RESULT_ROOT)
     save_eval_artifacts(
         graph,
         eval_state,
@@ -100,6 +102,7 @@ def _save_eval_artifacts(graph: dict, eval_state: dict, trajectory: dict, checkp
         REPORT_PATH,
         STATE_PATH,
         FINAL_MMD_PATH,
+        public_result_root,
     )
     FINAL_THREAD_MMD_PATH.write_text(export_final_thread_state_mermaid(graph, eval_state), encoding="utf-8")
 

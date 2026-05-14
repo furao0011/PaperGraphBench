@@ -87,12 +87,15 @@ def save_eval_artifacts(
     report_path: Path,
     state_path: Path,
     final_mmd_path: Path,
+    public_result_root: Path | None = None,
 ) -> None:
     reconcile_actual_transitions(trajectory)
     report = build_report(eval_state, trajectory)
     write_json(traj_path, trajectory)
     write_json(report_path, report)
     write_json(state_path, eval_state)
+    if public_result_root is not None:
+        _write_public_eval_result(public_result_root, graph, trajectory, report)
     final_mmd_path.parent.mkdir(parents=True, exist_ok=True)
     final_mmd_path.write_text(export_final_state_mermaid(graph, eval_state), encoding="utf-8")
     completed_question_ids = [
@@ -119,6 +122,14 @@ def save_eval_artifacts(
     )
 
 
+def _write_public_eval_result(public_result_root: Path, graph: dict, trajectory: dict, report: dict) -> None:
+    target_model = _safe_dir_name(trajectory.get("target_model") or "unknown_model")
+    paper_id = _safe_dir_name(graph.get("paper_id") or trajectory.get("paper_id") or "unknown_paper")
+    out_dir = public_result_root / target_model / paper_id
+    write_json(out_dir / "dialogue_trajectory.json", trajectory)
+    write_json(out_dir / "evaluation_report.json", report)
+
+
 def action_for_question_type(question_type: str) -> str:
     return {
         "detail_followup": "detail_followup",
@@ -138,3 +149,8 @@ def action_for_question_type(question_type: str) -> str:
 def _turn_number(turn_id: str) -> int:
     match = re.search(r"(\d+)$", str(turn_id))
     return int(match.group(1)) if match else 0
+
+
+def _safe_dir_name(value: object) -> str:
+    safe = re.sub(r"[^\w._-]+", "_", str(value or "").strip())
+    return safe.strip("._-") or "unknown"
