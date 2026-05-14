@@ -95,9 +95,7 @@ class OpenAICompatClient:
                 {"role": "user", "content": user_prompt},
             ],
         }
-        body = self._post_json(url, payload, timeout_s)
-        result = json.loads(body)
-        return result["choices"][0]["message"]["content"]
+        return self._chat_text_payload(url, payload, timeout_s, "Model")
 
     def chat_json_with_images(
         self,
@@ -168,9 +166,7 @@ class OpenAICompatClient:
                 {"role": "user", "content": content},
             ],
         }
-        body = self._post_json(url, payload, timeout_s)
-        result = json.loads(body)
-        return result["choices"][0]["message"]["content"]
+        return self._chat_text_payload(url, payload, timeout_s, "Vision model")
 
     def embed_texts(self, texts: list[str], timeout_s: int | None = None) -> list[list[float]]:
         if not self.embeddings_ready():
@@ -294,6 +290,40 @@ class OpenAICompatClient:
         assert last_exc is not None
         raise last_exc
 
+    def _chat_text_payload(
+        self,
+        url: str,
+        payload: dict[str, Any],
+        timeout_s: int | None,
+        label: str,
+    ) -> str:
+        attempts = max(1, self.cfg.max_retries + 1)
+        last_exc: Exception | None = None
+        for attempt in range(1, attempts + 1):
+            body = self._post_json(url, payload, timeout_s)
+            try:
+                result = json.loads(body)
+                content = _extract_chat_content(result)
+                if not content.strip():
+                    raise ValueError(f"{label} returned empty text content.")
+                return content
+            except (KeyError, IndexError, TypeError, ValueError, json.JSONDecodeError) as exc:
+                last_exc = _normalize_text_response_error(label, body, exc)
+                if attempt >= attempts:
+                    break
+                sleep_s = _retry_sleep_s(self.cfg.retry_sleep_s, attempt)
+                log(
+                    "model text response retry",
+                    attempt=attempt,
+                    attempts=attempts,
+                    timeout_s=timeout_s if timeout_s is not None else self.cfg.timeout_s,
+                    error=f"{type(last_exc).__name__}: {last_exc}",
+                    sleep_s=round(sleep_s, 2),
+                )
+                time.sleep(sleep_s)
+        assert last_exc is not None
+        raise last_exc
+
 
 def _env_int(name: str, default: int) -> int:
     raw = os.getenv(name)
@@ -345,6 +375,35 @@ def _normalize_json_response_error(label: str, body: str, exc: Exception) -> Val
         return ValueError(str(exc))
     preview = str(body)[:500]
     return ValueError(f"{label} response did not contain choices[0].message.content: {preview!r}")
+
+
+def _normalize_text_response_error(label: str, body: str, exc: Exception) -> ValueError:
+    if isinstance(exc, json.JSONDecodeError):
+        preview = str(body)[:500]
+        return ValueError(f"{label} returned invalid text response body: {preview!r}")
+    if isinstance(exc, ValueError):
+        return ValueError(str(exc))
+    preview = str(body)[:500]
+    return ValueError(f"{label} response did not contain choices[0].message.content: {preview!r}")
+
+
+def _extract_chat_content(result: dict[str, Any]) -> str:
+    content = result["choices"][0]["message"]["content"]
+    if content is None:
+        return ""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts: list[str] = []
+        for item in content:
+            if isinstance(item, dict):
+                text = item.get("text")
+                if isinstance(text, str):
+                    parts.append(text)
+            elif isinstance(item, str):
+                parts.append(item)
+        return "\n".join(parts)
+    return str(content)
 
 
 def _image_data_url(image_path: str) -> str:
