@@ -530,19 +530,31 @@ def build_model_answer(
     image_paths = image_paths or []
     if use_online_eval and client and client.is_ready():
         system_prompt = "Answer the Storybench-evaluation question based only on the provided original Storybench, attached figure/table assets, and dialogue context."
+        temperature = _eval_target_temperature()
         if image_paths:
             ans = client.chat_text_with_images(
                 system_prompt=system_prompt,
                 user_prompt=prompt,
                 image_paths=image_paths,
+                temperature=temperature,
             )
             return ans, "online_target_multimodal"
-        ans = client.chat_text(system_prompt=system_prompt, user_prompt=prompt)
+        ans = client.chat_text(system_prompt=system_prompt, user_prompt=prompt, temperature=temperature)
         return ans, "online_target_text"
     if os.getenv("ALLOW_MOCK_EVAL", "false").lower() in {"1", "true", "yes", "on"}:
         joined = "; ".join(k["full_claim"] for k in target_kcs[:2])
         return f"Based on the Storybench, {joined}", "mock"
     raise RuntimeError("Online evaluation requires a configured model and USE_ONLINE_EVAL=true. Set ALLOW_MOCK_EVAL=true only for local debugging.")
+
+
+def _eval_target_temperature() -> float:
+    raw = os.getenv("EVAL_TARGET_TEMPERATURE")
+    if raw is None or raw.strip() == "":
+        return 1.0
+    try:
+        return float(raw)
+    except ValueError as exc:
+        raise ValueError(f"EVAL_TARGET_TEMPERATURE must be a number, got {raw!r}.") from exc
 
 
 def _turn_multimodal_input(question: dict) -> dict:
