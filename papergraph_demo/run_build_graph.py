@@ -224,7 +224,7 @@ def main() -> None:
     if sections_payload:
         sections = sections_payload["sections"]
     else:
-        with span("split Storybench into sections", paper_chars=len(paper_text)):
+        with span("split paper into sections", paper_id=paper_id, paper_chars=len(paper_text)):
             sections = split_into_sections(paper_text)
         _write_json(SECTIONS_PATH, {"paper_id": paper_id, "sections": sections})
         _write_build_checkpoint(checkpoint_path, paper_id, "sections", resume=resume, restart=restart)
@@ -234,7 +234,7 @@ def main() -> None:
     if multimodal_enabled:
         paper_blocks_payload = _load_resumable_json(PAPER_BLOCKS_PATH, paper_id, resume, restart, "multimodal paper blocks")
         if not paper_blocks_payload:
-            with span("align Storybench blocks to sections", blocks=len(paper_bundle.get("blocks", []))):
+            with span("align paper blocks to sections", paper_id=paper_id, blocks=len(paper_bundle.get("blocks", []))):
                 paper_blocks_payload = align_blocks_to_sections(
                     paper_id=paper_id,
                     blocks=paper_bundle.get("blocks", []),
@@ -246,7 +246,8 @@ def main() -> None:
         if diagnostics.get("image_path_missing_count", 0):
             raise RuntimeError(f"Multimodal image path diagnostics failed: {diagnostics}")
         log(
-            "multimodal Storybench blocks ready",
+            "multimodal paper blocks ready",
+            paper_id=paper_id,
             path=PAPER_BLOCKS_PATH,
             blocks=paper_blocks_payload.get("summary", {}).get("block_count", 0),
             diagnostics=diagnostics,
@@ -267,7 +268,7 @@ def main() -> None:
     multimodal_asset_explanations_payload = None
     if multimodal_enabled:
         if paper_blocks_payload is None:
-            raise RuntimeError("MULTIMODAL_ENABLED=true requires aligned Storybench blocks.")
+            raise RuntimeError("MULTIMODAL_ENABLED=true requires aligned paper blocks.")
         multimodal_asset_groups_payload = _load_resumable_json(
             MULTIMODAL_ASSET_GROUPS_PATH,
             paper_id,
@@ -297,6 +298,13 @@ def main() -> None:
             restart,
             "multimodal assets",
         )
+        if multimodal_assets_payload and not _multimodal_assets_have_latex_tables(multimodal_assets_payload):
+            log(
+                "resume artifact ignored due to multimodal table asset schema mismatch",
+                path=MULTIMODAL_ASSETS_PATH,
+                required_field="normalized_latex",
+            )
+            multimodal_assets_payload = None
         if not multimodal_assets_payload:
             with span("normalize multimodal assets", groups=len(multimodal_asset_groups_payload.get("asset_groups", []))):
                 multimodal_assets_payload = normalize_multimodal_assets(
@@ -329,7 +337,7 @@ def main() -> None:
                 )
             _write_json(MULTIMODAL_ASSET_EXPLANATIONS_PATH, multimodal_asset_explanations_payload)
             _write_build_checkpoint(checkpoint_path, paper_id, "multimodal_asset_explanations", resume=resume, restart=restart)
-        with span("build evaluation Storybench context", blocks=len(paper_blocks_payload.get("blocks", []))):
+        with span("build evaluation paper context", paper_id=paper_id, blocks=len(paper_blocks_payload.get("blocks", []))):
             eval_context_payload = build_eval_paper_context(
                 paper_id=paper_id,
                 blocks=paper_blocks_payload.get("blocks", []),
@@ -1102,6 +1110,16 @@ def _kc_bank_has_multimodal_kcs(kc_bank: dict) -> bool:
         for node in kc_bank.get("kc_nodes", [])
         if isinstance(node, dict)
     )
+
+
+def _multimodal_assets_have_latex_tables(payload: dict) -> bool:
+    for asset in payload.get("assets", []):
+        if not isinstance(asset, dict):
+            continue
+        asset_type = str(asset.get("asset_type") or "").strip().lower()
+        if asset_type in {"table", "mixed"} and not str(asset.get("normalized_latex") or "").strip():
+            return False
+    return True
 
 
 def _kc_candidates_signature(candidates: list[dict]) -> dict:

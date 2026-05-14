@@ -49,7 +49,7 @@ def extract_multimodal_kc_candidates(
         )
         with span("multimodal KC extraction", asset_id=asset_id):
             result = client.chat_json(
-                system_prompt="You extract multimodal Storybench-evaluation KCs. Return JSON only.",
+                system_prompt="You extract multimodal paper-evaluation KCs. Return JSON only.",
                 user_prompt=prompt,
                 temperature=0.1,
             )

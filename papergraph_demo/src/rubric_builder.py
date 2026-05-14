@@ -42,11 +42,11 @@ def build_kc_rubric(
         forbidden.append(
             {
                 "claim_id": f"FC_{kc_id}_{idx}",
-                "claim": f"The Storybench rejects or reverses '{term}'.",
+                "claim": f"The paper rejects or reverses '{term}'.",
                 "type": "logic_hallucination",
                 "severity": "high",
                 "why_wrong": "This reverses the direction of the original claim.",
-                "followup_hint": "Please restate this point and align it with the Storybench evidence.",
+                "followup_hint": "Please restate this point and align it with the paper evidence.",
             }
         )
 
@@ -72,7 +72,7 @@ def _build_kc_rubric_online(
     tpl = load_prompt("generate_rubric.txt")
     user_prompt = render_prompt(tpl, kc_claim=full_claim, kc_evidence=evidence_text[:2000])
     result = client.chat_json(
-        system_prompt="You are a strict rubric constructor for Storybench-evaluation KCs.",
+        system_prompt="You are a strict rubric constructor for paper-evaluation KCs.",
         user_prompt=user_prompt,
     )
     must = result.get("must_include", [])
@@ -92,7 +92,7 @@ def _build_kc_rubric_online(
 
 def _extract_key_terms(text: str) -> list[str]:
     toks = re.findall(r"[A-Za-z][A-Za-z\-]{3,}", text)
-    stop = {"that", "with", "from", "this", "these", "those", "using", "which", "their", "Storybench"}
+    stop = {"that", "with", "from", "this", "these", "those", "using", "which", "their", "paper"}
     uniq = []
     seen = set()
     for t in toks:

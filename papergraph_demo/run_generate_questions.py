@@ -208,7 +208,7 @@ def main() -> None:
         for kc in graph.get("kc_nodes", [])
         if kc.get("kc_id")
     }
-    with span("load clean Storybench text for challenge solver trials"):
+    with span("load clean paper text for challenge solver trials"):
         paper_text = load_full_paper_text(graph, BASE_DIR, prefer_evaluation_context=False)
     log(
         "master graph loaded",

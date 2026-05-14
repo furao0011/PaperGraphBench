@@ -121,7 +121,7 @@ def _explain_table(asset: dict, client: OpenAICompatClient) -> dict:
     )
     with span("explain table asset", asset_id=asset.get("asset_id")):
         result = client.chat_json(
-            system_prompt="You explain Storybench table assets as strict, evidence-backed JSON. Return JSON only.",
+            system_prompt="You explain paper table assets as strict, evidence-backed JSON. Return JSON only.",
             user_prompt=prompt,
             temperature=0.1,
         )
@@ -142,7 +142,7 @@ def _explain_figure(asset: dict, client: OpenAICompatClient) -> dict:
     )
     with span("explain figure asset", asset_id=asset.get("asset_id"), images=len(image_paths)):
         result = client.chat_json_with_images(
-            system_prompt="You explain Storybench figure assets using the attached image and return JSON only.",
+            system_prompt="You explain paper figure assets using the attached image and return JSON only.",
             user_prompt=prompt,
             image_paths=image_paths,
             temperature=0.1,
@@ -165,7 +165,7 @@ def _asset_prompt_payload(asset: dict) -> dict:
         "source_basis": asset.get("source_basis", []),
     }
     if asset.get("asset_type") == "table":
-        payload["normalized_markdown"] = asset.get("normalized_markdown", "")
+        payload["normalized_latex"] = asset.get("normalized_latex", "")
         payload["table_shape"] = asset.get("table_shape", {})
     else:
         payload["image_paths"] = asset.get("image_paths", [])

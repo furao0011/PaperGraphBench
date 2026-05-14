@@ -49,7 +49,7 @@ def decompose_extraction_units(
             chars=len(window.get("text", "")),
         ):
             result = client.chat_json(
-                system_prompt="You decompose Storybench sections into semantic Extraction Units. Return JSON only.",
+                system_prompt="You decompose paper sections into semantic Extraction Units. Return JSON only.",
                 user_prompt=user_prompt,
                 temperature=0.1,
             )

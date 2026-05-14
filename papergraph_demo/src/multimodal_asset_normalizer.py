@@ -41,7 +41,7 @@ def normalize_multimodal_assets(paper_id: str, asset_groups: dict, macro_spine: 
 
     return {
         "paper_id": paper_id,
-        "schema_version": "v2_llm_structured_assets",
+        "schema_version": "v3_latex_table_assets",
         "assets": assets,
         "summary": {
             "asset_count": len(assets),
@@ -65,6 +65,7 @@ def _table_asset(
         raise ValueError(f"Table asset {asset_id} has no table blocks.")
     normalized_tables = [normalize_table_html(str(block.get("html") or "")) for block in table_blocks]
     markdown_parts = [item["normalized_markdown"] for item in normalized_tables if item.get("normalized_markdown")]
+    latex_parts = [item["normalized_latex"] for item in normalized_tables if item.get("normalized_latex")]
     first_shape = normalized_tables[0]["table_shape"]
     return {
         "asset_id": asset_id,
@@ -84,6 +85,7 @@ def _table_asset(
         "caption_number": group_asset.get("caption_number"),
         "html": "\n\n".join(str(block.get("html") or "") for block in table_blocks),
         "normalized_markdown": "\n\n".join(markdown_parts),
+        "normalized_latex": "\n\n".join(latex_parts),
         "table_grid": normalized_tables[0]["grid"] if len(normalized_tables) == 1 else [item["grid"] for item in normalized_tables],
         "nearby_context": group_asset.get("description_from_html", ""),
         "table_shape": first_shape if len(normalized_tables) == 1 else {"tables": [item["table_shape"] for item in normalized_tables]},
@@ -151,6 +153,9 @@ def _mixed_asset(
     table_blocks = [_required_block(html_by_id, block_id, asset_id) for block_id in table_ids]
     image_blocks = [_required_block(media_by_id, block_id, asset_id) for block_id in image_ids]
     normalized_tables = [normalize_table_html(str(block.get("html") or "")) for block in table_blocks]
+    table_html = "\n\n".join(str(block.get("html") or "") for block in table_blocks)
+    table_latex = "\n\n".join(item["normalized_latex"] for item in normalized_tables if item.get("normalized_latex"))
+    image_paths = [block.get("resolved_image_path") for block in image_blocks if block.get("resolved_image_path")]
     return {
         "asset_id": asset_id,
         "asset_type": "mixed",
@@ -164,16 +169,15 @@ def _mixed_asset(
         "source_group_id": group.get("asset_group_id"),
         "source_block_ids": group_asset.get("source_block_ids", []),
         "media_block_ids": group_asset.get("media_block_ids", []),
-        "image_paths": [block.get("resolved_image_path") for block in image_blocks if block.get("resolved_image_path")],
-        "attachments": _image_attachments(
-            asset_id,
-            [block.get("resolved_image_path") for block in image_blocks if block.get("resolved_image_path")],
-            group_asset.get("caption", ""),
-        ),
+        "image_paths": image_paths,
+        "attachments": _table_latex_attachment(asset_id, table_latex, group_asset.get("caption", ""))
+        + _image_attachments(asset_id, image_paths, group_asset.get("caption", "")),
         "caption": group_asset.get("caption", ""),
         "caption_kind": group_asset.get("caption_kind"),
         "caption_number": group_asset.get("caption_number"),
+        "html": table_html,
         "normalized_markdown": "\n\n".join(item["normalized_markdown"] for item in normalized_tables),
+        "normalized_latex": table_latex,
         "nearby_context": group_asset.get("description_from_html", ""),
         "source_basis": ["llm_html_island_extraction", "html_table", "image_file"],
         "llm_group_asset": group_asset,
@@ -209,6 +213,20 @@ def _image_attachments(asset_id: str, image_paths: list[str], caption: str) -> l
             "caption": caption,
         }
         for image_path in image_paths
+    ]
+
+
+def _table_latex_attachment(asset_id: str, latex: str, caption: str) -> list[dict]:
+    latex = str(latex or "").strip()
+    if not latex:
+        return []
+    return [
+        {
+            "type": "table_latex",
+            "asset_id": asset_id,
+            "content": latex,
+            "caption": caption,
+        }
     ]
 
 

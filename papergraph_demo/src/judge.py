@@ -96,7 +96,7 @@ def judge_answer_with_online_fallback(
                 related_forbidden_claims_json=json.dumps(related_forbidden_claims or [], ensure_ascii=False),
             )
             result = client.chat_json(
-                system_prompt="You are an accurate Storybench-evaluation judge.",
+                system_prompt="You are an accurate paper-evaluation judge.",
                 user_prompt=user_prompt,
             )
             required = {"state", "coverage", "hallucination_events", "recommended_tasks", "next_action"}

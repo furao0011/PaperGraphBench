@@ -16,7 +16,7 @@ def extract_atomic_claims(turn: dict, client: OpenAICompatClient) -> list[dict]:
     max_claims = _env_int("CLAIM_VERIFY_MAX_CLAIMS_PER_TURN", 8)
     tpl = load_prompt("extract_atomic_claims.txt")
     result = client.chat_json(
-        system_prompt="You extract atomic claims from model answers for Storybench-grounded verification. Return JSON only.",
+        system_prompt="You extract atomic claims from model answers for paper-grounded verification. Return JSON only.",
         user_prompt=render_prompt(
             tpl,
             turn_id=str(turn.get("turn_id", "")),

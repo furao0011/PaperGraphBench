@@ -58,7 +58,7 @@ def extract_macro_spine(
     )
     with span("extract macro spine", sections=len(sections), target=target_count):
         result = client.chat_json(
-            system_prompt="You construct strict Storybench-understanding Macro Spine graphs. Return JSON only.",
+            system_prompt="You construct strict paper-understanding Macro Spine graphs. Return JSON only.",
             user_prompt=user_prompt,
             temperature=0.2,
         )

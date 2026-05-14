@@ -110,7 +110,7 @@ def _overclaim_plans(by_kc: dict[str, dict], active_ids: set[str], limit: int) -
         claim = kc.get("full_claim", "")
         scope = kc.get("scope") if isinstance(kc.get("scope"), dict) else {}
         strength = str(kc.get("claim_strength", "")).strip() or "not_specified"
-        generality = str(scope.get("generality", "")).strip() or "the stated Storybench context"
+        generality = str(scope.get("generality", "")).strip() or "the stated paper context"
         dataset = str(scope.get("dataset", "")).strip() or "the stated dataset or setting"
         plans.append(
             {
@@ -129,7 +129,7 @@ def _overclaim_plans(by_kc: dict[str, dict], active_ids: set[str], limit: int) -
                     f"and beyond {dataset}."
                 ),
                 "expected_behavior": (
-                    f"The model should state the Storybench's claim while respecting claim_strength={strength} "
+                    f"The model should state the paper's claim while respecting claim_strength={strength} "
                     f"and the recorded scope={scope}."
                 ),
                 "target_failure_mode": "overclaim",
@@ -291,7 +291,7 @@ def _false_premise_plans(by_kc: dict[str, dict], active_ids: set[str], limit: in
                     "true_part": kc.get("full_claim", ""),
                     "trap_part": false_claim,
                     "expected_behavior": item.get("why_wrong")
-                    or "The model should reject the false premise and restate the Storybench-supported claim.",
+                    or "The model should reject the false premise and restate the paper-supported claim.",
                     "target_failure_mode": "false_premise",
                     "evidence": _kc_evidence_items([kc]),
                     "metadata": {
@@ -407,7 +407,7 @@ def _multimodal_overclaim_plan(kc: dict) -> dict:
         "true_part": kc.get("full_claim", ""),
         "trap_part": (
             f"The {asset_type} should be treated as proving a broader claim beyond the recorded asset scope "
-            f"and beyond the Storybench context."
+            f"and beyond the paper context."
         ),
         "expected_behavior": (
             "The model should answer using the attached figure/table and the prepared asset description, "

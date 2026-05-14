@@ -138,9 +138,9 @@ def asset_context_for_prompt(question: dict) -> str:
             for basis in evidence_bases:
                 lines.append(f"    - {basis}")
         for attachment in ref.get("attachments", []):
-            if attachment.get("type") == "table_markdown":
-                lines.append("  table_markdown:")
-                lines.append("```markdown")
+            if attachment.get("type") == "table_latex":
+                lines.append("  table_latex:")
+                lines.append("```latex")
                 lines.append(str(attachment.get("content") or ""))
                 lines.append("```")
             elif attachment.get("type") == "image":
@@ -184,17 +184,44 @@ def _asset_attachments(asset: dict) -> list[dict]:
             for path in asset.get("image_paths", [])
             if str(path).strip()
         ]
-    if asset_type == "table":
+    if asset_type in {"table", "mixed"}:
         attachments = []
-        markdown = str(asset.get("normalized_markdown") or "").strip()
-        if markdown:
-            attachments.append(
-                {
-                    "type": "table_markdown",
-                    "asset_id": asset.get("asset_id"),
-                    "content": markdown,
-                    "caption": asset.get("caption"),
-                }
-            )
+        latex = str(asset.get("normalized_latex") or "").strip()
+        if not latex:
+            raise ValueError(f"Table asset {asset.get('asset_id')} has no normalized_latex attachment content.")
+        attachments.append(
+            {
+                "type": "table_latex",
+                "asset_id": asset.get("asset_id"),
+                "content": latex,
+                "caption": asset.get("caption"),
+            }
+        )
+        if asset_type == "mixed":
+            image_attachments = asset.get("attachments")
+            if isinstance(image_attachments, list):
+                attachments.extend(
+                    {
+                        "type": str(item.get("type") or "image"),
+                        "asset_id": item.get("asset_id") or asset.get("asset_id"),
+                        "path": item.get("path"),
+                        "caption": item.get("caption") or asset.get("caption"),
+                    }
+                    for item in image_attachments
+                    if isinstance(item, dict)
+                    and str(item.get("type") or "image") == "image"
+                    and str(item.get("path") or "").strip()
+                )
+            else:
+                attachments.extend(
+                    {
+                        "type": "image",
+                        "asset_id": asset.get("asset_id"),
+                        "path": path,
+                        "caption": asset.get("caption"),
+                    }
+                    for path in asset.get("image_paths", [])
+                    if str(path).strip()
+                )
         return attachments
     return []

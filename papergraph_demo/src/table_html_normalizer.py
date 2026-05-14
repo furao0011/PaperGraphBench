@@ -10,9 +10,11 @@ def normalize_table_html(table_html: str) -> dict:
     parser.feed(table_html)
     rows = _pad_rows(parser.rows)
     markdown = _to_markdown(rows)
+    latex = _to_latex(rows)
     return {
         "grid": rows,
         "normalized_markdown": markdown,
+        "normalized_latex": latex,
         "table_shape": {
             "rows": len(rows),
             "columns": max((len(row) for row in rows), default=0),
@@ -114,6 +116,39 @@ def _to_markdown(rows: list[list[str]]) -> str:
 
 def _escape_md_cell(text: str) -> str:
     return text.replace("|", "\\|")
+
+
+def _to_latex(rows: list[list[str]]) -> str:
+    if not rows:
+        return ""
+    width = max((len(row) for row in rows), default=0)
+    if width <= 0:
+        return ""
+    lines = [f"\\begin{{tabular}}{{{'l' * width}}}", "\\hline"]
+    for idx, row in enumerate(rows):
+        cells = [_escape_latex_cell(cell) for cell in row]
+        lines.append(" & ".join(cells) + r" \\")
+        if idx == 0:
+            lines.append("\\hline")
+    lines.append("\\hline")
+    lines.append("\\end{tabular}")
+    return "\n".join(lines)
+
+
+def _escape_latex_cell(text: str) -> str:
+    replacements = {
+        "\\": r"\textbackslash{}",
+        "&": r"\&",
+        "%": r"\%",
+        "$": r"\$",
+        "#": r"\#",
+        "_": r"\_",
+        "{": r"\{",
+        "}": r"\}",
+        "~": r"\textasciitilde{}",
+        "^": r"\textasciicircum{}",
+    }
+    return "".join(replacements.get(ch, ch) for ch in text)
 
 
 def _clean_cell_text(text: str) -> str:

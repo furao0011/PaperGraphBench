@@ -130,17 +130,18 @@ def _render_figure(asset: dict, explanation: dict | None) -> str:
 
 def _render_table(asset: dict, explanation: dict | None) -> str:
     label = _asset_label(asset, "Table")
-    lines = [f"[{label} was here. The original paper contained a table at this position. The normalized table content is preserved below.]"]
+    lines = [f"[{label} was here. The original paper contained a table at this position. The normalized LaTeX table is preserved below.]"]
     caption = _first_nonempty(asset.get("caption"), (explanation or {}).get("caption"))
     if caption:
         lines.append(f"Caption: {caption}")
     summary = _first_nonempty((explanation or {}).get("summary"), asset.get("nearby_context"))
     if summary:
         lines.append(f"Summary: {summary}")
-    markdown = str(asset.get("normalized_markdown") or "").strip()
-    if not markdown:
-        raise ValueError(f"Table asset {asset.get('asset_id')} has no normalized_markdown for eval context.")
-    lines.append(markdown)
+    latex = str(asset.get("normalized_latex") or "").strip()
+    if not latex:
+        raise ValueError(f"Table asset {asset.get('asset_id')} has no normalized_latex for eval context.")
+    lines.append("Table LaTeX:")
+    lines.append(f"```latex\n{latex}\n```")
     return "\n\n".join(lines)
 
 

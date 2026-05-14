@@ -148,7 +148,7 @@ def main() -> None:
     questions = repair_questions_for_graph(graph, json.loads(QUESTION_PATH.read_text(encoding="utf-8")))
     by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", [])}
     kc_bank = load_kc_bank(graph, BASE_DIR)
-    with span("load Storybench text"):
+    with span("load paper text"):
         paper_text = load_full_paper_text(graph, BASE_DIR)
     log(
         "evaluation inputs ready",

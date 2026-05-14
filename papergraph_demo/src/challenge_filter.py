@@ -36,7 +36,7 @@ def run_single_challenge_question_trials(
     if not client or not client.is_ready():
         raise RuntimeError("Challenge filtering requires a configured online model client.")
     if not isinstance(paper_text, str) or not paper_text.strip():
-        raise ValueError("Challenge trial requires non-empty full Storybench text.")
+        raise ValueError("Challenge trial requires non-empty full paper text.")
     solver_runtime = solver_client or client
     provider = "vision_api" if _requires_multimodal_input(question) else "thread_api" if _is_thread_challenge(question) else "common_api"
     solvers = _solver_configs(solver_runtime.cfg.llm_model, provider=provider)
@@ -65,7 +65,7 @@ def filter_challenge_questions(
     if not isinstance(questions, list) or not questions:
         raise ValueError("Challenge filtering requires non-empty challenge_questions_raw.")
     if not isinstance(paper_text, str) or not paper_text.strip():
-        raise ValueError("Challenge filtering requires non-empty full Storybench text.")
+        raise ValueError("Challenge filtering requires non-empty full paper text.")
 
     solvers = _solver_configs(client.cfg.llm_model)
     signature = _raw_question_signature(raw_questions, solvers, paper_text)
@@ -267,7 +267,7 @@ def _solve_question(question: dict, solver: dict, client: OpenAICompatClient, pa
     image_paths = _question_image_paths(question)
     with span("challenge solver answer", question_id=question["question_id"], solver_id=solver["solver_id"]):
         system_prompt = (
-            "Answer the Storybench-evaluation question based only on the provided original Storybench, attached figure/table assets, and dialogue context."
+            "Answer the paper-evaluation question based only on the provided original paper, attached figure/table assets, and dialogue context."
         )
         if _requires_multimodal_input(question) and image_paths:
             answer = client.chat_text_with_images(
@@ -311,7 +311,7 @@ def _judge_solver_answer(
     }
     with span("judge challenge answer", question_id=question["question_id"], solver_id=solver["solver_id"]):
         result = client.chat_json(
-            system_prompt="You judge challenge-question answers for Storybench evaluation. Return JSON only.",
+            system_prompt="You judge challenge-question answers for paper evaluation. Return JSON only.",
             user_prompt=render_prompt(
                 judge_tpl,
                 challenge_trial_json=json.dumps(payload, ensure_ascii=False, indent=2),
@@ -433,7 +433,7 @@ def _build_solver_eval_prompt(paper_text: str, question: dict) -> str:
         synthetic_history = {}
     history_text = str(synthetic_history.get("history_text") or "").strip() or "No previous turns."
     return (
-        "```original Storybench\n"
+        "```original paper\n"
         f"{paper_text}\n"
         "```\n\n"
         f"{asset_context}"
@@ -483,9 +483,9 @@ def _asset_context_for_prompt(question: dict) -> str:
             for basis in evidence_bases:
                 lines.append(f"    - {basis}")
         for attachment in ref.get("attachments", []):
-            if attachment.get("type") == "table_markdown":
-                lines.append("  table_markdown:")
-                lines.append("```markdown")
+            if attachment.get("type") == "table_latex":
+                lines.append("  table_latex:")
+                lines.append("```latex")
                 lines.append(str(attachment.get("content") or ""))
                 lines.append("```")
             elif attachment.get("type") == "image":

@@ -65,7 +65,7 @@ def verify_edge_candidates(
         context_packet = _context_packet(candidate, by_kc, by_unit)
         with span("verify edge candidate", candidate_edge_id=candidate_edge_id):
             result = client.chat_json(
-                system_prompt="You verify reasoning edges for a Storybench evaluation graph. Return JSON only.",
+                system_prompt="You verify reasoning edges for a paper evaluation graph. Return JSON only.",
                 user_prompt=render_prompt(
                     tpl,
                     context_packet_json=json.dumps(context_packet, ensure_ascii=False, indent=2),

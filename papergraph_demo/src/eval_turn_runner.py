@@ -509,7 +509,7 @@ def dialogue_history_text(turns: list[dict]) -> str:
 
 def build_eval_prompt(paper_text: str, dialogue_history: str, question_text: str, asset_context: str = "") -> str:
     return (
-        "```original Storybench\n"
+        "```original paper\n"
         f"{paper_text}\n"
         "```\n\n"
         f"{asset_context}"
@@ -529,7 +529,7 @@ def build_model_answer(
 ) -> tuple[str, str]:
     image_paths = image_paths or []
     if use_online_eval and client and client.is_ready():
-        system_prompt = "Answer the Storybench-evaluation question based only on the provided original Storybench, attached figure/table assets, and dialogue context."
+        system_prompt = "Answer the paper-evaluation question based only on the provided original paper, attached figure/table assets, and dialogue context."
         temperature = _eval_target_temperature()
         if image_paths:
             ans = client.chat_text_with_images(
@@ -543,7 +543,7 @@ def build_model_answer(
         return ans, "online_target_text"
     if os.getenv("ALLOW_MOCK_EVAL", "false").lower() in {"1", "true", "yes", "on"}:
         joined = "; ".join(k["full_claim"] for k in target_kcs[:2])
-        return f"Based on the Storybench, {joined}", "mock"
+        return f"Based on the paper, {joined}", "mock"
     raise RuntimeError("Online evaluation requires a configured model and USE_ONLINE_EVAL=true. Set ALLOW_MOCK_EVAL=true only for local debugging.")
 
 

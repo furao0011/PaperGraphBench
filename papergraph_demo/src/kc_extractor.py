@@ -36,7 +36,7 @@ _STOPWORDS = {
     "where",
     "while",
     "about",
-    "Storybench",
+    "paper",
     "method",
     "results",
     "model",
@@ -115,7 +115,7 @@ def _keyword_fallback_claims(text: str, needed: int) -> list[str]:
     claims = []
     for idx, kw in enumerate(keywords[:needed], start=1):
         claims.append(
-            f"The Storybench treats '{kw}' as a relevant concept in its technical narrative (fallback KC {idx})."
+            f"The paper treats '{kw}' as a relevant concept in its technical narrative (fallback KC {idx})."
         )
     return claims
 
@@ -266,7 +266,7 @@ def extract_kc_candidates_by_sections(
             )
             with span("KC extraction chunk", section_id=sec.get("section_id"), chunk_id=sec.get("chunk_id")):
                 result = client.chat_json(
-                    system_prompt="You extract 3-5 evaluable KCs from one Storybench section or section chunk.",
+                    system_prompt="You extract 3-5 evaluable KCs from one paper section or section chunk.",
                     user_prompt=user_prompt,
                 )
             items = result.get("kcs", [])

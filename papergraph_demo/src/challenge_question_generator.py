@@ -154,7 +154,7 @@ def _generate_one(
                 )
             try:
                 result = client.chat_json(
-                    system_prompt="You generate natural Storybench-evaluation challenge questions. Return JSON only.",
+                    system_prompt="You generate natural paper-evaluation challenge questions. Return JSON only.",
                     user_prompt=prompt,
                     temperature=0.0 if attempt == 2 else 0.2,
                 )

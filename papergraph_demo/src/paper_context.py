@@ -20,7 +20,7 @@ def load_full_paper_text(
         raw_path = str(graph.get("paper_text_path", "")).strip()
     if not raw_path:
         raise FileNotFoundError(
-            "master_graph.json must include evaluation_paper_text_path or paper_text_path for full-Storybench evaluation context."
+            "master_graph.json must include evaluation_paper_text_path or paper_text_path for full-paper evaluation context."
         )
 
     paper_path = _resolve_paper_path(Path(raw_path), base_dir)

@@ -31,7 +31,7 @@ def build_challenge_questions_loop(
     if not client or not client.is_ready():
         raise RuntimeError("Challenge loop requires a configured online model client.")
     if not isinstance(paper_text, str) or not paper_text.strip():
-        raise ValueError("Challenge loop requires non-empty full Storybench text.")
+        raise ValueError("Challenge loop requires non-empty full paper text.")
     plans = challenge_plans.get("challenge_plans", [])
     if not isinstance(plans, list) or not plans:
         raise ValueError("Challenge loop requires non-empty challenge_plans.")
@@ -188,7 +188,7 @@ def _judge_question_usability(plan: dict, question: dict, client: OpenAICompatCl
         },
     }
     result = client.chat_json(
-        system_prompt="You validate challenge questions for Storybench evaluation. Return JSON only.",
+        system_prompt="You validate challenge questions for paper evaluation. Return JSON only.",
         user_prompt=render_prompt(
             tpl,
             usability_check_json=json.dumps(payload, ensure_ascii=False, indent=2),
@@ -221,7 +221,7 @@ def _judge_plan_easiness(
         "solver_trial": trial_bundle,
     }
     result = client.chat_json(
-        system_prompt="You diagnose failed challenge-question attempts for Storybench evaluation. Return JSON only.",
+        system_prompt="You diagnose failed challenge-question attempts for paper evaluation. Return JSON only.",
         user_prompt=render_prompt(
             tpl,
             easiness_check_json=json.dumps(payload, ensure_ascii=False, indent=2),

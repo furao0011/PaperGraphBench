@@ -20,7 +20,7 @@ def generate_questions_with_online_fallback(
             tpl = load_prompt("generate_questions.txt")
             user_prompt = render_prompt(tpl, graph_json=json.dumps(_main_question_graph(graph), ensure_ascii=False))
             result = client.chat_json(
-                system_prompt="You generate graph-grounded Storybench evaluation questions. Return JSON only.",
+                system_prompt="You generate graph-grounded paper evaluation questions. Return JSON only.",
                 user_prompt=user_prompt,
                 temperature=0.2,
             )
@@ -143,7 +143,7 @@ def _generate_one_macro_main_question(graph: dict, macro: dict, client: OpenAICo
     }
     tpl = load_prompt("generate_questions.txt")
     result = client.chat_json(
-        system_prompt="You generate graph-grounded Storybench evaluation questions. Return JSON only.",
+        system_prompt="You generate graph-grounded paper evaluation questions. Return JSON only.",
         user_prompt=render_prompt(tpl, graph_json=json.dumps(subgraph, ensure_ascii=False)),
         temperature=0.2,
     )
@@ -204,7 +204,7 @@ def _generate_one_multi_hop_question(graph: dict, path: dict, client: OpenAIComp
     }
     tpl = load_prompt("generate_questions.txt")
     result = client.chat_json(
-        system_prompt="You generate graph-grounded Storybench evaluation questions. Return JSON only.",
+        system_prompt="You generate graph-grounded paper evaluation questions. Return JSON only.",
         user_prompt=render_prompt(tpl, graph_json=json.dumps(subgraph, ensure_ascii=False)),
         temperature=0.2,
     )
@@ -409,7 +409,7 @@ def _debug_question_bundle(graph: dict) -> dict:
                 "question_type": "macro_main_question",
                 "macro_id": macro["macro_id"],
                 "target_kc_ids": target_ids,
-                "question_text": f"Explain the Storybench content covered by these target claims, without adding unsupported details: {claims}",
+                "question_text": f"Explain the paper content covered by these target claims, without adding unsupported details: {claims}",
                 "expected_coverage": {"must_cover": target_ids[:2], "optional_cover": target_ids[2:]},
                 "allowed_next_actions": [
                     "detail_followup",

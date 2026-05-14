@@ -228,7 +228,7 @@ def _attach_llm_subjective_scores(
         for node in nodes
     ]
     result = client.chat_json(
-        system_prompt="You score subjective KC quality for Storybench evaluation. Return JSON only.",
+        system_prompt="You score subjective KC quality for paper evaluation. Return JSON only.",
         user_prompt=render_prompt(
             tpl,
             macro_spine_json=json.dumps(macro_spine, ensure_ascii=False, indent=2),
