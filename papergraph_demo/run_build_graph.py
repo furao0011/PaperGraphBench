@@ -399,6 +399,20 @@ def main() -> None:
         kc_candidates_payload = None
     if kc_candidates_payload:
         kc_candidates = kc_candidates_payload["kc_candidates"]
+        if multimodal_kc_enabled and _has_invalid_multimodal_candidate_macro(kc_candidates):
+            log(
+                "resume artifact ignored due to invalid multimodal KC candidate macro_id",
+                path=KC_CANDIDATES_PATH,
+            )
+            kc_candidates = [
+                candidate
+                for candidate in kc_candidates
+                if not candidate.get("modality", {}).get("is_multimodal")
+            ]
+            kc_candidates_payload["kc_candidates"] = kc_candidates
+            kc_candidates_payload["multimodal_kc_enabled"] = False
+            kc_candidates_payload["multimodal_candidate_count"] = 0
+            kc_candidates_payload["extraction_source"] = kc_extraction_source
     else:
         if kc_extraction_source == "unit":
             with span("extract KC candidates from units", units=len(extraction_units.get("units", []))):
@@ -446,6 +460,7 @@ def main() -> None:
                     paper_id=paper_id,
                     asset_explanations_payload=multimodal_asset_explanations_payload,
                     client=client,
+                    macro_spine=macro_spine,
                 )
             _write_json(MULTIMODAL_KC_CANDIDATES_PATH, multimodal_kc_candidates_payload)
             multimodal_candidates = multimodal_kc_candidates_payload["kc_candidates"]
@@ -1120,6 +1135,20 @@ def _multimodal_assets_have_latex_tables(payload: dict) -> bool:
         if asset_type in {"table", "mixed"} and not str(asset.get("normalized_latex") or "").strip():
             return False
     return True
+
+
+def _has_invalid_multimodal_candidate_macro(candidates: list[dict]) -> bool:
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            continue
+        if not candidate.get("modality", {}).get("is_multimodal"):
+            continue
+        macro_id = candidate.get("macro_id")
+        if macro_id is None:
+            return True
+        if str(macro_id).strip().lower() in {"", "none", "null", "nan"}:
+            return True
+    return False
 
 
 def _kc_candidates_signature(candidates: list[dict]) -> dict:

@@ -26,6 +26,7 @@ def extract_multimodal_kc_candidates(
     paper_id: str,
     asset_explanations_payload: dict,
     client: OpenAICompatClient,
+    macro_spine: dict | None = None,
 ) -> dict:
     if not client or not client.is_ready():
         raise RuntimeError("Multimodal KC extraction requires a configured text LLM client.")
@@ -34,6 +35,8 @@ def extract_multimodal_kc_candidates(
         raise ValueError("asset_explanations payload must contain a non-empty asset_explanations list.")
 
     tpl = load_prompt("extract_multimodal_kc_from_asset.txt")
+    macro_bind_tpl = load_prompt("bind_multimodal_asset_macro.txt")
+    macro_options = _macro_options(macro_spine or {})
     max_workers = min(_env_positive_int("MULTIMODAL_KC_WORKERS", 3), len(explanations))
     candidates_by_asset: dict[str, list[dict]] = {}
     empty_assets: dict[str, str] = {}
@@ -53,7 +56,19 @@ def extract_multimodal_kc_candidates(
                 user_prompt=prompt,
                 temperature=0.1,
             )
-        candidates, empty_reason = _normalize_asset_result(explanation, result)
+        explanation_for_kc = explanation
+        if result.get("kcs") and not _macro_id_or_empty(explanation.get("macro_id")):
+            binding = _bind_asset_macro(
+                explanation=explanation,
+                kc_result=result,
+                macro_options=macro_options,
+                template=macro_bind_tpl,
+                client=client,
+            )
+            explanation_for_kc = dict(explanation)
+            explanation_for_kc["macro_id"] = binding["macro_id"]
+            explanation_for_kc["macro_binding"] = binding
+        candidates, empty_reason = _normalize_asset_result(explanation_for_kc, result)
         return asset_id, candidates, empty_reason
 
     with ThreadPoolExecutor(max_workers=max_workers) as ex:
@@ -142,7 +157,7 @@ def _normalize_asset_result(explanation: dict, result: dict) -> tuple[list[dict]
     asset_id = str(explanation.get("asset_id", "")).strip()
     asset_type = str(explanation.get("asset_type", "")).strip()
     section_id = str(explanation.get("section_id", "")).strip()
-    macro_id = str(explanation.get("macro_id", "")).strip()
+    macro_id = _macro_id_or_empty(explanation.get("macro_id"))
     if not macro_id:
         raise ValueError(f"Asset {asset_id} has no macro_id; cannot create multimodal KC.")
     possible_misreadings = explanation.get("possible_misreadings", [])
@@ -217,6 +232,7 @@ def _normalize_asset_result(explanation: dict, result: dict) -> tuple[list[dict]
                 "asset_possible_misreadings": possible_misreadings,
                 "asset_needs_review": bool(explanation.get("needs_review", False)),
                 "asset_confidence": explanation.get("confidence"),
+                "asset_macro_binding": explanation.get("macro_binding"),
                 "evidence_items": [
                     {
                         "section": explanation.get("section_id", ""),
@@ -241,6 +257,88 @@ def _evidence_text(explanation: dict, claim: str, evidence_basis: str) -> str:
         f"Supported claim: {claim}".strip(),
     ]
     return "\n".join(part for part in parts if part)
+
+
+def _macro_id_or_empty(value: object) -> str:
+    if value is None:
+        return ""
+    macro_id = str(value).strip()
+    if macro_id.lower() in {"none", "null", "nan"}:
+        return ""
+    return macro_id
+
+
+def _bind_asset_macro(
+    explanation: dict,
+    kc_result: dict,
+    macro_options: list[dict],
+    template: str,
+    client: OpenAICompatClient,
+) -> dict:
+    if not macro_options:
+        raise ValueError(f"Asset {explanation.get('asset_id')} has no macro_id and Macro Spine is empty.")
+    allowed = {str(item.get("macro_id")) for item in macro_options if str(item.get("macro_id") or "").strip()}
+    payload = {
+        "asset": {
+            "asset_id": explanation.get("asset_id"),
+            "asset_type": explanation.get("asset_type"),
+            "section_id": explanation.get("section_id"),
+            "caption": explanation.get("caption"),
+            "summary": explanation.get("summary"),
+            "key_elements": explanation.get("key_elements", []),
+            "relations": explanation.get("relations", []),
+            "supported_claims": explanation.get("supported_claims", []),
+        },
+        "extracted_kcs": kc_result.get("kcs", []),
+        "macro_options": macro_options,
+    }
+    last_error = ""
+    for attempt in range(1, 3):
+        prompt = render_prompt(
+            template,
+            macro_binding_json=json.dumps(payload, ensure_ascii=False, indent=2),
+            previous_error=last_error,
+        )
+        with span("bind multimodal asset macro", asset_id=explanation.get("asset_id"), attempt=attempt):
+            result = client.chat_json(
+                system_prompt="You bind one multimodal asset to exactly one existing paper Macro. Return JSON only.",
+                user_prompt=prompt,
+                temperature=0.0,
+            )
+        macro_id = _macro_id_or_empty(result.get("macro_id"))
+        if macro_id in allowed:
+            return {
+                "macro_id": macro_id,
+                "reason": str(result.get("reason") or "").strip(),
+                "confidence": str(result.get("confidence") or "").strip(),
+                "binding_source": "llm_forced_macro_binding",
+            }
+        last_error = (
+            f"Previous macro_id={result.get('macro_id')!r} is invalid. "
+            f"Choose exactly one macro_id from: {sorted(allowed)}."
+        )
+    raise ValueError(
+        f"Asset {explanation.get('asset_id')} macro binding failed after retry: {last_error}"
+    )
+
+
+def _macro_options(macro_spine: dict) -> list[dict]:
+    options = []
+    for macro in macro_spine.get("macro_nodes", []):
+        macro_id = _macro_id_or_empty(macro.get("macro_id"))
+        if not macro_id:
+            continue
+        options.append(
+            {
+                "macro_id": macro_id,
+                "title": macro.get("title"),
+                "role": macro.get("role"),
+                "summary": macro.get("summary"),
+                "source_sections": macro.get("source_sections", []),
+                "order": macro.get("order"),
+            }
+        )
+    return options
 
 
 def _forbidden_claims(asset_id: str, possible_misreadings: object) -> list[dict]:

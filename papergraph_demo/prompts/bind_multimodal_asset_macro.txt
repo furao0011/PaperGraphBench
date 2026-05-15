@@ -1,0 +1,20 @@
+You are binding one multimodal asset to a Macro in the paper's Macro Spine.
+
+The asset has produced at least one candidate KC, but its original section-to-Macro alignment did not resolve.
+
+Choose exactly one macro_id from macro_options. Do not invent a macro_id. Prefer the Macro whose role, title, summary, and source_sections best match the asset caption, summary, supported claims, and extracted KCs.
+
+If the asset appears broadly relevant, choose the Macro where this asset would be most useful as evaluation evidence.
+
+Previous validation error, if any:
+{{previous_error}}
+
+Input JSON:
+{{macro_binding_json}}
+
+Return strict JSON only:
+{
+  "macro_id": "one existing macro_id from macro_options",
+  "reason": "brief reason grounded in the asset and macro option",
+  "confidence": "high|medium|low"
+}
