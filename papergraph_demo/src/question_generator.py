@@ -101,10 +101,14 @@ def generate_questions_cached(
 
 
 def normalize_question_bundle(graph: dict, result: dict) -> dict:
-    macro_targets = {
-        m["macro_id"]: _macro_main_target_ids(graph, m)
-        for m in graph.get("macro_nodes", [])
-    }
+    macro_targets = {}
+    for macro in graph.get("macro_nodes", []):
+        macro_id = macro.get("macro_id")
+        if not macro_id:
+            continue
+        target_ids = _macro_main_target_ids(graph, macro)
+        if target_ids:
+            macro_targets[macro_id] = target_ids
     raw_macro_questions = result.get("macro_main_questions", result.get("main_questions", []))
     main_by_macro = {
         q.get("macro_id"): q
@@ -161,11 +165,14 @@ def _generate_one_macro_main_question(graph: dict, macro: dict, client: OpenAICo
 
 
 def _main_question_graph(graph: dict) -> dict:
-    target_ids_by_macro = {
-        macro.get("macro_id"): _macro_main_target_ids(graph, macro)
-        for macro in graph.get("macro_nodes", [])
-        if macro.get("macro_id")
-    }
+    target_ids_by_macro = {}
+    for macro in graph.get("macro_nodes", []):
+        macro_id = macro.get("macro_id")
+        if not macro_id:
+            continue
+        target_ids = _macro_main_target_ids(graph, macro)
+        if target_ids:
+            target_ids_by_macro[macro_id] = target_ids
     target_ids = {
         kc_id
         for ids in target_ids_by_macro.values()
@@ -277,7 +284,7 @@ def _normalize_multi_hop_question(graph: dict, path_id: str, source: dict) -> di
 def _graph_signature(graph: dict) -> dict:
     return {
         "paper_id": graph.get("paper_id", "unknown"),
-        "question_target_policy_version": "v2_active_kcs",
+        "question_target_policy_version": "v3_active_or_scored_text_kcs",
         "question_main_include_multimodal": _env_bool("QUESTION_MAIN_INCLUDE_MULTIMODAL", False),
         "active_kc_ids": graph.get("active_kc_ids", []),
         "macro_active_kc_ids": [
@@ -355,11 +362,11 @@ def _question_kc_allowed(kc: dict) -> bool:
 def _macro_main_target_ids(graph: dict, macro: dict) -> list[str]:
     by_kc = {k["kc_id"]: k for k in graph.get("kc_nodes", []) if k.get("kc_id")}
     macro_id = macro.get("macro_id")
-    active_ids = list(macro.get("active_kc_ids") or [])
+    active_ids = _dedupe_ids(macro.get("active_kc_ids") or [])
     if not active_ids:
         active_ids = [
             kc_id
-            for kc_id in macro.get("kc_ids", [])
+            for kc_id in (macro.get("kc_ids") or [])
             if kc_id in by_kc and by_kc[kc_id].get("flags", {}).get("active_for_question_generation")
         ]
     target_ids = [
@@ -367,9 +374,50 @@ def _macro_main_target_ids(graph: dict, macro: dict) -> list[str]:
         for kc_id in active_ids
         if kc_id in by_kc and _question_kc_allowed(by_kc[kc_id])
     ]
-    if not target_ids:
-        raise RuntimeError(f"Macro {macro_id} has no active text KCs for main question generation.")
-    return target_ids
+    if target_ids:
+        return target_ids
+
+    fallback_nodes = _macro_scored_question_kcs(graph, macro_id, macro.get("kc_ids") or [], by_kc)
+    return [node["kc_id"] for node in fallback_nodes[:3]]
+
+
+def _macro_scored_question_kcs(graph: dict, macro_id: str | None, macro_kc_ids: list, by_kc: dict) -> list[dict]:
+    nodes = []
+    seen = set()
+    for kc_id in _dedupe_ids(macro_kc_ids):
+        node = by_kc.get(kc_id)
+        if node and _question_kc_allowed(node):
+            nodes.append(node)
+            seen.add(kc_id)
+    for node in graph.get("kc_nodes", []):
+        kc_id = node.get("kc_id")
+        if not kc_id or kc_id in seen:
+            continue
+        if node.get("macro_id") == macro_id and _question_kc_allowed(node):
+            nodes.append(node)
+            seen.add(kc_id)
+    nodes.sort(key=_kc_main_question_score, reverse=True)
+    return nodes
+
+
+def _dedupe_ids(values: list) -> list[str]:
+    ids = []
+    seen = set()
+    for value in values:
+        item = str(value).strip()
+        if not item or item in seen:
+            continue
+        ids.append(item)
+        seen.add(item)
+    return ids
+
+
+def _kc_main_question_score(kc: dict) -> float:
+    scores = kc.get("importance_scores") or kc.get("scores") or {}
+    try:
+        return float(scores.get("final_importance_score", 0.0))
+    except (TypeError, ValueError):
+        return 0.0
 
 
 def _env_bool(name: str, default: bool = False) -> bool:
