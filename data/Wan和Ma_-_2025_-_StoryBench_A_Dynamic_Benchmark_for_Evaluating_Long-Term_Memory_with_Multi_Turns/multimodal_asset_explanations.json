@@ -1,0 +1,1235 @@
+{
+  "paper_id": "Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns",
+  "schema_version": "v1",
+  "table_explainer_model": "deepseek-v4-flash",
+  "figure_explainer_model": "qwen3.6-flash",
+  "figure_explainer_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "asset_explanations": [
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "dataset_statistics_table",
+      "section_id": "S3",
+      "macro_id": "M1",
+      "caption": "Table 1: Comparison of Existing Benchmarks across Multiple Dimensions.",
+      "summary": "This table compares existing benchmarks (NeedleInHaystack, RULER, LTM Benchmark, BABILong, L-Eval, LongBench, LooGLE, InfiniteBench, and StoryBench) across multiple dimensions including type (Synthetic, Realistic, Hybrid), knowledge retention (Long-context and Continual), sequential reasoning (Compositional, Dynamic, Multi-turn), and flexibility (Multiple-solution and Long-term+Short-term memory). It shows that the authors' benchmark, StoryBench, supports all listed dimensions, while other benchmarks support only subsets.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Ours(StoryBench) supports Continual knowledge retention (Conty).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Ours(StoryBench)' and column 'Conty' show a checkmark (✓).",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "NeedleInHaystack is a synthetic benchmark.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'NeedleInHaystack' and column 'Type' show 'Synthetic'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "Among all benchmarks, only Ours(StoryBench) supports all seven evaluated dimensions.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of rows: every other benchmark has at least one cross (✗) in the capability columns, while Ours(StoryBench) has checkmarks (✓) in all.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "StoryBench outperforms other benchmarks in all tasks.",
+          "why_wrong": "The table only indicates presence or absence of capabilities, not performance quality or task-specific results."
+        },
+        {
+          "claim": "All synthetic benchmarks support long-context knowledge retention (L-ctx).",
+          "why_wrong": "Although all synthetic benchmarks in the table (NeedleInHaystack, RULER, LTM Benchmark, BABILong) have a checkmark for L-ctx, the table does not claim that all synthetic benchmarks generally support it; it only covers these specific ones."
+        }
+      ],
+      "limitations": [
+        "The table only shows binary presence/absence of capabilities, not quantitative performance or effectiveness.",
+        "The definitions of the dimensions (e.g., 'Continual', 'Multi-turn') may be subjective or specific to the authors' categorization.",
+        "The table does not include information about evaluation metrics, domain coverage, or dataset size."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "chart",
+      "section_id": "S3",
+      "macro_id": "M1",
+      "caption": "Figure 6: Model multidimensional performance in Immediate Feedback and Self Recovery modes.",
+      "summary": "The figure presents two radar charts comparing the multidimensional performance of five AI models (Doubao1.5-pro, QFI-Mo, Claude 3.5 Sonnet, Deepseek-R1) across two modes: 'Immediate Feedback' (left) and 'Self Recovery' (right). The charts evaluate metrics including First-Try Accuracy, Overall Accuracy, Hard Accuracy, Success Count, and Reversed Retry Count. The visual data highlights differences in model capabilities, such as Claude 3.5 Sonnet achieving high success counts and Doubao1.5-pro (Improved) showing strong accuracy in self-recovery scenarios.",
+      "key_elements": [
+        {
+          "name": "Immediate Feedback Chart",
+          "role": "Left radar chart displaying model performance under immediate feedback conditions."
+        },
+        {
+          "name": "Self Recovery Chart",
+          "role": "Right radar chart displaying model performance under self-recovery conditions."
+        },
+        {
+          "name": "Performance Axes",
+          "role": "Five radial axes representing metrics: First-Try Acc, Overall Acc, Hard Acc, Success Count, and Reversed Retry Count."
+        },
+        {
+          "name": "Model Legends",
+          "role": "Color-coded keys identifying specific models and their variants (e.g., Original vs. Improved)."
+        },
+        {
+          "name": "Data Polygons",
+          "role": "Colored shapes representing the performance profile of each model on the radar chart."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Claude 3.5 Sonnet",
+          "target": "Success Count",
+          "relation": "achieves highest value"
+        },
+        {
+          "source": "Doubao1.5-pro (Improved)",
+          "target": "First-Try Acc",
+          "relation": "shows high performance in Self Recovery mode"
+        },
+        {
+          "source": "Immediate Feedback Chart",
+          "target": "Self Recovery Chart",
+          "relation": "compares against"
+        },
+        {
+          "source": "Deepseek-R1",
+          "target": "Reversed Retry Count",
+          "relation": "shows higher values than other models"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "In Immediate Feedback mode, Claude 3.5 Sonnet achieves the highest Success Count among the plotted models.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Green line extends furthest along the 'Success Count' axis in the left chart.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "Doubao1.5-pro (Improved) demonstrates superior First-Try and Overall Accuracy in Self Recovery mode compared to its original version and other models.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Pink polygon in the right chart is closest to the outer edge on the top and right axes.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The figure utilizes a radar chart format to visualize multi-dimensional performance metrics simultaneously.",
+          "support_level": "visible_label",
+          "evidence_basis": "Chart structure with multiple radial axes labeled with different metrics.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The radial distance represents the same scale for all axes.",
+          "why_wrong": "The axes have different scales; Accuracy is 0-1.0 while Success Count goes up to 10.0, making direct visual comparison of distances misleading without normalization."
+        },
+        {
+          "claim": "The grey center polygon represents the average performance of all models.",
+          "why_wrong": "The text inside reads '0.5 0.5...', suggesting it might be a random baseline or uniform distribution reference rather than an average of the colored lines."
+        }
+      ],
+      "limitations": [
+        "Exact numerical values are not provided, preventing precise quantitative comparison.",
+        "The metric 'Reversed Retry Count' lacks a clear definition of whether higher or lower values are better.",
+        "The legend in the right chart lists 'QFI-Mo (Improved)' and 'Deepseek-R1 (Improved)' but does not explicitly show their 'Original' counterparts, unlike the Doubao and Claude entries."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "chart",
+      "section_id": "S3",
+      "macro_id": "M1",
+      "caption": "Figure 7: Accuracy disparities across Models: overall, easy & hard tasks.",
+      "summary": "The figure consists of two bar charts comparing the accuracy of various AI models (Doubao, GPT-4o, Claude 3.5 Sonnet, Deepseek-V3) across three task categories: Overall Accuracy, Easy Accuracy, and Hard Accuracy. The first chart displays performance under 'Immediate Feedback', while the second chart shows performance under 'Self Recovery' conditions, including specific variations like 'improved' or 'original' versions of the models.",
+      "key_elements": [
+        {
+          "name": "Immediate Feedback Chart",
+          "role": "Left panel showing baseline model performance with immediate feedback"
+        },
+        {
+          "name": "Self Recovery Chart",
+          "role": "Right panel showing model performance with self-recovery mechanisms"
+        },
+        {
+          "name": "X-axis Categories",
+          "role": "Labels for different AI models (e.g., Doubao-1.5-v3, GPT-4o)"
+        },
+        {
+          "name": "Y-axis (Accuracy %)",
+          "role": "Vertical scale measuring performance percentage from 50 to over 90"
+        },
+        {
+          "name": "Legend",
+          "role": "Color coding for Overall Acc (blue), Easy Acc (green), and Hard Acc (orange)"
+        },
+        {
+          "name": "Data Bars",
+          "role": "Visual representation of accuracy scores for each model and task type"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Immediate Feedback Chart",
+          "target": "Self Recovery Chart",
+          "relation": "compares"
+        },
+        {
+          "source": "Easy Acc bars",
+          "target": "Hard Acc bars",
+          "relation": "shows higher values than"
+        },
+        {
+          "source": "Doubao-1.5-v3",
+          "target": "GPT-4o",
+          "relation": "outperforms in Immediate Feedback overall accuracy"
+        },
+        {
+          "source": "Self Recovery Chart",
+          "target": "GPT-4o (improved)",
+          "relation": "shows significantly lower overall accuracy compared to other models"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "In the Immediate Feedback condition, Doubao-1.5-v3 achieves the highest Overall Accuracy among the listed models.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Blue bar for Doubao-1.5-v3 is the tallest in the first chart.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "For all models in the Immediate Feedback chart, Easy Accuracy is consistently higher than Hard Accuracy.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Green bars are taller than orange bars for every model group in the first chart.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Under Self Recovery, GPT-4o (improved) has a notably low Overall Accuracy compared to its peers.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Blue bar for GPT-4o (improved) is significantly shorter than others in the second chart.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Doubao-1.5-v3 (improved) shows higher Easy Accuracy than Doubao-1.5-v3 (original) in the Self Recovery chart.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Green bar for improved version (95.1) is taller than original (90.32).",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Self Recovery always improves model performance.",
+          "why_wrong": "The chart shows that for GPT-4o (improved), the Overall Accuracy drops drastically (from ~75% to ~46%) compared to the Immediate Feedback baseline."
+        },
+        {
+          "claim": "Claude 3.5 Sonnet performs best in Self Recovery.",
+          "why_wrong": "While it has decent Easy Accuracy, its Overall Accuracy is lower than Doubao's improved version, and its Hard Accuracy is the lowest on the chart."
+        }
+      ],
+      "limitations": [
+        "The figure only presents accuracy metrics; it does not provide information on latency, cost, or other qualitative aspects of the models.",
+        "The 'Self Recovery' chart includes mixed labels ('improved', 'original', 'for trial'), making direct comparison with the standard 'Immediate Feedback' chart slightly complex without further context on what these modifications entail."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S4",
+      "macro_id": "M7",
+      "caption": "Figure 8: Mode impact on models: First-Try Accuracy & Longest Consecutive Correct Sequence metrics.",
+      "summary": "Figure 8 consists of two horizontal bar charts comparing the performance of four language models (Deepseek-R1, Claude 3.5 Sonnet, GPT-4o, Doubao1.5-pro) under two modes: 'Immediate Feedback' (blue bars) and 'Self Recovery' (orange bars). The left chart displays the 'Longest Consecutive Correct Sequence', while the right chart displays 'First-Try Accuracy'.",
+      "key_elements": [
+        {
+          "name": "Left Chart (Longest Consecutive Correct Sequence)",
+          "role": "Displays the average length of consecutive correct responses for each model and mode."
+        },
+        {
+          "name": "Right Chart (First-Try Accuracy)",
+          "role": "Displays the percentage of correct answers on the first attempt for each model and mode."
+        },
+        {
+          "name": "Immediate Feedback Mode",
+          "role": "Baseline condition represented by blue bars."
+        },
+        {
+          "name": "Self Recovery Mode",
+          "role": "Experimental condition represented by orange bars."
+        },
+        {
+          "name": "Model Labels",
+          "role": "Y-axis categories identifying the specific LLMs being tested."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Self Recovery Mode",
+          "target": "Longest Consecutive Correct Sequence",
+          "relation": "generally increases"
+        },
+        {
+          "source": "Deepseek-R1",
+          "target": "First-Try Accuracy",
+          "relation": "shows significant improvement with Self Recovery"
+        },
+        {
+          "source": "GPT-4o",
+          "target": "First-Try Accuracy",
+          "relation": "shows slight decrease with Self Recovery"
+        },
+        {
+          "source": "Doubao1.5-pro",
+          "target": "Longest Consecutive Correct Sequence",
+          "relation": "achieves highest score in Self Recovery mode"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "Self-Recovery mode generally improves the longest consecutive correct sequence compared to Immediate Feedback.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "In the left chart, orange bars are taller than blue bars for Deepseek-R1, Claude 3.5 Sonnet, and Doubao1.5-pro. For GPT-4o, they are equal.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Deepseek-R1 benefits most from Self-Recovery in terms of First-Try Accuracy.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "The gap between the blue bar (~49.16) and orange bar (~76.47) is the largest among all models in the right chart.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "GPT-4o performs slightly worse in First-Try Accuracy when using Self-Recovery.",
+          "support_level": "visible_label",
+          "evidence_basis": "The orange bar (~58.57) is shorter than the blue bar (~60.49) for GPT-4o in the right chart.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Doubao1.5-pro achieves the highest First-Try Accuracy overall.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "The top orange bar in the right chart extends furthest to the right (~82.33).",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Self-Recovery always improves First-Try Accuracy.",
+          "why_wrong": "The chart shows that for GPT-4o, the accuracy actually decreases slightly (from ~60.49 to ~58.57) with Self-Recovery."
+        },
+        {
+          "claim": "Claude 3.5 Sonnet has the best Longest Consecutive Correct Sequence.",
+          "why_wrong": "While it improves significantly, Doubao1.5-pro has a longer orange bar (~16.00 vs ~13.50)."
+        }
+      ],
+      "limitations": [
+        "No error bars or standard deviations are shown, so statistical significance cannot be determined.",
+        "Only four specific models are compared, limiting generalizability to other architectures.",
+        "Exact numerical values are provided but represent averages; individual instance variance is unknown."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S12",
+      "macro_id": "M4",
+      "caption": "Figure 1: Immediate Feedback. The model is informed immediately after each incorrect choice and prompted to retry until the correct option is selected.",
+      "summary": "The figure illustrates an 'Immediate Feedback' framework for a multi-turn task, likely story generation or dialogue. It depicts an agent navigating a timeline of choices (Choice_1 through Choice_4). The diagram specifically highlights a scenario at 'Choice_3' where an incorrect selection triggers a feedback message ('You chose wrong!'), indicated by a red 'X'. This error prompts a retry loop (circular arrow) before the process can proceed to subsequent correct choices and eventually reach the final 'Storyline' goal.",
+      "key_elements": [
+        {
+          "name": "Agent",
+          "role": "The entity initiating the sequence of choices"
+        },
+        {
+          "name": "Timeline Nodes (Start, Choice_1...)",
+          "role": "Sequential steps in the process"
+        },
+        {
+          "name": "Feedback Box",
+          "role": "Provides correction information ('You chose wrong!')"
+        },
+        {
+          "name": "Green Checkmarks",
+          "role": "Indicators of successful/correct choices"
+        },
+        {
+          "name": "Red X",
+          "role": "Indicator of an incorrect choice at Choice_3"
+        },
+        {
+          "name": "Loop Arrow",
+          "role": "Represents the retry mechanism after an error"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Agent",
+          "target": "Start",
+          "relation": "initiates"
+        },
+        {
+          "source": "Choice_2",
+          "target": "Choice_3",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Choice_3",
+          "target": "Red X",
+          "relation": "triggers_error"
+        },
+        {
+          "source": "Feedback Box",
+          "target": "Red X",
+          "relation": "points_to_error"
+        },
+        {
+          "source": "Choice_3",
+          "target": "Choice_3",
+          "relation": "loops_for_retry"
+        },
+        {
+          "source": "Choice_3",
+          "target": "Choice_4",
+          "relation": "eventually_flows_to"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The system provides immediate feedback when an incorrect choice is made.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Feedback box pointing to Red X at Choice_3",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "Incorrect choices trigger a retry mechanism rather than ending the task immediately.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Circular loop arrow around Choice_3",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "Correct choices are marked with green checkmarks and allow progression.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Green checkmarks above Choice_1, Choice_2, and Choice_4",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The agent fails permanently at Choice_3.",
+          "why_wrong": "The circular loop arrow indicates a retry process, not a permanent failure."
+        },
+        {
+          "claim": "The feedback is given before the choice is made.",
+          "why_wrong": "The arrow from the feedback box points to the 'X' on Choice_3, implying the feedback occurs after the incorrect action."
+        }
+      ],
+      "limitations": [
+        "The figure is a schematic representation and does not show specific content of the choices or the storyline.",
+        "It simplifies the interaction into discrete nodes, potentially hiding intermediate states or complex reasoning steps."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S12",
+      "macro_id": "M4",
+      "caption": "Figure 2: Self Recovery. An incorrect choice leads to a failure ending either immediately or after several scenes. The model is then asked to identify the earliest point in the story where it believes the incorrect decision occurred and to attempt recovery from that point.",
+      "summary": "Figure 2 illustrates the 'Self Recovery' mechanism within a long-term memory evaluation framework. It depicts a timeline of an agent making sequential choices (Choice_1 through Choice_14). At 'Choice_13', an incorrect decision leads to a failure state, represented by a red 'X' and a trophy icon labeled 'Failed! Where to retry?'. The system then initiates a recovery process, visualized as a dotted blue line labeled 'Restart' that loops back to 'Choice_13'. After this restart, the agent successfully proceeds through 'Choice_14' and reaches the final goal, indicated by a flag.",
+      "key_elements": [
+        {
+          "name": "Agent",
+          "role": "The entity making decisions, represented by a robot icon."
+        },
+        {
+          "name": "Timeline Nodes",
+          "role": "Sequential decision points labeled Start, Choice_1, Choice_12, Choice_13, and Choice_14."
+        },
+        {
+          "name": "Failure State",
+          "role": "Represented by a trophy icon and text 'Failed! Where to retry?', triggered by an incorrect choice."
+        },
+        {
+          "name": "Error Indicator",
+          "role": "A red 'X' marking the specific node (Choice_13) where the incorrect decision occurred."
+        },
+        {
+          "name": "Recovery Loop",
+          "role": "A dotted blue line labeled 'Restart' that connects the failure point back to 'Choice_13'."
+        },
+        {
+          "name": "Success Indicators",
+          "role": "Green checkmarks on the path after recovery and a final flag representing the completed storyline."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Agent",
+          "target": "Start",
+          "relation": "initiates"
+        },
+        {
+          "source": "Choice_13",
+          "target": "Failure State",
+          "relation": "leads_to_failure_via"
+        },
+        {
+          "source": "Failure State",
+          "target": "Recovery Loop",
+          "relation": "triggers"
+        },
+        {
+          "source": "Recovery Loop",
+          "target": "Choice_13",
+          "relation": "loops_back_to"
+        },
+        {
+          "source": "Choice_13",
+          "target": "Choice_14",
+          "relation": "enables_success_after_recovery"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "An incorrect choice at a specific point in the story leads to a failure ending.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Red 'X' at Choice_13 pointing to the trophy icon.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "The system identifies the earliest point of error to attempt recovery.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption states 'identify the earliest point... where it believes the incorrect decision occurred'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "Recovery involves restarting the process from the identified failure point.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Dotted blue line labeled 'Restart' looping from the failure area back to Choice_13.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "Successful recovery allows the agent to complete the remaining tasks.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Green checkmarks appearing on Choice_13 (after loop), Choice_14, and the final flag.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The red X indicates a failure at Choice_12.",
+          "why_wrong": "The red X is visually positioned directly above/next to the node labeled 'Choice_13', not Choice_12."
+        },
+        {
+          "claim": "The dotted line represents skipping ahead in time.",
+          "why_wrong": "The label 'Restart' and the backward direction of the loop indicate a return to a previous state, not a forward skip."
+        }
+      ],
+      "limitations": [
+        "The figure does not show the internal logic or algorithm used to identify the 'earliest point' of error.",
+        "It does not depict the specific content of the choices made by the agent."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_006",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S17",
+      "macro_id": "M5",
+      "caption": "Figure 3: Four typical patterns illustrating dataset structure complexity.",
+      "summary": "Figure 3 illustrates four distinct structural patterns of dataset complexity: Linear, Long-term, Complex, and Multi-solution. Each panel uses a schematic diagram with nodes (labeled 'S' for states/steps and 'C' for concepts/clues) and directed arrows to represent the flow of interactions or narrative paths. The figure highlights how these structures vary from simple sequential chains to complex webs with branching outcomes like 'Succeed!' or 'Failed Ending'.",
+      "key_elements": [
+        {
+          "name": "Panel (a) Linear",
+          "role": "Illustrates a simple, sequential structure with no branching."
+        },
+        {
+          "name": "Panel (b) Long-term",
+          "role": "Shows a structure with branching paths, potential loops (curved arrows), and long-range dependencies indicated by dotted lines."
+        },
+        {
+          "name": "Panel (c) Complex",
+          "role": "Depicts a dense network of interconnected nodes with multiple pathways leading to success or failure."
+        },
+        {
+          "name": "Panel (d) Multi-solution",
+          "role": "Demonstrates diverging paths where different sequences lead to distinct outcomes ('Succeed!' vs 'Failed Ending')."
+        },
+        {
+          "name": "Nodes (S/C labels)",
+          "role": "Represent specific steps, states, or concepts within the dataset structure."
+        },
+        {
+          "name": "Outcomes ('Succeed!', 'Failed Ending')",
+          "role": "Indicate terminal states or results of the interaction paths."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Panel (a)",
+          "target": "Panel (b)",
+          "relation": "contrasts_with"
+        },
+        {
+          "source": "Panel (b)",
+          "target": "Curved arrows",
+          "relation": "contains"
+        },
+        {
+          "source": "Panel (d)",
+          "target": "Path C78 -> C81 -> Succeed!",
+          "relation": "leads_to"
+        },
+        {
+          "source": "Panel (c)",
+          "target": "Red arrows",
+          "relation": "points_to"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The dataset includes examples of linear, long-term, complex, and multi-solution structural patterns.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption and panel titles",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        },
+        {
+          "claim": "The 'Linear' pattern consists of a single vertical sequence of steps.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel (a) layout",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        },
+        {
+          "claim": "The 'Long-term' pattern features branching paths and feedback loops.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel (b) curved arrows and branching nodes",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        },
+        {
+          "claim": "The 'Multi-solution' pattern allows for multiple distinct paths to an outcome.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel (d) diverging arrows to 'Succeed!' and 'Failed Ending'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The red color in Panel (c) indicates a negative outcome exclusively.",
+          "why_wrong": "While red arrows point to 'Failed Ending', other red elements might just be part of the connection logic; however, in this specific context, they do seem to link to failure, but assuming all red is bad without checking the arrow direction is risky. Actually, looking closely, the red arrows in (c) point to 'Failed Ending'. So this might be a valid reading, but let's look for a better misreading. Maybe thinking 'S' always means 'Success'? No, S usually means State/Step. Let's go with: The dotted lines represent missing data rather than a gap in time or sequence."
+        },
+        {
+          "claim": "All panels use the same color scheme to denote node types.",
+          "why_wrong": "Each panel has a distinct background color (grey, green, blue, orange) likely to distinguish the categories, not necessarily node types across the whole figure."
+        }
+      ],
+      "limitations": [
+        "The figure is qualitative and illustrative; it does not provide quantitative metrics about the size or frequency of these patterns.",
+        "The specific meaning of 'S' and 'C' labels is inferred from context (likely State/Step and Concept/Clue) but not explicitly defined in the visible caption."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_007",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S18",
+      "macro_id": "M5",
+      "caption": "Figure 4: Scene node example with character descriptions, dialogues, and other details.",
+      "summary": "The figure displays a structured data record labeled as a 'scene node' (ID 0). It organizes story elements into distinct sections: a narrative description, a specific location, character profiles, and a transcript of dialogues involving multiple speakers.",
+      "key_elements": [
+        {
+          "name": "Node Metadata",
+          "role": "Identifies the entity type ('scene') and ID (0) at the top."
+        },
+        {
+          "name": "Narrative Description",
+          "role": "Provides the plot context ('Prologue - Returning to the Country...')."
+        },
+        {
+          "name": "Location Data",
+          "role": "Specifies the setting ('Shanghai, Mr. Fang Hanzhou's home')."
+        },
+        {
+          "name": "Character List",
+          "role": "Details specific characters involved in the scene (e.g., Fang Min)."
+        },
+        {
+          "name": "Dialogue Transcript",
+          "role": "Lists sequential interactions between speakers (Xiao Tu, Fang Min, Fang Hanzhou)."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Node Metadata",
+          "target": "Narrative Description",
+          "relation": "contains"
+        },
+        {
+          "source": "Node Metadata",
+          "target": "Location Data",
+          "relation": "contains"
+        },
+        {
+          "source": "Node Metadata",
+          "target": "Character List",
+          "relation": "contains"
+        },
+        {
+          "source": "Node Metadata",
+          "target": "Dialogue Transcript",
+          "relation": "contains"
+        },
+        {
+          "source": "Character List",
+          "target": "Dialogue Transcript",
+          "relation": "supports"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "Story data is organized into discrete nodes with specific types.",
+          "support_level": "visible_label",
+          "evidence_basis": "Visible label 'type: scene'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_007"
+          }
+        },
+        {
+          "claim": "Each scene node captures both static context (location, characters) and dynamic events (dialogue).",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Layout showing separate fields for location/characters and dialogues",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_007"
+          }
+        },
+        {
+          "claim": "Dialogues are recorded as structured speaker-content pairs.",
+          "support_level": "visible_label",
+          "evidence_basis": "Labels 'speaker:' and 'content:' preceding text lines",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_007"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "This image is a screenshot of a game interface.",
+          "why_wrong": "The layout resembles a data structure or JSON representation rather than a graphical user interface."
+        },
+        {
+          "claim": "The dialogues are unstructured raw text.",
+          "why_wrong": "The text is clearly formatted with key-value pairs ('speaker:', 'content:') indicating structure."
+        }
+      ],
+      "limitations": [
+        "The figure only shows a single example instance, so it does not demonstrate how nodes connect to each other (edges/links)."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_008",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S18",
+      "macro_id": "M5",
+      "caption": "Figure 5: Choice node example with choice text, branches, and other details.",
+      "summary": "The figure illustrates a structured data example of a 'choice node' within a story context, displaying the node's ID, type, the specific choice text ('Mentor's Questioning'), and two distinct response branches with their corresponding IDs and texts.",
+      "key_elements": [
+        {
+          "name": "id",
+          "role": "Identifies the specific node as 'choice_1'"
+        },
+        {
+          "name": "type",
+          "role": "Classifies the node as a 'choice' type"
+        },
+        {
+          "name": "choice_text",
+          "role": "Displays the main prompt or question presented to the user"
+        },
+        {
+          "name": "branches",
+          "role": "Container for the available response options"
+        },
+        {
+          "name": "branch_id",
+          "role": "Unique identifier for each response option (e.g., 1-1, 1-2)"
+        },
+        {
+          "name": "branch_text",
+          "role": "The actual content of the response option"
+        }
+      ],
+      "relations": [
+        {
+          "source": "choice_text",
+          "target": "branches",
+          "relation": "leads_to"
+        },
+        {
+          "source": "branch_id",
+          "target": "branch_text",
+          "relation": "labels"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "A choice node is structured with an ID, type, main text, and a list of branches.",
+          "support_level": "visible_label",
+          "evidence_basis": "Visible keys: id, type, choice_text, branches",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_008"
+          }
+        },
+        {
+          "claim": "Each branch has a unique ID and associated text content.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Repeated pattern of branch_id and branch_text pairs",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_008"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "This image represents executable code.",
+          "why_wrong": "The format resembles a key-value pair structure or JSON-like representation used for data annotation, not necessarily runnable code."
+        },
+        {
+          "claim": "The colors indicate different data types or statuses.",
+          "why_wrong": "While colors are used (red for keys like id/type, green for choice_text, blue for branches), they primarily serve to distinguish structural hierarchy rather than functional status."
+        }
+      ],
+      "limitations": [
+        "The figure only shows a single static example and does not demonstrate the dynamic flow or interaction of the choice in a game environment.",
+        "It does not show how this structure connects to previous or subsequent nodes in the story graph."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S19",
+      "macro_id": "M6",
+      "caption": "Table 2: Performance of different models (Immediate Feedback).",
+      "summary": "Table 2 reports performance metrics (mean ± std) for four models (Doubao1.5-pro, GPT-4o, Claude 3.5 Sonnet, Deepseek-R1) on a task with immediate feedback, including Overall Accuracy, First-Try Accuracy, Hard/Easy Accuracy, Retry Count, Longest Correct, Runtime Cost, Token Consumption, and Success Count.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Doubao1.5-pro achieves the highest Overall Accuracy (80.98%) among the four models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Overall Acc (%)', Column 'Doubao1.5-pro'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Deepseek-R1 has the lowest Overall Accuracy (70.45%) among the four models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Overall Acc (%)', Column 'Deepseek-R1'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Claude 3.5 Sonnet has the highest Success Count (8.00) among the four models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Success Count', Column 'Claude 3.5 Sonnet'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Doubao1.5-pro has the lowest Retry Count (14.67) among the four models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Retry Count', Column 'Doubao1.5-pro'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "GPT-4o has the lowest Token Consumption (342k) among the four models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Token Cons', Column 'GPT-4o'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Deepseek-R1 has the highest Runtime Cost (2.72k s) among the four models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Runtime Cost (s)', Column 'Deepseek-R1'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Doubao1.5-pro is the best model overall across all metrics.",
+          "why_wrong": "Doubao1.5-pro has higher Token Consumption and Runtime Cost than GPT-4o, and lower Success Count than Claude 3.5 Sonnet; the table shows trade-offs, not overall superiority."
+        },
+        {
+          "claim": "Deepseek-R1 is the worst model overall.",
+          "why_wrong": "Deepseek-R1 has the highest Longest Correct (tied) and higher Easy Accuracy than GPT-4o and Claude; it is not uniformly worst."
+        },
+        {
+          "claim": "The differences between model performances are statistically significant.",
+          "why_wrong": "The table provides only mean and standard deviation; without statistical tests, significance cannot be inferred. Overlap in confidence intervals (e.g., ±) suggests some differences may not be significant."
+        }
+      ],
+      "limitations": [
+        "Results are limited to a single task setting (Immediate Feedback) and may not generalize to other tasks or feedback types.",
+        "Metrics are correlated (e.g., accuracy and retry count) but trade-offs are not quantified.",
+        "No statistical significance tests are reported; observed differences may be due to random variation.",
+        "Table only covers four specific model versions; newer versions may yield different results."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S20",
+      "macro_id": "M7",
+      "caption": "Table 3: Performance of different models (Original Self Recovery).",
+      "summary": "Table 3 reports performance metrics (accuracy, retry count, runtime, token consumption, success count) for four models (Doubao1.5-pro, GPT-4o, Claude 3.5 Sonnet, Deepseek-R1) under the Original Self Recovery condition. Many metrics for GPT-4o and Deepseek-R1 are missing (dashes), while Doubao1.5-pro and Claude 3.5 Sonnet have complete or nearly complete entries.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Doubao1.5-pro achieved an Overall Acc of 69.66% under Original Self Recovery.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Overall Acc (%)', column 'Doubao1.5-pro'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "Claude 3.5 Sonnet achieved an Easy Acc of 77.23% ± 0.31% under Original Self Recovery.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Easy Acc (%)', column 'Claude 3.5 Sonnet'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "Only Claude 3.5 Sonnet had a Success Count greater than 1 (2 successes); Doubao1.5-pro had 1 success, while GPT-4o and Deepseek-R1 had 0 successes.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Row 'Success Count', all columns",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "Doubao1.5-pro had a First-Try Acc of 83.05%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'First-Try Acc (%)', column 'Doubao1.5-pro'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "Claude 3.5 Sonnet had a Runtime Cost of 3.24k ± 0.36k seconds.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Runtime Cost (s)', column 'Claude 3.5 Sonnet'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "GPT-4o performed poorly on all metrics because all its entries except Success Count are dashes.",
+          "why_wrong": "The dashes indicate missing data, not zero performance; the table does not report any actual values for GPT-4o on those metrics, so no conclusion about its performance can be drawn."
+        },
+        {
+          "claim": "Claude 3.5 Sonnet outperforms Doubao1.5-pro on Hard Acc (60.35% vs 58.33%).",
+          "why_wrong": "Claude's Hard Acc has a standard deviation of ±4.09%, which overlaps with Doubao's 58.33% (no error given for Doubao), so the difference may not be statistically significant."
+        },
+        {
+          "claim": "All models have comparable runtime costs because the table shows only Claude's runtime.",
+          "why_wrong": "Runtime data is only provided for Claude (3.24k s); the other models have dashes, so no comparison is possible."
+        }
+      ],
+      "limitations": [
+        "Missing data for GPT-4o and Deepseek-R1 on most metrics (only Success Count is reported).",
+        "No error bars or variance provided for Doubao1.5-pro, making statistical comparisons unreliable.",
+        "Only one condition (Original Self Recovery) is evaluated; results may not generalize.",
+        "Success Count values are small (0–2), suggesting limited trials or small sample sizes."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S20",
+      "macro_id": "M7",
+      "caption": "Table 4: Performance of different models (Improved Self Recovery).",
+      "summary": "Table 4 reports performance metrics for four models (Doubao1.5-pro, GPT-4o, Claude 3.5 Sonnet, Deepseek-R1) under the Improved Self Recovery condition, including overall accuracy, first-try accuracy, hard/easy accuracy, retry count, longest correct sequence, max errors per choice, error count ≥ 9, runtime cost, token consumption, and success count. Claude 3.5 Sonnet has missing values (dashes) for most metrics and a success count of 0.00, indicating no successful runs. GPT-4o metrics include ± error bounds based on multiple runs.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Doubao1.5-pro achieves the highest Overall Accuracy (73.68%) among the models with reported values.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 2 (Overall Acc), column 2 (Doubao1.5-pro) shows 73.68%; other models: GPT-4o 60.76±1.35, Deepseek-R1 70.18%.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "Claude 3.5 Sonnet has a Success Count of 0.00, indicating no successful runs under the Improved Self Recovery condition.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Last row 'Success Count', column for Claude 3.5 Sonnet shows 0.00.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "GPT-4o's Overall Accuracy is 60.76% with a standard error of 1.35%, based on multiple runs.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 2 (Overall Acc), column 3 (GPT-4o) shows '60.76 \\pm 1.35'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "Doubao1.5-pro has a substantially lower Runtime Cost (0.60k s) compared to Deepseek-R1 (4.64k s).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Row 'Runtime Cost (s)': Doubao1.5-pro = 0.60k, Deepseek-R1 = 4.64k.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Claude 3.5 Sonnet performed poorly on all metrics because it has dashes.",
+          "why_wrong": "Dashes indicate missing data, not low performance. The success count of 0.00 suggests no successful runs, so the metrics are not applicable. Thus, one cannot conclude poor performance on those specific metrics."
+        }
+      ],
+      "limitations": [
+        "Only one experimental condition (Improved Self Recovery) is reported, so results may not generalize to other settings.",
+        "Claude 3.5 Sonnet lacks most metrics, limiting comparisons.",
+        "GPT-4o metrics include error bounds, but no error bounds are given for Doubao1.5-pro or Deepseek-R1, making statistical comparisons uncertain.",
+        "No statistical significance tests are provided in the table.",
+        "Only four models are compared, and the table does not include other potentially relevant models."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    }
+  ],
+  "summary": {
+    "asset_explanation_count": 12,
+    "by_asset_type": {
+      "table": 4,
+      "figure": 8
+    },
+    "needs_review_count": 0,
+    "supported_claim_count": 45,
+    "possible_misreading_count": 25
+  }
+}

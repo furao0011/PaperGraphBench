@@ -1,0 +1,822 @@
+{
+  "paper_id": "Debate-Feedback_NAACL2025_-9pages",
+  "schema_version": "v1",
+  "table_explainer_model": "deepseek-v4-flash",
+  "figure_explainer_model": "qwen3.6-flash",
+  "figure_explainer_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "asset_explanations": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S3",
+      "macro_id": "M1",
+      "caption": "Figure 1: A brief introduction of Debate-Feedback Structure",
+      "summary": "The figure illustrates a four-step 'Debate-Feedback Structure' framework. Step 1 involves preprocessing formatted legal cases using a Judge LLM to generate an initial opinion ($O_i$). Step 2 is a multi-agent debate phase where agents (labeled $A$ and $E$) exchange opinions, governed by specific formulas. Step 3 performs verification through trust analysis and a threshold check on the verified value ($V_i$). Step 4 produces the final output ($O_n$) via smoothing. A feedback loop labeled 'Next Round i+1' connects the end back to the beginning, indicating an iterative process.",
+      "key_elements": [
+        {
+          "name": "Formatted Legal Case",
+          "role": "Input data source"
+        },
+        {
+          "name": "Judge LLM (Step 1)",
+          "role": "Processes input to create initial opinion"
+        },
+        {
+          "name": "Initial Opinion ($O_i$)",
+          "role": "Starting point for the debate phase"
+        },
+        {
+          "name": "Multi-agent Debate",
+          "role": "Core processing stage with agents $A_1-A_3$ and $E_1-E_3$"
+        },
+        {
+          "name": "Exchange Opinion",
+          "role": "Interaction mechanism between agents in Step 2"
+        },
+        {
+          "name": "Trust Analysis",
+          "role": "Component used in verification"
+        },
+        {
+          "name": "Threshold",
+          "role": "Decision gate in Step 3"
+        },
+        {
+          "name": "Output ($O_n$)",
+          "role": "Final result of the process"
+        },
+        {
+          "name": "Next Round i+1",
+          "role": "Feedback loop indicator"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Formatted Legal Case",
+          "target": "Judge LLM (Step 1)",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Judge LLM (Step 1)",
+          "target": "Initial Opinion ($O_i$)",
+          "relation": "generates"
+        },
+        {
+          "source": "Initial Opinion ($O_i$)",
+          "target": "Multi-agent Debate",
+          "relation": "inputs_to"
+        },
+        {
+          "source": "Agents ($A_k$)",
+          "target": "Agents ($E_k$)",
+          "relation": "exchanges_opinion_with"
+        },
+        {
+          "source": "Multi-agent Debate",
+          "target": "Verification ($V_i$)",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Verification ($V_i$)",
+          "target": "Threshold",
+          "relation": "passes_through"
+        },
+        {
+          "source": "Threshold",
+          "target": "Output ($O_n$)",
+          "relation": "leads_to"
+        },
+        {
+          "source": "Output ($O_n$)",
+          "target": "Initial Opinion ($O_i$)",
+          "relation": "loops_back_to"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The system processes formatted legal cases to generate an initial opinion.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Step 1 flowchart showing database icon to Judge LLM to $O_i$",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The debate phase involves multiple agents exchanging opinions in a connected network.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Step 2 showing grid of agents with cross-arrows labeled 'exchange opinion'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "Verification involves calculating a value $V_i$ based on evidence and legal case info.",
+          "support_level": "visible_label",
+          "evidence_basis": "Formula $V_i = \text{\textbackslash mathcal{E}}(E_i \textbackslash oplus L_i)$ visible in Step 3",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The framework operates iteratively over rounds.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Arrow labeled 'Next Round i+1' looping from bottom back to start",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The agents $A$ and $E$ represent two separate sequential phases rather than interacting entities.",
+          "why_wrong": "The diagram shows arrows connecting every agent in column A to every agent in column E simultaneously, labeled 'exchange opinion', implying interaction within the same step."
+        },
+        {
+          "claim": "The output $O_n$ is the final end of the process with no further steps.",
+          "why_wrong": "There is a clear feedback loop arrow at the bottom labeled 'Next Round i+1' pointing back towards the beginning of the pipeline."
+        }
+      ],
+      "limitations": [
+        "The figure is a high-level schematic and does not show the internal architecture or specific parameters of the LLMs.",
+        "It does not provide quantitative performance metrics or accuracy results.",
+        "The exact nature of the 'Trust analysis' icon is illustrative and not detailed."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "dataset_statistics_table",
+      "section_id": "S7",
+      "macro_id": null,
+      "caption": "Table 1: Dataset of assistant model.",
+      "summary": "Table 1 defines the composition of the training dataset for the assistant model, specifying that Training_X consists of the case background combined with the debater's opinion, and Training_Y consists of the ground truth XORed with the debater's position.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Training_X is composed of the case background and the debater's opinion.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row: 'Training_X = {Case_background + Debater\\'s opinion}'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "Training_Y is composed of the ground truth XOR the debater's position.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row: 'Training_Y = {Ground_truth XOR Debater\\'s position}'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The table shows actual training examples or data statistics.",
+          "why_wrong": "The table only defines the structure of the training set variables, not providing any actual data points, counts, or statistics."
+        },
+        {
+          "claim": "Training_X and Training_Y are numerical values or vectors.",
+          "why_wrong": "The table describes them as sets/combinations of textual components (case background, debater's opinion, etc.), not as numerical data."
+        }
+      ],
+      "limitations": [
+        "Does not specify the size or source of the dataset.",
+        "Does not provide any actual data points or examples.",
+        "Only defines the logical composition of the training variables without quantitative information."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S10",
+      "macro_id": "M5",
+      "caption": "Table 2: Comparison of models on CaseLaw and CAIL18 datasets. All judge’s and debaters’ LMs in experiments are based on the GPT-4o model and T = 0.5.",
+      "summary": "Table 2 compares several models (CNN, Legal-BERT, Lawformer, GPT-3.5-turbo, GPT-4o, and two Debate-Feedback variants) on the CaseLaw and CAIL18 datasets using Accuracy and F1 scores. The caption notes that all judge's and debaters' LMs are based on GPT-4o with temperature 0.5. The table shows that Debate-Feedback variants achieve the highest scores on both datasets, with Debate-Feedback(assistant) reaching 0.67 Acc and 0.66 F1 on CaseLaw, and 0.45 Acc and 0.16 F1 on CAIL18.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Debate-Feedback(assistant) achieves 0.67 Accuracy on CaseLaw.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Debate-Feedback(assistant)', column 'CaseLaw Acc' in table",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Debate-Feedback(assistant) achieves 0.66 F1 on CaseLaw.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Debate-Feedback(assistant)', column 'CaseLaw F1' in table",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Debate-Feedback(single) achieves 0.66 Accuracy on CaseLaw.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Debate-Feedback(single)', column 'CaseLaw Acc' in table",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Debate-Feedback(single) achieves 0.65 F1 on CaseLaw.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Debate-Feedback(single)', column 'CaseLaw F1' in table",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "GPT-4o achieves 0.64 Accuracy and 0.64 F1 on CaseLaw.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'GPT-4o', columns 'CaseLaw Acc' and 'CaseLaw F1' in table",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "All judge's and debaters' LMs are based on the GPT-4o model with T=0.5.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption of Table 2",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Debate-Feedback(assistant) achieves 0.45 Accuracy on CAIL18, the highest among all models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Debate-Feedback(assistant)', column 'CAIL18 Acc' and comparison with other rows",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The results are statistically significant and generalizable to other datasets.",
+          "why_wrong": "The table only reports raw scores without statistical significance tests or confidence intervals. It only covers two datasets, so generalizability is not established."
+        },
+        {
+          "claim": "All models were trained on the same data and under identical conditions.",
+          "why_wrong": "The table does not provide information about training data, hyperparameters, or experimental setup beyond the note about GPT-4o base LMs. Models like CNN, Legal-BERT, etc., likely use different architectures and training procedures."
+        },
+        {
+          "claim": "Debate-Feedback(assistant) is always better than Debate-Feedback(single).",
+          "why_wrong": "While the assistant variant has higher scores on both datasets for both metrics except for a tie on CAIL18 F1 (both 0.16), the difference is small and the table does not indicate if it is consistent across multiple runs."
+        }
+      ],
+      "limitations": [
+        "Only two datasets are evaluated (CaseLaw and CAIL18), limiting generalizability.",
+        "All LMs are based on GPT-4o with T=0.5, so results may not hold for other base models or temperatures.",
+        "Table does not include error bars, confidence intervals, or statistical significance tests.",
+        "Models may have been fine-tuned on different amounts or types of data, not shown here."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S11",
+      "macro_id": "M6",
+      "caption": "Table 3: Performance comparison of different reasoning methods on CaseLaw and CAIL18 datasets.",
+      "summary": "Table 3 compares the performance of five reasoning methods (Few-shot, CoT, Reflexion, Debate-Feedback (single), Debate-Feedback (assistant)) on the CaseLaw and CAIL18 datasets, reporting accuracy (Acc) and F1 scores for each method on both datasets.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Debate-Feedback (assistant) achieves 67.1% accuracy on CaseLaw.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Debate-Feedback (assistant)', Column 'CaseLaw Acc'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "Debate-Feedback (assistant) achieves the highest accuracy on both CaseLaw (67.1%) and CAIL18 (44.8%) among the methods.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of Acc values across rows",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "Few-shot achieves the lowest F1 score on CAIL18 (5.03%).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Few-shot', Column 'CAIL18 F1'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "Reflexion outperforms CoT on both datasets in terms of both accuracy and F1.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparing Reflexion and CoT rows across all metric columns",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "CoT (4-steps) always outperforms Few-shot.",
+          "why_wrong": "On CaseLaw, Few-shot achieves 63.8% accuracy and 64.1% F1, while CoT achieves 63.7% and 64.0%, so Few-shot slightly outperforms CoT on CaseLaw."
+        },
+        {
+          "claim": "The ranking of methods is identical on both datasets.",
+          "why_wrong": "On CaseLaw, Few-shot (Acc 63.8%) ranks above CoT (63.7%), but on CAIL18, Few-shot (29.7%) ranks below CoT (31.2%). Thus rankings differ slightly between datasets."
+        }
+      ],
+      "limitations": [
+        "Only two datasets are evaluated; generalizability to other legal datasets is not shown.",
+        "Only accuracy and F1 are reported; other metrics like precision, recall, or computational cost are omitted.",
+        "No statistical significance tests or confidence intervals are provided.",
+        "The table does not indicate the number of samples or variance across runs."
+      ],
+      "needs_review": false,
+      "confidence": 1.0,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S14",
+      "macro_id": "M7",
+      "caption": "Figure 2: Influence of the number of debaters selected.",
+      "summary": "The figure is a line chart titled 'The Influence of the Number of Debaters Selected', plotting two performance metrics, Accuracy (Acc) and F1 score, against the number of debaters ranging from 2 to 5. Both metrics show an initial increase peaking at 3 debaters, followed by a decline as the number of debaters increases to 4 and 5.",
+      "key_elements": [
+        {
+          "name": "X-axis",
+          "role": "Represents the independent variable: Number of Debaters (values 2, 3, 4, 5)"
+        },
+        {
+          "name": "Y-axis",
+          "role": "Represents the dependent variable: Score (0-1), ranging from 0.60 to 0.70"
+        },
+        {
+          "name": "Acc Line",
+          "role": "Yellow solid line representing Accuracy scores"
+        },
+        {
+          "name": "F1 Line",
+          "role": "Red dashed line representing F1 scores"
+        },
+        {
+          "name": "Data Labels",
+          "role": "Numerical values indicating exact scores at each data point (e.g., 0.659, 0.656)"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Acc Line",
+          "target": "F1 Line",
+          "relation": "is consistently higher than"
+        },
+        {
+          "source": "Number of Debaters = 3",
+          "target": "Acc Line",
+          "relation": "corresponds to peak value for"
+        },
+        {
+          "source": "Number of Debaters = 3",
+          "target": "F1 Line",
+          "relation": "corresponds to peak value for"
+        },
+        {
+          "source": "Number of Debaters > 3",
+          "target": "Both Lines",
+          "relation": "shows decreasing trend for"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "Model performance (both Accuracy and F1) improves when increasing debaters from 2 to 3.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Upward slope of both lines between x=2 and x=3",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Performance peaks when there are exactly 3 debaters.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Highest data points on both lines occur at x=3 (Acc=0.659, F1=0.656)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Adding more than 3 debaters leads to a decrease in performance.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Downward slope of both lines from x=3 to x=5",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Accuracy is consistently higher than F1 score across all tested configurations.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Yellow solid line is positioned above the red dashed line at all x-values",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The performance drop after 3 debaters is drastic.",
+          "why_wrong": "While the trend is downward, the absolute drop is relatively small (e.g., Acc drops from 0.659 to 0.648), not a catastrophic failure."
+        },
+        {
+          "claim": "F1 score is sometimes better than Accuracy.",
+          "why_wrong": "The legend and visual layout clearly show the Acc line (yellow) is always above the F1 line (red)."
+        }
+      ],
+      "limitations": [
+        "The chart only displays discrete integer values for the number of debaters (2, 3, 4, 5), so trends between these integers are interpolated.",
+        "No error bars or confidence intervals are visible, so statistical significance of the differences cannot be determined visually.",
+        "The y-axis range is zoomed in (0.60-0.70), which might exaggerate the visual magnitude of small changes."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S14",
+      "macro_id": "M7",
+      "caption": "Figure 3: Influence of the number of rounds selected.",
+      "summary": "The line chart displays the relationship between the number of rounds (ranging from 1 to 4) and model performance metrics, specifically Accuracy (Acc) and F1 score. The graph shows that performance for both metrics increases from round 1 to round 2, reaching a peak, and then slightly decreases or stabilizes as the number of rounds increases to 3 and 4.",
+      "key_elements": [
+        {
+          "name": "X-axis: Number of Rounds",
+          "role": "Independent variable showing discrete values 1, 2, 3, 4"
+        },
+        {
+          "name": "Y-axis: Score (0-1)",
+          "role": "Dependent variable measuring performance"
+        },
+        {
+          "name": "Acc Line",
+          "role": "Yellow solid line representing Accuracy scores"
+        },
+        {
+          "name": "F1 Line",
+          "role": "Orange dashed line representing F1 scores"
+        },
+        {
+          "name": "Data Labels",
+          "role": "Specific numerical values indicating exact scores at each data point (e.g., 0.659, 0.656)"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Acc Line",
+          "target": "F1 Line",
+          "relation": "is consistently higher than"
+        },
+        {
+          "source": "Number of Rounds = 2",
+          "target": "Acc Line",
+          "relation": "corresponds to peak value"
+        },
+        {
+          "source": "Number of Rounds = 2",
+          "target": "F1 Line",
+          "relation": "corresponds to peak value"
+        },
+        {
+          "source": "Number of Rounds 1 -> 2",
+          "target": "Both Lines",
+          "relation": "shows positive trend/increase"
+        },
+        {
+          "source": "Number of Rounds 2 -> 4",
+          "target": "Both Lines",
+          "relation": "shows negative trend/decrease"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "Model performance (both Acc and F1) improves when increasing the number of rounds from 1 to 2.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Upward slope of both lines between x=1 and x=2",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "The optimal number of rounds for this metric is 2, as it yields the highest scores.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Peaks of both lines occur at x=2 with values 0.659 and 0.656",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Increasing the number of rounds beyond 2 leads to a decrease in performance.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Downward slope of lines from x=2 to x=3 and x=4",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Accuracy is consistently higher than the F1 score across all tested round counts.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Yellow line is physically above the orange dashed line at all points",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Performance continues to improve as more rounds are added.",
+          "why_wrong": "The chart clearly shows a decline in scores after the peak at round 2."
+        },
+        {
+          "claim": "F1 score is better than Accuracy.",
+          "why_wrong": "The legend indicates the yellow line is Acc and the orange dashed line is F1; the yellow line is always higher."
+        }
+      ],
+      "limitations": [
+        "The chart only displays integer values for rounds (1, 2, 3, 4), so intermediate values are not shown.",
+        "There are no error bars or confidence intervals visible, so statistical significance cannot be determined from this figure alone.",
+        "The range of rounds is limited to 4, so behavior beyond 4 rounds is unknown."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S14",
+      "macro_id": "M7",
+      "caption": "Table 4: An Example of Debate-Feedback Structure",
+      "summary": "The table presents an example of a debate-feedback structure for legal case prediction, illustrating four steps (Initial, Debate, Verification, Output) across three debaters. The initial step inputs a case and outputs a prediction; the debate step includes opinions and counter-arguments from three debaters; the verification step assigns reliability scores (0.75, 0.8, 0.45); the output step yields a final prediction of 'Plaintiff wins' based on debate summary and reliability.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "The table outlines a four-step debate-feedback structure: Initial Step, Debate Step, Verification Step, Output Step.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row headers in the table explicitly label these steps.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "The initial step involves inputting a legal case and outputting a prediction, as shown by the repeated input/output text in the first row.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "First row (1. Initial Step) contains '# input:...' and '# output:Plaintiff wins' in all three columns.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "The debate step includes three debaters providing opinions and counter-arguments for the case.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Second row (2. Debate Step) lists Debater 0, Debater 1, Debater 2 with respective opinion texts.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "The verification step assigns reliability scores of 0.75, 0.8, and 0.45 to Debater 0, Debater 1, and Debater 2 respectively.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Third row (3. Verification Step) shows 'reliability: 0.75', 'reliability: 0.8', 'reliability: 0.45' in the three columns.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "The output step produces a final prediction of 'Plaintiff wins' for all three debaters after considering the debate summary and reliability.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Fourth row (4. Output step) shows '# output:Plaintiff wins' in all three columns.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "The example uses the legal case 'The Adams Express Company v. Richard T. Haynes' from 1865.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "The input text in the first row includes the case name and description.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The reliability scores (0.75, 0.8, 0.45) are empirical results from an experiment.",
+          "why_wrong": "The table is an illustrative example; the scores are hypothetical and not derived from actual data or experiments."
+        },
+        {
+          "claim": "The table compares multiple debate-feedback methods or variations.",
+          "why_wrong": "The table only shows a single example of the structure; it does not compare different methods or conditions."
+        },
+        {
+          "claim": "The table proves that the debate-feedback structure always yields 'Plaintiff wins' for this case.",
+          "why_wrong": "The table shows only one output example; it does not demonstrate consistency or statistical significance."
+        }
+      ],
+      "limitations": [
+        "The table contains only one example, so it cannot support general claims about the effectiveness of the debate-feedback structure.",
+        "The reliability scores are given without justification or derivation.",
+        "The table does not include any quantitative evaluation or comparison with baselines.",
+        "The legal case example is simplified and may not reflect real-case complexity."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_005",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S14",
+      "macro_id": "M7",
+      "caption": "Table 5: Performance of smoothing mechanism.",
+      "summary": "This table compares the performance of a debate-feedback mechanism with and without a smoothing technique, reporting counts of prediction corrections and degradations, as well as overall accuracy rate.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Smoothing reduces the number of prediction degradations from 115 to 11.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Row 2 (Without Smoothing) and Row 3 (With Smoothing), column 'Prediction Degradation'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "Smoothing increases the accuracy rate from 62.8% to 65.7%.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Row 2 (Without Smoothing) and Row 3 (With Smoothing), column 'Accuracy Rate'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "Without smoothing, prediction corrections count is 102.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 2, column 'Prediction Correction'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "With smoothing, prediction corrections count is 93.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 3, column 'Prediction Correction'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "The smoothing mechanism improves overall performance as indicated by the increase in accuracy and reduction in degradations.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption 'Performance of smoothing mechanism' combined with numerical values",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Smoothing improves all three metrics (corrections, degradations, accuracy).",
+          "why_wrong": "While degradation decreased and accuracy increased, prediction corrections also decreased from 102 to 93. Depending on context, fewer corrections might be better (fewer mistakes that need fixing) or worse (less opportunity to correct errors); the table does not define the desirability of this metric."
+        },
+        {
+          "claim": "Smoothing causes a large and statistically significant improvement.",
+          "why_wrong": "The table reports raw counts and percentages without any measure of variance, significance testing, or confidence intervals; we cannot infer statistical significance or generalizability."
+        },
+        {
+          "claim": "The smoothing technique can be applied to other datasets or tasks with similar effects.",
+          "why_wrong": "This table only tests one specific scenario; there is no information about the task, dataset, or cross-validation; external validity is not established."
+        }
+      ],
+      "limitations": [
+        "Only two conditions are compared (with and without smoothing), so no intermediate or alternative methods are evaluated.",
+        "The meaning of 'Prediction Correction' and 'Prediction Degradation' is not defined in the table or caption, leaving room for interpretation.",
+        "No statistical significance or confidence intervals are provided.",
+        "The table reports aggregate counts but no per-instance breakdown, so we cannot assess consistency across examples."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    }
+  ],
+  "summary": {
+    "asset_explanation_count": 8,
+    "by_asset_type": {
+      "figure": 3,
+      "table": 5
+    },
+    "needs_review_count": 0,
+    "supported_claim_count": 36,
+    "possible_misreading_count": 19
+  }
+}

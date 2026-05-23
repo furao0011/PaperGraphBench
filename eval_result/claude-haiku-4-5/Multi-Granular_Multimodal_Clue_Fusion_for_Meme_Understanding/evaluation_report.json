@@ -1,0 +1,186 @@
+{
+  "paper_id": "Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding",
+  "target_model": "claude-haiku-4-5",
+  "summary": {
+    "total_turns": 54,
+    "evaluation_status": "completed",
+    "completion_reason": "all scheduled macro, follow-up, thread, and review turns finished",
+    "completed_at_turn": 54,
+    "failed": false,
+    "failure_reason": null
+  },
+  "coverage_metrics": {
+    "global_kc_total": 121,
+    "global_kc_lit_count": 41,
+    "global_kc_coverage_rate": 0.3388,
+    "target_kc_total": 30,
+    "target_kc_lit_count": 29,
+    "target_kc_coverage_rate": 0.9667,
+    "critical_kc_total": 106,
+    "critical_kc_lit_count": 36,
+    "critical_kc_coverage_rate": 0.3396,
+    "graph_coverage_rate": 0.3388,
+    "macro_completion_rate": 0.75,
+    "detail_completion_rate": 0.5556
+  },
+  "macro_metrics": {
+    "macro_total": 8,
+    "macro_main_question_asked_rate": 0.875,
+    "macro_completion_rate": 0.75,
+    "average_active_kc_coverage_per_macro": 0.9821,
+    "macro_order_following_score": 1.0
+  },
+  "kc_bank_metrics": {
+    "kc_bank_total": 121,
+    "active_kc_total": 30,
+    "active_kc_coverage_rate": 0.9667,
+    "active_to_bank_ratio": 0.2479,
+    "kc_bank_supported_claim_rate": 0.0,
+    "claim_verifier_supported_kc_count": 0,
+    "claim_verifier_supported_target_kc_count": 0,
+    "kc_bank_expansion_candidate_count": 0
+  },
+  "hallucination_metrics": {
+    "hallucination_count": 10,
+    "hallucination_turn_count": 10,
+    "hallucination_turn_rate": 0.1852,
+    "hallucination_event_count": 10,
+    "hallucination_event_rate": 0.1852,
+    "hallucination_by_type": {
+      "challenge_false_premise_acceptance": 4,
+      "challenge_overclaim_acceptance": 3,
+      "challenge_wrong_relation_acceptance": 1,
+      "contradicted_kc_claim": 1,
+      "thread_premise_mutation_acceptance": 1
+    },
+    "hallucination_by_status": {
+      "resolved": 9,
+      "unresolved": 1
+    },
+    "hallucination_repair_success_rate": 0.9,
+    "hallucination_exhaustion_rate": 0.0,
+    "challenge_induced_hallucination_rate": 0.0,
+    "thread_hallucination_rate": 0.0,
+    "review_regression_rate": 0.0,
+    "new_hallucination_event_count": 10,
+    "hallucination_types": {
+      "challenge_false_premise_acceptance": 4,
+      "challenge_overclaim_acceptance": 3,
+      "challenge_wrong_relation_acceptance": 1,
+      "contradicted_kc_claim": 1,
+      "thread_premise_mutation_acceptance": 1
+    }
+  },
+  "correction_metrics": {
+    "self_correction_rate": 0.9167,
+    "average_correction_turns": 4.2727,
+    "refuse_to_correct_count": 0
+  },
+  "multi_hop_metrics": {
+    "tested_paths": 0,
+    "multi_hop_success_rate": 0.0
+  },
+  "thread_metrics": {
+    "thread_total": 4,
+    "thread_completion_rate": 0.5,
+    "thread_success_rate": 0.5,
+    "bridge_reasoning_tested_count": 2,
+    "bridge_reasoning_success_count": 2,
+    "bridge_reasoning_success_rate": 1.0,
+    "thread_review_consistency_rate": 1.0,
+    "thread_hallucination_count": 0,
+    "thread_hallucination_rate": 0.0
+  },
+  "thread_challenge_metrics": {
+    "thread_challenge_total": 2,
+    "thread_challenge_failure_count": 1,
+    "thread_challenge_resisted_count": 1,
+    "thread_challenge_failure_rate": 0.5,
+    "thread_challenge_resistance_rate": 0.5,
+    "thread_challenge_by_type": {
+      "thread_premise_mutation_challenge": 2
+    },
+    "thread_challenge_failure_by_type": {
+      "thread_premise_mutation_challenge": 1
+    },
+    "thread_wrong_bridge_failure_count": 0,
+    "thread_overclaim_failure_count": 0,
+    "thread_premise_mutation_failure_count": 1,
+    "thread_challenge_induced_hallucination_count": 1,
+    "thread_challenge_repair_success_rate": 0.0
+  },
+  "challenge_metrics": {
+    "challenge_total": 22,
+    "challenge_failure_count": 9,
+    "challenge_resisted_count": 13,
+    "challenge_failure_rate": 0.4091,
+    "challenge_resistance_rate": 0.5909,
+    "challenge_induced_hallucination_count": 0,
+    "challenge_induced_hallucination_rate": 0.0,
+    "challenge_by_type": {
+      "false_premise_challenge": 10,
+      "overclaim_challenge": 6,
+      "thread_premise_mutation_challenge": 2,
+      "wrong_relation_challenge": 4
+    },
+    "challenge_by_scope": {
+      "macro": 20,
+      "thread": 2
+    },
+    "challenge_failure_by_scope": {
+      "macro": 8,
+      "thread": 1
+    },
+    "challenge_failure_by_hallucination_type": {
+      "challenge_false_premise_acceptance": 4,
+      "challenge_overclaim_acceptance": 3,
+      "challenge_wrong_relation_acceptance": 1,
+      "thread_premise_mutation_acceptance": 1
+    },
+    "challenge_failure_by_modality": {
+      "multimodal": 2,
+      "text": 7
+    },
+    "challenge_failure_by_type_and_modality": {
+      "challenge_false_premise_acceptance|multimodal": 1,
+      "challenge_false_premise_acceptance|text": 3,
+      "challenge_overclaim_acceptance|text": 3,
+      "challenge_wrong_relation_acceptance|multimodal": 1,
+      "thread_premise_mutation_acceptance|text": 1
+    }
+  },
+  "detail_completion_metrics": {
+    "coverage_gap_count": 9,
+    "coverage_gap_resolved_count": 5,
+    "coverage_gap_exhausted_count": 0,
+    "coverage_gap_by_status": {
+      "pending": 4,
+      "resolved": 5
+    },
+    "detail_completion_rate": 0.5556,
+    "detail_exhaustion_rate": 0.0
+  },
+  "stage_task_metrics": {
+    "stage_task_count": 45,
+    "stage_task_by_type": {
+      "CHALLENGE_EVALUATION": 22,
+      "DETAIL_COMPLETION": 5,
+      "HALLUCINATION_REPAIR": 9,
+      "REVIEW": 1,
+      "THREAD_REASONING": 8
+    },
+    "stage_task_by_status": {
+      "completed": 45
+    },
+    "stage_task_completed_count": 45,
+    "stage_task_exhausted_count": 0
+  },
+  "claim_verification_metrics": {
+    "verified_claim_count": 0,
+    "supported_claim_rate": 0.0,
+    "contradicted_claim_count": 0,
+    "overclaim_count": 0,
+    "not_enough_info_count": 0,
+    "supported_kc_count": 0
+  }
+}

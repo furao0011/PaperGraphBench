@@ -1,0 +1,1226 @@
+{
+  "paper_id": "Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding",
+  "schema_version": "v3_latex_table_assets",
+  "assets": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "qualitative_example",
+      "section_id": "S3",
+      "section_title": "Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem and Motivation",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S3_0001",
+      "source_block_ids": [
+        "P001_B0014",
+        "P001_B0015",
+        "P001_B0016",
+        "P001_B0017",
+        "P001_B0018",
+        "P001_B0019",
+        "P001_B0020"
+      ],
+      "media_block_ids": [
+        "P001_B0015",
+        "P001_B0017"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_651_515_870_665.jpg",
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_873_461_1105_618.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_001",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_651_515_870_665.jpg",
+          "caption": "Figure 1: Examples of Metaphorical Memes."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_001",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_873_461_1105_618.jpg",
+          "caption": "Figure 1: Examples of Metaphorical Memes."
+        }
+      ],
+      "caption": "Figure 1: Examples of Metaphorical Memes.",
+      "caption_kind": "figure",
+      "caption_number": "1",
+      "nearby_context": "Contains two subfigures: (a) How Italians fight corona virus? and (b) Peace is only an armistice in an endless war. Overall caption: Figure 1: Examples of Metaphorical Memes.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P001_B0015",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_2",
+          "panel_label": null,
+          "source_block_id": "P001_B0017",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 1: Examples of Metaphorical Memes.",
+        "caption_kind": "figure",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P001_B0014",
+          "P001_B0015",
+          "P001_B0016",
+          "P001_B0017",
+          "P001_B0018",
+          "P001_B0019",
+          "P001_B0020"
+        ],
+        "media_block_ids": [
+          "P001_B0015",
+          "P001_B0017"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P001_B0015",
+          "P001_B0017"
+        ],
+        "description_from_html": "Contains two subfigures: (a) How Italians fight corona virus? and (b) Peace is only an armistice in an endless war. Overall caption: Figure 1: Examples of Metaphorical Memes.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 2
+      }
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S5",
+      "section_title": "Metaphorical Information Processing",
+      "macro_id": "M2",
+      "macro_candidates": [
+        {
+          "macro_id": "M2",
+          "title": "Background and Related Work",
+          "role": "background",
+          "order": 2
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S5_0002",
+      "source_block_ids": [
+        "P003_B0001",
+        "P003_B0002"
+      ],
+      "media_block_ids": [
+        "P003_B0001"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_149_105_1074_592.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_002",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_149_105_1074_592.jpg",
+          "caption": "Figure 2: The overall architecture of our model. “mr” means metaphor recognition, “sa” means sentiment analysis, “id” means intention detection, “od” means offensiveness detection."
+        }
+      ],
+      "caption": "Figure 2: The overall architecture of our model. “mr” means metaphor recognition, “sa” means sentiment analysis, “id” means intention detection, “od” means offensiveness detection.",
+      "caption_kind": "figure",
+      "caption_number": "2",
+      "nearby_context": "Figure 2: The overall architecture of our model, with metaphors, sentiments, intentions, and offensiveness detection.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P003_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 2: The overall architecture of our model. “mr” means metaphor recognition, “sa” means sentiment analysis, “id” means intention detection, “od” means offensiveness detection.",
+        "caption_kind": "figure",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P003_B0001",
+          "P003_B0002"
+        ],
+        "media_block_ids": [
+          "P003_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P003_B0001"
+        ],
+        "description_from_html": "Figure 2: The overall architecture of our model, with metaphors, sentiments, intentions, and offensiveness detection.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S9",
+      "section_title": "Modal Fusion",
+      "macro_id": "M4",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Global-Local Cross-Modal Interaction",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S9_0003",
+      "source_block_ids": [
+        "P005_B0001",
+        "P005_B0002"
+      ],
+      "media_block_ids": [
+        "P005_B0001"
+      ],
+      "caption": "Table 1: Experimental results on the MET-MEME dataset of four tasks.",
+      "caption_kind": "table",
+      "caption_number": "1",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Method</td><td colspan=\"3\">English</td><td colspan=\"3\">Chinese</td><td colspan=\"3\">English</td><td colspan=\"3\">Chinese</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>Pre</td><td style='text-align: center; word-wrap: break-word;'>Rec</td><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>Pre</td><td style='text-align: center; word-wrap: break-word;'>Rec</td><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>Pre</td><td style='text-align: center; word-wrap: break-word;'>Rec</td><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>Pre</td><td style='text-align: center; word-wrap: break-word;'>Rec</td></tr><tr><td colspan=\"7\">Sentiment Analysis</td><td colspan=\"6\">Intention Detection</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>VGG16</td><td style='text-align: center; word-wrap: break-word;'>20.57</td><td style='text-align: center; word-wrap: break-word;'>20.84</td><td style='text-align: center; word-wrap: break-word;'>24.22</td><td style='text-align: center; word-wrap: break-word;'>29.94</td><td style='text-align: center; word-wrap: break-word;'>26.04</td><td style='text-align: center; word-wrap: break-word;'>29.20</td><td style='text-align: center; word-wrap: break-word;'>37.19</td><td style='text-align: center; word-wrap: break-word;'>38.71</td><td style='text-align: center; word-wrap: break-word;'>38.15</td><td style='text-align: center; word-wrap: break-word;'>47.48</td><td style='text-align: center; word-wrap: break-word;'>49.21</td><td style='text-align: center; word-wrap: break-word;'>47.81</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>DenseNet-161</td><td style='text-align: center; word-wrap: break-word;'>21.88</td><td style='text-align: center; word-wrap: break-word;'>21.71</td><td style='text-align: center; word-wrap: break-word;'>25.65</td><td style='text-align: center; word-wrap: break-word;'>29.45</td><td style='text-align: center; word-wrap: break-word;'>27.50</td><td style='text-align: center; word-wrap: break-word;'>29.36</td><td style='text-align: center; word-wrap: break-word;'>38.10</td><td style='text-align: center; word-wrap: break-word;'>39.31</td><td style='text-align: center; word-wrap: break-word;'>37.89</td><td style='text-align: center; word-wrap: break-word;'>47.23</td><td style='text-align: center; word-wrap: break-word;'>39.24</td><td style='text-align: center; word-wrap: break-word;'>47.06</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ResNet-50</td><td style='text-align: center; word-wrap: break-word;'>21.74</td><td style='text-align: center; word-wrap: break-word;'>18.63</td><td style='text-align: center; word-wrap: break-word;'>21.35</td><td style='text-align: center; word-wrap: break-word;'>29.36</td><td style='text-align: center; word-wrap: break-word;'>27.50</td><td style='text-align: center; word-wrap: break-word;'>29.28</td><td style='text-align: center; word-wrap: break-word;'>39.19</td><td style='text-align: center; word-wrap: break-word;'>37.12</td><td style='text-align: center; word-wrap: break-word;'>40.10</td><td style='text-align: center; word-wrap: break-word;'>47.15</td><td style='text-align: center; word-wrap: break-word;'>39.23</td><td style='text-align: center; word-wrap: break-word;'>47.06</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Multi-BERT_EfficientNet</td><td style='text-align: center; word-wrap: break-word;'>28.52</td><td style='text-align: center; word-wrap: break-word;'>24.52</td><td style='text-align: center; word-wrap: break-word;'>29.04</td><td style='text-align: center; word-wrap: break-word;'>33.50</td><td style='text-align: center; word-wrap: break-word;'>35.29</td><td style='text-align: center; word-wrap: break-word;'>33.42</td><td style='text-align: center; word-wrap: break-word;'>43.10</td><td style='text-align: center; word-wrap: break-word;'>41.54</td><td style='text-align: center; word-wrap: break-word;'>42.19</td><td style='text-align: center; word-wrap: break-word;'>51.03</td><td style='text-align: center; word-wrap: break-word;'>43.06</td><td style='text-align: center; word-wrap: break-word;'>51.03</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Multi-BERT_ViT</td><td style='text-align: center; word-wrap: break-word;'>24.43</td><td style='text-align: center; word-wrap: break-word;'>23.41</td><td style='text-align: center; word-wrap: break-word;'>23.96</td><td style='text-align: center; word-wrap: break-word;'>33.25</td><td style='text-align: center; word-wrap: break-word;'>27.33</td><td style='text-align: center; word-wrap: break-word;'>32.84</td><td style='text-align: center; word-wrap: break-word;'>41.28</td><td style='text-align: center; word-wrap: break-word;'>40.13</td><td style='text-align: center; word-wrap: break-word;'>40.62</td><td style='text-align: center; word-wrap: break-word;'>50.62</td><td style='text-align: center; word-wrap: break-word;'>41.32</td><td style='text-align: center; word-wrap: break-word;'>50.62</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Multi-BERT_PiT</td><td style='text-align: center; word-wrap: break-word;'>25.00</td><td style='text-align: center; word-wrap: break-word;'>27.82</td><td style='text-align: center; word-wrap: break-word;'>28.12</td><td style='text-align: center; word-wrap: break-word;'>33.66</td><td style='text-align: center; word-wrap: break-word;'>33.58</td><td style='text-align: center; word-wrap: break-word;'>33.09</td><td style='text-align: center; word-wrap: break-word;'>42.23</td><td style='text-align: center; word-wrap: break-word;'>41.09</td><td style='text-align: center; word-wrap: break-word;'>41.02</td><td style='text-align: center; word-wrap: break-word;'>50.21</td><td style='text-align: center; word-wrap: break-word;'>50.00</td><td style='text-align: center; word-wrap: break-word;'>50.04</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MET_add</td><td style='text-align: center; word-wrap: break-word;'>24.65</td><td style='text-align: center; word-wrap: break-word;'>24.52</td><td style='text-align: center; word-wrap: break-word;'>25.26</td><td style='text-align: center; word-wrap: break-word;'>32.50</td><td style='text-align: center; word-wrap: break-word;'>32.62</td><td style='text-align: center; word-wrap: break-word;'>33.50</td><td style='text-align: center; word-wrap: break-word;'>40.32</td><td style='text-align: center; word-wrap: break-word;'>40.39</td><td style='text-align: center; word-wrap: break-word;'>41.28</td><td style='text-align: center; word-wrap: break-word;'>52.93</td><td style='text-align: center; word-wrap: break-word;'>52.68</td><td style='text-align: center; word-wrap: break-word;'>54.01</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MET_cat</td><td style='text-align: center; word-wrap: break-word;'>27.68</td><td style='text-align: center; word-wrap: break-word;'>28.41</td><td style='text-align: center; word-wrap: break-word;'>29.82</td><td style='text-align: center; word-wrap: break-word;'>33.42</td><td style='text-align: center; word-wrap: break-word;'>34.33</td><td style='text-align: center; word-wrap: break-word;'>33.91</td><td style='text-align: center; word-wrap: break-word;'>38.56</td><td style='text-align: center; word-wrap: break-word;'>39.19</td><td style='text-align: center; word-wrap: break-word;'>39.84</td><td style='text-align: center; word-wrap: break-word;'>51.58</td><td style='text-align: center; word-wrap: break-word;'>51.48</td><td style='text-align: center; word-wrap: break-word;'>52.85</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>M3F_add</td><td style='text-align: center; word-wrap: break-word;'>30.47</td><td style='text-align: center; word-wrap: break-word;'>33.45</td><td style='text-align: center; word-wrap: break-word;'>30.34</td><td style='text-align: center; word-wrap: break-word;'>39.95</td><td style='text-align: center; word-wrap: break-word;'>41.80</td><td style='text-align: center; word-wrap: break-word;'>39.87</td><td style='text-align: center; word-wrap: break-word;'>44.40</td><td style='text-align: center; word-wrap: break-word;'>41.89</td><td style='text-align: center; word-wrap: break-word;'>44.32</td><td style='text-align: center; word-wrap: break-word;'>55.25</td><td style='text-align: center; word-wrap: break-word;'>54.57</td><td style='text-align: center; word-wrap: break-word;'>55.00</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>M3F_cat</td><td style='text-align: center; word-wrap: break-word;'>29.82</td><td style='text-align: center; word-wrap: break-word;'>34.18</td><td style='text-align: center; word-wrap: break-word;'>30.73</td><td style='text-align: center; word-wrap: break-word;'>37.22</td><td style='text-align: center; word-wrap: break-word;'>39.55</td><td style='text-align: center; word-wrap: break-word;'>37.97</td><td style='text-align: center; word-wrap: break-word;'>44.10</td><td style='text-align: center; word-wrap: break-word;'>44.56</td><td style='text-align: center; word-wrap: break-word;'>43.53</td><td style='text-align: center; word-wrap: break-word;'>53.52</td><td style='text-align: center; word-wrap: break-word;'>54.72</td><td style='text-align: center; word-wrap: break-word;'>54.52</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Ours</td><td style='text-align: center; word-wrap: break-word;'>34.36 (+3.89%)</td><td style='text-align: center; word-wrap: break-word;'>37.77 (+3.52%)</td><td style='text-align: center; word-wrap: break-word;'>34.38 (+3.65%)</td><td style='text-align: center; word-wrap: break-word;'>42.11 (+2.16%)</td><td style='text-align: center; word-wrap: break-word;'>47.59 (+5.79%)</td><td style='text-align: center; word-wrap: break-word;'>42.02 (+2.15%)</td><td style='text-align: center; word-wrap: break-word;'>47.92 (+3.52%)</td><td style='text-align: center; word-wrap: break-word;'>47.53 (+2.97%)</td><td style='text-align: center; word-wrap: break-word;'>47.06 (+2.74%)</td><td style='text-align: center; word-wrap: break-word;'>58.56 (+3.31%)</td><td style='text-align: center; word-wrap: break-word;'>57.99 (+3.27%)</td><td style='text-align: center; word-wrap: break-word;'>58.32 (+3.32%)</td></tr><tr><td colspan=\"7\">Offensiveness Detection</td><td colspan=\"6\">Metaphor Recognition</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>VGG16</td><td style='text-align: center; word-wrap: break-word;'>67.10</td><td style='text-align: center; word-wrap: break-word;'>63.42</td><td style='text-align: center; word-wrap: break-word;'>72.53</td><td style='text-align: center; word-wrap: break-word;'>70.07</td><td style='text-align: center; word-wrap: break-word;'>64.11</td><td style='text-align: center; word-wrap: break-word;'>72.07</td><td style='text-align: center; word-wrap: break-word;'>78.39</td><td style='text-align: center; word-wrap: break-word;'>79.73</td><td style='text-align: center; word-wrap: break-word;'>79.95</td><td style='text-align: center; word-wrap: break-word;'>67.00</td><td style='text-align: center; word-wrap: break-word;'>67.24</td><td style='text-align: center; word-wrap: break-word;'>67.82</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>DenseNet-161</td><td style='text-align: center; word-wrap: break-word;'>69.66</td><td style='text-align: center; word-wrap: break-word;'>62.07</td><td style='text-align: center; word-wrap: break-word;'>69.98</td><td style='text-align: center; word-wrap: break-word;'>71.43</td><td style='text-align: center; word-wrap: break-word;'>70.82</td><td style='text-align: center; word-wrap: break-word;'>75.43</td><td style='text-align: center; word-wrap: break-word;'>80.08</td><td style='text-align: center; word-wrap: break-word;'>80.23</td><td style='text-align: center; word-wrap: break-word;'>80.47</td><td style='text-align: center; word-wrap: break-word;'>67.16</td><td style='text-align: center; word-wrap: break-word;'>67.91</td><td style='text-align: center; word-wrap: break-word;'>67.99</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ResNet-50</td><td style='text-align: center; word-wrap: break-word;'>69.21</td><td style='text-align: center; word-wrap: break-word;'>64.62</td><td style='text-align: center; word-wrap: break-word;'>72.57</td><td style='text-align: center; word-wrap: break-word;'>73.24</td><td style='text-align: center; word-wrap: break-word;'>69.62</td><td style='text-align: center; word-wrap: break-word;'>75.74</td><td style='text-align: center; word-wrap: break-word;'>80.34</td><td style='text-align: center; word-wrap: break-word;'>81.22</td><td style='text-align: center; word-wrap: break-word;'>80.86</td><td style='text-align: center; word-wrap: break-word;'>67.74</td><td style='text-align: center; word-wrap: break-word;'>67.63</td><td style='text-align: center; word-wrap: break-word;'>67.66</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Multi-BERT_EfficientNet</td><td style='text-align: center; word-wrap: break-word;'>73.78</td><td style='text-align: center; word-wrap: break-word;'>67.98</td><td style='text-align: center; word-wrap: break-word;'>74.56</td><td style='text-align: center; word-wrap: break-word;'>78.15</td><td style='text-align: center; word-wrap: break-word;'>72.11</td><td style='text-align: center; word-wrap: break-word;'>79.98</td><td style='text-align: center; word-wrap: break-word;'>82.46</td><td style='text-align: center; word-wrap: break-word;'>84.39</td><td style='text-align: center; word-wrap: break-word;'>83.11</td><td style='text-align: center; word-wrap: break-word;'>74.19</td><td style='text-align: center; word-wrap: break-word;'>71.26</td><td style='text-align: center; word-wrap: break-word;'>74.28</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Multi-BERT_ViT</td><td style='text-align: center; word-wrap: break-word;'>71.22</td><td style='text-align: center; word-wrap: break-word;'>62.96</td><td style='text-align: center; word-wrap: break-word;'>72.66</td><td style='text-align: center; word-wrap: break-word;'>76.92</td><td style='text-align: center; word-wrap: break-word;'>67.31</td><td style='text-align: center; word-wrap: break-word;'>78.74</td><td style='text-align: center; word-wrap: break-word;'>81.90</td><td style='text-align: center; word-wrap: break-word;'>82.01</td><td style='text-align: center; word-wrap: break-word;'>82.46</td><td style='text-align: center; word-wrap: break-word;'>73.28</td><td style='text-align: center; word-wrap: break-word;'>72.55</td><td style='text-align: center; word-wrap: break-word;'>73.70</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Multi-BERT_PiT</td><td style='text-align: center; word-wrap: break-word;'>72.79</td><td style='text-align: center; word-wrap: break-word;'>66.69</td><td style='text-align: center; word-wrap: break-word;'>74.26</td><td style='text-align: center; word-wrap: break-word;'>77.17</td><td style='text-align: center; word-wrap: break-word;'>70.16</td><td style='text-align: center; word-wrap: break-word;'>79.05</td><td style='text-align: center; word-wrap: break-word;'>82.07</td><td style='text-align: center; word-wrap: break-word;'>83.05</td><td style='text-align: center; word-wrap: break-word;'>82.98</td><td style='text-align: center; word-wrap: break-word;'>75.10</td><td style='text-align: center; word-wrap: break-word;'>73.15</td><td style='text-align: center; word-wrap: break-word;'>74.28</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MET_add</td><td style='text-align: center; word-wrap: break-word;'>68.39</td><td style='text-align: center; word-wrap: break-word;'>66.21</td><td style='text-align: center; word-wrap: break-word;'>72.14</td><td style='text-align: center; word-wrap: break-word;'>76.01</td><td style='text-align: center; word-wrap: break-word;'>74.76</td><td style='text-align: center; word-wrap: break-word;'>78.16</td><td style='text-align: center; word-wrap: break-word;'>81.33</td><td style='text-align: center; word-wrap: break-word;'>81.49</td><td style='text-align: center; word-wrap: break-word;'>82.29</td><td style='text-align: center; word-wrap: break-word;'>74.04</td><td style='text-align: center; word-wrap: break-word;'>74.51</td><td style='text-align: center; word-wrap: break-word;'>74.96</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MET_cat</td><td style='text-align: center; word-wrap: break-word;'>67.25</td><td style='text-align: center; word-wrap: break-word;'>66.15</td><td style='text-align: center; word-wrap: break-word;'>74.48</td><td style='text-align: center; word-wrap: break-word;'>73.19</td><td style='text-align: center; word-wrap: break-word;'>71.59</td><td style='text-align: center; word-wrap: break-word;'>79.49</td><td style='text-align: center; word-wrap: break-word;'>82.39</td><td style='text-align: center; word-wrap: break-word;'>82.69</td><td style='text-align: center; word-wrap: break-word;'>83.33</td><td style='text-align: center; word-wrap: break-word;'>72.90</td><td style='text-align: center; word-wrap: break-word;'>72.80</td><td style='text-align: center; word-wrap: break-word;'>75.67</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>M3F_add</td><td style='text-align: center; word-wrap: break-word;'>76.17</td><td style='text-align: center; word-wrap: break-word;'>69.45</td><td style='text-align: center; word-wrap: break-word;'>76.19</td><td style='text-align: center; word-wrap: break-word;'>80.81</td><td style='text-align: center; word-wrap: break-word;'>76.00</td><td style='text-align: center; word-wrap: break-word;'>80.73</td><td style='text-align: center; word-wrap: break-word;'>83.98</td><td style='text-align: center; word-wrap: break-word;'>85.86</td><td style='text-align: center; word-wrap: break-word;'>84.38</td><td style='text-align: center; word-wrap: break-word;'>77.01</td><td style='text-align: center; word-wrap: break-word;'>72.94</td><td style='text-align: center; word-wrap: break-word;'>82.68</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>M3F_cat</td><td style='text-align: center; word-wrap: break-word;'>74.09</td><td style='text-align: center; word-wrap: break-word;'>69.59</td><td style='text-align: center; word-wrap: break-word;'>76.15</td><td style='text-align: center; word-wrap: break-word;'>80.07</td><td style='text-align: center; word-wrap: break-word;'>76.20</td><td style='text-align: center; word-wrap: break-word;'>80.62</td><td style='text-align: center; word-wrap: break-word;'>83.20</td><td style='text-align: center; word-wrap: break-word;'>85.97</td><td style='text-align: center; word-wrap: break-word;'>85.81</td><td style='text-align: center; word-wrap: break-word;'>76.18</td><td style='text-align: center; word-wrap: break-word;'>73.02</td><td style='text-align: center; word-wrap: break-word;'>80.00</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Ours</td><td style='text-align: center; word-wrap: break-word;'>78.11 (+1.94%)</td><td style='text-align: center; word-wrap: break-word;'>77.73 (+8.14%)</td><td style='text-align: center; word-wrap: break-word;'>78.32 (+2.13%)</td><td style='text-align: center; word-wrap: break-word;'>82.15 (+1.34%)</td><td style='text-align: center; word-wrap: break-word;'>81.80 (+5.6%)</td><td style='text-align: center; word-wrap: break-word;'>82.02 (+1.29%)</td><td style='text-align: center; word-wrap: break-word;'>87.51 (+3.53%)</td><td style='text-align: center; word-wrap: break-word;'>88.58 (+2.61%)</td><td style='text-align: center; word-wrap: break-word;'>88.89 (+3.08%)</td><td style='text-align: center; word-wrap: break-word;'>78.39 (+1.38%)</td><td style='text-align: center; word-wrap: break-word;'>78.16 (+3.65%)</td><td style='text-align: center; word-wrap: break-word;'>83.92 (+1.24%)</td></tr></table>",
+      "normalized_markdown": "| Method | English | English | English | Chinese | Chinese | Chinese | English | English | English | Chinese | Chinese | Chinese |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Method | Acc | Pre | Rec | Acc | Pre | Rec | Acc | Pre | Rec | Acc | Pre | Rec |\n| Sentiment Analysis | Sentiment Analysis | Sentiment Analysis | Sentiment Analysis | Sentiment Analysis | Sentiment Analysis | Sentiment Analysis | Intention Detection | Intention Detection | Intention Detection | Intention Detection | Intention Detection | Intention Detection |\n| VGG16 | 20.57 | 20.84 | 24.22 | 29.94 | 26.04 | 29.20 | 37.19 | 38.71 | 38.15 | 47.48 | 49.21 | 47.81 |\n| DenseNet-161 | 21.88 | 21.71 | 25.65 | 29.45 | 27.50 | 29.36 | 38.10 | 39.31 | 37.89 | 47.23 | 39.24 | 47.06 |\n| ResNet-50 | 21.74 | 18.63 | 21.35 | 29.36 | 27.50 | 29.28 | 39.19 | 37.12 | 40.10 | 47.15 | 39.23 | 47.06 |\n| Multi-BERT_EfficientNet | 28.52 | 24.52 | 29.04 | 33.50 | 35.29 | 33.42 | 43.10 | 41.54 | 42.19 | 51.03 | 43.06 | 51.03 |\n| Multi-BERT_ViT | 24.43 | 23.41 | 23.96 | 33.25 | 27.33 | 32.84 | 41.28 | 40.13 | 40.62 | 50.62 | 41.32 | 50.62 |\n| Multi-BERT_PiT | 25.00 | 27.82 | 28.12 | 33.66 | 33.58 | 33.09 | 42.23 | 41.09 | 41.02 | 50.21 | 50.00 | 50.04 |\n| MET_add | 24.65 | 24.52 | 25.26 | 32.50 | 32.62 | 33.50 | 40.32 | 40.39 | 41.28 | 52.93 | 52.68 | 54.01 |\n| MET_cat | 27.68 | 28.41 | 29.82 | 33.42 | 34.33 | 33.91 | 38.56 | 39.19 | 39.84 | 51.58 | 51.48 | 52.85 |\n| M3F_add | 30.47 | 33.45 | 30.34 | 39.95 | 41.80 | 39.87 | 44.40 | 41.89 | 44.32 | 55.25 | 54.57 | 55.00 |\n| M3F_cat | 29.82 | 34.18 | 30.73 | 37.22 | 39.55 | 37.97 | 44.10 | 44.56 | 43.53 | 53.52 | 54.72 | 54.52 |\n| Ours | 34.36 (+3.89%) | 37.77 (+3.52%) | 34.38 (+3.65%) | 42.11 (+2.16%) | 47.59 (+5.79%) | 42.02 (+2.15%) | 47.92 (+3.52%) | 47.53 (+2.97%) | 47.06 (+2.74%) | 58.56 (+3.31%) | 57.99 (+3.27%) | 58.32 (+3.32%) |\n| Offensiveness Detection | Offensiveness Detection | Offensiveness Detection | Offensiveness Detection | Offensiveness Detection | Offensiveness Detection | Offensiveness Detection | Metaphor Recognition | Metaphor Recognition | Metaphor Recognition | Metaphor Recognition | Metaphor Recognition | Metaphor Recognition |\n| VGG16 | 67.10 | 63.42 | 72.53 | 70.07 | 64.11 | 72.07 | 78.39 | 79.73 | 79.95 | 67.00 | 67.24 | 67.82 |\n| DenseNet-161 | 69.66 | 62.07 | 69.98 | 71.43 | 70.82 | 75.43 | 80.08 | 80.23 | 80.47 | 67.16 | 67.91 | 67.99 |\n| ResNet-50 | 69.21 | 64.62 | 72.57 | 73.24 | 69.62 | 75.74 | 80.34 | 81.22 | 80.86 | 67.74 | 67.63 | 67.66 |\n| Multi-BERT_EfficientNet | 73.78 | 67.98 | 74.56 | 78.15 | 72.11 | 79.98 | 82.46 | 84.39 | 83.11 | 74.19 | 71.26 | 74.28 |\n| Multi-BERT_ViT | 71.22 | 62.96 | 72.66 | 76.92 | 67.31 | 78.74 | 81.90 | 82.01 | 82.46 | 73.28 | 72.55 | 73.70 |\n| Multi-BERT_PiT | 72.79 | 66.69 | 74.26 | 77.17 | 70.16 | 79.05 | 82.07 | 83.05 | 82.98 | 75.10 | 73.15 | 74.28 |\n| MET_add | 68.39 | 66.21 | 72.14 | 76.01 | 74.76 | 78.16 | 81.33 | 81.49 | 82.29 | 74.04 | 74.51 | 74.96 |\n| MET_cat | 67.25 | 66.15 | 74.48 | 73.19 | 71.59 | 79.49 | 82.39 | 82.69 | 83.33 | 72.90 | 72.80 | 75.67 |\n| M3F_add | 76.17 | 69.45 | 76.19 | 80.81 | 76.00 | 80.73 | 83.98 | 85.86 | 84.38 | 77.01 | 72.94 | 82.68 |\n| M3F_cat | 74.09 | 69.59 | 76.15 | 80.07 | 76.20 | 80.62 | 83.20 | 85.97 | 85.81 | 76.18 | 73.02 | 80.00 |\n| Ours | 78.11 (+1.94%) | 77.73 (+8.14%) | 78.32 (+2.13%) | 82.15 (+1.34%) | 81.80 (+5.6%) | 82.02 (+1.29%) | 87.51 (+3.53%) | 88.58 (+2.61%) | 88.89 (+3.08%) | 78.39 (+1.38%) | 78.16 (+3.65%) | 83.92 (+1.24%) |",
+      "normalized_latex": "\\begin{tabular}{lllllllllllll}\n\\hline\nMethod & English & English & English & Chinese & Chinese & Chinese & English & English & English & Chinese & Chinese & Chinese \\\\\n\\hline\nMethod & Acc & Pre & Rec & Acc & Pre & Rec & Acc & Pre & Rec & Acc & Pre & Rec \\\\\nSentiment Analysis & Sentiment Analysis & Sentiment Analysis & Sentiment Analysis & Sentiment Analysis & Sentiment Analysis & Sentiment Analysis & Intention Detection & Intention Detection & Intention Detection & Intention Detection & Intention Detection & Intention Detection \\\\\nVGG16 & 20.57 & 20.84 & 24.22 & 29.94 & 26.04 & 29.20 & 37.19 & 38.71 & 38.15 & 47.48 & 49.21 & 47.81 \\\\\nDenseNet-161 & 21.88 & 21.71 & 25.65 & 29.45 & 27.50 & 29.36 & 38.10 & 39.31 & 37.89 & 47.23 & 39.24 & 47.06 \\\\\nResNet-50 & 21.74 & 18.63 & 21.35 & 29.36 & 27.50 & 29.28 & 39.19 & 37.12 & 40.10 & 47.15 & 39.23 & 47.06 \\\\\nMulti-BERT\\_EfficientNet & 28.52 & 24.52 & 29.04 & 33.50 & 35.29 & 33.42 & 43.10 & 41.54 & 42.19 & 51.03 & 43.06 & 51.03 \\\\\nMulti-BERT\\_ViT & 24.43 & 23.41 & 23.96 & 33.25 & 27.33 & 32.84 & 41.28 & 40.13 & 40.62 & 50.62 & 41.32 & 50.62 \\\\\nMulti-BERT\\_PiT & 25.00 & 27.82 & 28.12 & 33.66 & 33.58 & 33.09 & 42.23 & 41.09 & 41.02 & 50.21 & 50.00 & 50.04 \\\\\nMET\\_add & 24.65 & 24.52 & 25.26 & 32.50 & 32.62 & 33.50 & 40.32 & 40.39 & 41.28 & 52.93 & 52.68 & 54.01 \\\\\nMET\\_cat & 27.68 & 28.41 & 29.82 & 33.42 & 34.33 & 33.91 & 38.56 & 39.19 & 39.84 & 51.58 & 51.48 & 52.85 \\\\\nM3F\\_add & 30.47 & 33.45 & 30.34 & 39.95 & 41.80 & 39.87 & 44.40 & 41.89 & 44.32 & 55.25 & 54.57 & 55.00 \\\\\nM3F\\_cat & 29.82 & 34.18 & 30.73 & 37.22 & 39.55 & 37.97 & 44.10 & 44.56 & 43.53 & 53.52 & 54.72 & 54.52 \\\\\nOurs & 34.36 (+3.89\\%) & 37.77 (+3.52\\%) & 34.38 (+3.65\\%) & 42.11 (+2.16\\%) & 47.59 (+5.79\\%) & 42.02 (+2.15\\%) & 47.92 (+3.52\\%) & 47.53 (+2.97\\%) & 47.06 (+2.74\\%) & 58.56 (+3.31\\%) & 57.99 (+3.27\\%) & 58.32 (+3.32\\%) \\\\\nOffensiveness Detection & Offensiveness Detection & Offensiveness Detection & Offensiveness Detection & Offensiveness Detection & Offensiveness Detection & Offensiveness Detection & Metaphor Recognition & Metaphor Recognition & Metaphor Recognition & Metaphor Recognition & Metaphor Recognition & Metaphor Recognition \\\\\nVGG16 & 67.10 & 63.42 & 72.53 & 70.07 & 64.11 & 72.07 & 78.39 & 79.73 & 79.95 & 67.00 & 67.24 & 67.82 \\\\\nDenseNet-161 & 69.66 & 62.07 & 69.98 & 71.43 & 70.82 & 75.43 & 80.08 & 80.23 & 80.47 & 67.16 & 67.91 & 67.99 \\\\\nResNet-50 & 69.21 & 64.62 & 72.57 & 73.24 & 69.62 & 75.74 & 80.34 & 81.22 & 80.86 & 67.74 & 67.63 & 67.66 \\\\\nMulti-BERT\\_EfficientNet & 73.78 & 67.98 & 74.56 & 78.15 & 72.11 & 79.98 & 82.46 & 84.39 & 83.11 & 74.19 & 71.26 & 74.28 \\\\\nMulti-BERT\\_ViT & 71.22 & 62.96 & 72.66 & 76.92 & 67.31 & 78.74 & 81.90 & 82.01 & 82.46 & 73.28 & 72.55 & 73.70 \\\\\nMulti-BERT\\_PiT & 72.79 & 66.69 & 74.26 & 77.17 & 70.16 & 79.05 & 82.07 & 83.05 & 82.98 & 75.10 & 73.15 & 74.28 \\\\\nMET\\_add & 68.39 & 66.21 & 72.14 & 76.01 & 74.76 & 78.16 & 81.33 & 81.49 & 82.29 & 74.04 & 74.51 & 74.96 \\\\\nMET\\_cat & 67.25 & 66.15 & 74.48 & 73.19 & 71.59 & 79.49 & 82.39 & 82.69 & 83.33 & 72.90 & 72.80 & 75.67 \\\\\nM3F\\_add & 76.17 & 69.45 & 76.19 & 80.81 & 76.00 & 80.73 & 83.98 & 85.86 & 84.38 & 77.01 & 72.94 & 82.68 \\\\\nM3F\\_cat & 74.09 & 69.59 & 76.15 & 80.07 & 76.20 & 80.62 & 83.20 & 85.97 & 85.81 & 76.18 & 73.02 & 80.00 \\\\\nOurs & 78.11 (+1.94\\%) & 77.73 (+8.14\\%) & 78.32 (+2.13\\%) & 82.15 (+1.34\\%) & 81.80 (+5.6\\%) & 82.02 (+1.29\\%) & 87.51 (+3.53\\%) & 88.58 (+2.61\\%) & 88.89 (+3.08\\%) & 78.39 (+1.38\\%) & 78.16 (+3.65\\%) & 83.92 (+1.24\\%) \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Method",
+          "English",
+          "English",
+          "English",
+          "Chinese",
+          "Chinese",
+          "Chinese",
+          "English",
+          "English",
+          "English",
+          "Chinese",
+          "Chinese",
+          "Chinese"
+        ],
+        [
+          "Method",
+          "Acc",
+          "Pre",
+          "Rec",
+          "Acc",
+          "Pre",
+          "Rec",
+          "Acc",
+          "Pre",
+          "Rec",
+          "Acc",
+          "Pre",
+          "Rec"
+        ],
+        [
+          "Sentiment Analysis",
+          "Sentiment Analysis",
+          "Sentiment Analysis",
+          "Sentiment Analysis",
+          "Sentiment Analysis",
+          "Sentiment Analysis",
+          "Sentiment Analysis",
+          "Intention Detection",
+          "Intention Detection",
+          "Intention Detection",
+          "Intention Detection",
+          "Intention Detection",
+          "Intention Detection"
+        ],
+        [
+          "VGG16",
+          "20.57",
+          "20.84",
+          "24.22",
+          "29.94",
+          "26.04",
+          "29.20",
+          "37.19",
+          "38.71",
+          "38.15",
+          "47.48",
+          "49.21",
+          "47.81"
+        ],
+        [
+          "DenseNet-161",
+          "21.88",
+          "21.71",
+          "25.65",
+          "29.45",
+          "27.50",
+          "29.36",
+          "38.10",
+          "39.31",
+          "37.89",
+          "47.23",
+          "39.24",
+          "47.06"
+        ],
+        [
+          "ResNet-50",
+          "21.74",
+          "18.63",
+          "21.35",
+          "29.36",
+          "27.50",
+          "29.28",
+          "39.19",
+          "37.12",
+          "40.10",
+          "47.15",
+          "39.23",
+          "47.06"
+        ],
+        [
+          "Multi-BERT_EfficientNet",
+          "28.52",
+          "24.52",
+          "29.04",
+          "33.50",
+          "35.29",
+          "33.42",
+          "43.10",
+          "41.54",
+          "42.19",
+          "51.03",
+          "43.06",
+          "51.03"
+        ],
+        [
+          "Multi-BERT_ViT",
+          "24.43",
+          "23.41",
+          "23.96",
+          "33.25",
+          "27.33",
+          "32.84",
+          "41.28",
+          "40.13",
+          "40.62",
+          "50.62",
+          "41.32",
+          "50.62"
+        ],
+        [
+          "Multi-BERT_PiT",
+          "25.00",
+          "27.82",
+          "28.12",
+          "33.66",
+          "33.58",
+          "33.09",
+          "42.23",
+          "41.09",
+          "41.02",
+          "50.21",
+          "50.00",
+          "50.04"
+        ],
+        [
+          "MET_add",
+          "24.65",
+          "24.52",
+          "25.26",
+          "32.50",
+          "32.62",
+          "33.50",
+          "40.32",
+          "40.39",
+          "41.28",
+          "52.93",
+          "52.68",
+          "54.01"
+        ],
+        [
+          "MET_cat",
+          "27.68",
+          "28.41",
+          "29.82",
+          "33.42",
+          "34.33",
+          "33.91",
+          "38.56",
+          "39.19",
+          "39.84",
+          "51.58",
+          "51.48",
+          "52.85"
+        ],
+        [
+          "M3F_add",
+          "30.47",
+          "33.45",
+          "30.34",
+          "39.95",
+          "41.80",
+          "39.87",
+          "44.40",
+          "41.89",
+          "44.32",
+          "55.25",
+          "54.57",
+          "55.00"
+        ],
+        [
+          "M3F_cat",
+          "29.82",
+          "34.18",
+          "30.73",
+          "37.22",
+          "39.55",
+          "37.97",
+          "44.10",
+          "44.56",
+          "43.53",
+          "53.52",
+          "54.72",
+          "54.52"
+        ],
+        [
+          "Ours",
+          "34.36 (+3.89%)",
+          "37.77 (+3.52%)",
+          "34.38 (+3.65%)",
+          "42.11 (+2.16%)",
+          "47.59 (+5.79%)",
+          "42.02 (+2.15%)",
+          "47.92 (+3.52%)",
+          "47.53 (+2.97%)",
+          "47.06 (+2.74%)",
+          "58.56 (+3.31%)",
+          "57.99 (+3.27%)",
+          "58.32 (+3.32%)"
+        ],
+        [
+          "Offensiveness Detection",
+          "Offensiveness Detection",
+          "Offensiveness Detection",
+          "Offensiveness Detection",
+          "Offensiveness Detection",
+          "Offensiveness Detection",
+          "Offensiveness Detection",
+          "Metaphor Recognition",
+          "Metaphor Recognition",
+          "Metaphor Recognition",
+          "Metaphor Recognition",
+          "Metaphor Recognition",
+          "Metaphor Recognition"
+        ],
+        [
+          "VGG16",
+          "67.10",
+          "63.42",
+          "72.53",
+          "70.07",
+          "64.11",
+          "72.07",
+          "78.39",
+          "79.73",
+          "79.95",
+          "67.00",
+          "67.24",
+          "67.82"
+        ],
+        [
+          "DenseNet-161",
+          "69.66",
+          "62.07",
+          "69.98",
+          "71.43",
+          "70.82",
+          "75.43",
+          "80.08",
+          "80.23",
+          "80.47",
+          "67.16",
+          "67.91",
+          "67.99"
+        ],
+        [
+          "ResNet-50",
+          "69.21",
+          "64.62",
+          "72.57",
+          "73.24",
+          "69.62",
+          "75.74",
+          "80.34",
+          "81.22",
+          "80.86",
+          "67.74",
+          "67.63",
+          "67.66"
+        ],
+        [
+          "Multi-BERT_EfficientNet",
+          "73.78",
+          "67.98",
+          "74.56",
+          "78.15",
+          "72.11",
+          "79.98",
+          "82.46",
+          "84.39",
+          "83.11",
+          "74.19",
+          "71.26",
+          "74.28"
+        ],
+        [
+          "Multi-BERT_ViT",
+          "71.22",
+          "62.96",
+          "72.66",
+          "76.92",
+          "67.31",
+          "78.74",
+          "81.90",
+          "82.01",
+          "82.46",
+          "73.28",
+          "72.55",
+          "73.70"
+        ],
+        [
+          "Multi-BERT_PiT",
+          "72.79",
+          "66.69",
+          "74.26",
+          "77.17",
+          "70.16",
+          "79.05",
+          "82.07",
+          "83.05",
+          "82.98",
+          "75.10",
+          "73.15",
+          "74.28"
+        ],
+        [
+          "MET_add",
+          "68.39",
+          "66.21",
+          "72.14",
+          "76.01",
+          "74.76",
+          "78.16",
+          "81.33",
+          "81.49",
+          "82.29",
+          "74.04",
+          "74.51",
+          "74.96"
+        ],
+        [
+          "MET_cat",
+          "67.25",
+          "66.15",
+          "74.48",
+          "73.19",
+          "71.59",
+          "79.49",
+          "82.39",
+          "82.69",
+          "83.33",
+          "72.90",
+          "72.80",
+          "75.67"
+        ],
+        [
+          "M3F_add",
+          "76.17",
+          "69.45",
+          "76.19",
+          "80.81",
+          "76.00",
+          "80.73",
+          "83.98",
+          "85.86",
+          "84.38",
+          "77.01",
+          "72.94",
+          "82.68"
+        ],
+        [
+          "M3F_cat",
+          "74.09",
+          "69.59",
+          "76.15",
+          "80.07",
+          "76.20",
+          "80.62",
+          "83.20",
+          "85.97",
+          "85.81",
+          "76.18",
+          "73.02",
+          "80.00"
+        ],
+        [
+          "Ours",
+          "78.11 (+1.94%)",
+          "77.73 (+8.14%)",
+          "78.32 (+2.13%)",
+          "82.15 (+1.34%)",
+          "81.80 (+5.6%)",
+          "82.02 (+1.29%)",
+          "87.51 (+3.53%)",
+          "88.58 (+2.61%)",
+          "88.89 (+3.08%)",
+          "78.39 (+1.38%)",
+          "78.16 (+3.65%)",
+          "83.92 (+1.24%)"
+        ]
+      ],
+      "nearby_context": "Table showing experimental results on MET-MEME dataset for sentiment analysis, intention detection, offensiveness detection, and metaphor recognition, comparing various methods with metrics Acc, Pre, Rec for English and Chinese.",
+      "table_shape": {
+        "rows": 26,
+        "columns": 13
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 1: Experimental results on the MET-MEME dataset of four tasks.",
+        "caption_kind": "table",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P005_B0001",
+          "P005_B0002"
+        ],
+        "media_block_ids": [
+          "P005_B0001"
+        ],
+        "table_block_ids": [
+          "P005_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table showing experimental results on MET-MEME dataset for sentiment analysis, intention detection, offensiveness detection, and metaphor recognition, comparing various methods with metrics Acc, Pre, Rec for English and Chinese.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S12",
+      "section_title": "Baseline Systems",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Experimental Setup",
+          "role": "experiment_setup",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S12_0004",
+      "source_block_ids": [
+        "P006_B0001",
+        "P006_B0002"
+      ],
+      "media_block_ids": [
+        "P006_B0001"
+      ],
+      "caption": "Table 2: Ablation results on the MET-MEME English dataset of four tasks. “OM” means object-level semantic mining, “UP” means unimodal prediction, “GL” means global-local interaction, “DG” means dual-semantic guided strategy.",
+      "caption_kind": "table",
+      "caption_number": "2",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Method</td><td colspan=\"3\">Sentiment Analysis</td><td colspan=\"3\">Intention Detection</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>Pre</td><td style='text-align: center; word-wrap: break-word;'>Rec</td><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>Pre</td><td style='text-align: center; word-wrap: break-word;'>Rec</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Ours</td><td style='text-align: center; word-wrap: break-word;'>34.36</td><td style='text-align: center; word-wrap: break-word;'>37.77</td><td style='text-align: center; word-wrap: break-word;'>34.38</td><td style='text-align: center; word-wrap: break-word;'>47.92</td><td style='text-align: center; word-wrap: break-word;'>47.53</td><td style='text-align: center; word-wrap: break-word;'>47.06</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o OM</td><td style='text-align: center; word-wrap: break-word;'>32.47</td><td style='text-align: center; word-wrap: break-word;'>36.16</td><td style='text-align: center; word-wrap: break-word;'>32.39</td><td style='text-align: center; word-wrap: break-word;'>46.27</td><td style='text-align: center; word-wrap: break-word;'>46.17</td><td style='text-align: center; word-wrap: break-word;'>45.89</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o UP</td><td style='text-align: center; word-wrap: break-word;'>32.85</td><td style='text-align: center; word-wrap: break-word;'>36.53</td><td style='text-align: center; word-wrap: break-word;'>32.76</td><td style='text-align: center; word-wrap: break-word;'>46.73</td><td style='text-align: center; word-wrap: break-word;'>46.59</td><td style='text-align: center; word-wrap: break-word;'>46.11</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o GL</td><td style='text-align: center; word-wrap: break-word;'>31.76</td><td style='text-align: center; word-wrap: break-word;'>35.49</td><td style='text-align: center; word-wrap: break-word;'>31.83</td><td style='text-align: center; word-wrap: break-word;'>45.82</td><td style='text-align: center; word-wrap: break-word;'>45.41</td><td style='text-align: center; word-wrap: break-word;'>45.47</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o DG</td><td style='text-align: center; word-wrap: break-word;'>33.59</td><td style='text-align: center; word-wrap: break-word;'>36.94</td><td style='text-align: center; word-wrap: break-word;'>33.52</td><td style='text-align: center; word-wrap: break-word;'>47.05</td><td style='text-align: center; word-wrap: break-word;'>46.94</td><td style='text-align: center; word-wrap: break-word;'>46.63</td></tr><tr><td rowspan=\"2\"></td><td colspan=\"3\">Offensiveness Detection</td><td colspan=\"3\">Metaphor Recognition</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>Pre</td><td style='text-align: center; word-wrap: break-word;'>Rec</td><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>Pre</td><td style='text-align: center; word-wrap: break-word;'>Rec</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Ours</td><td style='text-align: center; word-wrap: break-word;'>78.11</td><td style='text-align: center; word-wrap: break-word;'>77.73</td><td style='text-align: center; word-wrap: break-word;'>78.32</td><td style='text-align: center; word-wrap: break-word;'>87.51</td><td style='text-align: center; word-wrap: break-word;'>88.58</td><td style='text-align: center; word-wrap: break-word;'>88.89</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o OM</td><td style='text-align: center; word-wrap: break-word;'>77.28</td><td style='text-align: center; word-wrap: break-word;'>73.41</td><td style='text-align: center; word-wrap: break-word;'>77.22</td><td style='text-align: center; word-wrap: break-word;'>85.42</td><td style='text-align: center; word-wrap: break-word;'>87.45</td><td style='text-align: center; word-wrap: break-word;'>87.46</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o UP</td><td style='text-align: center; word-wrap: break-word;'>77.53</td><td style='text-align: center; word-wrap: break-word;'>74.66</td><td style='text-align: center; word-wrap: break-word;'>77.68</td><td style='text-align: center; word-wrap: break-word;'>85.81</td><td style='text-align: center; word-wrap: break-word;'>87.64</td><td style='text-align: center; word-wrap: break-word;'>87.74</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o GL</td><td style='text-align: center; word-wrap: break-word;'>76.89</td><td style='text-align: center; word-wrap: break-word;'>72.57</td><td style='text-align: center; word-wrap: break-word;'>76.94</td><td style='text-align: center; word-wrap: break-word;'>84.98</td><td style='text-align: center; word-wrap: break-word;'>86.77</td><td style='text-align: center; word-wrap: break-word;'>86.79</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o DG</td><td style='text-align: center; word-wrap: break-word;'>77.74</td><td style='text-align: center; word-wrap: break-word;'>75.39</td><td style='text-align: center; word-wrap: break-word;'>77.93</td><td style='text-align: center; word-wrap: break-word;'>86.43</td><td style='text-align: center; word-wrap: break-word;'>87.93</td><td style='text-align: center; word-wrap: break-word;'>88.02</td></tr></table>",
+      "normalized_markdown": "| Method | Sentiment Analysis | Sentiment Analysis | Sentiment Analysis | Intention Detection | Intention Detection | Intention Detection |\n| --- | --- | --- | --- | --- | --- | --- |\n| Method | Acc | Pre | Rec | Acc | Pre | Rec |\n| Ours | 34.36 | 37.77 | 34.38 | 47.92 | 47.53 | 47.06 |\n| w/o OM | 32.47 | 36.16 | 32.39 | 46.27 | 46.17 | 45.89 |\n| w/o UP | 32.85 | 36.53 | 32.76 | 46.73 | 46.59 | 46.11 |\n| w/o GL | 31.76 | 35.49 | 31.83 | 45.82 | 45.41 | 45.47 |\n| w/o DG | 33.59 | 36.94 | 33.52 | 47.05 | 46.94 | 46.63 |\n|  | Offensiveness Detection | Offensiveness Detection | Offensiveness Detection | Metaphor Recognition | Metaphor Recognition | Metaphor Recognition |\n|  | Acc | Pre | Rec | Acc | Pre | Rec |\n| Ours | 78.11 | 77.73 | 78.32 | 87.51 | 88.58 | 88.89 |\n| w/o OM | 77.28 | 73.41 | 77.22 | 85.42 | 87.45 | 87.46 |\n| w/o UP | 77.53 | 74.66 | 77.68 | 85.81 | 87.64 | 87.74 |\n| w/o GL | 76.89 | 72.57 | 76.94 | 84.98 | 86.77 | 86.79 |\n| w/o DG | 77.74 | 75.39 | 77.93 | 86.43 | 87.93 | 88.02 |",
+      "normalized_latex": "\\begin{tabular}{lllllll}\n\\hline\nMethod & Sentiment Analysis & Sentiment Analysis & Sentiment Analysis & Intention Detection & Intention Detection & Intention Detection \\\\\n\\hline\nMethod & Acc & Pre & Rec & Acc & Pre & Rec \\\\\nOurs & 34.36 & 37.77 & 34.38 & 47.92 & 47.53 & 47.06 \\\\\nw/o OM & 32.47 & 36.16 & 32.39 & 46.27 & 46.17 & 45.89 \\\\\nw/o UP & 32.85 & 36.53 & 32.76 & 46.73 & 46.59 & 46.11 \\\\\nw/o GL & 31.76 & 35.49 & 31.83 & 45.82 & 45.41 & 45.47 \\\\\nw/o DG & 33.59 & 36.94 & 33.52 & 47.05 & 46.94 & 46.63 \\\\\n & Offensiveness Detection & Offensiveness Detection & Offensiveness Detection & Metaphor Recognition & Metaphor Recognition & Metaphor Recognition \\\\\n & Acc & Pre & Rec & Acc & Pre & Rec \\\\\nOurs & 78.11 & 77.73 & 78.32 & 87.51 & 88.58 & 88.89 \\\\\nw/o OM & 77.28 & 73.41 & 77.22 & 85.42 & 87.45 & 87.46 \\\\\nw/o UP & 77.53 & 74.66 & 77.68 & 85.81 & 87.64 & 87.74 \\\\\nw/o GL & 76.89 & 72.57 & 76.94 & 84.98 & 86.77 & 86.79 \\\\\nw/o DG & 77.74 & 75.39 & 77.93 & 86.43 & 87.93 & 88.02 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Method",
+          "Sentiment Analysis",
+          "Sentiment Analysis",
+          "Sentiment Analysis",
+          "Intention Detection",
+          "Intention Detection",
+          "Intention Detection"
+        ],
+        [
+          "Method",
+          "Acc",
+          "Pre",
+          "Rec",
+          "Acc",
+          "Pre",
+          "Rec"
+        ],
+        [
+          "Ours",
+          "34.36",
+          "37.77",
+          "34.38",
+          "47.92",
+          "47.53",
+          "47.06"
+        ],
+        [
+          "w/o OM",
+          "32.47",
+          "36.16",
+          "32.39",
+          "46.27",
+          "46.17",
+          "45.89"
+        ],
+        [
+          "w/o UP",
+          "32.85",
+          "36.53",
+          "32.76",
+          "46.73",
+          "46.59",
+          "46.11"
+        ],
+        [
+          "w/o GL",
+          "31.76",
+          "35.49",
+          "31.83",
+          "45.82",
+          "45.41",
+          "45.47"
+        ],
+        [
+          "w/o DG",
+          "33.59",
+          "36.94",
+          "33.52",
+          "47.05",
+          "46.94",
+          "46.63"
+        ],
+        [
+          "",
+          "Offensiveness Detection",
+          "Offensiveness Detection",
+          "Offensiveness Detection",
+          "Metaphor Recognition",
+          "Metaphor Recognition",
+          "Metaphor Recognition"
+        ],
+        [
+          "",
+          "Acc",
+          "Pre",
+          "Rec",
+          "Acc",
+          "Pre",
+          "Rec"
+        ],
+        [
+          "Ours",
+          "78.11",
+          "77.73",
+          "78.32",
+          "87.51",
+          "88.58",
+          "88.89"
+        ],
+        [
+          "w/o OM",
+          "77.28",
+          "73.41",
+          "77.22",
+          "85.42",
+          "87.45",
+          "87.46"
+        ],
+        [
+          "w/o UP",
+          "77.53",
+          "74.66",
+          "77.68",
+          "85.81",
+          "87.64",
+          "87.74"
+        ],
+        [
+          "w/o GL",
+          "76.89",
+          "72.57",
+          "76.94",
+          "84.98",
+          "86.77",
+          "86.79"
+        ],
+        [
+          "w/o DG",
+          "77.74",
+          "75.39",
+          "77.93",
+          "86.43",
+          "87.93",
+          "88.02"
+        ]
+      ],
+      "nearby_context": "Ablation results table for four tasks (Sentiment Analysis, Intention Detection, Offensiveness Detection, Metaphor Recognition) on the MET-MEME English dataset, comparing the full model (Ours) against variants without object-level semantic mining (w/o OM), without unimodal prediction (w/o UP), without global-local interaction (w/o GL), and without dual-semantic guided strategy (w/o DG). Metrics: Accuracy, Precision, Recall.",
+      "table_shape": {
+        "rows": 14,
+        "columns": 7
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "ablation_table",
+        "caption": "Table 2: Ablation results on the MET-MEME English dataset of four tasks. “OM” means object-level semantic mining, “UP” means unimodal prediction, “GL” means global-local interaction, “DG” means dual-semantic guided strategy.",
+        "caption_kind": "table",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P006_B0001",
+          "P006_B0002"
+        ],
+        "media_block_ids": [
+          "P006_B0001"
+        ],
+        "table_block_ids": [
+          "P006_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Ablation results table for four tasks (Sentiment Analysis, Intention Detection, Offensiveness Detection, Metaphor Recognition) on the MET-MEME English dataset, comparing the full model (Ours) against variants without object-level semantic mining (w/o OM), without unimodal prediction (w/o UP), without global-local interaction (w/o GL), and without dual-semantic guided strategy (w/o DG). Metrics: Accuracy, Precision, Recall.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S13",
+      "section_title": "Ablation Study",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Results and Analysis",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S13_0005",
+      "source_block_ids": [
+        "P006_B0008",
+        "P006_B0009"
+      ],
+      "media_block_ids": [
+        "P006_B0008"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_662_111_1082_508.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_662_111_1082_508.jpg",
+          "caption": "Figure 3: Comparative results between global-local and local-local interaction on the MET-MEME English dataset."
+        }
+      ],
+      "caption": "Figure 3: Comparative results between global-local and local-local interaction on the MET-MEME English dataset.",
+      "caption_kind": "figure",
+      "caption_number": "3",
+      "nearby_context": "A chart showing comparative results between global-local and local-local interaction on the MET-MEME English dataset.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P006_B0008",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 3: Comparative results between global-local and local-local interaction on the MET-MEME English dataset.",
+        "caption_kind": "figure",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P006_B0008",
+          "P006_B0009"
+        ],
+        "media_block_ids": [
+          "P006_B0008"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P006_B0008"
+        ],
+        "description_from_html": "A chart showing comparative results between global-local and local-local interaction on the MET-MEME English dataset.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S14",
+      "section_title": "Deep Analyses on The Proposed Methods",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Results and Analysis",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S14_0006",
+      "source_block_ids": [
+        "P007_B0001",
+        "P007_B0002"
+      ],
+      "media_block_ids": [
+        "P007_B0001"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_206_107_487_355.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_206_107_487_355.jpg",
+          "caption": "Figure 4: Visualization of a typical example."
+        }
+      ],
+      "caption": "Figure 4: Visualization of a typical example.",
+      "caption_kind": "figure",
+      "caption_number": "4",
+      "nearby_context": "A single image showing a typical example visualization.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P007_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 4: Visualization of a typical example.",
+        "caption_kind": "figure",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P007_B0001",
+          "P007_B0002"
+        ],
+        "media_block_ids": [
+          "P007_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P007_B0001"
+        ],
+        "description_from_html": "A single image showing a typical example visualization.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S14",
+      "section_title": "Deep Analyses on The Proposed Methods",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Results and Analysis",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S14_0006",
+      "source_block_ids": [
+        "P007_B0003",
+        "P007_B0004",
+        "P007_B0005",
+        "P007_B0006",
+        "P007_B0007"
+      ],
+      "media_block_ids": [
+        "P007_B0003",
+        "P007_B0004",
+        "P007_B0005",
+        "P007_B0006"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_110_434_341_587.jpg",
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_343_416_578_587.jpg",
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_109_588_341_726.jpg",
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_346_588_577_726.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_005",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_110_434_341_587.jpg",
+          "caption": "Figure 5: Influence of unimodal prediction on the MET-MEME English dataset."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_005",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_343_416_578_587.jpg",
+          "caption": "Figure 5: Influence of unimodal prediction on the MET-MEME English dataset."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_005",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_109_588_341_726.jpg",
+          "caption": "Figure 5: Influence of unimodal prediction on the MET-MEME English dataset."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_005",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_346_588_577_726.jpg",
+          "caption": "Figure 5: Influence of unimodal prediction on the MET-MEME English dataset."
+        }
+      ],
+      "caption": "Figure 5: Influence of unimodal prediction on the MET-MEME English dataset.",
+      "caption_kind": "figure",
+      "caption_number": "5",
+      "nearby_context": "Four charts illustrating the influence of unimodal prediction on the MET-MEME English dataset.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P007_B0003",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_2",
+          "panel_label": null,
+          "source_block_id": "P007_B0004",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_3",
+          "panel_label": null,
+          "source_block_id": "P007_B0005",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_4",
+          "panel_label": null,
+          "source_block_id": "P007_B0006",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 5: Influence of unimodal prediction on the MET-MEME English dataset.",
+        "caption_kind": "figure",
+        "caption_number": "5",
+        "source_block_ids": [
+          "P007_B0003",
+          "P007_B0004",
+          "P007_B0005",
+          "P007_B0006",
+          "P007_B0007"
+        ],
+        "media_block_ids": [
+          "P007_B0003",
+          "P007_B0004",
+          "P007_B0005",
+          "P007_B0006"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P007_B0003",
+          "P007_B0004",
+          "P007_B0005",
+          "P007_B0006"
+        ],
+        "description_from_html": "Four charts illustrating the influence of unimodal prediction on the MET-MEME English dataset.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 4
+      }
+    },
+    {
+      "asset_id": "FIG_006",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "chart",
+      "section_id": "S14",
+      "section_title": "Deep Analyses on The Proposed Methods",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Results and Analysis",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S14_0007",
+      "source_block_ids": [
+        "P007_B0011",
+        "P007_B0012"
+      ],
+      "media_block_ids": [
+        "P007_B0011"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_685_111_1065_464.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_006",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_685_111_1065_464.jpg",
+          "caption": "Figure 6: Influence of CLIP in MMU on the MET-MEME English dataset."
+        }
+      ],
+      "caption": "Figure 6: Influence of CLIP in MMU on the MET-MEME English dataset.",
+      "caption_kind": "figure",
+      "caption_number": "6",
+      "nearby_context": "Figure 6 showing influence of CLIP in MMU on the MET-MEME English dataset. Image file: imgs/img_in_image_box_685_111_1065_464.jpg.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P007_B0011",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "chart",
+        "caption": "Figure 6: Influence of CLIP in MMU on the MET-MEME English dataset.",
+        "caption_kind": "figure",
+        "caption_number": "6",
+        "source_block_ids": [
+          "P007_B0011",
+          "P007_B0012"
+        ],
+        "media_block_ids": [
+          "P007_B0011"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P007_B0011"
+        ],
+        "description_from_html": "Figure 6 showing influence of CLIP in MMU on the MET-MEME English dataset. Image file: imgs/img_in_image_box_685_111_1065_464.jpg.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    }
+  ],
+  "summary": {
+    "asset_count": 8,
+    "by_asset_type": {
+      "figure": 6,
+      "table": 2
+    },
+    "by_modality_class": {
+      "evidential": 5,
+      "explanatory": 3
+    },
+    "macro_unresolved_count": 0
+  }
+}

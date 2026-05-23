@@ -1,0 +1,986 @@
+{
+  "paper_id": "Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe",
+  "schema_version": "v3_latex_table_assets",
+  "assets": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S3",
+      "section_title": "1 Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem: Confirmation Bias in LLMs with RAG",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S3_0001",
+      "source_block_ids": [
+        "P001_B0020",
+        "P001_B0021"
+      ],
+      "media_block_ids": [
+        "P001_B0020"
+      ],
+      "image_paths": [
+        "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_644_440_1016_847.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_001",
+          "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_644_440_1016_847.jpg",
+          "caption": "Figure 1: Example of Confirmation Bias in LLMs (Llama-3-8B) using RAG-retrieved Knowledge about Brady's Super Bowl appearances. The LLMs typically generate a biased answer by focusing only on one event, such as Super Bowl LII, while ignoring other relevant information like Super Bowl LV. The good answer represents the ideal response the model should generate, referencing both events to provide a complete and accurate answer."
+        }
+      ],
+      "caption": "Figure 1: Example of Confirmation Bias in LLMs (Llama-3-8B) using RAG-retrieved Knowledge about Brady's Super Bowl appearances. The LLMs typically generate a biased answer by focusing only on one event, such as Super Bowl LII, while ignoring other relevant information like Super Bowl LV. The good answer represents the ideal response the model should generate, referencing both events to provide a complete and accurate answer.",
+      "caption_kind": "figure",
+      "caption_number": "1",
+      "nearby_context": "Figure 1: Example of Confirmation Bias in LLMs (Llama-3-8B) using RAG-retrieved Knowledge about Brady's Super Bowl appearances.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P001_B0020",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 1: Example of Confirmation Bias in LLMs (Llama-3-8B) using RAG-retrieved Knowledge about Brady's Super Bowl appearances. The LLMs typically generate a biased answer by focusing only on one event, such as Super Bowl LII, while ignoring other relevant information like Super Bowl LV. The good answer represents the ideal response the model should generate, referencing both events to provide a complete and accurate answer.",
+        "caption_kind": "figure",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P001_B0020",
+          "P001_B0021"
+        ],
+        "media_block_ids": [
+          "P001_B0020"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P001_B0020"
+        ],
+        "description_from_html": "Figure 1: Example of Confirmation Bias in LLMs (Llama-3-8B) using RAG-retrieved Knowledge about Brady's Super Bowl appearances.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "dataset_statistics_table",
+      "section_id": "S7",
+      "section_title": "B LLM as Judge for hallucination",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Experimental Setup: Datasets, Models, and Metrics",
+          "role": "experiment_setup",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S7_0002",
+      "source_block_ids": [
+        "P004_B0001",
+        "P004_B0002"
+      ],
+      "media_block_ids": [
+        "P004_B0001"
+      ],
+      "caption": "Table 5: Prompts used in the dataset generation pipeline.",
+      "caption_kind": "table",
+      "caption_number": "5",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Type</td><td style='text-align: center; word-wrap: break-word;'>Prompt</td></tr><tr><td rowspan=\"4\">Knowledge Segment Relevance Tagging</td><td style='text-align: center; word-wrap: break-word;'>Please identify the given knowledge segment is related to the given question. Make answer just TRUE or FALSE. JUST answer the question. DO NOT say the explanation.</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Provide your response as follows: Answer: (TRUE or FALSE)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Now here are the passage and question.</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Knowledge segment: {knowledge segment} Question: {question} Answer:</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Chosen Responses</td><td style='text-align: center; word-wrap: break-word;'>Answer the question based on the context. You SHOULD use all the information in the context to answer the question. SHOULD NOT say that you answered based on the given context. Context: {context} Question: {question} Answer:</td></tr><tr><td rowspan=\"2\">Distorted Evidence-Based Responses</td><td style='text-align: center; word-wrap: break-word;'>The Given context is UNRELATED to the question. Make WRONG answer to the question based on the UNRELATED context. SHOULD NOT say that you answered based on the given context.</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>UNRELATED Context: {context} Question: {question} WRONG Answer:</td></tr></table>",
+      "normalized_markdown": "| Type | Prompt |\n| --- | --- |\n| Knowledge Segment Relevance Tagging | Please identify the given knowledge segment is related to the given question. Make answer just TRUE or FALSE. JUST answer the question. DO NOT say the explanation. |\n| Knowledge Segment Relevance Tagging | Provide your response as follows: Answer: (TRUE or FALSE) |\n| Knowledge Segment Relevance Tagging | Now here are the passage and question. |\n| Knowledge Segment Relevance Tagging | Knowledge segment: {knowledge segment} Question: {question} Answer: |\n| Chosen Responses | Answer the question based on the context. You SHOULD use all the information in the context to answer the question. SHOULD NOT say that you answered based on the given context. Context: {context} Question: {question} Answer: |\n| Distorted Evidence-Based Responses | The Given context is UNRELATED to the question. Make WRONG answer to the question based on the UNRELATED context. SHOULD NOT say that you answered based on the given context. |\n| Distorted Evidence-Based Responses | UNRELATED Context: {context} Question: {question} WRONG Answer: |",
+      "normalized_latex": "\\begin{tabular}{ll}\n\\hline\nType & Prompt \\\\\n\\hline\nKnowledge Segment Relevance Tagging & Please identify the given knowledge segment is related to the given question. Make answer just TRUE or FALSE. JUST answer the question. DO NOT say the explanation. \\\\\nKnowledge Segment Relevance Tagging & Provide your response as follows: Answer: (TRUE or FALSE) \\\\\nKnowledge Segment Relevance Tagging & Now here are the passage and question. \\\\\nKnowledge Segment Relevance Tagging & Knowledge segment: \\{knowledge segment\\} Question: \\{question\\} Answer: \\\\\nChosen Responses & Answer the question based on the context. You SHOULD use all the information in the context to answer the question. SHOULD NOT say that you answered based on the given context. Context: \\{context\\} Question: \\{question\\} Answer: \\\\\nDistorted Evidence-Based Responses & The Given context is UNRELATED to the question. Make WRONG answer to the question based on the UNRELATED context. SHOULD NOT say that you answered based on the given context. \\\\\nDistorted Evidence-Based Responses & UNRELATED Context: \\{context\\} Question: \\{question\\} WRONG Answer: \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Type",
+          "Prompt"
+        ],
+        [
+          "Knowledge Segment Relevance Tagging",
+          "Please identify the given knowledge segment is related to the given question. Make answer just TRUE or FALSE. JUST answer the question. DO NOT say the explanation."
+        ],
+        [
+          "Knowledge Segment Relevance Tagging",
+          "Provide your response as follows: Answer: (TRUE or FALSE)"
+        ],
+        [
+          "Knowledge Segment Relevance Tagging",
+          "Now here are the passage and question."
+        ],
+        [
+          "Knowledge Segment Relevance Tagging",
+          "Knowledge segment: {knowledge segment} Question: {question} Answer:"
+        ],
+        [
+          "Chosen Responses",
+          "Answer the question based on the context. You SHOULD use all the information in the context to answer the question. SHOULD NOT say that you answered based on the given context. Context: {context} Question: {question} Answer:"
+        ],
+        [
+          "Distorted Evidence-Based Responses",
+          "The Given context is UNRELATED to the question. Make WRONG answer to the question based on the UNRELATED context. SHOULD NOT say that you answered based on the given context."
+        ],
+        [
+          "Distorted Evidence-Based Responses",
+          "UNRELATED Context: {context} Question: {question} WRONG Answer:"
+        ]
+      ],
+      "nearby_context": "Table 5: Prompts used in the dataset generation pipeline. Contains Type and Prompt columns with rows for Knowledge Segment Relevance Tagging, Chosen Responses, and Distorted Evidence-Based Responses.",
+      "table_shape": {
+        "rows": 8,
+        "columns": 2
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "dataset_statistics_table",
+        "caption": "Table 5: Prompts used in the dataset generation pipeline.",
+        "caption_kind": "table",
+        "caption_number": "5",
+        "source_block_ids": [
+          "P004_B0001",
+          "P004_B0002"
+        ],
+        "media_block_ids": [
+          "P004_B0001"
+        ],
+        "table_block_ids": [
+          "P004_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table 5: Prompts used in the dataset generation pipeline. Contains Type and Prompt columns with rows for Knowledge Segment Relevance Tagging, Chosen Responses, and Distorted Evidence-Based Responses.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "unknown_figure",
+      "section_id": "S7",
+      "section_title": "B LLM as Judge for hallucination",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Experimental Setup: Datasets, Models, and Metrics",
+          "role": "experiment_setup",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S7_0002",
+      "source_block_ids": [
+        "P004_B0003",
+        "P004_B0004"
+      ],
+      "media_block_ids": [
+        "P004_B0003"
+      ],
+      "image_paths": [
+        "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_197_1054_978_1353.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_002",
+          "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_197_1054_978_1353.jpg",
+          "caption": "Table 6: Prompts used in LLM as judge to evaluate groundness in the given claim (generated text) to the given document. To obtain more accurate results, we sequentially provided the model with only the passages related to the question from the given context as prompts."
+        }
+      ],
+      "caption": "Table 6: Prompts used in LLM as judge to evaluate groundness in the given claim (generated text) to the given document. To obtain more accurate results, we sequentially provided the model with only the passages related to the question from the given context as prompts.",
+      "caption_kind": "table",
+      "caption_number": "6",
+      "nearby_context": "Table 6: Prompts used in LLM as judge to evaluate groundness. Image of a table (screenshot).",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P004_B0003",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "unknown",
+        "caption": "Table 6: Prompts used in LLM as judge to evaluate groundness in the given claim (generated text) to the given document. To obtain more accurate results, we sequentially provided the model with only the passages related to the question from the given context as prompts.",
+        "caption_kind": "table",
+        "caption_number": "6",
+        "source_block_ids": [
+          "P004_B0003",
+          "P004_B0004"
+        ],
+        "media_block_ids": [
+          "P004_B0003"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P004_B0003"
+        ],
+        "description_from_html": "Table 6: Prompts used in LLM as judge to evaluate groundness. Image of a table (screenshot).",
+        "notes": "Image represents a table labeled as Table 6."
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S7",
+      "section_title": "B LLM as Judge for hallucination",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Experimental Setup: Datasets, Models, and Metrics",
+          "role": "experiment_setup",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S7_0002",
+      "source_block_ids": [
+        "P005_B0001",
+        "P005_B0002"
+      ],
+      "media_block_ids": [
+        "P005_B0001"
+      ],
+      "caption": "Table 7: Comparison in the performance of the Llama-3-8B-Inst model with our proposed model on both Single and Multiple knowledge segment(s) question answering tasks in 'Scaling with the number of relevant passages' dataset. The highlighted text in different colors indicates the specific parts of these segments that serve as evidence for the answer.",
+      "caption_kind": "table",
+      "caption_number": "7",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Type</td><td style='text-align: center; word-wrap: break-word;'>Question</td><td style='text-align: center; word-wrap: break-word;'>Knowledge segment(s)</td><td style='text-align: center; word-wrap: break-word;'>Llama-3-8B-Inst</td><td style='text-align: center; word-wrap: break-word;'>Ours</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Single</td><td style='text-align: center; word-wrap: break-word;'>when do the walking dead comics come out</td><td style='text-align: center; word-wrap: break-word;'>Title: The Walking Dead (comic book)The Walking Dead debuted in 2003, published by Image Comics, with art by Tony Moore for the first six issues and Cliff Rathburn shading the art after issue five (...)</td><td style='text-align: center; word-wrap: break-word;'>According to the document, there is no information about when the Walking Dead comics come out.</td><td style='text-align: center; word-wrap: break-word;'>The Walking Dead comic book series debuted in 2003 and has been published by Image Comics.</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Multiple</td><td style='text-align: center; word-wrap: break-word;'>where do they film take me out Fernando’s</td><td style='text-align: center; word-wrap: break-word;'>Title: Se Me Va la Voz to the script.Adriana Ontiveros, a model from Jalisco also participated in the video (...)Title: Take Me Out (UK game show) (...) In the first series, the successful couples conducted their date at Fernando’s! In the first date at Fernando’s! in Manchester, which is actually Club Bijou on Chapel Street (...)For the second series, the date took place abroad on the Isle of FERNANDO’S!, a fictional location based in Puerto de la Cruz, Tenerife (...)</td><td style='text-align: center; word-wrap: break-word;'>According to the document, the answer is: Puerto de la Cruz, Tenerife.</td><td style='text-align: center; word-wrap: break-word;'>For the Take Me Out Fernandos!, the date took place in two different locations.In the first series, the successful couples conducted their date at FERNANDO’S! in Manchester, which is actually Club Bijou on Chapel Street.In the second series, the date took place abroad on the Isle of FERNANDO’S!, a fictional location based in Puerto de la Cruz, Tenerife.</td></tr></table>",
+      "normalized_markdown": "| Type | Question | Knowledge segment(s) | Llama-3-8B-Inst | Ours |\n| --- | --- | --- | --- | --- |\n| Single | when do the walking dead comics come out | Title: The Walking Dead (comic book)The Walking Dead debuted in 2003, published by Image Comics, with art by Tony Moore for the first six issues and Cliff Rathburn shading the art after issue five (...) | According to the document, there is no information about when the Walking Dead comics come out. | The Walking Dead comic book series debuted in 2003 and has been published by Image Comics. |\n| Multiple | where do they film take me out Fernando’s | Title: Se Me Va la Voz to the script.Adriana Ontiveros, a model from Jalisco also participated in the video (...)Title: Take Me Out (UK game show) (...) In the first series, the successful couples conducted their date at Fernando’s! In the first date at Fernando’s! in Manchester, which is actually Club Bijou on Chapel Street (...)For the second series, the date took place abroad on the Isle of FERNANDO’S!, a fictional location based in Puerto de la Cruz, Tenerife (...) | According to the document, the answer is: Puerto de la Cruz, Tenerife. | For the Take Me Out Fernandos!, the date took place in two different locations.In the first series, the successful couples conducted their date at FERNANDO’S! in Manchester, which is actually Club Bijou on Chapel Street.In the second series, the date took place abroad on the Isle of FERNANDO’S!, a fictional location based in Puerto de la Cruz, Tenerife. |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nType & Question & Knowledge segment(s) & Llama-3-8B-Inst & Ours \\\\\n\\hline\nSingle & when do the walking dead comics come out & Title: The Walking Dead (comic book)The Walking Dead debuted in 2003, published by Image Comics, with art by Tony Moore for the first six issues and Cliff Rathburn shading the art after issue five (...) & According to the document, there is no information about when the Walking Dead comics come out. & The Walking Dead comic book series debuted in 2003 and has been published by Image Comics. \\\\\nMultiple & where do they film take me out Fernando’s & Title: Se Me Va la Voz to the script.Adriana Ontiveros, a model from Jalisco also participated in the video (...)Title: Take Me Out (UK game show) (...) In the first series, the successful couples conducted their date at Fernando’s! In the first date at Fernando’s! in Manchester, which is actually Club Bijou on Chapel Street (...)For the second series, the date took place abroad on the Isle of FERNANDO’S!, a fictional location based in Puerto de la Cruz, Tenerife (...) & According to the document, the answer is: Puerto de la Cruz, Tenerife. & For the Take Me Out Fernandos!, the date took place in two different locations.In the first series, the successful couples conducted their date at FERNANDO’S! in Manchester, which is actually Club Bijou on Chapel Street.In the second series, the date took place abroad on the Isle of FERNANDO’S!, a fictional location based in Puerto de la Cruz, Tenerife. \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Type",
+          "Question",
+          "Knowledge segment(s)",
+          "Llama-3-8B-Inst",
+          "Ours"
+        ],
+        [
+          "Single",
+          "when do the walking dead comics come out",
+          "Title: The Walking Dead (comic book)The Walking Dead debuted in 2003, published by Image Comics, with art by Tony Moore for the first six issues and Cliff Rathburn shading the art after issue five (...)",
+          "According to the document, there is no information about when the Walking Dead comics come out.",
+          "The Walking Dead comic book series debuted in 2003 and has been published by Image Comics."
+        ],
+        [
+          "Multiple",
+          "where do they film take me out Fernando’s",
+          "Title: Se Me Va la Voz to the script.Adriana Ontiveros, a model from Jalisco also participated in the video (...)Title: Take Me Out (UK game show) (...) In the first series, the successful couples conducted their date at Fernando’s! In the first date at Fernando’s! in Manchester, which is actually Club Bijou on Chapel Street (...)For the second series, the date took place abroad on the Isle of FERNANDO’S!, a fictional location based in Puerto de la Cruz, Tenerife (...)",
+          "According to the document, the answer is: Puerto de la Cruz, Tenerife.",
+          "For the Take Me Out Fernandos!, the date took place in two different locations.In the first series, the successful couples conducted their date at FERNANDO’S! in Manchester, which is actually Club Bijou on Chapel Street.In the second series, the date took place abroad on the Isle of FERNANDO’S!, a fictional location based in Puerto de la Cruz, Tenerife."
+        ]
+      ],
+      "nearby_context": "Table 7: Comparison of Llama-3-8B-Inst and Ours on Single and Multiple knowledge segment QA. Columns: Type, Question, Knowledge segment(s), Llama-3-8B-Inst, Ours. Example rows for 'when do the walking dead comics come out' and 'where do they film take me out Fernando’s'.",
+      "table_shape": {
+        "rows": 3,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A3",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 7: Comparison in the performance of the Llama-3-8B-Inst model with our proposed model on both Single and Multiple knowledge segment(s) question answering tasks in 'Scaling with the number of relevant passages' dataset. The highlighted text in different colors indicates the specific parts of these segments that serve as evidence for the answer.",
+        "caption_kind": "table",
+        "caption_number": "7",
+        "source_block_ids": [
+          "P005_B0001",
+          "P005_B0002"
+        ],
+        "media_block_ids": [
+          "P005_B0001"
+        ],
+        "table_block_ids": [
+          "P005_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table 7: Comparison of Llama-3-8B-Inst and Ours on Single and Multiple knowledge segment QA. Columns: Type, Question, Knowledge segment(s), Llama-3-8B-Inst, Ours. Example rows for 'when do the walking dead comics come out' and 'where do they film take me out Fernando’s'.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "pipeline_diagram",
+      "section_id": "S13",
+      "section_title": "3.1 Dataset for Mitigating Confirmation Bias",
+      "macro_id": "M3",
+      "macro_candidates": [
+        {
+          "macro_id": "M3",
+          "title": "Proposed Method: Synthetic Data and DPO for Confirmation Bias Mitigation",
+          "role": "method_overview",
+          "order": 3
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S13_0003",
+      "source_block_ids": [
+        "P007_B0001",
+        "P007_B0002"
+      ],
+      "media_block_ids": [
+        "P007_B0001"
+      ],
+      "image_paths": [
+        "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_144_147_1041_493.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_144_147_1041_493.jpg",
+          "caption": "Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference."
+        }
+      ],
+      "caption": "Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference.",
+      "caption_kind": "figure",
+      "caption_number": "2",
+      "nearby_context": "Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": "(i)",
+          "source_block_id": "P007_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "pipeline_diagram",
+        "caption": "Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference.",
+        "caption_kind": "figure",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P007_B0001",
+          "P007_B0002"
+        ],
+        "media_block_ids": [
+          "P007_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P007_B0001"
+        ],
+        "description_from_html": "Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S21",
+      "section_title": "4.2 Results in Question Answering",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Main Results: Improved Accuracy and Reduced Hallucination",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S21_0004",
+      "source_block_ids": [
+        "P010_B0001",
+        "P010_B0002"
+      ],
+      "media_block_ids": [
+        "P010_B0001"
+      ],
+      "caption": "Table 1: The effect of changing the number of passages in Scaling with the Number of Passages. The position of the gold knowledge segment is randomized. Our model shows better performance than baseline in terms of accuracy and hallucination across all numbers of passages. Bold text indicates superior performance in the same condition.",
+      "caption_kind": "table",
+      "caption_number": "1",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Model</td><td style='text-align: center; word-wrap: break-word;'># of Passages</td><td style='text-align: center; word-wrap: break-word;'>Accuracy</td><td style='text-align: center; word-wrap: break-word;'>KF1</td><td style='text-align: center; word-wrap: break-word;'>LLM as Judge</td></tr><tr><td rowspan=\"5\">Llama-3-8B-Inst</td><td style='text-align: center; word-wrap: break-word;'>1</td><td style='text-align: center; word-wrap: break-word;'>84.56</td><td style='text-align: center; word-wrap: break-word;'>27.13</td><td style='text-align: center; word-wrap: break-word;'>93.22</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>10</td><td style='text-align: center; word-wrap: break-word;'>65.35</td><td style='text-align: center; word-wrap: break-word;'>30.24</td><td style='text-align: center; word-wrap: break-word;'>62.2</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>20</td><td style='text-align: center; word-wrap: break-word;'>63.05</td><td style='text-align: center; word-wrap: break-word;'>30.42</td><td style='text-align: center; word-wrap: break-word;'>56.55</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>30</td><td style='text-align: center; word-wrap: break-word;'>59.55</td><td style='text-align: center; word-wrap: break-word;'>29.34</td><td style='text-align: center; word-wrap: break-word;'>55.83</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>40</td><td style='text-align: center; word-wrap: break-word;'>58.68</td><td style='text-align: center; word-wrap: break-word;'>28.62</td><td style='text-align: center; word-wrap: break-word;'>51.18</td></tr><tr><td rowspan=\"5\">Ours</td><td style='text-align: center; word-wrap: break-word;'>1</td><td style='text-align: center; word-wrap: break-word;'>92.32</td><td style='text-align: center; word-wrap: break-word;'>55.53</td><td style='text-align: center; word-wrap: break-word;'>97.66</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>10</td><td style='text-align: center; word-wrap: break-word;'>74.12</td><td style='text-align: center; word-wrap: break-word;'>47.02</td><td style='text-align: center; word-wrap: break-word;'>69.00</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>20</td><td style='text-align: center; word-wrap: break-word;'>69.11</td><td style='text-align: center; word-wrap: break-word;'>45.83</td><td style='text-align: center; word-wrap: break-word;'>63.24</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>30</td><td style='text-align: center; word-wrap: break-word;'>66.67</td><td style='text-align: center; word-wrap: break-word;'>44.54</td><td style='text-align: center; word-wrap: break-word;'>59.65</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>40</td><td style='text-align: center; word-wrap: break-word;'>65.76</td><td style='text-align: center; word-wrap: break-word;'>43.78</td><td style='text-align: center; word-wrap: break-word;'>57.14</td></tr></table>",
+      "normalized_markdown": "| Model | # of Passages | Accuracy | KF1 | LLM as Judge |\n| --- | --- | --- | --- | --- |\n| Llama-3-8B-Inst | 1 | 84.56 | 27.13 | 93.22 |\n| Llama-3-8B-Inst | 10 | 65.35 | 30.24 | 62.2 |\n| Llama-3-8B-Inst | 20 | 63.05 | 30.42 | 56.55 |\n| Llama-3-8B-Inst | 30 | 59.55 | 29.34 | 55.83 |\n| Llama-3-8B-Inst | 40 | 58.68 | 28.62 | 51.18 |\n| Ours | 1 | 92.32 | 55.53 | 97.66 |\n| Ours | 10 | 74.12 | 47.02 | 69.00 |\n| Ours | 20 | 69.11 | 45.83 | 63.24 |\n| Ours | 30 | 66.67 | 44.54 | 59.65 |\n| Ours | 40 | 65.76 | 43.78 | 57.14 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nModel & \\# of Passages & Accuracy & KF1 & LLM as Judge \\\\\n\\hline\nLlama-3-8B-Inst & 1 & 84.56 & 27.13 & 93.22 \\\\\nLlama-3-8B-Inst & 10 & 65.35 & 30.24 & 62.2 \\\\\nLlama-3-8B-Inst & 20 & 63.05 & 30.42 & 56.55 \\\\\nLlama-3-8B-Inst & 30 & 59.55 & 29.34 & 55.83 \\\\\nLlama-3-8B-Inst & 40 & 58.68 & 28.62 & 51.18 \\\\\nOurs & 1 & 92.32 & 55.53 & 97.66 \\\\\nOurs & 10 & 74.12 & 47.02 & 69.00 \\\\\nOurs & 20 & 69.11 & 45.83 & 63.24 \\\\\nOurs & 30 & 66.67 & 44.54 & 59.65 \\\\\nOurs & 40 & 65.76 & 43.78 & 57.14 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "# of Passages",
+          "Accuracy",
+          "KF1",
+          "LLM as Judge"
+        ],
+        [
+          "Llama-3-8B-Inst",
+          "1",
+          "84.56",
+          "27.13",
+          "93.22"
+        ],
+        [
+          "Llama-3-8B-Inst",
+          "10",
+          "65.35",
+          "30.24",
+          "62.2"
+        ],
+        [
+          "Llama-3-8B-Inst",
+          "20",
+          "63.05",
+          "30.42",
+          "56.55"
+        ],
+        [
+          "Llama-3-8B-Inst",
+          "30",
+          "59.55",
+          "29.34",
+          "55.83"
+        ],
+        [
+          "Llama-3-8B-Inst",
+          "40",
+          "58.68",
+          "28.62",
+          "51.18"
+        ],
+        [
+          "Ours",
+          "1",
+          "92.32",
+          "55.53",
+          "97.66"
+        ],
+        [
+          "Ours",
+          "10",
+          "74.12",
+          "47.02",
+          "69.00"
+        ],
+        [
+          "Ours",
+          "20",
+          "69.11",
+          "45.83",
+          "63.24"
+        ],
+        [
+          "Ours",
+          "30",
+          "66.67",
+          "44.54",
+          "59.65"
+        ],
+        [
+          "Ours",
+          "40",
+          "65.76",
+          "43.78",
+          "57.14"
+        ]
+      ],
+      "nearby_context": "Table comparing Llama-3-8B-Inst and Ours across different numbers of passages (1,10,20,30,40) on Accuracy, KF1, and LLM as Judge metrics.",
+      "table_shape": {
+        "rows": 11,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 1: The effect of changing the number of passages in Scaling with the Number of Passages. The position of the gold knowledge segment is randomized. Our model shows better performance than baseline in terms of accuracy and hallucination across all numbers of passages. Bold text indicates superior performance in the same condition.",
+        "caption_kind": "table",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P010_B0001",
+          "P010_B0002"
+        ],
+        "media_block_ids": [
+          "P010_B0001"
+        ],
+        "table_block_ids": [
+          "P010_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing Llama-3-8B-Inst and Ours across different numbers of passages (1,10,20,30,40) on Accuracy, KF1, and LLM as Judge metrics.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S21",
+      "section_title": "4.2 Results in Question Answering",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Main Results: Improved Accuracy and Reduced Hallucination",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S21_0004",
+      "source_block_ids": [
+        "P010_B0003",
+        "P010_B0004"
+      ],
+      "media_block_ids": [
+        "P010_B0003"
+      ],
+      "caption": "Table 2: Experiment results of HaluBench. Bold text indicates superior performance in the same condition.",
+      "caption_kind": "table",
+      "caption_number": "2",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Model</td><td style='text-align: center; word-wrap: break-word;'>Lynx Score</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Llama-3-8B-Inst</td><td style='text-align: center; word-wrap: break-word;'>83.10</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Ours</td><td style='text-align: center; word-wrap: break-word;'>89.11</td></tr></table>",
+      "normalized_markdown": "| Model | Lynx Score |\n| --- | --- |\n| Llama-3-8B-Inst | 83.10 |\n| Ours | 89.11 |",
+      "normalized_latex": "\\begin{tabular}{ll}\n\\hline\nModel & Lynx Score \\\\\n\\hline\nLlama-3-8B-Inst & 83.10 \\\\\nOurs & 89.11 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "Lynx Score"
+        ],
+        [
+          "Llama-3-8B-Inst",
+          "83.10"
+        ],
+        [
+          "Ours",
+          "89.11"
+        ]
+      ],
+      "nearby_context": "Table comparing Llama-3-8B-Inst and Ours on Lynx Score.",
+      "table_shape": {
+        "rows": 3,
+        "columns": 2
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 2: Experiment results of HaluBench. Bold text indicates superior performance in the same condition.",
+        "caption_kind": "table",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P010_B0003",
+          "P010_B0004"
+        ],
+        "media_block_ids": [
+          "P010_B0003"
+        ],
+        "table_block_ids": [
+          "P010_B0003"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing Llama-3-8B-Inst and Ours on Lynx Score.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S23",
+      "section_title": "4.4 Diving into Mitigating Hallucination in Terms of Confirmation Bias",
+      "macro_id": "M8",
+      "macro_candidates": [
+        {
+          "macro_id": "M8",
+          "title": "Analysis of Confirmation Bias Mitigation",
+          "role": "ablation_analysis",
+          "order": 8
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S23_0005",
+      "source_block_ids": [
+        "P011_B0001",
+        "P011_B0002",
+        "P011_B0003",
+        "P011_B0004"
+      ],
+      "media_block_ids": [
+        "P011_B0001",
+        "P011_B0002",
+        "P011_B0003"
+      ],
+      "image_paths": [
+        "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_144_142_411_379.jpg",
+        "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_442_141_712_392.jpg",
+        "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_742_141_1009_391.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_144_142_411_379.jpg",
+          "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_442_141_712_392.jpg",
+          "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_742_141_1009_391.jpg",
+          "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
+        }
+      ],
+      "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0.",
+      "caption_kind": "figure",
+      "caption_number": "3",
+      "nearby_context": "Three images showing comparison between our model and Llama-8B-Inst baseline for Lost in the Middle setting.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P011_B0001",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_2",
+          "panel_label": null,
+          "source_block_id": "P011_B0002",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_3",
+          "panel_label": null,
+          "source_block_id": "P011_B0003",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0.",
+        "caption_kind": "figure",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P011_B0001",
+          "P011_B0002",
+          "P011_B0003",
+          "P011_B0004"
+        ],
+        "media_block_ids": [
+          "P011_B0001",
+          "P011_B0002",
+          "P011_B0003"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P011_B0001",
+          "P011_B0002",
+          "P011_B0003"
+        ],
+        "description_from_html": "Three images showing comparison between our model and Llama-8B-Inst baseline for Lost in the Middle setting.",
+        "notes": "Three subfigures possibly representing different conditions."
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 3
+      }
+    },
+    {
+      "asset_id": "TAB_005",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S23",
+      "section_title": "4.4 Diving into Mitigating Hallucination in Terms of Confirmation Bias",
+      "macro_id": "M8",
+      "macro_candidates": [
+        {
+          "macro_id": "M8",
+          "title": "Analysis of Confirmation Bias Mitigation",
+          "role": "ablation_analysis",
+          "order": 8
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S23_0005",
+      "source_block_ids": [
+        "P011_B0005",
+        "P011_B0006"
+      ],
+      "media_block_ids": [
+        "P011_B0005"
+      ],
+      "caption": "Table 3: Experiment results on the Scaling with the number of relevant passages, showing model performance based on the number of query-related passages. Single refers to instances with only one related passage, while Multiple indicates instances with multiple related passages. The results compare accuracy, KF1 score, and LLM-as-Judge evaluations between the Llama-3-8B-Inst and our model. Bold text indicates superior performance in the same condition.",
+      "caption_kind": "table",
+      "caption_number": "3",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Model</td><td style='text-align: center; word-wrap: break-word;'>Type</td><td style='text-align: center; word-wrap: break-word;'>Accuracy</td><td style='text-align: center; word-wrap: break-word;'>KF1</td><td style='text-align: center; word-wrap: break-word;'>LLM as Judge</td></tr><tr><td rowspan=\"2\">Llama-3-8B-Inst</td><td style='text-align: center; word-wrap: break-word;'>Single</td><td style='text-align: center; word-wrap: break-word;'>86.80</td><td style='text-align: center; word-wrap: break-word;'>28.04</td><td style='text-align: center; word-wrap: break-word;'>90.00</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Multiple</td><td style='text-align: center; word-wrap: break-word;'>63.60</td><td style='text-align: center; word-wrap: break-word;'>32.49</td><td style='text-align: center; word-wrap: break-word;'>48.71</td></tr><tr><td rowspan=\"2\">Ours</td><td style='text-align: center; word-wrap: break-word;'>Single</td><td style='text-align: center; word-wrap: break-word;'>94.20</td><td style='text-align: center; word-wrap: break-word;'>54.52</td><td style='text-align: center; word-wrap: break-word;'>96.20</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Multiple</td><td style='text-align: center; word-wrap: break-word;'>73.00</td><td style='text-align: center; word-wrap: break-word;'>55.99</td><td style='text-align: center; word-wrap: break-word;'>58.56</td></tr></table>",
+      "normalized_markdown": "| Model | Type | Accuracy | KF1 | LLM as Judge |\n| --- | --- | --- | --- | --- |\n| Llama-3-8B-Inst | Single | 86.80 | 28.04 | 90.00 |\n| Llama-3-8B-Inst | Multiple | 63.60 | 32.49 | 48.71 |\n| Ours | Single | 94.20 | 54.52 | 96.20 |\n| Ours | Multiple | 73.00 | 55.99 | 58.56 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nModel & Type & Accuracy & KF1 & LLM as Judge \\\\\n\\hline\nLlama-3-8B-Inst & Single & 86.80 & 28.04 & 90.00 \\\\\nLlama-3-8B-Inst & Multiple & 63.60 & 32.49 & 48.71 \\\\\nOurs & Single & 94.20 & 54.52 & 96.20 \\\\\nOurs & Multiple & 73.00 & 55.99 & 58.56 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "Type",
+          "Accuracy",
+          "KF1",
+          "LLM as Judge"
+        ],
+        [
+          "Llama-3-8B-Inst",
+          "Single",
+          "86.80",
+          "28.04",
+          "90.00"
+        ],
+        [
+          "Llama-3-8B-Inst",
+          "Multiple",
+          "63.60",
+          "32.49",
+          "48.71"
+        ],
+        [
+          "Ours",
+          "Single",
+          "94.20",
+          "54.52",
+          "96.20"
+        ],
+        [
+          "Ours",
+          "Multiple",
+          "73.00",
+          "55.99",
+          "58.56"
+        ]
+      ],
+      "nearby_context": "Table showing accuracy, KF1, and LLM-as-Judge scores for Llama-3-8B-Inst and Ours under Single and Multiple conditions.",
+      "table_shape": {
+        "rows": 5,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 3: Experiment results on the Scaling with the number of relevant passages, showing model performance based on the number of query-related passages. Single refers to instances with only one related passage, while Multiple indicates instances with multiple related passages. The results compare accuracy, KF1 score, and LLM-as-Judge evaluations between the Llama-3-8B-Inst and our model. Bold text indicates superior performance in the same condition.",
+        "caption_kind": "table",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P011_B0005",
+          "P011_B0006"
+        ],
+        "media_block_ids": [
+          "P011_B0005"
+        ],
+        "table_block_ids": [
+          "P011_B0005"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table showing accuracy, KF1, and LLM-as-Judge scores for Llama-3-8B-Inst and Ours under Single and Multiple conditions.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_006",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S24",
+      "section_title": "4.5 Assessing the Quality of Synthetic Data",
+      "macro_id": "M9",
+      "macro_candidates": [
+        {
+          "macro_id": "M9",
+          "title": "Ablation: Quality of Synthetic Data",
+          "role": "ablation_analysis",
+          "order": 9
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S24_0006",
+      "source_block_ids": [
+        "P011_B0011",
+        "P011_B0012"
+      ],
+      "media_block_ids": [
+        "P011_B0011"
+      ],
+      "caption": "Table 4: Experiment results in assessing the quality of synthetic data. Llama-3-8B-Inst (chosen) refers to the Llama-3-8B Inst model fine-tuned exclusively on the chosen data, while Llama-3-8B-Inst (rejected) refers to the same model fine-tuned exclusively on the rejected data. Bold text indicates the best performance, while underlined text indicates the second-best performance.",
+      "caption_kind": "table",
+      "caption_number": "4",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Model</td><td style='text-align: center; word-wrap: break-word;'>Accuracy</td><td style='text-align: center; word-wrap: break-word;'>KF1</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Llama-3-8B-Inst</td><td style='text-align: center; word-wrap: break-word;'>58.68</td><td style='text-align: center; word-wrap: break-word;'>28.62</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Llama-3-8B-Inst (chosen)</td><td style='text-align: center; word-wrap: break-word;'>62.64</td><td style='text-align: center; word-wrap: break-word;'>40.40</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Llama-3-8B-Inst (rejected)</td><td style='text-align: center; word-wrap: break-word;'>39.59</td><td style='text-align: center; word-wrap: break-word;'>27.86</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Ours</td><td style='text-align: center; word-wrap: break-word;'>65.76</td><td style='text-align: center; word-wrap: break-word;'>43.78</td></tr></table>",
+      "normalized_markdown": "| Model | Accuracy | KF1 |\n| --- | --- | --- |\n| Llama-3-8B-Inst | 58.68 | 28.62 |\n| Llama-3-8B-Inst (chosen) | 62.64 | 40.40 |\n| Llama-3-8B-Inst (rejected) | 39.59 | 27.86 |\n| Ours | 65.76 | 43.78 |",
+      "normalized_latex": "\\begin{tabular}{lll}\n\\hline\nModel & Accuracy & KF1 \\\\\n\\hline\nLlama-3-8B-Inst & 58.68 & 28.62 \\\\\nLlama-3-8B-Inst (chosen) & 62.64 & 40.40 \\\\\nLlama-3-8B-Inst (rejected) & 39.59 & 27.86 \\\\\nOurs & 65.76 & 43.78 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "Accuracy",
+          "KF1"
+        ],
+        [
+          "Llama-3-8B-Inst",
+          "58.68",
+          "28.62"
+        ],
+        [
+          "Llama-3-8B-Inst (chosen)",
+          "62.64",
+          "40.40"
+        ],
+        [
+          "Llama-3-8B-Inst (rejected)",
+          "39.59",
+          "27.86"
+        ],
+        [
+          "Ours",
+          "65.76",
+          "43.78"
+        ]
+      ],
+      "nearby_context": "Table comparing model accuracy and KF1 scores for Llama-3-8B-Inst variants and Ours, with best and second-best performances highlighted.",
+      "table_shape": {
+        "rows": 5,
+        "columns": 3
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 4: Experiment results in assessing the quality of synthetic data. Llama-3-8B-Inst (chosen) refers to the Llama-3-8B Inst model fine-tuned exclusively on the chosen data, while Llama-3-8B-Inst (rejected) refers to the same model fine-tuned exclusively on the rejected data. Bold text indicates the best performance, while underlined text indicates the second-best performance.",
+        "caption_kind": "table",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P011_B0011",
+          "P011_B0012"
+        ],
+        "media_block_ids": [
+          "P011_B0011"
+        ],
+        "table_block_ids": [
+          "P011_B0011"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing model accuracy and KF1 scores for Llama-3-8B-Inst variants and Ours, with best and second-best performances highlighted.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    }
+  ],
+  "summary": {
+    "asset_count": 10,
+    "by_asset_type": {
+      "figure": 4,
+      "table": 6
+    },
+    "by_modality_class": {
+      "explanatory": 2,
+      "evidential": 8
+    },
+    "macro_unresolved_count": 0
+  }
+}

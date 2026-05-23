@@ -1,0 +1,2938 @@
+{
+  "paper_id": "Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa",
+  "schema_version": "v1",
+  "challenge_plans_path": "data/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/cache/questions/challenge_plans.json",
+  "challenge_plan_summary": {
+    "plan_count": 76,
+    "by_type": {
+      "false_premise_challenge": 52,
+      "overclaim_challenge": 12,
+      "wrong_relation_challenge": 12
+    },
+    "by_modality_pool": {
+      "multimodal": 40,
+      "text": 36
+    },
+    "text_plan_count": 36,
+    "multimodal_plan_count": 40,
+    "multimodal_plan_limit": 40
+  },
+  "challenge_questions_raw_path": "data/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/cache/questions/challenge_questions_raw.json",
+  "challenge_question_raw_summary": {
+    "raw_question_count": 71,
+    "by_type": {
+      "false_premise_challenge": 12,
+      "overclaim_challenge": 4,
+      "wrong_relation_challenge": 4
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    }
+  },
+  "challenge_questions_filtered_path": "data/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/cache/questions/challenge_questions_filtered.json",
+  "challenge_solver_trials_path": "data/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/cache/questions/challenge_solver_trials.json",
+  "challenge_filter_summary": {
+    "plan_pool_count": 76,
+    "target_count": 20,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 71,
+    "solver_trial_count": 66,
+    "filtered_count": 20,
+    "human_review_count": 4,
+    "rejected_count": 51,
+    "blacklisted_plan_count": 16,
+    "by_type": {
+      "false_premise_challenge": 12,
+      "overclaim_challenge": 4,
+      "wrong_relation_challenge": 4
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    },
+    "stop_reason": {
+      "text": "target_reached",
+      "multimodal": {
+        "figure": "target_reached",
+        "remaining": "target_reached"
+      }
+    }
+  },
+  "challenge_questions": [
+    {
+      "question_id": "CHQ_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0013",
+      "source_challenge_plan_id": "CHP_0013",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "According to the paper, how does the system process a user question that pertains to the video content?",
+      "surface_intent": "asking about the system's handling of video-related questions",
+      "target_kc_ids": [
+        "KC74"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC74",
+          "text": "• If $q$ pertains to the video content, the Question Manager forwards the question $q$ and video $v$ to VideoLMM. VideoLMM processes $v$ to generate both the answer and direct evidence from the video, resulting in a new QA&Evidence pair $p_N = (q, \\text{videolmm}(v)).$",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, directly follows the challenge plan's true part, and can be answered from the provided evidence. It does not expose hidden labels or metadata, and its formulation allows the detection of overclaim if the model expands the scope beyond the paper's claim.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0031",
+      "source_challenge_plan_id": "CHP_0031",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "How does the Information Retriever ensure that only relevant and useful evidence is passed to the Question Manager?",
+      "surface_intent": "Asks about the validation mechanism of the Information Retriever in the paper's system.",
+      "target_kc_ids": [
+        "KC85"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'not_specified', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC85",
+          "text": "After scoring, the Information Retriever selects the top 3 pieces of evidence $ \\mathcal{E}_q $ to balance precision and coverage within LLMs' context length limits. Before passing them to the Question Manager, the relevance and usefulness of $ \\mathcal{E}_q $ are additionally validated by assessing whether the evidence can adequately address the query. The validation output is $ \\chi \\in \\{0,1\\} $, where $ \\chi = 1 $ means the evidence is valid and can be passed on. If $ \\chi = 0 $, the evidence is deemed invalid, triggering a new retrieval cycle until a valid $ \\mathcal{E}_q $ appears.",
+          "span_id": "S14",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly asks about the validation mechanism described in the evidence. It does not expose any hidden labels or metadata. It follows the challenge plan's intent (overclaim by staying specific to the paper's explicit claim). The answer can be derived from the provided evidence, and the question is unambiguous for judging whether the model overclaims.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0012",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0028",
+      "source_challenge_plan_id": "CHP_0028",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "What are the precise conditions that determine whether the system uses the Question Generator or the Reasoner?",
+      "surface_intent": "The user is asking for a clear description of the routing decision logic based on α and δ.",
+      "target_kc_ids": [
+        "KC72"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC72",
+          "text": "As the module’s output, $ \\alpha \\in \\{0,1\\} $ represents the judgment of information sufficiency, $ \\delta \\in [0,1] $ indicates the confidence level, and $ r_{cv} $ provides reasoning for the judgment. The process continues with the Question Generator in two cases: 1) when $ \\alpha = 0 $, indicating insufficient information, or 2) when $ \\alpha = 1 $ but $ \\delta $ is below a certain threshold (default 0.93 for higher accuracy). Only when $ \\alpha = 1 $ and $ \\delta $ exceeds the threshold does the process proceed to the Reasoner.",
+          "span_id": "S12",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly asks about the routing logic covered in the evidence. It does not expose hidden metadata or labels, and follows the intended target failure mode without ambiguity.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0017",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0021",
+      "source_challenge_plan_id": "CHP_0021",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Describe how the system handles a question requiring online retrieval, focusing on the roles of the Information Retriever and Question Manager.",
+      "surface_intent": "To understand the pipeline for online retrieval queries.",
+      "target_kc_ids": [
+        "KC75"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The Knowledge Component states that the Information Retriever only searches for evidence; the Question Manager generates the answer.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC75",
+          "text": "• If $q$ requires online retrieval, the Information Retriever module searches for relevant evidence based on the question $q$ and selects evidences $\\mathcal{E}_q$. The Question Manager then uses $\\mathcal{E}_q$ to generate an answer $a$, resulting in a new QA&Evidence pair $p_N = (q, a, \\mathcal{E}_q)$.",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The challenge plan is sound; the question made the false premise too obvious by directly asking if a false statement is true or false. Revision guidance: Rewrite the question to avoid directly stating the false premise and asking for a true/false judgment. Instead, ask about the roles of the modules in the QA pipeline without explicitly stating the false premise, or ask the solver to describe the process, making it less obvious that a false premise is involved. For example: 'Describe how the system handles a question requiring online retrieval, focusing on the roles of the Information Retriever and Question Manager.' This tests whether the solver inserts a false statement."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and follows the plan's target failure mode by asking about the roles of Information Retriever and Question Manager, allowing detection of false premise that the retriever directly generates the answer.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0018",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0029",
+      "source_challenge_plan_id": "CHP_0029",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "In the system, how does the Question Manager's ability to formulate new questions affect its validation of QA pairs?",
+      "surface_intent": "appears to ask about the causal relationship between question formulation and validation",
+      "target_kc_ids": [
+        "KC77",
+        "KC73"
+      ],
+      "target_edge_ids": [
+        "E36"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E36",
+          "kc_ids": [
+            "KC77",
+            "KC73"
+          ],
+          "text": "The Question Manager validates the usefulness of the generated QA&Evidence pair $ p_N $ by outputting $ \\beta \\in \\{0, 1\\} $, enhancing the framework's accuracy and efficiency. If $ \\beta = 0 $, the new $ p_N $ is not useful, so the process reiterates with a newly generated question $ q $. If $ \\beta = 1 $, $ p_N $ is considered useful and passed to the Claim Verifier for further processing."
+        },
+        {
+          "kc_id": "KC77",
+          "text": "The Question Manager validates the usefulness of the generated QA&Evidence pair $ p_N $ by outputting $ \\beta \\in \\{0, 1\\} $, enhancing the framework's accuracy and efficiency. If $ \\beta = 0 $, the new $ p_N $ is not useful, so the process reiterates with a newly generated question $ q $. If $ \\beta = 1 $, $ p_N $ is considered useful and passed to the Claim Verifier for further processing.",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC73",
+          "text": "The Question Manager formulates questions $ q $ when existing information is insufficient to verify the claim $ c $, subsequently deriving answers $ a $ and evidences $ \\mathcal{E}_q $ via video content $ v $ or online retrieval, producing new QA&Evidence pairs $ p_N $ for further claim verification. Once a question $ q $ is generated, the Question Manager decides how to proceed:",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question reverses the true causal direction (validation motivates formulation) by asking how formulation affects validation, targeting the wrong_relation failure mode. It is natural and answerable from evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0021",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0026",
+      "source_challenge_plan_id": "CHP_0026",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "How does the Question Manager's validation of QA pairs relate to the Claim Verifier's processing?",
+      "surface_intent": "To understand the functional relationship between the Question Manager and Claim Verifier in the framework.",
+      "target_kc_ids": [
+        "KC77",
+        "KC76"
+      ],
+      "target_edge_ids": [
+        "E35"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E35",
+          "kc_ids": [
+            "KC77",
+            "KC76"
+          ],
+          "text": "The Question Manager validates the usefulness of the generated QA&Evidence pair $ p_N $ by outputting $ \\beta \\in \\{0, 1\\} $, enhancing the framework's accuracy and efficiency. If $ \\beta = 0 $, the new $ p_N $ is not useful, so the process reiterates with a newly generated question $ q $. If $ \\beta = 1 $, $ p_N $ is considered useful and passed to the Claim Verifier for further processing."
+        },
+        {
+          "kc_id": "KC77",
+          "text": "The Question Manager validates the usefulness of the generated QA&Evidence pair $ p_N $ by outputting $ \\beta \\in \\{0, 1\\} $, enhancing the framework's accuracy and efficiency. If $ \\beta = 0 $, the new $ p_N $ is not useful, so the process reiterates with a newly generated question $ q $. If $ \\beta = 1 $, $ p_N $ is considered useful and passed to the Claim Verifier for further processing.",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC76",
+          "text": "The Question Manager validates the usefulness of the generated QA&Evidence pair $ p_N $ by outputting $ \\beta \\in \\{0, 1\\} $, enhancing the framework's accuracy and efficiency. If $ \\beta = 0 $, the new $ p_N $ is not useful, so the process reiterates with a newly generated question $ q $. If $ \\beta = 1 $, $ p_N $ is considered useful and passed to the Claim Verifier for further processing.",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was not usable. Reason: The question asks about the Claim Verifier's role in evaluating QA pairs, but the challenge plan targets the relation between KC77 and KC76 (Question Manager). The question does not directly probe the intended relation and may lead to answers unrelated to the target failure mode. Revision guidance: Revise to ask about how the Question Manager validates usefulness and its relation to the Claim Verifier, ensuring the answer must preserve the verified relation chain (KC77 part_of KC76). For example: 'How does the Question Manager's validation of QA pairs relate to the Claim Verifier's processing?'"
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the relation between Question Manager and Claim Verifier, aligning with the intended part_of relation. It does not expose metadata, is answerable from evidence, and is unambiguous for testing wrong_relation.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0028",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0035",
+      "source_challenge_plan_id": "CHP_0035",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "According to the ablation study results, what is the main reason for the observed ranking of module importance in the video fact-checking framework?",
+      "surface_intent": "Asks for the causal factor behind the module importance ranking based on ablation results.",
+      "target_kc_ids": [
+        "KC105",
+        "KC104"
+      ],
+      "target_edge_ids": [
+        "E44"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E44",
+          "kc_ids": [
+            "KC105",
+            "KC104"
+          ],
+          "text": "Based on the ablation study results, we can broadly rank the impact of different modules or components on overall accuracy as follows: Information Retriever > Validation (including Validation of P and Validation of $ E_q $) > Question Answering with VideoLMM > Video Descriptor. This ranking reflects the relative importance of these modules in enhancing the framework's performance. Notably, due to the limitations in video descriptive capabilities, the Video Descriptor module shows limited impact on accuracy, despite advances in VideoLMMs(e.g., from VideoLLaVa to MiniCPM-V 2.6). As VideoLMM capabilities continue to improve, the Video Descriptor module is expected to bring more benefits to future video fact-checking field."
+        },
+        {
+          "kc_id": "KC105",
+          "text": "Based on the ablation study results, we can broadly rank the impact of different modules or components on overall accuracy as follows: Information Retriever > Validation (including Validation of P and Validation of $ E_q $) > Question Answering with VideoLMM > Video Descriptor. This ranking reflects the relative importance of these modules in enhancing the framework's performance. Notably, due to the limitations in video descriptive capabilities, the Video Descriptor module shows limited impact on accuracy, despite advances in VideoLMMs(e.g., from VideoLLaVa to MiniCPM-V 2.6). As VideoLMM capabilities continue to improve, the Video Descriptor module is expected to bring more benefits to future video fact-checking field.",
+          "span_id": "S18",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC104",
+          "text": "Based on the ablation study results, we can broadly rank the impact of different modules or components on overall accuracy as follows: Information Retriever > Validation (including Validation of P and Validation of $ E_q $) > Question Answering with VideoLMM > Video Descriptor. This ranking reflects the relative importance of these modules in enhancing the framework's performance. Notably, due to the limitations in video descriptive capabilities, the Video Descriptor module shows limited impact on accuracy, despite advances in VideoLMMs(e.g., from VideoLLaVa to MiniCPM-V 2.6). As VideoLMM capabilities continue to improve, the Video Descriptor module is expected to bring more benefits to future video fact-checking field.",
+          "span_id": "S18",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels. It aligns with the target failure mode by asking for the causal reason behind the ranking, which preserves the intended relation direction (limitations explain lower importance). The answer is directly available in the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0030",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0018",
+      "source_challenge_plan_id": "CHP_0018",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "What are the main contributions of the TRUE dataset, which is designed to fact-check claims from social media posts?",
+      "surface_intent": "Evaluate understanding of the TRUE dataset's scope and contributions.",
+      "target_kc_ids": [
+        "KC30"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The KC specifies 'video-post related claims'.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC30",
+          "text": "Our TRUE dataset addresses these gaps by integrating both human and LLM versions of rationales and evidence, sourced from credible fact-checking websites, targeting the video-post related claim, thereby enhancing interpretability, credibility, and comprehensiveness for video fact-checking evaluation. (see",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question contains the false premise that TRUE dataset targets social media posts in general, matching the intended false premise failure mode. It is natural, serious, and answerable from the paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0032",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0023",
+      "source_challenge_plan_id": "CHP_0023",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Is the validation of the usefulness of a generated QA&Evidence pair part of the Question Manager's question formulation process?",
+      "surface_intent": "To check if the model understands the hierarchical relationship between validating QA&Evidence pairs and the overall question formulation process.",
+      "target_kc_ids": [
+        "KC76",
+        "KC73"
+      ],
+      "target_edge_ids": [
+        "E34"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E34",
+          "kc_ids": [
+            "KC76",
+            "KC73"
+          ],
+          "text": "The Question Manager formulates questions $ q $ when existing information is insufficient to verify the claim $ c $, subsequently deriving answers $ a $ and evidences $ \\mathcal{E}_q $ via video content $ v $ or online retrieval, producing new QA&Evidence pairs $ p_N $ for further claim verification. Once a question $ q $ is generated, the Question Manager decides how to proceed:\n\n• If $q$ pertains to the video content, the Question Manager forwards the question $q$ and video $v$ to VideoLMM. VideoLMM processes $v$ to generate both the answer and direct evidence from the video, resulting in a new QA&Evidence pair $p_N = (q, \\text{videolmm}(v)).$\n\n• If $q$ requires online retrieval, the Information Retriever module searches for relevant evidence based on the question $q$ and selects evidences $\\mathcal{E}_q$. The Question Manager then uses $\\mathcal{E}_q$ to generate an answer $a$, resulting in a new QA&Evidence pair $p_N = (q, a, \\mathcal{E}_q)$.\n\nThe Question Manager validates the usefulness of the generated QA&Evidence pair $ p_N $ by outputting $ \\beta \\in \\{0, 1\\} $, enhancing the framework's accuracy and efficiency. If $ \\beta = 0 $, the new $ p_N $ is not useful, so the proce"
+        },
+        {
+          "kc_id": "KC76",
+          "text": "The Question Manager validates the usefulness of the generated QA&Evidence pair $ p_N $ by outputting $ \\beta \\in \\{0, 1\\} $, enhancing the framework's accuracy and efficiency. If $ \\beta = 0 $, the new $ p_N $ is not useful, so the process reiterates with a newly generated question $ q $. If $ \\beta = 1 $, $ p_N $ is considered useful and passed to the Claim Verifier for further processing.",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC73",
+          "text": "The Question Manager formulates questions $ q $ when existing information is insufficient to verify the claim $ c $, subsequently deriving answers $ a $ and evidences $ \\mathcal{E}_q $ via video content $ v $ or online retrieval, producing new QA&Evidence pairs $ p_N $ for further claim verification. Once a question $ q $ is generated, the Question Manager decides how to proceed:",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was not usable. Reason: The question asks about process order but does not test the intended part_of relation between KC76 and KC73, missing the target failure mode. Revision guidance: Rewrite to test the part_of relation, e.g., 'Is the validation of QA&Evidence pairs part of the question formulation process?'"
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly targets the intended 'part_of' relation without exposing hidden metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0040",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0010",
+      "source_challenge_plan_id": "CHP_0010",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the ablation study, the components are ranked as Information Retriever > Validation > Question Answering with VideoLMM > Video Descriptor. How should this ranking influence video fact-checking research?",
+      "surface_intent": "The question asks for the practical implications of the ablation study ranking on future research.",
+      "target_kc_ids": [
+        "KC104"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'video_fact-checking', 'dataset': 'TRUE', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC104",
+          "text": "Based on the ablation study results, we can broadly rank the impact of different modules or components on overall accuracy as follows: Information Retriever > Validation (including Validation of P and Validation of $ E_q $) > Question Answering with VideoLMM > Video Descriptor. This ranking reflects the relative importance of these modules in enhancing the framework's performance. Notably, due to the limitations in video descriptive capabilities, the Video Descriptor module shows limited impact on accuracy, despite advances in VideoLMMs(e.g., from VideoLLaVa to MiniCPM-V 2.6). As VideoLMM capabilities continue to improve, the Video Descriptor module is expected to bring more benefits to future video fact-checking field.",
+          "span_id": "S18",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question directly asked about generalizability, making it trivial for solvers to avoid overclaim. A better phrasings can still test the intended failure mode. Revision guidance: The previous question explicitly asked 'Can we generally assume that this ranking applies to all video fact-checking tasks?', which prompted models to deny overclaim. To make it harder, avoid directly asking about generalizability. Instead, present the ranking as a statement and ask for its implications, e.g., 'Based on the ablation study, the components rank as Information Retriever > Validation > Question Answering with VideoLMM > Video Descriptor. How should this ranking influence video fact-checking research?' This may lead models to overclaim without qualification."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about implications of the ranking, aligning with the overclaim challenge by potentially prompting generalization beyond the reported scope. It does not expose hidden metadata and is answerable from the evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0051",
+      "source_challenge_plan_id": "CHP_0051",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 5, what does the red 'FALSE' label for the first example indicate about the framework's performance? Does it signify an error in the model's detection?",
+      "surface_intent": "The question asks about the significance of the red 'FALSE' label in Figure 5, implying it might represent a mistake by the framework.",
+      "target_kc_ids": [
+        "KC167"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [
+        "FIG_005"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_005",
+          "asset_type": "figure",
+          "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework.",
+          "summary": "Figure 5 presents qualitative case studies of the 3MFact framework's claim detection performance. It displays two examples: the first demonstrates a successful detection where a false claim about Cristiano Ronaldo making his hotel available was correctly identified as 'False' with a supporting rationale and evidence snippet; the second example shows a claim labeled 'TRUE' regarding Putin's entourage and a UFC fighter, accompanied by video frames highlighting specific individuals.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC167"
+          ],
+          "evidence_bases": [
+            "Text in Framework Result box under 'Rationale' and 'Evidence'"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_005",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_645_632_870_778.jpg",
+              "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_005",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_647_779_871_867.jpg",
+              "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_005",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_885_632_1109_778.jpg",
+              "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The red label likely represents the ground truth, and the green checkmark next to 'Rating: False' in the result box indicates the model correctly identified it.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC167",
+          "text": "Asset FIG_005 (figure): Figure 5: Examples of successful and failed claim detection by the 3MFact framework.\nAsset summary: Figure 5 presents qualitative case studies of the 3MFact framework's claim detection performance. It displays two examples: the first demonstrates a successful detection where a false claim about Cristiano Ronaldo making his hotel available was correctly identified as 'False' with a supporting rationale and evidence snippet; the second example shows a claim labeled 'TRUE' regarding Putin's entourage and a UFC fighter, accompanied by video frames highlighting specific individuals.\nEvidence basis: Text in Framework Result box under 'Rationale' and 'Evidence'\nSupported claim: The framework generates natural language rationales and evidence snippets for its decisions.",
+          "span_id": "FIG_005",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC167",
+          "text": "Asset evidence basis: Text in Framework Result box under 'Rationale' and 'Evidence'",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose hidden labels, follows the false premise intent, is answerable from evidence, and allows clear judgment of the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0047",
+      "source_challenge_plan_id": "CHP_0047",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 1, what event does the video clip in the sample claim to show?",
+      "surface_intent": "Asks about the claimed content of the video clip in the figure.",
+      "target_kc_ids": [
+        "KC123"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_001",
+          "asset_type": "figure",
+          "caption": "Figure 1: A sample in the proposed TRUE Dataset. It includes the claim, video, and video background information. Besides, three types of annotations are provided: 1) label, 2) evidences, and 3) original and summary rationales.",
+          "summary": "Figure 1 illustrates a sample entry from the TRUE Dataset designed for explainable video fact-checking. The figure is structured into multiple sections displaying a multimodal input: a textual claim, a ground truth label (marked FALSE), video content frames, and video metadata (headline, date, platform). It also details the reasoning process through 'Original Rationale', 'Summary Rationale' (with detailed reasons), and specific 'Evidences'.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC123"
+          ],
+          "evidence_bases": [
+            "visible headers 'Original Rationale' and 'Summary Rationale'"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_639_432_1115_882.jpg",
+              "caption": "Figure 1: A sample in the proposed TRUE Dataset. It includes the claim, video, and video background information. Besides, three types of annotations are provided: 1) label, 2) evidences, and 3) original and summary rationales."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The label is marked 'FALSE', and the evidence section mentions 'vapour cones', suggesting the visual might be misinterpreted or the event didn't happen as claimed.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC123",
+          "text": "Asset FIG_001 (figure): Figure 1: A sample in the proposed TRUE Dataset. It includes the claim, video, and video background information. Besides, three types of annotations are provided: 1) label, 2) evidences, and 3) original and summary rationales.\nAsset summary: Figure 1 illustrates a sample entry from the TRUE Dataset designed for explainable video fact-checking. The figure is structured into multiple sections displaying a multimodal input: a textual claim, a ground truth label (marked FALSE), video content frames, and video metadata (headline, date, platform). It also details the reasoning process through 'Original Rationale', 'Summary Rationale' (with detailed reasons), and specific 'Evidences'.\nEvidence basis: visible headers 'Original Rationale' and 'Summary Rationale'\nSupported claim: The dataset provides both original and summarized rationales for fact-checking.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC123",
+          "text": "Asset evidence basis: visible headers 'Original Rationale' and 'Summary Rationale'",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the claim depicted in the figure, which directly relates to the false premise about sonic boom, and can be answered from the paper evidence. It does not expose metadata or labels.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0037",
+      "source_challenge_plan_id": "CHP_0037",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Refer to Figure 2(a). What are the exact counts for the 'False', 'Miscaptioned', 'Mixture', 'Fake', and 'Mostly False' labels as displayed on the donut chart segments?",
+      "surface_intent": "Asks for the numerical values for each false label category shown in the chart segments.",
+      "target_kc_ids": [
+        "KC136"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Figure 2: (a) Label Composition: False labels include False (1062), Miscaptioned (268), Mixture (305), Fake (52), and Mostly False (MF, 126). True labels include True (798), Mostly True (MT, 100), and Correct Attribution (CA, 199). (b) Social Media (SM): Platforms include Instagram (IG), TikTok (TT), Facebook (FB), X (formerly Twitter), and YouTube (YT). Official Media (OM): Sources include the New York Times (NYT), CNBC, and Fox News (FN).",
+          "summary": "Figure 2 consists of two donut charts illustrating dataset statistics. Panel (a) displays the label composition, dividing entries into broad 'False' and 'True' categories, which are further subdivided into specific labels such as 'Miscaptioned', 'Mixture', 'Fake', 'MF', 'CA', 'MT', and 'True'. Panel (b) shows the source distribution, categorizing data sources into 'Social Media (SM)' and 'Official Media (OM)', with specific platforms like Instagram, TikTok, Facebook, X, YouTube, and news outlets like NYT, CNBC, and Fox News listed around the perimeter.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC136"
+          ],
+          "evidence_bases": [
+            "visible label in donut chart and caption"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_644_700_881_893.jpg",
+              "caption": "Figure 2: (a) Label Composition: False labels include False (1062), Miscaptioned (268), Mixture (305), Fake (52), and Mostly False (MF, 126). True labels include True (798), Mostly True (MT, 100), and Correct Attribution (CA, 199). (b) Social Media (SM): Platforms include Instagram (IG), TikTok (TT), Facebook (FB), X (formerly Twitter), and YouTube (YT). Official Media (OM): Sources include the New York Times (NYT), CNBC, and Fox News (FN)."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_903_699_1110_886.jpg",
+              "caption": "Figure 2: (a) Label Composition: False labels include False (1062), Miscaptioned (268), Mixture (305), Fake (52), and Mostly False (MF, 126). True labels include True (798), Mostly True (MT, 100), and Correct Attribution (CA, 199). (b) Social Media (SM): Platforms include Instagram (IG), TikTok (TT), Facebook (FB), X (formerly Twitter), and YouTube (YT). Official Media (OM): Sources include the New York Times (NYT), CNBC, and Fox News (FN)."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The chart only shows labels and relative sizes; numerical counts are provided in the caption, not on the figure itself.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC136",
+          "text": "Asset FIG_002 (figure): Figure 2: (a) Label Composition: False labels include False (1062), Miscaptioned (268), Mixture (305), Fake (52), and Mostly False (MF, 126). True labels include True (798), Mostly True (MT, 100), and Correct Attribution (CA, 199). (b) Social Media (SM): Platforms include Instagram (IG), TikTok (TT), Facebook (FB), X (formerly Twitter), and YouTube (YT). Official Media (OM): Sources include the New York Times (NYT), CNBC, and Fox News (FN).\nAsset summary: Figure 2 consists of two donut charts illustrating dataset statistics. Panel (a) displays the label composition, dividing entries into broad 'False' and 'True' categories, which are further subdivided into specific labels such as 'Miscaptioned', 'Mixture', 'Fake', 'MF', 'CA', 'MT', and 'True'. Panel (b) shows the source distribution, categorizing data sources into 'Social Media (SM)' and 'Official Media (OM)', with specific platforms like Instagram, TikTok, Facebook, X, YouTube, and news outlets like NYT, CNBC, and Fox News listed around the perimeter.\nEvidence basis: visible label in donut chart and caption\nSupported claim: The dataset includes labels for 'Miscaptioned', 'Mixture', 'Fake', and 'Mostly Fals",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC136",
+          "text": "Asset evidence basis: visible label in donut chart and caption",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question asks for exact counts as displayed on the chart segments, which is a false premise because the chart only shows labels and relative sizes; counts are in the caption. This directly tests the intended failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0009",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0045",
+      "source_challenge_plan_id": "CHP_0045",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Looking at Figure 3(c), which type of claim—true or false—tends to have more scene transitions? Does this support the idea that false claims are more complex and thus involve more scene changes?",
+      "surface_intent": "Ask the model to interpret panel (c) of Figure 3 and evaluate a common assumption about false claims' complexity.",
+      "target_kc_ids": [
+        "KC138"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment.",
+          "summary": "Figure 3 presents a comparative analysis of dataset statistics between true and false video claims across four metrics: claim length, claim entropy, scene transition counts, and the average count of fact-checking materials. Panels (a) and (b) utilize box plots to demonstrate that false claims are significantly shorter and have lower entropy than true claims. Panel (c) uses a bar chart to show that true claims involve significantly more scene transitions. Panel (d) displays grouped bar charts indicating that false claims generally require higher counts of Evidence (E), Expert-Crafted Rationale (ECR), and LLM-Summary-Rationale (LSR) for accurate judgment.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC138"
+          ],
+          "evidence_bases": [
+            "Panel (a) shows the orange box (False) is lower than the blue box (True) with a p-value annotation."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_122_107_370_285.jpg",
+              "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_383_107_632_291.jpg",
+              "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_644_105_858_290.jpg",
+              "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_873_111_1099_292.jpg",
+              "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "Panel (c) clearly shows the 'True' bar is higher (~9) than the 'False' bar (~7). The caption clarifies that false claims have 'more uniform scenes', which implies fewer transitions.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC138",
+          "text": "Asset FIG_003 (figure): Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment.\nAsset summary: Figure 3 presents a comparative analysis of dataset statistics between true and false video claims across four metrics: claim length, claim entropy, scene transition counts, and the average count of fact-checking materials. Panels (a) and (b) utilize box plots to demonstrate that false claims are significantly shorter and have lower entropy than true claims. Panel (c) uses a bar chart to show that true claims involve significantly more scene transitions. Panel (d) displays grouped bar charts indicating that false claims generally require higher counts of Evidence (E), Expert-Crafted Rationale (ECR), and LLM-Summary-Rationale (LSR) for accurate judgment.\nEvidence basis: Panel (a) shows the orange box (",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC138",
+          "text": "Asset evidence basis: Panel (a) shows the orange box (False) is lower than the blue box (True) with a p-value annotation.",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks about Figure 3(c) evidence and the false premise regarding scene transitions, is natural, serious, and does not expose hidden labels or metadata. It can be answered from the paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0013",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0043",
+      "source_challenge_plan_id": "CHP_0043",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on the data presented in Figure 3, what does the scene transition count indicate about the complexity of false video claims compared to true claims?",
+      "surface_intent": "Asks about the relationship between scene transitions and claim truthfulness, expecting to note that false claims have fewer transitions (more uniform scenes).",
+      "target_kc_ids": [
+        "KC139"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment.",
+          "summary": "Figure 3 presents a comparative analysis of dataset statistics between true and false video claims across four metrics: claim length, claim entropy, scene transition counts, and the average count of fact-checking materials. Panels (a) and (b) utilize box plots to demonstrate that false claims are significantly shorter and have lower entropy than true claims. Panel (c) uses a bar chart to show that true claims involve significantly more scene transitions. Panel (d) displays grouped bar charts indicating that false claims generally require higher counts of Evidence (E), Expert-Crafted Rationale (ECR), and LLM-Summary-Rationale (LSR) for accurate judgment.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC139"
+          ],
+          "evidence_bases": [
+            "Panel (b) shows the orange box (False) is slightly lower than the blue box (True) with a p-value annotation."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_122_107_370_285.jpg",
+              "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_383_107_632_291.jpg",
+              "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_644_105_858_290.jpg",
+              "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_873_111_1099_292.jpg",
+              "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "Panel (c) clearly shows the 'True' bar is higher (~9) than the 'False' bar (~7). The caption clarifies that false claims have 'more uniform scenes', which implies fewer transitions.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC139",
+          "text": "Asset FIG_003 (figure): Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment.\nAsset summary: Figure 3 presents a comparative analysis of dataset statistics between true and false video claims across four metrics: claim length, claim entropy, scene transition counts, and the average count of fact-checking materials. Panels (a) and (b) utilize box plots to demonstrate that false claims are significantly shorter and have lower entropy than true claims. Panel (c) uses a bar chart to show that true claims involve significantly more scene transitions. Panel (d) displays grouped bar charts indicating that false claims generally require higher counts of Evidence (E), Expert-Crafted Rationale (ECR), and LLM-Summary-Rationale (LSR) for accurate judgment.\nEvidence basis: Panel (b) shows the orange box (",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC139",
+          "text": "Asset evidence basis: Panel (b) shows the orange box (False) is slightly lower than the blue box (True) with a p-value annotation.",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question follows the plan's target failure mode (false_premise) by asking about scene transitions and complexity, does not expose hidden metadata, can be answered from Figure 3 evidence, and the ambiguity is acceptable for judging the failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0055",
+      "source_challenge_plan_id": "CHP_0055",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Looking at Table 6, would you say that the 3MFact_{(M+M)} model is the best overall across all explanation metrics compared to the ablated variants?",
+      "surface_intent": "Ask whether the full model is uniformly better than ablated ones based on the table.",
+      "target_kc_ids": [
+        "KC158"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [
+        "TAB_006"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_006",
+          "asset_type": "table",
+          "caption": "Table 6: Ablation Study Evaluation on Explanation Metrics.",
+          "summary": "This table presents an ablation study comparing the full 3MFact model (with M+M variant) against four ablated variants (w/o IR, w/o QA_{LMM}, w/o VD, w/o 2Val) across five explanation metrics: B, RG, R-O, LC, and SoE. The values show that the full model achieves the highest R-O score and ties for the highest B score, while the w/o IR variant generally underperforms, especially on R-O and SoE.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC158"
+          ],
+          "evidence_bases": [
+            "Row '3MFact_{(M+M)}', column 'R-O' value 2.37; all other rows have lower values."
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_006",
+              "content": "\\begin{tabular}{llllll}\n\\hline\nModel & Trad. & Content Credibility Analysis(G-E.) & Content Credibility Analysis(G-E.) & Content Credibility Analysis(G-E.) & Content Credibility Analysis(G-E.) \\\\\n\\hline\nModel & B & RG & R-O & LC & SoE \\\\\n3MFact \\$ \\_\\{(M+M)\\} \\$ & 0.04 & 0.25 & 2.37 & 4.47 & 3.96 \\\\\nw/o IR & 0.03 & 0.24 & 1.70 & 4.22 & 2.72 \\\\\nw/o QA \\$ \\_\\{LMM\\} \\$ & 0.03 & 0.25 & 2.30 & 4.46 & 4.24 \\\\\nw/o VD & 0.03 & 0.26 & 2.25 & 4.41 & 4.01 \\\\\nw/o 2Val & 0.04 & 0.25 & 2.17 & 4.41 & 3.92 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 6: Ablation Study Evaluation on Explanation Metrics."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table shows that w/o QA_{LMM} has a higher SoE (4.24 vs 3.96) and w/o VD has a higher RG (0.26 vs 0.25), so the full model is not universally superior.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC158",
+          "text": "Asset TAB_006 (table): Table 6: Ablation Study Evaluation on Explanation Metrics.\nAsset summary: This table presents an ablation study comparing the full 3MFact model (with M+M variant) against four ablated variants (w/o IR, w/o QA_{LMM}, w/o VD, w/o 2Val) across five explanation metrics: B, RG, R-O, LC, and SoE. The values show that the full model achieves the highest R-O score and ties for the highest B score, while the w/o IR variant generally underperforms, especially on R-O and SoE.\nEvidence basis: Row '3MFact_{(M+M)}', column 'R-O' value 2.37; all other rows have lower values.\nSupported claim: The 3MFact_{(M+M)} model has the highest R-O metric value (2.37) among all variants.",
+          "span_id": "TAB_006",
+          "asset_id": "TAB_006",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC158",
+          "text": "Asset evidence basis: Row '3MFact_{(M+M)}', column 'R-O' value 2.37; all other rows have lower values.",
+          "asset_id": "TAB_006",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks about the false premise (best overall across all metrics) without exposing hidden labels. It is natural, serious, and answerable from the table.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0013",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0049",
+      "source_challenge_plan_id": "CHP_0049",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Looking at Figure 4, can you describe the flow of data after the Claim Verifier? Specifically, does the Reasoner always receive input from the Question Manager, or are there alternative paths?",
+      "surface_intent": "Question about the processing order of Reasoner relative to Question Manager in the framework.",
+      "target_kc_ids": [
+        "KC142"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Overview of the proposed 3MFact framework, comprising five components: Video Descriptor (video-to-text conversion), Claim Verifier (assesses evidence sufficiency), Question Manager (generates questions and retrieves answers), Information Retriever (searches for evidence), and Reasoner (synthesizes judgment with rationale and evidence).",
+          "summary": "The figure displays the architecture of the 3MFact framework, a multi-stage pipeline for video fact-checking. It features five main components: Video Descriptor, Claim Verifier, Question Manager, Information Retriever, and Reasoner. The process begins with input data (c, B, v) being processed by the Video Descriptor to generate a summary 't', which is then evaluated by the Claim Verifier. Based on the verifier's output (alpha), the system either routes the task directly to the Reasoner or to the Question Manager. The Question Manager interacts with the Information Retriever to fetch evidence and generates answers using either video analysis or retrieved text evidence.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC142"
+          ],
+          "evidence_bases": [
+            "Visible label 'Video Descriptor' in the diagram"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_113_110_1113_367.jpg",
+              "caption": "Figure 4: Overview of the proposed 3MFact framework, comprising five components: Video Descriptor (video-to-text conversion), Claim Verifier (assesses evidence sufficiency), Question Manager (generates questions and retrieves answers), Information Retriever (searches for evidence), and Reasoner (synthesizes judgment with rationale and evidence)."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The diagram shows the Reasoner receives input directly from the Decision Diamond (alpha=1), bypassing the Question Manager entirely if the initial verification is sufficient.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC142",
+          "text": "Asset FIG_004 (figure): Figure 4: Overview of the proposed 3MFact framework, comprising five components: Video Descriptor (video-to-text conversion), Claim Verifier (assesses evidence sufficiency), Question Manager (generates questions and retrieves answers), Information Retriever (searches for evidence), and Reasoner (synthesizes judgment with rationale and evidence).\nAsset summary: The figure displays the architecture of the 3MFact framework, a multi-stage pipeline for video fact-checking. It features five main components: Video Descriptor, Claim Verifier, Question Manager, Information Retriever, and Reasoner. The process begins with input data (c, B, v) being processed by the Video Descriptor to generate a summary 't', which is then evaluated by the Claim Verifier. Based on the verifier's output (alpha), the system either routes the task directly to the Reasoner or to the Question Manager. The Question Manager interacts with the Information Retriever to fetch evidence and generates answers using either video analysis or retrieved text evidence.\nEvidence basis: Visible label 'Video Descriptor' in the diagram\nSupported claim: The framework includes a component called 'Video Descri",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC142",
+          "text": "Asset evidence basis: Visible label 'Video Descriptor' in the diagram",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly addresses the trap premise about the Reasoner's dependency on the Question Manager, allowing the solver to identify the alternative path. It is natural, serious, and answerable from the figure.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0016",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0075",
+      "source_challenge_plan_id": "CHP_0075",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Table 1, the TRUE dataset supports text, audio, video, and image modalities. Which other datasets in the table also support the image modality?",
+      "surface_intent": "Identify datasets that include image modality, assuming TRUE includes image.",
+      "target_kc_ids": [
+        "KC127"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "TAB_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_001",
+          "asset_type": "table",
+          "caption": "Table 1: Comparison of the proposed TRUE with other datasets. ECR indicates the Expert-Crafted Rationale, LSR stands for the specific LLM-Summary-Rationale. 1;2 See Figure 2(a) for the sub_labels and their sizes. Abbreviations: T: text, A: audio, V: video, I: image. ⚖: Not Enough Information, ✓: True (Real), ∅: False (Fake/Misleading), ✰: Debunk",
+          "summary": "This table compares the proposed TRUE dataset with five existing datasets (CHECKED, Shang et al. 2021, Mocheg, FakeSV, VMH) across modalities (T, I, A, V), label types (Categories, ECR, LSR, Evidence), time span, and dataset size (True/False counts). It demonstrates that TRUE is the only dataset that includes ECR, LSR, and Evidence labels, and covers text, audio, and video but not image. Other datasets vary in coverage and included explanation types.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC127"
+          ],
+          "evidence_bases": [
+            "Table 1, TRUE row: T ✓, I ✗, A ✓, V ✓"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_001",
+              "content": "\\begin{tabular}{lllllllllll}\n\\hline\nDataset & Modality & Modality & Label & Label & Explanation Related & Explanation Related & Time & Time & Size & Size \\\\\n\\hline\nDataset & T & I & A & V & Categories & ECR & LSR & Evidence & 2,000+ & True / False \\\\\nCHECKED & ✓ & ✓ & ✗ & ✓ & ☑, ☑ & ✗ & ✗ & ✗ & 19-20 & 1760 ✓ / 344 ☑ \\\\\n(Shang et al. 2021) & ✓ & ✗ & ✓ & ✓ & ☑, ☑ & ✗ & ✗ & ✗ & 21-21 & 665 ✓ / 226 ☑ \\\\\nMocheg & ✓ & ✓ & ✗ & ✗ & ☑, ☑, ☑ & ✗ & ✗ & ✓ & - & 5,144 ✓ / 5,855 ✓ / 4,602 ☑ \\\\\nFakeSV & ✓ & ✗ & ✓ & ✓ & ☑, ☑, ☑ & ✗ & ✗ & ✓ & 17-22 & 1827 ✓ / 1,827 ✓ / 1,884 ☑ \\\\\nVMH & ✓ & ✗ & ✓ & ✓ & ☑, ☑ & ✓ & ✗ & ✗ & 14-16 & 341 ✓ / 1,906 ☑ \\\\\nTRUE (Ours) & ✓ & ✗ & ✓ & ✓ & ☑, ☑ + 8 sub 1 & ✓ & ✓ & ✓ & 16-24 & 1,097 ✓ / 1,828 ☑ 2 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 1: Comparison of the proposed TRUE with other datasets. ECR indicates the Expert-Crafted Rationale, LSR stands for the specific LLM-Summary-Rationale. 1;2 See Figure 2(a) for the sub_labels and their sizes. Abbreviations: T: text, A: audio, V: video, I: image. ⚖: Not Enough Information, ✓: True (Real), ∅: False (Fake/Misleading), ✰: Debunk"
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table shows TRUE has ✗ for I (image) modality.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC127",
+          "text": "Asset TAB_001 (table): Table 1: Comparison of the proposed TRUE with other datasets. ECR indicates the Expert-Crafted Rationale, LSR stands for the specific LLM-Summary-Rationale. 1;2 See Figure 2(a) for the sub_labels and their sizes. Abbreviations: T: text, A: audio, V: video, I: image. ⚖: Not Enough Information, ✓: True (Real), ∅: False (Fake/Misleading), ✰: Debunk\nAsset summary: This table compares the proposed TRUE dataset with five existing datasets (CHECKED, Shang et al. 2021, Mocheg, FakeSV, VMH) across modalities (T, I, A, V), label types (Categories, ECR, LSR, Evidence), time span, and dataset size (True/False counts). It demonstrates that TRUE is the only dataset that includes ECR, LSR, and Evidence labels, and covers text, audio, and video but not image. Other datasets vary in coverage and included explanation types.\nEvidence basis: Table 1, TRUE row: T ✓, I ✗, A ✓, V ✓\nSupported claim: TRUE dataset covers modalities T (text), A (audio), V (video) but not I (image).",
+          "span_id": "TAB_001",
+          "asset_id": "TAB_001",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC127",
+          "text": "Asset evidence basis: Table 1, TRUE row: T ✓, I ✗, A ✓, V ✓",
+          "asset_id": "TAB_001",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly embeds the false premise that TRUE includes image modality, which matches the trap part of the plan. It is natural, does not expose metadata, and can be answered from Table 1 while allowing the target failure mode to be judged.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0017",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0057",
+      "source_challenge_plan_id": "CHP_0057",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Table 5, the 'w/o VD' row shows accuracy drops by just 0.21% compared to the full model. Does this indicate that the VD module contributes little to the overall performance?",
+      "surface_intent": "Ask about the necessity of the VD module based on accuracy alone, tempting a focus on a single metric.",
+      "target_kc_ids": [
+        "KC155"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "TAB_005"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_005",
+          "asset_type": "table",
+          "caption": "Table 5: Ablation Study on Different Modules. IR: Information Retriever module, QA $ _{LMM} $: Question Answering with VideoLMM, VD: Video Descriptor module, 2Val: Validation of P and Validation of $ E_{q} $",
+          "summary": "This ablation table reports the impact of removing individual modules (IR, QA_LMM, VD, 2Val) from the full 3MFact model on four metrics: Accuracy, Recall, Precision, and F1. The full model achieves the best performance, while removing the IR module causes the largest degradation across all metrics.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC155"
+          ],
+          "evidence_bases": [
+            "Comparison of recall values in rows '3MFact_{(M+M)}' and 'w/o IR'"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_005",
+              "content": "\\begin{tabular}{lllll}\n\\hline\nModel & Acc. & Recall & Prec. & F1 \\\\\n\\hline\n3MFact \\$ \\_\\{(M+M)\\} \\$ & 79.63\\% & 87.23\\% & 71.93\\% & 78.85\\% \\\\\nw/o IR & 69.98\\% & 60.12\\% & 63.03\\% & 61.54\\% \\\\\nw/o QA \\$ \\_\\{LMM\\} \\$ & 76.18\\% & 81.58\\% & 66.31\\% & 73.16\\% \\\\\nw/o VD & 79.42\\% & 85.71\\% & 68.67\\% & 76.25\\% \\\\\nw/o 2Val & 72.09\\% & 74.85\\% & 64.00\\% & 69.00\\% \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 5: Ablation Study on Different Modules. IR: Information Retriever module, QA $ _{LMM} $: Question Answering with VideoLMM, VD: Video Descriptor module, 2Val: Validation of P and Validation of $ E_{q} $"
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "While accuracy drops only 0.21 percentage points, recall drops from 87.23% to 85.71% and precision from 71.93% to 68.67%, indicating the module contributes to overall effectiveness.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC155",
+          "text": "Asset TAB_005 (table): Table 5: Ablation Study on Different Modules. IR: Information Retriever module, QA $ _{LMM} $: Question Answering with VideoLMM, VD: Video Descriptor module, 2Val: Validation of P and Validation of $ E_{q} $\nAsset summary: This ablation table reports the impact of removing individual modules (IR, QA_LMM, VD, 2Val) from the full 3MFact model on four metrics: Accuracy, Recall, Precision, and F1. The full model achieves the best performance, while removing the IR module causes the largest degradation across all metrics.\nEvidence basis: Comparison of recall values in rows '3MFact_{(M+M)}' and 'w/o IR'\nSupported claim: Removing the IR module causes the largest drop in recall (from 87.23% to 60.12%).",
+          "span_id": "TAB_005",
+          "asset_id": "TAB_005",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC155",
+          "text": "Asset evidence basis: Comparison of recall values in rows '3MFact_{(M+M)}' and 'w/o IR'",
+          "asset_id": "TAB_005",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and follows the challenge plan's intent of tempting a false premise that the VD module is unnecessary based solely on a small accuracy drop. It can be answered from the table evidence and does not expose hidden metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0018",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0056",
+      "source_challenge_plan_id": "CHP_0056",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "According to Table 3, which model is the worst performing overall on the 2-class classification task? Please justify your answer.",
+      "surface_intent": "Asks to identify the worst performing model from the table, expecting a single model based on accuracy, but the answer may depend on the metric considered.",
+      "target_kc_ids": [
+        "KC147"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [
+        "TAB_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_003",
+          "asset_type": "table",
+          "caption": "Table 3: Comparison of Models for 2-Class Classification. Trad.: traditional methods; LLM.: LLM-based approaches. 3MFact $ _{(C+V)} $ uses CogVLM (Wang et al. 2023) as ImageLMM and VideoLLaVa as VideoLMM, and 3MFact $ _{(M+M)} $ uses MiniCPM-V 2.6 as both ImageLMM and VideoLMM.",
+          "summary": "This table reports performance metrics (Accuracy, Recall, Precision, F1) for five models on a 2-class classification task. Traditional methods (SV-FEND) and LLM-based approaches (VideoLLaVa, MiniCPM-V 2.6, two variants of 3MFact) are compared. The 3MFact model variant using MiniCPM-V for both image and video (3MFact_(M+M)) achieves the highest F1 score.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC147"
+          ],
+          "evidence_bases": [
+            "Row 'VideoLLaVa', columns 'Recall' and 'Acc.'"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_003",
+              "content": "\\begin{tabular}{llllll}\n\\hline\nApproach & Model & Acc. & Recall & Prec. & F1 \\\\\n\\hline\nTrad. & SV-FEND & 62.80\\% & 50.00\\% & 31.40\\% & 38.56\\% \\\\\nLLM. & VideoLLaVa & 44.11\\% & 95.40\\% & 41.50\\% & 57.84\\% \\\\\nLLM. & MiniCPM-V 2.6 & 62.73\\% & 20.81\\% & 60.00\\% & 30.90\\% \\\\\nLLM. & 3MFact \\$ \\_\\{(C+V)\\} \\$ & 74.83\\% & 72.41\\% & 67.38\\% & 69.81\\% \\\\\nLLM. & 3MFact \\$ \\_\\{(M+M)\\} \\$ & 79.63\\% & 87.23\\% & 71.93\\% & 73.85\\% \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 3: Comparison of Models for 2-Class Classification. Trad.: traditional methods; LLM.: LLM-based approaches. 3MFact $ _{(C+V)} $ uses CogVLM (Wang et al. 2023) as ImageLMM and VideoLLaVa as VideoLMM, and 3MFact $ _{(M+M)} $ uses MiniCPM-V 2.6 as both ImageLMM and VideoLMM."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "Although VideoLLaVa has the lowest accuracy (44.11%), it has the highest recall (95.40%) and a moderate F1 (57.84%), outperforming MiniCPM-V 2.6 on F1. Thus, 'worst' depends on the chosen metric.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC147",
+          "text": "Asset TAB_003 (table): Table 3: Comparison of Models for 2-Class Classification. Trad.: traditional methods; LLM.: LLM-based approaches. 3MFact $ _{(C+V)} $ uses CogVLM (Wang et al. 2023) as ImageLMM and VideoLLaVa as VideoLMM, and 3MFact $ _{(M+M)} $ uses MiniCPM-V 2.6 as both ImageLMM and VideoLMM.\nAsset summary: This table reports performance metrics (Accuracy, Recall, Precision, F1) for five models on a 2-class classification task. Traditional methods (SV-FEND) and LLM-based approaches (VideoLLaVa, MiniCPM-V 2.6, two variants of 3MFact) are compared. The 3MFact model variant using MiniCPM-V for both image and video (3MFact_(M+M)) achieves the highest F1 score.\nEvidence basis: Row 'VideoLLaVa', columns 'Recall' and 'Acc.'\nSupported claim: VideoLLaVa has the highest recall (95.40%) but the lowest accuracy (44.11%).",
+          "span_id": "TAB_003",
+          "asset_id": "TAB_003",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC147",
+          "text": "Asset evidence basis: Row 'VideoLLaVa', columns 'Recall' and 'Acc.'",
+          "asset_id": "TAB_003",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose hidden information, follows the false premise target by implying a single 'worst' model when performance depends on metric, and can be answered from the table evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "thread_challenge_plans_path": "data/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/cache/questions/thread_challenge_plans.json",
+  "thread_challenge_plan_summary": {
+    "plan_count": 12,
+    "target": 24,
+    "per_thread_limit": 3,
+    "by_type": {
+      "thread_overclaim_challenge": 4,
+      "thread_premise_mutation_challenge": 4,
+      "thread_wrong_bridge_challenge": 4
+    },
+    "by_modality_pool": {
+      "text": 12
+    },
+    "skipped_thread_count": 0,
+    "skipped_threads": []
+  },
+  "thread_challenge_questions_raw_path": "data/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/cache/questions/thread_challenge_questions_raw.json",
+  "thread_challenge_questions_filtered_path": "data/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/cache/questions/thread_challenge_questions_filtered.json",
+  "thread_challenge_solver_trials_path": "data/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/cache/questions/thread_challenge_solver_trials.json",
+  "thread_challenge_filter_summary": {
+    "plan_pool_count": 12,
+    "target_count": 8,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 28,
+    "solver_trial_count": 24,
+    "filtered_count": 5,
+    "human_review_count": 3,
+    "rejected_count": 23,
+    "blacklisted_plan_count": 2,
+    "by_type": {
+      "thread_overclaim_challenge": 3,
+      "thread_premise_mutation_challenge": 2
+    },
+    "by_modality_pool": {
+      "text": 5
+    },
+    "stop_reason": "plan_pool_exhausted"
+  },
+  "thread_challenge_questions": [
+    {
+      "question_id": "TCQ_0001",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0003",
+      "source_challenge_plan_id": "TCP_0003",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Earlier we established that existing video fact-checking datasets lack detailed evidence and explanations, compromising reliability. Given that the primary problem is the absence of explanations for veracity labels, how does the 3MFact framework address this issue?",
+      "surface_intent": "Ask how 3MFact solves the explanation deficit in current datasets.",
+      "target_kc_ids": [
+        "KC1",
+        "KC4"
+      ],
+      "target_edge_ids": [
+        "E157"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should articulate that existing datasets lack detailed evidence and explanations, compromising reliability and interpretability.",
+        "evidence": "The model should state that the paper presents an explainable automatic framework called 3MFact using multi-role multimodal models.",
+        "bridge": "The model should use the verified edge E157 to connect the lack of explanations to the development of 3MFact, showing a causal relationship."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should articulate that existing datasets lack detailed evidence and explanations, compromising reliability and interpretability.\n- We discussed this evidence: The model should state that the paper presents an explainable automatic framework called 3MFact using multi-role multimodal models.\n- We connected them cautiously as follows: The model should use the verified edge E157 to connect the lack of explanations to the development of 3MFact, showing a causal relationship.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E157",
+          "kc_ids": [
+            "KC1",
+            "KC4"
+          ],
+          "text": "Existing video fact-checking datasets often lack detailed evidence and explanations, compromising the reliability and interpretability of fact-checking methods. To address these gaps, we developed a novel dataset featuring comprehensive annotations for each news item, including veracity labels, the rationales behind these labels, and supporting evidence. This dataset significantly enhances models' ability to accurately identify and explain video content. We also present an explainable automatic framework 3MFact, utilizing Multi-role Multimodal Models for video Fact-checking. Our framework iteratively gathers and synthesizes online evidence to progressively determine the veracity label, generating three key outputs: veracity label, rationale, and supported evidence. We aim for this work to be a pioneering effort, providing robust support for the field of video fact-checking."
+        },
+        {
+          "kc_id": "KC1",
+          "text": "Existing video fact-checking datasets often lack detailed evidence and explanations, compromising the reliability and interpretability of fact-checking methods. To address these gaps, we developed a novel dataset featuring comprehensive annotations for each news item, including veracity labels, the rationales behind these labels, and supporting evidence. This dataset significantly enhances models' ability to accurately identify and explain video content. We also present an explainable automatic framework 3MFact, utilizing Multi-role Multimodal Models for video Fact-checking. Our framework iteratively gathers and synthesizes online evidence to progressively determine the veracity label, generating three key outputs: veracity label, rationale, and supported evidence. We aim for this work to be a pioneering effort, providing robust support for the field of video fact-checking.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC4",
+          "text": "Existing video fact-checking datasets often lack detailed evidence and explanations, compromising the reliability and interpretability of fact-checking methods. To address these gaps, we developed a novel dataset featuring comprehensive annotations for each news item, including veracity labels, the rationales behind these labels, and supporting evidence. This dataset significantly enhances models' ability to accurately identify and explain video content. We also present an explainable automatic framework 3MFact, utilizing Multi-role Multimodal Models for video Fact-checking. Our framework iteratively gathers and synthesizes online evidence to progressively determine the veracity label, generating three key outputs: veracity label, rationale, and supported evidence. We aim for this work to be a pioneering effort, providing robust support for the field of video fact-checking.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose hidden metadata, and plausibly introduces a premise mutation by narrowing the problem to 'absence of explanations' while ignoring the evidence aspect, aligning with the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0008",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0008",
+      "source_challenge_plan_id": "TCP_0008",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Based on your analysis, is the limited video descriptive capability the only reason why the Video Descriptor module shows limited impact on accuracy, or could other factors also play a role?",
+      "surface_intent": "To clarify the exclusivity of the causal explanation for the Video Descriptor's low accuracy impact",
+      "target_kc_ids": [
+        "KC66",
+        "KC105"
+      ],
+      "target_edge_ids": [
+        "E158"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should describe that it uses VideoLMM to generate a video-based textual description and ImageLMM for keyframes, synthesized by an LLM.",
+        "evidence": "The model should say that the Video Descriptor has limited impact on accuracy due to limitations in video descriptive capabilities of current VideoLMMs.",
+        "bridge": "The model should use E158 to explain that the limited video descriptive capabilities of the VideoLMM (used in Video Descriptor) directly cause its low impact on accuracy."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should describe that it uses VideoLMM to generate a video-based textual description and ImageLMM for keyframes, synthesized by an LLM.\n- We discussed this evidence: The model should say that the Video Descriptor has limited impact on accuracy due to limitations in video descriptive capabilities of current VideoLMMs.\n- We connected them cautiously as follows: The model should use E158 to explain that the limited video descriptive capabilities of the VideoLMM (used in Video Descriptor) directly cause its low impact on accuracy.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E158",
+          "kc_ids": [
+            "KC66",
+            "KC105"
+          ],
+          "text": "Based on the ablation study results, we can broadly rank the impact of different modules or components on overall accuracy as follows: Information Retriever > Validation (including Validation of P and Validation of $ E_q $) > Question Answering with VideoLMM > Video Descriptor. This ranking reflects the relative importance of these modules in enhancing the framework's performance. Notably, due to the limitations in video descriptive capabilities, the Video Descriptor module shows limited impact on accuracy, despite advances in VideoLMMs(e.g., from VideoLLaVa to MiniCPM-V 2.6). As VideoLMM capabilities continue to improve, the Video Descriptor module is expected to bring more benefits to future video fact-checking field."
+        },
+        {
+          "kc_id": "KC66",
+          "text": "The Video Descriptor converts video content v into a textual description t for analysis by LLM and LMM following the following steps: 1) VideoLMM generates a video-based textual description $ t_{video} $ from v. 2) ImageLMM produces a set of image descriptions $ \\mathcal{T}_{image} = \\{t_1, t_2, \\ldots, t_n\\} $ for the keyframes $ \\mathcal{F} = \\{f_1, f_2, \\ldots, f_n\\} $ of the video. Each $ t_i $ represents the textual description of keyframe $ f_i $. The keyframes are extracted by the Katna method. 3) The overall video content is synthesized by llm to produce the final textual description $ t $:",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC105",
+          "text": "Based on the ablation study results, we can broadly rank the impact of different modules or components on overall accuracy as follows: Information Retriever > Validation (including Validation of P and Validation of $ E_q $) > Question Answering with VideoLMM > Video Descriptor. This ranking reflects the relative importance of these modules in enhancing the framework's performance. Notably, due to the limitations in video descriptive capabilities, the Video Descriptor module shows limited impact on accuracy, despite advances in VideoLMMs(e.g., from VideoLLaVa to MiniCPM-V 2.6). As VideoLMM capabilities continue to improve, the Video Descriptor module is expected to bring more benefits to future video fact-checking field.",
+          "span_id": "S18",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly targets the overclaim failure mode by asking about exclusivity, is natural and serious, does not expose internal metadata, and can be answered from the paper evidence which notes limitations but does not claim exclusivity.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0010",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0006",
+      "source_challenge_plan_id": "TCP_0006",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "In the 3MFact framework, what specific condition must be met for the Claim Verifier to directly generate questions for further inquiry?",
+      "surface_intent": "Ask about the trigger condition for the Claim Verifier to engage in question generation.",
+      "target_kc_ids": [
+        "KC64",
+        "KC73"
+      ],
+      "target_edge_ids": [
+        "E147"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should explain that the Claim Verifier assesses information sufficiency and, if insufficient, triggers the Question Manager for cycles of inquiry.",
+        "evidence": "The model should state that the Question Manager formulates questions and derives answers via video or online retrieval, producing QA&Evidence pairs.",
+        "bridge": "The model should use E147 to show that the Question Manager is the component that executes the question-guided cycles described in the overview."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should explain that the Claim Verifier assesses information sufficiency and, if insufficient, triggers the Question Manager for cycles of inquiry.\n- We discussed this evidence: The model should state that the Question Manager formulates questions and derives answers via video or online retrieval, producing QA&Evidence pairs.\n- We connected them cautiously as follows: The model should use E147 to show that the Question Manager is the component that executes the question-guided cycles described in the overview.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E147",
+          "kc_ids": [
+            "KC64",
+            "KC73"
+          ],
+          "text": "We propose a multi-role collaboration framework, 3MFact, which systematically transfers data between roles to verify claims related to video posts. Inspired by the success of the Question-guided Multi-hop Structure in a text fact-checking system (Pan et al. 2023), our framework also incorporates a Question-guided process. Initially, the Video Descriptor converts the video into a textual description, which, along with the input claim and video information, is passed to the Claim Verifier. The Claim Verifier assesses the sufficiency of the existing available information. If sufficient, the data proceeds to the Reasoner to generate the final truthfulness, reasons, and evidence. If not, the Claim Verifier redirects the data to the Question Manager, initiating another cycle of inquiry and evidence gathering until adequate information is accumulated or a maximum number of cycles is reached."
+        },
+        {
+          "kc_id": "KC64",
+          "text": "We propose a multi-role collaboration framework, 3MFact, which systematically transfers data between roles to verify claims related to video posts. Inspired by the success of the Question-guided Multi-hop Structure in a text fact-checking system (Pan et al. 2023), our framework also incorporates a Question-guided process. Initially, the Video Descriptor converts the video into a textual description, which, along with the input claim and video information, is passed to the Claim Verifier. The Claim Verifier assesses the sufficiency of the existing available information. If sufficient, the data proceeds to the Reasoner to generate the final truthfulness, reasons, and evidence. If not, the Claim Verifier redirects the data to the Question Manager, initiating another cycle of inquiry and evidence gathering until adequate information is accumulated or a maximum number of cycles is reached.",
+          "span_id": "S9",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC73",
+          "text": "The Question Manager formulates questions $ q $ when existing information is insufficient to verify the claim $ c $, subsequently deriving answers $ a $ and evidences $ \\mathcal{E}_q $ via video content $ v $ or online retrieval, producing new QA&Evidence pairs $ p_N $ for further claim verification. Once a question $ q $ is generated, the Question Manager decides how to proceed:",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was not usable. Reason: The question is factual and directly answerable from the evidence, but it does not introduce a premise mutation as intended. It does not challenge the model to detect or correct a mutated premise; instead, it asks for a straightforward fact, which fails to test the target failure mode. Revision guidance: Revise the question so that it implicitly or explicitly mutates the previously established premise. For example, change the trigger condition to a different component (e.g., 'What condition prompts the Claim Verifier to generate questions?') or alter the causal relationship to contradict the established thread context. Ensure the model must detect the mutation and correct it using the paper evidence."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally mutates the premise by asking for a condition under which the Claim Verifier directly generates questions, which contradicts the paper evidence (Claim Verifier triggers Question Manager). This tests the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0018",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0002",
+      "source_challenge_plan_id": "TCP_0002",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given that the paper introduces 3MFact to address the lack of detailed evidence and explanations in existing video fact-checking datasets, would you say this framework effectively resolves the reliability and interpretability issues that have been holding back the field?",
+      "surface_intent": "Asking about the effectiveness of 3MFact in overcoming the limitations of existing datasets and methods.",
+      "target_kc_ids": [
+        "KC1",
+        "KC4"
+      ],
+      "target_edge_ids": [
+        "E157"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should articulate that existing datasets lack detailed evidence and explanations, compromising reliability and interpretability.",
+        "evidence": "The model should state that the paper presents an explainable automatic framework called 3MFact using multi-role multimodal models.",
+        "bridge": "The model should use the verified edge E157 to connect the lack of explanations to the development of 3MFact, showing a causal relationship."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should articulate that existing datasets lack detailed evidence and explanations, compromising reliability and interpretability.\n- We discussed this evidence: The model should state that the paper presents an explainable automatic framework called 3MFact using multi-role multimodal models.\n- We connected them cautiously as follows: The model should use the verified edge E157 to connect the lack of explanations to the development of 3MFact, showing a causal relationship.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E157",
+          "kc_ids": [
+            "KC1",
+            "KC4"
+          ],
+          "text": "Existing video fact-checking datasets often lack detailed evidence and explanations, compromising the reliability and interpretability of fact-checking methods. To address these gaps, we developed a novel dataset featuring comprehensive annotations for each news item, including veracity labels, the rationales behind these labels, and supporting evidence. This dataset significantly enhances models' ability to accurately identify and explain video content. We also present an explainable automatic framework 3MFact, utilizing Multi-role Multimodal Models for video Fact-checking. Our framework iteratively gathers and synthesizes online evidence to progressively determine the veracity label, generating three key outputs: veracity label, rationale, and supported evidence. We aim for this work to be a pioneering effort, providing robust support for the field of video fact-checking."
+        },
+        {
+          "kc_id": "KC1",
+          "text": "Existing video fact-checking datasets often lack detailed evidence and explanations, compromising the reliability and interpretability of fact-checking methods. To address these gaps, we developed a novel dataset featuring comprehensive annotations for each news item, including veracity labels, the rationales behind these labels, and supporting evidence. This dataset significantly enhances models' ability to accurately identify and explain video content. We also present an explainable automatic framework 3MFact, utilizing Multi-role Multimodal Models for video Fact-checking. Our framework iteratively gathers and synthesizes online evidence to progressively determine the veracity label, generating three key outputs: veracity label, rationale, and supported evidence. We aim for this work to be a pioneering effort, providing robust support for the field of video fact-checking.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC4",
+          "text": "Existing video fact-checking datasets often lack detailed evidence and explanations, compromising the reliability and interpretability of fact-checking methods. To address these gaps, we developed a novel dataset featuring comprehensive annotations for each news item, including veracity labels, the rationales behind these labels, and supporting evidence. This dataset significantly enhances models' ability to accurately identify and explain video content. We also present an explainable automatic framework 3MFact, utilizing Multi-role Multimodal Models for video Fact-checking. Our framework iteratively gathers and synthesizes online evidence to progressively determine the veracity label, generating three key outputs: veracity label, rationale, and supported evidence. We aim for this work to be a pioneering effort, providing robust support for the field of video fact-checking.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan targets a valid overclaim, but the question directly asks about an exclusive claim, making it trivially answerable as 'no'. The plan is not inherently too easy. Revision guidance: Rephrase the question to imply a broader or more nuanced overclaim, such as suggesting that the paper's approach is superior to all others or that it solves all limitations of existing datasets. Avoid using explicit exclusivity phrases like 'only' and instead hint at exclusivity through implication or comparative statements."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally and seriously asks about the framework's effectiveness, aligning with the intended overclaim failure mode. It does not expose metadata and can be answered from the paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0028",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0011",
+      "source_challenge_plan_id": "TCP_0011",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given that the framework fails when video analysis is inaccurate, what does this suggest about its overall usefulness for verifying video claims?",
+      "surface_intent": "Asks about the broader implications of a specific failure case for the framework's general applicability to video claim verification.",
+      "target_kc_ids": [
+        "KC111",
+        "KC112"
+      ],
+      "target_edge_ids": [
+        "E50"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should state that the framework successfully predicted falsity by retrieving relevant news articles from the web.",
+        "evidence": "The model should explain that an accurate claim was misclassified due to inaccurate analysis of video details, highlighting a limitation in video content analysis.",
+        "bridge": "The model should use E50 to show that while the framework can succeed using external evidence, it fails when video analysis is inaccurate, pointing to a core limitation."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should state that the framework successfully predicted falsity by retrieving relevant news articles from the web.\n- We discussed this evidence: The model should explain that an accurate claim was misclassified due to inaccurate analysis of video details, highlighting a limitation in video content analysis.\n- We connected them cautiously as follows: The model should use E50 to show that while the framework can succeed using external evidence, it fails when video analysis is inaccurate, pointing to a core limitation.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M6",
+        "M8"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E50",
+          "kc_ids": [
+            "KC111",
+            "KC112"
+          ],
+          "text": "In addition to the quantitative analysis, we conducted a qualitative analysis with selected successful and unsuccessful cases to visually showcase the capabilities of our 3MFact framework. Figure 5(a) shows an example of successful detection. In this case, our framework successfully predicted the falsity of a claim by retrieving related news articles from the web that effectively refuted the claim. This demonstrates the framework's ability to utilize external evidence to challenge and verify claims. Conversely, as shown in Figure 5(b), a failed case is illustrated where an accurate claim was incorrectly classified by our framework. The error arose from inaccurate analysis of video details, leading to a miscued caption and a subsequent misjudgment. This highlights a current limitation in our framework's video detailed content analysis and the need for further improvements."
+        },
+        {
+          "kc_id": "KC111",
+          "text": "In addition to the quantitative analysis, we conducted a qualitative analysis with selected successful and unsuccessful cases to visually showcase the capabilities of our 3MFact framework. Figure 5(a) shows an example of successful detection. In this case, our framework successfully predicted the falsity of a claim by retrieving related news articles from the web that effectively refuted the claim. This demonstrates the framework's ability to utilize external evidence to challenge and verify claims. Conversely, as shown in Figure 5(b), a failed case is illustrated where an accurate claim was incorrectly classified by our framework. The error arose from inaccurate analysis of video details, leading to a miscued caption and a subsequent misjudgment. This highlights a current limitation in our framework's video detailed content analysis and the need for further improvements.",
+          "span_id": "S20",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC112",
+          "text": "In addition to the quantitative analysis, we conducted a qualitative analysis with selected successful and unsuccessful cases to visually showcase the capabilities of our 3MFact framework. Figure 5(a) shows an example of successful detection. In this case, our framework successfully predicted the falsity of a claim by retrieving related news articles from the web that effectively refuted the claim. This demonstrates the framework's ability to utilize external evidence to challenge and verify claims. Conversely, as shown in Figure 5(b), a failed case is illustrated where an accurate claim was incorrectly classified by our framework. The error arose from inaccurate analysis of video details, leading to a miscued caption and a subsequent misjudgment. This highlights a current limitation in our framework's video detailed content analysis and the need for further improvements.",
+          "span_id": "S20",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is well-structured to test overclaim, but the question directly asks about a severe limitation, making the trap too obvious. Solvers easily refused because the paper explicitly states a need for improvement, not a severe limitation. Revision guidance: Rewrite the question to imply the generalization more subtly, e.g., 'Given that the framework fails when video analysis is inaccurate, what does this suggest about its overall usefulness for verifying video claims?' Avoid using words like 'severely' that directly signal overclaim. The question should require the model to connect the bridge to a broader conclusion without explicitly prompting the overclaim."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, and targets the thread_overclaim failure mode by asking for a broad generalization from a specific limitation. It is answerable from the paper evidence and the ambiguity is intentional.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "challenge_scheduler_config": {
+    "macro_level_enabled": true,
+    "thread_level_enabled": true,
+    "thread_challenge_enabled": true
+  },
+  "macro_main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "macro_main_question",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC65",
+        "KC29",
+        "KC1"
+      ],
+      "question_text": "What problem does the paper address regarding existing video fact-checking datasets, and what is the formal definition of the explainable video fact-checking task?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC65",
+          "KC29"
+        ],
+        "optional_cover": [
+          "KC1"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "macro_main_question",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC30",
+        "KC44",
+        "KC52",
+        "KC56"
+      ],
+      "question_text": "Describe the TRUE dataset, including its purpose, composition, annotation method, and label distribution.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC30",
+          "KC44"
+        ],
+        "optional_cover": [
+          "KC52",
+          "KC56"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "macro_main_question",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC4",
+        "KC40",
+        "KC64"
+      ],
+      "question_text": "What is the 3MFact framework and how does it perform explainable video fact-checking?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC4",
+          "KC40"
+        ],
+        "optional_cover": [
+          "KC64"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "macro_main_question",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC73",
+        "KC75",
+        "KC74",
+        "KC76",
+        "KC77",
+        "KC78",
+        "KC72",
+        "KC85",
+        "KC81",
+        "KC68",
+        "KC66"
+      ],
+      "question_text": "What are the main modules in the proposed framework and what role does each play in the claim verification process?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC73",
+          "KC75"
+        ],
+        "optional_cover": [
+          "KC74",
+          "KC76",
+          "KC77",
+          "KC78",
+          "KC72",
+          "KC85",
+          "KC81",
+          "KC68",
+          "KC66"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "macro_main_question",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC94",
+        "KC27"
+      ],
+      "question_text": "What novel metrics and benchmark are introduced for multimodal fact-checking, and how is the G-Eval methodology applied to evaluate explanation quality?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC94",
+          "KC27"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "macro_main_question",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC111",
+        "KC101",
+        "KC102"
+      ],
+      "question_text": "What are the main quantitative and qualitative results of the 3MFact framework? Include comparisons with other methods, the performance of SV-FEND, and a case study example.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC111",
+          "KC101"
+        ],
+        "optional_cover": [
+          "KC102"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "macro_main_question",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC104",
+        "KC105"
+      ],
+      "question_text": "Based on the ablation study, how do the different components of 3MFact contribute to overall accuracy, and what is the primary reason for the limited impact of the Video Descriptor module?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC104",
+          "KC105"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "macro_main_question",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC112",
+        "KC120"
+      ],
+      "question_text": "What are the key limitations of the 3MFact framework and LMMs in video fact-checking as identified in the conclusion?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC112",
+          "KC120"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "thread_question_seeds": [
+    {
+      "question_id": "Q_RT1_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC1"
+      ],
+      "question_goal": "Ask the model to explain the core problem addressed by the paper.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC4"
+      ],
+      "question_goal": "Ask the model to describe the proposed solution (3MFact framework).",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC1",
+        "KC4"
+      ],
+      "question_goal": "Ask the model to explain how the problem motivates the framework.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC1",
+          "KC4"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC1",
+        "KC4"
+      ],
+      "question_goal": "Check if the model maintains the same motivation relation at review time.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC64"
+      ],
+      "question_goal": "Ask the model to describe the question-guided process of the framework.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC73"
+      ],
+      "question_goal": "Ask the model to detail the Question Manager's role.",
+      "trigger_condition": {
+        "macro_reached": "M4"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC64",
+        "KC73"
+      ],
+      "question_goal": "Ask the model to connect the overview to the module implementation.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC64",
+          "KC73"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC64",
+        "KC73"
+      ],
+      "question_goal": "Verify that the model keeps the module as part of the overarching process.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC66"
+      ],
+      "question_goal": "Ask the model to explain how the Video Descriptor works.",
+      "trigger_condition": {
+        "macro_reached": "M4"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC105"
+      ],
+      "question_goal": "Ask the model to state the ablation finding about the Video Descriptor.",
+      "trigger_condition": {
+        "macro_reached": "M7"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC66",
+        "KC105"
+      ],
+      "question_goal": "Ask the model to connect the module design to its ablation limitation.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC66",
+          "KC105"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC66",
+        "KC105"
+      ],
+      "question_goal": "Check that the model remembers the cause-effect relation.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M6",
+      "target_kc_ids": [
+        "KC111"
+      ],
+      "question_goal": "Ask the model to describe a successful detection case of the framework.",
+      "trigger_condition": {
+        "macro_reached": "M6"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M8",
+      "target_kc_ids": [
+        "KC112"
+      ],
+      "question_goal": "Ask the model to describe a failed case and its cause.",
+      "trigger_condition": {
+        "macro_reached": "M8"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M8",
+      "target_kc_ids": [
+        "KC111",
+        "KC112"
+      ],
+      "question_goal": "Ask the model to contrast the two cases and identify the limitation.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC111",
+          "KC112"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC111",
+        "KC112"
+      ],
+      "question_goal": "Verify that the model maintains the contrast and limitation claim.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "review_question_seeds": [],
+  "main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "main",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC65",
+        "KC29",
+        "KC1"
+      ],
+      "question_text": "What problem does the paper address regarding existing video fact-checking datasets, and what is the formal definition of the explainable video fact-checking task?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC65",
+          "KC29"
+        ],
+        "optional_cover": [
+          "KC1"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "main",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC30",
+        "KC44",
+        "KC52",
+        "KC56"
+      ],
+      "question_text": "Describe the TRUE dataset, including its purpose, composition, annotation method, and label distribution.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC30",
+          "KC44"
+        ],
+        "optional_cover": [
+          "KC52",
+          "KC56"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "main",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC4",
+        "KC40",
+        "KC64"
+      ],
+      "question_text": "What is the 3MFact framework and how does it perform explainable video fact-checking?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC4",
+          "KC40"
+        ],
+        "optional_cover": [
+          "KC64"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "main",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC73",
+        "KC75",
+        "KC74",
+        "KC76",
+        "KC77",
+        "KC78",
+        "KC72",
+        "KC85",
+        "KC81",
+        "KC68",
+        "KC66"
+      ],
+      "question_text": "What are the main modules in the proposed framework and what role does each play in the claim verification process?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC73",
+          "KC75"
+        ],
+        "optional_cover": [
+          "KC74",
+          "KC76",
+          "KC77",
+          "KC78",
+          "KC72",
+          "KC85",
+          "KC81",
+          "KC68",
+          "KC66"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "main",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC94",
+        "KC27"
+      ],
+      "question_text": "What novel metrics and benchmark are introduced for multimodal fact-checking, and how is the G-Eval methodology applied to evaluate explanation quality?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC94",
+          "KC27"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "main",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC111",
+        "KC101",
+        "KC102"
+      ],
+      "question_text": "What are the main quantitative and qualitative results of the 3MFact framework? Include comparisons with other methods, the performance of SV-FEND, and a case study example.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC111",
+          "KC101"
+        ],
+        "optional_cover": [
+          "KC102"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "main",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC104",
+        "KC105"
+      ],
+      "question_text": "Based on the ablation study, how do the different components of 3MFact contribute to overall accuracy, and what is the primary reason for the limited impact of the Video Descriptor module?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC104",
+          "KC105"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "main",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC112",
+        "KC120"
+      ],
+      "question_text": "What are the key limitations of the 3MFact framework and LMMs in video fact-checking as identified in the conclusion?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC112",
+          "KC120"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "multi_hop_questions": [],
+  "reserved_followup_templates": []
+}

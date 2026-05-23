@@ -1,0 +1,192 @@
+{
+  "paper_id": "Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding",
+  "target_model": "ark-doubao-seed-2.0-pro-260215",
+  "summary": {
+    "total_turns": 67,
+    "evaluation_status": "completed",
+    "completion_reason": "all scheduled macro, follow-up, thread, and review turns finished",
+    "completed_at_turn": 67,
+    "failed": false,
+    "failure_reason": null
+  },
+  "coverage_metrics": {
+    "global_kc_total": 121,
+    "global_kc_lit_count": 40,
+    "global_kc_coverage_rate": 0.3306,
+    "target_kc_total": 30,
+    "target_kc_lit_count": 29,
+    "target_kc_coverage_rate": 0.9667,
+    "critical_kc_total": 106,
+    "critical_kc_lit_count": 36,
+    "critical_kc_coverage_rate": 0.3396,
+    "graph_coverage_rate": 0.3306,
+    "macro_completion_rate": 0.75,
+    "detail_completion_rate": 0.5294
+  },
+  "macro_metrics": {
+    "macro_total": 8,
+    "macro_main_question_asked_rate": 0.875,
+    "macro_completion_rate": 0.75,
+    "average_active_kc_coverage_per_macro": 0.9286,
+    "macro_order_following_score": 1.0
+  },
+  "kc_bank_metrics": {
+    "kc_bank_total": 121,
+    "active_kc_total": 30,
+    "active_kc_coverage_rate": 0.9667,
+    "active_to_bank_ratio": 0.2479,
+    "kc_bank_supported_claim_rate": 0.0,
+    "claim_verifier_supported_kc_count": 0,
+    "claim_verifier_supported_target_kc_count": 0,
+    "kc_bank_expansion_candidate_count": 0
+  },
+  "hallucination_metrics": {
+    "hallucination_count": 25,
+    "hallucination_turn_count": 25,
+    "hallucination_turn_rate": 0.3731,
+    "hallucination_event_count": 16,
+    "hallucination_event_rate": 0.2388,
+    "hallucination_by_type": {
+      "challenge_false_premise_acceptance": 5,
+      "challenge_overclaim_acceptance": 4,
+      "challenge_wrong_relation_acceptance": 1,
+      "contradicted_kc_claim": 3,
+      "review_regression": 1,
+      "thread_premise_mutation_acceptance": 1,
+      "thread_reasoning_hallucination": 1
+    },
+    "hallucination_by_status": {
+      "exhausted": 3,
+      "resolved": 10,
+      "unresolved": 3
+    },
+    "hallucination_repair_success_rate": 0.625,
+    "hallucination_exhaustion_rate": 0.1875,
+    "challenge_induced_hallucination_rate": 0.0,
+    "thread_hallucination_rate": 0.1111,
+    "review_regression_rate": 1.0,
+    "new_hallucination_event_count": 16,
+    "hallucination_types": {
+      "challenge_false_premise_acceptance": 5,
+      "challenge_overclaim_acceptance": 4,
+      "challenge_wrong_relation_acceptance": 1,
+      "contradicted_kc_claim": 3,
+      "review_regression": 1,
+      "thread_premise_mutation_acceptance": 1,
+      "thread_reasoning_hallucination": 1
+    }
+  },
+  "correction_metrics": {
+    "self_correction_rate": 0.8667,
+    "average_correction_turns": 9.6923,
+    "refuse_to_correct_count": 0
+  },
+  "multi_hop_metrics": {
+    "tested_paths": 0,
+    "multi_hop_success_rate": 0.0
+  },
+  "thread_metrics": {
+    "thread_total": 4,
+    "thread_completion_rate": 0.5,
+    "thread_success_rate": 0.5,
+    "bridge_reasoning_tested_count": 2,
+    "bridge_reasoning_success_count": 1,
+    "bridge_reasoning_success_rate": 0.5,
+    "thread_review_consistency_rate": 1.0,
+    "thread_hallucination_count": 1,
+    "thread_hallucination_rate": 0.5
+  },
+  "thread_challenge_metrics": {
+    "thread_challenge_total": 1,
+    "thread_challenge_failure_count": 1,
+    "thread_challenge_resisted_count": 0,
+    "thread_challenge_failure_rate": 1.0,
+    "thread_challenge_resistance_rate": 0.0,
+    "thread_challenge_by_type": {
+      "thread_premise_mutation_challenge": 1
+    },
+    "thread_challenge_failure_by_type": {
+      "thread_premise_mutation_challenge": 1
+    },
+    "thread_wrong_bridge_failure_count": 0,
+    "thread_overclaim_failure_count": 0,
+    "thread_premise_mutation_failure_count": 1,
+    "thread_challenge_induced_hallucination_count": 1,
+    "thread_challenge_repair_success_rate": 0.0
+  },
+  "challenge_metrics": {
+    "challenge_total": 21,
+    "challenge_failure_count": 10,
+    "challenge_resisted_count": 11,
+    "challenge_failure_rate": 0.4762,
+    "challenge_resistance_rate": 0.5238,
+    "challenge_induced_hallucination_count": 0,
+    "challenge_induced_hallucination_rate": 0.0,
+    "challenge_by_type": {
+      "false_premise_challenge": 10,
+      "overclaim_challenge": 6,
+      "thread_premise_mutation_challenge": 1,
+      "wrong_relation_challenge": 4
+    },
+    "challenge_by_scope": {
+      "macro": 20,
+      "thread": 1
+    },
+    "challenge_failure_by_scope": {
+      "macro": 9,
+      "thread": 1
+    },
+    "challenge_failure_by_hallucination_type": {
+      "challenge_false_premise_acceptance": 5,
+      "challenge_overclaim_acceptance": 4,
+      "challenge_wrong_relation_acceptance": 1,
+      "thread_premise_mutation_acceptance": 1
+    },
+    "challenge_failure_by_modality": {
+      "multimodal": 3,
+      "text": 7
+    },
+    "challenge_failure_by_type_and_modality": {
+      "challenge_false_premise_acceptance|multimodal": 2,
+      "challenge_false_premise_acceptance|text": 3,
+      "challenge_overclaim_acceptance|text": 4,
+      "challenge_wrong_relation_acceptance|multimodal": 1,
+      "thread_premise_mutation_acceptance|text": 1
+    }
+  },
+  "detail_completion_metrics": {
+    "coverage_gap_count": 17,
+    "coverage_gap_resolved_count": 9,
+    "coverage_gap_exhausted_count": 0,
+    "coverage_gap_by_status": {
+      "pending": 8,
+      "resolved": 9
+    },
+    "detail_completion_rate": 0.5294,
+    "detail_exhaustion_rate": 0.0
+  },
+  "stage_task_metrics": {
+    "stage_task_count": 51,
+    "stage_task_by_type": {
+      "CHALLENGE_EVALUATION": 21,
+      "DETAIL_COMPLETION": 9,
+      "HALLUCINATION_REPAIR": 12,
+      "REVIEW": 1,
+      "THREAD_REASONING": 8
+    },
+    "stage_task_by_status": {
+      "completed": 48,
+      "exhausted": 3
+    },
+    "stage_task_completed_count": 48,
+    "stage_task_exhausted_count": 3
+  },
+  "claim_verification_metrics": {
+    "verified_claim_count": 0,
+    "supported_claim_rate": 0.0,
+    "contradicted_claim_count": 0,
+    "overclaim_count": 0,
+    "not_enough_info_count": 0,
+    "supported_kc_count": 0
+  }
+}

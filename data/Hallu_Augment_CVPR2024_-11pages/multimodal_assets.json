@@ -1,0 +1,1578 @@
+{
+  "paper_id": "Hallu_Augment_CVPR2024_-11pages",
+  "schema_version": "v3_latex_table_assets",
+  "assets": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S2",
+      "section_title": "1. Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem: Hallucination in MLLMs",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S2_0001",
+      "source_block_ids": [
+        "P001_B0010",
+        "P001_B0011",
+        "P001_B0012"
+      ],
+      "media_block_ids": [
+        "P001_B0010",
+        "P001_B0011"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_621_505_1083_775.jpg",
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_626_777_1055_873.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_001",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_621_505_1083_775.jpg",
+          "caption": "(c) The blue bar represents overall score on MMhal-Bench and the orange bar represents the overall score on MME. Noted bigger numbers mean better results."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_001",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_626_777_1055_873.jpg",
+          "caption": "(c) The blue bar represents overall score on MMhal-Bench and the orange bar represents the overall score on MME. Noted bigger numbers mean better results."
+        }
+      ],
+      "caption": "(c) The blue bar represents overall score on MMhal-Bench and the orange bar represents the overall score on MME. Noted bigger numbers mean better results.",
+      "caption_kind": "figure",
+      "caption_number": "None",
+      "nearby_context": "Two bar charts showing overall scores on MMhal-Bench and MME, with blue and orange bars.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": "(c)",
+          "source_block_id": "P001_B0010",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_2",
+          "panel_label": null,
+          "source_block_id": "P001_B0011",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "(c) The blue bar represents overall score on MMhal-Bench and the orange bar represents the overall score on MME. Noted bigger numbers mean better results.",
+        "caption_kind": "figure",
+        "caption_number": "None",
+        "source_block_ids": [
+          "P001_B0010",
+          "P001_B0011",
+          "P001_B0012"
+        ],
+        "media_block_ids": [
+          "P001_B0010",
+          "P001_B0011"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P001_B0010",
+          "P001_B0011"
+        ],
+        "description_from_html": "Two bar charts showing overall scores on MMhal-Bench and MME, with blue and orange bars.",
+        "notes": "Caption starts with '(c)' suggesting subfigure label c."
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 2
+      }
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S3",
+      "section_title": "2. Related Work",
+      "macro_id": "M2",
+      "macro_candidates": [
+        {
+          "macro_id": "M2",
+          "title": "Limitations of Existing MLLMs",
+          "role": "prior_work_limitation",
+          "order": 2
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S3_0002",
+      "source_block_ids": [
+        "P004_B0001",
+        "P004_B0002"
+      ],
+      "media_block_ids": [
+        "P004_B0001"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_104_146_1089_693.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_002",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_104_146_1089_693.jpg",
+          "caption": "Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL."
+        }
+      ],
+      "caption": "Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL.",
+      "caption_kind": "figure",
+      "caption_number": "2",
+      "nearby_context": "Figure showing subfigures (a) HACL framework and (b) training paradigm.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": "(a)",
+          "source_block_id": "P004_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL.",
+        "caption_kind": "figure",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P004_B0001",
+          "P004_B0002"
+        ],
+        "media_block_ids": [
+          "P004_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P004_B0001"
+        ],
+        "description_from_html": "Figure showing subfigures (a) HACL framework and (b) training paradigm.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S6",
+      "section_title": "3.2. Improving Contrastive Learning with Hallucinative Captions",
+      "macro_id": "M5",
+      "macro_candidates": [
+        {
+          "macro_id": "M5",
+          "title": "Improving Contrastive Learning with Hallucinative Captions",
+          "role": "mechanism",
+          "order": 5
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S6_0003",
+      "source_block_ids": [
+        "P005_B0012",
+        "P005_B0013"
+      ],
+      "media_block_ids": [
+        "P005_B0012"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_616_143_1092_495.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_616_143_1092_495.jpg",
+          "caption": "Figure 3. This figure showcases a range of hallucinative captions generated by GPT-4. The hallucinative text is highlighted in red."
+        }
+      ],
+      "caption": "Figure 3. This figure showcases a range of hallucinative captions generated by GPT-4. The hallucinative text is highlighted in red.",
+      "caption_kind": "figure",
+      "caption_number": "3",
+      "nearby_context": "Figure 3 displays various hallucinative captions generated by GPT-4, with hallucinative text highlighted in red.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P005_B0012",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 3. This figure showcases a range of hallucinative captions generated by GPT-4. The hallucinative text is highlighted in red.",
+        "caption_kind": "figure",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P005_B0012",
+          "P005_B0013"
+        ],
+        "media_block_ids": [
+          "P005_B0012"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P005_B0012"
+        ],
+        "description_from_html": "Figure 3 displays various hallucinative captions generated by GPT-4, with hallucinative text highlighted in red.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S9",
+      "section_title": "4.2. Effectiveness of HACL on Mitigating Hallucination",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Experimental Results: Reducing Hallucination and Improving Comprehension",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S9_0004",
+      "source_block_ids": [
+        "P007_B0001",
+        "P007_B0002"
+      ],
+      "media_block_ids": [
+        "P007_B0001"
+      ],
+      "caption": "Table 1. Evaluation results for different MLLMs on MMHal-Bench.",
+      "caption_kind": "table",
+      "caption_number": "1",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Method</td><td rowspan=\"2\">Overall Score  $ \\uparrow $</td><td rowspan=\"2\">Hallucination Rate  $ \\downarrow $</td><td colspan=\"8\">Score in Each Question Type  $ \\uparrow $</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Attribute</td><td style='text-align: center; word-wrap: break-word;'>Adversarial</td><td style='text-align: center; word-wrap: break-word;'>Comparison</td><td style='text-align: center; word-wrap: break-word;'>Counting</td><td style='text-align: center; word-wrap: break-word;'>Relation</td><td style='text-align: center; word-wrap: break-word;'>Environment</td><td style='text-align: center; word-wrap: break-word;'>Holistic</td><td style='text-align: center; word-wrap: break-word;'>Other</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Kosmos-2 [40]</td><td style='text-align: center; word-wrap: break-word;'>1.69</td><td style='text-align: center; word-wrap: break-word;'>0.68</td><td style='text-align: center; word-wrap: break-word;'>2.00</td><td style='text-align: center; word-wrap: break-word;'>0.25</td><td style='text-align: center; word-wrap: break-word;'>1.42</td><td style='text-align: center; word-wrap: break-word;'>1.67</td><td style='text-align: center; word-wrap: break-word;'>1.67</td><td style='text-align: center; word-wrap: break-word;'>2.67</td><td style='text-align: center; word-wrap: break-word;'>2.50</td><td style='text-align: center; word-wrap: break-word;'>1.33</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>IDEFICS $ _{9B} $ [22]</td><td style='text-align: center; word-wrap: break-word;'>1.89</td><td style='text-align: center; word-wrap: break-word;'>0.64</td><td style='text-align: center; word-wrap: break-word;'>1.58</td><td style='text-align: center; word-wrap: break-word;'>0.75</td><td style='text-align: center; word-wrap: break-word;'>2.75</td><td style='text-align: center; word-wrap: break-word;'>1.83</td><td style='text-align: center; word-wrap: break-word;'>1.83</td><td style='text-align: center; word-wrap: break-word;'>2.50</td><td style='text-align: center; word-wrap: break-word;'>2.17</td><td style='text-align: center; word-wrap: break-word;'>1.67</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>IDEFICS $ _{80B} $ [22]</td><td style='text-align: center; word-wrap: break-word;'>2.05</td><td style='text-align: center; word-wrap: break-word;'>0.61</td><td style='text-align: center; word-wrap: break-word;'>2.33</td><td style='text-align: center; word-wrap: break-word;'>1.25</td><td style='text-align: center; word-wrap: break-word;'>2.00</td><td style='text-align: center; word-wrap: break-word;'>2.50</td><td style='text-align: center; word-wrap: break-word;'>1.50</td><td style='text-align: center; word-wrap: break-word;'>3.33</td><td style='text-align: center; word-wrap: break-word;'>2.33</td><td style='text-align: center; word-wrap: break-word;'>1.17</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>InstructBLIP $ _{7B} $ [10]</td><td style='text-align: center; word-wrap: break-word;'>2.10</td><td style='text-align: center; word-wrap: break-word;'>0.58</td><td style='text-align: center; word-wrap: break-word;'>3.42</td><td style='text-align: center; word-wrap: break-word;'>2.08</td><td style='text-align: center; word-wrap: break-word;'>1.33</td><td style='text-align: center; word-wrap: break-word;'>1.92</td><td style='text-align: center; word-wrap: break-word;'>2.17</td><td style='text-align: center; word-wrap: break-word;'>3.67</td><td style='text-align: center; word-wrap: break-word;'>1.17</td><td style='text-align: center; word-wrap: break-word;'>1.08</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>InstructBLIP $ _{13B} $ [10]</td><td style='text-align: center; word-wrap: break-word;'>2.14</td><td style='text-align: center; word-wrap: break-word;'>0.58</td><td style='text-align: center; word-wrap: break-word;'>2.75</td><td style='text-align: center; word-wrap: break-word;'>1.75</td><td style='text-align: center; word-wrap: break-word;'>1.25</td><td style='text-align: center; word-wrap: break-word;'>2.08</td><td style='text-align: center; word-wrap: break-word;'>2.50</td><td style='text-align: center; word-wrap: break-word;'>4.08</td><td style='text-align: center; word-wrap: break-word;'>1.50</td><td style='text-align: center; word-wrap: break-word;'>1.17</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA-RLHF $ _{7B} $ [44]</td><td style='text-align: center; word-wrap: break-word;'>2.05</td><td style='text-align: center; word-wrap: break-word;'>0.68</td><td style='text-align: center; word-wrap: break-word;'>2.92</td><td style='text-align: center; word-wrap: break-word;'>1.83</td><td style='text-align: center; word-wrap: break-word;'>2.42</td><td style='text-align: center; word-wrap: break-word;'>1.92</td><td style='text-align: center; word-wrap: break-word;'>2.25</td><td style='text-align: center; word-wrap: break-word;'>2.25</td><td style='text-align: center; word-wrap: break-word;'>1.75</td><td style='text-align: center; word-wrap: break-word;'>1.08</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA $ _{7B} $ [33]</td><td style='text-align: center; word-wrap: break-word;'>1.55</td><td style='text-align: center; word-wrap: break-word;'>0.76</td><td style='text-align: center; word-wrap: break-word;'>1.33</td><td style='text-align: center; word-wrap: break-word;'>0.00</td><td style='text-align: center; word-wrap: break-word;'>1.83</td><td style='text-align: center; word-wrap: break-word;'>1.17</td><td style='text-align: center; word-wrap: break-word;'>2.00</td><td style='text-align: center; word-wrap: break-word;'>2.58</td><td style='text-align: center; word-wrap: break-word;'>1.67</td><td style='text-align: center; word-wrap: break-word;'>1.83</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA $ _{7B} $-HACL [33]</td><td style='text-align: center; word-wrap: break-word;'>2.08 ( $ \\uparrow $ 0.53)</td><td style='text-align: center; word-wrap: break-word;'>0.62 ( $ \\downarrow $ 0.15)</td><td style='text-align: center; word-wrap: break-word;'>2.94</td><td style='text-align: center; word-wrap: break-word;'>2.01</td><td style='text-align: center; word-wrap: break-word;'>2.27</td><td style='text-align: center; word-wrap: break-word;'>1.64</td><td style='text-align: center; word-wrap: break-word;'>2.35</td><td style='text-align: center; word-wrap: break-word;'>2.14</td><td style='text-align: center; word-wrap: break-word;'>1.67</td><td style='text-align: center; word-wrap: break-word;'>1.63</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>miniGPT-4 $ _{7B} $ [33]</td><td style='text-align: center; word-wrap: break-word;'>1.39</td><td style='text-align: center; word-wrap: break-word;'>0.71</td><td style='text-align: center; word-wrap: break-word;'>0.75</td><td style='text-align: center; word-wrap: break-word;'>1.83</td><td style='text-align: center; word-wrap: break-word;'>2.16</td><td style='text-align: center; word-wrap: break-word;'>0.91</td><td style='text-align: center; word-wrap: break-word;'>1.25</td><td style='text-align: center; word-wrap: break-word;'>1.33</td><td style='text-align: center; word-wrap: break-word;'>0.91</td><td style='text-align: center; word-wrap: break-word;'>1.91</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>miniGPT-4 $ _{7B} $-HACL</td><td style='text-align: center; word-wrap: break-word;'>1.80 ( $ \\uparrow $ 0.31)</td><td style='text-align: center; word-wrap: break-word;'>0.65 ( $ \\downarrow $ 0.06)</td><td style='text-align: center; word-wrap: break-word;'>1.22</td><td style='text-align: center; word-wrap: break-word;'>1.85</td><td style='text-align: center; word-wrap: break-word;'>2.23</td><td style='text-align: center; word-wrap: break-word;'>1.74</td><td style='text-align: center; word-wrap: break-word;'>2.13</td><td style='text-align: center; word-wrap: break-word;'>2.48</td><td style='text-align: center; word-wrap: break-word;'>1.03</td><td style='text-align: center; word-wrap: break-word;'>1.58</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA1.5 $ _{7B} $ [33]</td><td style='text-align: center; word-wrap: break-word;'>2.08</td><td style='text-align: center; word-wrap: break-word;'>0.52</td><td style='text-align: center; word-wrap: break-word;'>2.75</td><td style='text-align: center; word-wrap: break-word;'>2.00</td><td style='text-align: center; word-wrap: break-word;'>2.33</td><td style='text-align: center; word-wrap: break-word;'>2.08</td><td style='text-align: center; word-wrap: break-word;'>1.50</td><td style='text-align: center; word-wrap: break-word;'>1.91</td><td style='text-align: center; word-wrap: break-word;'>1.91</td><td style='text-align: center; word-wrap: break-word;'>2.16</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA1.5 $ _{7B} $-HACL</td><td style='text-align: center; word-wrap: break-word;'>2.13 ( $ \\uparrow $ 0.05)</td><td style='text-align: center; word-wrap: break-word;'>0.50 ( $ \\downarrow $ 0.02)</td><td style='text-align: center; word-wrap: break-word;'>2.95</td><td style='text-align: center; word-wrap: break-word;'>2.15</td><td style='text-align: center; word-wrap: break-word;'>2.29</td><td style='text-align: center; word-wrap: break-word;'>1.97</td><td style='text-align: center; word-wrap: break-word;'>1.53</td><td style='text-align: center; word-wrap: break-word;'>1.98</td><td style='text-align: center; word-wrap: break-word;'>2.02</td><td style='text-align: center; word-wrap: break-word;'>2.19</td></tr></table>",
+      "normalized_markdown": "| Method | Overall Score $ \\uparrow $ | Hallucination Rate $ \\downarrow $ | Score in Each Question Type $ \\uparrow $ | Score in Each Question Type $ \\uparrow $ | Score in Each Question Type $ \\uparrow $ | Score in Each Question Type $ \\uparrow $ | Score in Each Question Type $ \\uparrow $ | Score in Each Question Type $ \\uparrow $ | Score in Each Question Type $ \\uparrow $ | Score in Each Question Type $ \\uparrow $ |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Method | Overall Score $ \\uparrow $ | Hallucination Rate $ \\downarrow $ | Attribute | Adversarial | Comparison | Counting | Relation | Environment | Holistic | Other |\n| Kosmos-2 [40] | 1.69 | 0.68 | 2.00 | 0.25 | 1.42 | 1.67 | 1.67 | 2.67 | 2.50 | 1.33 |\n| IDEFICS $ _{9B} $ [22] | 1.89 | 0.64 | 1.58 | 0.75 | 2.75 | 1.83 | 1.83 | 2.50 | 2.17 | 1.67 |\n| IDEFICS $ _{80B} $ [22] | 2.05 | 0.61 | 2.33 | 1.25 | 2.00 | 2.50 | 1.50 | 3.33 | 2.33 | 1.17 |\n| InstructBLIP $ _{7B} $ [10] | 2.10 | 0.58 | 3.42 | 2.08 | 1.33 | 1.92 | 2.17 | 3.67 | 1.17 | 1.08 |\n| InstructBLIP $ _{13B} $ [10] | 2.14 | 0.58 | 2.75 | 1.75 | 1.25 | 2.08 | 2.50 | 4.08 | 1.50 | 1.17 |\n| LLaVA-RLHF $ _{7B} $ [44] | 2.05 | 0.68 | 2.92 | 1.83 | 2.42 | 1.92 | 2.25 | 2.25 | 1.75 | 1.08 |\n| LLaVA $ _{7B} $ [33] | 1.55 | 0.76 | 1.33 | 0.00 | 1.83 | 1.17 | 2.00 | 2.58 | 1.67 | 1.83 |\n| LLaVA $ _{7B} $-HACL [33] | 2.08 ( $ \\uparrow $ 0.53) | 0.62 ( $ \\downarrow $ 0.15) | 2.94 | 2.01 | 2.27 | 1.64 | 2.35 | 2.14 | 1.67 | 1.63 |\n| miniGPT-4 $ _{7B} $ [33] | 1.39 | 0.71 | 0.75 | 1.83 | 2.16 | 0.91 | 1.25 | 1.33 | 0.91 | 1.91 |\n| miniGPT-4 $ _{7B} $-HACL | 1.80 ( $ \\uparrow $ 0.31) | 0.65 ( $ \\downarrow $ 0.06) | 1.22 | 1.85 | 2.23 | 1.74 | 2.13 | 2.48 | 1.03 | 1.58 |\n| LLaVA1.5 $ _{7B} $ [33] | 2.08 | 0.52 | 2.75 | 2.00 | 2.33 | 2.08 | 1.50 | 1.91 | 1.91 | 2.16 |\n| LLaVA1.5 $ _{7B} $-HACL | 2.13 ( $ \\uparrow $ 0.05) | 0.50 ( $ \\downarrow $ 0.02) | 2.95 | 2.15 | 2.29 | 1.97 | 1.53 | 1.98 | 2.02 | 2.19 |",
+      "normalized_latex": "\\begin{tabular}{lllllllllll}\n\\hline\nMethod & Overall Score \\$ \\textbackslash{}uparrow \\$ & Hallucination Rate \\$ \\textbackslash{}downarrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ \\\\\n\\hline\nMethod & Overall Score \\$ \\textbackslash{}uparrow \\$ & Hallucination Rate \\$ \\textbackslash{}downarrow \\$ & Attribute & Adversarial & Comparison & Counting & Relation & Environment & Holistic & Other \\\\\nKosmos-2 [40] & 1.69 & 0.68 & 2.00 & 0.25 & 1.42 & 1.67 & 1.67 & 2.67 & 2.50 & 1.33 \\\\\nIDEFICS \\$ \\_\\{9B\\} \\$ [22] & 1.89 & 0.64 & 1.58 & 0.75 & 2.75 & 1.83 & 1.83 & 2.50 & 2.17 & 1.67 \\\\\nIDEFICS \\$ \\_\\{80B\\} \\$ [22] & 2.05 & 0.61 & 2.33 & 1.25 & 2.00 & 2.50 & 1.50 & 3.33 & 2.33 & 1.17 \\\\\nInstructBLIP \\$ \\_\\{7B\\} \\$ [10] & 2.10 & 0.58 & 3.42 & 2.08 & 1.33 & 1.92 & 2.17 & 3.67 & 1.17 & 1.08 \\\\\nInstructBLIP \\$ \\_\\{13B\\} \\$ [10] & 2.14 & 0.58 & 2.75 & 1.75 & 1.25 & 2.08 & 2.50 & 4.08 & 1.50 & 1.17 \\\\\nLLaVA-RLHF \\$ \\_\\{7B\\} \\$ [44] & 2.05 & 0.68 & 2.92 & 1.83 & 2.42 & 1.92 & 2.25 & 2.25 & 1.75 & 1.08 \\\\\nLLaVA \\$ \\_\\{7B\\} \\$ [33] & 1.55 & 0.76 & 1.33 & 0.00 & 1.83 & 1.17 & 2.00 & 2.58 & 1.67 & 1.83 \\\\\nLLaVA \\$ \\_\\{7B\\} \\$-HACL [33] & 2.08 ( \\$ \\textbackslash{}uparrow \\$ 0.53) & 0.62 ( \\$ \\textbackslash{}downarrow \\$ 0.15) & 2.94 & 2.01 & 2.27 & 1.64 & 2.35 & 2.14 & 1.67 & 1.63 \\\\\nminiGPT-4 \\$ \\_\\{7B\\} \\$ [33] & 1.39 & 0.71 & 0.75 & 1.83 & 2.16 & 0.91 & 1.25 & 1.33 & 0.91 & 1.91 \\\\\nminiGPT-4 \\$ \\_\\{7B\\} \\$-HACL & 1.80 ( \\$ \\textbackslash{}uparrow \\$ 0.31) & 0.65 ( \\$ \\textbackslash{}downarrow \\$ 0.06) & 1.22 & 1.85 & 2.23 & 1.74 & 2.13 & 2.48 & 1.03 & 1.58 \\\\\nLLaVA1.5 \\$ \\_\\{7B\\} \\$ [33] & 2.08 & 0.52 & 2.75 & 2.00 & 2.33 & 2.08 & 1.50 & 1.91 & 1.91 & 2.16 \\\\\nLLaVA1.5 \\$ \\_\\{7B\\} \\$-HACL & 2.13 ( \\$ \\textbackslash{}uparrow \\$ 0.05) & 0.50 ( \\$ \\textbackslash{}downarrow \\$ 0.02) & 2.95 & 2.15 & 2.29 & 1.97 & 1.53 & 1.98 & 2.02 & 2.19 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Method",
+          "Overall Score $ \\uparrow $",
+          "Hallucination Rate $ \\downarrow $",
+          "Score in Each Question Type $ \\uparrow $",
+          "Score in Each Question Type $ \\uparrow $",
+          "Score in Each Question Type $ \\uparrow $",
+          "Score in Each Question Type $ \\uparrow $",
+          "Score in Each Question Type $ \\uparrow $",
+          "Score in Each Question Type $ \\uparrow $",
+          "Score in Each Question Type $ \\uparrow $",
+          "Score in Each Question Type $ \\uparrow $"
+        ],
+        [
+          "Method",
+          "Overall Score $ \\uparrow $",
+          "Hallucination Rate $ \\downarrow $",
+          "Attribute",
+          "Adversarial",
+          "Comparison",
+          "Counting",
+          "Relation",
+          "Environment",
+          "Holistic",
+          "Other"
+        ],
+        [
+          "Kosmos-2 [40]",
+          "1.69",
+          "0.68",
+          "2.00",
+          "0.25",
+          "1.42",
+          "1.67",
+          "1.67",
+          "2.67",
+          "2.50",
+          "1.33"
+        ],
+        [
+          "IDEFICS $ _{9B} $ [22]",
+          "1.89",
+          "0.64",
+          "1.58",
+          "0.75",
+          "2.75",
+          "1.83",
+          "1.83",
+          "2.50",
+          "2.17",
+          "1.67"
+        ],
+        [
+          "IDEFICS $ _{80B} $ [22]",
+          "2.05",
+          "0.61",
+          "2.33",
+          "1.25",
+          "2.00",
+          "2.50",
+          "1.50",
+          "3.33",
+          "2.33",
+          "1.17"
+        ],
+        [
+          "InstructBLIP $ _{7B} $ [10]",
+          "2.10",
+          "0.58",
+          "3.42",
+          "2.08",
+          "1.33",
+          "1.92",
+          "2.17",
+          "3.67",
+          "1.17",
+          "1.08"
+        ],
+        [
+          "InstructBLIP $ _{13B} $ [10]",
+          "2.14",
+          "0.58",
+          "2.75",
+          "1.75",
+          "1.25",
+          "2.08",
+          "2.50",
+          "4.08",
+          "1.50",
+          "1.17"
+        ],
+        [
+          "LLaVA-RLHF $ _{7B} $ [44]",
+          "2.05",
+          "0.68",
+          "2.92",
+          "1.83",
+          "2.42",
+          "1.92",
+          "2.25",
+          "2.25",
+          "1.75",
+          "1.08"
+        ],
+        [
+          "LLaVA $ _{7B} $ [33]",
+          "1.55",
+          "0.76",
+          "1.33",
+          "0.00",
+          "1.83",
+          "1.17",
+          "2.00",
+          "2.58",
+          "1.67",
+          "1.83"
+        ],
+        [
+          "LLaVA $ _{7B} $-HACL [33]",
+          "2.08 ( $ \\uparrow $ 0.53)",
+          "0.62 ( $ \\downarrow $ 0.15)",
+          "2.94",
+          "2.01",
+          "2.27",
+          "1.64",
+          "2.35",
+          "2.14",
+          "1.67",
+          "1.63"
+        ],
+        [
+          "miniGPT-4 $ _{7B} $ [33]",
+          "1.39",
+          "0.71",
+          "0.75",
+          "1.83",
+          "2.16",
+          "0.91",
+          "1.25",
+          "1.33",
+          "0.91",
+          "1.91"
+        ],
+        [
+          "miniGPT-4 $ _{7B} $-HACL",
+          "1.80 ( $ \\uparrow $ 0.31)",
+          "0.65 ( $ \\downarrow $ 0.06)",
+          "1.22",
+          "1.85",
+          "2.23",
+          "1.74",
+          "2.13",
+          "2.48",
+          "1.03",
+          "1.58"
+        ],
+        [
+          "LLaVA1.5 $ _{7B} $ [33]",
+          "2.08",
+          "0.52",
+          "2.75",
+          "2.00",
+          "2.33",
+          "2.08",
+          "1.50",
+          "1.91",
+          "1.91",
+          "2.16"
+        ],
+        [
+          "LLaVA1.5 $ _{7B} $-HACL",
+          "2.13 ( $ \\uparrow $ 0.05)",
+          "0.50 ( $ \\downarrow $ 0.02)",
+          "2.95",
+          "2.15",
+          "2.29",
+          "1.97",
+          "1.53",
+          "1.98",
+          "2.02",
+          "2.19"
+        ]
+      ],
+      "nearby_context": "Table showing evaluation results (Overall Score, Hallucination Rate, Scores per Question Type) for various MLLMs including Kosmos-2, IDEFICS, InstructBLIP, LLaVA, miniGPT-4, and their HACL variants on MMHal-Bench.",
+      "table_shape": {
+        "rows": 14,
+        "columns": 11
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 1. Evaluation results for different MLLMs on MMHal-Bench.",
+        "caption_kind": "table",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P007_B0001",
+          "P007_B0002"
+        ],
+        "media_block_ids": [
+          "P007_B0001"
+        ],
+        "table_block_ids": [
+          "P007_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table showing evaluation results (Overall Score, Hallucination Rate, Scores per Question Type) for various MLLMs including Kosmos-2, IDEFICS, InstructBLIP, LLaVA, miniGPT-4, and their HACL variants on MMHal-Bench.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S9",
+      "section_title": "4.2. Effectiveness of HACL on Mitigating Hallucination",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Experimental Results: Reducing Hallucination and Improving Comprehension",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S9_0004",
+      "source_block_ids": [
+        "P007_B0003",
+        "P007_B0004"
+      ],
+      "media_block_ids": [
+        "P007_B0003"
+      ],
+      "caption": "Table 2. Object hallucination benchmark using POPE [28] evaluation pipeline. \"Yes\" signifies the likelihood of the model producing a positive response.",
+      "caption_kind": "table",
+      "caption_number": "2",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Datasets</td><td style='text-align: center; word-wrap: break-word;'>Metrics</td><td style='text-align: center; word-wrap: break-word;'>Shikra  $ [7] $</td><td style='text-align: center; word-wrap: break-word;'>InstructBLIP  $ [10] $</td><td style='text-align: center; word-wrap: break-word;'>MM-GPT  $ [14] $</td><td style='text-align: center; word-wrap: break-word;'>mPLU/G-Owl  $ [51] $</td><td style='text-align: center; word-wrap: break-word;'>MiniGPT-4  $ [55] $ w/ HACL</td><td style='text-align: center; word-wrap: break-word;'>LLaVA  $ [33] $ w/ HACL</td><td style='text-align: center; word-wrap: break-word;'>LLaVA1.5  $ [32] $ w/ HACL</td><td style='text-align: center; word-wrap: break-word;'></td></tr><tr><td rowspan=\"7\">Random</td><td style='text-align: center; word-wrap: break-word;'>Accuracy ( $ \\uparrow $)</td><td style='text-align: center; word-wrap: break-word;'>86.90</td><td style='text-align: center; word-wrap: break-word;'>88.57</td><td style='text-align: center; word-wrap: break-word;'>50.10</td><td style='text-align: center; word-wrap: break-word;'>53.97</td><td style='text-align: center; word-wrap: break-word;'>54.64</td><td style='text-align: center; word-wrap: break-word;'>80.49 ( $ \\uparrow $ 25.84)</td><td style='text-align: center; word-wrap: break-word;'>50.97</td><td style='text-align: center; word-wrap: break-word;'>82.16 ( $ \\uparrow $ 31.18)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Precision ( $ \\uparrow $)</td><td style='text-align: center; word-wrap: break-word;'>94.40</td><td style='text-align: center; word-wrap: break-word;'>84.09</td><td style='text-align: center; word-wrap: break-word;'>50.05</td><td style='text-align: center; word-wrap: break-word;'>52.07</td><td style='text-align: center; word-wrap: break-word;'>57.92</td><td style='text-align: center; word-wrap: break-word;'>94.32 ( $ \\uparrow $ 36.39)</td><td style='text-align: center; word-wrap: break-word;'>50.19</td><td style='text-align: center; word-wrap: break-word;'>87.30 ( $ \\uparrow $ 37.11)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Recall ( $ \\uparrow $)</td><td style='text-align: center; word-wrap: break-word;'>79.27</td><td style='text-align: center; word-wrap: break-word;'>95.13</td><td style='text-align: center; word-wrap: break-word;'>100.00</td><td style='text-align: center; word-wrap: break-word;'>99.60</td><td style='text-align: center; word-wrap: break-word;'>34.65</td><td style='text-align: center; word-wrap: break-word;'>75.34 ( $ \\uparrow $ 40.69)</td><td style='text-align: center; word-wrap: break-word;'>99.13</td><td style='text-align: center; word-wrap: break-word;'>76.53 ( $ \\downarrow $ 22.59)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>F1-Score ( $ \\uparrow $)</td><td style='text-align: center; word-wrap: break-word;'>86.19</td><td style='text-align: center; word-wrap: break-word;'>89.27</td><td style='text-align: center; word-wrap: break-word;'>66.71</td><td style='text-align: center; word-wrap: break-word;'>68.39</td><td style='text-align: center; word-wrap: break-word;'>43.35</td><td style='text-align: center; word-wrap: break-word;'>83.82 ( $ \\uparrow $ 38.14)</td><td style='text-align: center; word-wrap: break-word;'>66.71</td><td style='text-align: center; word-wrap: break-word;'>81.44 ( $ \\uparrow $ 14.85)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Yes ( $ \\rightarrow $ 50\\%)</td><td style='text-align: center; word-wrap: break-word;'>43.16</td><td style='text-align: center; word-wrap: break-word;'>56.57</td><td style='text-align: center; word-wrap: break-word;'>98.90</td><td style='text-align: center; word-wrap: break-word;'>95.63</td><td style='text-align: center; word-wrap: break-word;'>31.32</td><td style='text-align: center; word-wrap: break-word;'>44.33 ( $ \\uparrow $ 13.01)</td><td style='text-align: center; word-wrap: break-word;'>99.90</td><td style='text-align: center; word-wrap: break-word;'>45.19 ( $ \\downarrow $ 5.47)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Accuracy ( $ \\uparrow $)</td><td style='text-align: center; word-wrap: break-word;'>83.97</td><td style='text-align: center; word-wrap: break-word;'>82.77</td><td style='text-align: center; word-wrap: break-word;'>50.00</td><td style='text-align: center; word-wrap: break-word;'>50.90</td><td style='text-align: center; word-wrap: break-word;'>56.67</td><td style='text-align: center; word-wrap: break-word;'>78.32 ( $ \\uparrow $ 21.64)</td><td style='text-align: center; word-wrap: break-word;'>49.87</td><td style='text-align: center; word-wrap: break-word;'>79.32 ( $ \\uparrow $ 29.44)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Precision ( $ \\uparrow $)</td><td style='text-align: center; word-wrap: break-word;'>87.55</td><td style='text-align: center; word-wrap: break-word;'>76.27</td><td style='text-align: center; word-wrap: break-word;'>50.00</td><td style='text-align: center; word-wrap: break-word;'>50.46</td><td style='text-align: center; word-wrap: break-word;'>58.69</td><td style='text-align: center; word-wrap: break-word;'>79.23 ( $ \\uparrow $ 20.54)</td><td style='text-align: center; word-wrap: break-word;'>49.93</td><td style='text-align: center; word-wrap: break-word;'>80.34 ( $ \\uparrow $ 30.41)</td></tr><tr><td rowspan=\"5\">Popular</td><td style='text-align: center; word-wrap: break-word;'>Recall ( $ \\uparrow $)</td><td style='text-align: center; word-wrap: break-word;'>79.20</td><td style='text-align: center; word-wrap: break-word;'>95.13</td><td style='text-align: center; word-wrap: break-word;'>100.00</td><td style='text-align: center; word-wrap: break-word;'>99.40</td><td style='text-align: center; word-wrap: break-word;'>44.74</td><td style='text-align: center; word-wrap: break-word;'>74.54 ( $ \\uparrow $ 29.80)</td><td style='text-align: center; word-wrap: break-word;'>99.27</td><td style='text-align: center; word-wrap: break-word;'>76.60 ( $ \\downarrow $ 22.67)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>F1-Score ( $ \\uparrow $)</td><td style='text-align: center; word-wrap: break-word;'>83.16</td><td style='text-align: center; word-wrap: break-word;'>84.66</td><td style='text-align: center; word-wrap: break-word;'>66.67</td><td style='text-align: center; word-wrap: break-word;'>66.94</td><td style='text-align: center; word-wrap: break-word;'>50.74</td><td style='text-align: center; word-wrap: break-word;'>76.85 ( $ \\uparrow $ 26.11)</td><td style='text-align: center; word-wrap: break-word;'>66.44</td><td style='text-align: center; word-wrap: break-word;'>78.43 ( $ \\uparrow $ 11.99)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Yes ( $ \\rightarrow $ 50\\%)</td><td style='text-align: center; word-wrap: break-word;'>44.06</td><td style='text-align: center; word-wrap: break-word;'>62.37</td><td style='text-align: center; word-wrap: break-word;'>100.00</td><td style='text-align: center; word-wrap: break-word;'>98.57</td><td style='text-align: center; word-wrap: break-word;'>62.20</td><td style='text-align: center; word-wrap: break-word;'>45.23 ( $ \\uparrow $ 26.72)</td><td style='text-align: center; word-wrap: break-word;'>47.66 ( $ \\uparrow $ 21.76)</td><td style='text-align: center; word-wrap: break-word;'>45.03 ( $ \\downarrow $ 26.77)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Accuracy ( $ \\uparrow $)</td><td style='text-align: center; word-wrap: break-word;'>83.10</td><td style='text-align: center; word-wrap: break-word;'>72.10</td><td style='text-align: center; word-wrap: break-word;'>50.00</td><td style='text-align: center; word-wrap: break-word;'>50.67</td><td style='text-align: center; word-wrap: break-word;'>54.50</td><td style='text-align: center; word-wrap: break-word;'>71.32 ( $ \\uparrow $ 16.82)</td><td style='text-align: center; word-wrap: break-word;'>49.70</td><td style='text-align: center; word-wrap: break-word;'>74.41 ( $ \\uparrow $ 24.77)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Precision ( $ \\uparrow $)</td><td style='text-align: center; word-wrap: break-word;'>85.60</td><td style='text-align: center; word-wrap: break-word;'>65.13</td><td style='text-align: center; word-wrap: break-word;'>50.00</td><td style='text-align: center; word-wrap: break-word;'>50.34</td><td style='text-align: center; word-wrap: break-word;'>57.21</td><td style='text-align: center; word-wrap: break-word;'>70.53 ( $ \\uparrow $ 13.32)</td><td style='text-align: center; word-wrap: break-word;'>49.85</td><td style='text-align: center; word-wrap: break-word;'>73.55 ( $ \\uparrow $ 23.70)</td></tr><tr><td rowspan=\"3\">Adversarial</td><td style='text-align: center; word-wrap: break-word;'>Recall ( $ \\uparrow $)</td><td style='text-align: center; word-wrap: break-word;'>79.60</td><td style='text-align: center; word-wrap: break-word;'>95.13</td><td style='text-align: center; word-wrap: break-word;'>100.00</td><td style='text-align: center; word-wrap: break-word;'>99.33</td><td style='text-align: center; word-wrap: break-word;'>41.45</td><td style='text-align: center; word-wrap: break-word;'>73.45 ( $ \\uparrow $ 32.00)</td><td style='text-align: center; word-wrap: break-word;'>99.07</td><td style='text-align: center; word-wrap: break-word;'>76.40 ( $ \\downarrow $ 22.67)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>F1-Score ( $ \\uparrow $)</td><td style='text-align: center; word-wrap: break-word;'>82.49</td><td style='text-align: center; word-wrap: break-word;'>77.32</td><td style='text-align: center; word-wrap: break-word;'>66.67</td><td style='text-align: center; word-wrap: break-word;'>66.82</td><td style='text-align: center; word-wrap: break-word;'>48.07</td><td style='text-align: center; word-wrap: break-word;'>71.96 ( $ \\uparrow $ 23.89)</td><td style='text-align: center; word-wrap: break-word;'>66.32</td><td style='text-align: center; word-wrap: break-word;'>74.95 ( $ \\uparrow $ 8.63)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Yes ( $ \\rightarrow $ 50\\%)</td><td style='text-align: center; word-wrap: break-word;'>46.50</td><td style='text-align: center; word-wrap: break-word;'>73.03</td><td style='text-align: center; word-wrap: break-word;'>100.00</td><td style='text-align: center; word-wrap: break-word;'>98.67</td><td style='text-align: center; word-wrap: break-word;'>38.32</td><td style='text-align: center; word-wrap: break-word;'>48.23 ( $ \\uparrow $ 9.91)</td><td style='text-align: center; word-wrap: break-word;'>99.37</td><td style='text-align: center; word-wrap: break-word;'>51.93 ( $ \\downarrow $ 47.44)</td></tr></table>",
+      "normalized_markdown": "| Datasets | Metrics | Shikra $ [7] $ | InstructBLIP $ [10] $ | MM-GPT $ [14] $ | mPLU/G-Owl $ [51] $ | MiniGPT-4 $ [55] $ w/ HACL | LLaVA $ [33] $ w/ HACL | LLaVA1.5 $ [32] $ w/ HACL |  |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Random | Accuracy ( $ \\uparrow $) | 86.90 | 88.57 | 50.10 | 53.97 | 54.64 | 80.49 ( $ \\uparrow $ 25.84) | 50.97 | 82.16 ( $ \\uparrow $ 31.18) |\n| Random | Precision ( $ \\uparrow $) | 94.40 | 84.09 | 50.05 | 52.07 | 57.92 | 94.32 ( $ \\uparrow $ 36.39) | 50.19 | 87.30 ( $ \\uparrow $ 37.11) |\n| Random | Recall ( $ \\uparrow $) | 79.27 | 95.13 | 100.00 | 99.60 | 34.65 | 75.34 ( $ \\uparrow $ 40.69) | 99.13 | 76.53 ( $ \\downarrow $ 22.59) |\n| Random | F1-Score ( $ \\uparrow $) | 86.19 | 89.27 | 66.71 | 68.39 | 43.35 | 83.82 ( $ \\uparrow $ 38.14) | 66.71 | 81.44 ( $ \\uparrow $ 14.85) |\n| Random | Yes ( $ \\rightarrow $ 50\\%) | 43.16 | 56.57 | 98.90 | 95.63 | 31.32 | 44.33 ( $ \\uparrow $ 13.01) | 99.90 | 45.19 ( $ \\downarrow $ 5.47) |\n| Random | Accuracy ( $ \\uparrow $) | 83.97 | 82.77 | 50.00 | 50.90 | 56.67 | 78.32 ( $ \\uparrow $ 21.64) | 49.87 | 79.32 ( $ \\uparrow $ 29.44) |\n| Random | Precision ( $ \\uparrow $) | 87.55 | 76.27 | 50.00 | 50.46 | 58.69 | 79.23 ( $ \\uparrow $ 20.54) | 49.93 | 80.34 ( $ \\uparrow $ 30.41) |\n| Popular | Recall ( $ \\uparrow $) | 79.20 | 95.13 | 100.00 | 99.40 | 44.74 | 74.54 ( $ \\uparrow $ 29.80) | 99.27 | 76.60 ( $ \\downarrow $ 22.67) |\n| Popular | F1-Score ( $ \\uparrow $) | 83.16 | 84.66 | 66.67 | 66.94 | 50.74 | 76.85 ( $ \\uparrow $ 26.11) | 66.44 | 78.43 ( $ \\uparrow $ 11.99) |\n| Popular | Yes ( $ \\rightarrow $ 50\\%) | 44.06 | 62.37 | 100.00 | 98.57 | 62.20 | 45.23 ( $ \\uparrow $ 26.72) | 47.66 ( $ \\uparrow $ 21.76) | 45.03 ( $ \\downarrow $ 26.77) |\n| Popular | Accuracy ( $ \\uparrow $) | 83.10 | 72.10 | 50.00 | 50.67 | 54.50 | 71.32 ( $ \\uparrow $ 16.82) | 49.70 | 74.41 ( $ \\uparrow $ 24.77) |\n| Popular | Precision ( $ \\uparrow $) | 85.60 | 65.13 | 50.00 | 50.34 | 57.21 | 70.53 ( $ \\uparrow $ 13.32) | 49.85 | 73.55 ( $ \\uparrow $ 23.70) |\n| Adversarial | Recall ( $ \\uparrow $) | 79.60 | 95.13 | 100.00 | 99.33 | 41.45 | 73.45 ( $ \\uparrow $ 32.00) | 99.07 | 76.40 ( $ \\downarrow $ 22.67) |\n| Adversarial | F1-Score ( $ \\uparrow $) | 82.49 | 77.32 | 66.67 | 66.82 | 48.07 | 71.96 ( $ \\uparrow $ 23.89) | 66.32 | 74.95 ( $ \\uparrow $ 8.63) |\n| Adversarial | Yes ( $ \\rightarrow $ 50\\%) | 46.50 | 73.03 | 100.00 | 98.67 | 38.32 | 48.23 ( $ \\uparrow $ 9.91) | 99.37 | 51.93 ( $ \\downarrow $ 47.44) |",
+      "normalized_latex": "\\begin{tabular}{llllllllll}\n\\hline\nDatasets & Metrics & Shikra \\$ [7] \\$ & InstructBLIP \\$ [10] \\$ & MM-GPT \\$ [14] \\$ & mPLU/G-Owl \\$ [51] \\$ & MiniGPT-4 \\$ [55] \\$ w/ HACL & LLaVA \\$ [33] \\$ w/ HACL & LLaVA1.5 \\$ [32] \\$ w/ HACL &  \\\\\n\\hline\nRandom & Accuracy ( \\$ \\textbackslash{}uparrow \\$) & 86.90 & 88.57 & 50.10 & 53.97 & 54.64 & 80.49 ( \\$ \\textbackslash{}uparrow \\$ 25.84) & 50.97 & 82.16 ( \\$ \\textbackslash{}uparrow \\$ 31.18) \\\\\nRandom & Precision ( \\$ \\textbackslash{}uparrow \\$) & 94.40 & 84.09 & 50.05 & 52.07 & 57.92 & 94.32 ( \\$ \\textbackslash{}uparrow \\$ 36.39) & 50.19 & 87.30 ( \\$ \\textbackslash{}uparrow \\$ 37.11) \\\\\nRandom & Recall ( \\$ \\textbackslash{}uparrow \\$) & 79.27 & 95.13 & 100.00 & 99.60 & 34.65 & 75.34 ( \\$ \\textbackslash{}uparrow \\$ 40.69) & 99.13 & 76.53 ( \\$ \\textbackslash{}downarrow \\$ 22.59) \\\\\nRandom & F1-Score ( \\$ \\textbackslash{}uparrow \\$) & 86.19 & 89.27 & 66.71 & 68.39 & 43.35 & 83.82 ( \\$ \\textbackslash{}uparrow \\$ 38.14) & 66.71 & 81.44 ( \\$ \\textbackslash{}uparrow \\$ 14.85) \\\\\nRandom & Yes ( \\$ \\textbackslash{}rightarrow \\$ 50\\textbackslash{}\\%) & 43.16 & 56.57 & 98.90 & 95.63 & 31.32 & 44.33 ( \\$ \\textbackslash{}uparrow \\$ 13.01) & 99.90 & 45.19 ( \\$ \\textbackslash{}downarrow \\$ 5.47) \\\\\nRandom & Accuracy ( \\$ \\textbackslash{}uparrow \\$) & 83.97 & 82.77 & 50.00 & 50.90 & 56.67 & 78.32 ( \\$ \\textbackslash{}uparrow \\$ 21.64) & 49.87 & 79.32 ( \\$ \\textbackslash{}uparrow \\$ 29.44) \\\\\nRandom & Precision ( \\$ \\textbackslash{}uparrow \\$) & 87.55 & 76.27 & 50.00 & 50.46 & 58.69 & 79.23 ( \\$ \\textbackslash{}uparrow \\$ 20.54) & 49.93 & 80.34 ( \\$ \\textbackslash{}uparrow \\$ 30.41) \\\\\nPopular & Recall ( \\$ \\textbackslash{}uparrow \\$) & 79.20 & 95.13 & 100.00 & 99.40 & 44.74 & 74.54 ( \\$ \\textbackslash{}uparrow \\$ 29.80) & 99.27 & 76.60 ( \\$ \\textbackslash{}downarrow \\$ 22.67) \\\\\nPopular & F1-Score ( \\$ \\textbackslash{}uparrow \\$) & 83.16 & 84.66 & 66.67 & 66.94 & 50.74 & 76.85 ( \\$ \\textbackslash{}uparrow \\$ 26.11) & 66.44 & 78.43 ( \\$ \\textbackslash{}uparrow \\$ 11.99) \\\\\nPopular & Yes ( \\$ \\textbackslash{}rightarrow \\$ 50\\textbackslash{}\\%) & 44.06 & 62.37 & 100.00 & 98.57 & 62.20 & 45.23 ( \\$ \\textbackslash{}uparrow \\$ 26.72) & 47.66 ( \\$ \\textbackslash{}uparrow \\$ 21.76) & 45.03 ( \\$ \\textbackslash{}downarrow \\$ 26.77) \\\\\nPopular & Accuracy ( \\$ \\textbackslash{}uparrow \\$) & 83.10 & 72.10 & 50.00 & 50.67 & 54.50 & 71.32 ( \\$ \\textbackslash{}uparrow \\$ 16.82) & 49.70 & 74.41 ( \\$ \\textbackslash{}uparrow \\$ 24.77) \\\\\nPopular & Precision ( \\$ \\textbackslash{}uparrow \\$) & 85.60 & 65.13 & 50.00 & 50.34 & 57.21 & 70.53 ( \\$ \\textbackslash{}uparrow \\$ 13.32) & 49.85 & 73.55 ( \\$ \\textbackslash{}uparrow \\$ 23.70) \\\\\nAdversarial & Recall ( \\$ \\textbackslash{}uparrow \\$) & 79.60 & 95.13 & 100.00 & 99.33 & 41.45 & 73.45 ( \\$ \\textbackslash{}uparrow \\$ 32.00) & 99.07 & 76.40 ( \\$ \\textbackslash{}downarrow \\$ 22.67) \\\\\nAdversarial & F1-Score ( \\$ \\textbackslash{}uparrow \\$) & 82.49 & 77.32 & 66.67 & 66.82 & 48.07 & 71.96 ( \\$ \\textbackslash{}uparrow \\$ 23.89) & 66.32 & 74.95 ( \\$ \\textbackslash{}uparrow \\$ 8.63) \\\\\nAdversarial & Yes ( \\$ \\textbackslash{}rightarrow \\$ 50\\textbackslash{}\\%) & 46.50 & 73.03 & 100.00 & 98.67 & 38.32 & 48.23 ( \\$ \\textbackslash{}uparrow \\$ 9.91) & 99.37 & 51.93 ( \\$ \\textbackslash{}downarrow \\$ 47.44) \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Datasets",
+          "Metrics",
+          "Shikra $ [7] $",
+          "InstructBLIP $ [10] $",
+          "MM-GPT $ [14] $",
+          "mPLU/G-Owl $ [51] $",
+          "MiniGPT-4 $ [55] $ w/ HACL",
+          "LLaVA $ [33] $ w/ HACL",
+          "LLaVA1.5 $ [32] $ w/ HACL",
+          ""
+        ],
+        [
+          "Random",
+          "Accuracy ( $ \\uparrow $)",
+          "86.90",
+          "88.57",
+          "50.10",
+          "53.97",
+          "54.64",
+          "80.49 ( $ \\uparrow $ 25.84)",
+          "50.97",
+          "82.16 ( $ \\uparrow $ 31.18)"
+        ],
+        [
+          "Random",
+          "Precision ( $ \\uparrow $)",
+          "94.40",
+          "84.09",
+          "50.05",
+          "52.07",
+          "57.92",
+          "94.32 ( $ \\uparrow $ 36.39)",
+          "50.19",
+          "87.30 ( $ \\uparrow $ 37.11)"
+        ],
+        [
+          "Random",
+          "Recall ( $ \\uparrow $)",
+          "79.27",
+          "95.13",
+          "100.00",
+          "99.60",
+          "34.65",
+          "75.34 ( $ \\uparrow $ 40.69)",
+          "99.13",
+          "76.53 ( $ \\downarrow $ 22.59)"
+        ],
+        [
+          "Random",
+          "F1-Score ( $ \\uparrow $)",
+          "86.19",
+          "89.27",
+          "66.71",
+          "68.39",
+          "43.35",
+          "83.82 ( $ \\uparrow $ 38.14)",
+          "66.71",
+          "81.44 ( $ \\uparrow $ 14.85)"
+        ],
+        [
+          "Random",
+          "Yes ( $ \\rightarrow $ 50\\%)",
+          "43.16",
+          "56.57",
+          "98.90",
+          "95.63",
+          "31.32",
+          "44.33 ( $ \\uparrow $ 13.01)",
+          "99.90",
+          "45.19 ( $ \\downarrow $ 5.47)"
+        ],
+        [
+          "Random",
+          "Accuracy ( $ \\uparrow $)",
+          "83.97",
+          "82.77",
+          "50.00",
+          "50.90",
+          "56.67",
+          "78.32 ( $ \\uparrow $ 21.64)",
+          "49.87",
+          "79.32 ( $ \\uparrow $ 29.44)"
+        ],
+        [
+          "Random",
+          "Precision ( $ \\uparrow $)",
+          "87.55",
+          "76.27",
+          "50.00",
+          "50.46",
+          "58.69",
+          "79.23 ( $ \\uparrow $ 20.54)",
+          "49.93",
+          "80.34 ( $ \\uparrow $ 30.41)"
+        ],
+        [
+          "Popular",
+          "Recall ( $ \\uparrow $)",
+          "79.20",
+          "95.13",
+          "100.00",
+          "99.40",
+          "44.74",
+          "74.54 ( $ \\uparrow $ 29.80)",
+          "99.27",
+          "76.60 ( $ \\downarrow $ 22.67)"
+        ],
+        [
+          "Popular",
+          "F1-Score ( $ \\uparrow $)",
+          "83.16",
+          "84.66",
+          "66.67",
+          "66.94",
+          "50.74",
+          "76.85 ( $ \\uparrow $ 26.11)",
+          "66.44",
+          "78.43 ( $ \\uparrow $ 11.99)"
+        ],
+        [
+          "Popular",
+          "Yes ( $ \\rightarrow $ 50\\%)",
+          "44.06",
+          "62.37",
+          "100.00",
+          "98.57",
+          "62.20",
+          "45.23 ( $ \\uparrow $ 26.72)",
+          "47.66 ( $ \\uparrow $ 21.76)",
+          "45.03 ( $ \\downarrow $ 26.77)"
+        ],
+        [
+          "Popular",
+          "Accuracy ( $ \\uparrow $)",
+          "83.10",
+          "72.10",
+          "50.00",
+          "50.67",
+          "54.50",
+          "71.32 ( $ \\uparrow $ 16.82)",
+          "49.70",
+          "74.41 ( $ \\uparrow $ 24.77)"
+        ],
+        [
+          "Popular",
+          "Precision ( $ \\uparrow $)",
+          "85.60",
+          "65.13",
+          "50.00",
+          "50.34",
+          "57.21",
+          "70.53 ( $ \\uparrow $ 13.32)",
+          "49.85",
+          "73.55 ( $ \\uparrow $ 23.70)"
+        ],
+        [
+          "Adversarial",
+          "Recall ( $ \\uparrow $)",
+          "79.60",
+          "95.13",
+          "100.00",
+          "99.33",
+          "41.45",
+          "73.45 ( $ \\uparrow $ 32.00)",
+          "99.07",
+          "76.40 ( $ \\downarrow $ 22.67)"
+        ],
+        [
+          "Adversarial",
+          "F1-Score ( $ \\uparrow $)",
+          "82.49",
+          "77.32",
+          "66.67",
+          "66.82",
+          "48.07",
+          "71.96 ( $ \\uparrow $ 23.89)",
+          "66.32",
+          "74.95 ( $ \\uparrow $ 8.63)"
+        ],
+        [
+          "Adversarial",
+          "Yes ( $ \\rightarrow $ 50\\%)",
+          "46.50",
+          "73.03",
+          "100.00",
+          "98.67",
+          "38.32",
+          "48.23 ( $ \\uparrow $ 9.91)",
+          "99.37",
+          "51.93 ( $ \\downarrow $ 47.44)"
+        ]
+      ],
+      "nearby_context": "Table presenting object hallucination benchmarks on POPE dataset across different datasets (Random, Popular, Adversarial) and metrics (Accuracy, Precision, Recall, F1-Score, Yes%) for models Shikra, InstructBLIP, MM-GPT, mPLUG-Owl, MiniGPT-4, LLaVA, LLaVA1.5 with and without HACL.",
+      "table_shape": {
+        "rows": 16,
+        "columns": 10
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 2. Object hallucination benchmark using POPE [28] evaluation pipeline. \"Yes\" signifies the likelihood of the model producing a positive response.",
+        "caption_kind": "table",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P007_B0003",
+          "P007_B0004"
+        ],
+        "media_block_ids": [
+          "P007_B0003"
+        ],
+        "table_block_ids": [
+          "P007_B0003"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table presenting object hallucination benchmarks on POPE dataset across different datasets (Random, Popular, Adversarial) and metrics (Accuracy, Precision, Recall, F1-Score, Yes%) for models Shikra, InstructBLIP, MM-GPT, mPLUG-Owl, MiniGPT-4, LLaVA, LLaVA1.5 with and without HACL.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S10",
+      "section_title": "4.3. Effectiveness of HACL on Visual Comprehension",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Experimental Results: Reducing Hallucination and Improving Comprehension",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S10_0005",
+      "source_block_ids": [
+        "P008_B0001",
+        "P008_B0002"
+      ],
+      "media_block_ids": [
+        "P008_B0001"
+      ],
+      "caption": "Table 3. Performance comparison on visual question answering. For VQA, accuracy is reported. Note that specialists are fine-tuned on each individual dataset. † denotes OCR inputs are utilized. ‡ indicates the model has trained on the dataset. We gray out those specialists' methods which are individually fine-tuned on the dataset as well as those fine-tuned results of generalists.",
+      "caption_kind": "table",
+      "caption_number": "3",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Method</td><td rowspan=\"2\">#Params</td><td colspan=\"2\">General VQA</td><td colspan=\"3\">General VQA (Zero-shot)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>VQAv2</td><td style='text-align: center; word-wrap: break-word;'>GQA</td><td style='text-align: center; word-wrap: break-word;'>VizWizQA</td><td style='text-align: center; word-wrap: break-word;'>TextVQA</td><td style='text-align: center; word-wrap: break-word;'>SciQA (IMG)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>BLIP-2 [27]</td><td style='text-align: center; word-wrap: break-word;'>8.2B</td><td style='text-align: center; word-wrap: break-word;'>65.0</td><td style='text-align: center; word-wrap: break-word;'>41.0</td><td style='text-align: center; word-wrap: break-word;'>19.6</td><td style='text-align: center; word-wrap: break-word;'>42.5</td><td style='text-align: center; word-wrap: break-word;'>61.0</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>InstructBLIP [10]</td><td style='text-align: center; word-wrap: break-word;'>8.2B</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>49.2</td><td style='text-align: center; word-wrap: break-word;'>34.5</td><td style='text-align: center; word-wrap: break-word;'>50.1 $ ^{\\dagger} $</td><td style='text-align: center; word-wrap: break-word;'>60.5</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Unified-IO $ _{XL} $ [35]</td><td style='text-align: center; word-wrap: break-word;'>2.9B</td><td style='text-align: center; word-wrap: break-word;'>77.9</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>57.4 $ ^{\\dagger} $</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>PaLM-E-12B [11]</td><td style='text-align: center; word-wrap: break-word;'>12B</td><td style='text-align: center; word-wrap: break-word;'>76.2</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Shikra [7]</td><td style='text-align: center; word-wrap: break-word;'>7.2B</td><td style='text-align: center; word-wrap: break-word;'>77.4</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Qwen-VL-Chat [2]</td><td style='text-align: center; word-wrap: break-word;'>9.6B</td><td style='text-align: center; word-wrap: break-word;'>78.2</td><td style='text-align: center; word-wrap: break-word;'>57.5</td><td style='text-align: center; word-wrap: break-word;'>38.9</td><td style='text-align: center; word-wrap: break-word;'>61.5 $ ^{\\dagger} $</td><td style='text-align: center; word-wrap: break-word;'>68.2</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA [32]</td><td style='text-align: center; word-wrap: break-word;'>7.2B</td><td style='text-align: center; word-wrap: break-word;'>71.3</td><td style='text-align: center; word-wrap: break-word;'>41.3</td><td style='text-align: center; word-wrap: break-word;'>36.7</td><td style='text-align: center; word-wrap: break-word;'>50.2 $ ^{\\dagger} $</td><td style='text-align: center; word-wrap: break-word;'>61.5</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA-HACL [32]</td><td style='text-align: center; word-wrap: break-word;'>7.2B</td><td style='text-align: center; word-wrap: break-word;'>73.3</td><td style='text-align: center; word-wrap: break-word;'>42.5</td><td style='text-align: center; word-wrap: break-word;'>37.4</td><td style='text-align: center; word-wrap: break-word;'>52.2 $ ^{\\dagger} $</td><td style='text-align: center; word-wrap: break-word;'>62.4</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MiniGPT-4 [32]</td><td style='text-align: center; word-wrap: break-word;'>7.2B</td><td style='text-align: center; word-wrap: break-word;'>65.2</td><td style='text-align: center; word-wrap: break-word;'>30.8</td><td style='text-align: center; word-wrap: break-word;'>30.2</td><td style='text-align: center; word-wrap: break-word;'>52.3 $ ^{\\dagger} $</td><td style='text-align: center; word-wrap: break-word;'>58.4</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MiniGPT-4-HACL [32]</td><td style='text-align: center; word-wrap: break-word;'>7.2B</td><td style='text-align: center; word-wrap: break-word;'>68.9</td><td style='text-align: center; word-wrap: break-word;'>32.3</td><td style='text-align: center; word-wrap: break-word;'>31.7</td><td style='text-align: center; word-wrap: break-word;'>54.2 $ ^{\\dagger} $</td><td style='text-align: center; word-wrap: break-word;'>60.3</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA1.5 [32]</td><td style='text-align: center; word-wrap: break-word;'>7.2B</td><td style='text-align: center; word-wrap: break-word;'>78.5</td><td style='text-align: center; word-wrap: break-word;'>62.0</td><td style='text-align: center; word-wrap: break-word;'>50.0</td><td style='text-align: center; word-wrap: break-word;'>58.2 $ ^{\\dagger} $</td><td style='text-align: center; word-wrap: break-word;'>66.8</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA1.5-HACL [32]</td><td style='text-align: center; word-wrap: break-word;'>7.2B</td><td style='text-align: center; word-wrap: break-word;'>79.1</td><td style='text-align: center; word-wrap: break-word;'>62.5</td><td style='text-align: center; word-wrap: break-word;'>50.5</td><td style='text-align: center; word-wrap: break-word;'>59.8 $ ^{\\dagger} $</td><td style='text-align: center; word-wrap: break-word;'>67.3</td></tr></table>",
+      "normalized_markdown": "| Method | #Params | General VQA | General VQA | General VQA (Zero-shot) | General VQA (Zero-shot) | General VQA (Zero-shot) |\n| --- | --- | --- | --- | --- | --- | --- |\n| Method | #Params | VQAv2 | GQA | VizWizQA | TextVQA | SciQA (IMG) |\n| BLIP-2 [27] | 8.2B | 65.0 | 41.0 | 19.6 | 42.5 | 61.0 |\n| InstructBLIP [10] | 8.2B | - | 49.2 | 34.5 | 50.1 $ ^{\\dagger} $ | 60.5 |\n| Unified-IO $ _{XL} $ [35] | 2.9B | 77.9 | - | 57.4 $ ^{\\dagger} $ | - | - |\n| PaLM-E-12B [11] | 12B | 76.2 | - | - | - | - |\n| Shikra [7] | 7.2B | 77.4 | - | - | - | - |\n| Qwen-VL-Chat [2] | 9.6B | 78.2 | 57.5 | 38.9 | 61.5 $ ^{\\dagger} $ | 68.2 |\n| LLaVA [32] | 7.2B | 71.3 | 41.3 | 36.7 | 50.2 $ ^{\\dagger} $ | 61.5 |\n| LLaVA-HACL [32] | 7.2B | 73.3 | 42.5 | 37.4 | 52.2 $ ^{\\dagger} $ | 62.4 |\n| MiniGPT-4 [32] | 7.2B | 65.2 | 30.8 | 30.2 | 52.3 $ ^{\\dagger} $ | 58.4 |\n| MiniGPT-4-HACL [32] | 7.2B | 68.9 | 32.3 | 31.7 | 54.2 $ ^{\\dagger} $ | 60.3 |\n| LLaVA1.5 [32] | 7.2B | 78.5 | 62.0 | 50.0 | 58.2 $ ^{\\dagger} $ | 66.8 |\n| LLaVA1.5-HACL [32] | 7.2B | 79.1 | 62.5 | 50.5 | 59.8 $ ^{\\dagger} $ | 67.3 |",
+      "normalized_latex": "\\begin{tabular}{lllllll}\n\\hline\nMethod & \\#Params & General VQA & General VQA & General VQA (Zero-shot) & General VQA (Zero-shot) & General VQA (Zero-shot) \\\\\n\\hline\nMethod & \\#Params & VQAv2 & GQA & VizWizQA & TextVQA & SciQA (IMG) \\\\\nBLIP-2 [27] & 8.2B & 65.0 & 41.0 & 19.6 & 42.5 & 61.0 \\\\\nInstructBLIP [10] & 8.2B & - & 49.2 & 34.5 & 50.1 \\$ \\textasciicircum{}\\{\\textbackslash{}dagger\\} \\$ & 60.5 \\\\\nUnified-IO \\$ \\_\\{XL\\} \\$ [35] & 2.9B & 77.9 & - & 57.4 \\$ \\textasciicircum{}\\{\\textbackslash{}dagger\\} \\$ & - & - \\\\\nPaLM-E-12B [11] & 12B & 76.2 & - & - & - & - \\\\\nShikra [7] & 7.2B & 77.4 & - & - & - & - \\\\\nQwen-VL-Chat [2] & 9.6B & 78.2 & 57.5 & 38.9 & 61.5 \\$ \\textasciicircum{}\\{\\textbackslash{}dagger\\} \\$ & 68.2 \\\\\nLLaVA [32] & 7.2B & 71.3 & 41.3 & 36.7 & 50.2 \\$ \\textasciicircum{}\\{\\textbackslash{}dagger\\} \\$ & 61.5 \\\\\nLLaVA-HACL [32] & 7.2B & 73.3 & 42.5 & 37.4 & 52.2 \\$ \\textasciicircum{}\\{\\textbackslash{}dagger\\} \\$ & 62.4 \\\\\nMiniGPT-4 [32] & 7.2B & 65.2 & 30.8 & 30.2 & 52.3 \\$ \\textasciicircum{}\\{\\textbackslash{}dagger\\} \\$ & 58.4 \\\\\nMiniGPT-4-HACL [32] & 7.2B & 68.9 & 32.3 & 31.7 & 54.2 \\$ \\textasciicircum{}\\{\\textbackslash{}dagger\\} \\$ & 60.3 \\\\\nLLaVA1.5 [32] & 7.2B & 78.5 & 62.0 & 50.0 & 58.2 \\$ \\textasciicircum{}\\{\\textbackslash{}dagger\\} \\$ & 66.8 \\\\\nLLaVA1.5-HACL [32] & 7.2B & 79.1 & 62.5 & 50.5 & 59.8 \\$ \\textasciicircum{}\\{\\textbackslash{}dagger\\} \\$ & 67.3 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Method",
+          "#Params",
+          "General VQA",
+          "General VQA",
+          "General VQA (Zero-shot)",
+          "General VQA (Zero-shot)",
+          "General VQA (Zero-shot)"
+        ],
+        [
+          "Method",
+          "#Params",
+          "VQAv2",
+          "GQA",
+          "VizWizQA",
+          "TextVQA",
+          "SciQA (IMG)"
+        ],
+        [
+          "BLIP-2 [27]",
+          "8.2B",
+          "65.0",
+          "41.0",
+          "19.6",
+          "42.5",
+          "61.0"
+        ],
+        [
+          "InstructBLIP [10]",
+          "8.2B",
+          "-",
+          "49.2",
+          "34.5",
+          "50.1 $ ^{\\dagger} $",
+          "60.5"
+        ],
+        [
+          "Unified-IO $ _{XL} $ [35]",
+          "2.9B",
+          "77.9",
+          "-",
+          "57.4 $ ^{\\dagger} $",
+          "-",
+          "-"
+        ],
+        [
+          "PaLM-E-12B [11]",
+          "12B",
+          "76.2",
+          "-",
+          "-",
+          "-",
+          "-"
+        ],
+        [
+          "Shikra [7]",
+          "7.2B",
+          "77.4",
+          "-",
+          "-",
+          "-",
+          "-"
+        ],
+        [
+          "Qwen-VL-Chat [2]",
+          "9.6B",
+          "78.2",
+          "57.5",
+          "38.9",
+          "61.5 $ ^{\\dagger} $",
+          "68.2"
+        ],
+        [
+          "LLaVA [32]",
+          "7.2B",
+          "71.3",
+          "41.3",
+          "36.7",
+          "50.2 $ ^{\\dagger} $",
+          "61.5"
+        ],
+        [
+          "LLaVA-HACL [32]",
+          "7.2B",
+          "73.3",
+          "42.5",
+          "37.4",
+          "52.2 $ ^{\\dagger} $",
+          "62.4"
+        ],
+        [
+          "MiniGPT-4 [32]",
+          "7.2B",
+          "65.2",
+          "30.8",
+          "30.2",
+          "52.3 $ ^{\\dagger} $",
+          "58.4"
+        ],
+        [
+          "MiniGPT-4-HACL [32]",
+          "7.2B",
+          "68.9",
+          "32.3",
+          "31.7",
+          "54.2 $ ^{\\dagger} $",
+          "60.3"
+        ],
+        [
+          "LLaVA1.5 [32]",
+          "7.2B",
+          "78.5",
+          "62.0",
+          "50.0",
+          "58.2 $ ^{\\dagger} $",
+          "66.8"
+        ],
+        [
+          "LLaVA1.5-HACL [32]",
+          "7.2B",
+          "79.1",
+          "62.5",
+          "50.5",
+          "59.8 $ ^{\\dagger} $",
+          "67.3"
+        ]
+      ],
+      "nearby_context": "Table comparing methods on VQA benchmarks including VQAv2, GQA, VizWizQA, TextVQA, SciQA (IMG). Methods include BLIP-2, InstructBLIP, Unified-IO, PaLM-E-12B, Shikra, Qwen-VL-Chat, LLaVA, LLaVA-HACL, MiniGPT-4, MiniGPT-4-HACL, LLaVA1.5, LLaVA1.5-HACL.",
+      "table_shape": {
+        "rows": 14,
+        "columns": 7
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 3. Performance comparison on visual question answering. For VQA, accuracy is reported. Note that specialists are fine-tuned on each individual dataset. † denotes OCR inputs are utilized. ‡ indicates the model has trained on the dataset. We gray out those specialists' methods which are individually fine-tuned on the dataset as well as those fine-tuned results of generalists.",
+        "caption_kind": "table",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P008_B0001",
+          "P008_B0002"
+        ],
+        "media_block_ids": [
+          "P008_B0001"
+        ],
+        "table_block_ids": [
+          "P008_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing methods on VQA benchmarks including VQAv2, GQA, VizWizQA, TextVQA, SciQA (IMG). Methods include BLIP-2, InstructBLIP, Unified-IO, PaLM-E-12B, Shikra, Qwen-VL-Chat, LLaVA, LLaVA-HACL, MiniGPT-4, MiniGPT-4-HACL, LLaVA1.5, LLaVA1.5-HACL.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S10",
+      "section_title": "4.3. Effectiveness of HACL on Visual Comprehension",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Experimental Results: Reducing Hallucination and Improving Comprehension",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S10_0005",
+      "source_block_ids": [
+        "P008_B0003",
+        "P008_B0004"
+      ],
+      "media_block_ids": [
+        "P008_B0003"
+      ],
+      "caption": "Table 4. Zero-shot multi-modal evaluation on multi-modal benchmarks including MME [12], MMBench [34], MM-Vet [52], SEEDBench [23]. The overall scores are reported for evaluation. For MMBench, we report test results.",
+      "caption_kind": "table",
+      "caption_number": "4",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Method</td><td style='text-align: center; word-wrap: break-word;'>Vision Encoder</td><td style='text-align: center; word-wrap: break-word;'>Language Model</td><td style='text-align: center; word-wrap: break-word;'>MME</td><td style='text-align: center; word-wrap: break-word;'>MMBench</td><td style='text-align: center; word-wrap: break-word;'>MM-Vet</td><td style='text-align: center; word-wrap: break-word;'>SEED-Bench</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>BLIP-2 [27]</td><td style='text-align: center; word-wrap: break-word;'>ViT-g (1.3B)</td><td style='text-align: center; word-wrap: break-word;'>Vicuna (7B)</td><td style='text-align: center; word-wrap: break-word;'>1293.84</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>22.4</td><td style='text-align: center; word-wrap: break-word;'>46.4</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>mPLUG-Owl [51]</td><td style='text-align: center; word-wrap: break-word;'>ViT-L (0.3B)</td><td style='text-align: center; word-wrap: break-word;'>LLaMA (7B)</td><td style='text-align: center; word-wrap: break-word;'>967.34</td><td style='text-align: center; word-wrap: break-word;'>46.6</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>34.0</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>InstructBLIP [10]</td><td style='text-align: center; word-wrap: break-word;'>ViT-g (1.3B)</td><td style='text-align: center; word-wrap: break-word;'>Vicuna (7B)</td><td style='text-align: center; word-wrap: break-word;'>1212.82</td><td style='text-align: center; word-wrap: break-word;'>36.0</td><td style='text-align: center; word-wrap: break-word;'>26.2</td><td style='text-align: center; word-wrap: break-word;'>53.4</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaMA-Adapter-v2 [13]</td><td style='text-align: center; word-wrap: break-word;'>ViT-L (0.3B)</td><td style='text-align: center; word-wrap: break-word;'>LLaMA (7B)</td><td style='text-align: center; word-wrap: break-word;'>1328.40</td><td style='text-align: center; word-wrap: break-word;'>39.5</td><td style='text-align: center; word-wrap: break-word;'>31.4</td><td style='text-align: center; word-wrap: break-word;'>32.7</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Otter [24]</td><td style='text-align: center; word-wrap: break-word;'>ViT-L (0.3B)</td><td style='text-align: center; word-wrap: break-word;'>LLaMA (7B)</td><td style='text-align: center; word-wrap: break-word;'>1292.26</td><td style='text-align: center; word-wrap: break-word;'>48.3</td><td style='text-align: center; word-wrap: break-word;'>24.6</td><td style='text-align: center; word-wrap: break-word;'>32.9</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Qwen-VL-Chat [2]</td><td style='text-align: center; word-wrap: break-word;'>ViT-G (1.9B)</td><td style='text-align: center; word-wrap: break-word;'>Qwen (7B)</td><td style='text-align: center; word-wrap: break-word;'>1487.58</td><td style='text-align: center; word-wrap: break-word;'>60.6</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>58.2</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA [33]</td><td style='text-align: center; word-wrap: break-word;'>ViT-L (0.3B)</td><td style='text-align: center; word-wrap: break-word;'>Vicuna (7B)</td><td style='text-align: center; word-wrap: break-word;'>502.82</td><td style='text-align: center; word-wrap: break-word;'>36.2</td><td style='text-align: center; word-wrap: break-word;'>28.1</td><td style='text-align: center; word-wrap: break-word;'>33.5</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA-HACL [33]</td><td style='text-align: center; word-wrap: break-word;'>ViT-L (0.3B)</td><td style='text-align: center; word-wrap: break-word;'>Vicuna (7B)</td><td style='text-align: center; word-wrap: break-word;'>562.58</td><td style='text-align: center; word-wrap: break-word;'>37.8</td><td style='text-align: center; word-wrap: break-word;'>28.4</td><td style='text-align: center; word-wrap: break-word;'>33.9</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MiniGPT-4 [55]</td><td style='text-align: center; word-wrap: break-word;'>ViT-g (1.3B)</td><td style='text-align: center; word-wrap: break-word;'>Vicuna (7B)</td><td style='text-align: center; word-wrap: break-word;'>581.67</td><td style='text-align: center; word-wrap: break-word;'>23.0</td><td style='text-align: center; word-wrap: break-word;'>22.1</td><td style='text-align: center; word-wrap: break-word;'>42.8</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MiniGPT-4-HACL [55]</td><td style='text-align: center; word-wrap: break-word;'>ViT-g (1.3B)</td><td style='text-align: center; word-wrap: break-word;'>Vicuna (7B)</td><td style='text-align: center; word-wrap: break-word;'>653.94</td><td style='text-align: center; word-wrap: break-word;'>24.5</td><td style='text-align: center; word-wrap: break-word;'>23.8</td><td style='text-align: center; word-wrap: break-word;'>42.5</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA-1.5 [32]</td><td style='text-align: center; word-wrap: break-word;'>ViT-L (0.3B)</td><td style='text-align: center; word-wrap: break-word;'>Vicuna (7B)</td><td style='text-align: center; word-wrap: break-word;'>1510.70</td><td style='text-align: center; word-wrap: break-word;'>64.3</td><td style='text-align: center; word-wrap: break-word;'>30.5</td><td style='text-align: center; word-wrap: break-word;'>58.6</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA-1.5-HACL [32]</td><td style='text-align: center; word-wrap: break-word;'>ViT-L (0.3B)</td><td style='text-align: center; word-wrap: break-word;'>Vicuna (7B)</td><td style='text-align: center; word-wrap: break-word;'>1530.10</td><td style='text-align: center; word-wrap: break-word;'>64.5</td><td style='text-align: center; word-wrap: break-word;'>30.4</td><td style='text-align: center; word-wrap: break-word;'>58.9</td></tr></table>",
+      "normalized_markdown": "| Method | Vision Encoder | Language Model | MME | MMBench | MM-Vet | SEED-Bench |\n| --- | --- | --- | --- | --- | --- | --- |\n| BLIP-2 [27] | ViT-g (1.3B) | Vicuna (7B) | 1293.84 | - | 22.4 | 46.4 |\n| mPLUG-Owl [51] | ViT-L (0.3B) | LLaMA (7B) | 967.34 | 46.6 | - | 34.0 |\n| InstructBLIP [10] | ViT-g (1.3B) | Vicuna (7B) | 1212.82 | 36.0 | 26.2 | 53.4 |\n| LLaMA-Adapter-v2 [13] | ViT-L (0.3B) | LLaMA (7B) | 1328.40 | 39.5 | 31.4 | 32.7 |\n| Otter [24] | ViT-L (0.3B) | LLaMA (7B) | 1292.26 | 48.3 | 24.6 | 32.9 |\n| Qwen-VL-Chat [2] | ViT-G (1.9B) | Qwen (7B) | 1487.58 | 60.6 | - | 58.2 |\n| LLaVA [33] | ViT-L (0.3B) | Vicuna (7B) | 502.82 | 36.2 | 28.1 | 33.5 |\n| LLaVA-HACL [33] | ViT-L (0.3B) | Vicuna (7B) | 562.58 | 37.8 | 28.4 | 33.9 |\n| MiniGPT-4 [55] | ViT-g (1.3B) | Vicuna (7B) | 581.67 | 23.0 | 22.1 | 42.8 |\n| MiniGPT-4-HACL [55] | ViT-g (1.3B) | Vicuna (7B) | 653.94 | 24.5 | 23.8 | 42.5 |\n| LLaVA-1.5 [32] | ViT-L (0.3B) | Vicuna (7B) | 1510.70 | 64.3 | 30.5 | 58.6 |\n| LLaVA-1.5-HACL [32] | ViT-L (0.3B) | Vicuna (7B) | 1530.10 | 64.5 | 30.4 | 58.9 |",
+      "normalized_latex": "\\begin{tabular}{lllllll}\n\\hline\nMethod & Vision Encoder & Language Model & MME & MMBench & MM-Vet & SEED-Bench \\\\\n\\hline\nBLIP-2 [27] & ViT-g (1.3B) & Vicuna (7B) & 1293.84 & - & 22.4 & 46.4 \\\\\nmPLUG-Owl [51] & ViT-L (0.3B) & LLaMA (7B) & 967.34 & 46.6 & - & 34.0 \\\\\nInstructBLIP [10] & ViT-g (1.3B) & Vicuna (7B) & 1212.82 & 36.0 & 26.2 & 53.4 \\\\\nLLaMA-Adapter-v2 [13] & ViT-L (0.3B) & LLaMA (7B) & 1328.40 & 39.5 & 31.4 & 32.7 \\\\\nOtter [24] & ViT-L (0.3B) & LLaMA (7B) & 1292.26 & 48.3 & 24.6 & 32.9 \\\\\nQwen-VL-Chat [2] & ViT-G (1.9B) & Qwen (7B) & 1487.58 & 60.6 & - & 58.2 \\\\\nLLaVA [33] & ViT-L (0.3B) & Vicuna (7B) & 502.82 & 36.2 & 28.1 & 33.5 \\\\\nLLaVA-HACL [33] & ViT-L (0.3B) & Vicuna (7B) & 562.58 & 37.8 & 28.4 & 33.9 \\\\\nMiniGPT-4 [55] & ViT-g (1.3B) & Vicuna (7B) & 581.67 & 23.0 & 22.1 & 42.8 \\\\\nMiniGPT-4-HACL [55] & ViT-g (1.3B) & Vicuna (7B) & 653.94 & 24.5 & 23.8 & 42.5 \\\\\nLLaVA-1.5 [32] & ViT-L (0.3B) & Vicuna (7B) & 1510.70 & 64.3 & 30.5 & 58.6 \\\\\nLLaVA-1.5-HACL [32] & ViT-L (0.3B) & Vicuna (7B) & 1530.10 & 64.5 & 30.4 & 58.9 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Method",
+          "Vision Encoder",
+          "Language Model",
+          "MME",
+          "MMBench",
+          "MM-Vet",
+          "SEED-Bench"
+        ],
+        [
+          "BLIP-2 [27]",
+          "ViT-g (1.3B)",
+          "Vicuna (7B)",
+          "1293.84",
+          "-",
+          "22.4",
+          "46.4"
+        ],
+        [
+          "mPLUG-Owl [51]",
+          "ViT-L (0.3B)",
+          "LLaMA (7B)",
+          "967.34",
+          "46.6",
+          "-",
+          "34.0"
+        ],
+        [
+          "InstructBLIP [10]",
+          "ViT-g (1.3B)",
+          "Vicuna (7B)",
+          "1212.82",
+          "36.0",
+          "26.2",
+          "53.4"
+        ],
+        [
+          "LLaMA-Adapter-v2 [13]",
+          "ViT-L (0.3B)",
+          "LLaMA (7B)",
+          "1328.40",
+          "39.5",
+          "31.4",
+          "32.7"
+        ],
+        [
+          "Otter [24]",
+          "ViT-L (0.3B)",
+          "LLaMA (7B)",
+          "1292.26",
+          "48.3",
+          "24.6",
+          "32.9"
+        ],
+        [
+          "Qwen-VL-Chat [2]",
+          "ViT-G (1.9B)",
+          "Qwen (7B)",
+          "1487.58",
+          "60.6",
+          "-",
+          "58.2"
+        ],
+        [
+          "LLaVA [33]",
+          "ViT-L (0.3B)",
+          "Vicuna (7B)",
+          "502.82",
+          "36.2",
+          "28.1",
+          "33.5"
+        ],
+        [
+          "LLaVA-HACL [33]",
+          "ViT-L (0.3B)",
+          "Vicuna (7B)",
+          "562.58",
+          "37.8",
+          "28.4",
+          "33.9"
+        ],
+        [
+          "MiniGPT-4 [55]",
+          "ViT-g (1.3B)",
+          "Vicuna (7B)",
+          "581.67",
+          "23.0",
+          "22.1",
+          "42.8"
+        ],
+        [
+          "MiniGPT-4-HACL [55]",
+          "ViT-g (1.3B)",
+          "Vicuna (7B)",
+          "653.94",
+          "24.5",
+          "23.8",
+          "42.5"
+        ],
+        [
+          "LLaVA-1.5 [32]",
+          "ViT-L (0.3B)",
+          "Vicuna (7B)",
+          "1510.70",
+          "64.3",
+          "30.5",
+          "58.6"
+        ],
+        [
+          "LLaVA-1.5-HACL [32]",
+          "ViT-L (0.3B)",
+          "Vicuna (7B)",
+          "1530.10",
+          "64.5",
+          "30.4",
+          "58.9"
+        ]
+      ],
+      "nearby_context": "Table comparing methods on MME, MMBench, MM-Vet, SEED-Bench. Methods include BLIP-2, mPLUG-Owl, InstructBLIP, LLaMA-Adapter-v2, Otter, Qwen-VL-Chat, LLaVA, LLaVA-HACL, MiniGPT-4, MiniGPT-4-HACL, LLaVA-1.5, LLaVA-1.5-HACL.",
+      "table_shape": {
+        "rows": 13,
+        "columns": 7
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 4. Zero-shot multi-modal evaluation on multi-modal benchmarks including MME [12], MMBench [34], MM-Vet [52], SEEDBench [23]. The overall scores are reported for evaluation. For MMBench, we report test results.",
+        "caption_kind": "table",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P008_B0003",
+          "P008_B0004"
+        ],
+        "media_block_ids": [
+          "P008_B0003"
+        ],
+        "table_block_ids": [
+          "P008_B0003"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing methods on MME, MMBench, MM-Vet, SEED-Bench. Methods include BLIP-2, mPLUG-Owl, InstructBLIP, LLaMA-Adapter-v2, Otter, Qwen-VL-Chat, LLaVA, LLaVA-HACL, MiniGPT-4, MiniGPT-4-HACL, LLaVA-1.5, LLaVA-1.5-HACL.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_005",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S11",
+      "section_title": "4.4. Ablation Study",
+      "macro_id": "M8",
+      "macro_candidates": [
+        {
+          "macro_id": "M8",
+          "title": "Ablation Study and Visualization",
+          "role": "ablation_analysis",
+          "order": 8
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S11_0006",
+      "source_block_ids": [
+        "P008_B0006",
+        "P008_B0007"
+      ],
+      "media_block_ids": [
+        "P008_B0006"
+      ],
+      "caption": "The result of ablations for the impact of hallucinative captions. We report the text-dev score results of POPE[28], MMhalBench [44], VQA and MME. w/ CL refers to training MLLMs with Contrastive Learning for MLLMs, w/ HC refers to utilize hallucinative captions to enhance the contrastive learning. For POPE, we report the average F1 score.",
+      "caption_kind": "table",
+      "caption_number": "5",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Model</td><td style='text-align: center; word-wrap: break-word;'>w/ CL</td><td style='text-align: center; word-wrap: break-word;'>w/ HC</td><td style='text-align: center; word-wrap: break-word;'>POPE</td><td style='text-align: center; word-wrap: break-word;'>MMHal</td><td style='text-align: center; word-wrap: break-word;'>VQA</td><td style='text-align: center; word-wrap: break-word;'>MME</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>66.48</td><td style='text-align: center; word-wrap: break-word;'>1.55</td><td style='text-align: center; word-wrap: break-word;'>71.32</td><td style='text-align: center; word-wrap: break-word;'>502.82</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>69.23</td><td style='text-align: center; word-wrap: break-word;'>1.67</td><td style='text-align: center; word-wrap: break-word;'>72.98</td><td style='text-align: center; word-wrap: break-word;'>549.04</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>78.31</td><td style='text-align: center; word-wrap: break-word;'>2.08</td><td style='text-align: center; word-wrap: break-word;'>73.30</td><td style='text-align: center; word-wrap: break-word;'>562.58</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MiniGP-4</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>47.38</td><td style='text-align: center; word-wrap: break-word;'>1.39</td><td style='text-align: center; word-wrap: break-word;'>65.2</td><td style='text-align: center; word-wrap: break-word;'>581.67</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MiniGP-4</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>53.54</td><td style='text-align: center; word-wrap: break-word;'>1.45</td><td style='text-align: center; word-wrap: break-word;'>67.6</td><td style='text-align: center; word-wrap: break-word;'>633.21</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MiniGP-4</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>77.54</td><td style='text-align: center; word-wrap: break-word;'>1.80</td><td style='text-align: center; word-wrap: break-word;'>68.9</td><td style='text-align: center; word-wrap: break-word;'>653.94</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA1.5</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>86.15</td><td style='text-align: center; word-wrap: break-word;'>2.08</td><td style='text-align: center; word-wrap: break-word;'>78.5</td><td style='text-align: center; word-wrap: break-word;'>1510.70</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA1.5</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>86.31</td><td style='text-align: center; word-wrap: break-word;'>2.09</td><td style='text-align: center; word-wrap: break-word;'>78.7</td><td style='text-align: center; word-wrap: break-word;'>1523.84</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA1.5</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>87.26</td><td style='text-align: center; word-wrap: break-word;'>2.13</td><td style='text-align: center; word-wrap: break-word;'>79.1</td><td style='text-align: center; word-wrap: break-word;'>1530.10</td></tr></table>",
+      "normalized_markdown": "| Model | w/ CL | w/ HC | POPE | MMHal | VQA | MME |\n| --- | --- | --- | --- | --- | --- | --- |\n| LLaVA | ✗ | ✗ | 66.48 | 1.55 | 71.32 | 502.82 |\n| LLaVA | ✓ | ✗ | 69.23 | 1.67 | 72.98 | 549.04 |\n| LLaVA | ✓ | ✓ | 78.31 | 2.08 | 73.30 | 562.58 |\n| MiniGP-4 | ✗ | ✗ | 47.38 | 1.39 | 65.2 | 581.67 |\n| MiniGP-4 | ✓ | ✗ | 53.54 | 1.45 | 67.6 | 633.21 |\n| MiniGP-4 | ✓ | ✓ | 77.54 | 1.80 | 68.9 | 653.94 |\n| LLaVA1.5 | ✗ | ✗ | 86.15 | 2.08 | 78.5 | 1510.70 |\n| LLaVA1.5 | ✓ | ✗ | 86.31 | 2.09 | 78.7 | 1523.84 |\n| LLaVA1.5 | ✓ | ✓ | 87.26 | 2.13 | 79.1 | 1530.10 |",
+      "normalized_latex": "\\begin{tabular}{lllllll}\n\\hline\nModel & w/ CL & w/ HC & POPE & MMHal & VQA & MME \\\\\n\\hline\nLLaVA & ✗ & ✗ & 66.48 & 1.55 & 71.32 & 502.82 \\\\\nLLaVA & ✓ & ✗ & 69.23 & 1.67 & 72.98 & 549.04 \\\\\nLLaVA & ✓ & ✓ & 78.31 & 2.08 & 73.30 & 562.58 \\\\\nMiniGP-4 & ✗ & ✗ & 47.38 & 1.39 & 65.2 & 581.67 \\\\\nMiniGP-4 & ✓ & ✗ & 53.54 & 1.45 & 67.6 & 633.21 \\\\\nMiniGP-4 & ✓ & ✓ & 77.54 & 1.80 & 68.9 & 653.94 \\\\\nLLaVA1.5 & ✗ & ✗ & 86.15 & 2.08 & 78.5 & 1510.70 \\\\\nLLaVA1.5 & ✓ & ✗ & 86.31 & 2.09 & 78.7 & 1523.84 \\\\\nLLaVA1.5 & ✓ & ✓ & 87.26 & 2.13 & 79.1 & 1530.10 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "w/ CL",
+          "w/ HC",
+          "POPE",
+          "MMHal",
+          "VQA",
+          "MME"
+        ],
+        [
+          "LLaVA",
+          "✗",
+          "✗",
+          "66.48",
+          "1.55",
+          "71.32",
+          "502.82"
+        ],
+        [
+          "LLaVA",
+          "✓",
+          "✗",
+          "69.23",
+          "1.67",
+          "72.98",
+          "549.04"
+        ],
+        [
+          "LLaVA",
+          "✓",
+          "✓",
+          "78.31",
+          "2.08",
+          "73.30",
+          "562.58"
+        ],
+        [
+          "MiniGP-4",
+          "✗",
+          "✗",
+          "47.38",
+          "1.39",
+          "65.2",
+          "581.67"
+        ],
+        [
+          "MiniGP-4",
+          "✓",
+          "✗",
+          "53.54",
+          "1.45",
+          "67.6",
+          "633.21"
+        ],
+        [
+          "MiniGP-4",
+          "✓",
+          "✓",
+          "77.54",
+          "1.80",
+          "68.9",
+          "653.94"
+        ],
+        [
+          "LLaVA1.5",
+          "✗",
+          "✗",
+          "86.15",
+          "2.08",
+          "78.5",
+          "1510.70"
+        ],
+        [
+          "LLaVA1.5",
+          "✓",
+          "✗",
+          "86.31",
+          "2.09",
+          "78.7",
+          "1523.84"
+        ],
+        [
+          "LLaVA1.5",
+          "✓",
+          "✓",
+          "87.26",
+          "2.13",
+          "79.1",
+          "1530.10"
+        ]
+      ],
+      "nearby_context": "Table showing ablation study of hallucinative captions. Columns: Model, w/ CL, w/ HC, POPE, MMHal, VQA, MME. Rows: LLaVA, MiniGP-4, LLaVA1.5 with different settings.",
+      "table_shape": {
+        "rows": 10,
+        "columns": 7
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "ablation_table",
+        "caption": "The result of ablations for the impact of hallucinative captions. We report the text-dev score results of POPE[28], MMhalBench [44], VQA and MME. w/ CL refers to training MLLMs with Contrastive Learning for MLLMs, w/ HC refers to utilize hallucinative captions to enhance the contrastive learning. For POPE, we report the average F1 score.",
+        "caption_kind": "table",
+        "caption_number": "5",
+        "source_block_ids": [
+          "P008_B0006",
+          "P008_B0007"
+        ],
+        "media_block_ids": [
+          "P008_B0006"
+        ],
+        "table_block_ids": [
+          "P008_B0006"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table showing ablation study of hallucinative captions. Columns: Model, w/ CL, w/ HC, POPE, MMHal, VQA, MME. Rows: LLaVA, MiniGP-4, LLaVA1.5 with different settings.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_006",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S11",
+      "section_title": "4.4. Ablation Study",
+      "macro_id": "M8",
+      "macro_candidates": [
+        {
+          "macro_id": "M8",
+          "title": "Ablation Study and Visualization",
+          "role": "ablation_analysis",
+          "order": 8
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S11_0006",
+      "source_block_ids": [
+        "P008_B0008",
+        "P008_B0009"
+      ],
+      "media_block_ids": [
+        "P008_B0008"
+      ],
+      "caption": "Results of models under different training paradigms. \"+VE\" denotes training the Visual Encoder during Stage 1 pretraining, while \"+LLM\" indicates training the LLM during Stage 1 pretraining.",
+      "caption_kind": "table",
+      "caption_number": "6",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>model</td><td style='text-align: center; word-wrap: break-word;'>+VE</td><td style='text-align: center; word-wrap: break-word;'>+LLM</td><td style='text-align: center; word-wrap: break-word;'>POPE</td><td style='text-align: center; word-wrap: break-word;'>MMHal</td><td style='text-align: center; word-wrap: break-word;'>VQA</td><td style='text-align: center; word-wrap: break-word;'>MME</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA-HACL</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>63.42</td><td style='text-align: center; word-wrap: break-word;'>1.43</td><td style='text-align: center; word-wrap: break-word;'>65.0</td><td style='text-align: center; word-wrap: break-word;'>324.50</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA-HACL</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>78.53</td><td style='text-align: center; word-wrap: break-word;'>2.08</td><td style='text-align: center; word-wrap: break-word;'>74.2</td><td style='text-align: center; word-wrap: break-word;'>580.32</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA-HACL</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>78.31</td><td style='text-align: center; word-wrap: break-word;'>2.08</td><td style='text-align: center; word-wrap: break-word;'>73.3</td><td style='text-align: center; word-wrap: break-word;'>562.58</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA1.5-HACL</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>68.89</td><td style='text-align: center; word-wrap: break-word;'>1.53</td><td style='text-align: center; word-wrap: break-word;'>69.6</td><td style='text-align: center; word-wrap: break-word;'>459.34</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA1.5-HACL</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>87.23</td><td style='text-align: center; word-wrap: break-word;'>2.13</td><td style='text-align: center; word-wrap: break-word;'>79.4</td><td style='text-align: center; word-wrap: break-word;'>1542.48</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LLaVA1.5-HACL</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>87.26</td><td style='text-align: center; word-wrap: break-word;'>2.13</td><td style='text-align: center; word-wrap: break-word;'>79.1</td><td style='text-align: center; word-wrap: break-word;'>1530.10</td></tr></table>",
+      "normalized_markdown": "| model | +VE | +LLM | POPE | MMHal | VQA | MME |\n| --- | --- | --- | --- | --- | --- | --- |\n| LLaVA-HACL | ✓ | ✗ | 63.42 | 1.43 | 65.0 | 324.50 |\n| LLaVA-HACL | ✗ | ✓ | 78.53 | 2.08 | 74.2 | 580.32 |\n| LLaVA-HACL | ✗ | ✗ | 78.31 | 2.08 | 73.3 | 562.58 |\n| LLaVA1.5-HACL | ✓ | ✗ | 68.89 | 1.53 | 69.6 | 459.34 |\n| LLaVA1.5-HACL | ✗ | ✓ | 87.23 | 2.13 | 79.4 | 1542.48 |\n| LLaVA1.5-HACL | ✗ | ✗ | 87.26 | 2.13 | 79.1 | 1530.10 |",
+      "normalized_latex": "\\begin{tabular}{lllllll}\n\\hline\nmodel & +VE & +LLM & POPE & MMHal & VQA & MME \\\\\n\\hline\nLLaVA-HACL & ✓ & ✗ & 63.42 & 1.43 & 65.0 & 324.50 \\\\\nLLaVA-HACL & ✗ & ✓ & 78.53 & 2.08 & 74.2 & 580.32 \\\\\nLLaVA-HACL & ✗ & ✗ & 78.31 & 2.08 & 73.3 & 562.58 \\\\\nLLaVA1.5-HACL & ✓ & ✗ & 68.89 & 1.53 & 69.6 & 459.34 \\\\\nLLaVA1.5-HACL & ✗ & ✓ & 87.23 & 2.13 & 79.4 & 1542.48 \\\\\nLLaVA1.5-HACL & ✗ & ✗ & 87.26 & 2.13 & 79.1 & 1530.10 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "model",
+          "+VE",
+          "+LLM",
+          "POPE",
+          "MMHal",
+          "VQA",
+          "MME"
+        ],
+        [
+          "LLaVA-HACL",
+          "✓",
+          "✗",
+          "63.42",
+          "1.43",
+          "65.0",
+          "324.50"
+        ],
+        [
+          "LLaVA-HACL",
+          "✗",
+          "✓",
+          "78.53",
+          "2.08",
+          "74.2",
+          "580.32"
+        ],
+        [
+          "LLaVA-HACL",
+          "✗",
+          "✗",
+          "78.31",
+          "2.08",
+          "73.3",
+          "562.58"
+        ],
+        [
+          "LLaVA1.5-HACL",
+          "✓",
+          "✗",
+          "68.89",
+          "1.53",
+          "69.6",
+          "459.34"
+        ],
+        [
+          "LLaVA1.5-HACL",
+          "✗",
+          "✓",
+          "87.23",
+          "2.13",
+          "79.4",
+          "1542.48"
+        ],
+        [
+          "LLaVA1.5-HACL",
+          "✗",
+          "✗",
+          "87.26",
+          "2.13",
+          "79.1",
+          "1530.10"
+        ]
+      ],
+      "nearby_context": "Table showing results under different training paradigms. Columns: model, +VE, +LLM, POPE, MMHal, VQA, MME. Rows: LLaVA-HACL and LLaVA1.5-HACL with different settings.",
+      "table_shape": {
+        "rows": 7,
+        "columns": 7
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "ablation_table",
+        "caption": "Results of models under different training paradigms. \"+VE\" denotes training the Visual Encoder during Stage 1 pretraining, while \"+LLM\" indicates training the LLM during Stage 1 pretraining.",
+        "caption_kind": "table",
+        "caption_number": "6",
+        "source_block_ids": [
+          "P008_B0008",
+          "P008_B0009"
+        ],
+        "media_block_ids": [
+          "P008_B0008"
+        ],
+        "table_block_ids": [
+          "P008_B0008"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table showing results under different training paradigms. Columns: model, +VE, +LLM, POPE, MMHal, VQA, MME. Rows: LLaVA-HACL and LLaVA1.5-HACL with different settings.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "chart",
+      "section_id": "S11",
+      "section_title": "4.4. Ablation Study",
+      "macro_id": "M8",
+      "macro_candidates": [
+        {
+          "macro_id": "M8",
+          "title": "Ablation Study and Visualization",
+          "role": "ablation_analysis",
+          "order": 8
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S11_0007",
+      "source_block_ids": [
+        "P009_B0001",
+        "P009_B0002",
+        "P009_B0003",
+        "P009_B0004",
+        "P009_B0005",
+        "P009_B0006",
+        "P009_B0007"
+      ],
+      "media_block_ids": [
+        "P009_B0001",
+        "P009_B0003",
+        "P009_B0005"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_chart_box_155_158_379_430.jpg",
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_chart_box_499_157_724_429.jpg",
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_chart_box_842_158_1066_429.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_chart_box_155_158_379_430.jpg",
+          "caption": "Figure 4. This figure illustrates the visualization of various data distributions. The blue icons represent visual data extracted from images, the green icons denote ground truth caption data, and the red icons signify hallucinative caption data. The label \"w/o HACL\" represents the data distribution obtained from the original model output without employing our proposed method. On the other hand, \"w/ CL\" indicates the data distribution resulting from the model output utilizing contrastive learning. Lastly, \"w/ HACL\" indicates the data distribution generated by the model output using our proposed method."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_chart_box_499_157_724_429.jpg",
+          "caption": "Figure 4. This figure illustrates the visualization of various data distributions. The blue icons represent visual data extracted from images, the green icons denote ground truth caption data, and the red icons signify hallucinative caption data. The label \"w/o HACL\" represents the data distribution obtained from the original model output without employing our proposed method. On the other hand, \"w/ CL\" indicates the data distribution resulting from the model output utilizing contrastive learning. Lastly, \"w/ HACL\" indicates the data distribution generated by the model output using our proposed method."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_chart_box_842_158_1066_429.jpg",
+          "caption": "Figure 4. This figure illustrates the visualization of various data distributions. The blue icons represent visual data extracted from images, the green icons denote ground truth caption data, and the red icons signify hallucinative caption data. The label \"w/o HACL\" represents the data distribution obtained from the original model output without employing our proposed method. On the other hand, \"w/ CL\" indicates the data distribution resulting from the model output utilizing contrastive learning. Lastly, \"w/ HACL\" indicates the data distribution generated by the model output using our proposed method."
+        }
+      ],
+      "caption": "Figure 4. This figure illustrates the visualization of various data distributions. The blue icons represent visual data extracted from images, the green icons denote ground truth caption data, and the red icons signify hallucinative caption data. The label \"w/o HACL\" represents the data distribution obtained from the original model output without employing our proposed method. On the other hand, \"w/ CL\" indicates the data distribution resulting from the model output utilizing contrastive learning. Lastly, \"w/ HACL\" indicates the data distribution generated by the model output using our proposed method.",
+      "caption_kind": "figure",
+      "caption_number": "4",
+      "nearby_context": "Three subfigures (a) w/o HACL, (b) w/ CL, (c) w/ HACL showing data distributions with blue, green, red icons.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P009_B0001",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_2",
+          "panel_label": null,
+          "source_block_id": "P009_B0003",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_3",
+          "panel_label": null,
+          "source_block_id": "P009_B0005",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "chart",
+        "caption": "Figure 4. This figure illustrates the visualization of various data distributions. The blue icons represent visual data extracted from images, the green icons denote ground truth caption data, and the red icons signify hallucinative caption data. The label \"w/o HACL\" represents the data distribution obtained from the original model output without employing our proposed method. On the other hand, \"w/ CL\" indicates the data distribution resulting from the model output utilizing contrastive learning. Lastly, \"w/ HACL\" indicates the data distribution generated by the model output using our proposed method.",
+        "caption_kind": "figure",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P009_B0001",
+          "P009_B0002",
+          "P009_B0003",
+          "P009_B0004",
+          "P009_B0005",
+          "P009_B0006",
+          "P009_B0007"
+        ],
+        "media_block_ids": [
+          "P009_B0001",
+          "P009_B0003",
+          "P009_B0005"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P009_B0001",
+          "P009_B0003",
+          "P009_B0005"
+        ],
+        "description_from_html": "Three subfigures (a) w/o HACL, (b) w/ CL, (c) w/ HACL showing data distributions with blue, green, red icons.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 3
+      }
+    }
+  ],
+  "summary": {
+    "asset_count": 10,
+    "by_asset_type": {
+      "figure": 4,
+      "table": 6
+    },
+    "by_modality_class": {
+      "evidential": 7,
+      "explanatory": 3
+    },
+    "macro_unresolved_count": 0
+  }
+}

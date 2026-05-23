@@ -1,0 +1,2967 @@
+{
+  "paper_id": "SHIFT_ICCV2025_-11pages",
+  "schema_version": "v1",
+  "challenge_plans_path": "data/SHIFT_ICCV2025_-11pages/cache/questions/challenge_plans.json",
+  "challenge_plan_summary": {
+    "plan_count": 76,
+    "by_type": {
+      "false_premise_challenge": 52,
+      "overclaim_challenge": 12,
+      "wrong_relation_challenge": 12
+    },
+    "by_modality_pool": {
+      "multimodal": 40,
+      "text": 36
+    },
+    "text_plan_count": 36,
+    "multimodal_plan_count": 40,
+    "multimodal_plan_limit": 40
+  },
+  "challenge_questions_raw_path": "data/SHIFT_ICCV2025_-11pages/cache/questions/challenge_questions_raw.json",
+  "challenge_question_raw_summary": {
+    "raw_question_count": 73,
+    "by_type": {
+      "false_premise_challenge": 14,
+      "overclaim_challenge": 5,
+      "wrong_relation_challenge": 1
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    }
+  },
+  "challenge_questions_filtered_path": "data/SHIFT_ICCV2025_-11pages/cache/questions/challenge_questions_filtered.json",
+  "challenge_solver_trials_path": "data/SHIFT_ICCV2025_-11pages/cache/questions/challenge_solver_trials.json",
+  "challenge_filter_summary": {
+    "plan_pool_count": 76,
+    "target_count": 20,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 73,
+    "solver_trial_count": 65,
+    "filtered_count": 20,
+    "human_review_count": 9,
+    "rejected_count": 53,
+    "blacklisted_plan_count": 14,
+    "by_type": {
+      "false_premise_challenge": 14,
+      "overclaim_challenge": 5,
+      "wrong_relation_challenge": 1
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    },
+    "stop_reason": {
+      "text": "target_reached",
+      "multimodal": {
+        "figure": "target_reached",
+        "remaining": "target_reached"
+      }
+    }
+  },
+  "challenge_questions": [
+    {
+      "question_id": "CHQ_0002",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0010",
+      "source_challenge_plan_id": "CHP_0010",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "In the paper, the mutation layer selection uses JSD. Can this criterion be applied to any multimodal model or dataset, or is it specific to the paper's setup?",
+      "surface_intent": "Clarifying the generalizability of the mutation layer selection method",
+      "target_kc_ids": [
+        "KC54"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'not_specified', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC54",
+          "text": "where $ P_{l} $ is the probability distribution of the l-th layer. After that, the JSD between the probability distributions of any two adjacent layers is calculated, then the mutation layer $ L_{mutation} $ with the maximum JSD is selected by\n\n$$ L_{mutation}=\\underset{l^{*}<l<N-1}{\\arg\\max}JSD(P_{l-1}||P_{l}), $$\n\nwhere the $ l^{*} $-th layer is the boundary of the hierarchical phenomenon in\n\n$$ \\begin{aligned}L_{mutation}^{*}=\\{l\\mid\\exists\\epsilon,\\delta>0such that JSD(P_{l-1}||P_{l})>\\epsilon\\\\ and\\left|\\frac{JSD(P_{l}||P_{l+1})-JSD(P_{l-1}||P_{l})}{JSD(P_{l-1}||P_{l})}\\right|>\\delta\\right\\},\\end{aligned} $$",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question was purely factual and did not probe the model's tendency to overgeneralize the claim. The plan's trap requires asking about applicability beyond the paper's scope, but the question asked only for the criterion, which the solvers could answer without overclaiming. Revision guidance: Ask a question that directly tests whether the model overgeneralizes the mutation layer selection criterion. For example: 'In the paper, the mutation layer selection uses JSD. Can this criterion be applied to any multimodal model or dataset, or is it specific to the paper's setup?' This pushes the model to either correctly limit the scope or overclaim by saying it applies broadly."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally probes the scope of the claim without exposing metadata. It targets overclaim by asking about generalization beyond the paper's context, aligning with the challenge plan's target failure mode. The evidence supports answering that the method is specific to the paper's setup.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0036",
+      "source_challenge_plan_id": "CHP_0036",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "How is the hierarchical boundary determined when selecting mutation layers in the model?",
+      "surface_intent": "understanding the criterion for hierarchical boundary in mutation layer selection",
+      "target_kc_ids": [
+        "KC54"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The definition requires both an absolute threshold epsilon and a relative change threshold delta.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC54",
+          "text": "where $ P_{l} $ is the probability distribution of the l-th layer. After that, the JSD between the probability distributions of any two adjacent layers is calculated, then the mutation layer $ L_{mutation} $ with the maximum JSD is selected by\n\n$$ L_{mutation}=\\underset{l^{*}<l<N-1}{\\arg\\max}JSD(P_{l-1}||P_{l}), $$\n\nwhere the $ l^{*} $-th layer is the boundary of the hierarchical phenomenon in\n\n$$ \\begin{aligned}L_{mutation}^{*}=\\{l\\mid\\exists\\epsilon,\\delta>0such that JSD(P_{l-1}||P_{l})>\\epsilon\\\\ and\\left|\\frac{JSD(P_{l}||P_{l+1})-JSD(P_{l-1}||P_{l})}{JSD(P_{l-1}||P_{l})}\\right|>\\delta\\right\\},\\end{aligned} $$",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose hidden labels, and directly asks about the hierarchical boundary determination, which is the focus of the false premise challenge. It can be answered from the evidence and allows judging whether the solver uses the incomplete definition (only epsilon) or the correct one (epsilon and delta).",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0014",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0001",
+      "source_challenge_plan_id": "CHP_0001",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "The paper identifies a pattern where hallucinated tokens exhibit a sharp probability rise after the mutation layer. Based on the reported experiments, to what extent does this finding generalize across different tasks and datasets?",
+      "surface_intent": "Asks about the generality of a key finding from the paper",
+      "target_kc_ids": [
+        "KC45"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'not_specified', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC45",
+          "text": "across layers. For hallucinated predictions, such as “man” are shown in Figure 3(a), the token initially has low probability, with “woman” as the top prediction. After 27-th layer, the probability of “man” rises sharply and surpasses “woman”, indicating that contradictory information is injected at this stage, ultimately leading to hallucination. In contrast, for correct predictions (Figure 3(b)), probability fluctuations remain within semantically related tokens (e.g., “boy” and “child”), suggesting that the injected information is correlated with the original context and does not impair prediction accuracy. Among 1206 manually identified hallucinated tokens, 1062 exhibit mutations in deep layers, indicating that hierarchical mutation is a widespread phenomenon in MLLMs. Our analysis reveals a consistent pattern: when the injected knowledge contradicts prior context, hallucinations emerge; when it is semantically aligned, the model maintains faithful outputs by preserving contextual consistency.",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the generality of the finding, which directly targets the overclaim failure mode without exposing any metadata. It can be answered from the evidence that the claim is limited to reported experiments.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0019",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0025",
+      "source_challenge_plan_id": "CHP_0025",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "What do the GPT-4v evaluation results show about SHIFT's performance compared to vanilla models, and what can be inferred about its general effectiveness in reducing hallucinations?",
+      "surface_intent": "asks for a summary of the reported improvements and their broader implications for hallucination reduction",
+      "target_kc_ids": [
+        "KC88"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'hallucination evaluation', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC88",
+          "text": "We further use GPT-4v to evaluate the quality of descriptions generated by SHIFT. Two metrics are considered, including correctness (C) and detailedness (D). As shown in Table 4, the proposed method outperforms the vanilla models up to 0.84% and 0.24% in terms of correctness and detailedness, respectively, indicating that SHIFT can provide accurate and detailed descriptions even on more challenging hallucination evaluation scenarios. Given GPT-4V's perception and reasoning abilities, which closely resemble those of humans, the evaluation results based on it provide a meaningful indication of SHIFT's effectiveness in reducing hallucinations from a human-centered perspective.",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally elicits both the reported improvements and an inference about general effectiveness, which aligns with the overclaim trap. It does not expose hidden labels or metadata, and the target failure mode is clearly testable.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0027",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0028",
+      "source_challenge_plan_id": "CHP_0028",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "How does the SHIFT operation adjust the feature vector at different layers according to the formula provided in the paper?",
+      "surface_intent": "Asks for a detailed explanation of the SHIFT operation's effect on feature vectors as described by the given equation.",
+      "target_kc_ids": [
+        "KC55"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'not_specified', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC55",
+          "text": "$$ V_{l}^{*}=\\begin{cases}V_{l}&if l<L_{mutation}^{*}\\\\ \\alpha\\cdot V_{l-1}+(1-\\alpha)\\cdot V_{l}&if l=L_{mutation}^{*}\\\\ V_{l-1}&if l>L_{mutation}^{*}\\end{cases}, $$\n\n<!-- page 6: doc_4.md -->\n\nwhere $ V_l $ is the feature vector of the $ l $-th layer, $ \\alpha $ is an adjustment parameter, and $ f(\\cdot) $ is the transformer block. With the greedy decoding, the prediction of the next token $ x_t^* $ is",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and follows the challenge plan's intent. It asks for an explanation of the SHIFT operation based on the formula, which can be answered from the provided evidence. It does not expose any hidden metadata or labels, and it is not ambiguous in a way that hinders evaluation of overclaim.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0032",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0012",
+      "source_challenge_plan_id": "CHP_0012",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "What does the paper conclude about the role of mutation layers in causing hallucinations?",
+      "surface_intent": "asking the paper's conclusion on the causal role of mutation layers in hallucinations",
+      "target_kc_ids": [
+        "KC45"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The analysis shows a strong correlation but does not claim causality for all hallucinations. There may be other factors.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC45",
+          "text": "across layers. For hallucinated predictions, such as “man” are shown in Figure 3(a), the token initially has low probability, with “woman” as the top prediction. After 27-th layer, the probability of “man” rises sharply and surpasses “woman”, indicating that contradictory information is injected at this stage, ultimately leading to hallucination. In contrast, for correct predictions (Figure 3(b)), probability fluctuations remain within semantically related tokens (e.g., “boy” and “child”), suggesting that the injected information is correlated with the original context and does not impair prediction accuracy. Among 1206 manually identified hallucinated tokens, 1062 exhibit mutations in deep layers, indicating that hierarchical mutation is a widespread phenomenon in MLLMs. Our analysis reveals a consistent pattern: when the injected knowledge contradicts prior context, hallucinations emerge; when it is semantically aligned, the model maintains faithful outputs by preserving contextual consistency.",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question directly asked about the false premise ('sole source'), making it trivial to reject. Solver answers correctly distinguished correlation from causation. Revision guidance: Revise the question to avoid explicitly mentioning the false premise. For example, ask 'What does the paper conclude about the role of mutation layers in causing hallucinations?' without hinting that there might be other causes. Such phrasing could lead a solver to overstate the causal claim, matching the false premise."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden intent. It asks about the paper's conclusion on mutation layers, which aligns with the target false premise failure mode. The paper evidence supports a nuanced answer, making the question answerable and not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0033",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0033",
+      "source_challenge_plan_id": "CHP_0033",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "How is the mutation layer selected in the hierarchical JSD-based method described in the paper?",
+      "surface_intent": "asking about the selection criteria for the mutation layer",
+      "target_kc_ids": [
+        "KC54"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "This ignores the hierarchical boundary condition; layers before the boundary are excluded from consideration.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC54",
+          "text": "where $ P_{l} $ is the probability distribution of the l-th layer. After that, the JSD between the probability distributions of any two adjacent layers is calculated, then the mutation layer $ L_{mutation} $ with the maximum JSD is selected by\n\n$$ L_{mutation}=\\underset{l^{*}<l<N-1}{\\arg\\max}JSD(P_{l-1}||P_{l}), $$\n\nwhere the $ l^{*} $-th layer is the boundary of the hierarchical phenomenon in\n\n$$ \\begin{aligned}L_{mutation}^{*}=\\{l\\mid\\exists\\epsilon,\\delta>0such that JSD(P_{l-1}||P_{l})>\\epsilon\\\\ and\\left|\\frac{JSD(P_{l}||P_{l+1})-JSD(P_{l-1}||P_{l})}{JSD(P_{l-1}||P_{l})}\\right|>\\delta\\right\\},\\end{aligned} $$",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden metadata. It directly asks about the mutation layer selection method, which aligns with the false premise challenge. The answer can be compared to the evidence to determine if the hierarchical boundary condition is correctly included.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0049",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0029",
+      "source_challenge_plan_id": "CHP_0029",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "How are information mutations in deep layers and the proposed filtering strategy causally related according to the paper?",
+      "surface_intent": "appears to ask about the causal relationship between information mutations and the mitigation strategy",
+      "target_kc_ids": [
+        "KC17",
+        "KC16"
+      ],
+      "target_edge_ids": [
+        "E78"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E78",
+          "kc_ids": [
+            "KC17",
+            "KC16"
+          ],
+          "text": "leads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming dominant and ultimately appearing in the final response, thereby causing hallucinations."
+        },
+        {
+          "kc_id": "KC17",
+          "text": "leads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming dominant and ultimately appearing in the final response, thereby causing hallucinations.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC16",
+          "text": "leads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming dominant and ultimately appearing in the final response, thereby causing hallucinations.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, follows the intended failure mode (wrong relation) by probing the causal direction between information mutations and the filtering strategy, and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0050",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0013",
+      "source_challenge_plan_id": "CHP_0013",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "The paper demonstrates that SHIFT effectively mitigates hallucinations across different datasets. What specific numbers are reported for MSCOCO?",
+      "surface_intent": "Ask for detailed performance metrics of SHIFT on MSCOCO, implying broader dataset effectiveness.",
+      "target_kc_ids": [
+        "KC81"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'hallucination mitigation', 'dataset': 'MSCOCO', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC81",
+          "text": "operate with any decoding method and effectively reduce hallucinations. For instance, on the MSCOCO dataset, SHIFT achieves accuracy improvements of up to 5.59%, 5.43%, and 7.6% compared to the original LLaVA-1.5, mPLUG-Owl2, and InstructBlip models under different settings, with F1 scores also improving by 4.31%, 4.24%, and 5.87%. Additionally, as the difficulty increases from random to popular and then to adversarial settings, models experience noticeable performance drops. Nevertheless, our method continues to enhance the model's resistance to hallucinations, demonstrating its robustness in challenging scenarios. Compared to other hallucination mitigation methods, SHIFT still demonstrates superior performance across different datasets and settings. Taking the MSCOCO dataset as an example, SHIFT achieves maximum accuracy and F1 score improvements of up to 2.6%/1.97%, 4.1%/2.34%, and 0.94%/0.89% across the three models compared to OPERA, which is based on Beam Search. In comparison with the nucleus-based VCD and ICD methods, SHIFT shows performance advantages of 3.8%/2.3%, 4.08%/2.88%, and 11.53%/6.76%. Notably, as the setting difficulty increases, SHIFT's performance lead becomes",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "Question is natural, serious, and aligns with the challenge plan; it asks for specific MSCOCO numbers while allowing evaluation of whether the model overclaims.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0054",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0015",
+      "source_challenge_plan_id": "CHP_0015",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on the paper's analysis, what does the paper conclude about the tendency of mutation layers in token replacement: do they more often replace correct tokens with hallucinations or replace hallucinations with correct tokens?",
+      "surface_intent": "Assess the model's understanding of the directionality of token mutations in mutation layers.",
+      "target_kc_ids": [
+        "KC51"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "This directly contradicts the KC which states that correct tokens are more often replaced by hallucinations, not the opposite.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC51",
+          "text": "2), hallucinated-to-correct (Type 3), and both hallucinated (Type 4). We randomly sample 100 images from the MSCOCO dataset [31] and tally these cases. As shown in Table 1, among the changed tokens (Types 2 and 3), correct tokens are more often replaced by hallucinations than vice versa, indicating that mutation layers tend to introduce hallucinated content. While not all mutations lead to hallucinations, most hallucinated tokens stem from such mutations. This suggests that smoothing mutation layers with information from preceding layers can help retain correct tokens and suppress hallucinations.",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly asks about the paper's conclusion regarding mutation layers. It does not expose any hidden metadata, follows the intended failure mode (false premise) by requiring knowledge of the correct direction, and can be answered unambiguously from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0001",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0039",
+      "source_challenge_plan_id": "CHP_0039",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 3, how does the model's overall accuracy for the token '_woman' vary with layer depth?",
+      "surface_intent": "Asking about the model's accuracy trends for a specific token based on a figure.",
+      "target_kc_ids": [
+        "KC99"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 3. The probability changes of tokens across different layers.",
+          "summary": "The figure presents two area charts illustrating the probability evolution of specific tokens across neural network layers. The left chart (Panel 1) displays probabilities for tokens '_woman' and '_man' given the prefix 'The image features a'. The right chart (Panel 2) displays probabilities for tokens '_boy' and '_child' given the prefix 'The image features a man and a young'. Both charts show that certain tokens gain probability mass earlier in the network (around layer 20) while others appear later, demonstrating information flow dynamics.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC99"
+          ],
+          "evidence_bases": [
+            "visual trend in panel 1"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_626_143_869_300.jpg",
+              "caption": "Figure 3. The probability changes of tokens across different layers."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_867_143_1107_300.jpg",
+              "caption": "Figure 3. The probability changes of tokens across different layers."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The y-axis is explicitly labeled 'Probability', referring to token likelihood, not overall task accuracy.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC99",
+          "text": "Asset FIG_003 (figure): Figure 3. The probability changes of tokens across different layers.\nAsset summary: The figure presents two area charts illustrating the probability evolution of specific tokens across neural network layers. The left chart (Panel 1) displays probabilities for tokens '_woman' and '_man' given the prefix 'The image features a'. The right chart (Panel 2) displays probabilities for tokens '_boy' and '_child' given the prefix 'The image features a man and a young'. Both charts show that certain tokens gain probability mass earlier in the network (around layer 20) while others appear later, demonstrating information flow dynamics.\nEvidence basis: visual trend in panel 1\nSupported claim: The probability of the token '_woman' rises significantly between layers 20 and 25.",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC99",
+          "text": "Asset evidence basis: visual trend in panel 1",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly incorporates the false premise (overall accuracy) as intended, is natural, serious, and answerable from the figure (which shows probability not accuracy).",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0046",
+      "source_challenge_plan_id": "CHP_0046",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "From Figure 4, how does the frequency of boundary layers vary across all layers for LLaVA-1.5 and mPLUG-Owl2?",
+      "surface_intent": "Asks about the frequency trend across all layers, expecting a summary based on the figure.",
+      "target_kc_ids": [
+        "KC105"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4. We randomly select 400 images from the MSCOCO dataset and conduct statistical analyses on LLaVA-1.5 and mPLUG-owl2, and the hierarchical phenomenon in all images",
+          "summary": "The figure presents two bar charts comparing the statistical distribution of 'Boundary Layers' for two models, LLaVA-1.5 and mPLUG-Owl2, based on an analysis of 400 MSCOCO images. The left chart shows a monotonically increasing frequency of boundary layers from the 15th to the 18th layer for LLaVA-1.5. The right chart shows a distribution for mPLUG-Owl2 that peaks at the 17th layer (0.44) before decreasing at the 18th layer.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC105"
+          ],
+          "evidence_bases": [
+            "Shortest bars in both charts labeled 0.02 and 0.01 at layer 15."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_645_867_1101_987.jpg",
+              "caption": "Figure 4. We randomly select 400 images from the MSCOCO dataset and conduct statistical analyses on LLaVA-1.5 and mPLUG-owl2, and the hierarchical phenomenon in all images"
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The x-axis only displays layers 15 through 18; earlier or later layers are not shown.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC105",
+          "text": "Asset FIG_004 (figure): Figure 4. We randomly select 400 images from the MSCOCO dataset and conduct statistical analyses on LLaVA-1.5 and mPLUG-owl2, and the hierarchical phenomenon in all images\nAsset summary: The figure presents two bar charts comparing the statistical distribution of 'Boundary Layers' for two models, LLaVA-1.5 and mPLUG-Owl2, based on an analysis of 400 MSCOCO images. The left chart shows a monotonically increasing frequency of boundary layers from the 15th to the 18th layer for LLaVA-1.5. The right chart shows a distribution for mPLUG-Owl2 that peaks at the 17th layer (0.44) before decreasing at the 18th layer.\nEvidence basis: Shortest bars in both charts labeled 0.02 and 0.01 at layer 15.\nSupported claim: The 15th layer has the lowest frequency in both LLaVA-1.5 and mPLUG-Owl2 among the displayed layers.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC105",
+          "text": "Asset evidence basis: Shortest bars in both charts labeled 0.02 and 0.01 at layer 15.",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly asks about variation across all layers, which is a false premise because the figure only displays layers 15-18, directly testing the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0041",
+      "source_challenge_plan_id": "CHP_0041",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "From Figure 3, what can you infer about the model's performance on predicting the tokens '_woman' and '_man'? Specifically, does the model's accuracy for '_man' improve only in the later layers?",
+      "surface_intent": "Appears to ask about the model's accuracy evolution across layers based on the figure.",
+      "target_kc_ids": [
+        "KC100"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 3. The probability changes of tokens across different layers.",
+          "summary": "The figure presents two area charts illustrating the probability evolution of specific tokens across neural network layers. The left chart (Panel 1) displays probabilities for tokens '_woman' and '_man' given the prefix 'The image features a'. The right chart (Panel 2) displays probabilities for tokens '_boy' and '_child' given the prefix 'The image features a man and a young'. Both charts show that certain tokens gain probability mass earlier in the network (around layer 20) while others appear later, demonstrating information flow dynamics.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC100"
+          ],
+          "evidence_bases": [
+            "visual trend in panel 1"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_626_143_869_300.jpg",
+              "caption": "Figure 3. The probability changes of tokens across different layers."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_867_143_1107_300.jpg",
+              "caption": "Figure 3. The probability changes of tokens across different layers."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The y-axis is explicitly labeled 'Probability', referring to token likelihood, not overall task accuracy.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC100",
+          "text": "Asset FIG_003 (figure): Figure 3. The probability changes of tokens across different layers.\nAsset summary: The figure presents two area charts illustrating the probability evolution of specific tokens across neural network layers. The left chart (Panel 1) displays probabilities for tokens '_woman' and '_man' given the prefix 'The image features a'. The right chart (Panel 2) displays probabilities for tokens '_boy' and '_child' given the prefix 'The image features a man and a young'. Both charts show that certain tokens gain probability mass earlier in the network (around layer 20) while others appear later, demonstrating information flow dynamics.\nEvidence basis: visual trend in panel 1\nSupported claim: The probability of the token '_man' rises significantly only in the final layers (28-30).",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC100",
+          "text": "Asset evidence basis: visual trend in panel 1",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly embeds the false premise (accuracy) as intended, is natural, and can be answered from the figure evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0040",
+      "source_challenge_plan_id": "CHP_0040",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Figure 3 presents the model's overall accuracy for different tokens across layers. What trend do you observe for the token '_boy' between layers 20 and 25?",
+      "surface_intent": "Ask about accuracy trend for '_boy' in Figure 3.",
+      "target_kc_ids": [
+        "KC101"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 3. The probability changes of tokens across different layers.",
+          "summary": "The figure presents two area charts illustrating the probability evolution of specific tokens across neural network layers. The left chart (Panel 1) displays probabilities for tokens '_woman' and '_man' given the prefix 'The image features a'. The right chart (Panel 2) displays probabilities for tokens '_boy' and '_child' given the prefix 'The image features a man and a young'. Both charts show that certain tokens gain probability mass earlier in the network (around layer 20) while others appear later, demonstrating information flow dynamics.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC101"
+          ],
+          "evidence_bases": [
+            "visual trend in panel 2"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_626_143_869_300.jpg",
+              "caption": "Figure 3. The probability changes of tokens across different layers."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_867_143_1107_300.jpg",
+              "caption": "Figure 3. The probability changes of tokens across different layers."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The y-axis is explicitly labeled 'Probability', referring to token likelihood, not overall task accuracy.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC101",
+          "text": "Asset FIG_003 (figure): Figure 3. The probability changes of tokens across different layers.\nAsset summary: The figure presents two area charts illustrating the probability evolution of specific tokens across neural network layers. The left chart (Panel 1) displays probabilities for tokens '_woman' and '_man' given the prefix 'The image features a'. The right chart (Panel 2) displays probabilities for tokens '_boy' and '_child' given the prefix 'The image features a man and a young'. Both charts show that certain tokens gain probability mass earlier in the network (around layer 20) while others appear later, demonstrating information flow dynamics.\nEvidence basis: visual trend in panel 2\nSupported claim: The probability of the token '_boy' rises significantly between layers 20 and 25.",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC101",
+          "text": "Asset evidence basis: visual trend in panel 2",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly uses the false premise (accuracy instead of probability) and is natural, serious, and answerable from the figure.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0009",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0051",
+      "source_challenge_plan_id": "CHP_0051",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 9, what do the probability curves for 'shovel' and 'toothbrush' indicate about the effect of SHIFT on token likelihood?",
+      "surface_intent": "Asks about the direction of probability shifts for correct and hallucinated tokens as shown in the figure.",
+      "target_kc_ids": [
+        "KC136"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_009"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_009",
+          "asset_type": "figure",
+          "caption": "Figure 9. SHIFT effectively suppresses token probability mutations caused by injected hallucinated information.",
+          "summary": "Figure 9 illustrates the effectiveness of the SHIFT method in suppressing token probability mutations caused by injected hallucinated information. The left side presents qualitative examples where hallucinated tokens ('toothbrush', 'man') are highlighted in red within generated text descriptions. The right side displays quantitative line charts comparing token probabilities over network layers for 'Vanilla' and 'SHIFT' models. The charts demonstrate that while the Vanilla model exhibits high probability for hallucinated tokens (e.g., 'man', and a token labeled 'Joh' corresponding to 'toothbrush'), the SHIFT method redirects this probability towards correct tokens (e.g., 'woman', 'shovel').",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC136"
+          ],
+          "evidence_bases": [
+            "high probability curves in SHIFT charts matching overlay text"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_009",
+              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_192_141_1032_446.jpg",
+              "caption": "Figure 9. SHIFT effectively suppresses token probability mutations caused by injected hallucinated information."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The caption states SHIFT suppresses mutations, implying the shift is a correction from the hallucination ('toothbrush') to the correct token ('shovel').",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC136",
+          "text": "Asset FIG_009 (figure): Figure 9. SHIFT effectively suppresses token probability mutations caused by injected hallucinated information.\nAsset summary: Figure 9 illustrates the effectiveness of the SHIFT method in suppressing token probability mutations caused by injected hallucinated information. The left side presents qualitative examples where hallucinated tokens ('toothbrush', 'man') are highlighted in red within generated text descriptions. The right side displays quantitative line charts comparing token probabilities over network layers for 'Vanilla' and 'SHIFT' models. The charts demonstrate that while the Vanilla model exhibits high probability for hallucinated tokens (e.g., 'man', and a token labeled 'Joh' corresponding to 'toothbrush'), the SHIFT method redirects this probability towards correct tokens (e.g., 'woman', 'shovel').\nEvidence basis: high probability curves in SHIFT charts matching overlay text\nSupported claim: SHIFT redirects probability mass to correct tokens like 'shovel' and 'woman'.",
+          "span_id": "FIG_009",
+          "asset_id": "FIG_009",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC136",
+          "text": "Asset evidence basis: high probability curves in SHIFT charts matching overlay text",
+          "asset_id": "FIG_009",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose metadata. It asks about probability curves for 'shovel' and 'toothbrush' in Figure 9, which aligns with the challenge plan's focus on SHIFT redirecting probability to correct tokens. The question can be answered from the figure evidence and is not ambiguous in a way that would prevent judging the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0042",
+      "source_challenge_plan_id": "CHP_0042",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 4, describe the distribution of boundary layers across all layers in mPLUG-Owl2 and identify the layer with the highest frequency.",
+      "surface_intent": "The question asks to interpret Figure 4 to describe the distribution of boundary layers across layers for mPLUG-Owl2, and to find the peak frequency.",
+      "target_kc_ids": [
+        "KC104"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4. We randomly select 400 images from the MSCOCO dataset and conduct statistical analyses on LLaVA-1.5 and mPLUG-owl2, and the hierarchical phenomenon in all images",
+          "summary": "The figure presents two bar charts comparing the statistical distribution of 'Boundary Layers' for two models, LLaVA-1.5 and mPLUG-Owl2, based on an analysis of 400 MSCOCO images. The left chart shows a monotonically increasing frequency of boundary layers from the 15th to the 18th layer for LLaVA-1.5. The right chart shows a distribution for mPLUG-Owl2 that peaks at the 17th layer (0.44) before decreasing at the 18th layer.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC104"
+          ],
+          "evidence_bases": [
+            "Tallest bar in the right chart labeled 0.44 at layer 17."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_645_867_1101_987.jpg",
+              "caption": "Figure 4. We randomly select 400 images from the MSCOCO dataset and conduct statistical analyses on LLaVA-1.5 and mPLUG-owl2, and the hierarchical phenomenon in all images"
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The x-axis only displays layers 15 through 18; earlier or later layers are not shown.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC104",
+          "text": "Asset FIG_004 (figure): Figure 4. We randomly select 400 images from the MSCOCO dataset and conduct statistical analyses on LLaVA-1.5 and mPLUG-owl2, and the hierarchical phenomenon in all images\nAsset summary: The figure presents two bar charts comparing the statistical distribution of 'Boundary Layers' for two models, LLaVA-1.5 and mPLUG-Owl2, based on an analysis of 400 MSCOCO images. The left chart shows a monotonically increasing frequency of boundary layers from the 15th to the 18th layer for LLaVA-1.5. The right chart shows a distribution for mPLUG-Owl2 that peaks at the 17th layer (0.44) before decreasing at the 18th layer.\nEvidence basis: Tallest bar in the right chart labeled 0.44 at layer 17.\nSupported claim: In mPLUG-Owl2, the 17th layer has the highest frequency of boundary layers (0.44) among layers 15-18.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC104",
+          "text": "Asset evidence basis: Tallest bar in the right chart labeled 0.44 at layer 17.",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question aligns with the false premise challenge: it asks about the distribution 'across all layers', but the figure only shows layers 15-18, which matches the intended trap. The question is natural, serious, and does not expose metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0073",
+      "source_challenge_plan_id": "CHP_0073",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Table 1, the caption says that after mutation layers, most tokens either remain correct (Type 1) or change from correct to hallucinated (Type 2). Given that Type 3 and Type 4 comprise the remaining 6.5% of tokens, what do these two types represent? Do they correspond to tokens that change from hallucinated to correct or remain hallucinated?",
+      "surface_intent": "asking the model to interpret the meanings of Type 3 and Type 4 based on the table and caption.",
+      "target_kc_ids": [
+        "KC117"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "TAB_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_001",
+          "asset_type": "table",
+          "caption": "Table 1. After the mutation layers, most tokens either remain correct or change from correct to hallucinated.",
+          "summary": "Table 1 reports the percentage distribution of token types after mutation layers, based on the caption: most tokens either remain correct (Type 1, 78.6%) or change from correct to hallucinated (Type 2, 14.9%), with two additional types (Type 3 and Type 4) making up the remaining 6.5%.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC117"
+          ],
+          "evidence_bases": [
+            "Table description: no definitions for Type 3 and Type 4"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_001",
+              "content": "\\begin{tabular}{lllll}\n\\hline\nType 1 & Type 2 & Type 3 & Type 4 & Total \\\\\n\\hline\n78.6\\% & 14.9\\% & 3.36\\% & 3.14\\% & 100\\% \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 1. After the mutation layers, most tokens either remain correct or change from correct to hallucinated."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The caption only describes Type 1 and Type 2; the table does not provide definitions for Type 3 and Type 4, so any specific interpretation is unsupported.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC117",
+          "text": "Asset TAB_001 (table): Table 1. After the mutation layers, most tokens either remain correct or change from correct to hallucinated.\nAsset summary: Table 1 reports the percentage distribution of token types after mutation layers, based on the caption: most tokens either remain correct (Type 1, 78.6%) or change from correct to hallucinated (Type 2, 14.9%), with two additional types (Type 3 and Type 4) making up the remaining 6.5%.\nEvidence basis: Table description: no definitions for Type 3 and Type 4\nSupported claim: Type 3 and Type 4 tokens are not defined in the table, limiting interpretation of the remaining 6.5% of tokens.",
+          "span_id": "TAB_001",
+          "asset_id": "TAB_001",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC117",
+          "text": "Asset evidence basis: Table description: no definitions for Type 3 and Type 4",
+          "asset_id": "TAB_001",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly targets the false premise by asking for interpretation of undefined Type 3 and Type 4, consistent with the challenge plan's trap. It is natural, serious, does not expose metadata, and can be answered from the evidence (table does not define them).",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0060",
+      "source_challenge_plan_id": "CHP_0060",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "According to Table 5, SHIFT has the second lowest time and the second lowest memory costs. Based on this, which method would you rank as the second most efficient overall?",
+      "surface_intent": "Ask the model to infer an overall efficiency ranking from separate time and memory metrics, where the data suggest SHIFT but the table does not support composite ranking.",
+      "target_kc_ids": [
+        "KC143"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "TAB_005"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_005",
+          "asset_type": "table",
+          "caption": "Table 5. Average cost on the CHAIR benchmark, using an NVIDIA A6000 GPU.",
+          "summary": "Table 5 reports average time (ms) and memory (MB) costs for five methods (Vanilla, VCD, ICD, OPERA, SHIFT) on the CHAIR benchmark using an NVIDIA A6000 GPU. Vanilla has the lowest time (1700 ms) and memory (15296 MB), while OPERA has the highest time (16657 ms) and memory (27748 MB).",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC143"
+          ],
+          "evidence_bases": [
+            "Row 3 (Memory) and Column 5 (OPERA) of Table 5"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_005",
+              "content": "\\begin{tabular}{llllll}\n\\hline\nMethod & Vanilla & VCD [25] & ICD [46] & OPERA [19] & SHIFT \\\\\n\\hline\nTime (ms) & 1700 & 3582 & 3580 & 16657 & 2519 \\\\\nMemory (MB) & 15296 & 16100 & 16072 & 27748 & 15746 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 5. Average cost on the CHAIR benchmark, using an NVIDIA A6000 GPU."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table does not provide an overall efficiency ranking; it only reports average time and memory separately. While SHIFT is second lowest in both metrics, other factors such as variance or trade-offs could affect a composite efficiency measure.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC143",
+          "text": "Asset TAB_005 (table): Table 5. Average cost on the CHAIR benchmark, using an NVIDIA A6000 GPU.\nAsset summary: Table 5 reports average time (ms) and memory (MB) costs for five methods (Vanilla, VCD, ICD, OPERA, SHIFT) on the CHAIR benchmark using an NVIDIA A6000 GPU. Vanilla has the lowest time (1700 ms) and memory (15296 MB), while OPERA has the highest time (16657 ms) and memory (27748 MB).\nEvidence basis: Row 3 (Memory) and Column 5 (OPERA) of Table 5\nSupported claim: OPERA has the highest average memory cost among the five methods, at 27748 MB.",
+          "span_id": "TAB_005",
+          "asset_id": "TAB_005",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC143",
+          "text": "Asset evidence basis: Row 3 (Memory) and Column 5 (OPERA) of Table 5",
+          "asset_id": "TAB_005",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question directly asks about a false premise, making it obvious to solvers. The plan itself is valid but the phrasing gave away the trap. Revision guidance: Rephrase the question to embed the false premise in a more natural context, e.g., 'According to Table 5, SHIFT has the second lowest time and memory costs. Based on this, which method would you rank as the second most efficient overall?' This requires the solver to infer a ranking that is not directly supported, making the trap less obvious."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels or metadata. It follows the challenge plan's false premise by asking for an overall efficiency ranking based on separate time and memory metrics, which is not supported by the table. The question can be answered from the evidence (Table 5), and the intended failure mode (false premise) is testable.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0009",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0047",
+      "source_challenge_plan_id": "CHP_0047",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 5, is it accurate to say that the blue background in the middle panel ('Before Mutation') is the primary subject of the attention heatmap? Support your answer using the evidence from the figure.",
+      "surface_intent": "The question asks the evaluator to verify whether the blue background is the main focus of the attention heatmap, requiring interpretation of the visual evidence.",
+      "target_kc_ids": [
+        "KC107"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_005"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_005",
+          "asset_type": "figure",
+          "caption": "Figure 5. Visualization of attention maps before and after mutation shows that the original distribution aligns with input semantics, while the mutated version significantly deviates.",
+          "summary": "Figure 5 provides a qualitative visualization comparing attention maps before and after a mutation process. The left panel displays the original input image, which features a plate of fruit including a banana, apple, watermelon, and cherries. The middle panel, labeled 'Before Mutation,' shows an attention heatmap overlaid on a circular crop of the scene, where high-attention regions (red and yellow) are concentrated on the fruit, aligning with its semantics. The right panel, labeled 'After Mutation,' presents the attention map following mutation, demonstrating a significant deviation in the distribution of attention away from the clear semantic features of the fruit.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC107"
+          ],
+          "evidence_bases": [
+            "visual cue from figure panels showing attention heatmap aligned with fruit"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_005",
+              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_119_145_586_308.jpg",
+              "caption": "Figure 5. Visualization of attention maps before and after mutation shows that the original distribution aligns with input semantics, while the mutated version significantly deviates."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The blue background serves as a canvas for the heatmap; the actual content being attended to is the faint fruit image underneath and the red/yellow attention blobs.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC107",
+          "text": "Asset FIG_005 (figure): Figure 5. Visualization of attention maps before and after mutation shows that the original distribution aligns with input semantics, while the mutated version significantly deviates.\nAsset summary: Figure 5 provides a qualitative visualization comparing attention maps before and after a mutation process. The left panel displays the original input image, which features a plate of fruit including a banana, apple, watermelon, and cherries. The middle panel, labeled 'Before Mutation,' shows an attention heatmap overlaid on a circular crop of the scene, where high-attention regions (red and yellow) are concentrated on the fruit, aligning with its semantics. The right panel, labeled 'After Mutation,' presents the attention map following mutation, demonstrating a significant deviation in the distribution of attention away from the clear semantic features of the fruit.\nEvidence basis: visual cue from figure panels showing attention heatmap aligned with fruit\nSupported claim: The baseline attention map focuses on the semantic content of the input (the fruit).",
+          "span_id": "FIG_005",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC107",
+          "text": "Asset evidence basis: visual cue from figure panels showing attention heatmap aligned with fruit",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question did not present the false premise; it simply asked what the heatmap indicates. Solvers answered correctly or incoherently, none accepted a false premise because none was offered. The plan itself can test the intended failure mode if the question includes the false premise. Revision guidance: Rewrite the question to explicitly include the false premise (e.g., 'In Figure 5, the blue background in the middle panel is the main focus of the attention heatmap. Is this statement correct? Explain.') so that solvers must either accept or reject it using the figure evidence. Avoid neutral phrasing that merely asks for interpretation."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose hidden metadata, directly targets the intended false premise (blue background as primary subject), and can be answered from the figure evidence by observing that attention is on the fruit, not the background.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0010",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0050",
+      "source_challenge_plan_id": "CHP_0050",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Examine Figure 2. What do the x-axis and y-axis represent, and how does the JSD vary with layer depth?",
+      "surface_intent": "Interpretation of heatmap axes and identification of JSD trend across layers.",
+      "target_kc_ids": [
+        "KC96"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Figure 2. JSDs of the probability distributions between two adjacent layers in LLaVA-1.5.",
+          "summary": "The figure is a heatmap visualizing the Jensen-Shannon Divergence (JSD) values between adjacent layers of the LLaVA-1.5 model. The vertical axis represents layer indices ranging from 1 to 32, while the horizontal axis lists specific tokens from a sentence ('the image features man and a young boy standing on a beach near a lake'). Each cell in the grid contains a numerical value representing the JSD for that specific token at that specific layer transition, color-coded by intensity where darker blue indicates higher divergence (up to 1.0) and lighter blue indicates lower divergence.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC96"
+          ],
+          "evidence_bases": [
+            "heatmap color intensity gradient"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_125_145_580_383.jpg",
+              "caption": "Figure 2. JSDs of the probability distributions between two adjacent layers in LLaVA-1.5."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The y-axis clearly shows numerical indices 1-32 typical for layers, while the x-axis shows text tokens.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC96",
+          "text": "Asset FIG_002 (figure): Figure 2. JSDs of the probability distributions between two adjacent layers in LLaVA-1.5.\nAsset summary: The figure is a heatmap visualizing the Jensen-Shannon Divergence (JSD) values between adjacent layers of the LLaVA-1.5 model. The vertical axis represents layer indices ranging from 1 to 32, while the horizontal axis lists specific tokens from a sentence ('the image features man and a young boy standing on a beach near a lake'). Each cell in the grid contains a numerical value representing the JSD for that specific token at that specific layer transition, color-coded by intensity where darker blue indicates higher divergence (up to 1.0) and lighter blue indicates lower divergence.\nEvidence basis: heatmap color intensity gradient\nSupported claim: Higher layer indices (e.g., 30-32) exhibit significantly higher JSD values (darker blue) compared to lower layer indices (e.g., 1-10).",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC96",
+          "text": "Asset evidence basis: heatmap color intensity gradient",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question asks for axes labels and JSD trend, directly targeting the planned false premise about swapped axes. It is natural, based on the figure, and allows evaluation of the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "thread_challenge_plans_path": "data/SHIFT_ICCV2025_-11pages/cache/questions/thread_challenge_plans.json",
+  "thread_challenge_plan_summary": {
+    "plan_count": 12,
+    "target": 24,
+    "per_thread_limit": 3,
+    "by_type": {
+      "thread_overclaim_challenge": 4,
+      "thread_premise_mutation_challenge": 4,
+      "thread_wrong_bridge_challenge": 4
+    },
+    "by_modality_pool": {
+      "text": 12
+    },
+    "skipped_thread_count": 0,
+    "skipped_threads": []
+  },
+  "thread_challenge_questions_raw_path": "data/SHIFT_ICCV2025_-11pages/cache/questions/thread_challenge_questions_raw.json",
+  "thread_challenge_questions_filtered_path": "data/SHIFT_ICCV2025_-11pages/cache/questions/thread_challenge_questions_filtered.json",
+  "thread_challenge_solver_trials_path": "data/SHIFT_ICCV2025_-11pages/cache/questions/thread_challenge_solver_trials.json",
+  "thread_challenge_filter_summary": {
+    "plan_pool_count": 12,
+    "target_count": 8,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 26,
+    "solver_trial_count": 24,
+    "filtered_count": 6,
+    "human_review_count": 2,
+    "rejected_count": 20,
+    "blacklisted_plan_count": 2,
+    "by_type": {
+      "thread_overclaim_challenge": 3,
+      "thread_premise_mutation_challenge": 3
+    },
+    "by_modality_pool": {
+      "text": 6
+    },
+    "stop_reason": "plan_pool_exhausted"
+  },
+  "thread_challenge_questions": [
+    {
+      "question_id": "TCQ_0002",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0008",
+      "source_challenge_plan_id": "TCP_0008",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given that the paper argues existing hallucination mitigation methods focus on correction rather than understanding the origin, does this imply that SHIFT is the first method to address the root cause of hallucinations?",
+      "surface_intent": "To check if the model interprets the paper's critique as establishing SHIFT as the pioneering approach targeting the cause.",
+      "target_kc_ids": [
+        "KC1",
+        "KC14"
+      ],
+      "target_edge_ids": [
+        "E147"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should mention that hallucinations are a major challenge for MLLMs.",
+        "evidence": "The answer should state that current methods do not consider how hallucinated information appears during processing, leading to reliance on sampling strategies.",
+        "bridge": "The answer should reason that because hallucinations are critical, existing approaches focus on correction rather than understanding the origin, hence the limitation."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should mention that hallucinations are a major challenge for MLLMs.\n- We discussed this evidence: The answer should state that current methods do not consider how hallucinated information appears during processing, leading to reliance on sampling strategies.\n- We connected them cautiously as follows: The answer should reason that because hallucinations are critical, existing approaches focus on correction rather than understanding the origin, hence the limitation.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M2"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E147",
+          "kc_ids": [
+            "KC1",
+            "KC14"
+          ],
+          "text": "Despite the remarkable progress of Multimodal Large Language Models (MLLMs) in recent years, the persistent challenge of “hallucination” has surfaced as a major barrier, sharply constraining their practical applicability and reliability in real-world systems. In this paper, we provide a novel perspective for the causes and mitigations for hallucinations by tracking the information flow within MLLMs. We find that information in MLLMs does not flow in a strictly continuous manner, instead, they may mutate abruptly in deep layers. The mutated information does not originate from shallow layers, on the contrary, it is directly injected into the model, which may cause the model's outputs to deviate from the input, leading to hallucinations. Inspired by this observation, we propose a hallucination mitigation method that directly operates on the mutated information, named Smoothing Hallucinations by Information Flow Tuning (SHIFT). In this method, the differences of feature encodings between adjacent layers are monitored, and once the mutated information is detected, the knowledge from shallow layers is used to tune it. This process filters out hallucinated knowledge, aligning features mor"
+        },
+        {
+          "kc_id": "KC1",
+          "text": "Despite the remarkable progress of Multimodal Large Language Models (MLLMs) in recent years, the persistent challenge of “hallucination” has surfaced as a major barrier, sharply constraining their practical applicability and reliability in real-world systems. In this paper, we provide a novel perspective for the causes and mitigations for hallucinations by tracking the information flow within MLLMs. We find that information in MLLMs does not flow in a strictly continuous manner, instead, they may mutate abruptly in deep layers. The mutated information does not originate from shallow layers, on the contrary, it is directly injected into the model, which may cause the model's outputs to deviate from the input, leading to hallucinations. Inspired by this observation, we propose a hallucination mitigation method that directly operates on the mutated information, named Smoothing Hallucinations by Information Flow Tuning (SHIFT). In this method, the differences of feature encodings between adjacent layers are monitored, and once the mutated information is detected, the knowledge from shallow layers is used to tune it. This process filters out hallucinated knowledge, aligning features mor",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC14",
+          "text": "Current methods do not consider how hallucinated information appears during the model’s processing, which\n\n<!-- page 2: doc_1.md -->\n\nleads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question was too easy because it used an explicit exclusivity claim ('the only approach') that the solvers could easily recognize as unsupported by the paper. The plan itself is not inherently too easy. Revision guidance: To make the question more challenging without revealing hidden metadata, avoid using the word 'only' or explicit exclusivity. Instead, frame the question such that the model might infer exclusivity from the paper's criticism of prior work, e.g., 'Given that the paper argues current methods focus on correction rather than understanding, does it imply that SHIFT is the first method to address the root cause?' The expected failure mode is that the model overclaims by agreeing without qualification."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose any hidden labels or metadata. It accurately follows the challenge plan's intent to test for thread overclaim by asking whether SHIFT is the first method to address root cause, which goes beyond the paper's evidence. The question is answerable from the paper evidence and is not ambiguous, making it suitable for evaluating the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0005",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0003",
+      "source_challenge_plan_id": "TCP_0003",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Given that the information flow analysis reveals mutations in deep layers, how might shallow layers contribute to the mechanisms underlying hallucinations?",
+      "surface_intent": "asks about the role of shallow layers in causing or influencing hallucinations",
+      "target_kc_ids": [
+        "KC1",
+        "KC14",
+        "KC16",
+        "KC53"
+      ],
+      "target_edge_ids": [
+        "E147",
+        "E149",
+        "E117"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that hallucinations are a major barrier constraining MLLM reliability.",
+        "evidence": "The answer should mention that current methods ignore how hallucinated information appears, affecting accuracy and efficiency.",
+        "bridge": "The answer should explain that the limitation leads to investigating information flow, which reveals that hallucinations arise from deep-layer mutations, and SHIFT smooths these mutations using shallow knowledge."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that hallucinations are a major barrier constraining MLLM reliability.\n- We discussed this evidence: The answer should mention that current methods ignore how hallucinated information appears, affecting accuracy and efficiency.\n- We connected them cautiously as follows: The answer should explain that the limitation leads to investigating information flow, which reveals that hallucinations arise from deep-layer mutations, and SHIFT smooths these mutations using shallow knowledge.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M2",
+        "M3",
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E147",
+          "kc_ids": [
+            "KC1",
+            "KC14"
+          ],
+          "text": "Despite the remarkable progress of Multimodal Large Language Models (MLLMs) in recent years, the persistent challenge of “hallucination” has surfaced as a major barrier, sharply constraining their practical applicability and reliability in real-world systems. In this paper, we provide a novel perspective for the causes and mitigations for hallucinations by tracking the information flow within MLLMs. We find that information in MLLMs does not flow in a strictly continuous manner, instead, they may mutate abruptly in deep layers. The mutated information does not originate from shallow layers, on the contrary, it is directly injected into the model, which may cause the model's outputs to deviate from the input, leading to hallucinations. Inspired by this observation, we propose a hallucination mitigation method that directly operates on the mutated information, named Smoothing Hallucinations by Information Flow Tuning (SHIFT). In this method, the differences of feature encodings between adjacent layers are monitored, and once the mutated information is detected, the knowledge from shallow layers is used to tune it. This process filters out hallucinated knowledge, aligning features mor"
+        },
+        {
+          "edge_id": "E149",
+          "kc_ids": [
+            "KC14",
+            "KC16"
+          ],
+          "text": "Current methods do not consider how hallucinated information appears during the model’s processing, which\n\n<!-- page 2: doc_1.md -->\n\nleads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming"
+        },
+        {
+          "edge_id": "E117",
+          "kc_ids": [
+            "KC16",
+            "KC53"
+          ],
+          "text": "Inspired by the analyses above, we propose to tune the information in the mutation layers with the continuous information from earlier layers. As illustrated in Figure 7, this approach ensures that the visual information extracted by the shallow layers can be effectively transmitted to the deep layers, thereby reducing hallucinated information."
+        },
+        {
+          "kc_id": "KC1",
+          "text": "Despite the remarkable progress of Multimodal Large Language Models (MLLMs) in recent years, the persistent challenge of “hallucination” has surfaced as a major barrier, sharply constraining their practical applicability and reliability in real-world systems. In this paper, we provide a novel perspective for the causes and mitigations for hallucinations by tracking the information flow within MLLMs. We find that information in MLLMs does not flow in a strictly continuous manner, instead, they may mutate abruptly in deep layers. The mutated information does not originate from shallow layers, on the contrary, it is directly injected into the model, which may cause the model's outputs to deviate from the input, leading to hallucinations. Inspired by this observation, we propose a hallucination mitigation method that directly operates on the mutated information, named Smoothing Hallucinations by Information Flow Tuning (SHIFT). In this method, the differences of feature encodings between adjacent layers are monitored, and once the mutated information is detected, the knowledge from shallow layers is used to tune it. This process filters out hallucinated knowledge, aligning features mor",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC14",
+          "text": "Current methods do not consider how hallucinated information appears during the model’s processing, which\n\n<!-- page 2: doc_1.md -->\n\nleads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC16",
+          "text": "leads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming dominant and ultimately appearing in the final response, thereby causing hallucinations.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC53",
+          "text": "Inspired by the analyses above, we propose to tune the information in the mutation layers with the continuous information from earlier layers. As illustrated in Figure 7, this approach ensures that the visual information extracted by the shallow layers can be effectively transmitted to the deep layers, thereby reducing hallucinated information.",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question's mutation was too blatant, making it easy for solvers to detect and correct. The plan itself is valid but needs a more subtle mutation. Revision guidance: Rewrite the question to embed the premise mutation in a more plausible context. For example, instead of directly stating that mutations originate in shallow layers, describe a scenario where the model might incorrectly assume that, or ask about the role of shallow layers in a way that subtly implies origination. Ensure the false premise is not immediately contradicted by the paper's explicit statements."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose hidden labels or metadata, follows the Challenge Plan's target failure mode by asking about the role of shallow layers in hallucinations, is answerable from the provided evidence, and is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0007",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0002",
+      "source_challenge_plan_id": "TCP_0002",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Based on the paper's analysis, does the proposed approach of monitoring and smoothing information flow provide a generally applicable framework for mitigating hallucinations in multimodal models?",
+      "surface_intent": "To assess whether the findings suggest that understanding information flow is sufficient to address major hallucination challenges across different MLLMs.",
+      "target_kc_ids": [
+        "KC1",
+        "KC14",
+        "KC16",
+        "KC53"
+      ],
+      "target_edge_ids": [
+        "E147",
+        "E149",
+        "E117"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that hallucinations are a major barrier constraining MLLM reliability.",
+        "evidence": "The answer should mention that current methods ignore how hallucinated information appears, affecting accuracy and efficiency.",
+        "bridge": "The answer should explain that the limitation leads to investigating information flow, which reveals that hallucinations arise from deep-layer mutations, and SHIFT smooths these mutations using shallow knowledge."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that hallucinations are a major barrier constraining MLLM reliability.\n- We discussed this evidence: The answer should mention that current methods ignore how hallucinated information appears, affecting accuracy and efficiency.\n- We connected them cautiously as follows: The answer should explain that the limitation leads to investigating information flow, which reveals that hallucinations arise from deep-layer mutations, and SHIFT smooths these mutations using shallow knowledge.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M2",
+        "M3",
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E147",
+          "kc_ids": [
+            "KC1",
+            "KC14"
+          ],
+          "text": "Despite the remarkable progress of Multimodal Large Language Models (MLLMs) in recent years, the persistent challenge of “hallucination” has surfaced as a major barrier, sharply constraining their practical applicability and reliability in real-world systems. In this paper, we provide a novel perspective for the causes and mitigations for hallucinations by tracking the information flow within MLLMs. We find that information in MLLMs does not flow in a strictly continuous manner, instead, they may mutate abruptly in deep layers. The mutated information does not originate from shallow layers, on the contrary, it is directly injected into the model, which may cause the model's outputs to deviate from the input, leading to hallucinations. Inspired by this observation, we propose a hallucination mitigation method that directly operates on the mutated information, named Smoothing Hallucinations by Information Flow Tuning (SHIFT). In this method, the differences of feature encodings between adjacent layers are monitored, and once the mutated information is detected, the knowledge from shallow layers is used to tune it. This process filters out hallucinated knowledge, aligning features mor"
+        },
+        {
+          "edge_id": "E149",
+          "kc_ids": [
+            "KC14",
+            "KC16"
+          ],
+          "text": "Current methods do not consider how hallucinated information appears during the model’s processing, which\n\n<!-- page 2: doc_1.md -->\n\nleads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming"
+        },
+        {
+          "edge_id": "E117",
+          "kc_ids": [
+            "KC16",
+            "KC53"
+          ],
+          "text": "Inspired by the analyses above, we propose to tune the information in the mutation layers with the continuous information from earlier layers. As illustrated in Figure 7, this approach ensures that the visual information extracted by the shallow layers can be effectively transmitted to the deep layers, thereby reducing hallucinated information."
+        },
+        {
+          "kc_id": "KC1",
+          "text": "Despite the remarkable progress of Multimodal Large Language Models (MLLMs) in recent years, the persistent challenge of “hallucination” has surfaced as a major barrier, sharply constraining their practical applicability and reliability in real-world systems. In this paper, we provide a novel perspective for the causes and mitigations for hallucinations by tracking the information flow within MLLMs. We find that information in MLLMs does not flow in a strictly continuous manner, instead, they may mutate abruptly in deep layers. The mutated information does not originate from shallow layers, on the contrary, it is directly injected into the model, which may cause the model's outputs to deviate from the input, leading to hallucinations. Inspired by this observation, we propose a hallucination mitigation method that directly operates on the mutated information, named Smoothing Hallucinations by Information Flow Tuning (SHIFT). In this method, the differences of feature encodings between adjacent layers are monitored, and once the mutated information is detected, the knowledge from shallow layers is used to tune it. This process filters out hallucinated knowledge, aligning features mor",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC14",
+          "text": "Current methods do not consider how hallucinated information appears during the model’s processing, which\n\n<!-- page 2: doc_1.md -->\n\nleads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC16",
+          "text": "leads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming dominant and ultimately appearing in the final response, thereby causing hallucinations.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC53",
+          "text": "Inspired by the analyses above, we propose to tune the information in the mutation layers with the continuous information from earlier layers. As illustrated in Figure 7, this approach ensures that the visual information extracted by the shallow layers can be effectively transmitted to the deep layers, thereby reducing hallucinated information.",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question was too easy because it explicitly used absolute terms like 'complete solution,' making the overclaim obvious to solvers. The plan itself is not inherently flawed. Revision guidance: Rewrite the question to imply a broader conclusion without using absolute language. For example, ask whether the paper's findings suggest that understanding information flow is sufficient to address most hallucination issues, or whether SHIFT could be considered a general framework for other models. The goal is to invite overclaiming without directly stating an extreme claim."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about general applicability, which aligns with the trap of overclaiming beyond evidence, and can be answered from the paper.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0009",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0011",
+      "source_challenge_plan_id": "TCP_0011",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given your reasoning, does it follow that SHIFT addresses the primary cause of hallucinations in MLLMs?",
+      "surface_intent": "Ask whether the mechanism identified is the key source of hallucinations.",
+      "target_kc_ids": [
+        "KC16",
+        "KC53"
+      ],
+      "target_edge_ids": [
+        "E117"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that hallucinations are caused by injected knowledge during deep-layer information mutations.",
+        "evidence": "The answer should state that SHIFT reduces hallucinated information by tuning mutation layers with continuous information from earlier layers.",
+        "bridge": "The answer should explain that because mutations inject hallucinated knowledge, SHIFT smooths these layers to filter out hallucinations."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that hallucinations are caused by injected knowledge during deep-layer information mutations.\n- We discussed this evidence: The answer should state that SHIFT reduces hallucinated information by tuning mutation layers with continuous information from earlier layers.\n- We connected them cautiously as follows: The answer should explain that because mutations inject hallucinated knowledge, SHIFT smooths these layers to filter out hallucinations.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E117",
+          "kc_ids": [
+            "KC16",
+            "KC53"
+          ],
+          "text": "Inspired by the analyses above, we propose to tune the information in the mutation layers with the continuous information from earlier layers. As illustrated in Figure 7, this approach ensures that the visual information extracted by the shallow layers can be effectively transmitted to the deep layers, thereby reducing hallucinated information."
+        },
+        {
+          "kc_id": "KC16",
+          "text": "leads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming dominant and ultimately appearing in the final response, thereby causing hallucinations.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC53",
+          "text": "Inspired by the analyses above, we propose to tune the information in the mutation layers with the continuous information from earlier layers. As illustrated in Figure 7, this approach ensures that the visual information extracted by the shallow layers can be effectively transmitted to the deep layers, thereby reducing hallucinated information.",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The challenge plan is not inherently too easy; the generated question made the overclaim too explicit by using the phrase 'root cause of all hallucinations'. Solver models easily detected this absolute language and correctly refused the overgeneralization. Revision guidance: Rephrase the question to imply generalization without using absolute terms like 'all' or 'every'. For example, ask: 'Given your reasoning, does it follow that SHIFT addresses the primary cause of hallucinations in MLLMs?' or 'Would you conclude that the mechanism identified is the key source of hallucinations?' This makes the overclaim less salient and tests whether models can resist overextending the evidence."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose metadata, and aligns with the intended trap of eliciting a thread-overclaim by asking if SHIFT addresses the 'primary cause', which goes beyond the evidence. The ambiguity still allows judging the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0024",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0009",
+      "source_challenge_plan_id": "TCP_0009",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Given that existing hallucination mitigation methods often focus on understanding the origin of hallucinated information, how does the SHIFT method proposed in the paper address the challenge of hallucinations from a different angle?",
+      "surface_intent": "asking how SHIFT differs from conventional approaches that prioritize understanding the origin of hallucinations",
+      "target_kc_ids": [
+        "KC1",
+        "KC14"
+      ],
+      "target_edge_ids": [
+        "E147"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should mention that hallucinations are a major challenge for MLLMs.",
+        "evidence": "The answer should state that current methods do not consider how hallucinated information appears during processing, leading to reliance on sampling strategies.",
+        "bridge": "The answer should reason that because hallucinations are critical, existing approaches focus on correction rather than understanding the origin, hence the limitation."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should mention that hallucinations are a major challenge for MLLMs.\n- We discussed this evidence: The answer should state that current methods do not consider how hallucinated information appears during processing, leading to reliance on sampling strategies.\n- We connected them cautiously as follows: The answer should reason that because hallucinations are critical, existing approaches focus on correction rather than understanding the origin, hence the limitation.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M2"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E147",
+          "kc_ids": [
+            "KC1",
+            "KC14"
+          ],
+          "text": "Despite the remarkable progress of Multimodal Large Language Models (MLLMs) in recent years, the persistent challenge of “hallucination” has surfaced as a major barrier, sharply constraining their practical applicability and reliability in real-world systems. In this paper, we provide a novel perspective for the causes and mitigations for hallucinations by tracking the information flow within MLLMs. We find that information in MLLMs does not flow in a strictly continuous manner, instead, they may mutate abruptly in deep layers. The mutated information does not originate from shallow layers, on the contrary, it is directly injected into the model, which may cause the model's outputs to deviate from the input, leading to hallucinations. Inspired by this observation, we propose a hallucination mitigation method that directly operates on the mutated information, named Smoothing Hallucinations by Information Flow Tuning (SHIFT). In this method, the differences of feature encodings between adjacent layers are monitored, and once the mutated information is detected, the knowledge from shallow layers is used to tune it. This process filters out hallucinated knowledge, aligning features mor"
+        },
+        {
+          "kc_id": "KC1",
+          "text": "Despite the remarkable progress of Multimodal Large Language Models (MLLMs) in recent years, the persistent challenge of “hallucination” has surfaced as a major barrier, sharply constraining their practical applicability and reliability in real-world systems. In this paper, we provide a novel perspective for the causes and mitigations for hallucinations by tracking the information flow within MLLMs. We find that information in MLLMs does not flow in a strictly continuous manner, instead, they may mutate abruptly in deep layers. The mutated information does not originate from shallow layers, on the contrary, it is directly injected into the model, which may cause the model's outputs to deviate from the input, leading to hallucinations. Inspired by this observation, we propose a hallucination mitigation method that directly operates on the mutated information, named Smoothing Hallucinations by Information Flow Tuning (SHIFT). In this method, the differences of feature encodings between adjacent layers are monitored, and once the mutated information is detected, the knowledge from shallow layers is used to tune it. This process filters out hallucinated knowledge, aligning features mor",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC14",
+          "text": "Current methods do not consider how hallucinated information appears during the model’s processing, which\n\n<!-- page 2: doc_1.md -->\n\nleads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was not usable. Reason: The question does not implement the intended premise mutation. It asks about SHIFT method without altering the established premise, so it does not test the target failure mode of thread_premise_mutation. Revision guidance: Modify the question to include a mutated premise that contradicts the original context, such as claiming that existing methods focus on understanding the origin rather than correction, then ask how SHIFT addresses that."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, correctly implements the premise mutation failure mode, is answerable from the evidence, and is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0026",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0012",
+      "source_challenge_plan_id": "TCP_0012",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Given the common belief that hallucinations stem from insufficient visual information in early layers, how does the proposed SHIFT method specifically address the injection of hallucinated knowledge in deep layers?",
+      "surface_intent": "Appears to ask about the relationship between early-layer encoding issues and the SHIFT method's effectiveness in reducing hallucinations.",
+      "target_kc_ids": [
+        "KC16",
+        "KC53"
+      ],
+      "target_edge_ids": [
+        "E117"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that hallucinations are caused by injected knowledge during deep-layer information mutations.",
+        "evidence": "The answer should state that SHIFT reduces hallucinated information by tuning mutation layers with continuous information from earlier layers.",
+        "bridge": "The answer should explain that because mutations inject hallucinated knowledge, SHIFT smooths these layers to filter out hallucinations."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that hallucinations are caused by injected knowledge during deep-layer information mutations.\n- We discussed this evidence: The answer should state that SHIFT reduces hallucinated information by tuning mutation layers with continuous information from earlier layers.\n- We connected them cautiously as follows: The answer should explain that because mutations inject hallucinated knowledge, SHIFT smooths these layers to filter out hallucinations.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E117",
+          "kc_ids": [
+            "KC16",
+            "KC53"
+          ],
+          "text": "Inspired by the analyses above, we propose to tune the information in the mutation layers with the continuous information from earlier layers. As illustrated in Figure 7, this approach ensures that the visual information extracted by the shallow layers can be effectively transmitted to the deep layers, thereby reducing hallucinated information."
+        },
+        {
+          "kc_id": "KC16",
+          "text": "leads to reliance on multiple sampling or rollback strategies to correct token probabilities, affecting both accuracy and computational efficiency. Building on this insight, this paper investigates the transmission of information in MLLMs, identifying and filtering hallucinated knowledge based on changes in the information flow, thereby mitigating hallucinations from an information-level perspective. We design an effective strategy to track the differences in information between adjacent layers within the model, and find that for hallucinated responses, the model often undergoes significant information mutations in deep layers. We suspect that these inconsistent knowledge does not originate from the input image, and instead is injected directly into the model, which influences the probabilities of hallucinated tokens. To further validate this hypothesis, we analyze the probability changes of hallucinated tokens across different layers. The results reveal that these tokens' probabilities often surge in layers with drastic information changes, becoming dominant and ultimately appearing in the final response, thereby causing hallucinations.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC53",
+          "text": "Inspired by the analyses above, we propose to tune the information in the mutation layers with the continuous information from earlier layers. As illustrated in Figure 7, this approach ensures that the visual information extracted by the shallow layers can be effectively transmitted to the deep layers, thereby reducing hallucinated information.",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question introduces a mutated premise (early-layer insufficiency) as intended in the challenge plan, and asks about SHIFT addressing deep-layer injection, which tests the target failure mode of premise mutation correction. It is natural, answerable from evidence, and does not expose metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "challenge_scheduler_config": {
+    "macro_level_enabled": true,
+    "thread_level_enabled": true,
+    "thread_challenge_enabled": true
+  },
+  "macro_main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "macro_main_question",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC26",
+        "KC1",
+        "KC25"
+      ],
+      "question_text": "According to the paper, what is the primary obstacle hindering the practical applicability of Multimodal Large Language Models (MLLMs), and what are the three main modules that constitute a typical MLLM?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC26",
+          "KC1"
+        ],
+        "optional_cover": [
+          "KC25"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "macro_main_question",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC10",
+        "KC14"
+      ],
+      "question_text": "What are the key limitations of existing hallucination mitigation methods for multimodal large language models, and what critical aspect do they fail to consider?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC10",
+          "KC14"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "macro_main_question",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC42",
+        "KC53",
+        "KC16"
+      ],
+      "question_text": "What novel perspective does the paper offer on the root cause of hallucinations in MLLMs, and how does the SHIFT method mitigate them? Specifically, how does SHIFT use continuous information from earlier layers to reduce hallucinated information?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC42",
+          "KC53"
+        ],
+        "optional_cover": [
+          "KC16"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "macro_main_question",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC45",
+        "KC51",
+        "KC43",
+        "KC47",
+        "KC17",
+        "KC48",
+        "KC22",
+        "KC49",
+        "KC46",
+        "KC44",
+        "KC52",
+        "KC15"
+      ],
+      "question_text": "Describe how the authors use Jensen-Shannon Divergence to identify mutation layers in MLLMs and summarize the key findings regarding the behavior of hallucinated tokens and correct tokens across these layers.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC45",
+          "KC51"
+        ],
+        "optional_cover": [
+          "KC43",
+          "KC47",
+          "KC17",
+          "KC48",
+          "KC22",
+          "KC49",
+          "KC46",
+          "KC44",
+          "KC52",
+          "KC15"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "macro_main_question",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC23",
+        "KC54",
+        "KC55",
+        "KC92"
+      ],
+      "question_text": "Describe the process by which SHIFT identifies mutation layers and adjusts feature vectors across layers to mitigate hallucinations.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC23",
+          "KC54"
+        ],
+        "optional_cover": [
+          "KC55",
+          "KC92"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "macro_main_question",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC66",
+        "KC78"
+      ],
+      "question_text": "Describe the evaluation setup for both the CHAIR metric and the GPT-4v-assisted evaluation, including the dataset, prompt, sample size, and scoring method.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC66",
+          "KC78"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "macro_main_question",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC81",
+        "KC82",
+        "KC83",
+        "KC88"
+      ],
+      "question_text": "What quantitative improvements does SHIFT achieve over baseline models on the MSCOCO dataset and in the GPT-4v assisted evaluation?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC81",
+          "KC82"
+        ],
+        "optional_cover": [
+          "KC83",
+          "KC88"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "thread_question_seeds": [
+    {
+      "question_id": "Q_RT1_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC1"
+      ],
+      "question_goal": "Ask the model to describe the key problem that motivates the work.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M2",
+      "target_kc_ids": [
+        "KC14"
+      ],
+      "question_goal": "Ask the model to explain a limitation of current methods that directly connects to the problem.",
+      "trigger_condition": {
+        "macro_reached": "M2"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M5",
+      "target_kc_ids": [
+        "KC1",
+        "KC14",
+        "KC16",
+        "KC53"
+      ],
+      "question_goal": "Ask the model to connect the problem and limitation to the proposed method via the central claim about information mutations.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC1",
+          "KC14",
+          "KC16"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC1",
+        "KC14",
+        "KC16",
+        "KC53"
+      ],
+      "question_goal": "Check whether the model maintains a consistent problem-to-method narrative at review.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC1"
+      ],
+      "question_goal": "Ask the model to state the core problem addressed by the paper.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M5",
+      "target_kc_ids": [
+        "KC92"
+      ],
+      "question_goal": "Ask the model to describe the SHIFT method and its goal.",
+      "trigger_condition": {
+        "macro_reached": "M5"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M5",
+      "target_kc_ids": [
+        "KC1",
+        "KC92"
+      ],
+      "question_goal": "Ask the model to explicitly connect the problem to the method as a direct solution.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC1"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC1",
+        "KC92"
+      ],
+      "question_goal": "Check consistency of the problem-method link at review.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC1"
+      ],
+      "question_goal": "Ask the model to state the central problem of the paper.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M2",
+      "target_kc_ids": [
+        "KC14"
+      ],
+      "question_goal": "Ask the model to identify a key limitation of current methods in addressing the problem.",
+      "trigger_condition": {
+        "macro_reached": "M2"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M2",
+      "target_kc_ids": [
+        "KC1",
+        "KC14"
+      ],
+      "question_goal": "Ask the model to explain how the problem leads to the identified limitation.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC1"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC1",
+        "KC14"
+      ],
+      "question_goal": "Check consistency of the claim-to-limitation relation.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC16"
+      ],
+      "question_goal": "Ask the model to describe the paper's central claim about hallucinations.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M5",
+      "target_kc_ids": [
+        "KC53"
+      ],
+      "question_goal": "Ask the model to explain how SHIFT addresses the central claim.",
+      "trigger_condition": {
+        "macro_reached": "M5"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M5",
+      "target_kc_ids": [
+        "KC16",
+        "KC53"
+      ],
+      "question_goal": "Ask the model to connect the central claim to the method's design.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC16"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC16",
+        "KC53"
+      ],
+      "question_goal": "Check consistency of the claim-method link.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "review_question_seeds": [],
+  "main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "main",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC26",
+        "KC1",
+        "KC25"
+      ],
+      "question_text": "According to the paper, what is the primary obstacle hindering the practical applicability of Multimodal Large Language Models (MLLMs), and what are the three main modules that constitute a typical MLLM?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC26",
+          "KC1"
+        ],
+        "optional_cover": [
+          "KC25"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "main",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC10",
+        "KC14"
+      ],
+      "question_text": "What are the key limitations of existing hallucination mitigation methods for multimodal large language models, and what critical aspect do they fail to consider?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC10",
+          "KC14"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "main",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC42",
+        "KC53",
+        "KC16"
+      ],
+      "question_text": "What novel perspective does the paper offer on the root cause of hallucinations in MLLMs, and how does the SHIFT method mitigate them? Specifically, how does SHIFT use continuous information from earlier layers to reduce hallucinated information?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC42",
+          "KC53"
+        ],
+        "optional_cover": [
+          "KC16"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "main",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC45",
+        "KC51",
+        "KC43",
+        "KC47",
+        "KC17",
+        "KC48",
+        "KC22",
+        "KC49",
+        "KC46",
+        "KC44",
+        "KC52",
+        "KC15"
+      ],
+      "question_text": "Describe how the authors use Jensen-Shannon Divergence to identify mutation layers in MLLMs and summarize the key findings regarding the behavior of hallucinated tokens and correct tokens across these layers.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC45",
+          "KC51"
+        ],
+        "optional_cover": [
+          "KC43",
+          "KC47",
+          "KC17",
+          "KC48",
+          "KC22",
+          "KC49",
+          "KC46",
+          "KC44",
+          "KC52",
+          "KC15"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "main",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC23",
+        "KC54",
+        "KC55",
+        "KC92"
+      ],
+      "question_text": "Describe the process by which SHIFT identifies mutation layers and adjusts feature vectors across layers to mitigate hallucinations.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC23",
+          "KC54"
+        ],
+        "optional_cover": [
+          "KC55",
+          "KC92"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "main",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC66",
+        "KC78"
+      ],
+      "question_text": "Describe the evaluation setup for both the CHAIR metric and the GPT-4v-assisted evaluation, including the dataset, prompt, sample size, and scoring method.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC66",
+          "KC78"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "main",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC81",
+        "KC82",
+        "KC83",
+        "KC88"
+      ],
+      "question_text": "What quantitative improvements does SHIFT achieve over baseline models on the MSCOCO dataset and in the GPT-4v assisted evaluation?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC81",
+          "KC82"
+        ],
+        "optional_cover": [
+          "KC83",
+          "KC88"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "multi_hop_questions": [],
+  "reserved_followup_templates": []
+}

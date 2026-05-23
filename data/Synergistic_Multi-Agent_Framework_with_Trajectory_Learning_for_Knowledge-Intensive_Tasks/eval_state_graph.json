@@ -1,0 +1,4783 @@
+{
+  "paper_id": "Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks",
+  "target_model": "qwen3.6-flash",
+  "kc_states": {
+    "KC1": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M1",
+      "is_active_target": false
+    },
+    "KC2": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC3": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC4": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC5": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC6": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M9",
+      "is_active_target": false
+    },
+    "KC7": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M1",
+      "is_active_target": false
+    },
+    "KC8": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T1"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 1.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M1",
+      "is_active_target": true
+    },
+    "KC9": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T1",
+        "T53",
+        "T54"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 1.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M1",
+      "is_active_target": true
+    },
+    "KC10": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M2",
+      "is_active_target": false
+    },
+    "KC11": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T8"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.9,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": true
+    },
+    "KC12": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC13": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T1",
+        "T2",
+        "T3"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M1",
+      "is_active_target": true
+    },
+    "KC14": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M1",
+      "is_active_target": false
+    },
+    "KC15": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC16": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC17": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC18": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC19": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC20": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC21": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC22": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC23": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M9",
+      "is_active_target": false
+    },
+    "KC24": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T8"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.9,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": true
+    },
+    "KC25": {
+      "status": "corrected",
+      "covered_by_turns": [
+        "T8",
+        "T11",
+        "T12",
+        "T14"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [
+        "T11",
+        "T12"
+      ],
+      "correction_status": "corrected",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": true
+    },
+    "KC26": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T8"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.9,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": true
+    },
+    "KC27": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC28": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC29": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC30": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC31": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T8"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.9,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": true
+    },
+    "KC32": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T8"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.9,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": true
+    },
+    "KC33": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC34": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC35": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T8"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.9,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": true
+    },
+    "KC36": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC37": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC38": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC39": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T8"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.9,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": true
+    },
+    "KC40": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC41": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC42": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC43": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T20",
+        "T21",
+        "T22"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": true
+    },
+    "KC44": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC45": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC46": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC47": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC48": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T20"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": true
+    },
+    "KC49": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC50": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC51": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC52": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC53": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T27",
+        "T29",
+        "T30"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 1.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": true
+    },
+    "KC54": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC55": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T27"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": true
+    },
+    "KC56": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC57": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC58": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC59": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC60": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC61": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T27"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": true
+    },
+    "KC62": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M6",
+      "is_active_target": false
+    },
+    "KC63": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M6",
+      "is_active_target": false
+    },
+    "KC64": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M6",
+      "is_active_target": false
+    },
+    "KC65": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M6",
+      "is_active_target": false
+    },
+    "KC66": {
+      "status": "hallucinated",
+      "covered_by_turns": [
+        "T31",
+        "T32",
+        "T38"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.8,
+      "hallucination_history": [
+        "T38"
+      ],
+      "correction_status": "uncorrected",
+      "same_hallucination_followed_up_times": 1,
+      "importance": "critical",
+      "macro_id": "M6",
+      "is_active_target": true
+    },
+    "KC67": {
+      "status": "hallucinated",
+      "covered_by_turns": [
+        "T31",
+        "T33"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [
+        "T33"
+      ],
+      "correction_status": "uncorrected",
+      "same_hallucination_followed_up_times": 1,
+      "importance": "critical",
+      "macro_id": "M6",
+      "is_active_target": true
+    },
+    "KC68": {
+      "status": "hallucinated",
+      "covered_by_turns": [
+        "T35",
+        "T36",
+        "T38"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.8,
+      "hallucination_history": [
+        "T38"
+      ],
+      "correction_status": "uncorrected",
+      "same_hallucination_followed_up_times": 1,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": true
+    },
+    "KC69": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T35"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": true
+    },
+    "KC70": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC71": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC72": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC73": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC74": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC75": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC76": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T35"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M7",
+      "is_active_target": true
+    },
+    "KC77": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC78": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC79": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC80": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC81": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC82": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC83": {
+      "status": "corrected",
+      "covered_by_turns": [
+        "T37",
+        "T40",
+        "T41"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [
+        "T40"
+      ],
+      "correction_status": "corrected",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": true
+    },
+    "KC84": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC85": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC86": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC87": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC88": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC89": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T6",
+        "T37"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": true
+    },
+    "KC90": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T4",
+        "T6",
+        "T7"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M2",
+      "is_active_target": true
+    },
+    "KC91": {
+      "status": "corrected",
+      "covered_by_turns": [
+        "T37",
+        "T42",
+        "T43"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [
+        "T42"
+      ],
+      "correction_status": "corrected",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": true
+    },
+    "KC92": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC93": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC94": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC95": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC96": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T37"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": true
+    },
+    "KC97": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M2",
+      "is_active_target": false
+    },
+    "KC98": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T3",
+        "T4",
+        "T5",
+        "T21",
+        "T22",
+        "T28",
+        "T55"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M2",
+      "is_active_target": true
+    },
+    "KC99": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T7",
+        "T9",
+        "T10",
+        "T15",
+        "T21",
+        "T22",
+        "T55"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [
+        "T8"
+      ],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": true
+    },
+    "KC100": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M9",
+      "is_active_target": false
+    },
+    "KC101": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M1",
+      "is_active_target": false
+    },
+    "KC102": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M2",
+      "is_active_target": false
+    },
+    "KC103": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M2",
+      "is_active_target": false
+    },
+    "KC104": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC105": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC106": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC107": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC108": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M9",
+      "is_active_target": false
+    },
+    "KC109": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T52"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 1.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M9",
+      "is_active_target": true
+    },
+    "KC110": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T52"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 1.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M9",
+      "is_active_target": true
+    },
+    "KC111": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M9",
+      "is_active_target": false
+    },
+    "KC112": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M9",
+      "is_active_target": false
+    },
+    "KC113": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T16"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC114": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC115": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC116": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC117": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T19"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 1.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC118": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T19"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 1.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC119": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T18"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [
+        "T17"
+      ],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC120": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M3",
+      "is_active_target": false
+    },
+    "KC121": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T26"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC122": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T26"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC123": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC124": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC125": {
+      "status": "corrected",
+      "covered_by_turns": [
+        "T23",
+        "T24",
+        "T25"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [
+        "T23",
+        "T24"
+      ],
+      "correction_status": "corrected",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC126": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC127": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M4",
+      "is_active_target": false
+    },
+    "KC128": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC129": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC130": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC131": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M5",
+      "is_active_target": false
+    },
+    "KC132": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC133": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC134": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC135": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M7",
+      "is_active_target": false
+    },
+    "KC136": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC137": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC138": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T51"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.9,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC139": {
+      "status": "unlit",
+      "covered_by_turns": [],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.0,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "normal",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC140": {
+      "status": "corrected",
+      "covered_by_turns": [
+        "T44",
+        "T45",
+        "T47",
+        "T48"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [
+        "T44",
+        "T47"
+      ],
+      "correction_status": "corrected",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC141": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T47",
+        "T48",
+        "T50"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [
+        "T47"
+      ],
+      "correction_status": "corrected",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC142": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T45",
+        "T46"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [
+        "T44"
+      ],
+      "confidence": 0.9,
+      "hallucination_history": [
+        "T44"
+      ],
+      "correction_status": "corrected",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    },
+    "KC143": {
+      "status": "lit",
+      "covered_by_turns": [
+        "T49"
+      ],
+      "globally_supported_by_turns": [],
+      "missed_by_turns": [],
+      "confidence": 0.95,
+      "hallucination_history": [],
+      "correction_status": "not_needed",
+      "same_hallucination_followed_up_times": 0,
+      "importance": "critical",
+      "macro_id": "M8",
+      "is_active_target": false
+    }
+  },
+  "path_states": {
+    "P1": {
+      "status": "not_tested",
+      "tested_by_turn": null,
+      "result": null,
+      "kc_sequence": [
+        "KC97",
+        "KC99",
+        "KC100"
+      ],
+      "required_lit_kc": [
+        "KC97",
+        "KC99"
+      ]
+    },
+    "P2": {
+      "status": "not_tested",
+      "tested_by_turn": null,
+      "result": null,
+      "kc_sequence": [
+        "KC97",
+        "KC99",
+        "KC43"
+      ],
+      "required_lit_kc": [
+        "KC97",
+        "KC99"
+      ]
+    },
+    "P3": {
+      "status": "not_tested",
+      "tested_by_turn": null,
+      "result": null,
+      "kc_sequence": [
+        "KC98",
+        "KC99",
+        "KC100"
+      ],
+      "required_lit_kc": [
+        "KC98",
+        "KC99"
+      ]
+    },
+    "P4": {
+      "status": "not_tested",
+      "tested_by_turn": null,
+      "result": null,
+      "kc_sequence": [
+        "KC98",
+        "KC99",
+        "KC43"
+      ],
+      "required_lit_kc": [
+        "KC98",
+        "KC99"
+      ]
+    },
+    "P5": {
+      "status": "not_tested",
+      "tested_by_turn": null,
+      "result": null,
+      "kc_sequence": [
+        "KC99",
+        "KC100",
+        "KC6"
+      ],
+      "required_lit_kc": [
+        "KC99",
+        "KC100"
+      ]
+    }
+  },
+  "macro_states": {
+    "M1": {
+      "status": "completed",
+      "main_question_asked": true,
+      "covered_kc_ids": [
+        "KC8",
+        "KC9",
+        "KC13",
+        "KC98"
+      ],
+      "missing_kc_ids": [],
+      "target_kc_ids": [
+        "KC13",
+        "KC9",
+        "KC8"
+      ],
+      "bank_kc_ids": [
+        "KC1",
+        "KC7",
+        "KC8",
+        "KC9",
+        "KC13",
+        "KC14",
+        "KC101"
+      ],
+      "related_turns": [
+        "T1",
+        "T2",
+        "T3",
+        "T53",
+        "T54"
+      ],
+      "bank_kc_count": 7,
+      "active_kc_count": 3,
+      "challenge_question_count": 1
+    },
+    "M2": {
+      "status": "completed",
+      "main_question_asked": true,
+      "covered_kc_ids": [
+        "KC90",
+        "KC98",
+        "KC89",
+        "KC99",
+        "KC43"
+      ],
+      "missing_kc_ids": [],
+      "target_kc_ids": [
+        "KC90",
+        "KC98"
+      ],
+      "bank_kc_ids": [
+        "KC10",
+        "KC90",
+        "KC97",
+        "KC98",
+        "KC102",
+        "KC103"
+      ],
+      "related_turns": [
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T22",
+        "T28"
+      ],
+      "bank_kc_count": 6,
+      "active_kc_count": 2,
+      "challenge_question_count": 3
+    },
+    "M3": {
+      "status": "completed",
+      "main_question_asked": true,
+      "covered_kc_ids": [
+        "KC35",
+        "KC24",
+        "KC26",
+        "KC32",
+        "KC11",
+        "KC25",
+        "KC39",
+        "KC31",
+        "KC99",
+        "KC113",
+        "KC119",
+        "KC117",
+        "KC118"
+      ],
+      "missing_kc_ids": [],
+      "target_kc_ids": [
+        "KC99",
+        "KC35",
+        "KC24",
+        "KC26",
+        "KC32",
+        "KC11",
+        "KC25",
+        "KC39",
+        "KC31"
+      ],
+      "bank_kc_ids": [
+        "KC2",
+        "KC3",
+        "KC11",
+        "KC12",
+        "KC24",
+        "KC25",
+        "KC26",
+        "KC27",
+        "KC28",
+        "KC29",
+        "KC30",
+        "KC31",
+        "KC32",
+        "KC33",
+        "KC34",
+        "KC35",
+        "KC36",
+        "KC37",
+        "KC38",
+        "KC39",
+        "KC40",
+        "KC41",
+        "KC99",
+        "KC104",
+        "KC105",
+        "KC113",
+        "KC114",
+        "KC115",
+        "KC116",
+        "KC117",
+        "KC118",
+        "KC119",
+        "KC120"
+      ],
+      "related_turns": [
+        "T8",
+        "T9",
+        "T10",
+        "T11",
+        "T12",
+        "T13",
+        "T14",
+        "T15",
+        "T16",
+        "T17",
+        "T18",
+        "T19"
+      ],
+      "bank_kc_count": 33,
+      "active_kc_count": 9,
+      "challenge_question_count": 5
+    },
+    "M4": {
+      "status": "completed",
+      "main_question_asked": true,
+      "covered_kc_ids": [
+        "KC48",
+        "KC43",
+        "KC98",
+        "KC99",
+        "KC125",
+        "KC121",
+        "KC122"
+      ],
+      "missing_kc_ids": [],
+      "target_kc_ids": [
+        "KC48",
+        "KC43"
+      ],
+      "bank_kc_ids": [
+        "KC42",
+        "KC43",
+        "KC44",
+        "KC45",
+        "KC46",
+        "KC47",
+        "KC48",
+        "KC49",
+        "KC50",
+        "KC51",
+        "KC52",
+        "KC57",
+        "KC121",
+        "KC122",
+        "KC123",
+        "KC124",
+        "KC125",
+        "KC126",
+        "KC127"
+      ],
+      "related_turns": [
+        "T20",
+        "T21",
+        "T23",
+        "T24",
+        "T25",
+        "T26"
+      ],
+      "bank_kc_count": 19,
+      "active_kc_count": 2,
+      "challenge_question_count": 2
+    },
+    "M5": {
+      "status": "completed",
+      "main_question_asked": true,
+      "covered_kc_ids": [
+        "KC53",
+        "KC55",
+        "KC61"
+      ],
+      "missing_kc_ids": [],
+      "target_kc_ids": [
+        "KC53",
+        "KC55",
+        "KC61"
+      ],
+      "bank_kc_ids": [
+        "KC4",
+        "KC15",
+        "KC16",
+        "KC17",
+        "KC18",
+        "KC21",
+        "KC22",
+        "KC53",
+        "KC54",
+        "KC55",
+        "KC56",
+        "KC58",
+        "KC59",
+        "KC60",
+        "KC61",
+        "KC79",
+        "KC106",
+        "KC128",
+        "KC129",
+        "KC130",
+        "KC131"
+      ],
+      "related_turns": [
+        "T27",
+        "T29",
+        "T30"
+      ],
+      "bank_kc_count": 21,
+      "active_kc_count": 3,
+      "challenge_question_count": 2
+    },
+    "M6": {
+      "status": "completed",
+      "main_question_asked": true,
+      "covered_kc_ids": [
+        "KC66",
+        "KC67"
+      ],
+      "missing_kc_ids": [],
+      "target_kc_ids": [
+        "KC66",
+        "KC67"
+      ],
+      "bank_kc_ids": [
+        "KC62",
+        "KC63",
+        "KC64",
+        "KC65",
+        "KC66",
+        "KC67"
+      ],
+      "related_turns": [
+        "T31",
+        "T32",
+        "T33",
+        "T34"
+      ],
+      "bank_kc_count": 6,
+      "active_kc_count": 2,
+      "challenge_question_count": 1
+    },
+    "M7": {
+      "status": "completed",
+      "main_question_asked": true,
+      "covered_kc_ids": [
+        "KC68",
+        "KC69",
+        "KC76",
+        "KC66"
+      ],
+      "missing_kc_ids": [],
+      "target_kc_ids": [
+        "KC68",
+        "KC69",
+        "KC76"
+      ],
+      "bank_kc_ids": [
+        "KC5",
+        "KC19",
+        "KC20",
+        "KC68",
+        "KC69",
+        "KC70",
+        "KC71",
+        "KC72",
+        "KC73",
+        "KC74",
+        "KC75",
+        "KC76",
+        "KC77",
+        "KC78",
+        "KC80",
+        "KC107",
+        "KC132",
+        "KC133",
+        "KC134",
+        "KC135"
+      ],
+      "related_turns": [
+        "T35",
+        "T36",
+        "T38",
+        "T39"
+      ],
+      "bank_kc_count": 20,
+      "active_kc_count": 3
+    },
+    "M8": {
+      "status": "completed",
+      "main_question_asked": true,
+      "covered_kc_ids": [
+        "KC83",
+        "KC89",
+        "KC91",
+        "KC96",
+        "KC140",
+        "KC142",
+        "KC141",
+        "KC143",
+        "KC138"
+      ],
+      "missing_kc_ids": [],
+      "target_kc_ids": [
+        "KC83",
+        "KC89",
+        "KC91",
+        "KC96"
+      ],
+      "bank_kc_ids": [
+        "KC81",
+        "KC82",
+        "KC83",
+        "KC84",
+        "KC85",
+        "KC86",
+        "KC87",
+        "KC88",
+        "KC89",
+        "KC91",
+        "KC92",
+        "KC93",
+        "KC94",
+        "KC95",
+        "KC96",
+        "KC136",
+        "KC137",
+        "KC138",
+        "KC139",
+        "KC140",
+        "KC141",
+        "KC142",
+        "KC143"
+      ],
+      "related_turns": [
+        "T37",
+        "T40",
+        "T41",
+        "T42",
+        "T43",
+        "T44",
+        "T45",
+        "T46",
+        "T47",
+        "T48",
+        "T49",
+        "T50",
+        "T51"
+      ],
+      "bank_kc_count": 23,
+      "active_kc_count": 4,
+      "challenge_question_count": 7
+    },
+    "M9": {
+      "status": "completed",
+      "main_question_asked": true,
+      "covered_kc_ids": [
+        "KC109",
+        "KC110"
+      ],
+      "missing_kc_ids": [],
+      "target_kc_ids": [
+        "KC109",
+        "KC110"
+      ],
+      "bank_kc_ids": [
+        "KC6",
+        "KC23",
+        "KC100",
+        "KC108",
+        "KC109",
+        "KC110",
+        "KC111",
+        "KC112"
+      ],
+      "related_turns": [
+        "T52"
+      ],
+      "bank_kc_count": 8,
+      "active_kc_count": 2
+    }
+  },
+  "thread_states": {
+    "RT1": {
+      "status": "reviewed_consistent",
+      "completed_steps": [
+        "RT1_STEP1",
+        "RT1_STEP2",
+        "RT1_STEP3",
+        "RT1_STEP4"
+      ],
+      "current_step": "RT1_STEP4",
+      "success": true,
+      "failure_reason": null,
+      "related_turns": [
+        "T5",
+        "T10",
+        "T21",
+        "T55"
+      ],
+      "bridge_success": true,
+      "review_consistency": true,
+      "thread_challenge_count": 1,
+      "thread_challenge_question_ids": [
+        "TCQ_0009"
+      ],
+      "thread_challenge_results": [
+        {
+          "question_id": "TCQ_0009",
+          "turn_id": "T22",
+          "challenge_type": "thread_wrong_bridge_challenge",
+          "target_failure_mode": "thread_wrong_bridge",
+          "result": "resisted"
+        }
+      ]
+    },
+    "RT2": {
+      "status": "bridge_ready",
+      "completed_steps": [
+        "RT2_STEP1",
+        "RT2_STEP3",
+        "RT2_STEP2"
+      ],
+      "current_step": "RT2_STEP2",
+      "success": null,
+      "failure_reason": null,
+      "related_turns": [
+        "T2",
+        "T3",
+        "T28"
+      ],
+      "bridge_success": null,
+      "review_consistency": null,
+      "thread_challenge_count": 0,
+      "thread_challenge_question_ids": [],
+      "thread_challenge_results": [],
+      "challenge_question_count": 1
+    },
+    "RT3": {
+      "status": "completed_partial",
+      "completed_steps": [
+        "RT3_STEP1",
+        "RT3_STEP2",
+        "RT3_STEP3"
+      ],
+      "current_step": "RT3_STEP3",
+      "success": null,
+      "failure_reason": null,
+      "related_turns": [
+        "T32",
+        "T36",
+        "T38"
+      ],
+      "bridge_success": false,
+      "review_consistency": null,
+      "thread_challenge_count": 0,
+      "thread_challenge_question_ids": [],
+      "thread_challenge_results": []
+    },
+    "RT4": {
+      "status": "in_progress",
+      "completed_steps": [
+        "RT4_STEP1"
+      ],
+      "current_step": "RT4_STEP1",
+      "success": null,
+      "failure_reason": null,
+      "related_turns": [
+        "T53"
+      ],
+      "bridge_success": null,
+      "review_consistency": null,
+      "thread_challenge_count": 0,
+      "thread_challenge_question_ids": [],
+      "thread_challenge_results": []
+    }
+  },
+  "claim_verification_states": {},
+  "hallucination_events": {
+    "H_T11_1": {
+      "hallucination_type": "challenge_overclaim_acceptance",
+      "subtype": "overclaim",
+      "claim": "the Intent Reconstructor's effectiveness can be generalized to a high degree across diverse instruction semantics, formatting styles, and task complexities.",
+      "related_kc_ids": [
+        "KC25"
+      ],
+      "matched_forbidden_claims": [],
+      "event_id": "H_T11_1",
+      "created_at_turn": "T11",
+      "macro_id": "M3",
+      "source_question_id": "CHQ_0005",
+      "source_question_type": "challenge_question",
+      "hallucination_family": "challenge_failure",
+      "judge_hallucination_type": "challenge_failure",
+      "challenge_type": "overclaim_challenge",
+      "target_failure_mode": "overclaim",
+      "challenge_trigger": "macro",
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'not_specified', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "requires_multimodal_input": false,
+      "modality_pool": "text",
+      "source": "judge_result.hallucination_events",
+      "status": "resolved",
+      "followup_turns": [
+        "T12",
+        "T13",
+        "T14"
+      ],
+      "max_followups": 3,
+      "resolved_at_turn": "T14",
+      "exhausted_at_turn": null
+    },
+    "H_T23_1": {
+      "hallucination_type": "challenge_false_premise_acceptance",
+      "subtype": "false_premise",
+      "claim": "The table implies a strictly sequential linear processing pipeline where the output of each sub-task explicitly feeds into the input of the next, with a specific order: Reconstructor → Retrieval → Locator → Generator.",
+      "related_kc_ids": [
+        "KC125"
+      ],
+      "matched_forbidden_claims": [
+        "MM_FC_TAB_001_1"
+      ],
+      "event_id": "H_T23_1",
+      "created_at_turn": "T23",
+      "macro_id": "M4",
+      "source_question_id": "CHQM_0002",
+      "source_question_type": "challenge_question",
+      "hallucination_family": "challenge_failure",
+      "judge_hallucination_type": "challenge_failure",
+      "challenge_type": "false_premise_challenge",
+      "target_failure_mode": "false_premise",
+      "challenge_trigger": "macro",
+      "expected_behavior": "The table only lists types, not their order of execution. The order could be different or they might be used independently.",
+      "requires_multimodal_input": true,
+      "modality_pool": "multimodal",
+      "asset_ids": [
+        "TAB_001"
+      ],
+      "asset_types": [
+        "table"
+      ],
+      "source": "judge_result.hallucination_events",
+      "status": "resolved",
+      "followup_turns": [
+        "T24",
+        "T25"
+      ],
+      "max_followups": 3,
+      "resolved_at_turn": "T25",
+      "exhausted_at_turn": null
+    },
+    "H_T33_1": {
+      "hallucination_type": "challenge_overclaim_acceptance",
+      "subtype": "overclaim",
+      "claim": "The answer asserts that the SMART framework generally outperforms state-of-the-art knowledge enhancement approaches, accepting the tempting premise without qualifying that the reported results are limited to specific experiments and baselines.",
+      "related_kc_ids": [
+        "KC67"
+      ],
+      "matched_forbidden_claims": [],
+      "event_id": "H_T33_1",
+      "created_at_turn": "T33",
+      "macro_id": "M6",
+      "source_question_id": "CHQ_0018",
+      "source_question_type": "challenge_question",
+      "hallucination_family": "challenge_failure",
+      "judge_hallucination_type": "challenge_failure",
+      "challenge_type": "overclaim_challenge",
+      "target_failure_mode": "overclaim",
+      "challenge_trigger": "macro",
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "requires_multimodal_input": false,
+      "modality_pool": "text",
+      "source": "judge_result.hallucination_events",
+      "status": "resolved",
+      "followup_turns": [
+        "T34"
+      ],
+      "max_followups": 3,
+      "resolved_at_turn": "T34",
+      "exhausted_at_turn": null
+    },
+    "H_T38_1": {
+      "hallucination_type": "thread_reasoning_hallucination",
+      "subtype": "fabricated numerical claim",
+      "claim": "SMART relies on only ~40% of the long-trajectory dataset for optimal gains",
+      "related_kc_ids": [
+        "KC66",
+        "KC68"
+      ],
+      "matched_forbidden_claims": [],
+      "event_id": "H_T38_1",
+      "created_at_turn": "T38",
+      "macro_id": "M7",
+      "source_question_id": "Q_RT3_STEP3",
+      "source_question_type": "thread_bridge_question",
+      "hallucination_family": "thread_reasoning_hallucination",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "requires_multimodal_input": false,
+      "source": "judge_result.hallucination_events",
+      "status": "resolved",
+      "followup_turns": [
+        "T39"
+      ],
+      "max_followups": 3,
+      "resolved_at_turn": "T39",
+      "exhausted_at_turn": null
+    },
+    "H_T40_1": {
+      "hallucination_type": "challenge_overclaim_acceptance",
+      "subtype": "overclaim",
+      "claim": "The importance of Fact Locator and Intent Reconstructor generalizes broadly across all knowledge-intensive tasks; they are core, non-optional components.",
+      "related_kc_ids": [
+        "KC83"
+      ],
+      "matched_forbidden_claims": [],
+      "event_id": "H_T40_1",
+      "created_at_turn": "T40",
+      "macro_id": "M8",
+      "source_question_id": "CHQ_0001",
+      "source_question_type": "challenge_question",
+      "hallucination_family": "challenge_failure",
+      "judge_hallucination_type": "challenge_failure",
+      "challenge_type": "overclaim_challenge",
+      "target_failure_mode": "overclaim",
+      "challenge_trigger": "macro",
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'knowledge-intensive tasks', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "requires_multimodal_input": false,
+      "modality_pool": "text",
+      "source": "judge_result.hallucination_events",
+      "status": "resolved",
+      "followup_turns": [
+        "T41"
+      ],
+      "max_followups": 3,
+      "resolved_at_turn": "T41",
+      "exhausted_at_turn": null
+    },
+    "H_T42_1": {
+      "hallucination_type": "challenge_overclaim_acceptance",
+      "subtype": "overclaim",
+      "claim": "Short-Trajectory Learning inherently makes multi-agent systems robust to missing agents",
+      "related_kc_ids": [
+        "KC91"
+      ],
+      "matched_forbidden_claims": [],
+      "event_id": "H_T42_1",
+      "created_at_turn": "T42",
+      "macro_id": "M8",
+      "source_question_id": "CHQ_0016",
+      "source_question_type": "challenge_question",
+      "hallucination_family": "challenge_failure",
+      "judge_hallucination_type": "challenge_failure",
+      "challenge_type": "overclaim_challenge",
+      "target_failure_mode": "overclaim",
+      "challenge_trigger": "macro",
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "requires_multimodal_input": false,
+      "modality_pool": "text",
+      "source": "judge_result.hallucination_events",
+      "status": "resolved",
+      "followup_turns": [
+        "T43"
+      ],
+      "max_followups": 3,
+      "resolved_at_turn": "T43",
+      "exhausted_at_turn": null
+    },
+    "H_T44_1": {
+      "hallucination_type": "challenge_wrong_relation_acceptance",
+      "subtype": "overclaim",
+      "claim": "Increasing K leads to the method surpassing both SelfRag-7B and MMAgent baselines in all three tasks.",
+      "related_kc_ids": [
+        "KC142"
+      ],
+      "matched_forbidden_claims": [
+        "FC_2 (KC142): The method outperforms the SelfRag-7B baseline on all three tasks."
+      ],
+      "event_id": "H_T44_1",
+      "created_at_turn": "T44",
+      "macro_id": "M8",
+      "source_question_id": "CHQF_0001",
+      "source_question_type": "challenge_question",
+      "hallucination_family": "challenge_failure",
+      "judge_hallucination_type": "challenge_failure",
+      "challenge_type": "wrong_relation_challenge",
+      "target_failure_mode": "wrong_relation",
+      "challenge_trigger": "macro",
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "requires_multimodal_input": true,
+      "modality_pool": "multimodal",
+      "asset_ids": [
+        "FIG_004"
+      ],
+      "asset_types": [
+        "figure"
+      ],
+      "source": "judge_result.hallucination_events",
+      "status": "resolved",
+      "followup_turns": [
+        "T45"
+      ],
+      "max_followups": 3,
+      "resolved_at_turn": "T45",
+      "exhausted_at_turn": null
+    },
+    "H_T47_1": {
+      "hallucination_type": "challenge_wrong_relation_acceptance",
+      "subtype": "overclaim",
+      "claim": "The method outperforms both SelfRag-7B and MMAgent baselines across all three tasks.",
+      "related_kc_ids": [
+        "KC141"
+      ],
+      "matched_forbidden_claims": [
+        "FC_x_2 from KC141's forbidden claims"
+      ],
+      "event_id": "H_T47_1",
+      "created_at_turn": "T47",
+      "macro_id": "M8",
+      "source_question_id": "CHQF_0002",
+      "source_question_type": "challenge_question",
+      "hallucination_family": "challenge_failure",
+      "judge_hallucination_type": "challenge_failure",
+      "challenge_type": "wrong_relation_challenge",
+      "target_failure_mode": "wrong_relation",
+      "challenge_trigger": "macro",
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "requires_multimodal_input": true,
+      "modality_pool": "multimodal",
+      "asset_ids": [
+        "FIG_004"
+      ],
+      "asset_types": [
+        "figure"
+      ],
+      "source": "judge_result.hallucination_events",
+      "status": "resolved",
+      "followup_turns": [
+        "T48"
+      ],
+      "max_followups": 3,
+      "resolved_at_turn": "T48",
+      "exhausted_at_turn": null
+    }
+  },
+  "coverage_gaps": {
+    "G_T8_1": {
+      "gap_id": "G_T8_1",
+      "created_at_turn": "T8",
+      "macro_id": "M3",
+      "source_question_type": "macro_main_question",
+      "missing_kc_ids": [
+        "KC99"
+      ],
+      "status": "resolved",
+      "followup_turns": [
+        "T9"
+      ],
+      "max_followups": 3,
+      "resolved_at_turn": "T9",
+      "exhausted_at_turn": null
+    },
+    "G_T17_1": {
+      "gap_id": "G_T17_1",
+      "created_at_turn": "T17",
+      "macro_id": "M3",
+      "source_question_type": "challenge_question",
+      "missing_kc_ids": [
+        "KC119"
+      ],
+      "status": "resolved",
+      "followup_turns": [
+        "T18"
+      ],
+      "max_followups": 3,
+      "resolved_at_turn": "T18",
+      "exhausted_at_turn": null
+    },
+    "G_T44_1": {
+      "gap_id": "G_T44_1",
+      "created_at_turn": "T44",
+      "macro_id": "M8",
+      "source_question_type": "challenge_question",
+      "missing_kc_ids": [
+        "KC142"
+      ],
+      "status": "resolved",
+      "followup_turns": [
+        "T46"
+      ],
+      "max_followups": 3,
+      "resolved_at_turn": "T46",
+      "exhausted_at_turn": null
+    }
+  },
+  "stage_tasks": {
+    "TASK_M1_THREAD_REASONING_RT2_STEP1": {
+      "task_id": "TASK_M1_THREAD_REASONING_RT2_STEP1",
+      "macro_id": "M1",
+      "task_type": "THREAD_REASONING",
+      "source_turn_id": null,
+      "source_question_id": "Q_RT2_STEP1",
+      "source_question_type": "thread_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC13"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 3,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T2"
+      ],
+      "created_at_turn_no": 2
+    },
+    "TASK_M1_CHALLENGE_EVALUATION_CHQ_0011": {
+      "task_id": "TASK_M1_CHALLENGE_EVALUATION_CHQ_0011",
+      "macro_id": "M1",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQ_0011",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC13",
+        "KC98"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T3"
+      ],
+      "created_at_turn_no": 3
+    },
+    "TASK_M2_THREAD_REASONING_RT1_STEP1": {
+      "task_id": "TASK_M2_THREAD_REASONING_RT1_STEP1",
+      "macro_id": "M2",
+      "task_type": "THREAD_REASONING",
+      "source_turn_id": null,
+      "source_question_id": "Q_RT1_STEP1",
+      "source_question_type": "thread_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC98"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 3,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T5"
+      ],
+      "created_at_turn_no": 5
+    },
+    "TASK_M2_CHALLENGE_EVALUATION_CHQ_0014": {
+      "task_id": "TASK_M2_CHALLENGE_EVALUATION_CHQ_0014",
+      "macro_id": "M2",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQ_0014",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC90",
+        "KC89"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T6"
+      ],
+      "created_at_turn_no": 6
+    },
+    "TASK_M2_CHALLENGE_EVALUATION_CHQ_0019": {
+      "task_id": "TASK_M2_CHALLENGE_EVALUATION_CHQ_0019",
+      "macro_id": "M2",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQ_0019",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC90",
+        "KC99"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T7"
+      ],
+      "created_at_turn_no": 7
+    },
+    "TASK_M3_T8_DETAIL_COMPLETION_1": {
+      "task_id": "TASK_M3_T8_DETAIL_COMPLETION_1",
+      "macro_id": "M3",
+      "task_type": "DETAIL_COMPLETION",
+      "source_turn_id": "T8",
+      "source_question_id": "Q_M3",
+      "source_question_type": "macro_main_question",
+      "source_action": "detail_followup",
+      "target_kc_ids": [
+        "KC99"
+      ],
+      "hallucination_event_ids": [],
+      "repair_context": {
+        "repair_type": "detail",
+        "root_turn_id": "T8",
+        "root_question_id": "Q_M3",
+        "root_question_type": "macro_main_question",
+        "remaining_kc_ids": [
+          "KC99"
+        ],
+        "covered_during_repair": []
+      },
+      "priority": 2,
+      "max_turns": 3,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T9"
+      ],
+      "created_at_turn_no": 8,
+      "coverage_gap_id": "G_T8_1"
+    },
+    "TASK_M3_THREAD_REASONING_RT1_STEP2": {
+      "task_id": "TASK_M3_THREAD_REASONING_RT1_STEP2",
+      "macro_id": "M3",
+      "task_type": "THREAD_REASONING",
+      "source_turn_id": null,
+      "source_question_id": "Q_RT1_STEP2",
+      "source_question_type": "thread_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC99"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 3,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T10"
+      ],
+      "created_at_turn_no": 10
+    },
+    "TASK_M3_CHALLENGE_EVALUATION_CHQ_0005": {
+      "task_id": "TASK_M3_CHALLENGE_EVALUATION_CHQ_0005",
+      "macro_id": "M3",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQ_0005",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC25"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T11"
+      ],
+      "created_at_turn_no": 11
+    },
+    "TASK_M3_T11_HALLUCINATION_REPAIR_1": {
+      "task_id": "TASK_M3_T11_HALLUCINATION_REPAIR_1",
+      "macro_id": "M3",
+      "task_type": "HALLUCINATION_REPAIR",
+      "source_turn_id": "T13",
+      "source_question_id": "CHQ_0005_F_F",
+      "source_question_type": "challenge_question",
+      "source_action": "hallucination_followup",
+      "target_kc_ids": [
+        "KC25"
+      ],
+      "hallucination_event_ids": [
+        "H_T11_1"
+      ],
+      "repair_context": {
+        "repair_type": "hallucination",
+        "root_turn_id": "T11",
+        "root_question_id": "CHQ_0005",
+        "root_question_type": "challenge_question",
+        "active_hallucinations": [
+          {
+            "event_id": "H_T11_1",
+            "hallucination_type": "challenge_overclaim_acceptance",
+            "subtype": "overclaim",
+            "claim": "the Intent Reconstructor's effectiveness can be generalized to a high degree across diverse instruction semantics, formatting styles, and task complexities.",
+            "related_kc_ids": [
+              "KC25"
+            ],
+            "matched_forbidden_claims": []
+          }
+        ],
+        "attempted_turn_ids": []
+      },
+      "priority": 1,
+      "max_turns": 3,
+      "current_turns": 3,
+      "status": "completed",
+      "followup_turns": [
+        "T12",
+        "T13",
+        "T14"
+      ],
+      "created_at_turn_no": 11
+    },
+    "TASK_M3_CHALLENGE_EVALUATION_CHQ_0006": {
+      "task_id": "TASK_M3_CHALLENGE_EVALUATION_CHQ_0006",
+      "macro_id": "M3",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQ_0006",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC99"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T15"
+      ],
+      "created_at_turn_no": 15
+    },
+    "TASK_M3_CHALLENGE_EVALUATION_CHQF_0007": {
+      "task_id": "TASK_M3_CHALLENGE_EVALUATION_CHQF_0007",
+      "macro_id": "M3",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQF_0007",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC113"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T16"
+      ],
+      "created_at_turn_no": 16
+    },
+    "TASK_M3_CHALLENGE_EVALUATION_CHQM_0001": {
+      "task_id": "TASK_M3_CHALLENGE_EVALUATION_CHQM_0001",
+      "macro_id": "M3",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQM_0001",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC119"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T17"
+      ],
+      "created_at_turn_no": 17
+    },
+    "TASK_M3_T17_DETAIL_COMPLETION_1": {
+      "task_id": "TASK_M3_T17_DETAIL_COMPLETION_1",
+      "macro_id": "M3",
+      "task_type": "DETAIL_COMPLETION",
+      "source_turn_id": "T17",
+      "source_question_id": "CHQM_0001",
+      "source_question_type": "challenge_question",
+      "source_action": "detail_followup",
+      "target_kc_ids": [
+        "KC119"
+      ],
+      "hallucination_event_ids": [],
+      "repair_context": {
+        "repair_type": "detail",
+        "root_turn_id": "T17",
+        "root_question_id": "CHQM_0001",
+        "root_question_type": "challenge_question",
+        "remaining_kc_ids": [
+          "KC119"
+        ],
+        "covered_during_repair": [],
+        "requires_multimodal_input": true,
+        "asset_references": [
+          {
+            "asset_id": "FIG_002",
+            "asset_type": "figure",
+            "caption": "Figure 2: Overview of our multi-agent framework with long- and short-trajectory learning. This framework incorporates four agents: intent reconstructor, knowledge retriever, fac locator, and response generator.",
+            "summary": "Figure 2 illustrates a multi-agent framework for knowledge-intensive tasks, divided into a high-level architecture overview (top) and a detailed trajectory example (bottom). The top section shows four sequential agents: Intent Reconstructor, Knowledge Retriever, Fact Locator, and Response Generator. The bottom section demonstrates a 'Long Trajectory' using a specific question about Joe Colquhoun and Carlton Loewer, breaking the process into four 'Short Trajectories' corresponding to each agent's function.",
+            "requires_multimodal_input": true,
+            "input_kind": "image",
+            "target_kc_ids": [
+              "KC119"
+            ],
+            "evidence_bases": [
+              "visible text"
+            ],
+            "attachments": [
+              {
+                "type": "image",
+                "asset_id": "FIG_002",
+                "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_109_109_1110_603.jpg",
+                "caption": "Figure 2: Overview of our multi-agent framework with long- and short-trajectory learning. This framework incorporates four agents: intent reconstructor, knowledge retriever, fac locator, and response generator."
+              }
+            ]
+          }
+        ],
+        "multimodal_input": {
+          "requires_multimodal_input": true,
+          "image_paths": [
+            "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_109_109_1110_603.jpg"
+          ],
+          "asset_ids": [
+            "FIG_002"
+          ]
+        }
+      },
+      "priority": 2,
+      "max_turns": 3,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T18"
+      ],
+      "created_at_turn_no": 17,
+      "coverage_gap_id": "G_T17_1"
+    },
+    "TASK_M3_CHALLENGE_EVALUATION_CHQM_0006": {
+      "task_id": "TASK_M3_CHALLENGE_EVALUATION_CHQM_0006",
+      "macro_id": "M3",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQM_0006",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC117",
+        "KC118"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T19"
+      ],
+      "created_at_turn_no": 19
+    },
+    "TASK_M4_THREAD_REASONING_RT1_STEP3": {
+      "task_id": "TASK_M4_THREAD_REASONING_RT1_STEP3",
+      "macro_id": "M4",
+      "task_type": "THREAD_REASONING",
+      "source_turn_id": null,
+      "source_question_id": "Q_RT1_STEP3",
+      "source_question_type": "thread_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC98",
+        "KC99",
+        "KC43"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 3,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T21"
+      ],
+      "created_at_turn_no": 21
+    },
+    "TASK_M2_CHALLENGE_EVALUATION_TCQ_0009": {
+      "task_id": "TASK_M2_CHALLENGE_EVALUATION_TCQ_0009",
+      "macro_id": "M2",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "TCQ_0009",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC98",
+        "KC99",
+        "KC43"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T22"
+      ],
+      "created_at_turn_no": 22
+    },
+    "TASK_M4_CHALLENGE_EVALUATION_CHQM_0002": {
+      "task_id": "TASK_M4_CHALLENGE_EVALUATION_CHQM_0002",
+      "macro_id": "M4",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQM_0002",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC125"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T23"
+      ],
+      "created_at_turn_no": 23
+    },
+    "TASK_M4_T23_HALLUCINATION_REPAIR_1": {
+      "task_id": "TASK_M4_T23_HALLUCINATION_REPAIR_1",
+      "macro_id": "M4",
+      "task_type": "HALLUCINATION_REPAIR",
+      "source_turn_id": "T24",
+      "source_question_id": "CHQM_0002_F",
+      "source_question_type": "challenge_question",
+      "source_action": "hallucination_followup",
+      "target_kc_ids": [
+        "KC125"
+      ],
+      "hallucination_event_ids": [
+        "H_T23_1"
+      ],
+      "repair_context": {
+        "repair_type": "hallucination",
+        "root_turn_id": "T23",
+        "root_question_id": "CHQM_0002",
+        "root_question_type": "challenge_question",
+        "active_hallucinations": [
+          {
+            "event_id": "H_T23_1",
+            "hallucination_type": "challenge_false_premise_acceptance",
+            "subtype": "false_premise",
+            "claim": "The table implies a strictly sequential linear processing pipeline where the output of each sub-task explicitly feeds into the input of the next, with a specific order: Reconstructor → Retrieval → Locator → Generator.",
+            "related_kc_ids": [
+              "KC125"
+            ],
+            "matched_forbidden_claims": [
+              "MM_FC_TAB_001_1"
+            ]
+          }
+        ],
+        "attempted_turn_ids": [],
+        "requires_multimodal_input": true,
+        "asset_references": [
+          {
+            "asset_id": "TAB_001",
+            "asset_type": "table",
+            "caption": "Table 1: Four types of trajectory tokens. $ x $, $ \\bar{q} $, $ \\bar{d} $, $ \\gamma $, $ \\bar{f} $ and $ \\bar{y} $ indicate instruction, intent, knowledge document, relevance tag, fact evidence and response, respectively.",
+            "summary": "The table defines four types of trajectory tokens used in a trajectory dataset construction: Reconstructor (A_i), Retrieval (A_r), Locator (A_l), and Generator (A_g). For each type, it specifies the head token (e.g., <Reconstructor>), end token (e.g., </eor>), input variables (e.g., x for Reconstructor), and output variables (e.g., \\bar{q} for Reconstructor). Notation is provided in the caption: x=instruction, \\bar{q}=intent, \\bar{d}=knowledge document, \\gamma=relevance tag, \\bar{f}=fact evidence, and y=response.",
+            "requires_multimodal_input": true,
+            "input_kind": "table",
+            "target_kc_ids": [
+              "KC125"
+            ],
+            "evidence_bases": [
+              "Row labels in table: Type column lists $\\mathcal{A}_i$, $\\mathcal{A}_r$, $\\mathcal{A}_l$, $\\mathcal{A}_g$ mapped to types."
+            ],
+            "attachments": [
+              {
+                "type": "table_latex",
+                "asset_id": "TAB_001",
+                "content": "\\begin{tabular}{lllll}\n\\hline\nType & Trajectory Tokens & Trajectory Tokens & Input & Output \\\\\n\\hline\nType & Head & End & Input & Output \\\\\n\\$ \\textbackslash{}mathcal\\{A\\}\\_i \\$ & <Reconstructor> & </eor> & x & \\$ \\textbackslash{}bar\\{q\\} \\$ \\\\\n\\$ \\textbackslash{}mathcal\\{A\\}\\_r \\$ & <retrieval> & </retrieval> & \\$ \\textbackslash{}bar\\{q\\} \\$ & \\$ \\textbackslash{}bar\\{d\\} \\$ \\\\\n\\$ \\textbackslash{}mathcal\\{A\\}\\_l \\$ & <Locator> & </eol> & x, \\$ \\textbackslash{}bar\\{d\\} \\$ & \\$ \\textbackslash{}gamma,\\textbackslash{}bar\\{f\\} \\$ \\\\\n\\$ \\textbackslash{}mathcal\\{A\\}\\_g \\$ & <Generator> & </eog> & x, \\$ \\textbackslash{}bar\\{d\\}/x \\$ & y \\\\\n\\hline\n\\end{tabular}",
+                "caption": "Table 1: Four types of trajectory tokens. $ x $, $ \\bar{q} $, $ \\bar{d} $, $ \\gamma $, $ \\bar{f} $ and $ \\bar{y} $ indicate instruction, intent, knowledge document, relevance tag, fact evidence and response, respectively."
+              }
+            ]
+          }
+        ],
+        "multimodal_input": {
+          "requires_multimodal_input": true,
+          "image_paths": [],
+          "asset_ids": [
+            "TAB_001"
+          ]
+        }
+      },
+      "priority": 1,
+      "max_turns": 3,
+      "current_turns": 2,
+      "status": "completed",
+      "followup_turns": [
+        "T24",
+        "T25"
+      ],
+      "created_at_turn_no": 23
+    },
+    "TASK_M4_CHALLENGE_EVALUATION_CHQM_0004": {
+      "task_id": "TASK_M4_CHALLENGE_EVALUATION_CHQM_0004",
+      "macro_id": "M4",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQM_0004",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC121",
+        "KC122"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T26"
+      ],
+      "created_at_turn_no": 26
+    },
+    "TASK_M2_THREAD_REASONING_RT2_STEP2": {
+      "task_id": "TASK_M2_THREAD_REASONING_RT2_STEP2",
+      "macro_id": "M2",
+      "task_type": "THREAD_REASONING",
+      "source_turn_id": null,
+      "source_question_id": "Q_RT2_STEP2",
+      "source_question_type": "thread_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC98"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 3,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T28"
+      ],
+      "created_at_turn_no": 28
+    },
+    "TASK_M5_CHALLENGE_EVALUATION_CHQ_0002": {
+      "task_id": "TASK_M5_CHALLENGE_EVALUATION_CHQ_0002",
+      "macro_id": "M5",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQ_0002",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC53"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T29"
+      ],
+      "created_at_turn_no": 29
+    },
+    "TASK_M5_CHALLENGE_EVALUATION_CHQ_0004": {
+      "task_id": "TASK_M5_CHALLENGE_EVALUATION_CHQ_0004",
+      "macro_id": "M5",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQ_0004",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC53"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T30"
+      ],
+      "created_at_turn_no": 30
+    },
+    "TASK_M6_THREAD_REASONING_RT3_STEP1": {
+      "task_id": "TASK_M6_THREAD_REASONING_RT3_STEP1",
+      "macro_id": "M6",
+      "task_type": "THREAD_REASONING",
+      "source_turn_id": null,
+      "source_question_id": "Q_RT3_STEP1",
+      "source_question_type": "thread_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC66"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 3,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T32"
+      ],
+      "created_at_turn_no": 32
+    },
+    "TASK_M6_CHALLENGE_EVALUATION_CHQ_0018": {
+      "task_id": "TASK_M6_CHALLENGE_EVALUATION_CHQ_0018",
+      "macro_id": "M6",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQ_0018",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC67"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T33"
+      ],
+      "created_at_turn_no": 33
+    },
+    "TASK_M6_T33_HALLUCINATION_REPAIR_1": {
+      "task_id": "TASK_M6_T33_HALLUCINATION_REPAIR_1",
+      "macro_id": "M6",
+      "task_type": "HALLUCINATION_REPAIR",
+      "source_turn_id": "T33",
+      "source_question_id": "CHQ_0018",
+      "source_question_type": "challenge_question",
+      "source_action": "hallucination_followup",
+      "target_kc_ids": [
+        "KC67"
+      ],
+      "hallucination_event_ids": [
+        "H_T33_1"
+      ],
+      "repair_context": {
+        "repair_type": "hallucination",
+        "root_turn_id": "T33",
+        "root_question_id": "CHQ_0018",
+        "root_question_type": "challenge_question",
+        "active_hallucinations": [
+          {
+            "event_id": "H_T33_1",
+            "hallucination_type": "challenge_overclaim_acceptance",
+            "subtype": "overclaim",
+            "claim": "The answer asserts that the SMART framework generally outperforms state-of-the-art knowledge enhancement approaches, accepting the tempting premise without qualifying that the reported results are limited to specific experiments and baselines.",
+            "related_kc_ids": [
+              "KC67"
+            ],
+            "matched_forbidden_claims": []
+          }
+        ],
+        "attempted_turn_ids": []
+      },
+      "priority": 1,
+      "max_turns": 3,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T34"
+      ],
+      "created_at_turn_no": 33
+    },
+    "TASK_M7_THREAD_REASONING_RT3_STEP2": {
+      "task_id": "TASK_M7_THREAD_REASONING_RT3_STEP2",
+      "macro_id": "M7",
+      "task_type": "THREAD_REASONING",
+      "source_turn_id": null,
+      "source_question_id": "Q_RT3_STEP2",
+      "source_question_type": "thread_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC68"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 3,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T36"
+      ],
+      "created_at_turn_no": 36
+    },
+    "TASK_M7_THREAD_REASONING_RT3_STEP3": {
+      "task_id": "TASK_M7_THREAD_REASONING_RT3_STEP3",
+      "macro_id": "M7",
+      "task_type": "THREAD_REASONING",
+      "source_turn_id": null,
+      "source_question_id": "Q_RT3_STEP3",
+      "source_question_type": "thread_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC66",
+        "KC68"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 3,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T38"
+      ],
+      "created_at_turn_no": 38
+    },
+    "TASK_M7_T38_HALLUCINATION_REPAIR_1": {
+      "task_id": "TASK_M7_T38_HALLUCINATION_REPAIR_1",
+      "macro_id": "M7",
+      "task_type": "HALLUCINATION_REPAIR",
+      "source_turn_id": "T38",
+      "source_question_id": "Q_RT3_STEP3",
+      "source_question_type": "thread_bridge_question",
+      "source_action": "hallucination_followup",
+      "target_kc_ids": [
+        "KC66",
+        "KC68"
+      ],
+      "hallucination_event_ids": [
+        "H_T38_1"
+      ],
+      "repair_context": {
+        "repair_type": "hallucination",
+        "root_turn_id": "T38",
+        "root_question_id": "Q_RT3_STEP3",
+        "root_question_type": "thread_bridge_question",
+        "active_hallucinations": [
+          {
+            "event_id": "H_T38_1",
+            "hallucination_type": "thread_reasoning_hallucination",
+            "subtype": "fabricated numerical claim",
+            "claim": "SMART relies on only ~40% of the long-trajectory dataset for optimal gains",
+            "related_kc_ids": [
+              "KC66",
+              "KC68"
+            ],
+            "matched_forbidden_claims": []
+          }
+        ],
+        "attempted_turn_ids": []
+      },
+      "priority": 1,
+      "max_turns": 3,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T39"
+      ],
+      "created_at_turn_no": 38
+    },
+    "TASK_M8_CHALLENGE_EVALUATION_CHQ_0001": {
+      "task_id": "TASK_M8_CHALLENGE_EVALUATION_CHQ_0001",
+      "macro_id": "M8",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQ_0001",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC83"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T40"
+      ],
+      "created_at_turn_no": 40
+    },
+    "TASK_M8_T40_HALLUCINATION_REPAIR_1": {
+      "task_id": "TASK_M8_T40_HALLUCINATION_REPAIR_1",
+      "macro_id": "M8",
+      "task_type": "HALLUCINATION_REPAIR",
+      "source_turn_id": "T40",
+      "source_question_id": "CHQ_0001",
+      "source_question_type": "challenge_question",
+      "source_action": "hallucination_followup",
+      "target_kc_ids": [
+        "KC83"
+      ],
+      "hallucination_event_ids": [
+        "H_T40_1"
+      ],
+      "repair_context": {
+        "repair_type": "hallucination",
+        "root_turn_id": "T40",
+        "root_question_id": "CHQ_0001",
+        "root_question_type": "challenge_question",
+        "active_hallucinations": [
+          {
+            "event_id": "H_T40_1",
+            "hallucination_type": "challenge_overclaim_acceptance",
+            "subtype": "overclaim",
+            "claim": "The importance of Fact Locator and Intent Reconstructor generalizes broadly across all knowledge-intensive tasks; they are core, non-optional components.",
+            "related_kc_ids": [
+              "KC83"
+            ],
+            "matched_forbidden_claims": []
+          }
+        ],
+        "attempted_turn_ids": []
+      },
+      "priority": 1,
+      "max_turns": 3,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T41"
+      ],
+      "created_at_turn_no": 40
+    },
+    "TASK_M8_CHALLENGE_EVALUATION_CHQ_0016": {
+      "task_id": "TASK_M8_CHALLENGE_EVALUATION_CHQ_0016",
+      "macro_id": "M8",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQ_0016",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC91"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T42"
+      ],
+      "created_at_turn_no": 42
+    },
+    "TASK_M8_T42_HALLUCINATION_REPAIR_1": {
+      "task_id": "TASK_M8_T42_HALLUCINATION_REPAIR_1",
+      "macro_id": "M8",
+      "task_type": "HALLUCINATION_REPAIR",
+      "source_turn_id": "T42",
+      "source_question_id": "CHQ_0016",
+      "source_question_type": "challenge_question",
+      "source_action": "hallucination_followup",
+      "target_kc_ids": [
+        "KC91"
+      ],
+      "hallucination_event_ids": [
+        "H_T42_1"
+      ],
+      "repair_context": {
+        "repair_type": "hallucination",
+        "root_turn_id": "T42",
+        "root_question_id": "CHQ_0016",
+        "root_question_type": "challenge_question",
+        "active_hallucinations": [
+          {
+            "event_id": "H_T42_1",
+            "hallucination_type": "challenge_overclaim_acceptance",
+            "subtype": "overclaim",
+            "claim": "Short-Trajectory Learning inherently makes multi-agent systems robust to missing agents",
+            "related_kc_ids": [
+              "KC91"
+            ],
+            "matched_forbidden_claims": []
+          }
+        ],
+        "attempted_turn_ids": []
+      },
+      "priority": 1,
+      "max_turns": 3,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T43"
+      ],
+      "created_at_turn_no": 42
+    },
+    "TASK_M8_CHALLENGE_EVALUATION_CHQF_0001": {
+      "task_id": "TASK_M8_CHALLENGE_EVALUATION_CHQF_0001",
+      "macro_id": "M8",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQF_0001",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC140",
+        "KC142"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T44"
+      ],
+      "created_at_turn_no": 44
+    },
+    "TASK_M8_T44_HALLUCINATION_REPAIR_1": {
+      "task_id": "TASK_M8_T44_HALLUCINATION_REPAIR_1",
+      "macro_id": "M8",
+      "task_type": "HALLUCINATION_REPAIR",
+      "source_turn_id": "T44",
+      "source_question_id": "CHQF_0001",
+      "source_question_type": "challenge_question",
+      "source_action": "hallucination_followup",
+      "target_kc_ids": [
+        "KC140",
+        "KC142"
+      ],
+      "hallucination_event_ids": [
+        "H_T44_1"
+      ],
+      "repair_context": {
+        "repair_type": "hallucination",
+        "root_turn_id": "T44",
+        "root_question_id": "CHQF_0001",
+        "root_question_type": "challenge_question",
+        "active_hallucinations": [
+          {
+            "event_id": "H_T44_1",
+            "hallucination_type": "challenge_wrong_relation_acceptance",
+            "subtype": "overclaim",
+            "claim": "Increasing K leads to the method surpassing both SelfRag-7B and MMAgent baselines in all three tasks.",
+            "related_kc_ids": [
+              "KC142"
+            ],
+            "matched_forbidden_claims": [
+              "FC_2 (KC142): The method outperforms the SelfRag-7B baseline on all three tasks."
+            ]
+          }
+        ],
+        "attempted_turn_ids": [],
+        "requires_multimodal_input": true,
+        "asset_references": [
+          {
+            "asset_id": "FIG_004",
+            "asset_type": "figure",
+            "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA.",
+            "summary": "The figure consists of three line charts (likely panels a, b, and c corresponding to tasks ARC-C, PopQA, and ASQA) that illustrate the effect of increasing long-trajectory training data size (K) on model performance. Each chart plots a performance metric (accuracy 'acc' or exact match 'em') on the y-axis against the number of training samples in thousands ('Num of training(k)') on the x-axis. A solid green line with markers represents the primary method's performance at different data sizes (0, 20, 60, 120, 140k), while horizontal dashed lines represent fixed baseline performances for 'SelfRag-7B' (blue) and 'MMAgent' (orange).",
+            "requires_multimodal_input": true,
+            "input_kind": "image",
+            "target_kc_ids": [
+              "KC140",
+              "KC142"
+            ],
+            "evidence_bases": [
+              "The green line shows an upward trend in all three panels as 'Num of training(k)' increases.",
+              "In Panel 2 and Panel 3, the green line crosses above the blue dashed line."
+            ],
+            "attachments": [
+              {
+                "type": "image",
+                "asset_id": "FIG_004",
+                "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_138_110_454_334.jpg",
+                "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
+              },
+              {
+                "type": "image",
+                "asset_id": "FIG_004",
+                "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_456_110_772_336.jpg",
+                "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
+              },
+              {
+                "type": "image",
+                "asset_id": "FIG_004",
+                "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_774_111_1088_334.jpg",
+                "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
+              }
+            ]
+          }
+        ],
+        "multimodal_input": {
+          "requires_multimodal_input": true,
+          "image_paths": [
+            "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_138_110_454_334.jpg",
+            "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_456_110_772_336.jpg",
+            "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_774_111_1088_334.jpg"
+          ],
+          "asset_ids": [
+            "FIG_004"
+          ]
+        }
+      },
+      "priority": 1,
+      "max_turns": 3,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T45"
+      ],
+      "created_at_turn_no": 44
+    },
+    "TASK_M8_T44_DETAIL_COMPLETION_2": {
+      "task_id": "TASK_M8_T44_DETAIL_COMPLETION_2",
+      "macro_id": "M8",
+      "task_type": "DETAIL_COMPLETION",
+      "source_turn_id": "T44",
+      "source_question_id": "CHQF_0001",
+      "source_question_type": "challenge_question",
+      "source_action": "hallucination_followup",
+      "target_kc_ids": [
+        "KC142"
+      ],
+      "hallucination_event_ids": [],
+      "repair_context": {
+        "repair_type": "detail",
+        "root_turn_id": "T44",
+        "root_question_id": "CHQF_0001",
+        "root_question_type": "challenge_question",
+        "remaining_kc_ids": [
+          "KC142"
+        ],
+        "covered_during_repair": [],
+        "requires_multimodal_input": true,
+        "asset_references": [
+          {
+            "asset_id": "FIG_004",
+            "asset_type": "figure",
+            "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA.",
+            "summary": "The figure consists of three line charts (likely panels a, b, and c corresponding to tasks ARC-C, PopQA, and ASQA) that illustrate the effect of increasing long-trajectory training data size (K) on model performance. Each chart plots a performance metric (accuracy 'acc' or exact match 'em') on the y-axis against the number of training samples in thousands ('Num of training(k)') on the x-axis. A solid green line with markers represents the primary method's performance at different data sizes (0, 20, 60, 120, 140k), while horizontal dashed lines represent fixed baseline performances for 'SelfRag-7B' (blue) and 'MMAgent' (orange).",
+            "requires_multimodal_input": true,
+            "input_kind": "image",
+            "target_kc_ids": [
+              "KC140",
+              "KC142"
+            ],
+            "evidence_bases": [
+              "The green line shows an upward trend in all three panels as 'Num of training(k)' increases.",
+              "In Panel 2 and Panel 3, the green line crosses above the blue dashed line."
+            ],
+            "attachments": [
+              {
+                "type": "image",
+                "asset_id": "FIG_004",
+                "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_138_110_454_334.jpg",
+                "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
+              },
+              {
+                "type": "image",
+                "asset_id": "FIG_004",
+                "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_456_110_772_336.jpg",
+                "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
+              },
+              {
+                "type": "image",
+                "asset_id": "FIG_004",
+                "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_774_111_1088_334.jpg",
+                "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
+              }
+            ]
+          }
+        ],
+        "multimodal_input": {
+          "requires_multimodal_input": true,
+          "image_paths": [
+            "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_138_110_454_334.jpg",
+            "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_456_110_772_336.jpg",
+            "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_774_111_1088_334.jpg"
+          ],
+          "asset_ids": [
+            "FIG_004"
+          ]
+        }
+      },
+      "priority": 2,
+      "max_turns": 3,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T46"
+      ],
+      "created_at_turn_no": 44,
+      "coverage_gap_id": "G_T44_1"
+    },
+    "TASK_M8_CHALLENGE_EVALUATION_CHQF_0002": {
+      "task_id": "TASK_M8_CHALLENGE_EVALUATION_CHQF_0002",
+      "macro_id": "M8",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQF_0002",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC140",
+        "KC141"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T47"
+      ],
+      "created_at_turn_no": 47
+    },
+    "TASK_M8_T47_HALLUCINATION_REPAIR_1": {
+      "task_id": "TASK_M8_T47_HALLUCINATION_REPAIR_1",
+      "macro_id": "M8",
+      "task_type": "HALLUCINATION_REPAIR",
+      "source_turn_id": "T47",
+      "source_question_id": "CHQF_0002",
+      "source_question_type": "challenge_question",
+      "source_action": "hallucination_followup",
+      "target_kc_ids": [
+        "KC140",
+        "KC141"
+      ],
+      "hallucination_event_ids": [
+        "H_T47_1"
+      ],
+      "repair_context": {
+        "repair_type": "hallucination",
+        "root_turn_id": "T47",
+        "root_question_id": "CHQF_0002",
+        "root_question_type": "challenge_question",
+        "active_hallucinations": [
+          {
+            "event_id": "H_T47_1",
+            "hallucination_type": "challenge_wrong_relation_acceptance",
+            "subtype": "overclaim",
+            "claim": "The method outperforms both SelfRag-7B and MMAgent baselines across all three tasks.",
+            "related_kc_ids": [
+              "KC141"
+            ],
+            "matched_forbidden_claims": [
+              "FC_x_2 from KC141's forbidden claims"
+            ]
+          }
+        ],
+        "attempted_turn_ids": [],
+        "requires_multimodal_input": true,
+        "asset_references": [
+          {
+            "asset_id": "FIG_004",
+            "asset_type": "figure",
+            "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA.",
+            "summary": "The figure consists of three line charts (likely panels a, b, and c corresponding to tasks ARC-C, PopQA, and ASQA) that illustrate the effect of increasing long-trajectory training data size (K) on model performance. Each chart plots a performance metric (accuracy 'acc' or exact match 'em') on the y-axis against the number of training samples in thousands ('Num of training(k)') on the x-axis. A solid green line with markers represents the primary method's performance at different data sizes (0, 20, 60, 120, 140k), while horizontal dashed lines represent fixed baseline performances for 'SelfRag-7B' (blue) and 'MMAgent' (orange).",
+            "requires_multimodal_input": true,
+            "input_kind": "image",
+            "target_kc_ids": [
+              "KC140",
+              "KC141"
+            ],
+            "evidence_bases": [
+              "The green line shows an upward trend in all three panels as 'Num of training(k)' increases.",
+              "In all three charts, the green line ends at a higher y-value than the orange dashed line."
+            ],
+            "attachments": [
+              {
+                "type": "image",
+                "asset_id": "FIG_004",
+                "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_138_110_454_334.jpg",
+                "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
+              },
+              {
+                "type": "image",
+                "asset_id": "FIG_004",
+                "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_456_110_772_336.jpg",
+                "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
+              },
+              {
+                "type": "image",
+                "asset_id": "FIG_004",
+                "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_774_111_1088_334.jpg",
+                "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
+              }
+            ]
+          }
+        ],
+        "multimodal_input": {
+          "requires_multimodal_input": true,
+          "image_paths": [
+            "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_138_110_454_334.jpg",
+            "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_456_110_772_336.jpg",
+            "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_774_111_1088_334.jpg"
+          ],
+          "asset_ids": [
+            "FIG_004"
+          ]
+        }
+      },
+      "priority": 1,
+      "max_turns": 3,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T48"
+      ],
+      "created_at_turn_no": 47
+    },
+    "TASK_M8_CHALLENGE_EVALUATION_CHQF_0003": {
+      "task_id": "TASK_M8_CHALLENGE_EVALUATION_CHQF_0003",
+      "macro_id": "M8",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQF_0003",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC143"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T49"
+      ],
+      "created_at_turn_no": 49
+    },
+    "TASK_M8_CHALLENGE_EVALUATION_CHQF_0008": {
+      "task_id": "TASK_M8_CHALLENGE_EVALUATION_CHQF_0008",
+      "macro_id": "M8",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQF_0008",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC141"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T50"
+      ],
+      "created_at_turn_no": 50
+    },
+    "TASK_M8_CHALLENGE_EVALUATION_CHQM_0003": {
+      "task_id": "TASK_M8_CHALLENGE_EVALUATION_CHQM_0003",
+      "macro_id": "M8",
+      "task_type": "CHALLENGE_EVALUATION",
+      "source_turn_id": null,
+      "source_question_id": "CHQM_0003",
+      "source_question_type": "challenge_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC138"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 4,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T51"
+      ],
+      "created_at_turn_no": 51
+    },
+    "TASK_M1_THREAD_REASONING_RT4_STEP1": {
+      "task_id": "TASK_M1_THREAD_REASONING_RT4_STEP1",
+      "macro_id": "M1",
+      "task_type": "THREAD_REASONING",
+      "source_turn_id": null,
+      "source_question_id": "Q_RT4_STEP1",
+      "source_question_type": "thread_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC9"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 3,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T53"
+      ],
+      "created_at_turn_no": 53
+    },
+    "TASK_M1_REVIEW_Q_RT4_STEP1_R1": {
+      "task_id": "TASK_M1_REVIEW_Q_RT4_STEP1_R1",
+      "macro_id": "M1",
+      "task_type": "REVIEW",
+      "source_turn_id": null,
+      "source_question_id": "Q_RT4_STEP1_R1",
+      "source_question_type": "review_followup",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC9"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 5,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T54"
+      ],
+      "created_at_turn_no": 54
+    },
+    "TASK_GLOBAL_THREAD_REASONING_RT1_STEP4": {
+      "task_id": "TASK_GLOBAL_THREAD_REASONING_RT1_STEP4",
+      "macro_id": null,
+      "task_type": "THREAD_REASONING",
+      "source_turn_id": null,
+      "source_question_id": "Q_RT1_STEP4",
+      "source_question_type": "thread_question",
+      "source_action": null,
+      "target_kc_ids": [
+        "KC98",
+        "KC99"
+      ],
+      "hallucination_event_ids": [],
+      "priority": 3,
+      "max_turns": 1,
+      "current_turns": 1,
+      "status": "completed",
+      "followup_turns": [
+        "T55"
+      ],
+      "created_at_turn_no": 55
+    }
+  },
+  "macro_stage_status": {
+    "M1": {
+      "status": "in_progress",
+      "main_done": true,
+      "repair_done": true,
+      "thread_done": true,
+      "challenge_done": true,
+      "pending_task_ids": [],
+      "running_task_ids": [],
+      "completed_task_ids": [
+        "TASK_M1_THREAD_REASONING_RT2_STEP1",
+        "TASK_M1_CHALLENGE_EVALUATION_CHQ_0011",
+        "TASK_M1_THREAD_REASONING_RT4_STEP1",
+        "TASK_M1_REVIEW_Q_RT4_STEP1_R1"
+      ],
+      "exhausted_task_ids": [],
+      "cancelled_task_ids": []
+    },
+    "M2": {
+      "status": "in_progress",
+      "main_done": true,
+      "repair_done": true,
+      "thread_done": true,
+      "challenge_done": true,
+      "pending_task_ids": [],
+      "running_task_ids": [],
+      "completed_task_ids": [
+        "TASK_M2_THREAD_REASONING_RT1_STEP1",
+        "TASK_M2_CHALLENGE_EVALUATION_CHQ_0014",
+        "TASK_M2_CHALLENGE_EVALUATION_CHQ_0019",
+        "TASK_M2_CHALLENGE_EVALUATION_TCQ_0009",
+        "TASK_M2_THREAD_REASONING_RT2_STEP2"
+      ],
+      "exhausted_task_ids": [],
+      "cancelled_task_ids": []
+    },
+    "M3": {
+      "status": "completed",
+      "main_done": true,
+      "repair_done": true,
+      "thread_done": true,
+      "challenge_done": true,
+      "pending_task_ids": [],
+      "running_task_ids": [],
+      "completed_task_ids": [
+        "TASK_M3_T8_DETAIL_COMPLETION_1",
+        "TASK_M3_THREAD_REASONING_RT1_STEP2",
+        "TASK_M3_CHALLENGE_EVALUATION_CHQ_0005",
+        "TASK_M3_T11_HALLUCINATION_REPAIR_1",
+        "TASK_M3_CHALLENGE_EVALUATION_CHQ_0006",
+        "TASK_M3_CHALLENGE_EVALUATION_CHQF_0007",
+        "TASK_M3_CHALLENGE_EVALUATION_CHQM_0001",
+        "TASK_M3_T17_DETAIL_COMPLETION_1",
+        "TASK_M3_CHALLENGE_EVALUATION_CHQM_0006"
+      ],
+      "exhausted_task_ids": [],
+      "cancelled_task_ids": []
+    },
+    "M4": {
+      "status": "completed",
+      "main_done": true,
+      "repair_done": true,
+      "thread_done": true,
+      "challenge_done": true,
+      "pending_task_ids": [],
+      "running_task_ids": [],
+      "completed_task_ids": [
+        "TASK_M4_THREAD_REASONING_RT1_STEP3",
+        "TASK_M4_CHALLENGE_EVALUATION_CHQM_0002",
+        "TASK_M4_T23_HALLUCINATION_REPAIR_1",
+        "TASK_M4_CHALLENGE_EVALUATION_CHQM_0004"
+      ],
+      "exhausted_task_ids": [],
+      "cancelled_task_ids": []
+    },
+    "M5": {
+      "status": "completed",
+      "main_done": true,
+      "repair_done": true,
+      "thread_done": true,
+      "challenge_done": true,
+      "pending_task_ids": [],
+      "running_task_ids": [],
+      "completed_task_ids": [
+        "TASK_M5_CHALLENGE_EVALUATION_CHQ_0002",
+        "TASK_M5_CHALLENGE_EVALUATION_CHQ_0004"
+      ],
+      "exhausted_task_ids": [],
+      "cancelled_task_ids": []
+    },
+    "M6": {
+      "status": "completed",
+      "main_done": true,
+      "repair_done": true,
+      "thread_done": true,
+      "challenge_done": true,
+      "pending_task_ids": [],
+      "running_task_ids": [],
+      "completed_task_ids": [
+        "TASK_M6_THREAD_REASONING_RT3_STEP1",
+        "TASK_M6_CHALLENGE_EVALUATION_CHQ_0018",
+        "TASK_M6_T33_HALLUCINATION_REPAIR_1"
+      ],
+      "exhausted_task_ids": [],
+      "cancelled_task_ids": []
+    },
+    "M7": {
+      "status": "in_progress",
+      "main_done": true,
+      "repair_done": true,
+      "thread_done": true,
+      "challenge_done": true,
+      "pending_task_ids": [],
+      "running_task_ids": [],
+      "completed_task_ids": [
+        "TASK_M7_THREAD_REASONING_RT3_STEP2",
+        "TASK_M7_THREAD_REASONING_RT3_STEP3",
+        "TASK_M7_T38_HALLUCINATION_REPAIR_1"
+      ],
+      "exhausted_task_ids": [],
+      "cancelled_task_ids": []
+    },
+    "M8": {
+      "status": "completed",
+      "main_done": true,
+      "repair_done": true,
+      "thread_done": true,
+      "challenge_done": true,
+      "pending_task_ids": [],
+      "running_task_ids": [],
+      "completed_task_ids": [
+        "TASK_M8_CHALLENGE_EVALUATION_CHQ_0001",
+        "TASK_M8_T40_HALLUCINATION_REPAIR_1",
+        "TASK_M8_CHALLENGE_EVALUATION_CHQ_0016",
+        "TASK_M8_T42_HALLUCINATION_REPAIR_1",
+        "TASK_M8_CHALLENGE_EVALUATION_CHQF_0001",
+        "TASK_M8_T44_HALLUCINATION_REPAIR_1",
+        "TASK_M8_T44_DETAIL_COMPLETION_2",
+        "TASK_M8_CHALLENGE_EVALUATION_CHQF_0002",
+        "TASK_M8_T47_HALLUCINATION_REPAIR_1",
+        "TASK_M8_CHALLENGE_EVALUATION_CHQF_0003",
+        "TASK_M8_CHALLENGE_EVALUATION_CHQF_0008",
+        "TASK_M8_CHALLENGE_EVALUATION_CHQM_0003"
+      ],
+      "exhausted_task_ids": [],
+      "cancelled_task_ids": []
+    },
+    "M9": {
+      "status": "completed",
+      "main_done": true,
+      "repair_done": true,
+      "thread_done": true,
+      "challenge_done": true,
+      "pending_task_ids": [],
+      "running_task_ids": [],
+      "completed_task_ids": [],
+      "exhausted_task_ids": [],
+      "cancelled_task_ids": []
+    }
+  },
+  "global_state": {
+    "turn_count": 55,
+    "hallucination_count": 11,
+    "hallucination_event_count": 8,
+    "hallucination_event_resolved_count": 8,
+    "hallucination_event_exhausted_count": 0,
+    "coverage_gap_count": 3,
+    "coverage_gap_resolved_count": 3,
+    "coverage_gap_exhausted_count": 0,
+    "review_question_count": 1,
+    "global_overclaim_count": 0,
+    "global_contradicted_claim_count": 0,
+    "not_enough_info_claim_count": 0,
+    "thread_bridge_tested_count": 2,
+    "thread_bridge_success_count": 1,
+    "challenge_question_count": 21,
+    "challenge_failure_count": 7,
+    "challenge_resisted_count": 14,
+    "stage_task_count": 43,
+    "stage_task_completed_count": 43,
+    "stage_task_exhausted_count": 0,
+    "failed": false,
+    "failure_reason": null,
+    "evaluation_status": "completed",
+    "completion_reason": "all scheduled macro, follow-up, thread, and review turns finished",
+    "completed_at_turn": 55
+  },
+  "challenge_states": {
+    "CHQ_0001": {
+      "status": "asked",
+      "turn_id": "T40",
+      "result": "failed",
+      "challenge_type": "overclaim_challenge",
+      "macro_ids": [
+        "M8"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQ_0002": {
+      "status": "asked",
+      "turn_id": "T29",
+      "result": "resisted",
+      "challenge_type": "false_premise_challenge",
+      "macro_ids": [
+        "M5"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQ_0004": {
+      "status": "asked",
+      "turn_id": "T30",
+      "result": "resisted",
+      "challenge_type": "false_premise_challenge",
+      "macro_ids": [
+        "M5"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQ_0005": {
+      "status": "asked",
+      "turn_id": "T11",
+      "result": "failed",
+      "challenge_type": "overclaim_challenge",
+      "macro_ids": [
+        "M3"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQ_0006": {
+      "status": "asked",
+      "turn_id": "T15",
+      "result": "resisted",
+      "challenge_type": "false_premise_challenge",
+      "macro_ids": [
+        "M3"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQ_0011": {
+      "status": "asked",
+      "turn_id": "T3",
+      "result": "resisted",
+      "challenge_type": "wrong_relation_challenge",
+      "macro_ids": [
+        "M1",
+        "M2"
+      ],
+      "thread_id": "RT2",
+      "challenge_scope": "macro"
+    },
+    "CHQ_0014": {
+      "status": "asked",
+      "turn_id": "T6",
+      "result": "resisted",
+      "challenge_type": "wrong_relation_challenge",
+      "macro_ids": [
+        "M2",
+        "M8"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQ_0016": {
+      "status": "asked",
+      "turn_id": "T42",
+      "result": "failed",
+      "challenge_type": "overclaim_challenge",
+      "macro_ids": [
+        "M8"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQ_0018": {
+      "status": "asked",
+      "turn_id": "T33",
+      "result": "failed",
+      "challenge_type": "overclaim_challenge",
+      "macro_ids": [
+        "M6"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQ_0019": {
+      "status": "asked",
+      "turn_id": "T7",
+      "result": "resisted",
+      "challenge_type": "wrong_relation_challenge",
+      "macro_ids": [
+        "M2",
+        "M3"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQF_0001": {
+      "status": "asked",
+      "turn_id": "T44",
+      "result": "failed",
+      "challenge_type": "wrong_relation_challenge",
+      "macro_ids": [
+        "M8"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQF_0002": {
+      "status": "asked",
+      "turn_id": "T47",
+      "result": "failed",
+      "challenge_type": "wrong_relation_challenge",
+      "macro_ids": [
+        "M8"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQF_0003": {
+      "status": "asked",
+      "turn_id": "T49",
+      "result": "resisted",
+      "challenge_type": "false_premise_challenge",
+      "macro_ids": [
+        "M8"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQF_0007": {
+      "status": "asked",
+      "turn_id": "T16",
+      "result": "resisted",
+      "challenge_type": "false_premise_challenge",
+      "macro_ids": [
+        "M3"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQF_0008": {
+      "status": "asked",
+      "turn_id": "T50",
+      "result": "resisted",
+      "challenge_type": "false_premise_challenge",
+      "macro_ids": [
+        "M8"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQM_0001": {
+      "status": "asked",
+      "turn_id": "T17",
+      "result": "resisted",
+      "challenge_type": "false_premise_challenge",
+      "macro_ids": [
+        "M3"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQM_0002": {
+      "status": "asked",
+      "turn_id": "T23",
+      "result": "failed",
+      "challenge_type": "false_premise_challenge",
+      "macro_ids": [
+        "M4"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQM_0003": {
+      "status": "asked",
+      "turn_id": "T51",
+      "result": "resisted",
+      "challenge_type": "false_premise_challenge",
+      "macro_ids": [
+        "M8"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQM_0004": {
+      "status": "asked",
+      "turn_id": "T26",
+      "result": "resisted",
+      "challenge_type": "wrong_relation_challenge",
+      "macro_ids": [
+        "M4"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "CHQM_0006": {
+      "status": "asked",
+      "turn_id": "T19",
+      "result": "resisted",
+      "challenge_type": "wrong_relation_challenge",
+      "macro_ids": [
+        "M3"
+      ],
+      "thread_id": null,
+      "challenge_scope": "macro"
+    },
+    "TCQ_0002": {
+      "status": "not_asked",
+      "turn_id": null,
+      "result": null,
+      "challenge_type": "thread_overclaim_challenge",
+      "macro_ids": [
+        "M1",
+        "M3"
+      ],
+      "thread_id": "RT4",
+      "challenge_scope": "thread"
+    },
+    "TCQ_0005": {
+      "status": "not_asked",
+      "turn_id": null,
+      "result": null,
+      "challenge_type": "thread_overclaim_challenge",
+      "macro_ids": [
+        "M6",
+        "M7"
+      ],
+      "thread_id": "RT3",
+      "challenge_scope": "thread"
+    },
+    "TCQ_0006": {
+      "status": "not_asked",
+      "turn_id": null,
+      "result": null,
+      "challenge_type": "thread_premise_mutation_challenge",
+      "macro_ids": [
+        "M6",
+        "M7"
+      ],
+      "thread_id": "RT3",
+      "challenge_scope": "thread"
+    },
+    "TCQ_0008": {
+      "status": "not_asked",
+      "turn_id": null,
+      "result": null,
+      "challenge_type": "thread_premise_mutation_challenge",
+      "macro_ids": [
+        "M1",
+        "M3"
+      ],
+      "thread_id": "RT4",
+      "challenge_scope": "thread"
+    },
+    "TCQ_0009": {
+      "status": "asked",
+      "turn_id": "T22",
+      "result": "resisted",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "macro_ids": [
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "thread_id": "RT1",
+      "challenge_scope": "thread"
+    },
+    "TCQ_0011": {
+      "status": "not_asked",
+      "turn_id": null,
+      "result": null,
+      "challenge_type": "thread_overclaim_challenge",
+      "macro_ids": [
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "thread_id": "RT1",
+      "challenge_scope": "thread"
+    },
+    "TCQ_0013": {
+      "status": "not_asked",
+      "turn_id": null,
+      "result": null,
+      "challenge_type": "thread_overclaim_challenge",
+      "macro_ids": [
+        "M1",
+        "M2"
+      ],
+      "thread_id": "RT2",
+      "challenge_scope": "thread"
+    },
+    "TCQ_0014": {
+      "status": "not_asked",
+      "turn_id": null,
+      "result": null,
+      "challenge_type": "thread_premise_mutation_challenge",
+      "macro_ids": [
+        "M1",
+        "M2"
+      ],
+      "thread_id": "RT2",
+      "challenge_scope": "thread"
+    }
+  }
+}

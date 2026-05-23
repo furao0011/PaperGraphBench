@@ -1,0 +1,1383 @@
+{
+  "paper_id": "Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa",
+  "schema_version": "v1",
+  "table_explainer_model": "deepseek-v4-flash",
+  "figure_explainer_model": "qwen3.6-flash",
+  "figure_explainer_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "asset_explanations": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "qualitative_example",
+      "section_id": "S3",
+      "macro_id": "M1",
+      "caption": "Figure 1: A sample in the proposed TRUE Dataset. It includes the claim, video, and video background information. Besides, three types of annotations are provided: 1) label, 2) evidences, and 3) original and summary rationales.",
+      "summary": "Figure 1 illustrates a sample entry from the TRUE Dataset designed for explainable video fact-checking. The figure is structured into multiple sections displaying a multimodal input: a textual claim, a ground truth label (marked FALSE), video content frames, and video metadata (headline, date, platform). It also details the reasoning process through 'Original Rationale', 'Summary Rationale' (with detailed reasons), and specific 'Evidences'.",
+      "key_elements": [
+        {
+          "name": "Claim",
+          "role": "The statement being verified (e.g., F-18 breaking sound barrier)"
+        },
+        {
+          "name": "Label",
+          "role": "The ground truth verification result (e.g., FALSE)"
+        },
+        {
+          "name": "Video Content",
+          "role": "Visual frames extracted from the video evidence"
+        },
+        {
+          "name": "Video Information",
+          "role": "Metadata about the video source including headline, date, and platform"
+        },
+        {
+          "name": "Original Rationale",
+          "role": "Initial human-provided reasoning steps"
+        },
+        {
+          "name": "Summary Rationale",
+          "role": "Synthesized conclusion and detailed supporting reasons"
+        },
+        {
+          "name": "Evidences",
+          "role": "Specific factual points supporting the rationale"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Claim",
+          "target": "Label",
+          "relation": "is_verified_by"
+        },
+        {
+          "source": "Video Content",
+          "target": "Video Information",
+          "relation": "is_contextualized_by"
+        },
+        {
+          "source": "Original Rationale",
+          "target": "Summary Rationale",
+          "relation": "leads_to"
+        },
+        {
+          "source": "Evidences",
+          "target": "Summary Rationale",
+          "relation": "supports"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The TRUE Dataset includes multimodal samples with claims, videos, and metadata.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible layout showing Claim, Video Content, and Video Information panels",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The dataset provides both original and summarized rationales for fact-checking.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible headers 'Original Rationale' and 'Summary Rationale'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "Samples in the dataset are assigned a ground truth label (e.g., TRUE/FALSE).",
+          "support_level": "visible_label",
+          "evidence_basis": "red stamp labeled 'FALSE' next to the claim",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The video definitely shows a sonic boom occurring.",
+          "why_wrong": "The label is marked 'FALSE', and the evidence section mentions 'vapour cones', suggesting the visual might be misinterpreted or the event didn't happen as claimed."
+        },
+        {
+          "claim": "The 'Original Rationale' is the final output of the system.",
+          "why_wrong": "The figure shows a 'Summary Rationale' section below it, indicating a multi-step reasoning process where the summary synthesizes the original points."
+        }
+      ],
+      "limitations": [
+        "Only a single example is shown, so it does not represent the full variety of data in the dataset.",
+        "Text in the 'Video Transcript' field is truncated ('... not to exceed...'), limiting full context visibility."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "explanatory",
+      "subtype": "dataset_statistics_table",
+      "section_id": "S3",
+      "macro_id": "M1",
+      "caption": "Table 1: Comparison of the proposed TRUE with other datasets. ECR indicates the Expert-Crafted Rationale, LSR stands for the specific LLM-Summary-Rationale. 1;2 See Figure 2(a) for the sub_labels and their sizes. Abbreviations: T: text, A: audio, V: video, I: image. ⚖: Not Enough Information, ✓: True (Real), ∅: False (Fake/Misleading), ✰: Debunk",
+      "summary": "This table compares the proposed TRUE dataset with five existing datasets (CHECKED, Shang et al. 2021, Mocheg, FakeSV, VMH) across modalities (T, I, A, V), label types (Categories, ECR, LSR, Evidence), time span, and dataset size (True/False counts). It demonstrates that TRUE is the only dataset that includes ECR, LSR, and Evidence labels, and covers text, audio, and video but not image. Other datasets vary in coverage and included explanation types.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "TRUE dataset includes the ECR (Expert-Crafted Rationale) label.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "TRUE row, ECR column: ✓",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "TRUE dataset includes the LSR (LLM-Summary-Rationale) label.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "TRUE row, LSR column: ✓",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "TRUE dataset includes the Evidence label.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "TRUE row, Evidence column: ✓",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "TRUE dataset covers modalities T (text), A (audio), V (video) but not I (image).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "TRUE row: T ✓, I ✗, A ✓, V ✓",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "CHECKED dataset covers modalities T, I, V but not A.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "CHECKED row: T ✓, I ✓, A ✗, V ✓",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "VMH dataset includes ECR but not LSR or Evidence.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "VMH row: ECR ✓, LSR ✗, Evidence ✗",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "Mocheg dataset includes Evidence but not ECR or LSR.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Mocheg row: ECR ✗, LSR ✗, Evidence ✓",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "TRUE dataset time span is 2016–2024.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "TRUE row, Time column: 16-24",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "TRUE dataset has 1,097 instances marked as true (✓) and 1,828 instances marked with ☑ (likely false) in the size column.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "TRUE row, Size column: 1,097 ✓ / 1,828 ☑ 2",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "TRUE dataset includes image modality.",
+          "why_wrong": "The table shows TRUE has ✗ for I (image) modality."
+        },
+        {
+          "claim": "VMH dataset includes Evidence label.",
+          "why_wrong": "The table shows VMH has ✗ for Evidence."
+        },
+        {
+          "claim": "All datasets have the same number of instance categories (true/false only).",
+          "why_wrong": "Mocheg size column shows three numbers (5,144 ✓ / 5,855 ✓ / 4,602 ☑), suggesting three categories, possibly true, debunk, and false, unlike other datasets."
+        },
+        {
+          "claim": "The ☑ symbol consistently means 'Not Enough Information' as defined in the caption.",
+          "why_wrong": "The caption defines ⚖ as 'Not Enough Information' but the table uses ☑, which may be a typographical variant; it likely represents false based on context, but the mismatch introduces ambiguity."
+        }
+      ],
+      "limitations": [
+        "The table uses a symbol (☑) not explicitly defined in the caption; its meaning must be inferred from context.",
+        "The size column for Mocheg contains three values, making the exact interpretation of true/false counts unclear.",
+        "The 'Categories' column uses multiple checkmarks without clear mapping to actual category names.",
+        "The time span for Mocheg is missing ('-').",
+        "The table references Figure 2(a) for sub-label sizes, but that information is not contained in this table."
+      ],
+      "needs_review": true,
+      "confidence": 0.7,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S6",
+      "macro_id": "M2",
+      "caption": "",
+      "summary": "This table reports the percentages for Originality, Accuracy, and Comprehensiveness for two methods or datasets (ECR and LSR). ECR achieves 100% Originality, 70.90% Accuracy, and 33.70% Comprehensiveness; LSR has a dash (indicating not applicable or not reported) for Originality, 92.30% Accuracy, and 98.40% Comprehensiveness.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "ECR achieves 100% Originality.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'ECR', column 'Originality'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "ECR achieves 70.90% Accuracy.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'ECR', column 'Accuracy'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "ECR achieves 33.70% Comprehensiveness.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'ECR', column 'Comprehensiveness'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "LSR has a dash ('-') for Originality, indicating it is not reported or not applicable.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'LSR', column 'Originality'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "LSR achieves 92.30% Accuracy.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'LSR', column 'Accuracy'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "LSR achieves 98.40% Comprehensiveness.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'LSR', column 'Comprehensiveness'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "ECR is the best method overall because it has 100% in one metric.",
+          "why_wrong": "ECR only leads in Originality; LSR has higher Accuracy (92.30% vs 70.90%) and much higher Comprehensiveness (98.40% vs 33.70%). The table does not aggregate or weigh metrics, so no overall conclusion is supported."
+        },
+        {
+          "claim": "LSR has 0% Originality because the dash represents zero.",
+          "why_wrong": "A dash typically indicates the value is not reported, not applicable, or not measured. It does not imply a numerical zero. The table does not provide information on why it is absent."
+        }
+      ],
+      "limitations": [
+        "The table does not define what ECR and LSR stand for.",
+        "The table does not explain why LSR's Originality is a dash (not reported, not applicable, or zero).",
+        "No sample sizes or confidence intervals are provided.",
+        "No comparison to baseline or state-of-the-art methods is given.",
+        "The metrics (Originality, Accuracy, Comprehensiveness) are not defined.",
+        "Only two entities are compared, limiting generalizability."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "chart",
+      "section_id": "S6",
+      "macro_id": "M2",
+      "caption": "Figure 2: (a) Label Composition: False labels include False (1062), Miscaptioned (268), Mixture (305), Fake (52), and Mostly False (MF, 126). True labels include True (798), Mostly True (MT, 100), and Correct Attribution (CA, 199). (b) Social Media (SM): Platforms include Instagram (IG), TikTok (TT), Facebook (FB), X (formerly Twitter), and YouTube (YT). Official Media (OM): Sources include the New York Times (NYT), CNBC, and Fox News (FN).",
+      "summary": "Figure 2 consists of two donut charts illustrating dataset statistics. Panel (a) displays the label composition, dividing entries into broad 'False' and 'True' categories, which are further subdivided into specific labels such as 'Miscaptioned', 'Mixture', 'Fake', 'MF', 'CA', 'MT', and 'True'. Panel (b) shows the source distribution, categorizing data sources into 'Social Media (SM)' and 'Official Media (OM)', with specific platforms like Instagram, TikTok, Facebook, X, YouTube, and news outlets like NYT, CNBC, and Fox News listed around the perimeter.",
+      "key_elements": [
+        {
+          "name": "Panel (a) Donut Chart",
+          "role": "Visualizes label composition"
+        },
+        {
+          "name": "Panel (b) Donut Chart",
+          "role": "Visualizes source distribution"
+        },
+        {
+          "name": "False Category",
+          "role": "Major segment in Panel (a) containing false labels"
+        },
+        {
+          "name": "True Category",
+          "role": "Major segment in Panel (a) containing true labels"
+        },
+        {
+          "name": "SM Category",
+          "role": "Major segment in Panel (b) representing Social Media sources"
+        },
+        {
+          "name": "OM Category",
+          "role": "Major segment in Panel (b) representing Official Media sources"
+        },
+        {
+          "name": "Sub-labels",
+          "role": "Specific classes or sources (e.g., Miscaptioned, Fake, YT, FB)"
+        }
+      ],
+      "relations": [
+        {
+          "source": "False Category",
+          "target": "Miscaptioned",
+          "relation": "contains"
+        },
+        {
+          "source": "False Category",
+          "target": "Mixture",
+          "relation": "contains"
+        },
+        {
+          "source": "False Category",
+          "target": "Fake",
+          "relation": "contains"
+        },
+        {
+          "source": "False Category",
+          "target": "MF",
+          "relation": "contains"
+        },
+        {
+          "source": "False Category",
+          "target": "False",
+          "relation": "contains"
+        },
+        {
+          "source": "True Category",
+          "target": "CA",
+          "relation": "contains"
+        },
+        {
+          "source": "True Category",
+          "target": "MT",
+          "relation": "contains"
+        },
+        {
+          "source": "True Category",
+          "target": "True",
+          "relation": "contains"
+        },
+        {
+          "source": "SM Category",
+          "target": "YT",
+          "relation": "contains"
+        },
+        {
+          "source": "SM Category",
+          "target": "X",
+          "relation": "contains"
+        },
+        {
+          "source": "SM Category",
+          "target": "TT",
+          "relation": "contains"
+        },
+        {
+          "source": "SM Category",
+          "target": "FB",
+          "relation": "contains"
+        },
+        {
+          "source": "SM Category",
+          "target": "IG",
+          "relation": "contains"
+        },
+        {
+          "source": "OM Category",
+          "target": "NYT",
+          "relation": "contains"
+        },
+        {
+          "source": "OM Category",
+          "target": "FN",
+          "relation": "contains"
+        },
+        {
+          "source": "OM Category",
+          "target": "CNBC",
+          "relation": "contains"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The dataset contains a 'False' label class distinct from other false types.",
+          "support_level": "visible_label",
+          "evidence_basis": "caption, visible label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The dataset contains a 'True' label class distinct from other true types.",
+          "support_level": "visible_label",
+          "evidence_basis": "caption, visible label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Social media sources include Instagram, TikTok, Facebook, X, and YouTube.",
+          "support_level": "visible_label",
+          "evidence_basis": "caption, visible label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Official media sources include New York Times, CNBC, and Fox News.",
+          "support_level": "visible_label",
+          "evidence_basis": "caption, visible label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The dataset includes labels for 'Miscaptioned', 'Mixture', 'Fake', and 'Mostly False (MF)'.",
+          "support_level": "visible_label",
+          "evidence_basis": "caption, visible label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The dataset includes labels for 'Correct Attribution (CA)' and 'Mostly True (MT)'.",
+          "support_level": "visible_label",
+          "evidence_basis": "caption, visible label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The chart displays exact percentages or counts directly on the segments.",
+          "why_wrong": "The chart only shows labels and relative sizes; numerical counts are provided in the caption, not on the figure itself."
+        },
+        {
+          "claim": "'False' and 'True' in the center represent the only categories, ignoring sub-classes.",
+          "why_wrong": "The chart is a nested donut/sunburst chart where the outer ring or surrounding labels indicate sub-categories (e.g., 'Miscaptioned' under 'False')."
+        }
+      ],
+      "limitations": [
+        "The figure does not display numerical values (counts), requiring the caption for quantitative evidence.",
+        "Visual proportions of segments may be difficult to interpret precisely without gridlines or data labels."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S7",
+      "macro_id": "M2",
+      "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment.",
+      "summary": "Figure 3 presents a comparative analysis of dataset statistics between true and false video claims across four metrics: claim length, claim entropy, scene transition counts, and the average count of fact-checking materials. Panels (a) and (b) utilize box plots to demonstrate that false claims are significantly shorter and have lower entropy than true claims. Panel (c) uses a bar chart to show that true claims involve significantly more scene transitions. Panel (d) displays grouped bar charts indicating that false claims generally require higher counts of Evidence (E), Expert-Crafted Rationale (ECR), and LLM-Summary-Rationale (LSR) for accurate judgment.",
+      "key_elements": [
+        {
+          "name": "Panel (a)",
+          "role": "Box plot comparing Claim Length for True vs False claims"
+        },
+        {
+          "name": "Panel (b)",
+          "role": "Box plot comparing Claim Entropy for True vs False claims"
+        },
+        {
+          "name": "Panel (c)",
+          "role": "Bar chart comparing Scene Transition counts for True vs False claims"
+        },
+        {
+          "name": "Panel (d)",
+          "role": "Grouped bar chart comparing Average counts of E, ECR, and LSR for True vs False claims"
+        },
+        {
+          "name": "Statistical Annotations",
+          "role": "Indicates significance levels (e.g., t-test_ind p <= 1e-5)"
+        },
+        {
+          "name": "Color Legend",
+          "role": "Distinguishes 'True' (blue) from 'False' (orange)"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Panel (a)",
+          "target": "Claim Length",
+          "relation": "visualizes_distribution_of"
+        },
+        {
+          "source": "Panel (b)",
+          "target": "Claim Entropy",
+          "relation": "visualizes_distribution_of"
+        },
+        {
+          "source": "Panel (c)",
+          "target": "Scene Transition",
+          "relation": "visualizes_comparison_of"
+        },
+        {
+          "source": "Panel (d)",
+          "target": "Fact-Checking Materials",
+          "relation": "visualizes_counts_of"
+        },
+        {
+          "source": "Blue elements",
+          "target": "True claims",
+          "relation": "represents"
+        },
+        {
+          "source": "Orange elements",
+          "target": "False claims",
+          "relation": "represents"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "False claims have significantly shorter lengths than true claims.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel (a) shows the orange box (False) is lower than the blue box (True) with a p-value annotation.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "False claims have lower entropy (information richness) than true claims.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel (b) shows the orange box (False) is slightly lower than the blue box (True) with a p-value annotation.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "True claims have significantly more scene transitions than false claims.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel (c) shows the blue bar (True) is higher than the orange bar (False) with a p-value annotation.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "False claims require more Evidence, ECR, and LSR on average than true claims.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Panel (d) shows orange bars are consistently higher than blue bars for all three categories (E, ECR, LSR).",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "False claims have more scene transitions because they are 'complex'.",
+          "why_wrong": "Panel (c) clearly shows the 'True' bar is higher (~9) than the 'False' bar (~7). The caption clarifies that false claims have 'more uniform scenes', which implies fewer transitions."
+        },
+        {
+          "claim": "The difference in material counts in panel (d) is statistically significant based solely on the visual height difference.",
+          "why_wrong": "Unlike panels (a)-(c), panel (d) does not display explicit p-value brackets or annotations. While the trend supports the caption, the statistical significance is not visually marked on the chart itself."
+        }
+      ],
+      "limitations": [
+        "The figure aggregates data into means/medians and distributions but does not show individual data points for every claim.",
+        "Panel (d) lacks explicit statistical significance markers present in other panels, making it harder to judge significance purely from the image without the caption."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S12",
+      "macro_id": "M4",
+      "caption": "Figure 4: Overview of the proposed 3MFact framework, comprising five components: Video Descriptor (video-to-text conversion), Claim Verifier (assesses evidence sufficiency), Question Manager (generates questions and retrieves answers), Information Retriever (searches for evidence), and Reasoner (synthesizes judgment with rationale and evidence).",
+      "summary": "The figure displays the architecture of the 3MFact framework, a multi-stage pipeline for video fact-checking. It features five main components: Video Descriptor, Claim Verifier, Question Manager, Information Retriever, and Reasoner. The process begins with input data (c, B, v) being processed by the Video Descriptor to generate a summary 't', which is then evaluated by the Claim Verifier. Based on the verifier's output (alpha), the system either routes the task directly to the Reasoner or to the Question Manager. The Question Manager interacts with the Information Retriever to fetch evidence and generates answers using either video analysis or retrieved text evidence.",
+      "key_elements": [
+        {
+          "name": "Video Descriptor",
+          "role": "Processes raw video input to create a textual summary"
+        },
+        {
+          "name": "Claim Verifier",
+          "role": "Evaluates the claim against the video summary to determine sufficiency"
+        },
+        {
+          "name": "Reasoner",
+          "role": "Synthesizes final judgment and rationale when evidence is sufficient"
+        },
+        {
+          "name": "Question Manager",
+          "role": "Orchestrates question generation and answer synthesis when further investigation is needed"
+        },
+        {
+          "name": "Information Retriever",
+          "role": "Searches for external evidence using tools like Google Search"
+        },
+        {
+          "name": "LLM Summary",
+          "role": "Generates a summary from LMM analyses within the Video Descriptor block"
+        },
+        {
+          "name": "Answer Generation w/ Video LMM",
+          "role": "Generates an answer based on visual analysis if deemed sufficient"
+        },
+        {
+          "name": "Answer w/ Evidences",
+          "role": "Generates an answer based on retrieved textual evidence"
+        },
+        {
+          "name": "Decision Diamond (alpha)",
+          "role": "Routes flow based on verification confidence/sufficiency"
+        },
+        {
+          "name": "Decision Diamond (beta)",
+          "role": "Routes flow within the Question Manager based on whether video analysis is sufficient"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Video Descriptor",
+          "target": "Claim Verifier",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Claim Verifier",
+          "target": "Decision Diamond (alpha)",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Decision Diamond (alpha)",
+          "target": "Reasoner",
+          "relation": "routes_to_if_alpha_equals_1"
+        },
+        {
+          "source": "Decision Diamond (alpha)",
+          "target": "Question Manager",
+          "relation": "routes_to_if_alpha_equals_0"
+        },
+        {
+          "source": "Question Manager",
+          "target": "Information Retriever",
+          "relation": "sends_query_q_to"
+        },
+        {
+          "source": "Information Retriever",
+          "target": "Question Manager",
+          "relation": "returns_evidence_Eq_to"
+        },
+        {
+          "source": "LLM Summary",
+          "target": "Decision Diamond (beta)",
+          "relation": "informs_decision_on_beta"
+        },
+        {
+          "source": "Decision Diamond (beta)",
+          "target": "Answer Generation w/ Video LMM",
+          "relation": "routes_to_if_beta_equals_1"
+        },
+        {
+          "source": "Decision Diamond (beta)",
+          "target": "Answer w/ Evidences",
+          "relation": "routes_to_if_beta_equals_0"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The framework includes a component called 'Video Descriptor' that processes video input.",
+          "support_level": "visible_label",
+          "evidence_basis": "Visible label 'Video Descriptor' in the diagram",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "The system uses 'Google Search' as part of its information retrieval process.",
+          "support_level": "visible_label",
+          "evidence_basis": "Visible label 'Google Search' inside the yellow box",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "The Claim Verifier determines if the initial evidence is sufficient to skip further questioning.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption states 'Claim Verifier (assesses evidence sufficiency)' and diagram shows routing based on alpha",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "The framework can generate answers using either video analysis or retrieved evidence.",
+          "support_level": "visible_label",
+          "evidence_basis": "Labels 'Answer Generation w/ Video LMM' and 'Answer w/ Evidences'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The Reasoner always runs after the Question Manager.",
+          "why_wrong": "The diagram shows the Reasoner receives input directly from the Decision Diamond (alpha=1), bypassing the Question Manager entirely if the initial verification is sufficient."
+        },
+        {
+          "claim": "The Information Retriever only searches for video content.",
+          "why_wrong": "The sub-components include 'Generate Search Items' and 'Google Search', implying general web/text search capabilities, not just video search."
+        }
+      ],
+      "limitations": [
+        "The specific mathematical definitions of variables like 'r_cv' or 'delta' are not provided in the figure.",
+        "The internal architecture of the LLMs and LMMs is abstracted (represented by swirl icons) and not detailed."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S17",
+      "macro_id": "M6",
+      "caption": "Table 3: Comparison of Models for 2-Class Classification. Trad.: traditional methods; LLM.: LLM-based approaches. 3MFact $ _{(C+V)} $ uses CogVLM (Wang et al. 2023) as ImageLMM and VideoLLaVa as VideoLMM, and 3MFact $ _{(M+M)} $ uses MiniCPM-V 2.6 as both ImageLMM and VideoLMM.",
+      "summary": "This table reports performance metrics (Accuracy, Recall, Precision, F1) for five models on a 2-class classification task. Traditional methods (SV-FEND) and LLM-based approaches (VideoLLaVa, MiniCPM-V 2.6, two variants of 3MFact) are compared. The 3MFact model variant using MiniCPM-V for both image and video (3MFact_(M+M)) achieves the highest F1 score.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "3MFact_(M+M) achieves the highest F1 score (73.85%) among all models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row '3MFact_(M+M)', column 'F1'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "VideoLLaVa has the highest recall (95.40%) but the lowest accuracy (44.11%).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'VideoLLaVa', columns 'Recall' and 'Acc.'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "MiniCPM-V 2.6 has the lowest recall (20.81%) and the second lowest F1 (30.90%).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'MiniCPM-V 2.6', columns 'Recall' and 'F1'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "3MFact_(M+M) achieves the highest precision (71.93%) among all models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row '3MFact_(M+M)', column 'Prec.'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "The two 3MFact variants outperform all other models on F1 score, with both exceeding 69%.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of F1 values across rows: 3MFact_(C+V)=69.81%, 3MFact_(M+M)=73.85%, next best is VideoLLaVa=57.84%.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "VideoLLaVa is the worst performing model overall.",
+          "why_wrong": "Although VideoLLaVa has the lowest accuracy (44.11%), it has the highest recall (95.40%) and a moderate F1 (57.84%), outperforming MiniCPM-V 2.6 on F1. Thus, 'worst' depends on the chosen metric."
+        },
+        {
+          "claim": "3MFact_(M+M) is the best model for all classification tasks.",
+          "why_wrong": "The table only evaluates 2-class classification. Performance may differ on multi-class or other datasets/tasks."
+        },
+        {
+          "claim": "Traditional methods are inferior to LLM-based methods.",
+          "why_wrong": "SV-FEND (traditional) achieves a higher accuracy (62.80%) than VideoLLaVa (44.11%) and MiniCPM-V 2.6 (62.73%), and its F1 (38.56%) is higher than MiniCPM-V 2.6 (30.90%). So not all LLM methods outperform the traditional one."
+        }
+      ],
+      "limitations": [
+        "Only 2-class classification results are shown, not multi-class or other tasks.",
+        "Only five models are compared; results may not generalize to other models or datasets.",
+        "Metrics are reported without confidence intervals or statistical significance tests.",
+        "The caption indicates use of specific base models (CogVLM, VideoLLaVa, MiniCPM-V) but does not detail training or evaluation procedures."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S17",
+      "macro_id": "M6",
+      "caption": "Table 4: Evaluation of Models on Explanation Metrics. R-O: Reasons/Evidence Omission, LC: Logical Consistency, SoE: Strength of Evidence, COM: Comprehensiveness, CUR: Currency, CON: Conciseness, FAI: Faithfulness, FH: Fact Hallucination.",
+      "summary": "Table 4 reports evaluation scores for four models (VideoLLaVa, MiniCPM-V, 3MFact_(C+V), 3MFact_(M+M)) on explanation metrics: B., RG., R-O, a combined metric (LC, SoE, COM, CUR, CON, FAI, FH), and an additional unnamed sixth column. 3MFact variants generally outperform the other two models across all metrics.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "3MFact_(C+V) has the highest R-O score (2.24) among all models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row '3MFact_(C+V)', column 'R-O'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "3MFact_(M+M) has the highest B. score (0.04) among all models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row '3MFact_(M+M)', column 'B.'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "VideoLLaVa and MiniCPM-V both have B. scores of 0.00.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Rows 'VideoLLaVa' and 'MiniCPM-V', column 'B.'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "3MFact_(M+M) achieves the highest score (3.96) in the sixth column (unnamed), while 3MFact_(C+V) scores 3.98.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Rows '3MFact_(M+M)' and '3MFact_(C+V)', last numeric column",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "All models have higher scores in the combined metric (LC, SoE, etc.) compared to earlier metrics, with 3MFact variants scoring above 4.4 in that column.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of values across columns for each row",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "MiniCPM-V outperforms VideoLLaVa on all metrics.",
+          "why_wrong": "MiniCPM-V has higher R-O and combined metric scores, but B. and RG. are identical (0.00 and 0.16 respectively)."
+        },
+        {
+          "claim": "3MFact_(C+V) is the best overall model because it has the highest combined metric score (4.48).",
+          "why_wrong": "3MFact_(M+M) has a slightly lower combined score (4.47) but has higher B. (0.04 vs 0.03) and highest sixth column score (3.96 vs 3.98? Actually 3MFact_(C+V) sixth column is 3.98, so (M+M) is lower). So which is 'best' is unclear without weighting."
+        },
+        {
+          "claim": "The unnamed sixth column represents an average or summary of all metrics.",
+          "why_wrong": "The column header is missing; there is no evidence it is an average. It could be another distinct metric."
+        }
+      ],
+      "limitations": [
+        "Missing column header for the sixth numeric column, making its interpretation ambiguous.",
+        "No information about units or scale of the metrics.",
+        "No statistical significance tests or confidence intervals reported.",
+        "The combined metric column aggregates multiple submetrics, so individual contributions are not discernible.",
+        "Only four models are compared; generalizability to other models is limited."
+      ],
+      "needs_review": true,
+      "confidence": 0.7,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_005",
+      "asset_type": "table",
+      "modality_class": "explanatory",
+      "subtype": "ablation_table",
+      "section_id": "S18",
+      "macro_id": "M7",
+      "caption": "Table 5: Ablation Study on Different Modules. IR: Information Retriever module, QA $ _{LMM} $: Question Answering with VideoLMM, VD: Video Descriptor module, 2Val: Validation of P and Validation of $ E_{q} $",
+      "summary": "This ablation table reports the impact of removing individual modules (IR, QA_LMM, VD, 2Val) from the full 3MFact model on four metrics: Accuracy, Recall, Precision, and F1. The full model achieves the best performance, while removing the IR module causes the largest degradation across all metrics.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "The full 3MFact model achieves an accuracy of 79.63%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row '3MFact_{(M+M)}', column 'Acc.'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "Removing the IR module reduces accuracy to 69.98%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'w/o IR', column 'Acc.'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "Removing the IR module causes the largest drop in recall (from 87.23% to 60.12%).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of recall values in rows '3MFact_{(M+M)}' and 'w/o IR'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "Removing the VD module has the smallest impact on accuracy (79.42% vs 79.63%).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of accuracy values in rows '3MFact_{(M+M)}' and 'w/o VD'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "The full model has recall of 87.23%, precision of 71.93%, and F1 of 78.85%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row '3MFact_{(M+M)}', columns 'Recall', 'Prec.', 'F1'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The VD module is unnecessary because accuracy remains nearly the same when removed.",
+          "why_wrong": "While accuracy drops only 0.21 percentage points, recall drops from 87.23% to 85.71% and precision from 71.93% to 68.67%, indicating the module contributes to overall effectiveness."
+        },
+        {
+          "claim": "The QA_LMM module has little effect because the accuracy drop is moderate (79.63% to 76.18%).",
+          "why_wrong": "The recall drops from 87.23% to 81.58% and F1 from 78.85% to 73.16%, showing a substantial impact on the model's ability to answer questions."
+        }
+      ],
+      "limitations": [
+        "The table only reports results on a single dataset or experiment; generalizability is unknown.",
+        "No statistical significance or variance is reported (e.g., standard deviations).",
+        "The table does not explain why certain modules are more important; it only shows empirical drops."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_006",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S20",
+      "macro_id": "M6",
+      "caption": "Table 6: Ablation Study Evaluation on Explanation Metrics.",
+      "summary": "This table presents an ablation study comparing the full 3MFact model (with M+M variant) against four ablated variants (w/o IR, w/o QA_{LMM}, w/o VD, w/o 2Val) across five explanation metrics: B, RG, R-O, LC, and SoE. The values show that the full model achieves the highest R-O score and ties for the highest B score, while the w/o IR variant generally underperforms, especially on R-O and SoE.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "The 3MFact_{(M+M)} model has the highest R-O metric value (2.37) among all variants.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row '3MFact_{(M+M)}', column 'R-O' value 2.37; all other rows have lower values.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "The w/o IR variant has the lowest SoE metric value (2.72) compared to other variants.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'w/o IR', column 'SoE' value 2.72; all other rows have higher values.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "The 3MFact_{(M+M)} model does not outperform all ablated variants on the SoE metric; w/o QA_{LMM} achieves a higher SoE (4.24) than the full model (3.96).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of row 'w/o QA_{LMM}' SoE value 4.24 and row '3MFact_{(M+M)}' SoE value 3.96.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "The ablation study evaluates the contribution of IR, QA_{LMM}, VD, and 2Val components on explanation metrics.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption: 'Table 6: Ablation Study Evaluation on Explanation Metrics.' and row labels indicating removed components.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The 3MFact_{(M+M)} model is the best overall across all metrics.",
+          "why_wrong": "The table shows that w/o QA_{LMM} has a higher SoE (4.24 vs 3.96) and w/o VD has a higher RG (0.26 vs 0.25), so the full model is not universally superior."
+        },
+        {
+          "claim": "Higher metric values always indicate better performance.",
+          "why_wrong": "The table does not specify whether higher is better for these metrics; without domain knowledge, this assumption is unsupported."
+        },
+        {
+          "claim": "The w/o IR variant performs worst on all metrics.",
+          "why_wrong": "While w/o IR has the lowest R-O and SoE, it ties with others on B (0.03) and is not the lowest on RG (0.24 vs full 0.25) or LC (4.22 vs full 4.47)."
+        }
+      ],
+      "limitations": [
+        "The specific definitions and optimal directions (higher/lower better) of the metrics B, RG, R-O, LC, and SoE are not provided.",
+        "No statistical significance or error bars are reported, so differences may not be reliable.",
+        "The ablation study is limited to a single task/dataset; generalizability is not demonstrated.",
+        "Only four ablated variants are tested; other potential ablations are not included."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_007",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "comparison_table",
+      "section_id": "S20",
+      "macro_id": "M6",
+      "caption": "Table 7: Comparison of Results on Different GT-R (Ground Truth Rationale) type. GT-R type: Ground Truth Rationale Type. ECR: the Expert-Crafted Rationale, LSR: the specific LLM-Summary-Rationale",
+      "summary": "This table compares the performance of three Ground Truth Rationale (GT-R) types—ECR+LSR, ECR, and LSR—on three evaluation metrics: BLEU-4, ROUGE-L, and R-O(G-E.). The values show that LSR achieves the highest scores across all metrics, while ECR has the lowest.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "LSR achieves the highest BLEU-4 score of 0.037 among the three GT-R types.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'LSR', column 'BLEU-4'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "ECR has the lowest BLEU-4 score of 0.021.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'ECR', column 'BLEU-4'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "LSR outperforms ECR+LSR and ECR on ROUGE-L with a score of 0.252.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'LSR', column 'ROUGE-L'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "LSR has the highest R-O(G-E.) score of 2.370.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'LSR', column 'R-O(G-E.)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "The combined GT-R type ECR+LSR yields intermediate scores between ECR and LSR on all metrics.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of rows ECR+LSR, ECR, and LSR across all columns",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "ECR+LSR performs best overall because it combines both rationale types.",
+          "why_wrong": "The table shows LSR achieves the highest scores on all three metrics, not ECR+LSR."
+        },
+        {
+          "claim": "The differences between GT-R types are statistically significant.",
+          "why_wrong": "The table reports raw scores without any measures of variability or significance tests, so significance cannot be inferred."
+        },
+        {
+          "claim": "R-O(G-E.) is the most important metric.",
+          "why_wrong": "The table does not indicate relative importance of metrics; each is just reported."
+        }
+      ],
+      "limitations": [
+        "Only three GT-R types are compared.",
+        "Only three evaluation metrics are reported.",
+        "No statistical significance tests are provided.",
+        "The table does not explain what the metrics measure or their ranges.",
+        "The sample size or dataset used for evaluation is not given."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S20",
+      "macro_id": "M6",
+      "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework.",
+      "summary": "Figure 5 presents qualitative case studies of the 3MFact framework's claim detection performance. It displays two examples: the first demonstrates a successful detection where a false claim about Cristiano Ronaldo making his hotel available was correctly identified as 'False' with a supporting rationale and evidence snippet; the second example shows a claim labeled 'TRUE' regarding Putin's entourage and a UFC fighter, accompanied by video frames highlighting specific individuals.",
+      "key_elements": [
+        {
+          "name": "Label: FALSE box",
+          "role": "Indicates the ground truth label for the first claim"
+        },
+        {
+          "name": "Claim text (Ronaldo)",
+          "role": "The specific claim being evaluated in the first example"
+        },
+        {
+          "name": "Video frames (Ronaldo case)",
+          "role": "Visual context including rubble, Ronaldo's face, and a hotel room"
+        },
+        {
+          "name": "Framework Result box",
+          "role": "Displays the model's output, including Rating (False), Rationale, and Evidence"
+        },
+        {
+          "name": "Label: TRUE box",
+          "role": "Indicates the ground truth label for the second claim"
+        },
+        {
+          "name": "Claim text (Putin)",
+          "role": "The specific claim being evaluated in the second example"
+        },
+        {
+          "name": "Video frames (Putin case)",
+          "role": "Visual context showing Vladimir Putin and associates, with red circles highlighting entities"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Label: FALSE box",
+          "target": "Claim text (Ronaldo)",
+          "relation": "labels_as_ground_truth"
+        },
+        {
+          "source": "Framework Result box",
+          "target": "Claim text (Ronaldo)",
+          "relation": "analyzes"
+        },
+        {
+          "source": "Video frames (Ronaldo case)",
+          "target": "Claim text (Ronaldo)",
+          "relation": "provides_visual_context_for"
+        },
+        {
+          "source": "Label: TRUE box",
+          "target": "Claim text (Putin)",
+          "relation": "labels_as_ground_truth"
+        },
+        {
+          "source": "Video frames (Putin case)",
+          "target": "Claim text (Putin)",
+          "relation": "illustrates_entities_in"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The framework successfully detected a false claim regarding Cristiano Ronaldo.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Framework Result box shows Rating: False matching Label: FALSE",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "The framework generates natural language rationales and evidence snippets for its decisions.",
+          "support_level": "visible_label",
+          "evidence_basis": "Text in Framework Result box under 'Rationale' and 'Evidence'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "The framework processes claims involving political figures like Vladimir Putin.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Claim text mentions Putin's entourage",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The red 'FALSE' label indicates the model made an error.",
+          "why_wrong": "The red label likely represents the ground truth, and the green checkmark next to 'Rating: False' in the result box indicates the model correctly identified it."
+        },
+        {
+          "claim": "The second example (Putin) shows a successful detection.",
+          "why_wrong": "While the label is 'TRUE', the nearby context describes this as a 'Failed detection', implying the model's output (not fully visible or implied to be different) contradicted the ground truth."
+        }
+      ],
+      "limitations": [
+        "Only two examples are shown, limiting generalizability.",
+        "The specific model output for the second example (Putin) is not clearly visible in the provided crops to confirm the nature of the failure.",
+        "Small text overlays in video frames (e.g., subscriber counts) may be difficult to read precisely."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    }
+  ],
+  "summary": {
+    "asset_explanation_count": 12,
+    "by_asset_type": {
+      "figure": 5,
+      "table": 7
+    },
+    "needs_review_count": 2,
+    "supported_claim_count": 59,
+    "possible_misreading_count": 30
+  }
+}

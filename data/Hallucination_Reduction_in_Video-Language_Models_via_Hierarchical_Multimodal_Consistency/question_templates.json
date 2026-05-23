@@ -1,0 +1,2839 @@
+{
+  "paper_id": "Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency",
+  "schema_version": "v1",
+  "challenge_plans_path": "data/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/cache/questions/challenge_plans.json",
+  "challenge_plan_summary": {
+    "plan_count": 76,
+    "by_type": {
+      "false_premise_challenge": 39,
+      "overclaim_challenge": 12,
+      "wrong_relation_challenge": 25
+    },
+    "by_modality_pool": {
+      "multimodal": 40,
+      "text": 36
+    },
+    "text_plan_count": 36,
+    "multimodal_plan_count": 40,
+    "multimodal_plan_limit": 40
+  },
+  "challenge_questions_raw_path": "data/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/cache/questions/challenge_questions_raw.json",
+  "challenge_question_raw_summary": {
+    "raw_question_count": 50,
+    "by_type": {
+      "false_premise_challenge": 9,
+      "overclaim_challenge": 6,
+      "wrong_relation_challenge": 5
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    }
+  },
+  "challenge_questions_filtered_path": "data/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/cache/questions/challenge_questions_filtered.json",
+  "challenge_solver_trials_path": "data/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/cache/questions/challenge_solver_trials.json",
+  "challenge_filter_summary": {
+    "plan_pool_count": 76,
+    "target_count": 20,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 50,
+    "solver_trial_count": 49,
+    "filtered_count": 20,
+    "human_review_count": 9,
+    "rejected_count": 30,
+    "blacklisted_plan_count": 7,
+    "by_type": {
+      "false_premise_challenge": 9,
+      "overclaim_challenge": 6,
+      "wrong_relation_challenge": 5
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    },
+    "stop_reason": {
+      "text": "target_reached",
+      "multimodal": {
+        "figure": "target_reached",
+        "remaining": "target_reached"
+      }
+    }
+  },
+  "challenge_questions": [
+    {
+      "question_id": "CHQ_0002",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0036",
+      "source_challenge_plan_id": "CHP_0036",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "The paper mentions that the semantic discriminative loss follows the form of InfoNCE loss. Does it use softmax cross-entropy over pairs to compute probabilities, or does it directly maximize cosine similarity between matching pairs?",
+      "surface_intent": "Seeks clarification on the loss function used for aligning video and text embeddings.",
+      "target_kc_ids": [
+        "KC47"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The KC says the loss maximizes and minimizes cosine similarity, which is a direct similarity measure, not a softmax-based probability. However, InfoNCE often uses softmax, but the core is still cosine similarity.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC47",
+          "text": "To achieve the semantic alignment of visual and text modal features, we utilize the semantic discriminative loss to inject text semantics during the training process of the visual Q-Former. Specifically, in a batch of N (video, text) pairs, the positive sample pairs are the N matching video-text pairs, and the negative sample pairs are the $ N^{2} - N $ non-matching video-text pairs in the batch. The semantic discriminative loss maximizes the cosine similarity of the video and text embeddings of all positive sample pairs in the batch while minimizing the cosine similarity of the embeddings of all negative sample pairs. Essentially, semantic discriminative loss follows the form of InfoNCE loss and learns a common semantic embedding space for the visual and text modalities, which can be expressed as:",
+          "span_id": "S9",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, directly asks about the loss function, and can be answered from the provided evidence. It does not expose hidden labels or evaluation metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0028",
+      "source_challenge_plan_id": "CHP_0028",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Is the two-level alignment scheme effective for reducing hallucinations in multimodal models?",
+      "surface_intent": "To assess whether the model correctly identifies the scope of the paper's claim about the two-level alignment scheme's effectiveness.",
+      "target_kc_ids": [
+        "KC55"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC55",
+          "text": "where L represents the number of levels. In the experiment, we adopted a two-level alignment scheme of aligning the output features of Q-Former and aligning the input features of the cross-attention mechanism. Finally, we achieve semantic alignment of features across all levels of visual and textual modalities using a multi-level semantic discriminative loss. This enables our model to capture both high-level and low-level semantic relations while effectively reducing hallucinations by establishing precise correspondences between video content and generated language.",
+          "span_id": "S9",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's trap relies on models overclaiming generality, but the question explicitly asks whether the scheme is 'generally effective', which cues solvers to consider scope limitations. Solver answers correctly limited the claim to the paper's experiments, so the question phrasing made the trap too obvious. Revision guidance: Rewrite the question to more subtly invoke the claim without explicitly mentioning generality. For example, ask: 'Is the two-level alignment scheme effective for reducing hallucinations in multimodal models?' or 'Based on the experiment, can the two-level alignment scheme reduce hallucinations?' This avoids directly prompting the solver to consider scope limitations, making the overclaim trap more likely to be triggered."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, and targets the overclaim failure mode by asking broadly about effectiveness, allowing the model to overclaim beyond the paper's limited scope.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0010",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0011",
+      "source_challenge_plan_id": "CHP_0011",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "What problem does the two-stage training scheme aim to address?",
+      "surface_intent": "Asks for the motivation behind the two-stage training scheme",
+      "target_kc_ids": [
+        "KC58",
+        "KC59"
+      ],
+      "target_edge_ids": [
+        "E25"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP4",
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The answer should reiterate that the two-stage training scheme is motivated by the uneven distribution problem.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E25",
+          "kc_ids": [
+            "KC58",
+            "KC59"
+          ],
+          "text": "The training dataset is a significant factor contributing to hallucinations in video-language models. On one hand, the lack of diversity in some datasets results in the model having an inadequate understanding of certain visual concepts, complicating the alignment between video and text modalities. On the other hand, the uneven distribution of objects in the training set causes the video-language model to favor predicting common objects or frequently co-occurring combinations of objects. Therefore, we propose a two-stage training scheme that utilizes the extended dataset to improve the optimization of the multi-level semantic discriminative loss. These two stages are the auxiliary pre-training stage and the task-specific training stage respectively."
+        },
+        {
+          "kc_id": "KC58",
+          "text": "The training dataset is a significant factor contributing to hallucinations in video-language models. On one hand, the lack of diversity in some datasets results in the model having an inadequate understanding of certain visual concepts, complicating the alignment between video and text modalities. On the other hand, the uneven distribution of objects in the training set causes the video-language model to favor predicting common objects or frequently co-occurring combinations of objects. Therefore, we propose a two-stage training scheme that utilizes the extended dataset to improve the optimization of the multi-level semantic discriminative loss. These two stages are the auxiliary pre-training stage and the task-specific training stage respectively.",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC59",
+          "text": "The training dataset is a significant factor contributing to hallucinations in video-language models. On one hand, the lack of diversity in some datasets results in the model having an inadequate understanding of certain visual concepts, complicating the alignment between video and text modalities. On the other hand, the uneven distribution of objects in the training set causes the video-language model to favor predicting common objects or frequently co-occurring combinations of objects. Therefore, we propose a two-stage training scheme that utilizes the extended dataset to improve the optimization of the multi-level semantic discriminative loss. These two stages are the auxiliary pre-training stage and the task-specific training stage respectively.",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks for the motivation behind the two-stage training scheme, which aligns with the target failure mode of wrong relation. It is natural, not exposing metadata, and can be answered from the evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0011",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0007",
+      "source_challenge_plan_id": "CHP_0007",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Given the specific choices of ViT-G/14 encoder, Q-Former from InstructBLIP, WebVid-5k dataset, Vicuna-7B LLM, and loss hyperparameters (λ_multi=0.5, λ_text=1), how transferable are these components to other video-language understanding tasks?",
+      "surface_intent": "asks about generalizability of paper's implementation choices",
+      "target_kc_ids": [
+        "KC68"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'video-language understanding', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC68",
+          "text": "For the visual encoder, we adopt the pre-trained image encoder ViT-G/14 [Alexey, 2020] from EVA-CLIP [Fang et al., 2023], which can also be replaced with other CLIP-based video encoders. We utilize the pre-trained Q-Former weights provided by InstructBLIP [Dai et al., 2023] and use the collected WebVid-5k [Bain et al., 2021] dataset for the first stage of training. Additionally, we employ Vicuna-7B [Chiang et al., 2023] as the large language model (LLM). The hyperparameters of the loss function in our method are set as: $ \\lambda_{multi} = 0.5 $ and $ \\lambda_{text} = 1 $. All experiments are conducted on 4 V100 GPUs.",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question probes generalizability beyond the paper's limited scope, directly targeting overclaim without revealing evaluation metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0020",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0031",
+      "source_challenge_plan_id": "CHP_0031",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "The paper reports a 3.3% performance improvement from the multi-level alignment strategy on the LVU relation dataset. Based on this evidence, how would you assess the potential of this approach for improving performance on other long video understanding tasks?",
+      "surface_intent": "Asks about generalizability of the ablation study result to other tasks.",
+      "target_kc_ids": [
+        "KC74"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'paper_setting', 'dataset': 'LVU relation', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC74",
+          "text": "Ablation Study. To evaluate the effectiveness of the multilevel multimodal alignment strategy and the two-stage training strategy, we conduct comprehensive ablation experiments on the LVU relation dataset. The experimental results are shown in\n\n<!-- page 7: doc_6.md -->\n\nThe results show that employing a multi-level alignment strategy based on the baseline yields performance improvements of 3.3%. This indicates that multi-level multimodal alignment effectively integrates textual semantics into the training of the video language model, enhancing the training process of Q-Former and significantly improving recognition accuracy in long video understanding tasks.",
+          "span_id": "S14",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question asks about generalizing a specific experimental result, directly testing for overclaim without exposing metadata. It is natural, serious, and answerable from the given evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0022",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0001",
+      "source_challenge_plan_id": "CHP_0001",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Explain the role of the loss function L = λ_multi * L_multi + λ_text * L_text in the proposed method.",
+      "surface_intent": "Appears to ask for an explanation of the loss function's purpose in the paper's method.",
+      "target_kc_ids": [
+        "KC66"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC66",
+          "text": "$$ \\mathcal{L}=\\lambda_{m u l t i}\\cdot\\mathcal{L}_{m u l t i}+\\lambda_{t e x t}\\cdot\\mathcal{L}_{t e x t}, $$\n\nwhere $ \\lambda_{multi} $ and $ \\lambda_{text} $ are hyper-parameters to trade off the two parts.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question directly asks whether the loss function is generally applicable, making the overclaim trap too obvious. Solver models correctly recognized the paper's limited context. The plan itself is not inherently too easy; a more indirect question could still trigger overclaim. Revision guidance: Replace the explicit generality question with a request to summarize or elaborate on the role of the loss function without prompting for generalization. For example: 'Explain the role of the loss function L = λ_multi * L_multi + λ_text * L_text in the proposed method.' A good answer should describe it within the paper's context; an overclaim would occur if the model states it is widely used or proven effective beyond this specific setting."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, and can test overclaim by probing the model's explanation of the loss function's role within the paper's scope.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0023",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0019",
+      "source_challenge_plan_id": "CHP_0019",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "What is the key innovation of the paper in addressing hallucinations across video-language tasks, and how does it advance beyond previous approaches?",
+      "surface_intent": "Asks the model to summarize the paper's claimed contribution and its novelty relative to existing methods.",
+      "target_kc_ids": [
+        "KC38"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=author_hypothesis and the recorded scope={'task': 'video-language tasks', 'dataset': 'not_specified', 'generality': 'broad_paper_claim'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC38",
+          "text": "Dataset-level approaches, such as Text Shearing and CIT [Hu et al., 2023], aim to mitigate hallucinations by improving data quality, reducing overconfidence, and disrupting spurious co-occurrences in training data. Modality-level methods, including visual fusion and perceptual reinforcement, enhance cross-modal alignment and reduce semantic misalignment. Output correction strategies, such as post-generation refinement (Woodpecker [Yin et al., 2024]), focus on detecting and correcting hallucinations in model outputs. Despite promising results, these methods often come with high computational costs or rely on extensive curated datasets, limiting scalability. In this work, we propose a novel framework that explicitly integrates language-level alignment and an enhanced training scheme to address hallucinations, achieving stronger semantic consistency and improved robustness across video-language tasks.",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and asks about the paper's claimed innovation, allowing the model to potentially overclaim. It aligns with the challenge plan's target failure mode of overclaim and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0026",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0013",
+      "source_challenge_plan_id": "CHP_0013",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "According to the paper, can LongVLM be considered an effective solution for long-term video understanding?",
+      "surface_intent": "Appears to ask whether the paper supports LongVLM as an effective method for long-term video understanding.",
+      "target_kc_ids": [
+        "KC26"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'video_understanding', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC26",
+          "text": "Memory-augmented architectures have become a key strategy for long-term video understanding by retaining and referencing past frames to maintain temporal coherence. Models like LongVLM [Weng et al., 2025] balance short- and long-term memory to reduce redundancy in extended videos, though they often struggle to preserve fine-grained visual details under limited computational budgets. Hierarchical models such as MeMViT [Wu et al., 2022] improve attention mechanisms for long-form tasks but often underutilize token-level representation, which remains essential for effective encoding.",
+          "span_id": "S6",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan targets a clear overclaim scenario with explicit limitations. The generated question was too easy because it was broad and open-ended, prompting solvers to naturally include the documented limitation. The failure mode remains testable with a more precisely phrased question that does not cue the limitation. Revision guidance: Rephrase the question to avoid hinting at the limitation. For example, use a yes/no format: 'According to the paper, is LongVLM an effective solution for long-term video understanding?' or 'Can LongVLM be considered a reliable model for processing extended videos?' The question should not mention 'struggle' or 'computational budget' to increase the chance of overclaim."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels. It appropriately targets the overclaim failure mode by asking about LongVLM's effectiveness, which can be answered from the paper evidence. The ambiguity is acceptable as it allows testing whether the model overclaims without considering limitations.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0028",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0003",
+      "source_challenge_plan_id": "CHP_0003",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "What is the single term that makes up the loss function in this paper?",
+      "surface_intent": "Ask about the loss function composition",
+      "target_kc_ids": [
+        "KC66"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The KC explicitly states the loss is a weighted sum of two parts.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC66",
+          "text": "$$ \\mathcal{L}=\\lambda_{m u l t i}\\cdot\\mathcal{L}_{m u l t i}+\\lambda_{t e x t}\\cdot\\mathcal{L}_{t e x t}, $$\n\nwhere $ \\lambda_{multi} $ and $ \\lambda_{text} $ are hyper-parameters to trade off the two parts.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally embeds a false premise that the loss function consists of a single term, matching the intended false premise challenge. It does not expose hidden metadata and is answerable from the paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0031",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0026",
+      "source_challenge_plan_id": "CHP_0026",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "A reviewer claims that the performance gains are mainly due to the two-stage training strategy, not the multi-level alignment. How would you argue against this using evidence from the paper?",
+      "surface_intent": "The question asks the model to defend the importance of multi-level alignment against a reviewer's criticism, requiring evidence from the paper.",
+      "target_kc_ids": [
+        "KC20",
+        "KC17"
+      ],
+      "target_edge_ids": [
+        "E52"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E52",
+          "kc_ids": [
+            "KC20",
+            "KC17"
+          ],
+          "text": "Extensive experimentation demonstrates that our method consistently outperforms existing models in reducing hallucinations, improving multimodal alignment, and achieving superior overall performance across multiple video-language tasks. Our results suggest that the proposed approach effectively mitigates hallucinations in large video-language models, laying a foundation for more reliable and accurate multimodal systems.\n\nWe summarize our main contributions as follows:\n\n• We propose a novel multi-level multimodal alignment strategy that incorporates textual semantic supervision during visual encoding. This approach aligns semantic features from both text and vision at multiple levels to address hallucinations in large video-language models.\n\n• We propose a two-stage training strategy that facilitates progressive co-learning from general vision-text semantics to task-specific semantics, utilizing a larger and more diverse dataset.\n\n• We conducted extensive experiments on the LVU and MSVD datasets to compare our methods with other VLMs. Our results show that our approach achieves state-of-the-art performance across various downstream video tasks, significantly improving the quality an"
+        },
+        {
+          "kc_id": "KC20",
+          "text": "• We conducted extensive experiments on the LVU and MSVD datasets to compare our methods with other VLMs. Our results show that our approach achieves state-of-the-art performance across various downstream video tasks, significantly improving the quality and reliability of video language models while effectively reducing hallucinations.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC17",
+          "text": "Extensive experimentation demonstrates that our method consistently outperforms existing models in reducing hallucinations, improving multimodal alignment, and achieving superior overall performance across multiple video-language tasks. Our results suggest that the proposed approach effectively mitigates hallucinations in large video-language models, laying a foundation for more reliable and accurate multimodal systems.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question was too direct and factual, asking for a summary of justification that all solvers answered correctly without needing to manipulate the relation. The intended failure mode (wrong_relation) was not triggered because the question did not pressure the model to alter or apply the relation in a challenging way. Revision guidance: Rewrite the question to require applying the verified relation in a novel or evaluative context. For example: 'A reviewer argues that the method's improvements are solely due to the two-stage training, not the multi-level alignment. Based on the paper, how would you defend the importance of multi-level alignment?' This forces the model to use the evidence to support a specific stance, increasing the chance of a wrong relation (e.g., downplaying the alignment's role)."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally defends the multi-level alignment's importance, aligning with the verified relation KC20 supports KC17, without exposing metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0002",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0073",
+      "source_challenge_plan_id": "CHP_0073",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Based on Figure 4, which shows the ablation experiment results, a reviewer claims that the Baseline and Two-stage Training configurations yield nearly identical Top-1 Accuracy. Is this claim supported by the data in the figure? Please explain using the specific accuracy values shown.",
+      "surface_intent": "Evaluating the accuracy difference between Baseline and Two-stage Training based on Figure 4.",
+      "target_kc_ids": [
+        "KC100",
+        "KC102"
+      ],
+      "target_edge_ids": [
+        "E10"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Ablation experiment of multi-level alignment module.",
+          "summary": "The figure presents an ablation study chart illustrating the impact of different alignment module configurations on Top-1 Accuracy (%). It compares a Baseline method against Single-Level Alignment, various Multi-Level Alignment setups (differing in frame and batch settings), and a final configuration involving Two-stage Training. The chart demonstrates a general upward trend in accuracy as more complex alignment strategies are introduced.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC100",
+            "KC102"
+          ],
+          "evidence_bases": [
+            "Data label '58.2' above the 'Baseline' point on the x-axis.",
+            "The rightmost data point is the highest on the Y-axis at 62.6%."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_chart_box_130_123_578_475.jpg",
+              "caption": "Figure 4: Ablation experiment of multi-level alignment module."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E10",
+          "kc_ids": [
+            "KC100",
+            "KC102"
+          ],
+          "text": "Asset summary: The figure presents an ablation study chart illustrating the impact of different alignment module configurations on Top-1 Accuracy (%). It compares a Baseline method against Single-Level Alignment, various Multi-Level Alignment setups (differing in frame and batch settings), and a final configuration involving Two-stage Training. The chart demonstrates a general upward trend in accuracy as more complex alignment strategies are introduced.\n\nEvidence bases:\n- Data label '58.2' above the 'Baseline' point on the x-axis.\n- Both data points are labeled '61.5'.\n- The rightmost data point is the highest on the Y-axis at 62.6%.\n- The figure only displays Top-1 Accuracy and does not provide information on computational efficiency, memory usage, or other evaluation metrics."
+        },
+        {
+          "kc_id": "KC100",
+          "text": "Asset FIG_004 (figure): Figure 4: Ablation experiment of multi-level alignment module.\nAsset summary: The figure presents an ablation study chart illustrating the impact of different alignment module configurations on Top-1 Accuracy (%). It compares a Baseline method against Single-Level Alignment, various Multi-Level Alignment setups (differing in frame and batch settings), and a final configuration involving Two-stage Training. The chart demonstrates a general upward trend in accuracy as more complex alignment strategies are introduced.\nEvidence basis: Data label '58.2' above the 'Baseline' point on the x-axis.\nSupported claim: The Baseline method achieves a Top-1 Accuracy of 58.2%.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC102",
+          "text": "Asset FIG_004 (figure): Figure 4: Ablation experiment of multi-level alignment module.\nAsset summary: The figure presents an ablation study chart illustrating the impact of different alignment module configurations on Top-1 Accuracy (%). It compares a Baseline method against Single-Level Alignment, various Multi-Level Alignment setups (differing in frame and batch settings), and a final configuration involving Two-stage Training. The chart demonstrates a general upward trend in accuracy as more complex alignment strategies are introduced.\nEvidence basis: The rightmost data point is the highest on the Y-axis at 62.6%.\nSupported claim: Two-stage training provides the best performance among the tested ablations.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question directly asks for a comparison that is clearly answered by the figure data, so models correctly identify the superior method. The intended failure mode (wrong relation) was not triggered because the question did not introduce any conflicting information or ambiguity to cause a reversal or weakening of the verified relation. Revision guidance: The next question should introduce a subtle conflict, such as claiming that Baseline and Two-stage Training achieve similar performance, or that Baseline is superior, then ask the model to evaluate based on the figure. Alternatively, ask about a relation not directly shown (e.g., whether Two-stage Training is less effective than a simpler method) to test reliance on evidence."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden metadata. It tests the target failure mode (wrong_relation) by asking whether the claim of nearly identical accuracy is supported, which requires preserving the verified contrast (Baseline 58.2% vs. Two-stage 62.6%). The evidence in the figure allows a definitive answer, and the question is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0003",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0049",
+      "source_challenge_plan_id": "CHP_0049",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on the examples shown in Figure 5, what can you conclude about the overall accuracy of the proposed method on the LVU dataset?",
+      "surface_intent": "inquiring about performance from qualitative results",
+      "target_kc_ids": [
+        "KC105"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_005"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_005",
+          "asset_type": "figure",
+          "caption": "Figure 5: Visualization results of our method on long-term video recognition task on LVU dataset.",
+          "summary": "The figure presents three qualitative examples of a video recognition method labeled 'Ours'. Each row displays a sequence of video frames as input, followed by a specific question about the movie (genre, relationship, or scene). The output shows the model's prediction in a blue box accompanied by a green checkmark, indicating a correct answer.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC105"
+          ],
+          "evidence_bases": [
+            "Row 2 shows video frames leading to the answer 'friend' with a checkmark."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_005",
+              "path": "rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_image_box_633_115_1104_544.jpg",
+              "caption": "Figure 5: Visualization results of our method on long-term video recognition task on LVU dataset."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The figure only displays three selected successful examples (qualitative), not a statistical summary of performance.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC105",
+          "text": "Asset FIG_005 (figure): Figure 5: Visualization results of our method on long-term video recognition task on LVU dataset.\nAsset summary: The figure presents three qualitative examples of a video recognition method labeled 'Ours'. Each row displays a sequence of video frames as input, followed by a specific question about the movie (genre, relationship, or scene). The output shows the model's prediction in a blue box accompanied by a green checkmark, indicating a correct answer.\nEvidence basis: Row 2 shows video frames leading to the answer 'friend' with a checkmark.\nSupported claim: The method can identify relationships between characters in a video.",
+          "span_id": "FIG_005",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC105",
+          "text": "Asset evidence basis: Row 2 shows video frames leading to the answer 'friend' with a checkmark.",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question aligns with the intended false premise challenge, asking to infer overall accuracy from qualitative examples, which is the trap.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0037",
+      "source_challenge_plan_id": "CHP_0037",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 4, how does the 'Frame=1&T Batch=4' configuration compare to 'Frame=1&2 Batch=4' in terms of Top-1 Accuracy?",
+      "surface_intent": "Ask about the performance difference between two configurations shown in the ablation study figure.",
+      "target_kc_ids": [
+        "KC101"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Ablation experiment of multi-level alignment module.",
+          "summary": "The figure presents an ablation study chart illustrating the impact of different alignment module configurations on Top-1 Accuracy (%). It compares a Baseline method against Single-Level Alignment, various Multi-Level Alignment setups (differing in frame and batch settings), and a final configuration involving Two-stage Training. The chart demonstrates a general upward trend in accuracy as more complex alignment strategies are introduced.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC101"
+          ],
+          "evidence_bases": [
+            "Both data points are labeled '61.5'."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_chart_box_130_123_578_475.jpg",
+              "caption": "Figure 4: Ablation experiment of multi-level alignment module."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The chart explicitly labels both points with the value '61.5', indicating equal performance, connected by a flat line segment.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC101",
+          "text": "Asset FIG_004 (figure): Figure 4: Ablation experiment of multi-level alignment module.\nAsset summary: The figure presents an ablation study chart illustrating the impact of different alignment module configurations on Top-1 Accuracy (%). It compares a Baseline method against Single-Level Alignment, various Multi-Level Alignment setups (differing in frame and batch settings), and a final configuration involving Two-stage Training. The chart demonstrates a general upward trend in accuracy as more complex alignment strategies are introduced.\nEvidence basis: Both data points are labeled '61.5'.\nSupported claim: Switching from 'Frame=1&2' to 'Frame=1&T' in the Multi-Level Alignment module does not change accuracy.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC101",
+          "text": "Asset evidence basis: Both data points are labeled '61.5'.",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the performance comparison, which aligns with the false premise challenge; the correct answer based on the figure is that they are equal, and the question does not expose any internal metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0040",
+      "source_challenge_plan_id": "CHP_0040",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 2, the left panel shows the overall framework including an LLM for text generation, and the right panel details the two-stage training strategy. Please explain how the LLM is used in each stage. Does the LLM participate in the auxiliary pre-training stage (Stage 1), or is it only involved in the task-specific stage (Stage 2)? Support your answer with evidence from the figure.",
+      "surface_intent": "Ask about the role of the LLM in the two-stage training process, particularly whether it is used in Stage 1.",
+      "target_kc_ids": [
+        "KC87"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Figure 2: (Left) Framework overview. Framework overview. Long-Term Memory Bank and Q-Former are employed to encode visual features. Text encoder extracts joint semantic features from the prompt and text label, achieving multi-level semantic alignment with visual features through contrastive learning. The LLM then generates text outputs for various downstream tasks in video understanding. (Right) Two-stage training strategy. In the auxiliary pre-training stage, semantic discriminant loss is utilized on a larger and more diverse video-language dataset. In the task-specific training stage, both semantic discriminant loss and text decoding loss are applied to train on downstream task datasets.",
+          "summary": "The figure illustrates a video-language model framework featuring a Long-Term Memory Bank and a two-stage training strategy. The left panel details the architecture, showing how visual features are encoded into a memory bank, processed by a Q-Former to generate visual queries, and aligned with text features via a cross-modal similarity matrix. The right panel contrasts the auxiliary pre-training stage (Stage 1), which uses video-caption data and discriminative loss, with the task-specific training stage (Stage 2), which utilizes VQA data and an LLM for text generation.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC87"
+          ],
+          "evidence_bases": [
+            "Caption mentions 'semantic discriminant loss is utilized on a larger and more diverse video-language dataset' and diagram shows 'Discriminative Loss' in Stage 1"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_image_box_121_124_1112_689.jpg",
+              "caption": "Figure 2: (Left) Framework overview. Framework overview. Long-Term Memory Bank and Q-Former are employed to encode visual features. Text encoder extracts joint semantic features from the prompt and text label, achieving multi-level semantic alignment with visual features through contrastive learning. The LLM then generates text outputs for various downstream tasks in video understanding. (Right) Two-stage training strategy. In the auxiliary pre-training stage, semantic discriminant loss is utilized on a larger and more diverse video-language dataset. In the task-specific training stage, both semantic discriminant loss and text decoding loss are applied to train on downstream task datasets."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "While the LLM is explicitly shown in the Stage 2 flow, the caption states the LLM generates outputs for various tasks, implying it's part of the overall framework. The diagram structure suggests the LLM might be fine-tuned in Stage 2 but its architecture is likely present throughout.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC87",
+          "text": "Asset FIG_002 (figure): Figure 2: (Left) Framework overview. Framework overview. Long-Term Memory Bank and Q-Former are employed to encode visual features. Text encoder extracts joint semantic features from the prompt and text label, achieving multi-level semantic alignment with visual features through contrastive learning. The LLM then generates text outputs for various downstream tasks in video understanding. (Right) Two-stage training strategy. In the auxiliary pre-training stage, semantic discriminant loss is utilized on a larger and more diverse video-language dataset. In the task-specific training stage, both semantic discriminant loss and text decoding loss are applied to train on downstream task datasets.\nAsset summary: The figure illustrates a video-language model framework featuring a Long-Term Memory Bank and a two-stage training strategy. The left panel details the architecture, showing how visual features are encoded into a memory bank, processed by a Q-Former to generate visual queries, and aligned with text features via a cross-modal similarity matrix. The right panel contrasts the auxiliary pre-training stage (Stage 1), which uses video-caption data and discriminati",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC87",
+          "text": "Asset evidence basis: Caption mentions 'semantic discriminant loss is utilized on a larger and more diverse video-language dataset' and diagram shows 'Discriminative Loss' in Stage 1",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly probes the target false premise (LLM not in Stage 1) in a natural way, does not leak metadata, and is answerable from the figure caption and diagram.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0048",
+      "source_challenge_plan_id": "CHP_0048",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 4, which configuration achieves the highest Top-1 Accuracy? Explain the performance differences among the multi-level alignment setups.",
+      "surface_intent": "The question appears to ask about the best configuration and to compare the performance of various multi-level alignment setups, testing understanding of the ablation study.",
+      "target_kc_ids": [
+        "KC102"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Ablation experiment of multi-level alignment module.",
+          "summary": "The figure presents an ablation study chart illustrating the impact of different alignment module configurations on Top-1 Accuracy (%). It compares a Baseline method against Single-Level Alignment, various Multi-Level Alignment setups (differing in frame and batch settings), and a final configuration involving Two-stage Training. The chart demonstrates a general upward trend in accuracy as more complex alignment strategies are introduced.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC102"
+          ],
+          "evidence_bases": [
+            "The rightmost data point is the highest on the Y-axis at 62.6%."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_chart_box_130_123_578_475.jpg",
+              "caption": "Figure 4: Ablation experiment of multi-level alignment module."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The chart explicitly labels both points with the value '61.5', indicating equal performance, connected by a flat line segment.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC102",
+          "text": "Asset FIG_004 (figure): Figure 4: Ablation experiment of multi-level alignment module.\nAsset summary: The figure presents an ablation study chart illustrating the impact of different alignment module configurations on Top-1 Accuracy (%). It compares a Baseline method against Single-Level Alignment, various Multi-Level Alignment setups (differing in frame and batch settings), and a final configuration involving Two-stage Training. The chart demonstrates a general upward trend in accuracy as more complex alignment strategies are introduced.\nEvidence basis: The rightmost data point is the highest on the Y-axis at 62.6%.\nSupported claim: Two-stage training provides the best performance among the tested ablations.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC102",
+          "text": "Asset evidence basis: The rightmost data point is the highest on the Y-axis at 62.6%.",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question directly asks about the comparison, making it trivial to verify equality. A more indirect or context-heavy question could still elicit the false premise failure mode. Revision guidance: Rephrase the question to avoid direct comparison. For example, ask about the overall trend or performance of multiple configurations, embedding the false premise as a subtle detail. E.g., 'Based on Figure 4, which configuration achieves the highest Top-1 Accuracy? Explain the performance differences among the multi-level alignment setups.' This forces the model to consider all points and may lead to accepting the false premise that 'Frame=1&T Batch=4' is worse."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose hidden labels, and can be answered from Figure 4. It allows testing the false premise by asking about performance differences; a solver may incorrectly claim that 'Frame=1&T Batch=4' is worse than 'Frame=1&2 Batch=4', which is the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0058",
+      "source_challenge_plan_id": "CHP_0058",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 5, what can you conclude about the model's performance on the LVU dataset?",
+      "surface_intent": "asking about model performance from figure",
+      "target_kc_ids": [
+        "KC104"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_005"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_005",
+          "asset_type": "figure",
+          "caption": "Figure 5: Visualization results of our method on long-term video recognition task on LVU dataset.",
+          "summary": "The figure presents three qualitative examples of a video recognition method labeled 'Ours'. Each row displays a sequence of video frames as input, followed by a specific question about the movie (genre, relationship, or scene). The output shows the model's prediction in a blue box accompanied by a green checkmark, indicating a correct answer.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC104"
+          ],
+          "evidence_bases": [
+            "Row 1 shows video frames leading to the answer 'comedy' with a checkmark."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_005",
+              "path": "rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_image_box_633_115_1104_544.jpg",
+              "caption": "Figure 5: Visualization results of our method on long-term video recognition task on LVU dataset."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The figure only displays three selected successful examples (qualitative), not a statistical summary of performance.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC104",
+          "text": "Asset FIG_005 (figure): Figure 5: Visualization results of our method on long-term video recognition task on LVU dataset.\nAsset summary: The figure presents three qualitative examples of a video recognition method labeled 'Ours'. Each row displays a sequence of video frames as input, followed by a specific question about the movie (genre, relationship, or scene). The output shows the model's prediction in a blue box accompanied by a green checkmark, indicating a correct answer.\nEvidence basis: Row 1 shows video frames leading to the answer 'comedy' with a checkmark.\nSupported claim: The method can identify the genre of a movie from video frames.",
+          "span_id": "FIG_005",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC104",
+          "text": "Asset evidence basis: Row 1 shows video frames leading to the answer 'comedy' with a checkmark.",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose hidden labels, follows the plan's intent to test whether the solver recognizes that Figure 5 only shows qualitative examples, and can be answered from the figure evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0062",
+      "source_challenge_plan_id": "CHP_0062",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 1, what quantitative performance metrics does the proposed method achieve compared to MA-LMM?",
+      "surface_intent": "The question appears to ask for numerical performance results from the figure, expecting the model to extract accuracy percentages or similar quantitative data.",
+      "target_kc_ids": [
+        "KC84"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [
+        "FIG_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_001",
+          "asset_type": "figure",
+          "caption": "Figure 1: (Top-left) Existing methods utilize visual features that are not semantically aligned for text decoding. (Bottom-left) Our MMA employs a multi-level multimodal semantic alignment strategy to mitigate the hallucinations. (Right) Our method effectively identifies confusable objects, showcasing its capability to grasp complex semantics. It significantly outperforms MA-LMM in reducing hallucinations and enhancing answer accuracy.",
+          "summary": "The figure presents a comparative framework diagram and qualitative results for a video-language model. The left side contrasts the architecture of 'Existing methods' (a) with the proposed method '(b) Ours', highlighting the addition of a Text Encoder and multi-level alignment blocks in the latter. The right side displays qualitative examples where the proposed method ('Ours') correctly identifies objects, relationships, and scene descriptions, whereas the baseline 'MA-LMM' produces hallucinatory answers.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC84"
+          ],
+          "evidence_bases": [
+            "The figure only contains qualitative examples and architectural diagrams; no numerical tables or charts are visible."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_image_box_121_107_1117_740.jpg",
+              "caption": "Figure 1: (Top-left) Existing methods utilize visual features that are not semantically aligned for text decoding. (Bottom-left) Our MMA employs a multi-level multimodal semantic alignment strategy to mitigate the hallucinations. (Right) Our method effectively identifies confusable objects, showcasing its capability to grasp complex semantics. It significantly outperforms MA-LMM in reducing hallucinations and enhancing answer accuracy."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The figure only contains qualitative examples and architectural diagrams; no numerical tables or charts are visible.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC84",
+          "text": "Asset FIG_001 (figure): Figure 1: (Top-left) Existing methods utilize visual features that are not semantically aligned for text decoding. (Bottom-left) Our MMA employs a multi-level multimodal semantic alignment strategy to mitigate the hallucinations. (Right) Our method effectively identifies confusable objects, showcasing its capability to grasp complex semantics. It significantly outperforms MA-LMM in reducing hallucinations and enhancing answer accuracy.\nAsset summary: The figure presents a comparative framework diagram and qualitative results for a video-language model. The left side contrasts the architecture of 'Existing methods' (a) with the proposed method '(b) Ours', highlighting the addition of a Text Encoder and multi-level alignment blocks in the latter. The right side displays qualitative examples where the proposed method ('Ours') correctly identifies objects, relationships, and scene descriptions, whereas the baseline 'MA-LMM' produces hallucinatory answers.\nEvidence basis: The figure only contains qualitative examples and architectural diagrams; no numerical tables or charts are visible.\nSupported claim: The figure only provides qualitative examples and does not s",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC84",
+          "text": "Asset evidence basis: The figure only contains qualitative examples and architectural diagrams; no numerical tables or charts are visible.",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question aligns with the false premise challenge: it asks for quantitative metrics from a figure that only contains qualitative content, making it a valid test for false premise detection.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0075",
+      "source_challenge_plan_id": "CHP_0075",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Based on Figure 4, how does the Top-1 Accuracy change when comparing the 'Multi-Level Alignment (Frame=1&2, Batch=1)' configuration to the 'Multi-Level Alignment (Frame=1&T, Batch=1)' configuration? What does this specific comparison, along with the overall trend in the figure, imply about the role of the alignment module complexity as a limiting factor for accuracy?",
+      "surface_intent": "Evaluate the effect of alignment module variations on accuracy and their implications for the relationship between module complexity and accuracy limits.",
+      "target_kc_ids": [
+        "KC103",
+        "KC101"
+      ],
+      "target_edge_ids": [
+        "E12"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Ablation experiment of multi-level alignment module.",
+          "summary": "The figure presents an ablation study chart illustrating the impact of different alignment module configurations on Top-1 Accuracy (%). It compares a Baseline method against Single-Level Alignment, various Multi-Level Alignment setups (differing in frame and batch settings), and a final configuration involving Two-stage Training. The chart demonstrates a general upward trend in accuracy as more complex alignment strategies are introduced.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC103",
+            "KC101"
+          ],
+          "evidence_bases": [
+            "The figure only displays Top-1 Accuracy and does not provide information on computational efficiency, memory usage, or other evaluation metrics.",
+            "Both data points are labeled '61.5'."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_chart_box_130_123_578_475.jpg",
+              "caption": "Figure 4: Ablation experiment of multi-level alignment module."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E12",
+          "kc_ids": [
+            "KC103",
+            "KC101"
+          ],
+          "text": "Evidence bases:\n- Data label '58.2' above the 'Baseline' point on the x-axis.\n- Both data points are labeled '61.5'.\n- The rightmost data point is the highest on the Y-axis at 62.6%.\n- The figure only displays Top-1 Accuracy and does not provide information on computational efficiency, memory usage, or other evaluation metrics."
+        },
+        {
+          "kc_id": "KC103",
+          "text": "Asset FIG_004 (figure): Figure 4: Ablation experiment of multi-level alignment module.\nAsset summary: The figure presents an ablation study chart illustrating the impact of different alignment module configurations on Top-1 Accuracy (%). It compares a Baseline method against Single-Level Alignment, various Multi-Level Alignment setups (differing in frame and batch settings), and a final configuration involving Two-stage Training. The chart demonstrates a general upward trend in accuracy as more complex alignment strategies are introduced.\nEvidence basis: The figure only displays Top-1 Accuracy and does not provide information on computational efficiency, memory usage, or other evaluation metrics.\nSupported claim: The figure only displays Top-1 Accuracy and does not provide information on computational efficiency, memory usage, or other evaluation metrics.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC101",
+          "text": "Asset FIG_004 (figure): Figure 4: Ablation experiment of multi-level alignment module.\nAsset summary: The figure presents an ablation study chart illustrating the impact of different alignment module configurations on Top-1 Accuracy (%). It compares a Baseline method against Single-Level Alignment, various Multi-Level Alignment setups (differing in frame and batch settings), and a final configuration involving Two-stage Training. The chart demonstrates a general upward trend in accuracy as more complex alignment strategies are introduced.\nEvidence basis: Both data points are labeled '61.5'.\nSupported claim: Switching from 'Frame=1&2' to 'Frame=1&T' in the Multi-Level Alignment module does not change accuracy.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose hidden labels or metadata, follows the intended target failure mode (wrong relation) by asking about the limiting role of alignment complexity, is answerable from the figure evidence, and is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0009",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0070",
+      "source_challenge_plan_id": "CHP_0070",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "In Figure 2, the right panel outlines a two-stage training strategy. A claim is made that both stages employ the same loss function and are trained on identical types of datasets. Based on the information provided in the figure, is this claim accurate? If not, correct it.",
+      "surface_intent": "evaluate a claim about the training stages in Figure 2",
+      "target_kc_ids": [
+        "KC87",
+        "KC88"
+      ],
+      "target_edge_ids": [
+        "E7"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Figure 2: (Left) Framework overview. Framework overview. Long-Term Memory Bank and Q-Former are employed to encode visual features. Text encoder extracts joint semantic features from the prompt and text label, achieving multi-level semantic alignment with visual features through contrastive learning. The LLM then generates text outputs for various downstream tasks in video understanding. (Right) Two-stage training strategy. In the auxiliary pre-training stage, semantic discriminant loss is utilized on a larger and more diverse video-language dataset. In the task-specific training stage, both semantic discriminant loss and text decoding loss are applied to train on downstream task datasets.",
+          "summary": "The figure illustrates a video-language model framework featuring a Long-Term Memory Bank and a two-stage training strategy. The left panel details the architecture, showing how visual features are encoded into a memory bank, processed by a Q-Former to generate visual queries, and aligned with text features via a cross-modal similarity matrix. The right panel contrasts the auxiliary pre-training stage (Stage 1), which uses video-caption data and discriminative loss, with the task-specific training stage (Stage 2), which utilizes VQA data and an LLM for text generation.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC87",
+            "KC88"
+          ],
+          "evidence_bases": [
+            "Caption mentions 'semantic discriminant loss is utilized on a larger and more diverse video-language dataset' and diagram shows 'Discriminative Loss' in Stage 1",
+            "Diagram shows VQA Data input leading to Text Encoder and Visual Encoder, eventually feeding into LLM which outputs 'Text'"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_image_box_121_124_1112_689.jpg",
+              "caption": "Figure 2: (Left) Framework overview. Framework overview. Long-Term Memory Bank and Q-Former are employed to encode visual features. Text encoder extracts joint semantic features from the prompt and text label, achieving multi-level semantic alignment with visual features through contrastive learning. The LLM then generates text outputs for various downstream tasks in video understanding. (Right) Two-stage training strategy. In the auxiliary pre-training stage, semantic discriminant loss is utilized on a larger and more diverse video-language dataset. In the task-specific training stage, both semantic discriminant loss and text decoding loss are applied to train on downstream task datasets."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E7",
+          "kc_ids": [
+            "KC87",
+            "KC88"
+          ],
+          "text": "Caption: Figure 2: (Left) Framework overview. Framework overview. Long-Term Memory Bank and Q-Former are employed to encode visual features. Text encoder extracts joint semantic features from the prompt and text label, achieving multi-level semantic alignment with visual features through contrastive learning. The LLM then generates text outputs for various downstream tasks in video understanding. (Right) Two-stage training strategy. In the auxiliary pre-training stage, semantic discriminant loss is utilized on a larger and more diverse video-language dataset. In the task-specific training stage, both semantic discriminant loss and text decoding loss are applied to train on downstream task datasets.\n\nAsset summary: The figure illustrates a video-language model framework featuring a Long-Term Memory Bank and a two-stage training strategy. The left panel details the architecture, showing how visual features are encoded into a memory bank, processed by a Q-Former to generate visual queries, and aligned with text features via a cross-modal similarity matrix. The right panel contrasts the auxiliary pre-training stage (Stage 1), which uses video-caption data and discriminative loss, with"
+        },
+        {
+          "kc_id": "KC87",
+          "text": "Asset FIG_002 (figure): Figure 2: (Left) Framework overview. Framework overview. Long-Term Memory Bank and Q-Former are employed to encode visual features. Text encoder extracts joint semantic features from the prompt and text label, achieving multi-level semantic alignment with visual features through contrastive learning. The LLM then generates text outputs for various downstream tasks in video understanding. (Right) Two-stage training strategy. In the auxiliary pre-training stage, semantic discriminant loss is utilized on a larger and more diverse video-language dataset. In the task-specific training stage, both semantic discriminant loss and text decoding loss are applied to train on downstream task datasets.\nAsset summary: The figure illustrates a video-language model framework featuring a Long-Term Memory Bank and a two-stage training strategy. The left panel details the architecture, showing how visual features are encoded into a memory bank, processed by a Q-Former to generate visual queries, and aligned with text features via a cross-modal similarity matrix. The right panel contrasts the auxiliary pre-training stage (Stage 1), which uses video-caption data and discriminati",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC88",
+          "text": "Asset FIG_002 (figure): Figure 2: (Left) Framework overview. Framework overview. Long-Term Memory Bank and Q-Former are employed to encode visual features. Text encoder extracts joint semantic features from the prompt and text label, achieving multi-level semantic alignment with visual features through contrastive learning. The LLM then generates text outputs for various downstream tasks in video understanding. (Right) Two-stage training strategy. In the auxiliary pre-training stage, semantic discriminant loss is utilized on a larger and more diverse video-language dataset. In the task-specific training stage, both semantic discriminant loss and text decoding loss are applied to train on downstream task datasets.\nAsset summary: The figure illustrates a video-language model framework featuring a Long-Term Memory Bank and a two-stage training strategy. The left panel details the architecture, showing how visual features are encoded into a memory bank, processed by a Q-Former to generate visual queries, and aligned with text features via a cross-modal similarity matrix. The right panel contrasts the auxiliary pre-training stage (Stage 1), which uses video-caption data and discriminati",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question directly asked for a description of the relationship, which the figure makes obvious and solvers answered correctly without introducing wrong relations. The trap (reversing/weakening the relation) was not triggered because no misleading claim or choice was presented. Revision guidance: Reframe the question to require evaluating a potentially incorrect statement about the relation (e.g., a claim that the stages are independent or reversed), forcing the solver to check against the evidence and either correct or agree. Avoid directly asking for the relation; instead, embed a subtle trap that a hasty solver might fall for."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the relation between the two training stages, targeting the contrast relation intended in the challenge plan. It does not expose hidden labels and is answerable from the provided figure caption and summary, which describe different loss functions and dataset types for the two stages.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0011",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0038",
+      "source_challenge_plan_id": "CHP_0038",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Referring to Figure 3, what conclusion can we draw about the effect of training adjustments on model accuracy?",
+      "surface_intent": "Interpret bar chart accuracy for training adjustments",
+      "target_kc_ids": [
+        "KC97"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 3: Ablation results of effect of multi-level multimodal alignment and two-stage training on the LVU Relation.",
+          "summary": "The figure is a horizontal bar chart presenting ablation study results for the LVU Relation task. It compares the Top-1 Accuracy (%) of three model configurations: a baseline without multi-level alignment or two-stage training, a variant with only multi-level alignment, and the full model with both components. The chart visually demonstrates that adding these components incrementally improves performance.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC97"
+          ],
+          "evidence_bases": [
+            "Comparison between the top bar (62.6) and middle bar (61.5) labels"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_chart_box_617_1034_1096_1341.jpg",
+              "caption": "Figure 3: Ablation results of effect of multi-level multimodal alignment and two-stage training on the LVU Relation."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The axis labels and bar descriptions explicitly refer to architectural/training components ('Multi-Level Alignment', 'Two-Stage Training'), not hyperparameters.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC97",
+          "text": "Asset FIG_003 (figure): Figure 3: Ablation results of effect of multi-level multimodal alignment and two-stage training on the LVU Relation.\nAsset summary: The figure is a horizontal bar chart presenting ablation study results for the LVU Relation task. It compares the Top-1 Accuracy (%) of three model configurations: a baseline without multi-level alignment or two-stage training, a variant with only multi-level alignment, and the full model with both components. The chart visually demonstrates that adding these components incrementally improves performance.\nEvidence basis: Comparison between the top bar (62.6) and middle bar (61.5) labels\nSupported claim: Adding Two-Stage Training improves accuracy from 61.5% to 62.6% when Multi-Level Alignment is present.",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC97",
+          "text": "Asset evidence basis: Comparison between the top bar (62.6) and middle bar (61.5) labels",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question was easy because the false premise explicitly mentioned 'learning rate or batch size adjustments', which directly contradicts the figure's clear labeling about 'multi-level alignment' and 'two-stage training'. Solvers easily recognized the mismatch. Revision guidance: Rephrase the question to be less directly contradictory. For example, ask about 'the effect of specific training adjustments on accuracy' without naming hyperparameters explicitly, or embed the false premise in a more plausible context that requires careful reading of the figure axis and title."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose hidden metadata, is answerable from Figure 3, and can effectively test the false premise target (writers may misinterpret 'training adjustments' as hyperparameters rather than architectural components).",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "thread_challenge_plans_path": "data/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/cache/questions/thread_challenge_plans.json",
+  "thread_challenge_plan_summary": {
+    "plan_count": 6,
+    "target": 24,
+    "per_thread_limit": 3,
+    "by_type": {
+      "thread_overclaim_challenge": 2,
+      "thread_premise_mutation_challenge": 2,
+      "thread_wrong_bridge_challenge": 2
+    },
+    "by_modality_pool": {
+      "text": 6
+    },
+    "skipped_thread_count": 1,
+    "skipped_threads": [
+      {
+        "thread_id": "RT3",
+        "reason": "thread lacks premise/evidence steps"
+      }
+    ]
+  },
+  "thread_challenge_questions_raw_path": "data/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/cache/questions/thread_challenge_questions_raw.json",
+  "thread_challenge_questions_filtered_path": "data/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/cache/questions/thread_challenge_questions_filtered.json",
+  "thread_challenge_solver_trials_path": "data/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/cache/questions/thread_challenge_solver_trials.json",
+  "thread_challenge_filter_summary": {
+    "plan_pool_count": 6,
+    "target_count": 6,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 13,
+    "solver_trial_count": 12,
+    "filtered_count": 4,
+    "human_review_count": 1,
+    "rejected_count": 9,
+    "blacklisted_plan_count": 0,
+    "by_type": {
+      "thread_overclaim_challenge": 1,
+      "thread_premise_mutation_challenge": 2,
+      "thread_wrong_bridge_challenge": 1
+    },
+    "by_modality_pool": {
+      "text": 4
+    },
+    "stop_reason": "plan_pool_exhausted"
+  },
+  "thread_challenge_questions": [
+    {
+      "question_id": "TCQ_0002",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0002",
+      "source_challenge_plan_id": "TCP_0002",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given the performance improvements reported for the MMA framework, what does the evidence suggest about the role of multi-level alignment in reducing hallucinations in video-language models?",
+      "surface_intent": "The question asks about the implications of the MMA framework's success on the importance of multi-level alignment for hallucination mitigation.",
+      "target_kc_ids": [
+        "KC2",
+        "KC13",
+        "KC17",
+        "KC18"
+      ],
+      "target_edge_ids": [
+        "E140",
+        "E100",
+        "E50"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the MMA framework that uses a text encoder and semantic discriminative loss to achieve multilevel alignment.",
+        "evidence": "The answer should state that multi-level alignment establishes precise correspondences between video content and generated language, reducing hallucinations.",
+        "bridge": "The answer should use the chain: MMA framework -> multi-level alignment -> enhanced Q-Former training -> state-of-the-art performance."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the MMA framework that uses a text encoder and semantic discriminative loss to achieve multilevel alignment.\n- We discussed this evidence: The answer should state that multi-level alignment establishes precise correspondences between video content and generated language, reducing hallucinations.\n- We connected them cautiously as follows: The answer should use the chain: MMA framework -> multi-level alignment -> enhanced Q-Former training -> state-of-the-art performance.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M4",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E140",
+          "kc_ids": [
+            "KC2",
+            "KC13"
+          ],
+          "text": "The rapid advancement of large language models (LLMs) has led to the widespread adoption of video-language models (VLMs) across various domains. However, VLMs are often hindered by their limited semantic discrimination capability, exacerbated by the limited diversity and biased sample distribution of most video-language datasets. This limitation results in a biased understanding of the semantics between visual concepts, leading to hallucinations. To address this challenge, we propose a Multi-level Multimodal Alignment (MMA) framework that leverages a text encoder and semantic discriminative loss to achieve multilevel alignment. This enables the model to capture both low-level and high-level semantic relationships, thereby reducing hallucinations. By incorporating language-level alignment into the training process, our approach ensures stronger semantic consistency between video and textual modalities. Furthermore, we introduce a two-stage progressive training strategy that exploits larger and more diverse datasets to enhance semantic alignment and better capture general semantic relationships between visual and textual modalities. Our comprehensive experiments demonstrate that the"
+        },
+        {
+          "edge_id": "E100",
+          "kc_ids": [
+            "KC13",
+            "KC18"
+          ],
+          "text": "timodal alignment (MMA) strategy to enhance intermediate visual features, combined with final language supervision, guiding the model to generate more accurate and contextually aligned outputs. Specifically, we employ a text encoder to convert text inputs into semantic features, facilitating alignment between visual and textual modalities through a semantic discriminative loss. Our approach goes beyond simple global representations by performing multi-level alignment, aligning semantic features at various levels of the visual and textual modalities. This strategy enables the model to capture both high-level and low-level semantic relationships, reducing hallucinations by establishing precise correspondences between video content and generated language."
+        },
+        {
+          "edge_id": "E50",
+          "kc_ids": [
+            "KC18",
+            "KC17"
+          ],
+          "text": "Extensive experimentation demonstrates that our method consistently outperforms existing models in reducing hallucinations, improving multimodal alignment, and achieving superior overall performance across multiple video-language tasks. Our results suggest that the proposed approach effectively mitigates hallucinations in large video-language models, laying a foundation for more reliable and accurate multimodal systems.\n\nWe summarize our main contributions as follows:\n\n• We propose a novel multi-level multimodal alignment strategy that incorporates textual semantic supervision during visual encoding. This approach aligns semantic features from both text and vision at multiple levels to address hallucinations in large video-language models."
+        },
+        {
+          "kc_id": "KC2",
+          "text": "The rapid advancement of large language models (LLMs) has led to the widespread adoption of video-language models (VLMs) across various domains. However, VLMs are often hindered by their limited semantic discrimination capability, exacerbated by the limited diversity and biased sample distribution of most video-language datasets. This limitation results in a biased understanding of the semantics between visual concepts, leading to hallucinations. To address this challenge, we propose a Multi-level Multimodal Alignment (MMA) framework that leverages a text encoder and semantic discriminative loss to achieve multilevel alignment. This enables the model to capture both low-level and high-level semantic relationships, thereby reducing hallucinations. By incorporating language-level alignment into the training process, our approach ensures stronger semantic consistency between video and textual modalities. Furthermore, we introduce a two-stage progressive training strategy that exploits larger and more diverse datasets to enhance semantic alignment and better capture general semantic relationships between visual and textual modalities. Our comprehensive experiments demonstrate that the",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC13",
+          "text": "timodal alignment (MMA) strategy to enhance intermediate visual features, combined with final language supervision, guiding the model to generate more accurate and contextually aligned outputs. Specifically, we employ a text encoder to convert text inputs into semantic features, facilitating alignment between visual and textual modalities through a semantic discriminative loss. Our approach goes beyond simple global representations by performing multi-level alignment, aligning semantic features at various levels of the visual and textual modalities. This strategy enables the model to capture both high-level and low-level semantic relationships, reducing hallucinations by establishing precise correspondences between video content and generated language.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC17",
+          "text": "Extensive experimentation demonstrates that our method consistently outperforms existing models in reducing hallucinations, improving multimodal alignment, and achieving superior overall performance across multiple video-language tasks. Our results suggest that the proposed approach effectively mitigates hallucinations in large video-language models, laying a foundation for more reliable and accurate multimodal systems.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC18",
+          "text": "• We propose a novel multi-level multimodal alignment strategy that incorporates textual semantic supervision during visual encoding. This approach aligns semantic features from both text and vision at multiple levels to address hallucinations in large video-language models.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is valid; the trap is about overgeneralization which is appropriate. However, the generated question was too transparent, directly asking about a universal claim, making it easy for solvers to reject. Revision guidance: Make the trap subtler by not directly asking about the necessity of multi-level alignment. For example, ask 'What does the MMA framework's performance suggest about the importance of multi-level alignment for hallucination reduction?' or present a scenario where the model might be tempted to overclaim. Avoid explicit logical implication phrasing."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels or metadata. It asks for what the evidence suggests about the role of multi-level alignment, which aligns with the true part of the plan without demanding exclusive or broadly generalized conclusions. The question can be answered from the provided paper evidence and does not introduce ambiguity that would prevent judging the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0004",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0001",
+      "source_challenge_plan_id": "TCP_0001",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "The paper introduces a Multi-level Multimodal Alignment (MMA) framework that uses a text encoder and semantic discriminative loss. How does this framework enhance Q-Former training, and in what specific way does this enhancement lead to the state-of-the-art performance reported across multiple video-language tasks?",
+      "surface_intent": "Seems to ask about the direct causal link between Q-Former training and performance, potentially skipping the role of multi-level alignment.",
+      "target_kc_ids": [
+        "KC2",
+        "KC13",
+        "KC17",
+        "KC18"
+      ],
+      "target_edge_ids": [
+        "E140",
+        "E100",
+        "E50"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the MMA framework that uses a text encoder and semantic discriminative loss to achieve multilevel alignment.",
+        "evidence": "The answer should state that multi-level alignment establishes precise correspondences between video content and generated language, reducing hallucinations.",
+        "bridge": "The answer should use the chain: MMA framework -> multi-level alignment -> enhanced Q-Former training -> state-of-the-art performance."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the MMA framework that uses a text encoder and semantic discriminative loss to achieve multilevel alignment.\n- We discussed this evidence: The answer should state that multi-level alignment establishes precise correspondences between video content and generated language, reducing hallucinations.\n- We connected them cautiously as follows: The answer should use the chain: MMA framework -> multi-level alignment -> enhanced Q-Former training -> state-of-the-art performance.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M4",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E140",
+          "kc_ids": [
+            "KC2",
+            "KC13"
+          ],
+          "text": "The rapid advancement of large language models (LLMs) has led to the widespread adoption of video-language models (VLMs) across various domains. However, VLMs are often hindered by their limited semantic discrimination capability, exacerbated by the limited diversity and biased sample distribution of most video-language datasets. This limitation results in a biased understanding of the semantics between visual concepts, leading to hallucinations. To address this challenge, we propose a Multi-level Multimodal Alignment (MMA) framework that leverages a text encoder and semantic discriminative loss to achieve multilevel alignment. This enables the model to capture both low-level and high-level semantic relationships, thereby reducing hallucinations. By incorporating language-level alignment into the training process, our approach ensures stronger semantic consistency between video and textual modalities. Furthermore, we introduce a two-stage progressive training strategy that exploits larger and more diverse datasets to enhance semantic alignment and better capture general semantic relationships between visual and textual modalities. Our comprehensive experiments demonstrate that the"
+        },
+        {
+          "edge_id": "E100",
+          "kc_ids": [
+            "KC13",
+            "KC18"
+          ],
+          "text": "timodal alignment (MMA) strategy to enhance intermediate visual features, combined with final language supervision, guiding the model to generate more accurate and contextually aligned outputs. Specifically, we employ a text encoder to convert text inputs into semantic features, facilitating alignment between visual and textual modalities through a semantic discriminative loss. Our approach goes beyond simple global representations by performing multi-level alignment, aligning semantic features at various levels of the visual and textual modalities. This strategy enables the model to capture both high-level and low-level semantic relationships, reducing hallucinations by establishing precise correspondences between video content and generated language."
+        },
+        {
+          "edge_id": "E50",
+          "kc_ids": [
+            "KC18",
+            "KC17"
+          ],
+          "text": "Extensive experimentation demonstrates that our method consistently outperforms existing models in reducing hallucinations, improving multimodal alignment, and achieving superior overall performance across multiple video-language tasks. Our results suggest that the proposed approach effectively mitigates hallucinations in large video-language models, laying a foundation for more reliable and accurate multimodal systems.\n\nWe summarize our main contributions as follows:\n\n• We propose a novel multi-level multimodal alignment strategy that incorporates textual semantic supervision during visual encoding. This approach aligns semantic features from both text and vision at multiple levels to address hallucinations in large video-language models."
+        },
+        {
+          "kc_id": "KC2",
+          "text": "The rapid advancement of large language models (LLMs) has led to the widespread adoption of video-language models (VLMs) across various domains. However, VLMs are often hindered by their limited semantic discrimination capability, exacerbated by the limited diversity and biased sample distribution of most video-language datasets. This limitation results in a biased understanding of the semantics between visual concepts, leading to hallucinations. To address this challenge, we propose a Multi-level Multimodal Alignment (MMA) framework that leverages a text encoder and semantic discriminative loss to achieve multilevel alignment. This enables the model to capture both low-level and high-level semantic relationships, thereby reducing hallucinations. By incorporating language-level alignment into the training process, our approach ensures stronger semantic consistency between video and textual modalities. Furthermore, we introduce a two-stage progressive training strategy that exploits larger and more diverse datasets to enhance semantic alignment and better capture general semantic relationships between visual and textual modalities. Our comprehensive experiments demonstrate that the",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC13",
+          "text": "timodal alignment (MMA) strategy to enhance intermediate visual features, combined with final language supervision, guiding the model to generate more accurate and contextually aligned outputs. Specifically, we employ a text encoder to convert text inputs into semantic features, facilitating alignment between visual and textual modalities through a semantic discriminative loss. Our approach goes beyond simple global representations by performing multi-level alignment, aligning semantic features at various levels of the visual and textual modalities. This strategy enables the model to capture both high-level and low-level semantic relationships, reducing hallucinations by establishing precise correspondences between video content and generated language.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC17",
+          "text": "Extensive experimentation demonstrates that our method consistently outperforms existing models in reducing hallucinations, improving multimodal alignment, and achieving superior overall performance across multiple video-language tasks. Our results suggest that the proposed approach effectively mitigates hallucinations in large video-language models, laying a foundation for more reliable and accurate multimodal systems.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC18",
+          "text": "• We propose a novel multi-level multimodal alignment strategy that incorporates textual semantic supervision during visual encoding. This approach aligns semantic features from both text and vision at multiple levels to address hallucinations in large video-language models.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question was too direct, making the wrong bridge obvious to all solvers. The plan itself is not inherently flawed but the specific wording allowed trivial rejection. Revision guidance: For the next question, embed the wrong bridge more subtly. For example, ask about the role of a specific component (e.g., Q-Former) and suggest that its improvement leads to SOTA performance, rather than directly pitting hallucination reduction against the overall framework. Use a more complex causal chain that requires careful reading to detect the unsupported link."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally follows the intended bridge (MMA framework -> multi-level alignment -> enhanced Q-Former training -> state-of-the-art performance) and does not expose hidden labels or metadata. It is answerable from the paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0006",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0006",
+      "source_challenge_plan_id": "TCP_0006",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "You've established that uneven distribution causes hallucination. The paper also mentions lack of diversity. How does the lack of diversity lead to uneven distribution, and what role does the auxiliary pre-training stage play in addressing this chain?",
+      "surface_intent": "To understand the causal relationship between lack of diversity and uneven distribution based on the paper.",
+      "target_kc_ids": [
+        "KC58",
+        "KC59",
+        "KC60"
+      ],
+      "target_edge_ids": [
+        "E25",
+        "E126"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that uneven distribution causes the model to favor common objects or co-occurrences, contributing to hallucination.",
+        "evidence": "The answer should note that a two-stage training scheme with auxiliary pre-training and task-specific training is proposed to address the data imbalance problem.",
+        "bridge": "The answer should connect the problem (uneven distribution) to the method (auxiliary pre-training on diverse data to learn general semantics) and then to the task-specific training."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that uneven distribution causes the model to favor common objects or co-occurrences, contributing to hallucination.\n- We discussed this evidence: The answer should note that a two-stage training scheme with auxiliary pre-training and task-specific training is proposed to address the data imbalance problem.\n- We connected them cautiously as follows: The answer should connect the problem (uneven distribution) to the method (auxiliary pre-training on diverse data to learn general semantics) and then to the task-specific training.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M3",
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E25",
+          "kc_ids": [
+            "KC58",
+            "KC59"
+          ],
+          "text": "The training dataset is a significant factor contributing to hallucinations in video-language models. On one hand, the lack of diversity in some datasets results in the model having an inadequate understanding of certain visual concepts, complicating the alignment between video and text modalities. On the other hand, the uneven distribution of objects in the training set causes the video-language model to favor predicting common objects or frequently co-occurring combinations of objects. Therefore, we propose a two-stage training scheme that utilizes the extended dataset to improve the optimization of the multi-level semantic discriminative loss. These two stages are the auxiliary pre-training stage and the task-specific training stage respectively."
+        },
+        {
+          "edge_id": "E126",
+          "kc_ids": [
+            "KC59",
+            "KC60"
+          ],
+          "text": "The training dataset is a significant factor contributing to hallucinations in video-language models. On one hand, the lack of diversity in some datasets results in the model having an inadequate understanding of certain visual concepts, complicating the alignment between video and text modalities. On the other hand, the uneven distribution of objects in the training set causes the video-language model to favor predicting common objects or frequently co-occurring combinations of objects. Therefore, we propose a two-stage training scheme that utilizes the extended dataset to improve the optimization of the multi-level semantic discriminative loss. These two stages are the auxiliary pre-training stage and the task-specific training stage respectively."
+        },
+        {
+          "kc_id": "KC58",
+          "text": "The training dataset is a significant factor contributing to hallucinations in video-language models. On one hand, the lack of diversity in some datasets results in the model having an inadequate understanding of certain visual concepts, complicating the alignment between video and text modalities. On the other hand, the uneven distribution of objects in the training set causes the video-language model to favor predicting common objects or frequently co-occurring combinations of objects. Therefore, we propose a two-stage training scheme that utilizes the extended dataset to improve the optimization of the multi-level semantic discriminative loss. These two stages are the auxiliary pre-training stage and the task-specific training stage respectively.",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC59",
+          "text": "The training dataset is a significant factor contributing to hallucinations in video-language models. On one hand, the lack of diversity in some datasets results in the model having an inadequate understanding of certain visual concepts, complicating the alignment between video and text modalities. On the other hand, the uneven distribution of objects in the training set causes the video-language model to favor predicting common objects or frequently co-occurring combinations of objects. Therefore, we propose a two-stage training scheme that utilizes the extended dataset to improve the optimization of the multi-level semantic discriminative loss. These two stages are the auxiliary pre-training stage and the task-specific training stage respectively.",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC60",
+          "text": "Auxiliary Pre-Training Stage. In this stage, we utilize a larger amount of data to infuse richer semantics into the training of the video-language model. Specifically, we initially conduct pre-training on the WebVid dataset. Through this process, the model can learn the general semantics between the visual and language modalities. This serves as an auxiliary for the training of the video-language model in specific tasks. The WebVid-5K dataset contains a vast variety of video clips with corresponding textual descriptions. By exposing the model to this extensive and diverse data source, it can capture a wide range of semantic relationships that exist in the real world. This helps the model to generalize better and build a more solid foundation for subsequent task-specific training.",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the solvers correctly identified the mutation and provided accurate corrections. The challenge tests the intended failure mode but was successfully resolved by the models due to the clarity of the evidence. Revision guidance: The previous question was too easy because it directly contrasted two factors that the paper presents as complementary, making the mutation obvious. To increase difficulty, frame the mutation as a subtle shift in causality (e.g., implying that uneven distribution is a consequence of lack of diversity) or introduce a new factor not explicitly supported by the paper. Avoid directly asking which factor is primary; instead, embed the mutation in a continuation that implicitly assumes a different cause."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally presents a premise mutation (linking lack of diversity to uneven distribution), aligning with the challenge plan's target failure mode. It can be answered by correcting the mutation using the thread context.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0013",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0003",
+      "source_challenge_plan_id": "TCP_0003",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Given that the MMA framework employs a contrastive alignment loss between visual and textual features, could you detail how this multi-level contrastive approach reduces hallucinations in video-language models?",
+      "surface_intent": "The question appears to ask for an explanation of the mechanism by which contrastive alignment reduces hallucinations.",
+      "target_kc_ids": [
+        "KC2",
+        "KC13",
+        "KC17",
+        "KC18"
+      ],
+      "target_edge_ids": [
+        "E140",
+        "E100",
+        "E50"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the MMA framework that uses a text encoder and semantic discriminative loss to achieve multilevel alignment.",
+        "evidence": "The answer should state that multi-level alignment establishes precise correspondences between video content and generated language, reducing hallucinations.",
+        "bridge": "The answer should use the chain: MMA framework -> multi-level alignment -> enhanced Q-Former training -> state-of-the-art performance."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the MMA framework that uses a text encoder and semantic discriminative loss to achieve multilevel alignment.\n- We discussed this evidence: The answer should state that multi-level alignment establishes precise correspondences between video content and generated language, reducing hallucinations.\n- We connected them cautiously as follows: The answer should use the chain: MMA framework -> multi-level alignment -> enhanced Q-Former training -> state-of-the-art performance.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M4",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E140",
+          "kc_ids": [
+            "KC2",
+            "KC13"
+          ],
+          "text": "The rapid advancement of large language models (LLMs) has led to the widespread adoption of video-language models (VLMs) across various domains. However, VLMs are often hindered by their limited semantic discrimination capability, exacerbated by the limited diversity and biased sample distribution of most video-language datasets. This limitation results in a biased understanding of the semantics between visual concepts, leading to hallucinations. To address this challenge, we propose a Multi-level Multimodal Alignment (MMA) framework that leverages a text encoder and semantic discriminative loss to achieve multilevel alignment. This enables the model to capture both low-level and high-level semantic relationships, thereby reducing hallucinations. By incorporating language-level alignment into the training process, our approach ensures stronger semantic consistency between video and textual modalities. Furthermore, we introduce a two-stage progressive training strategy that exploits larger and more diverse datasets to enhance semantic alignment and better capture general semantic relationships between visual and textual modalities. Our comprehensive experiments demonstrate that the"
+        },
+        {
+          "edge_id": "E100",
+          "kc_ids": [
+            "KC13",
+            "KC18"
+          ],
+          "text": "timodal alignment (MMA) strategy to enhance intermediate visual features, combined with final language supervision, guiding the model to generate more accurate and contextually aligned outputs. Specifically, we employ a text encoder to convert text inputs into semantic features, facilitating alignment between visual and textual modalities through a semantic discriminative loss. Our approach goes beyond simple global representations by performing multi-level alignment, aligning semantic features at various levels of the visual and textual modalities. This strategy enables the model to capture both high-level and low-level semantic relationships, reducing hallucinations by establishing precise correspondences between video content and generated language."
+        },
+        {
+          "edge_id": "E50",
+          "kc_ids": [
+            "KC18",
+            "KC17"
+          ],
+          "text": "Extensive experimentation demonstrates that our method consistently outperforms existing models in reducing hallucinations, improving multimodal alignment, and achieving superior overall performance across multiple video-language tasks. Our results suggest that the proposed approach effectively mitigates hallucinations in large video-language models, laying a foundation for more reliable and accurate multimodal systems.\n\nWe summarize our main contributions as follows:\n\n• We propose a novel multi-level multimodal alignment strategy that incorporates textual semantic supervision during visual encoding. This approach aligns semantic features from both text and vision at multiple levels to address hallucinations in large video-language models."
+        },
+        {
+          "kc_id": "KC2",
+          "text": "The rapid advancement of large language models (LLMs) has led to the widespread adoption of video-language models (VLMs) across various domains. However, VLMs are often hindered by their limited semantic discrimination capability, exacerbated by the limited diversity and biased sample distribution of most video-language datasets. This limitation results in a biased understanding of the semantics between visual concepts, leading to hallucinations. To address this challenge, we propose a Multi-level Multimodal Alignment (MMA) framework that leverages a text encoder and semantic discriminative loss to achieve multilevel alignment. This enables the model to capture both low-level and high-level semantic relationships, thereby reducing hallucinations. By incorporating language-level alignment into the training process, our approach ensures stronger semantic consistency between video and textual modalities. Furthermore, we introduce a two-stage progressive training strategy that exploits larger and more diverse datasets to enhance semantic alignment and better capture general semantic relationships between visual and textual modalities. Our comprehensive experiments demonstrate that the",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC13",
+          "text": "timodal alignment (MMA) strategy to enhance intermediate visual features, combined with final language supervision, guiding the model to generate more accurate and contextually aligned outputs. Specifically, we employ a text encoder to convert text inputs into semantic features, facilitating alignment between visual and textual modalities through a semantic discriminative loss. Our approach goes beyond simple global representations by performing multi-level alignment, aligning semantic features at various levels of the visual and textual modalities. This strategy enables the model to capture both high-level and low-level semantic relationships, reducing hallucinations by establishing precise correspondences between video content and generated language.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC17",
+          "text": "Extensive experimentation demonstrates that our method consistently outperforms existing models in reducing hallucinations, improving multimodal alignment, and achieving superior overall performance across multiple video-language tasks. Our results suggest that the proposed approach effectively mitigates hallucinations in large video-language models, laying a foundation for more reliable and accurate multimodal systems.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC18",
+          "text": "• We propose a novel multi-level multimodal alignment strategy that incorporates textual semantic supervision during visual encoding. This approach aligns semantic features from both text and vision at multiple levels to address hallucinations in large video-language models.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question mutates the key component from 'semantic discriminative loss' to 'contrastive alignment loss', aligning with the thread_premise_mutation challenge.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "challenge_scheduler_config": {
+    "macro_level_enabled": true,
+    "thread_level_enabled": true,
+    "thread_challenge_enabled": true
+  },
+  "macro_main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "macro_main_question",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC58",
+        "KC10",
+        "KC12"
+      ],
+      "question_text": "According to the paper, what are the main causes of hallucinations in video-language models?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC58",
+          "KC10"
+        ],
+        "optional_cover": [
+          "KC12"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "macro_main_question",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC23",
+        "KC26",
+        "KC34"
+      ],
+      "question_text": "What limitations do current video-language models like Video-ChatGPT, Video-LLaMA, and LongVLM exhibit when processing long videos, and why are existing hallucination mitigation strategies considered insufficient?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC23",
+          "KC26"
+        ],
+        "optional_cover": [
+          "KC34"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "macro_main_question",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC38",
+        "KC2",
+        "KC39",
+        "KC59"
+      ],
+      "question_text": "What is the proposed Multi-level Multimodal Alignment (MMA) framework, and how does it, along with its two-stage training scheme, address hallucination in video-language models?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC38",
+          "KC2"
+        ],
+        "optional_cover": [
+          "KC39",
+          "KC59"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "macro_main_question",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC47",
+        "KC53",
+        "KC40",
+        "KC55",
+        "KC13",
+        "KC18",
+        "KC75",
+        "KC54",
+        "KC46"
+      ],
+      "question_text": "How does the Multi-Level Multimodal Alignment module integrate textual semantics into visual encoding to reduce hallucinations in video-language models?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC47",
+          "KC53"
+        ],
+        "optional_cover": [
+          "KC40",
+          "KC55",
+          "KC13",
+          "KC18",
+          "KC75",
+          "KC54",
+          "KC46"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "macro_main_question",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC19",
+        "KC60",
+        "KC64",
+        "KC62",
+        "KC66"
+      ],
+      "question_text": "What is the two-stage training strategy proposed in the paper, and what components and objectives are involved in each stage?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC19",
+          "KC60"
+        ],
+        "optional_cover": [
+          "KC64",
+          "KC62",
+          "KC66"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "macro_main_question",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC67",
+        "KC68"
+      ],
+      "question_text": "What are the datasets, visual encoder, Q-Former, first-stage training dataset, large language model, loss hyperparameters, and GPU setup used in the experiments?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC67",
+          "KC68"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "macro_main_question",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC74",
+        "KC17",
+        "KC20"
+      ],
+      "question_text": "What are the main quantitative results of the proposed method, including its performance on benchmarks and the findings from the ablation study?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC74",
+          "KC17"
+        ],
+        "optional_cover": [
+          "KC20"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "macro_main_question",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC80"
+      ],
+      "question_text": "According to the conclusion, what are the main contributions and implications of the proposed framework for video-language understanding?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC80"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "thread_question_seeds": [
+    {
+      "question_id": "Q_RT1_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC2"
+      ],
+      "question_goal": "Ask the model to explain the Multi-level Multimodal Alignment (MMA) framework as introduced in the overview.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC13"
+      ],
+      "question_goal": "Ask the model to explain how multi-level alignment reduces hallucinations by establishing precise correspondences.",
+      "trigger_condition": {
+        "macro_reached": "M4"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC17"
+      ],
+      "question_goal": "Ask the model to connect the multi-level alignment mechanism to the experimental result that the method outperforms existing models.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC2",
+          "KC13",
+          "KC18"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC2",
+        "KC13",
+        "KC18"
+      ],
+      "question_goal": "Check whether the model preserves the same causal chain when asked to confirm the relationship between the framework, alignment, and Q-Former enhancement.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC58"
+      ],
+      "question_goal": "Ask the model to describe the problem of uneven object distribution in training data leading to hallucinations.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC59"
+      ],
+      "question_goal": "Ask the model to describe the proposed two-stage training scheme.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M5",
+      "target_kc_ids": [
+        "KC60"
+      ],
+      "question_goal": "Ask the model to explain how the auxiliary pre-training stage on WebVid addresses the uneven distribution problem.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC58",
+          "KC59"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC58",
+        "KC59"
+      ],
+      "question_goal": "Check if the model maintains the problem-method relation when asked to confirm.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M5",
+      "target_kc_ids": [
+        "KC19"
+      ],
+      "question_goal": "Ask the model to describe the two-stage training strategy that facilitates progressive co-learning.",
+      "trigger_condition": {
+        "macro_reached": "M5"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP2",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP2",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC17"
+      ],
+      "question_goal": "Ask the model to explain how the two-stage training strategy contributes to the method's state-of-the-art performance.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC19"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP3",
+      "question_type": "thread_review_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC19",
+        "KC17"
+      ],
+      "question_goal": "Check whether the model still maintains that the training strategy is key to the performance when asked to confirm.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "review_question_seeds": [],
+  "main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "main",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC58",
+        "KC10",
+        "KC12"
+      ],
+      "question_text": "According to the paper, what are the main causes of hallucinations in video-language models?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC58",
+          "KC10"
+        ],
+        "optional_cover": [
+          "KC12"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "main",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC23",
+        "KC26",
+        "KC34"
+      ],
+      "question_text": "What limitations do current video-language models like Video-ChatGPT, Video-LLaMA, and LongVLM exhibit when processing long videos, and why are existing hallucination mitigation strategies considered insufficient?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC23",
+          "KC26"
+        ],
+        "optional_cover": [
+          "KC34"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "main",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC38",
+        "KC2",
+        "KC39",
+        "KC59"
+      ],
+      "question_text": "What is the proposed Multi-level Multimodal Alignment (MMA) framework, and how does it, along with its two-stage training scheme, address hallucination in video-language models?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC38",
+          "KC2"
+        ],
+        "optional_cover": [
+          "KC39",
+          "KC59"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "main",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC47",
+        "KC53",
+        "KC40",
+        "KC55",
+        "KC13",
+        "KC18",
+        "KC75",
+        "KC54",
+        "KC46"
+      ],
+      "question_text": "How does the Multi-Level Multimodal Alignment module integrate textual semantics into visual encoding to reduce hallucinations in video-language models?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC47",
+          "KC53"
+        ],
+        "optional_cover": [
+          "KC40",
+          "KC55",
+          "KC13",
+          "KC18",
+          "KC75",
+          "KC54",
+          "KC46"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "main",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC19",
+        "KC60",
+        "KC64",
+        "KC62",
+        "KC66"
+      ],
+      "question_text": "What is the two-stage training strategy proposed in the paper, and what components and objectives are involved in each stage?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC19",
+          "KC60"
+        ],
+        "optional_cover": [
+          "KC64",
+          "KC62",
+          "KC66"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "main",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC67",
+        "KC68"
+      ],
+      "question_text": "What are the datasets, visual encoder, Q-Former, first-stage training dataset, large language model, loss hyperparameters, and GPU setup used in the experiments?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC67",
+          "KC68"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "main",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC74",
+        "KC17",
+        "KC20"
+      ],
+      "question_text": "What are the main quantitative results of the proposed method, including its performance on benchmarks and the findings from the ablation study?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC74",
+          "KC17"
+        ],
+        "optional_cover": [
+          "KC20"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "main",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC80"
+      ],
+      "question_text": "According to the conclusion, what are the main contributions and implications of the proposed framework for video-language understanding?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC80"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "multi_hop_questions": [],
+  "reserved_followup_templates": []
+}

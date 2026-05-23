@@ -1,0 +1,13 @@
+{
+  "paper_id": "Debate-Feedback_NAACL2025_-9pages",
+  "source_pdf": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\pdfInput\\Debate-Feedback(NAACL2025)-9pages.pdf",
+  "raw_paper_dir": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Debate-Feedback_NAACL2025_-9pages",
+  "doc_count": 9,
+  "markdown_image_count": 3,
+  "layout_image_count": 9,
+  "build_graph_env": {
+    "PAPER_INPUT_DIR": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Debate-Feedback_NAACL2025_-9pages",
+    "PAPER_ID": "Debate-Feedback_NAACL2025_-9pages"
+  },
+  "papergraph_data_dir": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\papergraph_demo\\data\\Debate-Feedback_NAACL2025_-9pages"
+}

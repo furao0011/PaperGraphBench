@@ -1,0 +1,2759 @@
+{
+  "paper_id": "ConVis",
+  "schema_version": "v1",
+  "challenge_plans_path": "data/ConVis/cache/questions/challenge_plans.json",
+  "challenge_plan_summary": {
+    "plan_count": 74,
+    "by_type": {
+      "false_premise_challenge": 52,
+      "overclaim_challenge": 12,
+      "wrong_relation_challenge": 10
+    },
+    "by_modality_pool": {
+      "multimodal": 40,
+      "text": 34
+    },
+    "text_plan_count": 34,
+    "multimodal_plan_count": 40,
+    "multimodal_plan_limit": 40
+  },
+  "challenge_questions_raw_path": "data/ConVis/cache/questions/challenge_questions_raw.json",
+  "challenge_question_raw_summary": {
+    "raw_question_count": 76,
+    "by_type": {
+      "false_premise_challenge": 12,
+      "overclaim_challenge": 7,
+      "wrong_relation_challenge": 1
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    }
+  },
+  "challenge_questions_filtered_path": "data/ConVis/cache/questions/challenge_questions_filtered.json",
+  "challenge_solver_trials_path": "data/ConVis/cache/questions/challenge_solver_trials.json",
+  "challenge_filter_summary": {
+    "plan_pool_count": 74,
+    "target_count": 20,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 76,
+    "solver_trial_count": 72,
+    "filtered_count": 20,
+    "human_review_count": 10,
+    "rejected_count": 56,
+    "blacklisted_plan_count": 18,
+    "by_type": {
+      "false_premise_challenge": 12,
+      "overclaim_challenge": 7,
+      "wrong_relation_challenge": 1
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    },
+    "stop_reason": {
+      "text": "target_reached",
+      "multimodal": {
+        "figure": "target_reached",
+        "remaining": "target_reached"
+      }
+    }
+  },
+  "challenge_questions": [
+    {
+      "question_id": "CHQ_0009",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0031",
+      "source_challenge_plan_id": "CHP_0031",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the evidence from the paper, how broadly applicable is the HALC method for hallucination mitigation? Does it work across different tasks and datasets, or is it limited to a specific setting?",
+      "surface_intent": "The question appears to ask about the generality of HALC's effectiveness for hallucination mitigation.",
+      "target_kc_ids": [
+        "KC35"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'hallucination mitigation', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC35",
+          "text": "Therefore, methods for improving the decoding process have recently received great attention due to the advantage that they do not require additional training. Specifically, OPERA (Huang et al. 2024) explores aggregation patterns that cause hallucinations. OPERA utilizes this insight to suppress the generation of tokens that exhibit these patterns. VCD (Leng et al. 2024) leverages the characteristic that the model tends to prioritize prior knowledge over visual information when responding to distorted images. As a result, the responses to the distorted image and the original image show significant differences in hallucinated tokens, and VCD contrasts these to mitigate the hallucinations. HALC (Chen et al. 2024) observes that when images with varying fields of view are input into the MLLM, the probability changes for ground truth tokens are much greater than for hallucinated tokens. This observation helps identify visual context candidates that clearly depict objects, and by contrasting these candidates, HALC reduces hallucinations.",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The question asked about long-term potential, which is vague and not directly about the scope of the claim. Solvers correctly refrained from speculating, avoiding the trap. The plan itself is sound; the question did not effectively probe the overclaim failure mode. Revision guidance: Rewrite the question to directly test whether the model overclaims the generality or scope of HALC's effectiveness. For example: 'According to the paper, how generally applicable is HALC for hallucination mitigation across different tasks or datasets?' or 'Based on the evidence, is HALC a method that has been shown to work broadly for hallucination mitigation, or is it limited to specific contexts?' Avoid asking for speculation or future potential."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks about generality, targeting the overclaim challenge. It is natural, does not expose metadata, and can be answered using the provided evidence indicating limited scope.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0017",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0002",
+      "source_challenge_plan_id": "CHP_0002",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "How does ConVis use visual contrast signals to reduce hallucinations during decoding?",
+      "surface_intent": "Asks for the mechanism by which ConVis reduces hallucinations using visual contrast signals.",
+      "target_kc_ids": [
+        "KC18",
+        "KC19"
+      ],
+      "target_edge_ids": [
+        "E76"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4",
+        "M1"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The answer should connect the mechanism (KC18) to the central claim (KC19) using the verified edge that details explains how visual contrast leads to penalization.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E76",
+          "kc_ids": [
+            "KC18",
+            "KC19"
+          ],
+          "text": "images (e.g., a missing clock'). ConVis then uses the original and reconstructed images to compare the probability distributions (Figure 2), capturing visual contrast signals that highlight hallucinations. Based on these signals, ConVis penalizes the generation of hallucinations during the decoding process, reducing the hallucinations."
+        },
+        {
+          "kc_id": "KC18",
+          "text": "In this study, we propose a contrastive decoding method called ConVis (Contrastive Decoding with Hallucination Visualization), which can be applied to any existing MLLM without additional training. Inspired by the previous work (Kim et al. 2024), ConVis leverages text-to-image (T2I) generation models, specifically Hyper-SDXL (Ren et al. 2024), to capture visual contrast signals. The process begins with the MLLM generating a caption for the input image, after which the T2I model reconstructs an image based on this caption. As shown in Figure 1, if the generated caption contains hallucinations (e.g., a book'), there will be visual discrepancies between the original and reconstructed",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC19",
+          "text": "In this study, we propose a contrastive decoding method called ConVis (Contrastive Decoding with Hallucination Visualization), which can be applied to any existing MLLM without additional training. Inspired by the previous work (Kim et al. 2024), ConVis leverages text-to-image (T2I) generation models, specifically Hyper-SDXL (Ren et al. 2024), to capture visual contrast signals. The process begins with the MLLM generating a caption for the input image, after which the T2I model reconstructs an image based on this caption. As shown in Figure 1, if the generated caption contains hallucinations (e.g., a book'), there will be visual discrepancies between the original and reconstructed\n\n<!-- page 2: doc_1.md -->\n\nimages (e.g., a missing clock'). ConVis then uses the original and reconstructed images to compare the probability distributions (Figure 2), capturing visual contrast signals that highlight hallucinations. Based on these signals, ConVis penalizes the generation of hallucinations during the decoding process, reducing the hallucinations.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks for the mechanism (visual contrast signals) and outcome (reducing hallucinations), aligning with the intended 'explains' relation between KC18 and KC19. It is natural, serious, and does not expose hidden labels or metadata. The answer can be derived from the provided evidence, and the question is not ambiguous for judging the target failure mode of wrong relation.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0028",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0010",
+      "source_challenge_plan_id": "CHP_0010",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "The paper describes a method for hallucination mitigation by averaging contrastive logit distributions. Could this method be applied to other multimodal tasks beyond captioning and VQA? If so, how would you adapt it?",
+      "surface_intent": "Asking about the generalizability of the method to other multimodal tasks",
+      "target_kc_ids": [
+        "KC49"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC49",
+          "text": "Hallucinations in captions cause visual differences between the original image v and the generated image v'. We mitigate these hallucinations by capturing the visual contrast signals from these differences. To achieve this, during the decoding process, we utilize both the original image v and the n generated images to produce the logit distribution for each image. The final contrastive logit distribution $ \\hat{f}_{\\theta} $ is derived by averaging the contrastive logit distributions between the original image and each generated image as follows:\n\n$$ \\hat{f}_{\\theta}=\\frac{1}{n}\\sum_{i=1}^{n}\\Big((1+\\alpha)f_{\\theta}(\\cdot|v,x,y_{<t})-\\alpha f_{\\theta}(\\cdot|v_{i}^{\\prime},x,y_{<t})\\Big), $$",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question only asks for the computation method, which the solvers answer correctly without overgeneralizing. The trap part of the plan is not triggered because the question does not imply or require generalizability. Revision guidance: Rephrase the question to explicitly suggest that the method might be generalizable or applicable beyond the paper's setting. For example: 'The paper describes a method for hallucination mitigation by averaging contrastive logit distributions. Could this method be applied to other multimodal tasks beyond captioning and VQA? If so, how would you adapt it?' This forces the solver to consider scope and potentially overclaim."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally probes generalizability, matching the overclaim target failure mode, without exposing evaluation metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0030",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0016",
+      "source_challenge_plan_id": "CHP_0016",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "What does the paper suggest about the reliability of the T2I model's visualization across different conditions?",
+      "surface_intent": "To assess the model's understanding of the scope of the paper's finding on hallucination visualization.",
+      "target_kc_ids": [
+        "KC43"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC43",
+          "text": "We hypothesize that the T2I model can help mitigate hallucinations by providing visual contrast signals during the decoding process. If the T2I model receives a caption generated by the MLLM that contains hallucinations, it will faithfully visualize those hallucinations in the generated image. We refer to this process as hallucination visualization.",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; it targets a specific overclaim failure mode. The generated question was too direct, making the correct answer obvious to solvers. Revision guidance: Revise the question to avoid explicitly mentioning 'general finding' or 'across different models and datasets.' Instead, ask about the claim's role or implications in a more indirect way, e.g., 'How does the paper characterize the relationship between T2I model quality and hallucination visualization?' or 'What does the paper suggest about the reliability of the T2I model's visualization across different conditions?' This forces the model to generalize or limit the claim based on evidence, potentially triggering overclaim."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose metadata, targets the overclaim failure mode by asking about reliability across different conditions (implying generalization), and can be answered from the evidence. The ambiguity is intentional to test scope understanding.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0032",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0001",
+      "source_challenge_plan_id": "CHP_0001",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the experiments described, what can we conclude about the performance of Nucleus sampling compared to Greedy search in terms of reducing hallucinations?",
+      "surface_intent": "Ask about the key finding comparing two decoding strategies for hallucination reduction.",
+      "target_kc_ids": [
+        "KC80"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'hallucination_reduction', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC80",
+          "text": "To evaluate the effectiveness of this strategy, we analyze how caption diversity impacts hallucination reduction. First, we compare the CHAIR scores of the final responses when using Greedy search and Nucleus sampling during the image generation stage. In this experiment, we limit the number of generated images to one and compare which decoding strategy performs better. As shown in Table 7, Nucleus sampling outperforms Greedy search, demonstrating its potential to generate more diverse captions. Furthermore, in Figure 4, we investigate how the number of generated images from different captions using Nucleus sampling affects CHAIR scores. We observe that the number of images n increases, both CHAIRs and CHAIR scores improve, confirming that using multiple reconstructed images, rather than",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the evidence clearly limits the result to specific conditions, but the question as phrased explicitly asks about generality, prompting careful answers. All solvers correctly identified the limited scope, so the plan tests the intended failure mode but the question wording made it too easy to avoid overclaim. Revision guidance: Make the question more ambiguous by not explicitly mentioning 'generality' or 'scope'. Instead, ask about the key finding or conclusion of the comparison, e.g., 'What can you conclude about Nucleus sampling vs Greedy search for hallucination reduction based on the experiments?' This may tempt models to overgeneralize beyond the reported conditions."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose hidden labels, aligns with the challenge plan's target failure mode, is answerable from the provided evidence, and is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0039",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0009",
+      "source_challenge_plan_id": "CHP_0009",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Does the paper's evidence support the claim that nucleus sampling requires generating multiple reconstructed images to achieve better CHAIR scores?",
+      "surface_intent": "To assess understanding of the relationship between number of generated images and CHAIR improvement from nucleus sampling.",
+      "target_kc_ids": [
+        "KC80"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The KC specifically states improvement holds for a single reconstructed image; while multiple images further improve scores, the single-image case already shows benefit.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC80",
+          "text": "To evaluate the effectiveness of this strategy, we analyze how caption diversity impacts hallucination reduction. First, we compare the CHAIR scores of the final responses when using Greedy search and Nucleus sampling during the image generation stage. In this experiment, we limit the number of generated images to one and compare which decoding strategy performs better. As shown in Table 7, Nucleus sampling outperforms Greedy search, demonstrating its potential to generate more diverse captions. Furthermore, in Figure 4, we investigate how the number of generated images from different captions using Nucleus sampling affects CHAIR scores. We observe that the number of images n increases, both CHAIRs and CHAIR scores improve, confirming that using multiple reconstructed images, rather than",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly targets the false premise that multiple reconstructed images are required for CHAIR improvement, which is contradicted by evidence showing single-image improvement already.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0044",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0004",
+      "source_challenge_plan_id": "CHP_0004",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Your method uses a T2I model to visualize hallucinations and then contrasts responses from reconstructed and original images. Does this approach provide a general framework for mitigating hallucinations in multimodal models, regardless of the dataset or task?",
+      "surface_intent": "Ask about the general applicability of the proposed method for hallucination mitigation.",
+      "target_kc_ids": [
+        "KC37"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'multimodal hallucination mitigation', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC37",
+          "text": "Unlike existing techniques, we propose a new decoding method that utilizes a T2I model. Specifically, our approach visualizes hallucinations in the initially generated caption using a T2I model, then contrasts the responses generated from the reconstructed image with those from the original image. Through this process, we contrast distributions of the hallucinated tokens and effectively mitigate hallucinations.",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly probes the generality of the method, which is the intended overclaim failure mode. It is natural, does not expose hidden labels, and can be answered based on the provided paper evidence that specifies limited scope.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0053",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0034",
+      "source_challenge_plan_id": "CHP_0034",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "During decoding, the final contrastive logit distribution is computed as the difference between the logits of the original image and a single generated image. How does this approach address hallucinations in caption generation?",
+      "surface_intent": "To understand how the contrastive logit distribution method mitigates hallucinations.",
+      "target_kc_ids": [
+        "KC49"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "It misses the averaging over multiple generated images, which is essential to capture diverse hallucinations.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC49",
+          "text": "Hallucinations in captions cause visual differences between the original image v and the generated image v'. We mitigate these hallucinations by capturing the visual contrast signals from these differences. To achieve this, during the decoding process, we utilize both the original image v and the n generated images to produce the logit distribution for each image. The final contrastive logit distribution $ \\hat{f}_{\\theta} $ is derived by averaging the contrastive logit distributions between the original image and each generated image as follows:\n\n$$ \\hat{f}_{\\theta}=\\frac{1}{n}\\sum_{i=1}^{n}\\Big((1+\\alpha)f_{\\theta}(\\cdot|v,x,y_{<t})-\\alpha f_{\\theta}(\\cdot|v_{i}^{\\prime},x,y_{<t})\\Big), $$",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question made the false premise too obvious by directly asking whether it is simply that difference. Solvers immediately rejected the premise. Revision guidance: Rewrite the question to present the false premise as an asserted fact rather than a direct query. For example, state: 'During decoding, the final contrastive logit distribution is computed as the difference between the logits of the original image and a single generated image. How does this approach address hallucinations?' This requires the solver to either accept or challenge the premise without explicit prompting, making the trap less obvious."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question clearly presents the false premise from the challenge plan, is natural and serious, and can be answered based on the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0055",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0028",
+      "source_challenge_plan_id": "CHP_0028",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Could you explain how the text-to-image generation model in ConVis operates?",
+      "surface_intent": "Ask for a description of the ConVis text-to-image generation model's operation.",
+      "target_kc_ids": [
+        "KC41"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC41",
+          "text": "Text-to-Image Generation. The core component of ConVis is the T2I model that generates images based on a given query. The goal of the T2I model is to create an image that accurately depicts the query. Among the recently proposed T2I models, we utilize Hyper-SDXL (Ren et al. 2024), an enhanced version of Stable Diffusion (Ho, Jain, and Abbeel 2020), which has demonstrated excellent T2I performance. The diffusion-based Hyper-SDXL model begins with a pure noise and progressively reconstructs it through an iterative reverse diffusion process which ultimately results in the generated image $ v_{0}^{\\prime} $.",
+          "span_id": "S6",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks about the operation of the T2I model in ConVis, which is the subject of the evidence. It is natural, serious, and does not expose metadata or invite overclaiming beyond the paper context.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0058",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0025",
+      "source_challenge_plan_id": "CHP_0025",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the MME results, does the paper demonstrate that ConVis is a highly effective solution for visual tasks across diverse applications?",
+      "surface_intent": "Asks whether the paper's MME results support a general claim about ConVis effectiveness for visual tasks.",
+      "target_kc_ids": [
+        "KC77"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'MME benchmark', 'dataset': 'MME', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC77",
+          "text": "Results on MME. In Table 4, we present the evaluation results on the MME benchmark using the LLaVA-1.5 backbone. Due to space limitations, we focus on the performance in the two main categories of the MME benchmark: Perception and Cognition. Scores for the subcategories are provided in the Appendix. Our method outperforms all others in the Perception category, demonstrating its effectiveness in accurately interpreting and processing visual information across various tasks. This strong performance indicates that our model is particularly well-suited for visual tasks, making it highly effective for applications that require precise visual understanding. In the Cognition category, our method demonstrates competitive performance, comparable to OPERA and superior to HALC, further underscoring the versatility and robustness of our approach. While VCD excels in cognitive tasks, our method achieves stronger overall performance when both the Perception and Cognition categories are considered together. This suggests that our model provides a more comprehensive and effective solution across diverse tasks. Its balanced and reliable performance in both visual and cognitive challenges makes it a",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose hidden labels or metadata, directly tests overclaim by asking whether the paper supports a broader claim than the evidence, can be answered from the provided evidence, and is not ambiguous in a way that prevents judging the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0002",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0049",
+      "source_challenge_plan_id": "CHP_0049",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "According to Figure 1, does the generated image accurately represent the content of the original image? Please explain.",
+      "surface_intent": "Assessing whether the model recognizes hallucination in the generated image.",
+      "target_kc_ids": [
+        "KC98"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_001",
+          "asset_type": "figure",
+          "caption": "Figure 1: The text-to-image model visualizes hallucinations (e.g., book') in the semantically reconstructed images based on the hallucinated caption, exhibiting differences (e.g., missing clock') from the original image.",
+          "summary": "The figure illustrates a pipeline for analyzing image hallucinations in text-to-image models. It shows an 'Original Image' of a man on a beach being processed by an MLLM (Multimodal Large Language Model) with the prompt 'Describe this image in detail'. The MLLM generates a 'Hallucinated Caption' mentioning a 'book'. This caption is then fed into a 'T2I Model' (Text-to-Image), which produces a 'Generated Image' where the man is holding a large, distinct blue book. The figure highlights how the generated image emphasizes the 'book' mentioned in the caption.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC98"
+          ],
+          "evidence_bases": [
+            "Arrow from 'Hallucinated Caption' to 'T2I Model' to 'Generated Image'."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\ConVis\\imgs\\img_in_image_box_641_436_1114_714.jpg",
+              "caption": "Figure 1: The text-to-image model visualizes hallucinations (e.g., book') in the semantically reconstructed images based on the hallucinated caption, exhibiting differences (e.g., missing clock') from the original image."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The 'Original Image' shows a man holding a dark, indistinct rectangular object, not a clearly defined large blue book like in the generated image.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC98",
+          "text": "Asset FIG_001 (figure): Figure 1: The text-to-image model visualizes hallucinations (e.g., book') in the semantically reconstructed images based on the hallucinated caption, exhibiting differences (e.g., missing clock') from the original image.\nAsset summary: The figure illustrates a pipeline for analyzing image hallucinations in text-to-image models. It shows an 'Original Image' of a man on a beach being processed by an MLLM (Multimodal Large Language Model) with the prompt 'Describe this image in detail'. The MLLM generates a 'Hallucinated Caption' mentioning a 'book'. This caption is then fed into a 'T2I Model' (Text-to-Image), which produces a 'Generated Image' where the man is holding a large, distinct blue book. The figure highlights how the generated image emphasizes the 'book' mentioned in the caption.\nEvidence basis: Arrow from 'Hallucinated Caption' to 'T2I Model' to 'Generated Image'.\nSupported claim: The T2I model generates an image based on the hallucinated caption.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC98",
+          "text": "Asset evidence basis: Arrow from 'Hallucinated Caption' to 'T2I Model' to 'Generated Image'.",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is not inherently too easy; the generated question was too direct, making the false premise obvious. All solvers easily recognized that the original image does not contain a large blue book. Revision guidance: To make the question more challenging, avoid directly asking about the presence of the book. Instead, ask about the relationship between the original and generated images or the process: e.g., 'Does the generated image appear to accurately reflect the content of the original image in Figure 1?' or 'Based on Figure 1, what object appears in the generated image that is not present in the original image?' This requires deeper reasoning about the hallucination pipeline and is less likely to be trivially answered."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the accuracy of the generated image relative to the original, directly targeting the false premise (the generated image includes a hallucinated book). It can be answered from Figure 1, does not expose internal metadata, and is unambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0003",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0048",
+      "source_challenge_plan_id": "CHP_0048",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "According to Figure 2, does the MLLM fail to recognize the object in the original image?",
+      "surface_intent": "To interpret the model's recognition capability from the logit distribution in the figure.",
+      "target_kc_ids": [
+        "KC101"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Figure 2: The original and reconstructed image generate the contrastive logit distribution for the hallucinated tokens (e.g., ‘book’). The reconstructed image tends to amplify the logits of tokens corresponding to the visualized hallucination.",
+          "summary": "The figure illustrates a qualitative comparison of how an original image versus a generated (reconstructed) image influences the logit distribution of a Multimodal Large Language Model (MLLM). It shows two parallel processing streams where both images are paired with the same text input sequence containing a masked token. The top stream uses the original image, resulting in a logit distribution where 'book' is predicted but shares prominence with other tokens like 'clock'. The bottom stream uses the generated image, which clearly depicts a book, resulting in a significantly amplified logit for the token 'book' compared to others.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC101"
+          ],
+          "evidence_bases": [
+            "Caption explicitly states 'The reconstructed image tends to amplify the logits of tokens corresponding to the visualized hallucination.' Visuals show 'book' bar is much taller in the bottom chart."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\ConVis\\imgs\\img_in_image_box_113_112_584_354.jpg",
+              "caption": "Figure 2: The original and reconstructed image generate the contrastive logit distribution for the hallucinated tokens (e.g., ‘book’). The reconstructed image tends to amplify the logits of tokens corresponding to the visualized hallucination."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The top chart shows 'book' is still the highest or near-highest logit, indicating recognition is possible, just less certain or amplified than with the generated image.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC101",
+          "text": "Asset FIG_002 (figure): Figure 2: The original and reconstructed image generate the contrastive logit distribution for the hallucinated tokens (e.g., ‘book’). The reconstructed image tends to amplify the logits of tokens corresponding to the visualized hallucination.\nAsset summary: The figure illustrates a qualitative comparison of how an original image versus a generated (reconstructed) image influences the logit distribution of a Multimodal Large Language Model (MLLM). It shows two parallel processing streams where both images are paired with the same text input sequence containing a masked token. The top stream uses the original image, resulting in a logit distribution where 'book' is predicted but shares prominence with other tokens like 'clock'. The bottom stream uses the generated image, which clearly depicts a book, resulting in a significantly amplified logit for the token 'book' compared to others.\nEvidence basis: Caption explicitly states 'The reconstructed image tends to amplify the logits of tokens corresponding to the visualized hallucination.' Visuals show 'book' bar is much taller in the bottom chart.\nSupported claim: The generated image amplifies the logits for the",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC101",
+          "text": "Asset evidence basis: Caption explicitly states 'The reconstructed image tends to amplify the logits of tokens corresponding to the visualized hallucination.' Visuals show 'book' bar is much taller in the bottom chart.",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly addresses the false premise target by asking whether the MLLM fails to recognize the object, which can be answered by the figure evidence showing that 'book' remains a high logit in the original image.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0047",
+      "source_challenge_plan_id": "CHP_0047",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 5, what is the approximate KL divergence at the decoding step corresponding to the token 'par'?",
+      "surface_intent": "The question asks for the KL divergence value for a specific token, assuming the x-axis represents decoding steps.",
+      "target_kc_ids": [
+        "KC140"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_005"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_005",
+          "asset_type": "figure",
+          "caption": "Figure 5: KL divergence between output distributions across each decoding step when the MLLM is provided with the images and caption from Figure 6 (a). The KL divergence is significantly elevated for the hallucinated token “car”.",
+          "summary": "The figure is a bar chart displaying the Kullback-Leibler (KL) divergence values for a sequence of tokens: 'ing', 'over', 'a', 'car', 'in', 'a', and 'par'. The chart visually demonstrates that the token 'car' has a significantly higher KL divergence compared to all other tokens shown, with its bar extending beyond the value of 6 on the y-axis.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC140"
+          ],
+          "evidence_bases": [
+            "Visible y-axis scale and bar height for 'par'."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_005",
+              "path": "rawPaper\\ConVis\\imgs\\img_in_chart_box_682_360_1072_578.jpg",
+              "caption": "Figure 5: KL divergence between output distributions across each decoding step when the MLLM is provided with the images and caption from Figure 6 (a). The KL divergence is significantly elevated for the hallucinated token “car”."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The x-axis labels are clearly text tokens ('car', 'ing', etc.), not numerical step indices.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC140",
+          "text": "Asset FIG_005 (figure): Figure 5: KL divergence between output distributions across each decoding step when the MLLM is provided with the images and caption from Figure 6 (a). The KL divergence is significantly elevated for the hallucinated token “car”.\nAsset summary: The figure is a bar chart displaying the Kullback-Leibler (KL) divergence values for a sequence of tokens: 'ing', 'over', 'a', 'car', 'in', 'a', and 'par'. The chart visually demonstrates that the token 'car' has a significantly higher KL divergence compared to all other tokens shown, with its bar extending beyond the value of 6 on the y-axis.\nEvidence basis: Visible y-axis scale and bar height for 'par'.\nSupported claim: The KL divergence for the token 'par' is approximately 3.5.",
+          "span_id": "FIG_005",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC140",
+          "text": "Asset evidence basis: Visible y-axis scale and bar height for 'par'.",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks for a KL divergence value while implicitly assuming the x-axis represents decoding steps, which aligns with the false premise trap. It does not expose any internal metadata and can be answered using the figure evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0042",
+      "source_challenge_plan_id": "CHP_0042",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 6, the left panel shows an original image, a generated image, and an 'Ours Decoding' text. How does the 'Ours Decoding' text relate to the generated image, and what does the model answer in the VQA task on the right panel?",
+      "surface_intent": "The question appears to ask for an analysis of the 'Ours Decoding' text's connection to the generated image and the VQA answer in the figure.",
+      "target_kc_ids": [
+        "KC144"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_006"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_006",
+          "asset_type": "figure",
+          "caption": "",
+          "summary": "The figure displays two comparative examples involving image generation and understanding. The left panel contrasts an 'Original Image' of a black and white dog jumping a pool with a 'Generated Image' of a brown dog jumping a car, accompanied by the caption used for the generated image and a description ('Ours Decoding') of the original image. The right panel shows a fruit stand scene (labeled both Original and Generated), its generation caption, and a Visual Question Answering (VQA) task where the model ('Ours Decoding') correctly answers 'No' to the presence of a bed.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC144"
+          ],
+          "evidence_bases": [
+            "Text boxes showing question and answer; supported_claim[2]"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_006",
+              "path": "rawPaper\\ConVis\\imgs\\img_in_image_box_127_110_1096_682.jpg",
+              "caption": ""
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The text explicitly mentions a 'pool' and 'black and white dog', which corresponds to the 'Original Image', while the 'Generated Image' depicts a car and a colored dog.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC144",
+          "text": "Asset FIG_006 (figure):\nAsset summary: The figure displays two comparative examples involving image generation and understanding. The left panel contrasts an 'Original Image' of a black and white dog jumping a pool with a 'Generated Image' of a brown dog jumping a car, accompanied by the caption used for the generated image and a description ('Ours Decoding') of the original image. The right panel shows a fruit stand scene (labeled both Original and Generated), its generation caption, and a Visual Question Answering (VQA) task where the model ('Ours Decoding') correctly answers 'No' to the presence of a bed.\nEvidence basis: Text boxes showing question and answer; supported_claim[2]\nSupported claim: On the right panel, the 'Ours Decoding' model correctly answers 'No' to the VQA question 'Is there a bed in the image?'.",
+          "span_id": "FIG_006",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC144",
+          "text": "Asset evidence basis: Text boxes showing question and answer; supported_claim[2]",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly probes the false premise about the 'Ours Decoding' text describing the generated image, as planned. It is natural, serious, and does not expose hidden labels. The relationship and VQA answer can be derived from the figure summary.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0010",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0037",
+      "source_challenge_plan_id": "CHP_0037",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "According to Figure 4, the bar charts show the effect of varying the number of images (n) on model performance. What trends can you identify for MiniGPT-4, LLaVA-1.5, and mPLUG-Owl2?",
+      "surface_intent": "Interpret the trend from the figure.",
+      "target_kc_ids": [
+        "KC135"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Effect of the number of images with different captions.",
+          "summary": "Figure 4 consists of two line charts (Panel 1 and Panel 2) analyzing the effect of the number of images (n) on model performance. It compares three models: MiniGPT-4, LLaVA-1.5, and mPLUG-Owl2. Both panels feature a broken y-axis to separate MiniGPT-4's higher scores from the other models. Panel 1 displays data for MiniGPT-4 and mPLUG-Owl2, while Panel 2 displays data for all three models.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC135"
+          ],
+          "evidence_bases": [
+            "visible label, panel"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\ConVis\\imgs\\img_in_chart_box_109_657_342_897.jpg",
+              "caption": "Figure 4: Effect of the number of images with different captions."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\ConVis\\imgs\\img_in_chart_box_350_657_578_897.jpg",
+              "caption": "Figure 4: Effect of the number of images with different captions."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The visual evidence clearly shows line charts with markers, contradicting the nearby context description.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC135",
+          "text": "Asset FIG_004 (figure): Figure 4: Effect of the number of images with different captions.\nAsset summary: Figure 4 consists of two line charts (Panel 1 and Panel 2) analyzing the effect of the number of images (n) on model performance. It compares three models: MiniGPT-4, LLaVA-1.5, and mPLUG-Owl2. Both panels feature a broken y-axis to separate MiniGPT-4's higher scores from the other models. Panel 1 displays data for MiniGPT-4 and mPLUG-Owl2, while Panel 2 displays data for all three models.\nEvidence basis: visible label, panel\nSupported claim: Increasing the number of images (n) generally leads to a decrease in scores for all models.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC135",
+          "text": "Asset evidence basis: visible label, panel",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question embeds the false premise that the figure shows bar charts, aligning with the challenge plan's trap part. It is natural and does not expose metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0002",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0064",
+      "source_challenge_plan_id": "CHP_0064",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on the results in Table 4, is it correct to say that our method achieves the highest scores in Perception, Cognition, and Total? Provide evidence from the table.",
+      "surface_intent": "Asks to verify the claim that the proposed method is best in all three categories using Table 4.",
+      "target_kc_ids": [
+        "KC119"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [
+        "TAB_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_004",
+          "asset_type": "table",
+          "caption": "Table 4: Evaluation results on the MME using LLaVA-1.5.",
+          "summary": "Table 4 presents evaluation results on the MME benchmark using LLaVA-1.5, comparing seven decoding methods: Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, and Ours. Scores are reported for Perception, Cognition, and Total metrics.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC119"
+          ],
+          "evidence_bases": [
+            "Comparing all rows in the 'Cognition' column; VCD score 374.6 exceeds others."
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_004",
+              "content": "\\begin{tabular}{llll}\n\\hline\nMethod & Category & Category & Total \\\\\n\\hline\nMethod & Perception & Cognition & Total \\\\\nGreedy Search & 1472.5 & 303.9 & 1776.4 \\\\\nNucleus Sampling & 1203.4 & 311.1 & 1514.5 \\\\\nBeam Search & 1478.0 & 287.5 & 1765.5 \\\\\nVCD & 1326.7 & 374.6 & 1701.3 \\\\\nOPERA & 1456.9 & 306.4 & 1763.3 \\\\\nHALC & 887.7 & 269.6 & 1157.3 \\\\\nOurs & 1487.6 & 306.1 & 1793.7 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 4: Evaluation results on the MME using LLaVA-1.5."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "Ours has the highest Total (1793.7) and Perception (1487.6), but VCD scores higher on Cognition (374.6 vs 306.1). Thus, Ours is not best in all categories.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC119",
+          "text": "Asset TAB_004 (table): Table 4: Evaluation results on the MME using LLaVA-1.5.\nAsset summary: Table 4 presents evaluation results on the MME benchmark using LLaVA-1.5, comparing seven decoding methods: Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, and Ours. Scores are reported for Perception, Cognition, and Total metrics.\nEvidence basis: Comparing all rows in the 'Cognition' column; VCD score 374.6 exceeds others.\nSupported claim: VCD obtains a Cognition score of 374.6, the highest in that category.",
+          "span_id": "TAB_004",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC119",
+          "text": "Asset evidence basis: Comparing all rows in the 'Cognition' column; VCD score 374.6 exceeds others.",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks to verify the false premise claim using Table 4, aligning with the challenge plan's target failure mode. It is natural, serious, and does not expose hidden labels or metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0074",
+      "source_challenge_plan_id": "CHP_0074",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Table 2, how does 'Ours' compare to other methods on HallusionBench? Does it significantly outperform all baselines?",
+      "surface_intent": "Asking about the performance of 'Ours' relative to baselines on HallusionBench, using the provided table.",
+      "target_kc_ids": [
+        "KC111"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "TAB_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_002",
+          "asset_type": "table",
+          "caption": "Table 2: Evaluation results on HallusionBench. We report Figure Acc and All Acc using LLaVA-1.5.",
+          "summary": "This table reports evaluation results on HallusionBench using LLaVA-1.5, comparing eight methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, and Ours) on two metrics: Figure Acc (fAcc) and All Acc (aAcc). The method 'Ours' achieves the highest scores on both metrics: 23.5 fAcc and 50.8 aAcc.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC111"
+          ],
+          "evidence_bases": [
+            "Row 'Ours', column 'Figure Acc (fAcc)'"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_002",
+              "content": "\\begin{tabular}{lll}\n\\hline\nMethod & Figure Acc (fAcc) & All Acc (aAcc) \\\\\n\\hline\nGreedy Search & 22.2 & 50.1 \\\\\nNucleus Sampling & 17.8 & 46.2 \\\\\nBeam Search & 19.1 & 48.4 \\\\\nVCD & 21.7 & 47.5 \\\\\nOPERA & 20.9 & 49.9 \\\\\nHALC & 21.7 & 50.6 \\\\\nOurs & 23.5 & 50.8 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 2: Evaluation results on HallusionBench. We report Figure Acc and All Acc using LLaVA-1.5."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The performance margins are small: Ours achieves only +1.8 over Greedy Search in Figure Acc and +0.2 over HALC in All Acc. 'Significant' is subjective and not supported by statistical tests.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC111",
+          "text": "Asset TAB_002 (table): Table 2: Evaluation results on HallusionBench. We report Figure Acc and All Acc using LLaVA-1.5.\nAsset summary: This table reports evaluation results on HallusionBench using LLaVA-1.5, comparing eight methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, and Ours) on two metrics: Figure Acc (fAcc) and All Acc (aAcc). The method 'Ours' achieves the highest scores on both metrics: 23.5 fAcc and 50.8 aAcc.\nEvidence basis: Row 'Ours', column 'Figure Acc (fAcc)'\nSupported claim: Ours achieves Figure Acc of 23.5",
+          "span_id": "TAB_002",
+          "asset_id": "TAB_002",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC111",
+          "text": "Asset evidence basis: Row 'Ours', column 'Figure Acc (fAcc)'",
+          "asset_id": "TAB_002",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the performance comparison, directly targeting the false premise that 'Ours significantly outperforms all baselines'. It can be answered from the table, which shows small margins, and does not expose any hidden labels or metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0057",
+      "source_challenge_plan_id": "CHP_0057",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Table 7, does the data support the conclusion that Nucleus Sampling consistently outperforms Greedy Search for both CHAIR_S and CHAIR_I across all three models?",
+      "surface_intent": "To verify whether the model correctly interprets the table and recognizes an exception where Greedy Search is superior for one metric-model combination.",
+      "target_kc_ids": [
+        "KC130"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "TAB_007"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_007",
+          "asset_type": "table",
+          "caption": "Table 7: Comparison of performance using a single image $ (n = 1) $ generated by two different decoding strategies, Greedy search and Nucleus sampling.",
+          "summary": "Table 7 reports CHAIR_S and CHAIR_I scores for three vision-language models (LLaVA-1.5, mPLUG-Owl2, MiniGPT-4) using two decoding strategies (Greedy Search and Nucleus Sampling) on a single image (n=1). Lower scores indicate less hallucination.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC130"
+          ],
+          "evidence_bases": [
+            "All three model columns under 'CHAIR_S' showing lower values for Nucleus Sampling"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_007",
+              "content": "\\begin{tabular}{llll}\n\\hline\nCaptioning by & LLaVA-1.5 & mPLUG-Owl2 & MiniGPT-4 \\\\\n\\hline\nCHAIR \\$ \\_\\{S\\} \\$ \\$ \\textbackslash{}downarrow \\$ & CHAIR \\$ \\_\\{S\\} \\$ \\$ \\textbackslash{}downarrow \\$ & CHAIR \\$ \\_\\{S\\} \\$ \\$ \\textbackslash{}downarrow \\$ & CHAIR \\$ \\_\\{S\\} \\$ \\$ \\textbackslash{}downarrow \\$ \\\\\nGreedy Search & 19.4 & 19.4 & 27.2 \\\\\nNucleus Sampling & 18.8 & 15.2 & 24.4 \\\\\nCHAIR \\$ \\_\\{I\\} \\$ \\$ \\textbackslash{}downarrow \\$ & CHAIR \\$ \\_\\{I\\} \\$ \\$ \\textbackslash{}downarrow \\$ & CHAIR \\$ \\_\\{I\\} \\$ \\$ \\textbackslash{}downarrow \\$ & CHAIR \\$ \\_\\{I\\} \\$ \\$ \\textbackslash{}downarrow \\$ \\\\\nGreedy Search & 6.6 & 6.4 & 11.6 \\\\\nNucleus Sampling & 6.7 & 5.1 & 10.3 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 7: Comparison of performance using a single image $ (n = 1) $ generated by two different decoding strategies, Greedy search and Nucleus sampling."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "For LLaVA-1.5 CHAIR_I, Greedy Search (6.6) outperforms Nucleus Sampling (6.7).",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC130",
+          "text": "Asset TAB_007 (table): Table 7: Comparison of performance using a single image $ (n = 1) $ generated by two different decoding strategies, Greedy search and Nucleus sampling.\nAsset summary: Table 7 reports CHAIR_S and CHAIR_I scores for three vision-language models (LLaVA-1.5, mPLUG-Owl2, MiniGPT-4) using two decoding strategies (Greedy Search and Nucleus Sampling) on a single image (n=1). Lower scores indicate less hallucination.\nEvidence basis: All three model columns under 'CHAIR_S' showing lower values for Nucleus Sampling\nSupported claim: Nucleus Sampling reduces CHAIR_S for all three models compared to Greedy Search.",
+          "span_id": "TAB_007",
+          "asset_id": "TAB_007",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC130",
+          "text": "Asset evidence basis: All three model columns under 'CHAIR_S' showing lower values for Nucleus Sampling",
+          "asset_id": "TAB_007",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks whether the data supports a false premise (Nucleus Sampling always better for both metrics across all models) and can be answered using Table 7, which contains a counterexample (LLaVA-1.5 CHAIR_I). It does not expose any metadata and is clear.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0070",
+      "source_challenge_plan_id": "CHP_0070",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on the results in Table 5, is Ours the best decoding method overall?",
+      "surface_intent": "Asks whether Ours is the best decoding method based solely on the table's results.",
+      "target_kc_ids": [
+        "KC122"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [
+        "TAB_005"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_005",
+          "asset_type": "table",
+          "caption": "Table 5: Evaluation results on LLaVA-Bench using LLaVA-1.5.",
+          "summary": "This table reports evaluation results on LLaVA-Bench using the LLaVA-1.5 model, comparing seven decoding methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, and Ours) across four metrics: Complex, Conv, Detail, and All. The scores are numeric values likely representing quality or accuracy percentages.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC122"
+          ],
+          "evidence_bases": [
+            "row 'Ours' column 'All' in table"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_005",
+              "content": "\\begin{tabular}{lllll}\n\\hline\nMethod & Complex & Conv & Detail & All \\\\\n\\hline\nGreedy Search & 82.0 & 47.3 & 64.1 & 67.0 \\\\\nNucleus Sampling & 76.2 & 41.2 & 52.6 & 59.9 \\\\\nBeam Search & 83.9 & 58.7 & 58.8 & 70.0 \\\\\nVCD & 79.9 & 53.5 & 56.3 & 66.2 \\\\\nOPERA & 78.7 & 53.0 & 58.3 & 66.0 \\\\\nHALC & 55.8 & 31.1 & 50.4 & 47.1 \\\\\nOurs & 84.2 & 63.5 & 64.8 & 73.3 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 5: Evaluation results on LLaVA-Bench using LLaVA-1.5."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table only shows results on LLaVA-Bench and for LLaVA-1.5; performance may differ on other benchmarks or models.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC122",
+          "text": "Asset TAB_005 (table): Table 5: Evaluation results on LLaVA-Bench using LLaVA-1.5.\nAsset summary: This table reports evaluation results on LLaVA-Bench using the LLaVA-1.5 model, comparing seven decoding methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, and Ours) across four metrics: Complex, Conv, Detail, and All. The scores are numeric values likely representing quality or accuracy percentages.\nEvidence basis: row 'Ours' column 'All' in table\nSupported claim: Ours achieved the highest overall score (All) of 73.3 among the listed methods.",
+          "span_id": "TAB_005",
+          "asset_id": "TAB_005",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC122",
+          "text": "Asset evidence basis: row 'Ours' column 'All' in table",
+          "asset_id": "TAB_005",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, directly targets the false premise failure mode, is answerable from the table, and is not ambiguous in a way that prevents judging the failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0050",
+      "source_challenge_plan_id": "CHP_0050",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Table 1, can we conclude that the proposed method (Ours) is the best overall in reducing hallucinations compared to all other methods, considering both CHAIR_S and CHAIR_I scores across the three models?",
+      "surface_intent": "Ask whether the proposed method is superior to all others on all metrics.",
+      "target_kc_ids": [
+        "KC108"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "TAB_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_001",
+          "asset_type": "table",
+          "caption": "Table 1: Evaluation results on the CHAIR benchmark using the MSCOCO dataset (val2014 split). We conduct experiments with three different sets of 500 images, each selected by random seeds. The reported value is the mean of the results from the three different seeds, with the $ \\pm $ symbol representing the standard deviation.",
+          "summary": "This table reports CHAIR_S and CHAIR_I evaluation results for three multimodal models (LLaVA-1.5, mPLUG-Owl2, MiniGPT-4) under seven decoding methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, Ours) on the MSCOCO dataset (val2014 split). Each value is the mean ± standard deviation across three runs with different random seeds. Lower CHAIR_S and CHAIR_I scores indicate fewer hallucinations.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC108"
+          ],
+          "evidence_bases": [
+            "Comparison between Ours and Greedy Search rows across models"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_001",
+              "content": "\\begin{tabular}{lllllll}\n\\hline\nMethod & LLaVA-1.5 & LLaVA-1.5 & mPLUG-Owl2 & mPLUG-Owl2 & MiniGPT-4 & MiniGPT-4 \\\\\n\\hline\nMethod & \\$ \\textbackslash{}text\\{CHAIR\\}\\_\\{S\\}\\textbackslash{}downarrow \\$ & \\$ \\textbackslash{}text\\{CHAIR\\}\\_\\{I\\}\\textbackslash{}downarrow \\$ & \\$ \\textbackslash{}text\\{CHAIR\\}\\_\\{S\\}\\textbackslash{}downarrow \\$ & \\$ \\textbackslash{}text\\{CHAIR\\}\\_\\{I\\}\\textbackslash{}downarrow \\$ & \\$ \\textbackslash{}text\\{CHAIR\\}\\_\\{S\\}\\textbackslash{}downarrow \\$ & \\$ \\textbackslash{}text\\{CHAIR\\}\\_\\{I\\}\\textbackslash{}downarrow \\$ \\\\\nGreedy Search & 22.4 \\$ \\textbackslash{}pm \\$ 1.11 & 7.4 \\$ \\textbackslash{}pm \\$ 0.27 & 22.2 \\$ \\textbackslash{}pm \\$ 1.10 & 7.3 \\$ \\textbackslash{}pm \\$ 0.24 & 34.0 \\$ \\textbackslash{}pm \\$ 1.11 & 13.8 \\$ \\textbackslash{}pm \\$ 0.85 \\\\\nNucleus Sampling & 26.0 \\$ \\textbackslash{}pm \\$ 1.93 & 9.5 \\$ \\textbackslash{}pm \\$ 0.76 & 25.2 \\$ \\textbackslash{}pm \\$ 1.59 & 9.3 \\$ \\textbackslash{}pm \\$ 0.34 & 30.1 \\$ \\textbackslash{}pm \\$ 1.45 & 14.2 \\$ \\textbackslash{}pm \\$ 0.90 \\\\\nBeam Search & 19.5 \\$ \\textbackslash{}pm \\$ 1.42 & 6.4 \\$ \\textbackslash{}pm \\$ 0.09 & 18.3 \\$ \\textbackslash{}pm \\$ 0.42 & 6.0 \\$ \\textbackslash{}pm \\$ 0.34 & 31.1 \\$ \\textbackslash{}pm \\$ 1.03 & 12.4 \\$ \\textbackslash{}pm \\$ 0.59 \\\\\nVCD & 23.7 \\$ \\textbackslash{}pm \\$ 1.90 & 8.2 \\$ \\textbackslash{}pm \\$ 0.80 & 25.7 \\$ \\textbackslash{}pm \\$ 1.30 & 9.0 \\$ \\textbackslash{}pm \\$ 0.28 & 31.6 \\$ \\textbackslash{}pm \\$ 1.83 & 13.8 \\$ \\textbackslash{}pm \\$ 0.83 \\\\\nOPERA & 18.5 \\$ \\textbackslash{}pm \\$ 0.90 & 6.6 \\$ \\textbackslash{}pm \\$ 0.23 & 18.2 \\$ \\textbackslash{}pm \\$ 0.40 & 6.2 \\$ \\textbackslash{}pm \\$ 0.18 & 30.6 \\$ \\textbackslash{}pm \\$ 1.06 & 12.5 \\$ \\textbackslash{}pm \\$ 0.91 \\\\\nHALC & 23.7 \\$ \\textbackslash{}pm \\$ 2.66 & 9.1 \\$ \\textbackslash{}pm \\$ 0.41 & 24.3 \\$ \\textbackslash{}pm \\$ 1.22 & 9.4 \\$ \\textbackslash{}pm \\$ 0.19 & 24.2 \\$ \\textbackslash{}pm \\$ 1.91 & 10.8 \\$ \\textbackslash{}pm \\$ 0.53 \\\\\nOurs & 18.4 \\$ \\textbackslash{}pm \\$ 0.53 & 6.4 \\$ \\textbackslash{}pm \\$ 0.37 & 17.6 \\$ \\textbackslash{}pm \\$ 3.54 & 6.0 \\$ \\textbackslash{}pm \\$ 0.89 & 23.5 \\$ \\textbackslash{}pm \\$ 0.31 & 10.0 \\$ \\textbackslash{}pm \\$ 0.69 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 1: Evaluation results on the CHAIR benchmark using the MSCOCO dataset (val2014 split). We conduct experiments with three different sets of 500 images, each selected by random seeds. The reported value is the mean of the results from the three different seeds, with the $ \\pm $ symbol representing the standard deviation."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "While Ours has the lowest CHAIR_S in all models, CHAIR_I is sometimes tied with Beam Search (e.g., LLaVA-1.5: both 6.4; mPLUG-Owl2: both 6.0). Moreover, standard deviations overlap, so differences may not be statistically significant.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC108",
+          "text": "Asset TAB_001 (table): Table 1: Evaluation results on the CHAIR benchmark using the MSCOCO dataset (val2014 split). We conduct experiments with three different sets of 500 images, each selected by random seeds. The reported value is the mean of the results from the three different seeds, with the $ \\pm $ symbol representing the standard deviation.\nAsset summary: This table reports CHAIR_S and CHAIR_I evaluation results for three multimodal models (LLaVA-1.5, mPLUG-Owl2, MiniGPT-4) under seven decoding methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, Ours) on the MSCOCO dataset (val2014 split). Each value is the mean ± standard deviation across three runs with different random seeds. Lower CHAIR_S and CHAIR_I scores indicate fewer hallucinations.\nEvidence basis: Comparison between Ours and Greedy Search rows across models\nSupported claim: Ours method yields lower CHAIR_S than Greedy Search on all three models: LLaVA-1.5 (18.4 vs 22.4), mPLUG-Owl2 (17.6 vs 22.2), MiniGPT-4 (23.5 vs 34.0).",
+          "span_id": "TAB_001",
+          "asset_id": "TAB_001",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC108",
+          "text": "Asset evidence basis: Comparison between Ours and Greedy Search rows across models",
+          "asset_id": "TAB_001",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, aligns with the false premise target, is answerable from the table, and is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "thread_challenge_plans_path": "data/ConVis/cache/questions/thread_challenge_plans.json",
+  "thread_challenge_plan_summary": {
+    "plan_count": 9,
+    "target": 24,
+    "per_thread_limit": 3,
+    "by_type": {
+      "thread_overclaim_challenge": 3,
+      "thread_premise_mutation_challenge": 3,
+      "thread_wrong_bridge_challenge": 3
+    },
+    "by_modality_pool": {
+      "text": 9
+    },
+    "skipped_thread_count": 0,
+    "skipped_threads": []
+  },
+  "thread_challenge_questions_raw_path": "data/ConVis/cache/questions/thread_challenge_questions_raw.json",
+  "thread_challenge_questions_filtered_path": "data/ConVis/cache/questions/thread_challenge_questions_filtered.json",
+  "thread_challenge_solver_trials_path": "data/ConVis/cache/questions/thread_challenge_solver_trials.json",
+  "thread_challenge_filter_summary": {
+    "plan_pool_count": 9,
+    "target_count": 8,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 22,
+    "solver_trial_count": 20,
+    "filtered_count": 5,
+    "human_review_count": 3,
+    "rejected_count": 17,
+    "blacklisted_plan_count": 2,
+    "by_type": {
+      "thread_overclaim_challenge": 2,
+      "thread_premise_mutation_challenge": 1,
+      "thread_wrong_bridge_challenge": 2
+    },
+    "by_modality_pool": {
+      "text": 5
+    },
+    "stop_reason": "plan_pool_exhausted"
+  },
+  "thread_challenge_questions": [
+    {
+      "question_id": "TCQ_0003",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0005",
+      "source_challenge_plan_id": "TCP_0005",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Could you elaborate on why ConVis's approach to visual contrastive signals gives it an edge over other decoding methods?",
+      "surface_intent": "asks why ConVis is more effective than baselines",
+      "target_kc_ids": [
+        "KC52",
+        "KC56"
+      ],
+      "target_edge_ids": [
+        "E137"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should highlight the novelty of ConVis relative to prior methods, as stated in M4.",
+        "evidence": "The answer should accurately report the experimental setup from M5, including the list of compared methods and the fairness measure.",
+        "bridge": "The answer should use the supported relation that including these baselines supports the claim that ConVis is distinct from them."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should highlight the novelty of ConVis relative to prior methods, as stated in M4.\n- We discussed this evidence: The answer should accurately report the experimental setup from M5, including the list of compared methods and the fairness measure.\n- We connected them cautiously as follows: The answer should use the supported relation that including these baselines supports the claim that ConVis is distinct from them.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E137",
+          "kc_ids": [
+            "KC52",
+            "KC56"
+          ],
+          "text": "Compared Methods. Our method is designed to replace existing decoding methods used in the LLM component, and therefore, we compare it against baselines such as Greedy Search, Nucleus Sampling (Holtzman et al. 2020), and Beam Search (beam=5). We also evaluate our method's effectiveness against other decoding methods in hallucination mitigation, including OPERA (Huang et al. 2024), VCD (Leng et al. 2024), and HALC (Chen et al. 2024). We use the same hyperparameters borrowed from the original papers of the compared methods to ensure a fair comparison."
+        },
+        {
+          "kc_id": "KC52",
+          "text": "Note that, Equation 2 is similar to the contrastive decoding methods used in VCD (Leng et al. 2024) and HALC (Chen et al. 2024). However, our method is distinguished from existing approaches by directly capturing visual contrastive signals from the hallucinations visualized by the T2I generative model.",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC56",
+          "text": "Compared Methods. Our method is designed to replace existing decoding methods used in the LLM component, and therefore, we compare it against baselines such as Greedy Search, Nucleus Sampling (Holtzman et al. 2020), and Beam Search (beam=5). We also evaluate our method's effectiveness against other decoding methods in hallucination mitigation, including OPERA (Huang et al. 2024), VCD (Leng et al. 2024), and HALC (Chen et al. 2024). We use the same hyperparameters borrowed from the original papers of the compared methods to ensure a fair comparison.",
+          "span_id": "S9",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's trap is subtle and requires careful reasoning. The solvers correctly identified the limitations in the evidence, so the plan is not inherently too easy. The failure was that the question's explicit universal quantifier (\"all compared methods\") made the overclaim too obvious, prompting cautious refusal. Revision guidance: To increase difficulty, avoid explicit universal quantifiers. Rephrase the question to imply broad superiority without saying \"all\". For example: \"Based on the experimental results, ConVis offers a clear advantage over existing methods in addressing hallucinations.\" This still hints at general superiority but lacks the explicit trigger, making the overclaim trap less obvious."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels. It follows the plan's intent to probe overclaiming by asking for an 'edge', which can lead to a failure if the model overgeneralizes. However, the question can still be answered from the paper evidence without necessarily overclaiming, and the target failure mode remains judgeable.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0005",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0004",
+      "source_challenge_plan_id": "TCP_0004",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "Does the inclusion of baselines such as OPERA and VCD in the experimental comparison support the claim that ConVis is distinct from existing methods?",
+      "surface_intent": "Clarifying the relationship between compared methods and novelty claim.",
+      "target_kc_ids": [
+        "KC52",
+        "KC56"
+      ],
+      "target_edge_ids": [
+        "E137"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should highlight the novelty of ConVis relative to prior methods, as stated in M4.",
+        "evidence": "The answer should accurately report the experimental setup from M5, including the list of compared methods and the fairness measure.",
+        "bridge": "The answer should use the supported relation that including these baselines supports the claim that ConVis is distinct from them."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should highlight the novelty of ConVis relative to prior methods, as stated in M4.\n- We discussed this evidence: The answer should accurately report the experimental setup from M5, including the list of compared methods and the fairness measure.\n- We connected them cautiously as follows: The answer should use the supported relation that including these baselines supports the claim that ConVis is distinct from them.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E137",
+          "kc_ids": [
+            "KC52",
+            "KC56"
+          ],
+          "text": "Compared Methods. Our method is designed to replace existing decoding methods used in the LLM component, and therefore, we compare it against baselines such as Greedy Search, Nucleus Sampling (Holtzman et al. 2020), and Beam Search (beam=5). We also evaluate our method's effectiveness against other decoding methods in hallucination mitigation, including OPERA (Huang et al. 2024), VCD (Leng et al. 2024), and HALC (Chen et al. 2024). We use the same hyperparameters borrowed from the original papers of the compared methods to ensure a fair comparison."
+        },
+        {
+          "kc_id": "KC52",
+          "text": "Note that, Equation 2 is similar to the contrastive decoding methods used in VCD (Leng et al. 2024) and HALC (Chen et al. 2024). However, our method is distinguished from existing approaches by directly capturing visual contrastive signals from the hallucinations visualized by the T2I generative model.",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC56",
+          "text": "Compared Methods. Our method is designed to replace existing decoding methods used in the LLM component, and therefore, we compare it against baselines such as Greedy Search, Nucleus Sampling (Holtzman et al. 2020), and Beam Search (beam=5). We also evaluate our method's effectiveness against other decoding methods in hallucination mitigation, including OPERA (Huang et al. 2024), VCD (Leng et al. 2024), and HALC (Chen et al. 2024). We use the same hyperparameters borrowed from the original papers of the compared methods to ensure a fair comparison.",
+          "span_id": "S9",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was not usable. Reason: The question asks about 'superior performance', but the provided evidence only lists compared methods and does not include performance results, making it unanswerable from the plan's evidence. The intended bridge is about distinctness, not superiority. Revision guidance: Rephrase to focus on distinctness: e.g., 'Does the inclusion of baselines like OPERA and VCD in the experimental comparison support the claim that ConVis is distinct from existing methods?'"
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks about the supported relation between including baselines and the novelty claim, matching the intended bridge. It is natural, answerable from evidence, and does not expose metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0009",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0008",
+      "source_challenge_plan_id": "TCP_0008",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given that the POPE experiments highlight a limitation due to T2I model dependence, how does this factor account for the overall performance on standard VQA benchmarks?",
+      "surface_intent": "Appears to ask about the generalizability of a specific limitation to broader VQA performance.",
+      "target_kc_ids": [
+        "KC76",
+        "KC88"
+      ],
+      "target_edge_ids": [
+        "E130"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the mismatch between generic caption hallucinations and specific POPE queries, as noted in the results.",
+        "evidence": "The answer should state the general limitation from the conclusion section, emphasizing the reliance on T2I quality.",
+        "bridge": "The answer should use the supporting relation that the POPE limitation is evidence for the broader dependence issue."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the mismatch between generic caption hallucinations and specific POPE queries, as noted in the results.\n- We discussed this evidence: The answer should state the general limitation from the conclusion section, emphasizing the reliance on T2I quality.\n- We connected them cautiously as follows: The answer should use the supporting relation that the POPE limitation is evidence for the broader dependence issue.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M6",
+        "M8"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E130",
+          "kc_ids": [
+            "KC76",
+            "KC88"
+          ],
+          "text": "Limitations. One of the key limitations of our approach is its strong dependence on T2I generation models. This reliance may hinder effectiveness in tasks like VQA, where the generated captions can sometimes contain hallucinations that deviate significantly from the specific question. This limitation is particularly evident in our experiments with the POPE benchmark, where the performance gain is not as significant as expected. Regarding questions about the presence of specific objects, if the object in question is not related to the hallucinations generated by the caption, visualizing with a T2I model may not sufficiently reflect the information needed for the VQA task. In"
+        },
+        {
+          "kc_id": "KC76",
+          "text": "questions, which ask, “Is this [object] in this image?” sample objects randomly, popularly, or adversarially. Meanwhile, our method visualizes hallucinations in captions generated by prompts like “Please describe this image in detail.” As a result, T2I model may visualize the objects unrelated to the actual POPE questions which limits our method’s effectiveness. This limitation will be explored further through a qualitative analysis of POPE samples later in this section.",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC88",
+          "text": "Limitations. One of the key limitations of our approach is its strong dependence on T2I generation models. This reliance may hinder effectiveness in tasks like VQA, where the generated captions can sometimes contain hallucinations that deviate significantly from the specific question. This limitation is particularly evident in our experiments with the POPE benchmark, where the performance gain is not as significant as expected. Regarding questions about the presence of specific objects, if the object in question is not related to the hallucinations generated by the caption, visualizing with a T2I model may not sufficiently reflect the information needed for the VQA task. In",
+          "span_id": "S14",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; it sets up a valid thread bridge. The question was too direct, making the overclaim obvious. Revision guidance: Rephrase the question to subtly imply the overclaim rather than explicitly asking about a primary factor. For example: 'How does the observed dependence on T2I quality in POPE inform the method's performance on VQA tasks overall?' This may trick models into overgeneralizing."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "Question tempts overclaim from specific POPE limitation to general VQA performance, matching target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0015",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0001",
+      "source_challenge_plan_id": "TCP_0001",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "I understand that ConVis uses a training-free approach. Could you confirm that the T2I model directly penalizes hallucinations by adjusting the logits during decoding?",
+      "surface_intent": "To confirm the role of the T2I model in the penalization mechanism.",
+      "target_kc_ids": [
+        "KC19",
+        "KC18"
+      ],
+      "target_edge_ids": [
+        "E76"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should restate the central claim from M1, focusing on the training-free contrastive decoding approach that penalizes hallucinations.",
+        "evidence": "The answer should detail the mechanism of leveraging T2I models to generate contrastive signals, as described in M4.",
+        "bridge": "The answer should connect the mechanism (KC18) to the central claim (KC19) using the verified edge that details explains how visual contrast leads to penalization."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should restate the central claim from M1, focusing on the training-free contrastive decoding approach that penalizes hallucinations.\n- We discussed this evidence: The answer should detail the mechanism of leveraging T2I models to generate contrastive signals, as described in M4.\n- We connected them cautiously as follows: The answer should connect the mechanism (KC18) to the central claim (KC19) using the verified edge that details explains how visual contrast leads to penalization.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E76",
+          "kc_ids": [
+            "KC18",
+            "KC19"
+          ],
+          "text": "images (e.g., a missing clock'). ConVis then uses the original and reconstructed images to compare the probability distributions (Figure 2), capturing visual contrast signals that highlight hallucinations. Based on these signals, ConVis penalizes the generation of hallucinations during the decoding process, reducing the hallucinations."
+        },
+        {
+          "kc_id": "KC19",
+          "text": "In this study, we propose a contrastive decoding method called ConVis (Contrastive Decoding with Hallucination Visualization), which can be applied to any existing MLLM without additional training. Inspired by the previous work (Kim et al. 2024), ConVis leverages text-to-image (T2I) generation models, specifically Hyper-SDXL (Ren et al. 2024), to capture visual contrast signals. The process begins with the MLLM generating a caption for the input image, after which the T2I model reconstructs an image based on this caption. As shown in Figure 1, if the generated caption contains hallucinations (e.g., a book'), there will be visual discrepancies between the original and reconstructed\n\n<!-- page 2: doc_1.md -->\n\nimages (e.g., a missing clock'). ConVis then uses the original and reconstructed images to compare the probability distributions (Figure 2), capturing visual contrast signals that highlight hallucinations. Based on these signals, ConVis penalizes the generation of hallucinations during the decoding process, reducing the hallucinations.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC18",
+          "text": "In this study, we propose a contrastive decoding method called ConVis (Contrastive Decoding with Hallucination Visualization), which can be applied to any existing MLLM without additional training. Inspired by the previous work (Kim et al. 2024), ConVis leverages text-to-image (T2I) generation models, specifically Hyper-SDXL (Ren et al. 2024), to capture visual contrast signals. The process begins with the MLLM generating a caption for the input image, after which the T2I model reconstructs an image based on this caption. As shown in Figure 1, if the generated caption contains hallucinations (e.g., a book'), there will be visual discrepancies between the original and reconstructed",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is not too easy; the generated question failed to present a wrong bridge for the model to reject. Instead, it asked a factual clarification, allowing solvers to answer correctly without encountering the intended trap. Revision guidance: Rewrite the question to explicitly propose an incorrect or reversed bridge that contradicts the established evidence. For example, suggest that the T2I model directly penalizes hallucinations by adjusting logits, and ask the model to confirm or correct that relation, forcing it to reject the wrong bridge based on paper evidence."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally probes the mechanism of penalization, testing whether the model correctly attributes the penalization to ConVis rather than directly to the T2I model, which aligns with the target failure mode of a wrong bridge. It does not expose hidden labels or metadata and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0022",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0006",
+      "source_challenge_plan_id": "TCP_0006",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "It seems that ConVis's mechanism is nearly identical to VCD and HALC, as they all use contrastive decoding. How does the paper argue that ConVis is still novel? Continue from the previous context.",
+      "surface_intent": "ask for justification of ConVis's novelty despite similarity to other methods",
+      "target_kc_ids": [
+        "KC52",
+        "KC56"
+      ],
+      "target_edge_ids": [
+        "E137"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should highlight the novelty of ConVis relative to prior methods, as stated in M4.",
+        "evidence": "The answer should accurately report the experimental setup from M5, including the list of compared methods and the fairness measure.",
+        "bridge": "The answer should use the supported relation that including these baselines supports the claim that ConVis is distinct from them."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should highlight the novelty of ConVis relative to prior methods, as stated in M4.\n- We discussed this evidence: The answer should accurately report the experimental setup from M5, including the list of compared methods and the fairness measure.\n- We connected them cautiously as follows: The answer should use the supported relation that including these baselines supports the claim that ConVis is distinct from them.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E137",
+          "kc_ids": [
+            "KC52",
+            "KC56"
+          ],
+          "text": "Compared Methods. Our method is designed to replace existing decoding methods used in the LLM component, and therefore, we compare it against baselines such as Greedy Search, Nucleus Sampling (Holtzman et al. 2020), and Beam Search (beam=5). We also evaluate our method's effectiveness against other decoding methods in hallucination mitigation, including OPERA (Huang et al. 2024), VCD (Leng et al. 2024), and HALC (Chen et al. 2024). We use the same hyperparameters borrowed from the original papers of the compared methods to ensure a fair comparison."
+        },
+        {
+          "kc_id": "KC52",
+          "text": "Note that, Equation 2 is similar to the contrastive decoding methods used in VCD (Leng et al. 2024) and HALC (Chen et al. 2024). However, our method is distinguished from existing approaches by directly capturing visual contrastive signals from the hallucinations visualized by the T2I generative model.",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC56",
+          "text": "Compared Methods. Our method is designed to replace existing decoding methods used in the LLM component, and therefore, we compare it against baselines such as Greedy Search, Nucleus Sampling (Holtzman et al. 2020), and Beam Search (beam=5). We also evaluate our method's effectiveness against other decoding methods in hallucination mitigation, including OPERA (Huang et al. 2024), VCD (Leng et al. 2024), and HALC (Chen et al. 2024). We use the same hyperparameters borrowed from the original papers of the compared methods to ensure a fair comparison.",
+          "span_id": "S9",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question did not actually implement the planned premise mutation; it simply asked about the relationship between ConVis and compared methods, which all solvers correctly answered using the paper evidence. The plan itself is not too easy; the question generation failed to execute the trap. Revision guidance: Rewrite the question to introduce a mutated premise that contradicts the paper's evidence. For example, state that 'ConVis's mechanism is identical to VCD and HALC' or 'ConVis uses a different mathematical formulation' and ask the model to continue the discussion. The expected behavior is to correct the mutation using the established context. Ensure the surface question appears natural without revealing the mutation explicitly."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "Question directly tests the target failure mode by presenting a mutated premise and asking for the correct counterargument based on paper evidence. It is natural, serious, and does not expose metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "challenge_scheduler_config": {
+    "macro_level_enabled": true,
+    "thread_level_enabled": true,
+    "thread_challenge_enabled": true
+  },
+  "macro_main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "macro_main_question",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC19",
+        "KC13",
+        "KC87"
+      ],
+      "question_text": "How does ConVis reduce hallucinations in MLLMs without additional training, and how do hallucinated tokens primarily influence the original and generated images?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC19",
+          "KC13"
+        ],
+        "optional_cover": [
+          "KC87"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "macro_main_question",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC34",
+        "KC35"
+      ],
+      "question_text": "Describe how VCD and HALC mitigate hallucinations in multimodal large language models (MLLMs), and explain the key observations each method leverages to reduce hallucinations.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC34",
+          "KC35"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "macro_main_question",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC38",
+        "KC41"
+      ],
+      "question_text": "What are the key components of ConVis's technical foundation? Describe how the MLLM generates a response and what text-to-image generation model is used, including its process.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC38",
+          "KC41"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "macro_main_question",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC3",
+        "KC37",
+        "KC43",
+        "KC49",
+        "KC51",
+        "KC45",
+        "KC50",
+        "KC52",
+        "KC18",
+        "KC22"
+      ],
+      "question_text": "How does ConVis leverage a text-to-image (T2I) model to mitigate hallucinations during decoding?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC3",
+          "KC37"
+        ],
+        "optional_cover": [
+          "KC43",
+          "KC49",
+          "KC51",
+          "KC45",
+          "KC50",
+          "KC52",
+          "KC18",
+          "KC22"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "macro_main_question",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC55",
+        "KC56"
+      ],
+      "question_text": "What backbone MLLMs and compared decoding methods were used in the experimental setup, and how were hyperparameters handled to ensure fairness?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC55",
+          "KC56"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "macro_main_question",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC68",
+        "KC77",
+        "KC79",
+        "KC69",
+        "KC71"
+      ],
+      "question_text": "What are the key results achieved by ConVis on the HallusionBench, MME, and POPE benchmarks when using the LLaVA-1.5 backbone, and how do they compare to existing methods?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC68",
+          "KC77"
+        ],
+        "optional_cover": [
+          "KC79",
+          "KC69",
+          "KC71"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "macro_main_question",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC80",
+        "KC81",
+        "KC83",
+        "KC84"
+      ],
+      "question_text": "What did the ablation experiments reveal about the effects of decoding strategy, number of reconstructed images, and choice of T2I model on hallucination reduction?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC80",
+          "KC81"
+        ],
+        "optional_cover": [
+          "KC83",
+          "KC84"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "macro_main_question",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC76",
+        "KC88"
+      ],
+      "question_text": "According to the paper, what are the key limitations of the ConVis approach when using T2I generation models for hallucination visualization?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC76",
+          "KC88"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "thread_question_seeds": [
+    {
+      "question_id": "Q_RT1_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC19"
+      ],
+      "question_goal": "Ask the model to articulate the main claim of ConVis: that it reduces hallucinations by penalizing hallucinated tokens during decoding based on visual contrast signals, without additional training.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC18"
+      ],
+      "question_goal": "Ask the model to explain how ConVis uses T2I models (Hyper-SDXL) to capture visual contrast signals from visual discrepancies between original and reconstructed images.",
+      "trigger_condition": {
+        "macro_reached": "M4"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC19",
+        "KC18"
+      ],
+      "question_goal": "Ask the model to explain how capturing visual contrast signals from T2I models directly enables the penalization of hallucinated tokens during decoding.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC19",
+          "KC18"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC19",
+        "KC18"
+      ],
+      "question_goal": "Ask the model to confirm that the relationship between T2I-based contrastive signals and hallucination penalization remains consistent when considering both the claim and the mechanism.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC52"
+      ],
+      "question_goal": "Ask the model to describe how ConVis distinguishes from existing contrastive decoding methods (VCD, HALC) by directly capturing visual contrastive signals from T2I-generated hallucinations.",
+      "trigger_condition": {
+        "macro_reached": "M4"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M5",
+      "target_kc_ids": [
+        "KC56"
+      ],
+      "question_goal": "Ask the model to list the baselines and compared methods (Greedy, Nucleus, Beam, OPERA, VCD, HALC) and note that hyperparameters are taken from original papers for fairness.",
+      "trigger_condition": {
+        "macro_reached": "M5"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M5",
+      "target_kc_ids": [
+        "KC52",
+        "KC56"
+      ],
+      "question_goal": "Ask the model to explain why including VCD and HALC as baselines is specifically relevant for evaluating ConVis's distinctiveness.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC52",
+          "KC56"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC52",
+        "KC56"
+      ],
+      "question_goal": "Ask the model to verify that the experimental comparison logically follows from the method's claimed novelty.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M6",
+      "target_kc_ids": [
+        "KC76"
+      ],
+      "question_goal": "Ask the model to explain a specific limitation on POPE: the T2I model may visualize objects unrelated to the actual questions, limiting effectiveness.",
+      "trigger_condition": {
+        "macro_reached": "M6"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M8",
+      "target_kc_ids": [
+        "KC88"
+      ],
+      "question_goal": "Ask the model to articulate the broader limitation: strong dependence on T2I models may hinder VQA tasks when captions contain hallucinations not related to the specific question.",
+      "trigger_condition": {
+        "macro_reached": "M8"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M8",
+      "target_kc_ids": [
+        "KC76",
+        "KC88"
+      ],
+      "question_goal": "Ask the model to connect the specific POPE limitation to the broader VQA limitation, explaining how the former supports the latter.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC76",
+          "KC88"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC76",
+        "KC88"
+      ],
+      "question_goal": "Ask the model to confirm that the specific limitation on POPE is a valid instance of the broader T2I dependence limitation.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "review_question_seeds": [],
+  "main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "main",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC19",
+        "KC13",
+        "KC87"
+      ],
+      "question_text": "How does ConVis reduce hallucinations in MLLMs without additional training, and how do hallucinated tokens primarily influence the original and generated images?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC19",
+          "KC13"
+        ],
+        "optional_cover": [
+          "KC87"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "main",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC34",
+        "KC35"
+      ],
+      "question_text": "Describe how VCD and HALC mitigate hallucinations in multimodal large language models (MLLMs), and explain the key observations each method leverages to reduce hallucinations.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC34",
+          "KC35"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "main",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC38",
+        "KC41"
+      ],
+      "question_text": "What are the key components of ConVis's technical foundation? Describe how the MLLM generates a response and what text-to-image generation model is used, including its process.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC38",
+          "KC41"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "main",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC3",
+        "KC37",
+        "KC43",
+        "KC49",
+        "KC51",
+        "KC45",
+        "KC50",
+        "KC52",
+        "KC18",
+        "KC22"
+      ],
+      "question_text": "How does ConVis leverage a text-to-image (T2I) model to mitigate hallucinations during decoding?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC3",
+          "KC37"
+        ],
+        "optional_cover": [
+          "KC43",
+          "KC49",
+          "KC51",
+          "KC45",
+          "KC50",
+          "KC52",
+          "KC18",
+          "KC22"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "main",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC55",
+        "KC56"
+      ],
+      "question_text": "What backbone MLLMs and compared decoding methods were used in the experimental setup, and how were hyperparameters handled to ensure fairness?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC55",
+          "KC56"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "main",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC68",
+        "KC77",
+        "KC79",
+        "KC69",
+        "KC71"
+      ],
+      "question_text": "What are the key results achieved by ConVis on the HallusionBench, MME, and POPE benchmarks when using the LLaVA-1.5 backbone, and how do they compare to existing methods?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC68",
+          "KC77"
+        ],
+        "optional_cover": [
+          "KC79",
+          "KC69",
+          "KC71"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "main",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC80",
+        "KC81",
+        "KC83",
+        "KC84"
+      ],
+      "question_text": "What did the ablation experiments reveal about the effects of decoding strategy, number of reconstructed images, and choice of T2I model on hallucination reduction?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC80",
+          "KC81"
+        ],
+        "optional_cover": [
+          "KC83",
+          "KC84"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "main",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC76",
+        "KC88"
+      ],
+      "question_text": "According to the paper, what are the key limitations of the ConVis approach when using T2I generation models for hallucination visualization?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC76",
+          "KC88"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "multi_hop_questions": [],
+  "reserved_followup_templates": []
+}

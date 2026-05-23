@@ -1,0 +1,13 @@
+{
+  "paper_id": "Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency",
+  "source_pdf": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\pdfInput\\Hallucination Reduction in Video-Language Models via Hierarchical Multimodal Consistency.pdf",
+  "raw_paper_dir": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency",
+  "doc_count": 9,
+  "markdown_image_count": 5,
+  "layout_image_count": 9,
+  "build_graph_env": {
+    "PAPER_INPUT_DIR": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency",
+    "PAPER_ID": "Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency"
+  },
+  "papergraph_data_dir": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\papergraph_demo\\data\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency"
+}

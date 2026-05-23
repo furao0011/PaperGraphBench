@@ -1,0 +1,949 @@
+{
+  "paper_id": "Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding",
+  "schema_version": "v1",
+  "table_explainer_model": "deepseek-v4-flash",
+  "figure_explainer_model": "qwen3.6-flash",
+  "figure_explainer_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "asset_explanations": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "qualitative_example",
+      "section_id": "S3",
+      "macro_id": "M1",
+      "caption": "Figure 1: Examples of Metaphorical Memes.",
+      "summary": "Figure 1 displays two examples of metaphorical memes. Panel (a) shows a man wearing a slice of pizza as a makeshift face mask, accompanied by the text 'HOW ITALIANS FIGHT CORONA VIRUS'. Panel (b) features a scene from the movie *Wonder Woman* showing a dance between two characters, overlaid with the quote 'Peace is only an armistice in an endless war' attributed to Thucydides, and the caption 'Wonder Woman Knows Thucydides. Do you?'.",
+      "key_elements": [
+        {
+          "name": "Panel (a)",
+          "role": "Left subfigure containing a food-based meme"
+        },
+        {
+          "name": "Man with pizza mask",
+          "role": "Central visual subject in panel (a)"
+        },
+        {
+          "name": "Caption 'HOW ITALIANS FIGHT CORONA VIRUS'",
+          "role": "Top text providing context for panel (a)"
+        },
+        {
+          "name": "Panel (b)",
+          "role": "Right subfigure containing a pop-culture/philosophy meme"
+        },
+        {
+          "name": "Movie characters (Diana & Steve)",
+          "role": "Central visual subjects in panel (b)"
+        },
+        {
+          "name": "Quote text overlay",
+          "role": "Text explaining the philosophical theme in panel (b)"
+        },
+        {
+          "name": "Yellow arrows",
+          "role": "Visual indicators pointing to the characters in panel (b)"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Pizza mask",
+          "target": "Man's face",
+          "relation": "covers"
+        },
+        {
+          "source": "Caption 'HOW ITALIANS...'",
+          "target": "Panel (a)",
+          "relation": "describes"
+        },
+        {
+          "source": "Quote text overlay",
+          "target": "Panel (b)",
+          "relation": "overlays"
+        },
+        {
+          "source": "Yellow arrows",
+          "target": "Movie characters",
+          "relation": "point_to"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The figure illustrates examples of metaphorical memes.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Overall caption: Figure 1: Examples of Metaphorical Memes.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "One meme uses national stereotypes involving food to comment on a health crisis.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Visual of pizza slice worn as mask combined with text 'Italians' and 'Corona Virus'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "Another meme juxtaposes a romantic movie scene with a historical quote about war.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Visual of dancing couple from Wonder Woman combined with text about 'armistice' and 'Thucydides'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The man in panel (a) is eating the pizza.",
+          "why_wrong": "The strings attached to the pizza slice suggest it is being worn as a mask or held up, rather than consumed."
+        },
+        {
+          "claim": "The quote in panel (b) is dialogue spoken by the characters.",
+          "why_wrong": "The font style and placement indicate it is an added caption for the meme, not subtitles from the film."
+        }
+      ],
+      "limitations": [
+        "The figure does not explain the specific metaphorical mechanism linking the visuals to the text beyond labeling them as such.",
+        "The resolution limits the ability to read very small background details in the movie still."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S5",
+      "macro_id": "M2",
+      "caption": "Figure 2: The overall architecture of our model. “mr” means metaphor recognition, “sa” means sentiment analysis, “id” means intention detection, “od” means offensiveness detection.",
+      "summary": "Figure 2 illustrates the overall architecture of a multimodal model designed for meme understanding. The system processes text inputs (source/target domains and literal text) and image inputs (full images and detected objects) through separate encoders. These features are fused and processed through a 'global-local interaction' module involving cross-modal attention blocks ($CAP_{G-T}$ and $CAP_{G-I}$) across multiple layers. Finally, the model aggregates these features to predict four downstream tasks: metaphor recognition (mr), sentiment analysis (sa), intention detection (id), and offensiveness detection (od).",
+      "key_elements": [
+        {
+          "name": "Source/Target Domain & Text Inputs",
+          "role": "Provides semantic context for metaphor and literal meaning."
+        },
+        {
+          "name": "Text Encoder",
+          "role": "Encodes textual information into feature vectors."
+        },
+        {
+          "name": "Image & Detected Object Inputs",
+          "role": "Provides visual context including global scene and local details."
+        },
+        {
+          "name": "Coarse/Fine-grained Encoders",
+          "role": "Extracts visual features from full images and cropped objects respectively."
+        },
+        {
+          "name": "Global-Local Interaction Module",
+          "role": "Core processing unit combining text and image features via CAP blocks."
+        },
+        {
+          "name": "CAP Blocks ($CAP_{G-T}$, $CAP_{G-I}$)",
+          "role": "Facilitates cross-modal attention and feature fusion."
+        },
+        {
+          "name": "Task Outputs ($y_{mr}, y_{sa}, y_{id}, y_{od}$)",
+          "role": "Final predictions for metaphor, sentiment, intention, and offensiveness."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Source/Target Domain & Text Inputs",
+          "target": "Text Encoder",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Image & Detected Object Inputs",
+          "target": "Coarse/Fine-grained Encoders",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Coarse/Fine-grained Encoders",
+          "target": "Fusion",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Text Encoder",
+          "target": "CAP_G-T blocks",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Fusion",
+          "target": "CAP_G-I blocks",
+          "relation": "flows_to"
+        },
+        {
+          "source": "CAP_G-T blocks",
+          "target": "CAP_G-I blocks",
+          "relation": "interacts_with"
+        },
+        {
+          "source": "CAP blocks",
+          "target": "Task Outputs",
+          "relation": "leads_to"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The model integrates text and image modalities.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Visual layout showing parallel input streams merging into a central processing block.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Metaphor recognition relies on source and target domains.",
+          "support_level": "visible_label",
+          "evidence_basis": "Top-left box explicitly lists 'source domain' and 'target domain' as inputs.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The architecture utilizes a multi-layer interaction process.",
+          "support_level": "visible_label",
+          "evidence_basis": "Indices $[l]$ and $[L]$ indicate multiple layers in the CAP blocks.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The system predicts four specific attributes.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Rightmost column lists mr, sa, id, od; caption defines these acronyms.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The pink bars represent noise or irrelevant data.",
+          "why_wrong": "They are labeled $g^{[0]}$ etc., indicating global image features that interact with text features."
+        },
+        {
+          "claim": "The yellow output box is a separate input stream.",
+          "why_wrong": "Arrows point towards it from the previous columns, indicating it is an aggregation of results."
+        }
+      ],
+      "limitations": [
+        "Does not explain the internal mathematical operations within the CAP blocks.",
+        "Does not specify the exact number of layers (L) used in experiments.",
+        "Does not show loss functions or training objectives."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S9",
+      "macro_id": "M4",
+      "caption": "Table 1: Experimental results on the MET-MEME dataset of four tasks.",
+      "summary": "This table reports experimental results on the MET-MEME dataset for four tasks: Sentiment Analysis, Intention Detection, Offensiveness Detection, and Metaphor Recognition, in both English and Chinese. It compares ten baseline methods (VGG16, DenseNet-161, ResNet-50, Multi-BERT_EfficientNet, Multi-BERT_ViT, Multi-BERT_PiT, MET_add, MET_cat, M3F_add, M3F_cat) against a proposed method (Ours). Metrics include Accuracy, Precision, and Recall. The Ours row shows improvements (in parentheses) over a baseline, and Ours consistently achieves the highest values across all task-language-metric combinations.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Ours achieves the highest Accuracy (34.36%), Precision (37.77%), and Recall (34.38%) for English Sentiment Analysis among all listed methods.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Ours' and column 'English Acc/Pre/Rec' under 'Sentiment Analysis'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "Ours achieves the highest Accuracy (42.11%), Precision (47.59%), and Recall (42.02%) for Chinese Sentiment Analysis among all listed methods.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Ours' and columns 'Chinese Acc/Pre/Rec' under 'Sentiment Analysis'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "Ours outperforms VGG16 in all 12 metric-task-language combinations (Acc, Pre, Rec for each of 4 tasks and 2 languages).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of rows 'Ours' and 'VGG16' across all columns",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "The table includes results for four tasks (Sentiment Analysis, Intention Detection, Offensiveness Detection, Metaphor Recognition) and two languages (English, Chinese).",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption: 'Experimental results on the MET-MEME dataset of four tasks.' and row headers indicating tasks and languages",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The improvement percentages (e.g., +3.89%) show the relative improvement of Ours over the best overall baseline.",
+          "why_wrong": "The baseline for the improvement is not explicitly stated; calculations suggest it may be over M3F_add or M3F_cat, but it is inconsistent across metrics and tasks, so the exact baseline is unclear."
+        },
+        {
+          "claim": "The table covers all possible tasks on the MET-MEME dataset.",
+          "why_wrong": "Only four tasks are listed; the dataset may include additional tasks not shown in this table."
+        },
+        {
+          "claim": "All methods are compared fairly without any hyperparameter tuning or dataset splits differences.",
+          "why_wrong": "The table does not provide details on experimental settings, such as data splits, number of runs, or statistical significance, so differences may not be reliable."
+        }
+      ],
+      "limitations": [
+        "Results are limited to the MET-MEME dataset and may not generalize to other datasets.",
+        "No statistical significance tests are reported, so performance differences may not be robust.",
+        "The baseline for the improvement percentages in the Ours row is not identified, making it unclear what the relative gains are compared to.",
+        "Only three metrics (Acc, Pre, Rec) are reported; other relevant metrics like F1-score are omitted."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S12",
+      "macro_id": "M6",
+      "caption": "Table 2: Ablation results on the MET-MEME English dataset of four tasks. “OM” means object-level semantic mining, “UP” means unimodal prediction, “GL” means global-local interaction, “DG” means dual-semantic guided strategy.",
+      "summary": "This table presents ablation results on the MET-MEME English dataset comparing the full model (Ours) against four ablated variants: without object-level semantic mining (w/o OM), without unimodal prediction (w/o UP), without global-local interaction (w/o GL), and without dual-semantic guided strategy (w/o DG). Metrics reported are Accuracy, Precision, and Recall for four tasks: Sentiment Analysis, Intention Detection, Offensiveness Detection, and Metaphor Recognition.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "The full model (Ours) achieves the highest Accuracy, Precision, and Recall on all four tasks compared to any ablated variant.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Rows 'Ours' vs 'w/o OM', 'w/o UP', 'w/o GL', 'w/o DG' across all columns (Task, Metric). For each task and metric, the Ours value is greater than all corresponding w/o values. Example: Sentiment Analysis Acc: Ours 34.36 > 32.47 (w/o OM), 32.85 (w/o UP), 31.76 (w/o GL), 33.59 (w/o DG).",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Among ablated variants, removing global-local interaction (w/o GL) results in the lowest Accuracy on all four tasks (Sentiment Analysis: 31.76, Intention Detection: 45.82, Offensiveness Detection: 76.89, Metaphor Recognition: 84.98).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Rows for w/o GL under each task's Acc column: Sentiment Analysis (31.76), Intention Detection (45.82), Offensiveness Detection (76.89), Metaphor Recognition (84.98) are the lowest among all ablated variants.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "The dual-semantic guided strategy (w/o DG) causes the smallest drop in Accuracy relative to the full model across all tasks (drops of 0.77, 0.87, 0.37, 1.08 for the four tasks respectively).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Compute difference between Ours Acc and w/o DG Acc for each task: Sentiment: 34.36-33.59=0.77; Intention: 47.92-47.05=0.87; Offensiveness: 78.11-77.74=0.37; Metaphor: 87.51-86.43=1.08. These are the smallest drops compared to other w/o variants.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The ablation study demonstrates that dual-semantic guided strategy is the most important component.",
+          "why_wrong": "The table shows that removing global-local interaction (w/o GL) leads to larger performance drops than removing any other component, including dual-semantic guided strategy. Therefore, global-local interaction appears more critical."
+        },
+        {
+          "claim": "The model achieves state-of-the-art results on the MET-MEME dataset.",
+          "why_wrong": "The table only compares the full model against its own ablated variants, not against any external baselines or prior work. No evidence of state-of-the-art performance is provided."
+        },
+        {
+          "claim": "The results are averaged over multiple runs and are statistically significant.",
+          "why_wrong": "The table does not report any standard deviations, confidence intervals, or statistical significance tests. It is unclear if the results are from a single run or aggregated runs."
+        }
+      ],
+      "limitations": [
+        "Results are only on one dataset (MET-MEME English), limiting generalizability.",
+        "No statistical significance or confidence intervals are provided, so the reliability of improvements is unknown.",
+        "No comparison to external baselines or prior work is included.",
+        "The table does not report standard deviations, so the robustness of the ablation effects is unclear."
+      ],
+      "needs_review": false,
+      "confidence": 0.98,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S13",
+      "macro_id": "M7",
+      "caption": "Figure 3: Comparative results between global-local and local-local interaction on the MET-MEME English dataset.",
+      "summary": "The figure displays a comparative bar chart evaluating two interaction methods, 'global-local interaction' (blue bars) and 'local-local interaction' (pink bars), across four distinct tasks: Sentiment Analysis, Intention Detection, Offensiveness Detection, and Metaphor Recognition. For each task, performance metrics including Recall (Rec), Precision (Pre), and Accuracy (Acc) are plotted as percentages. Visually, the blue bars representing the global-local interaction consistently extend further to the right than the pink bars in every metric and task category, indicating superior performance.",
+      "key_elements": [
+        {
+          "name": "global-local interaction",
+          "role": "Method being evaluated, represented by blue bars"
+        },
+        {
+          "name": "local-local interaction",
+          "role": "Baseline or comparative method, represented by pink bars"
+        },
+        {
+          "name": "Sentiment Analysis",
+          "role": "Task panel title (top-left)"
+        },
+        {
+          "name": "Intention Detection",
+          "role": "Task panel title (top-right)"
+        },
+        {
+          "name": "Offensiveness Detection",
+          "role": "Task panel title (bottom-left)"
+        },
+        {
+          "name": "Metaphor Recognition",
+          "role": "Task panel title (bottom-right)"
+        },
+        {
+          "name": "Rec",
+          "role": "Metric label for Recall"
+        },
+        {
+          "name": "Pre",
+          "role": "Metric label for Precision"
+        },
+        {
+          "name": "Acc",
+          "role": "Metric label for Accuracy"
+        },
+        {
+          "name": "Value(%)",
+          "role": "X-axis label indicating percentage values"
+        }
+      ],
+      "relations": [
+        {
+          "source": "global-local interaction",
+          "target": "local-local interaction",
+          "relation": "outperforms"
+        },
+        {
+          "source": "Sentiment Analysis",
+          "target": "Rec",
+          "relation": "contains_metric"
+        },
+        {
+          "source": "Sentiment Analysis",
+          "target": "Pre",
+          "relation": "contains_metric"
+        },
+        {
+          "source": "Sentiment Analysis",
+          "target": "Acc",
+          "relation": "contains_metric"
+        },
+        {
+          "source": "Intention Detection",
+          "target": "Rec",
+          "relation": "contains_metric"
+        },
+        {
+          "source": "Intention Detection",
+          "target": "Pre",
+          "relation": "contains_metric"
+        },
+        {
+          "source": "Intention Detection",
+          "target": "Acc",
+          "relation": "contains_metric"
+        },
+        {
+          "source": "Offensiveness Detection",
+          "target": "Rec",
+          "relation": "contains_metric"
+        },
+        {
+          "source": "Offensiveness Detection",
+          "target": "Pre",
+          "relation": "contains_metric"
+        },
+        {
+          "source": "Offensiveness Detection",
+          "target": "Acc",
+          "relation": "contains_metric"
+        },
+        {
+          "source": "Metaphor Recognition",
+          "target": "Rec",
+          "relation": "contains_metric"
+        },
+        {
+          "source": "Metaphor Recognition",
+          "target": "Pre",
+          "relation": "contains_metric"
+        },
+        {
+          "source": "Metaphor Recognition",
+          "target": "Acc",
+          "relation": "contains_metric"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "Global-local interaction achieves higher Recall, Precision, and Accuracy than local-local interaction in Sentiment Analysis.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Blue bars are consistently longer than pink bars in the Sentiment Analysis panel.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Global-local interaction achieves higher Recall, Precision, and Accuracy than local-local interaction in Intention Detection.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Blue bars are consistently longer than pink bars in the Intention Detection panel.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Global-local interaction achieves higher Recall, Precision, and Accuracy than local-local interaction in Offensiveness Detection.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Blue bars are consistently longer than pink bars in the Offensiveness Detection panel.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Global-local interaction achieves higher Recall, Precision, and Accuracy than local-local interaction in Metaphor Recognition.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Blue bars are consistently longer than pink bars in the Metaphor Recognition panel.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The pink bars represent the proposed method.",
+          "why_wrong": "While not explicitly stated which is 'proposed', the legend order (Blue then Pink) and the context of an ablation study (where usually the full model is compared against a baseline) suggest Blue (global-local) is likely the enhanced method. However, strictly visually, we only know Blue is 'global-local'."
+        },
+        {
+          "claim": "The x-axis represents the number of samples.",
+          "why_wrong": "The axis label is clearly 'Value(%)', indicating performance scores, not sample counts."
+        }
+      ],
+      "limitations": [
+        "Exact numerical values are not provided, preventing precise quantification of the performance gap.",
+        "Error bars or standard deviations are not visible, so statistical significance cannot be determined from this figure alone.",
+        "The specific dataset details (MET-MEME English) are only available in the caption, not on the chart axes."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S14",
+      "macro_id": "M7",
+      "caption": "Figure 4: Visualization of a typical example.",
+      "summary": "The figure presents a visualization of a meme image containing a person and two bears, overlaid with red bounding boxes to highlight specific regions. Text labels identify the person as 'Me', the smaller bear as 'Self doubt', and the larger bear as 'This one is just a real bear'. A legend on the right side lists these labels alongside a color scale ranging from 0.0 to 1.0, indicating a quantitative measure of relevance or attention for the identified elements.",
+      "key_elements": [
+        {
+          "name": "Meme image content",
+          "role": "The base visual input showing a person and two bears in a forest setting."
+        },
+        {
+          "name": "Red bounding boxes",
+          "role": "Visual indicators highlighting specific regions of interest within the image."
+        },
+        {
+          "name": "Text labels ('Me', 'Self doubt', 'This one is just a real bear')",
+          "role": "Semantic identifiers for the highlighted regions."
+        },
+        {
+          "name": "Legend/Scale panel",
+          "role": "A vertical bar on the right displaying labels and a numerical score range (0.0-1.0) associated with the concepts."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Red bounding boxes",
+          "target": "Meme image content",
+          "relation": "encloses"
+        },
+        {
+          "source": "Text labels",
+          "target": "Meme image content",
+          "relation": "identifies"
+        },
+        {
+          "source": "Legend/Scale panel",
+          "target": "Text labels",
+          "relation": "quantifies"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The visualization highlights three distinct semantic entities: the observer ('Me'), a metaphorical concept ('Self doubt'), and the primary subject ('This one is just a real bear').",
+          "support_level": "visible_label",
+          "evidence_basis": "visible label, bounding box",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "There is an associated quantitative scale ranging from 0.0 to 1.0 for the identified concepts.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "legend, visible label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The figure shows ground truth annotations for object detection.",
+          "why_wrong": "The caption describes it as a 'visualization' and the context implies analysis of methods (likely attention or feature importance), rather than simple ground truth labeling."
+        },
+        {
+          "claim": "The color bar represents pixel intensity values.",
+          "why_wrong": "The labels next to the bar ('Me', 'Self doubt') are semantic concepts, not physical properties like brightness."
+        }
+      ],
+      "limitations": [
+        "The figure only demonstrates a single example, so it cannot prove general model behavior across different memes.",
+        "It is unclear if the red boxes themselves have varying opacity corresponding to the scale, or if they are uniform; the scale might apply to the text labels instead."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S14",
+      "macro_id": "M7",
+      "caption": "Figure 5: Influence of unimodal prediction on the MET-MEME English dataset.",
+      "summary": "The figure presents four bar charts evaluating the performance of a proposed multimodal method ('Our') against two unimodal variants ('Without Image' and 'Without Text') across four tasks: Sentiment Analysis, Intention Detection, Offensiveness Detection, and Metaphor Recognition. Each chart displays Accuracy (Acc), Precision (Pre), and Recall (Rec) as percentages.",
+      "key_elements": [
+        {
+          "name": "Sentiment Analysis Chart",
+          "role": "Displays performance metrics for the sentiment analysis task"
+        },
+        {
+          "name": "Intention Detection Chart",
+          "role": "Displays performance metrics for the intention detection task"
+        },
+        {
+          "name": "Offensiveness Detection Chart",
+          "role": "Displays performance metrics for the offensiveness detection task"
+        },
+        {
+          "name": "Metaphor Recognition Chart",
+          "role": "Displays performance metrics for the metaphor recognition task"
+        },
+        {
+          "name": "Blue Bars ('Our')",
+          "role": "Represents the performance of the proposed full model"
+        },
+        {
+          "name": "Red Bars ('Without Image')",
+          "role": "Represents the performance of the text-only variant"
+        },
+        {
+          "name": "Beige Bars ('Without Text')",
+          "role": "Represents the performance of the image-only variant"
+        },
+        {
+          "name": "X-axis Categories (Acc, Pre, Rec)",
+          "role": "Indicates the evaluation metrics: Accuracy, Precision, Recall"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Blue Bars ('Our')",
+          "target": "Red Bars ('Without Image')",
+          "relation": "outperforms"
+        },
+        {
+          "source": "Blue Bars ('Our')",
+          "target": "Beige Bars ('Without Text')",
+          "relation": "outperforms"
+        },
+        {
+          "source": "Sentiment Analysis Chart",
+          "target": "Blue Bars ('Our')",
+          "relation": "contains"
+        },
+        {
+          "source": "Intention Detection Chart",
+          "target": "Blue Bars ('Our')",
+          "relation": "contains"
+        },
+        {
+          "source": "Offensiveness Detection Chart",
+          "target": "Blue Bars ('Our')",
+          "relation": "contains"
+        },
+        {
+          "source": "Metaphor Recognition Chart",
+          "target": "Blue Bars ('Our')",
+          "relation": "contains"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The proposed method ('Our') achieves the highest Accuracy across all four evaluated tasks compared to unimodal variants.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "In all four charts, the blue bar in the 'Acc' category is taller than the red and beige bars.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "The proposed method ('Our') achieves the highest Precision across all four evaluated tasks compared to unimodal variants.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "In all four charts, the blue bar in the 'Pre' category is taller than the red and beige bars.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "The proposed method ('Our') achieves the highest Recall across all four evaluated tasks compared to unimodal variants.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "In all four charts, the blue bar in the 'Rec' category is taller than the red and beige bars.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "The 'Without Image' variant generally performs worse than the 'Without Text' variant in Precision for Offensiveness Detection.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "In the Offensiveness Detection chart, under 'Pre', the red bar is visibly shorter than the beige bar.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The 'Without Image' and 'Without Text' methods perform equally well.",
+          "why_wrong": "While close in some categories, distinct differences are visible, particularly in Offensiveness Detection Precision where the red bar is lower than the beige bar."
+        },
+        {
+          "claim": "The proposed method fails to improve upon baselines in specific sub-metrics.",
+          "why_wrong": "Visually, the blue bars ('Our') are consistently the highest in every single metric group across all four charts."
+        }
+      ],
+      "limitations": [
+        "Exact numerical values are not provided, only relative heights.",
+        "No error bars or statistical significance indicators are visible.",
+        "The scale of improvement cannot be precisely quantified from the visual alone."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_006",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "chart",
+      "section_id": "S14",
+      "macro_id": "M7",
+      "caption": "Figure 6: Influence of CLIP in MMU on the MET-MEME English dataset.",
+      "summary": "Figure 6 presents a comparative analysis of the proposed method ('clip + our') against a baseline ('clip') using four radar charts. The charts evaluate performance across four tasks: Sentiment Analysis, Intention Detection, Offensiveness Detection, and Metaphor Recognition. Each chart plots three metrics: Precision (Pre%), Accuracy (Acc%), and Recall (Rec%). In all four tasks, the 'clip + our' model (represented by the larger red/pink polygon) demonstrates superior performance compared to the 'clip' baseline (represented by the smaller blue polygon).",
+      "key_elements": [
+        {
+          "name": "Sentiment Analysis Chart",
+          "role": "Radar chart showing performance on sentiment analysis task"
+        },
+        {
+          "name": "Intention Detection Chart",
+          "role": "Radar chart showing performance on intention detection task"
+        },
+        {
+          "name": "Offensiveness Detection Chart",
+          "role": "Radar chart showing performance on offensiveness detection task"
+        },
+        {
+          "name": "Metaphor Recognition Chart",
+          "role": "Radar chart showing performance on metaphor recognition task"
+        },
+        {
+          "name": "clip + our (Red/Pink Polygon)",
+          "role": "Data series representing the proposed method's performance"
+        },
+        {
+          "name": "clip (Blue Polygon)",
+          "role": "Data series representing the baseline CLIP model's performance"
+        },
+        {
+          "name": "Axes (Pre%, Acc%, Rec%)",
+          "role": "Performance metrics plotted for each task"
+        }
+      ],
+      "relations": [
+        {
+          "source": "clip + our",
+          "target": "clip",
+          "relation": "outperforms"
+        },
+        {
+          "source": "clip + our",
+          "target": "Sentiment Analysis Chart",
+          "relation": "is_plotted_in"
+        },
+        {
+          "source": "clip + our",
+          "target": "Intention Detection Chart",
+          "relation": "is_plotted_in"
+        },
+        {
+          "source": "clip + our",
+          "target": "Offensiveness Detection Chart",
+          "relation": "is_plotted_in"
+        },
+        {
+          "source": "clip + our",
+          "target": "Metaphor Recognition Chart",
+          "relation": "is_plotted_in"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The proposed method ('clip + our') achieves higher precision, accuracy, and recall than the baseline ('clip') in Sentiment Analysis.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "The red polygon completely encloses the blue polygon in the Sentiment Analysis chart.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        },
+        {
+          "claim": "The proposed method outperforms the baseline in Intention Detection.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "The red polygon has a larger area than the blue polygon in the Intention Detection chart.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        },
+        {
+          "claim": "The proposed method outperforms the baseline in Offensiveness Detection.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "The red polygon has a larger area than the blue polygon in the Offensiveness Detection chart.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        },
+        {
+          "claim": "The proposed method outperforms the baseline in Metaphor Recognition.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "The red polygon has a larger area than the blue polygon in the Metaphor Recognition chart.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The blue line represents the better model because it is inside the red shape.",
+          "why_wrong": "In radar charts where axes represent positive metrics like accuracy and recall, a larger enclosed area indicates higher values and thus better performance. The legend confirms 'clip + our' (red) is the outer, larger shape."
+        },
+        {
+          "claim": "The figure displays F1 scores.",
+          "why_wrong": "The axes are explicitly labeled as Pre(%), Acc(%), and Rec(%), not F1 score."
+        }
+      ],
+      "limitations": [
+        "Exact numerical values for the metrics are not provided, making precise comparison difficult.",
+        "Statistical significance or error bars are not visible.",
+        "The relative scale of the axes is not explicitly quantified with numbers."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    }
+  ],
+  "summary": {
+    "asset_explanation_count": 8,
+    "by_asset_type": {
+      "figure": 6,
+      "table": 2
+    },
+    "needs_review_count": 0,
+    "supported_claim_count": 28,
+    "possible_misreading_count": 18
+  }
+}

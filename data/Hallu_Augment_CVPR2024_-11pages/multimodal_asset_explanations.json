@@ -1,0 +1,1097 @@
+{
+  "paper_id": "Hallu_Augment_CVPR2024_-11pages",
+  "schema_version": "v1",
+  "table_explainer_model": "deepseek-v4-flash",
+  "figure_explainer_model": "qwen3.6-flash",
+  "figure_explainer_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "asset_explanations": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S2",
+      "macro_id": "M1",
+      "caption": "(c) The blue bar represents overall score on MMhal-Bench and the orange bar represents the overall score on MME. Noted bigger numbers mean better results.",
+      "summary": "The figure demonstrates the effect of HACl on LLaVA through representation analysis and performance benchmarks. Panels (a) and (b) show 3D scatter plots of feature distributions, illustrating a 'Modality Gap' between text-based representations (Ground Truth/Hallucination) and image representations in the baseline model, which is reduced when HACl is applied. Panel (c) displays a bar chart comparing performance scores on MMhal-Bench and MME, showing that LLaVA with HACl outperforms the baseline.",
+      "key_elements": [
+        {
+          "name": "Panel (a)",
+          "role": "Scatter plot showing representation distribution of LLaVA without HACl"
+        },
+        {
+          "name": "Panel (b)",
+          "role": "Scatter plot showing representation distribution of LLaVA with HACl"
+        },
+        {
+          "name": "Panel (c)",
+          "role": "Bar chart comparing performance metrics"
+        },
+        {
+          "name": "Modality Gap Arrow",
+          "role": "Indicates spatial separation between modalities in panel (a)"
+        },
+        {
+          "name": "Legend",
+          "role": "Identifies data points as Ground Truth (green), Hallucination (red), and Image (blue)"
+        },
+        {
+          "name": "MMhal-Bench Scores",
+          "role": "Quantitative comparison metric (blue bars)"
+        },
+        {
+          "name": "MME Scores",
+          "role": "Quantitative comparison metric (orange bars)"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Panel (a)",
+          "target": "Panel (b)",
+          "relation": "compares_baseline_to_improved"
+        },
+        {
+          "source": "Modality Gap Arrow",
+          "target": "Panel (a)",
+          "relation": "annotates_separation"
+        },
+        {
+          "source": "LLaVA with HACl",
+          "target": "MMhal-Bench Scores",
+          "relation": "achieves_higher_score"
+        },
+        {
+          "source": "LLaVA with HACl",
+          "target": "MME Scores",
+          "relation": "achieves_higher_score"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "LLaVA without HACl exhibits a distinct separation between text-based and image representations.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible_label, panel layout",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "Applying HACl reduces the modality gap, causing representations to overlap more.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "panel layout, visual cue",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "LLaVA with HACl achieves a score of 2.08 on MMhal-Bench.",
+          "support_level": "visible_label",
+          "evidence_basis": "visible_label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "LLaVA w/o HACl achieves a score of 1.55 on MMhal-Bench.",
+          "support_level": "visible_label",
+          "evidence_basis": "visible_label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "LLaVA with HACl achieves a score of 562.58 on MME.",
+          "support_level": "visible_label",
+          "evidence_basis": "visible_label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "LLaVA w/o HACl achieves a score of 502.82 on MME.",
+          "support_level": "visible_label",
+          "evidence_basis": "visible_label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The colors in the scatter plot correspond to the colors in the bar chart.",
+          "why_wrong": "In the scatter plot, colors represent data types (GT, Hallucination, Image), while in the bar chart, they represent different metrics (Blue=MMhal, Orange=MME)."
+        },
+        {
+          "claim": "The axes PC1, PC2, PC3 represent physical dimensions.",
+          "why_wrong": "PC typically stands for Principal Component, indicating these are abstract dimensions from PCA analysis, not physical space."
+        }
+      ],
+      "limitations": [
+        "The scatter plots are 3D projections, so exact distances and overlaps might be visually distorted.",
+        "The performance comparison is limited to only two specific benchmarks (MMhal-Bench and MME)."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S3",
+      "macro_id": "M2",
+      "caption": "Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL.",
+      "summary": "Figure 2 illustrates the HACL framework and its two-stage training paradigm. Panel (a) depicts the architecture where a Large Language Model (LLM) processes projected visual tokens from a Vision Encoder via an Interface, and interacts with both ground truth and hallucinative captions for contrastive learning objectives. Panel (b) outlines the training process: Stage 1 involves text generation and intra-LLM contrastive learning, while Stage 2 focuses on self-instruction tuning.",
+      "key_elements": [
+        {
+          "name": "Text to Image Contrastive Learning diagram",
+          "role": "visualizes embedding relationships"
+        },
+        {
+          "name": "Image to Text Contrastive Learning diagram",
+          "role": "visualizes embedding relationships"
+        },
+        {
+          "name": "Large Language Model (LLM)",
+          "role": "central processing component"
+        },
+        {
+          "name": "Ground Truth Caption",
+          "role": "example input/output text"
+        },
+        {
+          "name": "Hallucinative Caption",
+          "role": "example input/output text"
+        },
+        {
+          "name": "Projected Visual Token Sequence",
+          "role": "intermediate data representation"
+        },
+        {
+          "name": "Interface",
+          "role": "component connecting vision encoder and LLM"
+        },
+        {
+          "name": "Vision Encoder",
+          "role": "component processing images"
+        },
+        {
+          "name": "Stage 1",
+          "role": "training phase block"
+        },
+        {
+          "name": "Stage 2",
+          "role": "training phase block"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Vision Encoder",
+          "target": "Interface",
+          "relation": "connects_to"
+        },
+        {
+          "source": "Interface",
+          "target": "Projected Visual Token Sequence",
+          "relation": "produces"
+        },
+        {
+          "source": "Projected Visual Token Sequence",
+          "target": "Large Language Model (LLM)",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Ground Truth Caption",
+          "target": "Large Language Model (LLM)",
+          "relation": "connected_to"
+        },
+        {
+          "source": "Hallucinative Caption",
+          "target": "Large Language Model (LLM)",
+          "relation": "connected_to"
+        },
+        {
+          "source": "Stage 1",
+          "target": "Large Language Model (LLM)",
+          "relation": "contains"
+        },
+        {
+          "source": "Stage 1",
+          "target": "Intra-LLM Contrastive Learning",
+          "relation": "includes_task"
+        },
+        {
+          "source": "Stage 2",
+          "target": "Self Instruction Tuning",
+          "relation": "includes_task"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The framework uses a Large Language Model (LLM).",
+          "support_level": "visible_label",
+          "evidence_basis": "Visible label 'Large Language Model (LLM)' in center and right panels",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The training process consists of two stages.",
+          "support_level": "visible_label",
+          "evidence_basis": "Visible labels 'Stage 1' and 'Stage 2'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Stage 1 includes 'Intra-LLM Contrastive Learning'.",
+          "support_level": "visible_label",
+          "evidence_basis": "Visible text in Stage 1 box",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Stage 2 includes 'Self Instruction Tuning'.",
+          "support_level": "visible_label",
+          "evidence_basis": "Visible text in Stage 2 box",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The model generates hallucinative captions that differ from ground truth.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption mentions 'hallucinative captions' and visible text boxes show different descriptions ('golden flower' vs 'green leaf')",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Visual information is processed through a Vision Encoder and Interface.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Flow arrows from images -> Vision Encoder -> Interface -> Projected Visual Token Sequence",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The diagram indicates that hallucinative captions are treated as positive samples in Image-to-Text contrastive learning.",
+          "why_wrong": "While the inner ring of the top-right circle is labeled 'Positive' and contains a pink dot (legend: hallucinative caption), the figure caption explicitly states that hallucinative captions are used as 'hard negative samples'. This suggests the diagram's labeling might be specific to a certain loss formulation or notation that contradicts standard terminology, requiring careful interpretation."
+        },
+        {
+          "claim": "The arrows from the caption boxes indicate the LLM outputs them directly in the main flow.",
+          "why_wrong": "The arrows point upwards from the caption boxes into the LLM block, which visually suggests they are inputs or factors being fed back into the model (possibly for loss calculation or alignment), rather than simple output arrows."
+        }
+      ],
+      "limitations": [
+        "The exact mathematical mechanism of 'Intra-LLM Contrastive Learning' is abstractly represented by circles and does not show the specific loss function equations.",
+        "The color coding in the legend and diagrams (specifically regarding 'Positive' vs 'Negative' samples) appears potentially contradictory to the caption text, making precise interpretation difficult without further context."
+      ],
+      "needs_review": false,
+      "confidence": 0.85,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S6",
+      "macro_id": "M5",
+      "caption": "Figure 3. This figure showcases a range of hallucinative captions generated by GPT-4. The hallucinative text is highlighted in red.",
+      "summary": "The figure presents three qualitative examples comparing 'Ground Truth Captions' with 'Hallucinative Captions' generated by GPT-4. Each example consists of an image on the left and two corresponding text descriptions on the right. The hallucinative captions contain specific phrases highlighted in red, indicating details that are fabricated or incorrect relative to the image content.",
+      "key_elements": [
+        {
+          "name": "Example 1 (Bus)",
+          "role": "Top panel showing a white bus image and associated captions"
+        },
+        {
+          "name": "Example 2 (Horse)",
+          "role": "Middle panel showing a person riding a horse and associated captions"
+        },
+        {
+          "name": "Example 3 (Elephants)",
+          "role": "Bottom panel showing elephants and associated captions"
+        },
+        {
+          "name": "Ground Truth Caption",
+          "role": "Text block describing the actual image content, enclosed in green dashed border"
+        },
+        {
+          "name": "Hallucinative Caption",
+          "role": "Text block containing model-generated text with errors, enclosed in red dashed border"
+        },
+        {
+          "name": "Red Highlighted Text",
+          "role": "Specific words within the hallucinative caption marked in red to indicate hallucination"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Hallucinative Caption",
+          "target": "Ground Truth Caption",
+          "relation": "contradicts_or_adds_to"
+        },
+        {
+          "source": "Red Highlighted Text",
+          "target": "Hallucinative Caption",
+          "relation": "is_part_of"
+        },
+        {
+          "source": "Image",
+          "target": "Ground Truth Caption",
+          "relation": "illustrates"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "GPT-4 can generate captions that include details not present in the source image.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "In all three panels, the hallucinative caption contains red text describing objects or attributes (e.g., 'red bus', 'silver sword', 'zebra') that are absent from the corresponding image.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "The figure uses red highlighting to explicitly mark hallucinated text.",
+          "support_level": "visible_label",
+          "evidence_basis": "The caption states 'The hallucinative text is highlighted in red', and this visual pattern is consistent across all three examples.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Hallucinations can involve incorrect object attributes or entirely non-existent objects.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Example 1 shows incorrect color/pattern ('red bus', 'polka dots'). Example 2 adds a non-existent object ('silver sword'). Example 3 introduces a non-existent animal ('zebra').",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The red text indicates the correct or most important part of the caption.",
+          "why_wrong": "The caption explicitly states 'hallucinative text is highlighted in red', meaning it represents errors or fabrications, not correctness."
+        },
+        {
+          "claim": "The images show the scenes described in the hallucinative captions.",
+          "why_wrong": "The images correspond to the 'Ground Truth Caption' which accurately describes the visible scene, whereas the hallucinative caption describes things not seen."
+        }
+      ],
+      "limitations": [
+        "Only three specific examples are shown, so they may not represent the full range or frequency of hallucinations.",
+        "The figure does not provide quantitative metrics on how often these hallucinations occur.",
+        "It is unclear if the 'Ground Truth' is perfectly accurate without external verification, though it is presented as such."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S9",
+      "macro_id": "M7",
+      "caption": "Table 1. Evaluation results for different MLLMs on MMHal-Bench.",
+      "summary": "This table reports evaluation results for multiple Multimodal Large Language Models (MLLMs) on the MMHal-Bench benchmark, including baseline models and their HACL variants. Metrics include Overall Score (higher is better), Hallucination Rate (lower is better), and per-type scores for eight question categories (Attribute, Adversarial, Comparison, Counting, Relation, Environment, Holistic, Other). The table shows that HACL variants generally improve overall score and reduce hallucination rate compared to their base models.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "InstructBLIP_13B achieves the highest overall score of 2.14 among all methods listed.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row for InstructBLIP_13B, column 'Overall Score'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "LLaVA1.5_7B-HACL has the lowest hallucination rate of 0.50 among all methods.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row for LLaVA1.5_7B-HACL, column 'Hallucination Rate'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "LLaVA_7B-HACL improves overall score by 0.53 compared to its base model LLaVA_7B (from 1.55 to 2.08).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Rows for LLaVA_7B and LLaVA_7B-HACL, column 'Overall Score'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "LLaVA_7B-HACL reduces hallucination rate by 0.15 compared to LLaVA_7B (from 0.76 to 0.62).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Rows for LLaVA_7B and LLaVA_7B-HACL, column 'Hallucination Rate'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "Kosmos-2 has the highest hallucination rate of 0.68 among all methods.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row for Kosmos-2, column 'Hallucination Rate'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "HACL always provides large improvements in overall score and hallucination rate.",
+          "why_wrong": "The improvements vary by base model; for LLaVA1.5_7B-HACL, the overall score improvement is only 0.05 and hallucination rate reduction is 0.02, which are much smaller than the improvements for LLaVA_7B-HACL and miniGPT-4_7B-HACL."
+        },
+        {
+          "claim": "The overall score is the average of the eight per-type scores.",
+          "why_wrong": "The table does not provide any formula or indication that overall score is an average; it is a separate metric likely computed differently."
+        },
+        {
+          "claim": "Kosmos-2 performs worse than all other models on overall score and hallucination rate.",
+          "why_wrong": "While Kosmos-2 has low overall score (1.69) and high hallucination rate (0.68), miniGPT-4_7B has an even lower overall score (1.39) and LLaVA_7B has a higher hallucination rate (0.76)."
+        }
+      ],
+      "limitations": [
+        "The table only evaluates models on MMHal-Bench; results may not generalize to other benchmarks or real-world tasks.",
+        "The metrics are averaged scores; individual question-type scores may have high variance.",
+        "The table does not provide statistical significance or confidence intervals for the reported values.",
+        "The number of runs or seeds used for evaluation is not specified.",
+        "Some models have different parameter sizes, which may affect comparisons."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S9",
+      "macro_id": "M7",
+      "caption": "Table 2. Object hallucination benchmark using POPE [28] evaluation pipeline. \"Yes\" signifies the likelihood of the model producing a positive response.",
+      "summary": "Table 2 reports object hallucination benchmarks using the POPE evaluation pipeline across three datasets (Random, Popular, Adversarial). It shows performance metrics (Accuracy, Precision, Recall, F1-Score, Yes%) for several vision-language models, including Shikra, InstructBLIP, MM-GPT, mPLUG-Owl, MiniGPT-4, LLaVA, and LLaVA1.5. For LLaVA and LLaVA1.5, results are presented with HACL, and arrows indicate the change (improvement or degradation) relative to their baselines without HACL, which are not shown in the table.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "On the Random dataset, LLaVA with HACL achieves 80.49% accuracy, representing an improvement of 25.84 percentage points over its baseline.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Random & Accuracy', column 'LLaVA w/ HACL': '80.49 (↑ 25.84)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "On the Random dataset, LLaVA1.5 with HACL achieves 82.16% accuracy, representing an improvement of 31.18 percentage points over its baseline.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Random & Accuracy', column 'LLaVA1.5 w/ HACL': '82.16 (↑ 31.18)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "On the Popular dataset, LLaVA1.5 with HACL shows a decrease in Yes% of 26.77 percentage points relative to its baseline, resulting in 45.03% Yes responses.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Popular & Yes', column 'LLaVA1.5 w/ HACL': '45.03 (↓ 26.77)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "On the Adversarial dataset, LLaVA with HACL improves Recall by 32.00 percentage points to 73.45%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Adversarial & Recall', column 'LLaVA w/ HACL': '73.45 (↑ 32.00)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "HACL consistently improves all metrics across all datasets for LLaVA and LLaVA1.5.",
+          "why_wrong": "The table shows down arrows (↓) for some metrics, e.g., LLaVA1.5 Yes% on Random drops by 22.59 points, and on Popular drops by 26.77 points. HACL does not always improve performance."
+        },
+        {
+          "claim": "The arrows indicate the difference between the model's performance and the performance of the model immediately to its left in the table.",
+          "why_wrong": "The arrows indicate change relative to the model's own baseline without HACL (not shown), not relative to the previous column. For example, LLaVA w/ HACL accuracy of 80.49 (↑25.84) compares to LLaVA without HACL, not to MiniGPT-4 w/ HACL."
+        }
+      ],
+      "limitations": [
+        "The table does not show baseline values (without HACL) for models other than those with arrows, so direct comparisons of HACL's effect are limited.",
+        "Results are specific to the POPE benchmark and may not generalize to other hallucination evaluation datasets.",
+        "The column ordering and model identification are somewhat ambiguous due to an apparent extra column or missing header label in the original table.",
+        "The table only includes a subset of models and does not indicate statistical significance or variance."
+      ],
+      "needs_review": false,
+      "confidence": 0.8,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S10",
+      "macro_id": "M7",
+      "caption": "Table 3. Performance comparison on visual question answering. For VQA, accuracy is reported. Note that specialists are fine-tuned on each individual dataset. † denotes OCR inputs are utilized. ‡ indicates the model has trained on the dataset. We gray out those specialists' methods which are individually fine-tuned on the dataset as well as those fine-tuned results of generalists.",
+      "summary": "Table 3 reports accuracy scores comparing various generalist and specialist multimodal models on five VQA benchmarks: VQAv2, GQA, VizWizQA, TextVQA, and SciQA (IMG). It includes baseline models and their HACL-enhanced variants, with special markers for OCR input use (†) and dataset-specific fine-tuning (‡).",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "LLaVA1.5-HACL achieves higher accuracy than LLaVA1.5 on all five VQA benchmarks.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Row LLaVA1.5 vs Row LLaVA1.5-HACL, columns VQAv2 (78.5 vs 79.1), GQA (62.0 vs 62.5), VizWizQA (50.0 vs 50.5), TextVQA (58.2 vs 59.8), SciQA (IMG) (66.8 vs 67.3)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "LLaVA-HACL outperforms LLaVA on all five VQA benchmarks.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Row LLaVA vs Row LLaVA-HACL, columns VQAv2 (71.3 vs 73.3), GQA (41.3 vs 42.5), VizWizQA (36.7 vs 37.4), TextVQA (50.2 vs 52.2), SciQA (IMG) (61.5 vs 62.4)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "BLIP-2 (8.2B params) achieves 65.0% accuracy on VQAv2.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row BLIP-2, column VQAv2",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "InstructBLIP (8.2B params) with OCR input (†) achieves 50.1% on TextVQA.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row InstructBLIP, column TextVQA (50.1 with † symbol)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "All results are zero-shot without any dataset-specific training.",
+          "why_wrong": "The caption states that specialists are fine-tuned on each individual dataset, and the † symbol indicates OCR inputs; some methods (e.g., those with ‡) are trained on the dataset, as mentioned in the caption."
+        },
+        {
+          "claim": "HACL consistently improves performance for all base methods.",
+          "why_wrong": "The table only shows HACL variants for LLaVA, MiniGPT-4, and LLaVA1.5; not all methods have HACL versions, so the claim cannot be generalized."
+        },
+        {
+          "claim": "Qwen-VL-Chat outperforms all other models on all tasks.",
+          "why_wrong": "Qwen-VL-Chat has high scores on VQAv2 (78.2) and SciQA (68.2) but is not the best on GQA (57.5, lower than LLaVA1.5's 62.0) and other tasks."
+        }
+      ],
+      "limitations": [
+        "Table only reports accuracy for five specific VQA benchmarks; generalization to other VQA datasets or tasks is not supported.",
+        "Comparisons between methods with different parameter counts (e.g., 2.9B vs 12B) may not be fair without considering model size.",
+        "The table does not provide confidence intervals or statistical significance, so differences may not be meaningful.",
+        "Methods with † (OCR input) or ‡ (trained on dataset) have advantages not available to others, making direct comparisons less definitive."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S10",
+      "macro_id": "M7",
+      "caption": "Table 4. Zero-shot multi-modal evaluation on multi-modal benchmarks including MME [12], MMBench [34], MM-Vet [52], SEEDBench [23]. The overall scores are reported for evaluation. For MMBench, we report test results.",
+      "summary": "This table presents zero-shot performance of various multi-modal models (BLIP-2, mPLUG-Owl, InstructBLIP, LLaMA-Adapter-v2, Otter, Qwen-VL-Chat, LLaVA, LLaVA-HACL, MiniGPT-4, MiniGPT-4-HACL, LLaVA-1.5, LLaVA-1.5-HACL) on four benchmarks: MME, MMBench, MM-Vet, and SEED-Bench. Overall scores are reported; for MMBench, test results are shown. The HACL variants consistently outperform their base counterparts, with LLaVA-1.5-HACL achieving the highest scores on MME (1530.10), MMBench (64.5), and SEED-Bench (58.9), while LLaVA-1.5 slightly edges ahead on MM-Vet (30.5 vs 30.4).",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "LLaVA-1.5-HACL achieves an MME score of 1530.10",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'LLaVA-1.5-HACL', column 'MME'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "LLaVA-1.5-HACL outperforms LLaVA-1.5 on MMBench by 0.2 points (64.5 vs 64.3)",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of rows 'LLaVA-1.5-HACL' and 'LLaVA-1.5', column 'MMBench'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "MiniGPT-4-HACL improves over MiniGPT-4 on MM-Vet by 1.7 points (23.8 vs 22.1)",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of rows 'MiniGPT-4-HACL' and 'MiniGPT-4', column 'MM-Vet'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "LLaVA-HACL achieves an MME score of 562.58, which is higher than LLaVA's 502.82",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Rows 'LLaVA-HACL' and 'LLaVA', column 'MME'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "Qwen-VL-Chat achieves the highest MMBench score (60.6) among models without HACL variants",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Qwen-VL-Chat', column 'MMBench'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "HACL always improves performance on all benchmarks.",
+          "why_wrong": "For MM-Vet, LLaVA-1.5-HACL (30.4) is slightly worse than LLaVA-1.5 (30.5). Also, MiniGPT-4-HACL scores 42.5 on SEED-Bench versus MiniGPT-4's 42.8, a decrease."
+        },
+        {
+          "claim": "LLaVA-1.5-HACL is the best model overall on all four benchmarks.",
+          "why_wrong": "On MM-Vet, LLaVA-1.5 (30.5) surpasses LLaVA-1.5-HACL (30.4). Additionally, Qwen-VL-Chat has a higher MMBench score (60.6) than LLaVA-1.5-HACL (64.5? Wait 64.5 > 60.6, so actually LLaVA-1.5-HACL is higher. But check: LLaVA-1.5-HACL MMBench = 64.5, Qwen-VL-Chat = 60.6, so LLaVA-1.5-HACL is best on MMBench. So this claim might be partially true except MM-Vet. Still, the claim is overgeneralized."
+        },
+        {
+          "claim": "The table shows that HACL is effective for all vision-language models.",
+          "why_wrong": "The table only includes HACL variants for LLaVA, MiniGPT-4, and LLaVA-1.5. It does not test HACL on other base models like BLIP-2 or InstructBLIP, so we cannot generalize."
+        }
+      ],
+      "limitations": [
+        "Only overall scores are reported; per-category or per-question breakdowns are not provided.",
+        "Results are zero-shot only; fine-tuned performance is not shown.",
+        "Some entries are missing (dashes), indicating the benchmark was not evaluated for those models.",
+        "No statistical significance measures (e.g., confidence intervals) are provided.",
+        "The table does not include model sizes or computational costs, which may affect interpretation.",
+        "Only four benchmarks are considered; generalization to other tasks or datasets is not validated."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_005",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S11",
+      "macro_id": "M8",
+      "caption": "The result of ablations for the impact of hallucinative captions. We report the text-dev score results of POPE[28], MMhalBench [44], VQA and MME. w/ CL refers to training MLLMs with Contrastive Learning for MLLMs, w/ HC refers to utilize hallucinative captions to enhance the contrastive learning. For POPE, we report the average F1 score.",
+      "summary": "This table presents an ablation study on the impact of hallucinative captions (HC) and contrastive learning (CL) for three multimodal large language models (LLaVA, MiniGP-4, LLaVA1.5). It reports text-dev scores on POPE (average F1), MMHalBench, VQA, and MME benchmarks across different combinations of w/ CL and w/ HC.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "LLaVA without contrastive learning or hallucinative captions achieves a POPE F1 score of 66.48.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row1 (LLaVA, ✗, ✗), column POPE",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "Adding both contrastive learning and hallucinative captions to LLaVA increases its POPE score by 11.83 points (from 66.48 to 78.31).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "row1 (66.48) and row3 (78.31) of LLaVA",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "For LLaVA1.5, the configuration with both contrastive learning and hallucinative captions yields the highest POPE score of 87.26 among the three configurations tested.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row9 (LLaVA1.5, ✓, ✓), column POPE",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "Across all models and configurations, LLaVA1.5 with both enhancements achieves the highest MME score of 1530.10.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row9 (LLaVA1.5, ✓, ✓), column MME",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Adding hallucinative captions always provides large improvements across all metrics and models.",
+          "why_wrong": "For LLaVA1.5, the improvement from adding w/ HC to the w/ CL configuration is small (e.g., POPE from 86.31 to 87.26; MME from 1523.84 to 1530.10), and the improvement magnitude varies by model and metric."
+        },
+        {
+          "claim": "Contrastive learning alone is sufficient to achieve near-optimal performance.",
+          "why_wrong": "In all three models, adding hallucinative captions on top of contrastive learning further improves scores on all metrics, indicating that HC provides additional benefit."
+        },
+        {
+          "claim": "The reported scores reflect overall benchmark test performance.",
+          "why_wrong": "The caption explicitly states these are 'text-dev score results', meaning they are from a development set, not official test sets."
+        }
+      ],
+      "limitations": [
+        "The table only covers three specific model architectures (LLaVA, MiniGP-4, LLaVA1.5).",
+        "All scores are from a text-dev set; generalization to test sets may differ.",
+        "No statistical significance or confidence intervals are provided.",
+        "Only four metrics (POPE, MMHalBench, VQA, MME) are reported; other hallucination or quality metrics are not considered."
+      ],
+      "needs_review": false,
+      "confidence": 1.0,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_006",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S11",
+      "macro_id": "M8",
+      "caption": "Results of models under different training paradigms. \"+VE\" denotes training the Visual Encoder during Stage 1 pretraining, while \"+LLM\" indicates training the LLM during Stage 1 pretraining.",
+      "summary": "This ablation table compares performance of LLaVA-HACL and LLaVA1.5-HACL under different Stage 1 pretraining configurations: training only the Visual Encoder (+VE), only the LLM (+LLM), or neither. Metrics include POPE, MMHal, VQA, and MME scores.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "For LLaVA-HACL, not training either the Visual Encoder or LLM (+VE=✗, +LLM=✗) achieves POPE score 78.31, MMHal 2.08, VQA 73.3, MME 562.58.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 3 of table: LLaVA-HACL with ✗,✗ in columns +VE, +LLM",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "For LLaVA-HACL, training only the LLM (+VE=✗, +LLM=✓) yields higher scores than training only the Visual Encoder (+VE=✓, +LLM=✗) across all four metrics: POPE 78.53 vs 63.42, MMHal 2.08 vs 1.43, VQA 74.2 vs 65.0, MME 580.32 vs 324.50.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Rows 2 and 1 of table",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "For LLaVA1.5-HACL, training only the LLM (+VE=✗, +LLM=✓) achieves POPE 87.23, MMHal 2.13, VQA 79.4, MME 1542.48.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 5 of table: LLaVA1.5-HACL with ✗,✓",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "For LLaVA1.5-HACL, training only the Visual Encoder (+VE=✓, +LLM=✗) yields POPE 68.89, MMHal 1.53, VQA 69.6, MME 459.34.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 4 of table: LLaVA1.5-HACL with ✓,✗",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "For LLaVA1.5-HACL, not training either (+VE=✗, +LLM=✗) gives POPE 87.26, MMHal 2.13, VQA 79.1, MME 1530.10, which are very similar to training only the LLM.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Rows 6 and 5 of table",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Training both +VE and +LLM always degrades performance compared to training neither.",
+          "why_wrong": "The table does not include a row with both +VE and +LLM checked, so no comparison is possible."
+        },
+        {
+          "claim": "LLaVA1.5-HACL outperforms LLaVA-HACL in all configurations.",
+          "why_wrong": "While LLaVA1.5-HACL scores are higher, the models have different base architectures; the table does not control for that, so a direct cross-model comparison is not a supported claim."
+        },
+        {
+          "claim": "Training only the LLM is always better than training the Visual Encoder for both models.",
+          "why_wrong": "The table supports this for LLaVA-HACL and LLaVA1.5-HACL, but the claim says 'always' which may not generalize to other models or settings not tested."
+        }
+      ],
+      "limitations": [
+        "No error bars or statistical significance are provided.",
+        "The condition where both +VE and +LLM are trained is missing.",
+        "Only two model variants are tested, limiting generalizability.",
+        "Metrics are reported as single numbers, likely without uncertainty quantification."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "chart",
+      "section_id": "S11",
+      "macro_id": "M8",
+      "caption": "Figure 4. This figure illustrates the visualization of various data distributions. The blue icons represent visual data extracted from images, the green icons denote ground truth caption data, and the red icons signify hallucinative caption data. The label \"w/o HACL\" represents the data distribution obtained from the original model output without employing our proposed method. On the other hand, \"w/ CL\" indicates the data distribution resulting from the model output utilizing contrastive learning. Lastly, \"w/ HACL\" indicates the data distribution generated by the model output using our proposed method.",
+      "summary": "Figure 4 displays three 3D scatter plots visualizing data distributions in a latent space defined by PC1, PC2, and PC3. The plots compare the alignment of visual data (blue dots), ground truth captions (green circles), and hallucinative captions (red triangles) under three conditions: without the proposed method (w/o HACL), with contrastive learning (w/ CL), and with the proposed method (w/ HACL). Panel (a) shows a clear separation between visual data and text data. Panel (b) shows all data types heavily overlapped. Panel (c) shows visual data separated from text data, but with ground truth data positioned closer to visual data than hallucinative data, suggesting the proposed method distinguishes hallucinations.",
+      "key_elements": [
+        {
+          "name": "Panel (a) / w/o HACL",
+          "role": "Baseline condition showing separation of modalities"
+        },
+        {
+          "name": "Panel (b) / w/ CL",
+          "role": "Condition with contrastive learning showing overlap"
+        },
+        {
+          "name": "Panel (c) / w/ HACL",
+          "role": "Proposed method condition showing partial separation of hallucinations"
+        },
+        {
+          "name": "Legend",
+          "role": "Defines symbols for Ground Truth (green circle), Hallucination (red triangle), and Image (blue dot)"
+        },
+        {
+          "name": "Axes (PC1, PC2, PC3)",
+          "role": "Define the 3D coordinate system for the scatter plots"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Panel (a)",
+          "target": "Visual Data",
+          "relation": "shows_separation_from"
+        },
+        {
+          "source": "Panel (a)",
+          "target": "Text Data",
+          "relation": "shows_separation_from"
+        },
+        {
+          "source": "Panel (b)",
+          "target": "All Data Types",
+          "relation": "shows_overlap_of"
+        },
+        {
+          "source": "Panel (c)",
+          "target": "Ground Truth",
+          "relation": "is_closer_to"
+        },
+        {
+          "source": "Ground Truth",
+          "target": "Visual Data",
+          "relation": "is_closer_to"
+        },
+        {
+          "source": "Hallucination",
+          "target": "Visual Data",
+          "relation": "is_further_from"
+        },
+        {
+          "source": "Legend",
+          "target": "Green icons",
+          "relation": "denotes"
+        },
+        {
+          "source": "Legend",
+          "target": "Red icons",
+          "relation": "signifies"
+        },
+        {
+          "source": "Legend",
+          "target": "Blue icons",
+          "relation": "represent"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The figure visualizes data distributions using Principal Components PC1, PC2, and PC3.",
+          "support_level": "visible_label",
+          "evidence_basis": "Axis labels on the plots",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "Blue dots represent visual data extracted from images.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption and Legend",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "Green circles represent ground truth caption data.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption and Legend",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "Red triangles represent hallucinative caption data.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption and Legend",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "In the 'w/o HACL' setting, visual data is spatially distinct from text data.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel (a) layout",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "In the 'w/ CL' setting, visual, ground truth, and hallucinative data are largely overlapping.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel (b) layout",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "In the 'w/ HACL' setting, ground truth data appears closer to visual data than hallucinative data does.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel (c) layout showing Blue-Green-Red ordering",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Panel (c) shows perfect alignment of all data types similar to Panel (b).",
+          "why_wrong": "Visually, Panel (c) shows a clear separation between the blue cluster (visual) and the red/green cluster (text), unlike the mixed cloud in Panel (b)."
+        },
+        {
+          "claim": "The red and green icons are indistinguishable in all panels.",
+          "why_wrong": "The legend and visual inspection show red triangles and green circles, which can be distinguished, especially in Panel (c) where they appear ordered."
+        }
+      ],
+      "limitations": [
+        "The figure relies on PCA visualization, which may distort true high-dimensional distances.",
+        "The exact degree of separation or alignment cannot be quantified precisely from the image alone.",
+        "It is difficult to discern subtle differences in the 'w/ HACL' panel without numerical metrics."
+      ],
+      "needs_review": false,
+      "confidence": 0.85,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    }
+  ],
+  "summary": {
+    "asset_explanation_count": 10,
+    "by_asset_type": {
+      "figure": 4,
+      "table": 6
+    },
+    "needs_review_count": 0,
+    "supported_claim_count": 49,
+    "possible_misreading_count": 25
+  }
+}

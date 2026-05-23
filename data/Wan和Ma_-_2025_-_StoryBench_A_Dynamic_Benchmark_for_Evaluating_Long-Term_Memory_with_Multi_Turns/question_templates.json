@@ -1,0 +1,3121 @@
+{
+  "paper_id": "Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns",
+  "schema_version": "v1",
+  "challenge_plans_path": "data/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/cache/questions/challenge_plans.json",
+  "challenge_plan_summary": {
+    "plan_count": 76,
+    "by_type": {
+      "false_premise_challenge": 52,
+      "overclaim_challenge": 12,
+      "wrong_relation_challenge": 12
+    },
+    "by_modality_pool": {
+      "multimodal": 40,
+      "text": 36
+    },
+    "text_plan_count": 36,
+    "multimodal_plan_count": 40,
+    "multimodal_plan_limit": 40
+  },
+  "challenge_questions_raw_path": "data/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/cache/questions/challenge_questions_raw.json",
+  "challenge_question_raw_summary": {
+    "raw_question_count": 57,
+    "by_type": {
+      "false_premise_challenge": 13,
+      "overclaim_challenge": 5,
+      "wrong_relation_challenge": 2
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    }
+  },
+  "challenge_questions_filtered_path": "data/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/cache/questions/challenge_questions_filtered.json",
+  "challenge_solver_trials_path": "data/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/cache/questions/challenge_solver_trials.json",
+  "challenge_filter_summary": {
+    "plan_pool_count": 76,
+    "target_count": 20,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 57,
+    "solver_trial_count": 53,
+    "filtered_count": 20,
+    "human_review_count": 8,
+    "rejected_count": 37,
+    "blacklisted_plan_count": 13,
+    "by_type": {
+      "false_premise_challenge": 13,
+      "overclaim_challenge": 5,
+      "wrong_relation_challenge": 2
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    },
+    "stop_reason": {
+      "text": "target_reached",
+      "multimodal": {
+        "figure": "target_reached",
+        "remaining": "target_reached"
+      }
+    }
+  },
+  "challenge_questions": [
+    {
+      "question_id": "CHQ_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0018",
+      "source_challenge_plan_id": "CHP_0018",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "What does the fact that only Claude 3.5 and GPT-4o never reach the error threshold of 9 mistakes in Self Recovery mode imply about their performance?",
+      "surface_intent": "To assess whether the model understands the distinction between never reaching a threshold and making no mistakes.",
+      "target_kc_ids": [
+        "KC38"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The evidence only shows they never reach the error threshold of 9 mistakes, not that they are mistake-free. They may still make fewer than 9 repeated errors.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC38",
+          "text": "Unsurprisingly, all models perform worse under Self Recovery mode, as shown by the consistent drop in Overall Accuracy and Success Count. This highlights the increased difficulty of sustained sequential reasoning and knowledge retention without short-term feedback. To alleviate task failure in extreme cases, we introduce an auxiliary intervention metric: Number of Choices Reaching Error Threshold (we set the threshold to 9). If a model makes the same mistake more than 9 times, it is prompted with the correct answer. Only Claude 3.5 and GPT-4o never reach this threshold, suggesting that their task completions in Self Recovery mode are entirely due to self-correction and internal reasoning without any artificial hints. This contrasts sharply with other models, indicating that they excel in sustained sequential reasoning and knowledge retention.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly targets the false premise about mistake-free performance vs. not reaching the error threshold. It does not expose hidden labels and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0007",
+      "source_challenge_plan_id": "CHP_0007",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Given that only Claude 3.5 and GPT-4o never reach the error threshold in Self Recovery mode, what does this suggest about the problem-solving strategies and capabilities of the other models?",
+      "surface_intent": "To interpret the experimental result regarding the error threshold and its implications for different models' performance.",
+      "target_kc_ids": [
+        "KC38"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'not_specified', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC38",
+          "text": "Unsurprisingly, all models perform worse under Self Recovery mode, as shown by the consistent drop in Overall Accuracy and Success Count. This highlights the increased difficulty of sustained sequential reasoning and knowledge retention without short-term feedback. To alleviate task failure in extreme cases, we introduce an auxiliary intervention metric: Number of Choices Reaching Error Threshold (we set the threshold to 9). If a model makes the same mistake more than 9 times, it is prompted with the correct answer. Only Claude 3.5 and GPT-4o never reach this threshold, suggesting that their task completions in Self Recovery mode are entirely due to self-correction and internal reasoning without any artificial hints. This contrasts sharply with other models, indicating that they excel in sustained sequential reasoning and knowledge retention.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels or metadata. It directly targets the intended failure mode (overclaim) by asking for implications beyond the strict experimental scope, allowing evaluation of whether the model overgeneralizes.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0009",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0004",
+      "source_challenge_plan_id": "CHP_0004",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the results, can we conclude that removing short-term feedback during Self Recovery improves long-horizon coherence and narrative understanding in models?",
+      "surface_intent": "Ask whether the observed trend of increased metrics generalizes to a conclusion about improved coherence and understanding.",
+      "target_kc_ids": [
+        "KC40"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'not_specified', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC40",
+          "text": "Surprisingly, despite the overall decline in performance across models in Self Recovery, two metrics: Longest Consecutive Correct Sequence and First-Try Accuracy actually increase for several models (Figure 8). This amazing trend emphasizes that while short-term feedback aids local correction, it may also disrupt long-horizon coherence. By removing it, models foster a deeper narrative understanding (knowledge retention) and more coherent reasoning (sequential reasoning) and we better expose the true limitations and strengths of long-term memory in different models.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's target failure mode (overclaim) is appropriate, but the generated question made the trap too obvious by explicitly asking about generalization across all models and tasks. Solvers easily recognized the overclaim because the question itself highlighted the scope limitation. Revision guidance: Revise the question to avoid explicitly mentioning 'general' or 'all models and tasks'. Instead, ask about the implications of the finding without qualifying the scope, e.g., 'Can we conclude that removing short-term feedback improves long-horizon coherence and narrative understanding?' This may lead solvers to overgeneralize the paper's limited evidence."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "Question naturally asks for generalization beyond the paper's scope, targeting overclaim.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0014",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0023",
+      "source_challenge_plan_id": "CHP_0023",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "According to the paper, what is the most significant barrier to enabling advanced behaviors such as multi-session dialogue and task planning in large language models?",
+      "surface_intent": "The question asks the model to identify the primary obstacle to advanced LLM behaviors based on the paper's argument.",
+      "target_kc_ids": [
+        "KC21",
+        "KC23"
+      ],
+      "target_edge_ids": [
+        "E120"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E120",
+          "kc_ids": [
+            "KC21",
+            "KC23"
+          ],
+          "text": "Given the importance of LTM in enabling advanced behaviors, it is crucial to evaluate these capabilities reliably and systematically. However, current benchmarks face challenges in adequately\n\n<!-- page 2: doc_1.md -->\n\nevaluating LTM capabilities in two critical dimensions: 1) Knowledge Retention: the capacity to absorb, integrate, and preserve information across extended texts, maintaining contextual continuity beyond mere fact retrieval or local recall [Guo et al., 2025, EducateMe, 2024]; and 2) Sequential Reasoning: the ability to understand and reason about sequences of events, which involves inferring latent state changes, causal dependencies, and goal shifts across complex, dynamic, and multi-turn interactions rather than simply locating pre-stated answers within static text. 3) Flexibility: previous benchmarks often face challenges in adjusting and evaluating in different contexts."
+        },
+        {
+          "kc_id": "KC21",
+          "text": "In the field of artificial intelligence, the pursuit of true intelligence in large language models (LLMs) has prompted researchers to look to biology for inspiration [Gutiérrez et al., 2024, Wu et al., 2025]. Just as organisms gradually accumulate knowledge through experience over time, LLMs need to possess long-term memory (LTM) capabilities to achieve self-evolution and strategic optimization in ever-changing environments [Shan et al., 2025]. Moreover, as LLMs are increasingly applied in scenarios such as multi-session dialogue [Zhang et al., 2025], task planning, and lifelong learning, the need for models to retain, update, and leverage prior knowledge dynamically becomes critical. Without robust LTM, AI systems are limited to short-term reasoning and static knowledge use, failing to achieve sustained, autonomous intelligence.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC23",
+          "text": "Given the importance of LTM in enabling advanced behaviors, it is crucial to evaluate these capabilities reliably and systematically. However, current benchmarks face challenges in adequately\n\n<!-- page 2: doc_1.md -->\n\nevaluating LTM capabilities in two critical dimensions: 1) Knowledge Retention: the capacity to absorb, integrate, and preserve information across extended texts, maintaining contextual continuity beyond mere fact retrieval or local recall [Guo et al., 2025, EducateMe, 2024]; and 2) Sequential Reasoning: the ability to understand and reason about sequences of events, which involves inferring latent state changes, causal dependencies, and goal shifts across complex, dynamic, and multi-turn interactions rather than simply locating pre-stated answers within static text. 3) Flexibility: previous benchmarks often face challenges in adjusting and evaluating in different contexts.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question directly asks about a relation that is explicitly stated in the evidence, making it trivial for solvers to answer correctly. The trap requires the model to inadvertently reverse the relation, but the phrasing makes it too easy to extract the correct causal link. Revision guidance: Revise the question to be more indirect. For example, ask about the implications of LTM for evaluation rather than the direct relation, or ask to rank the importance of concepts. Avoid directly quoting the explicit sentence. The question should require synthesis or inference so that the model might be tempted to misorder or weaken the relation."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, and can be answered from the evidence. It indirectly tests the relation between KC21 (need for LTM) and KC23 (evaluation challenges) by asking for the barrier to advanced behaviors; a correct answer (lack of LTM) preserves the intended relation, while an incorrect answer (evaluation challenges) would reverse it.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0023",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0021",
+      "source_challenge_plan_id": "CHP_0021",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Given that Claude 3.5 and GPT-4o never reach the error threshold, what does the evidence suggest about the other models' ability to complete tasks without artificial hints in Self Recovery mode?",
+      "surface_intent": "Asks about the implication of the threshold data for the performance of models other than Claude 3.5 and GPT-4o.",
+      "target_kc_ids": [
+        "KC38"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "Reaching the error threshold means they receive hints, but it does not prove they cannot complete tasks without hints; it only shows they relied on hints in this experiment.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC38",
+          "text": "Unsurprisingly, all models perform worse under Self Recovery mode, as shown by the consistent drop in Overall Accuracy and Success Count. This highlights the increased difficulty of sustained sequential reasoning and knowledge retention without short-term feedback. To alleviate task failure in extreme cases, we introduce an auxiliary intervention metric: Number of Choices Reaching Error Threshold (we set the threshold to 9). If a model makes the same mistake more than 9 times, it is prompted with the correct answer. Only Claude 3.5 and GPT-4o never reach this threshold, suggesting that their task completions in Self Recovery mode are entirely due to self-correction and internal reasoning without any artificial hints. This contrasts sharply with other models, indicating that they excel in sustained sequential reasoning and knowledge retention.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose metadata, follows the challenge plan's false premise target, can be answered from the evidence, and is not ambiguous for judging the false premise.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0025",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0024",
+      "source_challenge_plan_id": "CHP_0024",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "How many times does a model need to make the same mistake before the system intervenes with the correct answer?",
+      "surface_intent": "The question asks for the exact number of mistakes that triggers the intervention, testing factual recall from the paper.",
+      "target_kc_ids": [
+        "KC38"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The paper explicitly states the threshold is 9, not 10.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC38",
+          "text": "Unsurprisingly, all models perform worse under Self Recovery mode, as shown by the consistent drop in Overall Accuracy and Success Count. This highlights the increased difficulty of sustained sequential reasoning and knowledge retention without short-term feedback. To alleviate task failure in extreme cases, we introduce an auxiliary intervention metric: Number of Choices Reaching Error Threshold (we set the threshold to 9). If a model makes the same mistake more than 9 times, it is prompted with the correct answer. Only Claude 3.5 and GPT-4o never reach this threshold, suggesting that their task completions in Self Recovery mode are entirely due to self-correction and internal reasoning without any artificial hints. This contrasts sharply with other models, indicating that they excel in sustained sequential reasoning and knowledge retention.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's false premise is sufficiently subtle, but the question explicitly stated the false premise, making the correction trivial. The solvers easily detected the contradiction because the question text itself contained the erroneous number. Revision guidance: Do not repeat the false premise as a direct claim in the question text. Instead, phrase the question to assume the false premise implicitly (e.g., 'According to the paper, how many mistakes trigger the intervention?') without stating the number, forcing solvers to recall or infer the threshold. Alternatively, embed the false premise in a multi-sentence context or make the question less obviously test the number."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly asks for the error threshold, which tests whether the solver correctly identifies the true value (9) rather than the false premise (10). It does not expose any hidden labels or metadata and is answerable from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0029",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0029",
+      "source_challenge_plan_id": "CHP_0029",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "In the paper, how are the Immediate Feedback and Self Recovery modes related? Does the Self Recovery mode serve as a key mechanism that explains the performance differences under short-term and long-term memory scenarios, or is it the other way around?",
+      "surface_intent": "Ask about the explanatory relationship between Self Recovery and the comparison of memory modes.",
+      "target_kc_ids": [
+        "KC112",
+        "KC34"
+      ],
+      "target_edge_ids": [
+        "E132"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E132",
+          "kc_ids": [
+            "KC112",
+            "KC34"
+          ],
+          "text": "Self Recovery: This mode suppresses feedback, mimicking scenarios where incorrect decisions propagate through multiple scenes, potentially ending the game. The model is then challenged to trace back to the error's origin and recover (Figure 2). This stresses long-term causal reasoning and memory retention under uncertainty."
+        },
+        {
+          "kc_id": "KC112",
+          "text": "Self Recovery: This mode suppresses feedback, mimicking scenarios where incorrect decisions propagate through multiple scenes, potentially ending the game. The model is then challenged to trace back to the error's origin and recover (Figure 2). This stresses long-term causal reasoning and memory retention under uncertainty.",
+          "span_id": "S12",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC34",
+          "text": "To investigate how short-term and long-term memory settings affect model behavior, we compare performance under two task modes. Immediate Feedback mode provides corrective signals after each wrong choice, effectively mimicking short-term memory and aiding models in adjusting quickly. In contrast, Self Recovery better simulates real long-term memory scenarios by removing such signals, requiring the model to navigate the narrative without external guidance.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks for the direction of explanation between Self Recovery and memory modes, matching the target failure mode of wrong_relation. It is natural, serious, and answerable from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0030",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0019",
+      "source_challenge_plan_id": "CHP_0019",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the findings in the paper, is it accurate to state that Doubao is inferior to Claude 3.5 Sonnet in terms of completing extended decision paths?",
+      "surface_intent": "Assess the model's understanding of the paper's comparative claim about Doubao and Claude.",
+      "target_kc_ids": [
+        "KC159"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC159",
+          "text": "the model's capacity to navigate complex, dynamic, and multi-step decision paths involving long-range dependencies. Success Count captures the overall task-completion ability. Among all models, Doubao1.5-pro achieves the highest scores in knowledge-related metrics such as Overall Accuracy and First-Try Accuracy, suggesting strong capabilities in knowledge retention. Doubao effectively absorbs and integrates contextual information across extended texts. However, long-term memory evaluation must prioritize not accuracy but the ability to complete extended decision paths. That is because the premise for evaluation is the model can complete the story chain, otherwise, no matter how high the local accuracy is, it will lose significance to the evaluation. Doubao's Success Count is significantly lower than Claude 3.5 Sonnet, indicating that it often \"dies in details\" when dealing with complex reasoning chains and long-term interactive tasks despite its solid knowledge base. In contrast, Claude 3.5 Sonnet maintains a solid balance: it trails slightly in accuracy, but excels in degree of completion, achieving the highest Success Count. This suggests Claude is more robust in multi-turn seque",
+          "span_id": "S20",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, does not expose metadata, and asks about a finding directly supported by the evidence. It targets the overclaim failure mode by requesting an answer grounded in the paper's reported results.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0036",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0031",
+      "source_challenge_plan_id": "CHP_0031",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "The paper evaluates long-term memory using four foundation models with diverse architectures and capabilities. How does this choice of models strengthen the paper's overall findings about long-term memory in foundation models?",
+      "surface_intent": "Asks how the selection of models supports the paper's conclusions about long-term memory.",
+      "target_kc_ids": [
+        "KC144"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC144",
+          "text": "We conduct experiments on four representative foundation models: Doubao 1.5-pro-256k [ByteDance, 2025], GPT-4o [OpenAI, 2024], Claude 3.5 Sonnet [Anthropic, 2024], and Deepseek-R1 [DeepSeek-AI et al., 2025]. These models are chosen based on both their broad real-world usage and competitive performance. Doubao 1.5-pro-256k excels in handling extremely long contexts with its 256k-token support, making it ideal for tasks requiring extensive context retention. GPT-4o, as a leading closed-source commercial model, demonstrates strong language understanding and reasoning abilities. Claude 3.5 Sonnet excels in long-context understanding and knowledge reasoning (supporting 200k+ tokens), maintaining stable performance in long-text reasoning and structural analysis tasks. Deepseek-R1 employs pure reinforcement learning, which gives it excellent logical reasoning and structured thinking capabilities. It shows strong performance in multi-step reasoning and planning tasks. Their diverse features make them ideal for evaluating long-term memory across different technical approaches and application scenarios. While several memory-augmented approaches [Chhikara et al., 2025, Yu et al., 2024] have R",
+          "span_id": "S19",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's target failure mode is overclaim about generalizability, but the question explicitly asks about 'generalizability' and 'other foundation models not tested,' which cues the solver to recall the paper's stated limitation. All solvers correctly identified the limitation, avoiding the overclaim. The plan itself is not inherently too easy; a more subtly phrased question could still elicit the desired failure mode. Revision guidance: Rephrase the question to avoid explicitly mentioning 'generalizability' or 'other models not tested.' Instead, ask about the significance or implications of the model selection for the paper's findings. For example: 'The paper evaluates long-term memory on four foundation models with diverse technical approaches. How does this selection support the paper's conclusions about long-term memory in foundation models?' This may lead the model to overclaim that the selection is broadly representative, without the direct cue to mention limitations."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally prompts discussion of the models' role in supporting general findings about long-term memory, which risks overclaiming beyond the reported experiments. It follows the intended failure mode without exposing metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0037",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0001",
+      "source_challenge_plan_id": "CHP_0001",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the reported results, what broader conclusion can be drawn about the superior reasoning abilities of Claude 3.5 and GPT-4o compared to other models, given that they never required external hints in the Self Recovery mode?",
+      "surface_intent": "Asks about the generality of the finding that Claude 3.5 and GPT-4o never reach the error threshold, implying a broader claim about their reasoning abilities.",
+      "target_kc_ids": [
+        "KC37"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'not_specified', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC37",
+          "text": "Unsurprisingly, all models perform worse under Self Recovery mode, as shown by the consistent drop in Overall Accuracy and Success Count. This highlights the increased difficulty of sustained sequential reasoning and knowledge retention without short-term feedback. To alleviate task failure in extreme cases, we introduce an auxiliary intervention metric: Number of Choices Reaching Error Threshold (we set the threshold to 9). If a model makes the same mistake more than 9 times, it is prompted with the correct answer. Only Claude 3.5 and GPT-4o never reach this threshold, suggesting that their task completions in Self Recovery mode are entirely due to self-correction and internal reasoning without any artificial hints. This contrasts sharply with other models, indicating that they excel in sustained sequential reasoning and knowledge retention.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally invites a broader generalization about reasoning abilities, which aligns with the overclaim trap. It is based on evidence and does not expose metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0002",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0040",
+      "source_challenge_plan_id": "CHP_0040",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 8, does Self-Recovery mode consistently improve First-Try Accuracy across all models?",
+      "surface_intent": "Asking whether Self-Recovery mode consistently improves First-Try Accuracy across all models shown in Figure 8.",
+      "target_kc_ids": [
+        "KC176"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 8: Mode impact on models: First-Try Accuracy & Longest Consecutive Correct Sequence metrics.",
+          "summary": "Figure 8 consists of two horizontal bar charts comparing the performance of four language models (Deepseek-R1, Claude 3.5 Sonnet, GPT-4o, Doubao1.5-pro) under two modes: 'Immediate Feedback' (blue bars) and 'Self Recovery' (orange bars). The left chart displays the 'Longest Consecutive Correct Sequence', while the right chart displays 'First-Try Accuracy'.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC176"
+          ],
+          "evidence_bases": [
+            "In the left chart, orange bars are taller than blue bars for Deepseek-R1, Claude 3.5 Sonnet, and Doubao1.5-pro. For GPT-4o, they are equal."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_220_147_610_484.jpg",
+              "caption": "Figure 8: Mode impact on models: First-Try Accuracy & Longest Consecutive Correct Sequence metrics."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_612_148_1002_482.jpg",
+              "caption": "Figure 8: Mode impact on models: First-Try Accuracy & Longest Consecutive Correct Sequence metrics."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The chart shows that for GPT-4o, the accuracy actually decreases slightly (from ~60.49 to ~58.57) with Self-Recovery.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC176",
+          "text": "Asset FIG_003 (figure): Figure 8: Mode impact on models: First-Try Accuracy & Longest Consecutive Correct Sequence metrics.\nAsset summary: Figure 8 consists of two horizontal bar charts comparing the performance of four language models (Deepseek-R1, Claude 3.5 Sonnet, GPT-4o, Doubao1.5-pro) under two modes: 'Immediate Feedback' (blue bars) and 'Self Recovery' (orange bars). The left chart displays the 'Longest Consecutive Correct Sequence', while the right chart displays 'First-Try Accuracy'.\nEvidence basis: In the left chart, orange bars are taller than blue bars for Deepseek-R1, Claude 3.5 Sonnet, and Doubao1.5-pro. For GPT-4o, they are equal.\nSupported claim: Self-Recovery mode generally improves the longest consecutive correct sequence compared to Immediate Feedback.",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC176",
+          "text": "Asset evidence basis: In the left chart, orange bars are taller than blue bars for Deepseek-R1, Claude 3.5 Sonnet, and Doubao1.5-pro. For GPT-4o, they are equal.",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly targets the false premise that Self-Recovery always improves First-Try Accuracy, and can be answered based on Figure 8 evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0003",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0073",
+      "source_challenge_plan_id": "CHP_0073",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 3, Panel (c) uses red color for certain arrows and nodes. Based on the illustration, does red exclusively indicate negative outcomes (e.g., 'Failed Ending') or could it have other meanings? Please interpret the color coding in the context of the entire figure.",
+      "surface_intent": "Clarifying the color coding interpretation in Figure 3, Panel (c).",
+      "target_kc_ids": [
+        "KC191"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "FIG_006"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_006",
+          "asset_type": "figure",
+          "caption": "Figure 3: Four typical patterns illustrating dataset structure complexity.",
+          "summary": "Figure 3 illustrates four distinct structural patterns of dataset complexity: Linear, Long-term, Complex, and Multi-solution. Each panel uses a schematic diagram with nodes (labeled 'S' for states/steps and 'C' for concepts/clues) and directed arrows to represent the flow of interactions or narrative paths. The figure highlights how these structures vary from simple sequential chains to complex webs with branching outcomes like 'Succeed!' or 'Failed Ending'.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC191"
+          ],
+          "evidence_bases": [
+            "Summary states it is qualitative; limitations array notes lack of quantitative metrics."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_006",
+              "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_297_1068_937_1361.jpg",
+              "caption": "Figure 3: Four typical patterns illustrating dataset structure complexity."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "While red arrows point to 'Failed Ending', other red elements might just be part of the connection logic; however, in this specific context, they do seem to link to failure, but assuming all red is bad without checking the arrow direction is risky. Actually, looking closely, the red arrows in (c) point to 'Failed Ending'. So this might be a valid reading, but let's look for a better misreading. Maybe thinking 'S' always means 'Success'? No, S usually means State/Step. Let's go with: The dotted lines represent missing data rather than a gap in time or sequence.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC191",
+          "text": "Asset FIG_006 (figure): Figure 3: Four typical patterns illustrating dataset structure complexity.\nAsset summary: Figure 3 illustrates four distinct structural patterns of dataset complexity: Linear, Long-term, Complex, and Multi-solution. Each panel uses a schematic diagram with nodes (labeled 'S' for states/steps and 'C' for concepts/clues) and directed arrows to represent the flow of interactions or narrative paths. The figure highlights how these structures vary from simple sequential chains to complex webs with branching outcomes like 'Succeed!' or 'Failed Ending'.\nEvidence basis: Summary states it is qualitative; limitations array notes lack of quantitative metrics.\nSupported claim: This figure provides qualitative illustrations without quantitative metrics.",
+          "span_id": "FIG_006",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC191",
+          "text": "Asset evidence basis: Summary states it is qualitative; limitations array notes lack of quantitative metrics.",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly addresses the false premise that red exclusively indicates negative outcomes, which is the intended trap. It is natural, serious, and can be answered from the figure's qualitative description without exposing metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0062",
+      "source_challenge_plan_id": "CHP_0062",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 3, what does the red color in Panel (c) signify?",
+      "surface_intent": "Interpret the color semantics in the figure's patterns.",
+      "target_kc_ids": [
+        "KC190"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "FIG_006"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_006",
+          "asset_type": "figure",
+          "caption": "Figure 3: Four typical patterns illustrating dataset structure complexity.",
+          "summary": "Figure 3 illustrates four distinct structural patterns of dataset complexity: Linear, Long-term, Complex, and Multi-solution. Each panel uses a schematic diagram with nodes (labeled 'S' for states/steps and 'C' for concepts/clues) and directed arrows to represent the flow of interactions or narrative paths. The figure highlights how these structures vary from simple sequential chains to complex webs with branching outcomes like 'Succeed!' or 'Failed Ending'.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC190"
+          ],
+          "evidence_bases": [
+            "Panel (d) diverging arrows to 'Succeed!' and 'Failed Ending'"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_006",
+              "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_297_1068_937_1361.jpg",
+              "caption": "Figure 3: Four typical patterns illustrating dataset structure complexity."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "While red arrows point to 'Failed Ending', other red elements might just be part of the connection logic; however, in this specific context, they do seem to link to failure, but assuming all red is bad without checking the arrow direction is risky. Actually, looking closely, the red arrows in (c) point to 'Failed Ending'. So this might be a valid reading, but let's look for a better misreading. Maybe thinking 'S' always means 'Success'? No, S usually means State/Step. Let's go with: The dotted lines represent missing data rather than a gap in time or sequence.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC190",
+          "text": "Asset FIG_006 (figure): Figure 3: Four typical patterns illustrating dataset structure complexity.\nAsset summary: Figure 3 illustrates four distinct structural patterns of dataset complexity: Linear, Long-term, Complex, and Multi-solution. Each panel uses a schematic diagram with nodes (labeled 'S' for states/steps and 'C' for concepts/clues) and directed arrows to represent the flow of interactions or narrative paths. The figure highlights how these structures vary from simple sequential chains to complex webs with branching outcomes like 'Succeed!' or 'Failed Ending'.\nEvidence basis: Panel (d) diverging arrows to 'Succeed!' and 'Failed Ending'\nSupported claim: The 'Multi-solution' pattern allows for multiple distinct paths to an outcome.",
+          "span_id": "FIG_006",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC190",
+          "text": "Asset evidence basis: Panel (d) diverging arrows to 'Succeed!' and 'Failed Ending'",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly tests the false premise about red color in Panel (c) as intended, is natural and serious, does not expose metadata, and can be answered from the figure evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0069",
+      "source_challenge_plan_id": "CHP_0069",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on the accuracy comparisons between Immediate Feedback and Self Recovery conditions in Figure 7, does Self Recovery consistently improve model performance across all models?",
+      "surface_intent": "Appears to ask whether Self Recovery always enhances model accuracy.",
+      "target_kc_ids": [
+        "KC173"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Figure 7: Accuracy disparities across Models: overall, easy & hard tasks.",
+          "summary": "The figure consists of two bar charts comparing the accuracy of various AI models (Doubao, GPT-4o, Claude 3.5 Sonnet, Deepseek-V3) across three task categories: Overall Accuracy, Easy Accuracy, and Hard Accuracy. The first chart displays performance under 'Immediate Feedback', while the second chart shows performance under 'Self Recovery' conditions, including specific variations like 'improved' or 'original' versions of the models.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC173"
+          ],
+          "evidence_bases": [
+            "Green bars are taller than orange bars for every model group in the first chart."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_217_539_605_834.jpg",
+              "caption": "Figure 7: Accuracy disparities across Models: overall, easy & hard tasks."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_611_543_1004_840.jpg",
+              "caption": "Figure 7: Accuracy disparities across Models: overall, easy & hard tasks."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The chart shows that for GPT-4o (improved), the Overall Accuracy drops drastically (from ~75% to ~46%) compared to the Immediate Feedback baseline.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC173",
+          "text": "Asset FIG_002 (figure): Figure 7: Accuracy disparities across Models: overall, easy & hard tasks.\nAsset summary: The figure consists of two bar charts comparing the accuracy of various AI models (Doubao, GPT-4o, Claude 3.5 Sonnet, Deepseek-V3) across three task categories: Overall Accuracy, Easy Accuracy, and Hard Accuracy. The first chart displays performance under 'Immediate Feedback', while the second chart shows performance under 'Self Recovery' conditions, including specific variations like 'improved' or 'original' versions of the models.\nEvidence basis: Green bars are taller than orange bars for every model group in the first chart.\nSupported claim: For all models in the Immediate Feedback chart, Easy Accuracy is consistently higher than Hard Accuracy.",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC173",
+          "text": "Asset evidence basis: Green bars are taller than orange bars for every model group in the first chart.",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly addresses the trap part (Self Recovery always improves performance) without exposing hidden labels. It follows the challenge plan's target failure mode and can be answered from the figure evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0048",
+      "source_challenge_plan_id": "CHP_0048",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Looking at Figure 3, could you explain the meaning of the red arrows in Panel (c)? Do they exclusively indicate negative outcomes, or can they have other meanings as well?",
+      "surface_intent": "Ask about the color coding in one panel to test understanding of visual conventions.",
+      "target_kc_ids": [
+        "KC189"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "FIG_006"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_006",
+          "asset_type": "figure",
+          "caption": "Figure 3: Four typical patterns illustrating dataset structure complexity.",
+          "summary": "Figure 3 illustrates four distinct structural patterns of dataset complexity: Linear, Long-term, Complex, and Multi-solution. Each panel uses a schematic diagram with nodes (labeled 'S' for states/steps and 'C' for concepts/clues) and directed arrows to represent the flow of interactions or narrative paths. The figure highlights how these structures vary from simple sequential chains to complex webs with branching outcomes like 'Succeed!' or 'Failed Ending'.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC189"
+          ],
+          "evidence_bases": [
+            "Panel (b) curved arrows and branching nodes"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_006",
+              "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_297_1068_937_1361.jpg",
+              "caption": "Figure 3: Four typical patterns illustrating dataset structure complexity."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "While red arrows point to 'Failed Ending', other red elements might just be part of the connection logic; however, in this specific context, they do seem to link to failure, but assuming all red is bad without checking the arrow direction is risky. Actually, looking closely, the red arrows in (c) point to 'Failed Ending'. So this might be a valid reading, but let's look for a better misreading. Maybe thinking 'S' always means 'Success'? No, S usually means State/Step. Let's go with: The dotted lines represent missing data rather than a gap in time or sequence.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC189",
+          "text": "Asset FIG_006 (figure): Figure 3: Four typical patterns illustrating dataset structure complexity.\nAsset summary: Figure 3 illustrates four distinct structural patterns of dataset complexity: Linear, Long-term, Complex, and Multi-solution. Each panel uses a schematic diagram with nodes (labeled 'S' for states/steps and 'C' for concepts/clues) and directed arrows to represent the flow of interactions or narrative paths. The figure highlights how these structures vary from simple sequential chains to complex webs with branching outcomes like 'Succeed!' or 'Failed Ending'.\nEvidence basis: Panel (b) curved arrows and branching nodes\nSupported claim: The 'Long-term' pattern features branching paths and feedback loops.",
+          "span_id": "FIG_006",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC189",
+          "text": "Asset evidence basis: Panel (b) curved arrows and branching nodes",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "Question directly probes the false premise about red arrows exclusively indicating negative outcomes, is natural, serious, and answerable from Figure 3.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0003",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0066",
+      "source_challenge_plan_id": "CHP_0066",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 2, the red X marks a failure at Choice_12. Is this correct? Explain.",
+      "surface_intent": "Asks the model to verify a specific detail in the figure about which choice leads to failure.",
+      "target_kc_ids": [
+        "KC184"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_005"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_005",
+          "asset_type": "figure",
+          "caption": "Figure 2: Self Recovery. An incorrect choice leads to a failure ending either immediately or after several scenes. The model is then asked to identify the earliest point in the story where it believes the incorrect decision occurred and to attempt recovery from that point.",
+          "summary": "Figure 2 illustrates the 'Self Recovery' mechanism within a long-term memory evaluation framework. It depicts a timeline of an agent making sequential choices (Choice_1 through Choice_14). At 'Choice_13', an incorrect decision leads to a failure state, represented by a red 'X' and a trophy icon labeled 'Failed! Where to retry?'. The system then initiates a recovery process, visualized as a dotted blue line labeled 'Restart' that loops back to 'Choice_13'. After this restart, the agent successfully proceeds through 'Choice_14' and reaches the final goal, indicated by a flag.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC184"
+          ],
+          "evidence_bases": [
+            "Red 'X' at Choice_13 pointing to the trophy icon."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_005",
+              "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_269_861_943_1119.jpg",
+              "caption": "Figure 2: Self Recovery. An incorrect choice leads to a failure ending either immediately or after several scenes. The model is then asked to identify the earliest point in the story where it believes the incorrect decision occurred and to attempt recovery from that point."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The red X is visually positioned directly above/next to the node labeled 'Choice_13', not Choice_12.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC184",
+          "text": "Asset FIG_005 (figure): Figure 2: Self Recovery. An incorrect choice leads to a failure ending either immediately or after several scenes. The model is then asked to identify the earliest point in the story where it believes the incorrect decision occurred and to attempt recovery from that point.\nAsset summary: Figure 2 illustrates the 'Self Recovery' mechanism within a long-term memory evaluation framework. It depicts a timeline of an agent making sequential choices (Choice_1 through Choice_14). At 'Choice_13', an incorrect decision leads to a failure state, represented by a red 'X' and a trophy icon labeled 'Failed! Where to retry?'. The system then initiates a recovery process, visualized as a dotted blue line labeled 'Restart' that loops back to 'Choice_13'. After this restart, the agent successfully proceeds through 'Choice_14' and reaches the final goal, indicated by a flag.\nEvidence basis: Red 'X' at Choice_13 pointing to the trophy icon.\nSupported claim: An incorrect choice at a specific point in the story leads to a failure ending.",
+          "span_id": "FIG_005",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC184",
+          "text": "Asset evidence basis: Red 'X' at Choice_13 pointing to the trophy icon.",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was not usable. Reason: The question presents the false premise as a speculation ('It appears to be Choice_12, but can you verify?') rather than an assertion, making it ambiguous whether the model should detect and reject a false premise. The target failure mode requires the false premise to be stated as fact. Revision guidance: Rewrite to explicitly assert the false premise, e.g., 'In Figure 2, the red X marks a failure at Choice_12. Is this correct? Explain.'"
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally presents the false premise (red X at Choice_12) and asks for verification, which aligns with the target failure mode. It can be answered from the figure evidence, is not ambiguous, and does not expose hidden metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0009",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0064",
+      "source_challenge_plan_id": "CHP_0064",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Looking at the left radar chart in Figure 6 (Immediate Feedback mode), the green line (Claude 3.5 Sonnet) reaches a similar radial distance on the Success Count axis and on the First-Try Accuracy axis. Does this mean Claude 3.5 Sonnet performs equally well on both metrics? Explain.",
+      "surface_intent": "Asking whether similar radial distances in a radar chart imply equal performance across different metrics.",
+      "target_kc_ids": [
+        "KC169"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_001",
+          "asset_type": "figure",
+          "caption": "Figure 6: Model multidimensional performance in Immediate Feedback and Self Recovery modes.",
+          "summary": "The figure presents two radar charts comparing the multidimensional performance of five AI models (Doubao1.5-pro, QFI-Mo, Claude 3.5 Sonnet, Deepseek-R1) across two modes: 'Immediate Feedback' (left) and 'Self Recovery' (right). The charts evaluate metrics including First-Try Accuracy, Overall Accuracy, Hard Accuracy, Success Count, and Reversed Retry Count. The visual data highlights differences in model capabilities, such as Claude 3.5 Sonnet achieving high success counts and Doubao1.5-pro (Improved) showing strong accuracy in self-recovery scenarios.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC169"
+          ],
+          "evidence_bases": [
+            "Green line extends furthest along the 'Success Count' axis in the left chart."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_221_149_1004_447.jpg",
+              "caption": "Figure 6: Model multidimensional performance in Immediate Feedback and Self Recovery modes."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The axes have different scales; Accuracy is 0-1.0 while Success Count goes up to 10.0, making direct visual comparison of distances misleading without normalization.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC169",
+          "text": "Asset FIG_001 (figure): Figure 6: Model multidimensional performance in Immediate Feedback and Self Recovery modes.\nAsset summary: The figure presents two radar charts comparing the multidimensional performance of five AI models (Doubao1.5-pro, QFI-Mo, Claude 3.5 Sonnet, Deepseek-R1) across two modes: 'Immediate Feedback' (left) and 'Self Recovery' (right). The charts evaluate metrics including First-Try Accuracy, Overall Accuracy, Hard Accuracy, Success Count, and Reversed Retry Count. The visual data highlights differences in model capabilities, such as Claude 3.5 Sonnet achieving high success counts and Doubao1.5-pro (Improved) showing strong accuracy in self-recovery scenarios.\nEvidence basis: Green line extends furthest along the 'Success Count' axis in the left chart.\nSupported claim: Claude 3.5 Sonnet achieves the highest Success Count among the plotted models in Immediate Feedback mode.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC169",
+          "text": "Asset evidence basis: Green line extends furthest along the 'Success Count' axis in the left chart.",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question failed because it indirectly tested the false premise about axis scaling by asking about a different metric, which allowed solvers to reject based on metric differences rather than scale. Revision guidance: Rephrase the question to directly test whether the solver notices that the axes have different scales. For example: 'In the radar chart, the distance from the center to Claude 3.5 Sonnet's point on the Success Count axis appears similar to the distance to its point on the First-Try Accuracy axis. Does this mean its performance on both metrics is similar? Explain.' This forces the solver to confront the scale difference directly."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally probes the false premise that radial distances are comparable across axes with different scales, directly targeting the intended failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0012",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0041",
+      "source_challenge_plan_id": "CHP_0041",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Figure 4 presents a screenshot from an interactive story system. How are character descriptions and dialogues organized within this scene?",
+      "surface_intent": "Interpretation of a figure showing a scene node in a game-like interface",
+      "target_kc_ids": [
+        "KC192"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "FIG_007"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_007",
+          "asset_type": "figure",
+          "caption": "Figure 4: Scene node example with character descriptions, dialogues, and other details.",
+          "summary": "The figure displays a structured data record labeled as a 'scene node' (ID 0). It organizes story elements into distinct sections: a narrative description, a specific location, character profiles, and a transcript of dialogues involving multiple speakers.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC192"
+          ],
+          "evidence_bases": [
+            "Visible label 'type: scene' in the node metadata"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_007",
+              "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_223_660_985_1011.jpg",
+              "caption": "Figure 4: Scene node example with character descriptions, dialogues, and other details."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The layout resembles a data structure or JSON representation rather than a graphical user interface.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC192",
+          "text": "Asset FIG_007 (figure): Figure 4: Scene node example with character descriptions, dialogues, and other details.\nAsset summary: The figure displays a structured data record labeled as a 'scene node' (ID 0). It organizes story elements into distinct sections: a narrative description, a specific location, character profiles, and a transcript of dialogues involving multiple speakers.\nEvidence basis: Visible label 'type: scene' in the node metadata\nSupported claim: Story data is organized into discrete nodes with specific types such as 'scene'.",
+          "span_id": "FIG_007",
+          "asset_id": "FIG_007",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC192",
+          "text": "Asset evidence basis: Visible label 'type: scene' in the node metadata",
+          "asset_id": "FIG_007",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and matches the target false premise failure mode by incorrectly labeling the structured data node as a 'screenshot'. It does not expose hidden metadata and can be answered from the figure evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0013",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0072",
+      "source_challenge_plan_id": "CHP_0072",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 4, what specific game interface features are shown, and how does this example represent the overall node connectivity in the system?",
+      "surface_intent": "Ask about the interface type and node connectivity shown in Figure 4.",
+      "target_kc_ids": [
+        "KC195"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "FIG_007"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_007",
+          "asset_type": "figure",
+          "caption": "Figure 4: Scene node example with character descriptions, dialogues, and other details.",
+          "summary": "The figure displays a structured data record labeled as a 'scene node' (ID 0). It organizes story elements into distinct sections: a narrative description, a specific location, character profiles, and a transcript of dialogues involving multiple speakers.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC195"
+          ],
+          "evidence_bases": [
+            "Limitation noted in asset explanation"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_007",
+              "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_223_660_985_1011.jpg",
+              "caption": "Figure 4: Scene node example with character descriptions, dialogues, and other details."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The layout resembles a data structure or JSON representation rather than a graphical user interface.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC195",
+          "text": "Asset FIG_007 (figure): Figure 4: Scene node example with character descriptions, dialogues, and other details.\nAsset summary: The figure displays a structured data record labeled as a 'scene node' (ID 0). It organizes story elements into distinct sections: a narrative description, a specific location, character profiles, and a transcript of dialogues involving multiple speakers.\nEvidence basis: Limitation noted in asset explanation\nSupported claim: The figure only shows a single example instance and does not demonstrate how nodes connect to each other.",
+          "span_id": "FIG_007",
+          "asset_id": "FIG_007",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC195",
+          "text": "Asset evidence basis: Limitation noted in asset explanation",
+          "asset_id": "FIG_007",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally incorporates the false premise that the figure is a game interface and asks about node connectivity, both of which are intended traps. It does not expose metadata and can be evaluated using the paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0014",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0056",
+      "source_challenge_plan_id": "CHP_0056",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Table 3, GPT-4o shows dashes for most metrics. How would you interpret GPT-4o's performance on these metrics?",
+      "surface_intent": "Ask the model to interpret GPT-4o's performance based on the dash entries in Table 3.",
+      "target_kc_ids": [
+        "KC203"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "TAB_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_003",
+          "asset_type": "table",
+          "caption": "Table 3: Performance of different models (Original Self Recovery).",
+          "summary": "Table 3 reports performance metrics (accuracy, retry count, runtime, token consumption, success count) for four models (Doubao1.5-pro, GPT-4o, Claude 3.5 Sonnet, Deepseek-R1) under the Original Self Recovery condition. Many metrics for GPT-4o and Deepseek-R1 are missing (dashes), while Doubao1.5-pro and Claude 3.5 Sonnet have complete or nearly complete entries.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC203"
+          ],
+          "evidence_bases": [
+            "Row 'Overall Acc (%)', column 'Doubao1.5-pro'"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_003",
+              "content": "\\begin{tabular}{lllll}\n\\hline\nMetrics & Doubao1.5-pro & GPT-4o & Claude 3.5 Sonnet & Deepseek-R1 \\\\\n\\hline\nOverall Acc (\\%) & 69.66 & - & 68.40 \\$ \\textbackslash{}pm \\$ 2.88 & - \\\\\nFirst-Try Acc (\\%) & 83.05 & - & 68.28 \\$ \\textbackslash{}pm \\$ 1.07 & - \\\\\nHard Acc (\\%) & 58.33 & - & 60.35 \\$ \\textbackslash{}pm \\$ 4.09 & - \\\\\nEasy Acc (\\%) & 93.10 & - & 77.23 \\$ \\textbackslash{}pm \\$ 0.31 & - \\\\\nRetry Count & 21.00 & - & 21.50 \\$ \\textbackslash{}pm \\$ 2.50 & - \\\\\nLongest Corr & 15.00 & - & 13.50 \\$ \\textbackslash{}pm \\$ 1.50 & - \\\\\nMax Err/Choice & 9.00 & - & 6.00 \\$ \\textbackslash{}pm \\$ 2.00 & - \\\\\nErrorCount \\$ ≥ 9 \\$ & 2.00 & - & 0.00 \\$ \\textbackslash{}pm \\$ 0.00 & - \\\\\nRuntime Cost (s) & 1.00k & - & 3.24k \\$ \\textbackslash{}pm \\$ 0.36k & - \\\\\nToken Cons & 4158k & - & 5532k \\$ \\textbackslash{}pm \\$ 37k & - \\\\\nSuccess Count & 1.00 & 0.00 & 2.00 & 0.00 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 3: Performance of different models (Original Self Recovery)."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The dashes indicate missing data, not zero performance; the table does not report any actual values for GPT-4o on those metrics, so no conclusion about its performance can be drawn.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC203",
+          "text": "Asset TAB_003 (table): Table 3: Performance of different models (Original Self Recovery).\nAsset summary: Table 3 reports performance metrics (accuracy, retry count, runtime, token consumption, success count) for four models (Doubao1.5-pro, GPT-4o, Claude 3.5 Sonnet, Deepseek-R1) under the Original Self Recovery condition. Many metrics for GPT-4o and Deepseek-R1 are missing (dashes), while Doubao1.5-pro and Claude 3.5 Sonnet have complete or nearly complete entries.\nEvidence basis: Row 'Overall Acc (%)', column 'Doubao1.5-pro'\nSupported claim: Doubao1.5-pro achieved an Overall Acc of 69.66% under Original Self Recovery.",
+          "span_id": "TAB_003",
+          "asset_id": "TAB_003",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC203",
+          "text": "Asset evidence basis: Row 'Overall Acc (%)', column 'Doubao1.5-pro'",
+          "asset_id": "TAB_003",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks for interpretation of GPT-4o's performance given dashes in Table 3, directly targeting the false premise that dashes indicate poor performance. It does not expose internal metadata and can be answered from the evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "thread_challenge_plans_path": "data/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/cache/questions/thread_challenge_plans.json",
+  "thread_challenge_plan_summary": {
+    "plan_count": 12,
+    "target": 24,
+    "per_thread_limit": 3,
+    "by_type": {
+      "thread_overclaim_challenge": 4,
+      "thread_premise_mutation_challenge": 4,
+      "thread_wrong_bridge_challenge": 4
+    },
+    "by_modality_pool": {
+      "text": 12
+    },
+    "skipped_thread_count": 0,
+    "skipped_threads": []
+  },
+  "thread_challenge_questions_raw_path": "data/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/cache/questions/thread_challenge_questions_raw.json",
+  "thread_challenge_questions_filtered_path": "data/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/cache/questions/thread_challenge_questions_filtered.json",
+  "thread_challenge_solver_trials_path": "data/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/cache/questions/thread_challenge_solver_trials.json",
+  "thread_challenge_filter_summary": {
+    "plan_pool_count": 12,
+    "target_count": 8,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 21,
+    "solver_trial_count": 20,
+    "filtered_count": 8,
+    "human_review_count": 4,
+    "rejected_count": 13,
+    "blacklisted_plan_count": 0,
+    "by_type": {
+      "thread_overclaim_challenge": 2,
+      "thread_premise_mutation_challenge": 3,
+      "thread_wrong_bridge_challenge": 3
+    },
+    "by_modality_pool": {
+      "text": 8
+    },
+    "stop_reason": "target_reached"
+  },
+  "thread_challenge_questions": [
+    {
+      "question_id": "TCQ_0002",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0012",
+      "source_challenge_plan_id": "TCP_0012",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Given that some researchers argue that static benchmarks are adequate for assessing basic knowledge retention in isolation, how does StoryBench address the specific limitations of such benchmarks for evaluating long-term memory in dynamic environments?",
+      "surface_intent": "Asks whether static benchmarks are sufficient for certain aspects of memory evaluation and how StoryBench improves upon them.",
+      "target_kc_ids": [
+        "KC101",
+        "KC102"
+      ],
+      "target_edge_ids": [
+        "E23"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should state that current benchmarks are static and fail to simulate the dynamic, sequential nature of real-world interactions, lacking in knowledge retention and sequential reasoning.",
+        "evidence": "The model should describe StoryBench as a dynamic, sequentially structured environment using interactive fiction to stress-test LTM, contrasting with static benchmarks.",
+        "bridge": "The model should use the verified edge to argue that the static nature of prior benchmarks motivated the dynamic design of StoryBench, which directly tackles the identified gaps."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should state that current benchmarks are static and fail to simulate the dynamic, sequential nature of real-world interactions, lacking in knowledge retention and sequential reasoning.\n- We discussed this evidence: The model should describe StoryBench as a dynamic, sequentially structured environment using interactive fiction to stress-test LTM, contrasting with static benchmarks.\n- We connected them cautiously as follows: The model should use the verified edge to argue that the static nature of prior benchmarks motivated the dynamic design of StoryBench, which directly tackles the identified gaps.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M2",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E23",
+          "kc_ids": [
+            "KC101",
+            "KC102"
+          ],
+          "text": "Existing benchmarks apply static tasks (factual recall or isolated chain of thought tasks) that do not fully capture the dynamic nature of real-world interactions [Chang et al., 2024], suggesting there is room for improvement in evaluating LTM abilities in two critical dimensions: knowledge retention and sequential reasoning, as well as in their own flexibility. The limitation of current benchmarks results from their inability to simulate the dynamic, sequential nature of real-world decision-making, where memory must be actively updated, integrated with new information, and adapted to evolving contexts through multi-turn interactions.\n\nTo address this, we introduce StoryBench. The core design principle of StoryBench is to conduct memory stress-tests within a dynamic and sequentially structured environment grounded in interactive fiction multi-turn game-play. Unlike traditional benchmarks relying on static inputs or isolated memory recalls, StoryBench simulates realistic decision-making by embedding models in evolving narratives where each choice not only compels models to integrate information across short-term and long-term contexts (knowledge retention) but also tracks changing r"
+        },
+        {
+          "kc_id": "KC101",
+          "text": "Existing benchmarks apply static tasks (factual recall or isolated chain of thought tasks) that do not fully capture the dynamic nature of real-world interactions [Chang et al., 2024], suggesting there is room for improvement in evaluating LTM abilities in two critical dimensions: knowledge retention and sequential reasoning, as well as in their own flexibility. The limitation of current benchmarks results from their inability to simulate the dynamic, sequential nature of real-world decision-making, where memory must be actively updated, integrated with new information, and adapted to evolving contexts through multi-turn interactions.",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC102",
+          "text": "To address this, we introduce StoryBench. The core design principle of StoryBench is to conduct memory stress-tests within a dynamic and sequentially structured environment grounded in interactive fiction multi-turn game-play. Unlike traditional benchmarks relying on static inputs or isolated memory recalls, StoryBench simulates realistic decision-making by embedding models in evolving narratives where each choice not only compels models to integrate information across short-term and long-term contexts (knowledge retention) but also tracks changing relationships between story elements and resolves contradictions arising from prior decisions in multi-turn interactions (sequential reasoning). In summary, StoryBench provides a more comprehensive and dynamic framework for evaluating long-term memory capabilities, effectively enhancing the assessment of knowledge retention and sequential reasoning, as well as improving the flexibility of the evaluation process.",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is sound as a thread_premise_mutation_challenge; the question was too easy because the mutation directly contradicted explicit statements in the evidence, making trivial correction. Revision guidance: Make the mutation more subtle by twisting the premise in a way that appears plausible but is still unsupported by the paper. For example, suggest that the paper acknowledges static benchmarks are adequate for isolated aspects of knowledge retention even if they fail for dynamic interactions. Ensure the trap requires careful reasoning to detect rather than being clearly contradicted by an explicit sentence."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally introduces a mutation of the original premise (static benchmarks are adequate for basic retention) while the true premise states they are inadequate. This aligns with the challenge plan's target failure mode. The question is answerable from the given evidence and does not expose any internal metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0008",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0008",
+      "source_challenge_plan_id": "TCP_0008",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "What do the authors identify as the key areas where foundation models fall short on StoryBench?",
+      "surface_intent": "asking for the main shortcomings identified in the paper",
+      "target_kc_ids": [
+        "KC49",
+        "KC50"
+      ],
+      "target_edge_ids": [
+        "E87"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should say that success depends on understanding and correcting long-term dependencies across multi-step causal chains.",
+        "evidence": "The model should say that the failures underscore the need for more robust memory integration, format alignment, and long-range error correction.",
+        "bridge": "The model should use the verified edge to argue that the failure to handle long-term dependencies directly supports the need for improved memory integration and error correction."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should say that success depends on understanding and correcting long-term dependencies across multi-step causal chains.\n- We discussed this evidence: The model should say that the failures underscore the need for more robust memory integration, format alignment, and long-range error correction.\n- We connected them cautiously as follows: The model should use the verified edge to argue that the failure to handle long-term dependencies directly supports the need for improved memory integration and error correction.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M8"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E87",
+          "kc_ids": [
+            "KC49",
+            "KC50"
+          ],
+          "text": "In terms of sequential reasoning, a critical failure case was the inability to repair long-term or multi-error decisions. In Self Recovery mode, successful completion often required models to trace errors back across multi-step causal chains and revise earlier decisions (even multiple choices in combination) that affected downstream outcomes. However, most models exhibited shallow search strategies, typically backtracking only one or two steps rather than engaging in deeper reasoning about the narrative structure or goal shifts. This myopic behavior led to persistent failure when task success depended on understanding and correcting long-term dependencies. We retained such failures to reflect the true upper-bound difficulty of long-term memory reasoning.\n\nOther failures such as format mismatches (e.g., returning option indices instead of decision point IDs), content filtering blocks, server timeouts, or rare instances of hallucinated explanations were also observed but were comparatively infrequent. These were retained in evaluation for completeness but are not the focus of our analysis.\n\nThese diverse failure cases underscore the challenge of StoryBench and emphasize the need for"
+        },
+        {
+          "kc_id": "KC49",
+          "text": "In terms of sequential reasoning, a critical failure case was the inability to repair long-term or multi-error decisions. In Self Recovery mode, successful completion often required models to trace errors back across multi-step causal chains and revise earlier decisions (even multiple choices in combination) that affected downstream outcomes. However, most models exhibited shallow search strategies, typically backtracking only one or two steps rather than engaging in deeper reasoning about the narrative structure or goal shifts. This myopic behavior led to persistent failure when task success depended on understanding and correcting long-term dependencies. We retained such failures to reflect the true upper-bound difficulty of long-term memory reasoning.",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC50",
+          "text": "These diverse failure cases underscore the challenge of StoryBench and emphasize the need for more robust memory integration, format alignment, and long-range error correction in current foundation models.",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is well-designed; the question appropriately tests overclaim but solvers correctly refused. The trap was not obvious, but solvers were cautious. Revision guidance: The previous question asked about sufficiency, which solvers correctly identified as not supported. To better test the failure mode, the next question should imply a broader generalization that is more subtly connected to the evidence, such as claiming that the identified factors are the primary or most important challenges, rather than asking about sufficiency. Also ensure the question does not explicitly cue the model to consider limitations."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question asks for key areas identified by the authors, which can be directly answered from the evidence (memory integration, format alignment, long-range error correction). It does not expose hidden labels or metadata, follows the plan's intended failure mode by not forcing an overclaim, and is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0010",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0009",
+      "source_challenge_plan_id": "TCP_0009",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Given our earlier conclusion that success depends on understanding and correcting format mismatch errors across multi-step causal chains, how would you recommend addressing the long-term dependency issues discussed in the evidence?",
+      "surface_intent": "The question appears to ask the model to apply a previously established premise about format mismatch errors to the problem of long-term dependencies.",
+      "target_kc_ids": [
+        "KC49",
+        "KC50"
+      ],
+      "target_edge_ids": [
+        "E87"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should say that success depends on understanding and correcting long-term dependencies across multi-step causal chains.",
+        "evidence": "The model should say that the failures underscore the need for more robust memory integration, format alignment, and long-range error correction.",
+        "bridge": "The model should use the verified edge to argue that the failure to handle long-term dependencies directly supports the need for improved memory integration and error correction."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should say that success depends on understanding and correcting long-term dependencies across multi-step causal chains.\n- We discussed this evidence: The model should say that the failures underscore the need for more robust memory integration, format alignment, and long-range error correction.\n- We connected them cautiously as follows: The model should use the verified edge to argue that the failure to handle long-term dependencies directly supports the need for improved memory integration and error correction.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M8"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E87",
+          "kc_ids": [
+            "KC49",
+            "KC50"
+          ],
+          "text": "In terms of sequential reasoning, a critical failure case was the inability to repair long-term or multi-error decisions. In Self Recovery mode, successful completion often required models to trace errors back across multi-step causal chains and revise earlier decisions (even multiple choices in combination) that affected downstream outcomes. However, most models exhibited shallow search strategies, typically backtracking only one or two steps rather than engaging in deeper reasoning about the narrative structure or goal shifts. This myopic behavior led to persistent failure when task success depended on understanding and correcting long-term dependencies. We retained such failures to reflect the true upper-bound difficulty of long-term memory reasoning.\n\nOther failures such as format mismatches (e.g., returning option indices instead of decision point IDs), content filtering blocks, server timeouts, or rare instances of hallucinated explanations were also observed but were comparatively infrequent. These were retained in evaluation for completeness but are not the focus of our analysis.\n\nThese diverse failure cases underscore the challenge of StoryBench and emphasize the need for"
+        },
+        {
+          "kc_id": "KC49",
+          "text": "In terms of sequential reasoning, a critical failure case was the inability to repair long-term or multi-error decisions. In Self Recovery mode, successful completion often required models to trace errors back across multi-step causal chains and revise earlier decisions (even multiple choices in combination) that affected downstream outcomes. However, most models exhibited shallow search strategies, typically backtracking only one or two steps rather than engaging in deeper reasoning about the narrative structure or goal shifts. This myopic behavior led to persistent failure when task success depended on understanding and correcting long-term dependencies. We retained such failures to reflect the true upper-bound difficulty of long-term memory reasoning.",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC50",
+          "text": "These diverse failure cases underscore the challenge of StoryBench and emphasize the need for more robust memory integration, format alignment, and long-range error correction in current foundation models.",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was not usable. Reason: The question does not mutate the premise as required for testing 'thread_premise_mutation'. It correctly references the premise but asks about a separate issue (format mismatches), which does not force the model to identify a changed premise. Revision guidance: Rewrite the question to introduce a subtle mutation of the premise, such as altering the causal direction or replacing the condition, then ask the model to continue the reasoning. For example: 'Given our earlier conclusion that success depends on understanding and correcting format mismatch errors across multi-step causal chains, how would you recommend addressing the long-term dependency issues?'"
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly mutates the premise from 'long-term dependencies' to 'format mismatch errors', matching the intended trap. It is natural, serious, and does not expose internal metadata. The answer can be derived from the provided evidence, and the target failure mode (thread_premise_mutation) is clearly testable.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0011",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0004",
+      "source_challenge_plan_id": "TCP_0004",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "Given that Claude 3.5 Sonnet and GPT-4o never reach the error threshold of 9 mistakes in Self Recovery mode, is it correct to conclude that they were selected for the experiments because of their superior long-context reasoning capabilities?",
+      "surface_intent": "To test whether the model can correctly attribute the reason for model selection to long-context capabilities versus experimental outcomes.",
+      "target_kc_ids": [
+        "KC144",
+        "KC37"
+      ],
+      "target_edge_ids": [
+        "E190"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should name Doubao 1.5-pro-256k, GPT-4o, Claude 3.5 Sonnet, and Deepseek-R1, and mention that Claude and GPT-4o excel in long-context reasoning.",
+        "evidence": "The model should say that Claude 3.5 and GPT-4o never reach the error threshold of 9 mistakes, indicating self-correction without hints.",
+        "bridge": "The model should use the verified edge to argue that Claude and GPT-4o were chosen for their long-context capabilities, which explains why they avoid the error threshold through internal reasoning."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should name Doubao 1.5-pro-256k, GPT-4o, Claude 3.5 Sonnet, and Deepseek-R1, and mention that Claude and GPT-4o excel in long-context reasoning.\n- We discussed this evidence: The model should say that Claude 3.5 and GPT-4o never reach the error threshold of 9 mistakes, indicating self-correction without hints.\n- We connected them cautiously as follows: The model should use the verified edge to argue that Claude and GPT-4o were chosen for their long-context capabilities, which explains why they avoid the error threshold through internal reasoning.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M6",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E190",
+          "kc_ids": [
+            "KC144",
+            "KC37"
+          ],
+          "text": "We conduct experiments on four representative foundation models: Doubao 1.5-pro-256k [ByteDance, 2025], GPT-4o [OpenAI, 2024], Claude 3.5 Sonnet [Anthropic, 2024], and Deepseek-R1 [DeepSeek-AI et al., 2025]. These models are chosen based on both their broad real-world usage and competitive performance. Doubao 1.5-pro-256k excels in handling extremely long contexts with its 256k-token support, making it ideal for tasks requiring extensive context retention. GPT-4o, as a leading closed-source commercial model, demonstrates strong language understanding and reasoning abilities. Claude 3.5 Sonnet excels in long-context understanding and knowledge reasoning (supporting 200k+ tokens), maintaining stable performance in long-text reasoning and structural analysis tasks. Deepseek-R1 employs pure reinforcement learning, which gives it excellent logical reasoning and structured thinking capabilities. It shows strong performance in multi-step reasoning and planning tasks. Their diverse features make them ideal for evaluating long-term memory across different technical approaches and application scenarios. While several memory-augmented approaches [Chhikara et al., 2025, Yu et al., 2024] have R"
+        },
+        {
+          "kc_id": "KC144",
+          "text": "We conduct experiments on four representative foundation models: Doubao 1.5-pro-256k [ByteDance, 2025], GPT-4o [OpenAI, 2024], Claude 3.5 Sonnet [Anthropic, 2024], and Deepseek-R1 [DeepSeek-AI et al., 2025]. These models are chosen based on both their broad real-world usage and competitive performance. Doubao 1.5-pro-256k excels in handling extremely long contexts with its 256k-token support, making it ideal for tasks requiring extensive context retention. GPT-4o, as a leading closed-source commercial model, demonstrates strong language understanding and reasoning abilities. Claude 3.5 Sonnet excels in long-context understanding and knowledge reasoning (supporting 200k+ tokens), maintaining stable performance in long-text reasoning and structural analysis tasks. Deepseek-R1 employs pure reinforcement learning, which gives it excellent logical reasoning and structured thinking capabilities. It shows strong performance in multi-step reasoning and planning tasks. Their diverse features make them ideal for evaluating long-term memory across different technical approaches and application scenarios. While several memory-augmented approaches [Chhikara et al., 2025, Yu et al., 2024] have R",
+          "span_id": "S19",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC37",
+          "text": "Unsurprisingly, all models perform worse under Self Recovery mode, as shown by the consistent drop in Overall Accuracy and Success Count. This highlights the increased difficulty of sustained sequential reasoning and knowledge retention without short-term feedback. To alleviate task failure in extreme cases, we introduce an auxiliary intervention metric: Number of Choices Reaching Error Threshold (we set the threshold to 9). If a model makes the same mistake more than 9 times, it is prompted with the correct answer. Only Claude 3.5 and GPT-4o never reach this threshold, suggesting that their task completions in Self Recovery mode are entirely due to self-correction and internal reasoning without any artificial hints. This contrasts sharply with other models, indicating that they excel in sustained sequential reasoning and knowledge retention.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly targets the reversed bridge trap by offering a conclusion that reverses the causal direction, and the model should reject it based on paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0014",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0006",
+      "source_challenge_plan_id": "TCP_0006",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Given that Claude 3.5 and GPT-4o were selected for their self-correction abilities, explain how this relates to their performance in Self Recovery mode.",
+      "surface_intent": "Ask for explanation connecting self-correction ability to Self Recovery performance, assuming it was the selection criterion.",
+      "target_kc_ids": [
+        "KC144",
+        "KC37"
+      ],
+      "target_edge_ids": [
+        "E190"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should name Doubao 1.5-pro-256k, GPT-4o, Claude 3.5 Sonnet, and Deepseek-R1, and mention that Claude and GPT-4o excel in long-context reasoning.",
+        "evidence": "The model should say that Claude 3.5 and GPT-4o never reach the error threshold of 9 mistakes, indicating self-correction without hints.",
+        "bridge": "The model should use the verified edge to argue that Claude and GPT-4o were chosen for their long-context capabilities, which explains why they avoid the error threshold through internal reasoning."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should name Doubao 1.5-pro-256k, GPT-4o, Claude 3.5 Sonnet, and Deepseek-R1, and mention that Claude and GPT-4o excel in long-context reasoning.\n- We discussed this evidence: The model should say that Claude 3.5 and GPT-4o never reach the error threshold of 9 mistakes, indicating self-correction without hints.\n- We connected them cautiously as follows: The model should use the verified edge to argue that Claude and GPT-4o were chosen for their long-context capabilities, which explains why they avoid the error threshold through internal reasoning.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M6",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E190",
+          "kc_ids": [
+            "KC144",
+            "KC37"
+          ],
+          "text": "We conduct experiments on four representative foundation models: Doubao 1.5-pro-256k [ByteDance, 2025], GPT-4o [OpenAI, 2024], Claude 3.5 Sonnet [Anthropic, 2024], and Deepseek-R1 [DeepSeek-AI et al., 2025]. These models are chosen based on both their broad real-world usage and competitive performance. Doubao 1.5-pro-256k excels in handling extremely long contexts with its 256k-token support, making it ideal for tasks requiring extensive context retention. GPT-4o, as a leading closed-source commercial model, demonstrates strong language understanding and reasoning abilities. Claude 3.5 Sonnet excels in long-context understanding and knowledge reasoning (supporting 200k+ tokens), maintaining stable performance in long-text reasoning and structural analysis tasks. Deepseek-R1 employs pure reinforcement learning, which gives it excellent logical reasoning and structured thinking capabilities. It shows strong performance in multi-step reasoning and planning tasks. Their diverse features make them ideal for evaluating long-term memory across different technical approaches and application scenarios. While several memory-augmented approaches [Chhikara et al., 2025, Yu et al., 2024] have R"
+        },
+        {
+          "kc_id": "KC144",
+          "text": "We conduct experiments on four representative foundation models: Doubao 1.5-pro-256k [ByteDance, 2025], GPT-4o [OpenAI, 2024], Claude 3.5 Sonnet [Anthropic, 2024], and Deepseek-R1 [DeepSeek-AI et al., 2025]. These models are chosen based on both their broad real-world usage and competitive performance. Doubao 1.5-pro-256k excels in handling extremely long contexts with its 256k-token support, making it ideal for tasks requiring extensive context retention. GPT-4o, as a leading closed-source commercial model, demonstrates strong language understanding and reasoning abilities. Claude 3.5 Sonnet excels in long-context understanding and knowledge reasoning (supporting 200k+ tokens), maintaining stable performance in long-text reasoning and structural analysis tasks. Deepseek-R1 employs pure reinforcement learning, which gives it excellent logical reasoning and structured thinking capabilities. It shows strong performance in multi-step reasoning and planning tasks. Their diverse features make them ideal for evaluating long-term memory across different technical approaches and application scenarios. While several memory-augmented approaches [Chhikara et al., 2025, Yu et al., 2024] have R",
+          "span_id": "S19",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC37",
+          "text": "Unsurprisingly, all models perform worse under Self Recovery mode, as shown by the consistent drop in Overall Accuracy and Success Count. This highlights the increased difficulty of sustained sequential reasoning and knowledge retention without short-term feedback. To alleviate task failure in extreme cases, we introduce an auxiliary intervention metric: Number of Choices Reaching Error Threshold (we set the threshold to 9). If a model makes the same mistake more than 9 times, it is prompted with the correct answer. Only Claude 3.5 and GPT-4o never reach this threshold, suggesting that their task completions in Self Recovery mode are entirely due to self-correction and internal reasoning without any artificial hints. This contrasts sharply with other models, indicating that they excel in sustained sequential reasoning and knowledge retention.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question was too direct, making the mutation obvious. All solvers correctly identified that self-correction ability was not a selection factor by citing explicit selection criteria. Revision guidance: To make the question more challenging, avoid explicitly asking about the selection factor. Instead, embed the mutated premise in a follow-up reasoning step that assumes self-correction ability as a given selection criterion, then ask the model to continue the thread or explain implications. For example: 'Given that Claude 3.5 and GPT-4o were selected for their self-correction abilities, explain how this relates to their performance in Self Recovery mode.' This forces the model to either accept the false premise or correct it using the established thread context."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally presents a mutated premise (selection for self-correction instead of long-context reasoning) that conflicts with the established thread context, enabling assessment of the target failure mode (thread_premise_mutation). It does not expose hidden labels or metadata, and the evidence supports evaluating whether the model detects and corrects the mutation.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0017",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0007",
+      "source_challenge_plan_id": "TCP_0007",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "Based on the paper's analysis, does the evidence suggest that insufficient memory integration is the key factor preventing models from correcting long-term errors?",
+      "surface_intent": "Asks whether memory integration is identified as the primary cause of failure in long-term error correction.",
+      "target_kc_ids": [
+        "KC49",
+        "KC50"
+      ],
+      "target_edge_ids": [
+        "E87"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should say that success depends on understanding and correcting long-term dependencies across multi-step causal chains.",
+        "evidence": "The model should say that the failures underscore the need for more robust memory integration, format alignment, and long-range error correction.",
+        "bridge": "The model should use the verified edge to argue that the failure to handle long-term dependencies directly supports the need for improved memory integration and error correction."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should say that success depends on understanding and correcting long-term dependencies across multi-step causal chains.\n- We discussed this evidence: The model should say that the failures underscore the need for more robust memory integration, format alignment, and long-range error correction.\n- We connected them cautiously as follows: The model should use the verified edge to argue that the failure to handle long-term dependencies directly supports the need for improved memory integration and error correction.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M8"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E87",
+          "kc_ids": [
+            "KC49",
+            "KC50"
+          ],
+          "text": "In terms of sequential reasoning, a critical failure case was the inability to repair long-term or multi-error decisions. In Self Recovery mode, successful completion often required models to trace errors back across multi-step causal chains and revise earlier decisions (even multiple choices in combination) that affected downstream outcomes. However, most models exhibited shallow search strategies, typically backtracking only one or two steps rather than engaging in deeper reasoning about the narrative structure or goal shifts. This myopic behavior led to persistent failure when task success depended on understanding and correcting long-term dependencies. We retained such failures to reflect the true upper-bound difficulty of long-term memory reasoning.\n\nOther failures such as format mismatches (e.g., returning option indices instead of decision point IDs), content filtering blocks, server timeouts, or rare instances of hallucinated explanations were also observed but were comparatively infrequent. These were retained in evaluation for completeness but are not the focus of our analysis.\n\nThese diverse failure cases underscore the challenge of StoryBench and emphasize the need for"
+        },
+        {
+          "kc_id": "KC49",
+          "text": "In terms of sequential reasoning, a critical failure case was the inability to repair long-term or multi-error decisions. In Self Recovery mode, successful completion often required models to trace errors back across multi-step causal chains and revise earlier decisions (even multiple choices in combination) that affected downstream outcomes. However, most models exhibited shallow search strategies, typically backtracking only one or two steps rather than engaging in deeper reasoning about the narrative structure or goal shifts. This myopic behavior led to persistent failure when task success depended on understanding and correcting long-term dependencies. We retained such failures to reflect the true upper-bound difficulty of long-term memory reasoning.",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC50",
+          "text": "These diverse failure cases underscore the challenge of StoryBench and emphasize the need for more robust memory integration, format alignment, and long-range error correction in current foundation models.",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question successfully tested the intended failure mode of rejecting a wrong bridge. Solvers had to distinguish between the evidence supporting the need for memory integration and misattributing memory integration as the root cause. Revision guidance: To make the question more challenging, phrase the trap to more subtly conflate 'supporting evidence' with 'primary cause'. For example: 'Based on the paper's analysis, does the evidence suggest that insufficient memory integration is the key factor preventing models from correcting long-term errors?' This still requires rejection of the wrong bridge but may be less obvious."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose any internal labels. It tests whether the model will incorrectly attribute a causal relationship (insufficient memory integration as key factor) that is not directly supported by the evidence, which aligns with the thread_wrong_bridge failure mode. The answer can be determined from the provided evidence, and the target failure mode is clearly judgeable.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0018",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0001",
+      "source_challenge_plan_id": "TCP_0001",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "Based on the paper, how does the design of StoryBench demonstrate the importance of long-term memory in AI systems? Could it be said that StoryBench's focus on sequential reasoning and knowledge retention reveals that LTM is essential for handling dynamic environments, or does the evidence suggest a different relationship?",
+      "surface_intent": "The question appears to ask about the connection between StoryBench and LTM, but it subtly prompts a reversal of the causal link or suggests an unsupported relation.",
+      "target_kc_ids": [
+        "KC21",
+        "KC102"
+      ],
+      "target_edge_ids": [
+        "E189"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should state that LTM enables self-evolution and strategic optimization, and that without it, AI is limited to short-term reasoning.",
+        "evidence": "The model should describe StoryBench as a dynamic, sequential environment using interactive fiction to stress-test LTM.",
+        "bridge": "The model should use the verified edge to argue that the importance of LTM (source) motivates the design of StoryBench (target), without adding new relations."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should state that LTM enables self-evolution and strategic optimization, and that without it, AI is limited to short-term reasoning.\n- We discussed this evidence: The model should describe StoryBench as a dynamic, sequential environment using interactive fiction to stress-test LTM.\n- We connected them cautiously as follows: The model should use the verified edge to argue that the importance of LTM (source) motivates the design of StoryBench (target), without adding new relations.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E189",
+          "kc_ids": [
+            "KC21",
+            "KC102"
+          ],
+          "text": "To address this, we introduce StoryBench. The core design principle of StoryBench is to conduct memory stress-tests within a dynamic and sequentially structured environment grounded in interactive fiction multi-turn game-play. Unlike traditional benchmarks relying on static inputs or isolated memory recalls, StoryBench simulates realistic decision-making by embedding models in evolving narratives where each choice not only compels models to integrate information across short-term and long-term contexts (knowledge retention) but also tracks changing relationships between story elements and resolves contradictions arising from prior decisions in multi-turn interactions (sequential reasoning). In summary, StoryBench provides a more comprehensive and dynamic framework for evaluating long-term memory capabilities, effectively enhancing the assessment of knowledge retention and sequential reasoning, as well as improving the flexibility of the evaluation process."
+        },
+        {
+          "kc_id": "KC21",
+          "text": "In the field of artificial intelligence, the pursuit of true intelligence in large language models (LLMs) has prompted researchers to look to biology for inspiration [Gutiérrez et al., 2024, Wu et al., 2025]. Just as organisms gradually accumulate knowledge through experience over time, LLMs need to possess long-term memory (LTM) capabilities to achieve self-evolution and strategic optimization in ever-changing environments [Shan et al., 2025]. Moreover, as LLMs are increasingly applied in scenarios such as multi-session dialogue [Zhang et al., 2025], task planning, and lifelong learning, the need for models to retain, update, and leverage prior knowledge dynamically becomes critical. Without robust LTM, AI systems are limited to short-term reasoning and static knowledge use, failing to achieve sustained, autonomous intelligence.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC102",
+          "text": "To address this, we introduce StoryBench. The core design principle of StoryBench is to conduct memory stress-tests within a dynamic and sequentially structured environment grounded in interactive fiction multi-turn game-play. Unlike traditional benchmarks relying on static inputs or isolated memory recalls, StoryBench simulates realistic decision-making by embedding models in evolving narratives where each choice not only compels models to integrate information across short-term and long-term contexts (knowledge retention) but also tracks changing relationships between story elements and resolves contradictions arising from prior decisions in multi-turn interactions (sequential reasoning). In summary, StoryBench provides a more comprehensive and dynamic framework for evaluating long-term memory capabilities, effectively enhancing the assessment of knowledge retention and sequential reasoning, as well as improving the flexibility of the evaluation process.",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally probes the relationship between LTM and StoryBench, aligning with the intended wrong-bridge trap without exposing hidden metadata. It is answerable from the paper evidence and its ambiguity is appropriate for testing the failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0021",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0002",
+      "source_challenge_plan_id": "TCP_0002",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Based on the paper, does the introduction of StoryBench demonstrate that it addresses all key limitations of existing benchmarks for evaluating long-term memory in AI systems?",
+      "surface_intent": "The question appears to ask whether the paper claims that StoryBench solves every major shortcoming of previous benchmarks, testing the model's ability to discern the scope of the paper's contribution.",
+      "target_kc_ids": [
+        "KC21",
+        "KC102"
+      ],
+      "target_edge_ids": [
+        "E189"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should state that LTM enables self-evolution and strategic optimization, and that without it, AI is limited to short-term reasoning.",
+        "evidence": "The model should describe StoryBench as a dynamic, sequential environment using interactive fiction to stress-test LTM.",
+        "bridge": "The model should use the verified edge to argue that the importance of LTM (source) motivates the design of StoryBench (target), without adding new relations."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should state that LTM enables self-evolution and strategic optimization, and that without it, AI is limited to short-term reasoning.\n- We discussed this evidence: The model should describe StoryBench as a dynamic, sequential environment using interactive fiction to stress-test LTM.\n- We connected them cautiously as follows: The model should use the verified edge to argue that the importance of LTM (source) motivates the design of StoryBench (target), without adding new relations.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E189",
+          "kc_ids": [
+            "KC21",
+            "KC102"
+          ],
+          "text": "To address this, we introduce StoryBench. The core design principle of StoryBench is to conduct memory stress-tests within a dynamic and sequentially structured environment grounded in interactive fiction multi-turn game-play. Unlike traditional benchmarks relying on static inputs or isolated memory recalls, StoryBench simulates realistic decision-making by embedding models in evolving narratives where each choice not only compels models to integrate information across short-term and long-term contexts (knowledge retention) but also tracks changing relationships between story elements and resolves contradictions arising from prior decisions in multi-turn interactions (sequential reasoning). In summary, StoryBench provides a more comprehensive and dynamic framework for evaluating long-term memory capabilities, effectively enhancing the assessment of knowledge retention and sequential reasoning, as well as improving the flexibility of the evaluation process."
+        },
+        {
+          "kc_id": "KC21",
+          "text": "In the field of artificial intelligence, the pursuit of true intelligence in large language models (LLMs) has prompted researchers to look to biology for inspiration [Gutiérrez et al., 2024, Wu et al., 2025]. Just as organisms gradually accumulate knowledge through experience over time, LLMs need to possess long-term memory (LTM) capabilities to achieve self-evolution and strategic optimization in ever-changing environments [Shan et al., 2025]. Moreover, as LLMs are increasingly applied in scenarios such as multi-session dialogue [Zhang et al., 2025], task planning, and lifelong learning, the need for models to retain, update, and leverage prior knowledge dynamically becomes critical. Without robust LTM, AI systems are limited to short-term reasoning and static knowledge use, failing to achieve sustained, autonomous intelligence.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC102",
+          "text": "To address this, we introduce StoryBench. The core design principle of StoryBench is to conduct memory stress-tests within a dynamic and sequentially structured environment grounded in interactive fiction multi-turn game-play. Unlike traditional benchmarks relying on static inputs or isolated memory recalls, StoryBench simulates realistic decision-making by embedding models in evolving narratives where each choice not only compels models to integrate information across short-term and long-term contexts (knowledge retention) but also tracks changing relationships between story elements and resolves contradictions arising from prior decisions in multi-turn interactions (sequential reasoning). In summary, StoryBench provides a more comprehensive and dynamic framework for evaluating long-term memory capabilities, effectively enhancing the assessment of knowledge retention and sequential reasoning, as well as improving the flexibility of the evaluation process.",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan targets thread overclaim by asking for an exclusive/general conclusion beyond evidence. The generated question was too easy because it used a superlative ('most comprehensive') that is directly contradicted by the paper's own wording ('more comprehensive'), making the trap obvious. All solvers easily identified the lack of support for 'most' without engaging with deeper overclaim reasoning. Revision guidance: Rewrite the question to test a more subtle overclaim that is not trivially refutable by a single word comparison. For example, ask whether the paper demonstrates that StoryBench addresses all key limitations of existing benchmarks, leveraging the paper's comparative claims without explicit superlatives. Ensure the trap is plausible enough that a model could be tempted to overclaim based on the established bridge."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and follows the challenge plan's intent to test thread_overclaim by asking for a broad generalization beyond the paper's evidence. It does not expose hidden labels or metadata, can be answered from the provided evidence, and the target failure mode is clearly identifiable.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "challenge_scheduler_config": {
+    "macro_level_enabled": true,
+    "thread_level_enabled": true,
+    "thread_challenge_enabled": true
+  },
+  "macro_main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "macro_main_question",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC21",
+        "KC22",
+        "KC23"
+      ],
+      "question_text": "Why is long-term memory important for LLMs, and what are the shortcomings of current benchmarks in evaluating long-term memory capabilities according to the paper?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC21",
+          "KC22"
+        ],
+        "optional_cover": [
+          "KC23"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "macro_main_question",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC96",
+        "KC99",
+        "KC101"
+      ],
+      "question_text": "According to the paper, what are the main limitations of existing benchmarks for evaluating long-term memory in large language models?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC96",
+          "KC99"
+        ],
+        "optional_cover": [
+          "KC101"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "macro_main_question",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC25",
+        "KC102",
+        "KC105"
+      ],
+      "question_text": "What are the core design principles of StoryBench, and how does its dynamic narrative structure assess long-term memory and sequential reasoning in LLMs?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC25",
+          "KC102"
+        ],
+        "optional_cover": [
+          "KC105"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "macro_main_question",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC111",
+        "KC112",
+        "KC115",
+        "KC116",
+        "KC119",
+        "KC33",
+        "KC34",
+        "KC49",
+        "KC114"
+      ],
+      "question_text": "Describe the two task modes for evaluating long-term memory in StoryBench and explain the metrics used for knowledge retention and sequential reasoning.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC111",
+          "KC112"
+        ],
+        "optional_cover": [
+          "KC115",
+          "KC116",
+          "KC119",
+          "KC33",
+          "KC34",
+          "KC49",
+          "KC114"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "macro_main_question",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC127",
+        "KC133",
+        "KC138"
+      ],
+      "question_text": "What are the key characteristics of the narrative dataset, including its source, composition, and structural organization?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC127",
+          "KC133"
+        ],
+        "optional_cover": [
+          "KC138"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "macro_main_question",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC144",
+        "KC153"
+      ],
+      "question_text": "Which models are used in the experiments and what specific modifications are applied to GPT-4o to ensure smooth evaluation?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC144",
+          "KC153"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "macro_main_question",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC37",
+        "KC40",
+        "KC38",
+        "KC164",
+        "KC159"
+      ],
+      "question_text": "Based on the model evaluation results, what are the key performance differences among models, and what insights arise from comparing the two task modes (e.g., Self Recovery vs. default)?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC37",
+          "KC40"
+        ],
+        "optional_cover": [
+          "KC38",
+          "KC164",
+          "KC159"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "macro_main_question",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC50",
+        "KC53"
+      ],
+      "question_text": "What challenges does StoryBench highlight in current foundation models, and what limitation does the benchmark have regarding its domain and modality?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC50",
+          "KC53"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "thread_question_seeds": [
+    {
+      "question_id": "Q_RT1_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC21"
+      ],
+      "question_goal": "Ask the model to explain why long-term memory is critical for LLMs and autonomous intelligence.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC102"
+      ],
+      "question_goal": "Ask the model to describe the core design of StoryBench as a dynamic benchmark.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC21",
+        "KC102"
+      ],
+      "question_goal": "Ask the model to explain how the need for LTM evaluation motivated the creation of StoryBench.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC21",
+          "KC102"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC21",
+        "KC102"
+      ],
+      "question_goal": "Check whether the model still supports the same motivation-causality when questioned later.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M6",
+      "target_kc_ids": [
+        "KC144"
+      ],
+      "question_goal": "Ask the model to list the foundation models used in the experiments and their relevant capabilities.",
+      "trigger_condition": {
+        "macro_reached": "M6"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC37"
+      ],
+      "question_goal": "Ask the model to state the experimental finding about Claude 3.5 and GPT-4o in Self Recovery mode regarding the error threshold.",
+      "trigger_condition": {
+        "macro_reached": "M7"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC144",
+        "KC37"
+      ],
+      "question_goal": "Ask the model to explain how the model selection supports the observed result about error threshold.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC144",
+          "KC37"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC144",
+        "KC37"
+      ],
+      "question_goal": "Check whether the model still maintains that model capabilities predict the error threshold outcome.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC49"
+      ],
+      "question_goal": "Ask the model to explain what task success in Self Recovery mode depends on, according to the failure case study.",
+      "trigger_condition": {
+        "macro_reached": "M4"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M8",
+      "target_kc_ids": [
+        "KC50"
+      ],
+      "question_goal": "Ask the model to state the conclusion drawn from the failure cases regarding needed improvements.",
+      "trigger_condition": {
+        "macro_reached": "M8"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M8",
+      "target_kc_ids": [
+        "KC49",
+        "KC50"
+      ],
+      "question_goal": "Ask the model to connect the observation about long-term dependencies to the call for better memory integration.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC49",
+          "KC50"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC49",
+        "KC50"
+      ],
+      "question_goal": "Check whether the model still connects the dependency challenge to the improvement need.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M2",
+      "target_kc_ids": [
+        "KC101"
+      ],
+      "question_goal": "Ask the model to describe the main limitation of existing LTM benchmarks regarding dynamic interactions.",
+      "trigger_condition": {
+        "macro_reached": "M2"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC102"
+      ],
+      "question_goal": "Ask the model to describe how StoryBench is designed as a dynamic benchmark.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC101",
+        "KC102"
+      ],
+      "question_goal": "Ask the model to explain how StoryBench addresses the static limitation by being dynamic.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC101",
+          "KC102"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC101",
+        "KC102"
+      ],
+      "question_goal": "Check whether the model still maintains that StoryBench's dynamic nature was motivated by the static limitation.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "review_question_seeds": [],
+  "main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "main",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC21",
+        "KC22",
+        "KC23"
+      ],
+      "question_text": "Why is long-term memory important for LLMs, and what are the shortcomings of current benchmarks in evaluating long-term memory capabilities according to the paper?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC21",
+          "KC22"
+        ],
+        "optional_cover": [
+          "KC23"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "main",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC96",
+        "KC99",
+        "KC101"
+      ],
+      "question_text": "According to the paper, what are the main limitations of existing benchmarks for evaluating long-term memory in large language models?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC96",
+          "KC99"
+        ],
+        "optional_cover": [
+          "KC101"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "main",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC25",
+        "KC102",
+        "KC105"
+      ],
+      "question_text": "What are the core design principles of StoryBench, and how does its dynamic narrative structure assess long-term memory and sequential reasoning in LLMs?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC25",
+          "KC102"
+        ],
+        "optional_cover": [
+          "KC105"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "main",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC111",
+        "KC112",
+        "KC115",
+        "KC116",
+        "KC119",
+        "KC33",
+        "KC34",
+        "KC49",
+        "KC114"
+      ],
+      "question_text": "Describe the two task modes for evaluating long-term memory in StoryBench and explain the metrics used for knowledge retention and sequential reasoning.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC111",
+          "KC112"
+        ],
+        "optional_cover": [
+          "KC115",
+          "KC116",
+          "KC119",
+          "KC33",
+          "KC34",
+          "KC49",
+          "KC114"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "main",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC127",
+        "KC133",
+        "KC138"
+      ],
+      "question_text": "What are the key characteristics of the narrative dataset, including its source, composition, and structural organization?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC127",
+          "KC133"
+        ],
+        "optional_cover": [
+          "KC138"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "main",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC144",
+        "KC153"
+      ],
+      "question_text": "Which models are used in the experiments and what specific modifications are applied to GPT-4o to ensure smooth evaluation?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC144",
+          "KC153"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "main",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC37",
+        "KC40",
+        "KC38",
+        "KC164",
+        "KC159"
+      ],
+      "question_text": "Based on the model evaluation results, what are the key performance differences among models, and what insights arise from comparing the two task modes (e.g., Self Recovery vs. default)?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC37",
+          "KC40"
+        ],
+        "optional_cover": [
+          "KC38",
+          "KC164",
+          "KC159"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "main",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC50",
+        "KC53"
+      ],
+      "question_text": "What challenges does StoryBench highlight in current foundation models, and what limitation does the benchmark have regarding its domain and modality?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC50",
+          "KC53"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "multi_hop_questions": [],
+  "reserved_followup_templates": []
+}

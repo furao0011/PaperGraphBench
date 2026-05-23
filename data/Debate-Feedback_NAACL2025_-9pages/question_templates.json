@@ -1,0 +1,3012 @@
+{
+  "paper_id": "Debate-Feedback_NAACL2025_-9pages",
+  "schema_version": "v1",
+  "challenge_plans_path": "data/Debate-Feedback_NAACL2025_-9pages/cache/questions/challenge_plans.json",
+  "challenge_plan_summary": {
+    "plan_count": 72,
+    "by_type": {
+      "false_premise_challenge": 40,
+      "overclaim_challenge": 12,
+      "wrong_relation_challenge": 20
+    },
+    "by_modality_pool": {
+      "multimodal": 36,
+      "text": 36
+    },
+    "text_plan_count": 36,
+    "multimodal_plan_count": 36,
+    "multimodal_plan_limit": 36
+  },
+  "challenge_questions_raw_path": "data/Debate-Feedback_NAACL2025_-9pages/cache/questions/challenge_questions_raw.json",
+  "challenge_question_raw_summary": {
+    "raw_question_count": 64,
+    "by_type": {
+      "false_premise_challenge": 7,
+      "overclaim_challenge": 4,
+      "wrong_relation_challenge": 7
+    },
+    "by_modality_pool": {
+      "multimodal": 8,
+      "text": 10
+    }
+  },
+  "challenge_questions_filtered_path": "data/Debate-Feedback_NAACL2025_-9pages/cache/questions/challenge_questions_filtered.json",
+  "challenge_solver_trials_path": "data/Debate-Feedback_NAACL2025_-9pages/cache/questions/challenge_solver_trials.json",
+  "challenge_filter_summary": {
+    "plan_pool_count": 72,
+    "target_count": 18,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 64,
+    "solver_trial_count": 57,
+    "filtered_count": 18,
+    "human_review_count": 7,
+    "rejected_count": 46,
+    "blacklisted_plan_count": 13,
+    "by_type": {
+      "false_premise_challenge": 7,
+      "overclaim_challenge": 4,
+      "wrong_relation_challenge": 7
+    },
+    "by_modality_pool": {
+      "multimodal": 8,
+      "text": 10
+    },
+    "stop_reason": {
+      "text": "target_reached",
+      "multimodal": {
+        "figure": "target_reached",
+        "remaining": "target_reached"
+      }
+    }
+  },
+  "challenge_questions": [
+    {
+      "question_id": "CHQ_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0024",
+      "source_challenge_plan_id": "CHP_0024",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "What is the F1-score of the Debate-Feedback model on the CAIL18 dataset?",
+      "surface_intent": "Seeking the F1-score of the Debate-Feedback model on the CAIL18 dataset.",
+      "target_kc_ids": [
+        "KC55"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The evidence states that the model with an assistant component improved the F1-score to 0.16, not the base Debate-Feedback model.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC55",
+          "text": "CAIL18 Dataset Performance On the Chinese legal dataset CAIL18, the Debate-Feedback model achieved a remarkable accuracy of 0.45, significantly surpassing GPT-4o (accuracy 0.31) and GPT-3.5-turbo (accuracy 0.26). The model with an assistant component further improved the F1-score to 0.16, highlighting the ability of the assistant model to refine predictions and correct any inconsistencies in the debate phase. These results also suggest that the Debate-Feedback model is more versatile in handling cross-linguistic challenges compared to other models.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose metadata, and can be answered from the evidence (the evidence does not report an F1-score for the base Debate-Feedback model, so a correct answer avoids the false premise). This tests whether the system fabricates an F1-score, aligning with the false premise failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0013",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0008",
+      "source_challenge_plan_id": "CHP_0008",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "The paper states that traditional LegalAI methods rely heavily on large, domain-specific datasets. Yet, the proposed Debate-Feedback model also uses a debate phase that could require extensive training data to generate reliable debates. Is it consistent with the paper that the model still depends on large datasets?",
+      "surface_intent": "Checking understanding of the model's data efficiency claim.",
+      "target_kc_ids": [
+        "KC16",
+        "KC2"
+      ],
+      "target_edge_ids": [
+        "E96"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The answer should connect the problem of dataset dependence to the method's design of using debate and reliability to reduce data needs.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E96",
+          "kc_ids": [
+            "KC16",
+            "KC2"
+          ],
+          "text": "In-context Learning(ICL) is a learning paradigm widely applied in large language models (LLMs) by using a set of context examples to guide predictions during reasoning (Dong et al., 2024; Liu et al., 2021; Gutierrez-Pachas et al., 2022; Min et al., 2022). However, due to the often extensive length of legal texts, naive ICL methods are constrained by LLM input length limits. As a result, LegalAI solutions typically combine ICL with fine-tuning or pretraining of models to overcome these limitations. For instance, LegalBERT (Chalkidis et al., 2019) fine-tunes BERT on legal datasets, achieving strong results in legal text classification and provision retrieval. Similarly, Lawformer (Xiao et al., 2021) handles lengthy Chinese legal documents, while CaseLaw-BERT (Paul et al., 2023), fine-tuned on case law datasets, enhances legal case retrieval and judgment prediction. Despite their success, these approaches rely heavily on large, domain-specific datasets, which can limit their applicability across different legal systems and languages."
+        },
+        {
+          "kc_id": "KC16",
+          "text": "In-context Learning(ICL) is a learning paradigm widely applied in large language models (LLMs) by using a set of context examples to guide predictions during reasoning (Dong et al., 2024; Liu et al., 2021; Gutierrez-Pachas et al., 2022; Min et al., 2022). However, due to the often extensive length of legal texts, naive ICL methods are constrained by LLM input length limits. As a result, LegalAI solutions typically combine ICL with fine-tuning or pretraining of models to overcome these limitations. For instance, LegalBERT (Chalkidis et al., 2019) fine-tunes BERT on legal datasets, achieving strong results in legal text classification and provision retrieval. Similarly, Lawformer (Xiao et al., 2021) handles lengthy Chinese legal documents, while CaseLaw-BERT (Paul et al., 2023), fine-tuned on case law datasets, enhances legal case retrieval and judgment prediction. Despite their success, these approaches rely heavily on large, domain-specific datasets, which can limit their applicability across different legal systems and languages.",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC2",
+          "text": "The use of AI in legal analysis and prediction (LegalAI) has gained widespread attention, with past research focusing on retrieval-based methods and fine-tuning large models. However, these approaches often require large datasets and underutilize the capabilities of modern large language models (LLMs). In this paper, inspired by the debate phase of real courtroom trials, we propose a novel legal judgment prediction model based on the DebateFeedback architecture, which integrates LLM multi-agent debate and reliability evaluation models. Unlike traditional methods, our model achieves significant improvements in efficiency by minimizing the need for large historical datasets, thus offering a lightweight yet robust solution. Comparative experiments show that it outperforms several general-purpose and domain-specific legal models, offering a dynamic reasoning process and a promising direction for future LegalAI research.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question directly asked for the model's method to address dataset dependence, which is explicitly stated in the paper, making it trivial to answer correctly. The challenge plan itself is not inherently too easy; it requires a more indirect question to test the relation between dataset dependence (KC16) and the model's design (KC2). Revision guidance: The next question should avoid directly asking about the model's solution. Instead, probe the relation indirectly: e.g., ask 'Why does the paper claim that traditional methods like fine-tuning are insufficient for LegalAI?' and then follow up with a question about how the proposed model's design addresses that, requiring the solver to connect KC16 (dataset dependence) to KC2 (the model's approach). Alternatively, present a plausible but incorrect statement that weakens the relation (e.g., 'The Debate-Feedback model still relies on large datasets for debate training') and ask if it is consistent with the paper, forcing the solver to reject the wrong relation."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and aligns with the target failure mode of wrong relation by probing whether the debate-feedback model still depends on large datasets, which tests the correct motivation chain. It is answerable from the evidence and not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0014",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0023",
+      "source_challenge_plan_id": "CHP_0023",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Based on the paper, what is the relationship between the debate model and the Debate-Feedback model?",
+      "surface_intent": "To understand how the general debate model relates to the specific Debate-Feedback model proposed in the paper.",
+      "target_kc_ids": [
+        "KC6",
+        "KC8"
+      ],
+      "target_edge_ids": [
+        "E31"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3",
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E31",
+          "kc_ids": [
+            "KC6",
+            "KC8"
+          ],
+          "text": "In this paper, we propose a Debate-Feedback model to explore an efficient and convenient method for predicting legal judgement. Fig[1] shows the general framework of the model in the task of predicting decision results. Specifically, Debate-Feedback can be divided into four steps. First, the collected historical legal cases $ L_i $ will be formatted into Case Background $ C_i $, Plaintiff Claim $ P_i $ and Defendant Statement $ D_i $. These information will be provided to the judge LLM for initial prediction. In the second step of the debate, multiple LLM agents will be guided to answer the prediction questions from different perspectives, and then exchange opinions and debate to generate their own comments $ E_i $. In the verification phase, a pre-trained assistant model $ \\mathcal{E} $ will conduct a reliability analysis on each LLM's comments combined with case information. The results of the analysis will be provided to the judge LLM for reference together with each agent's comments. The judge LLM will give the prediction $ O_i $ for this round based on the above information $ \\mathcal{E} = E_i \\oplus L_i $. More details are illustrated in the Methodology section. In summary, w"
+        },
+        {
+          "kc_id": "KC6",
+          "text": "The debate model is a system that integrates large language modeling (LLM) with argumentative reasoning techniques to simulate the process of debate or contention (Irving et al., 2018; Nie et al., 2020), ultimately arriving at a decision or conclusion on a specific issue through the debate process. In a typical debate task, multiple LLM agents assume different roles and are deliberately guided to provide answers from various perspectives or positions. These generated arguments are then synthesized to assist the LLM in reaching a final conclusion (Zeng et al., 2022).",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC8",
+          "text": "In this paper, we propose a Debate-Feedback model to explore an efficient and convenient method for predicting legal judgement. Fig[1] shows the general framework of the model in the task of predicting decision results. Specifically, Debate-Feedback can be divided into four steps. First, the collected historical legal cases $ L_i $ will be formatted into Case Background $ C_i $, Plaintiff Claim $ P_i $ and Defendant Statement $ D_i $. These information will be provided to the judge LLM for initial prediction. In the second step of the debate, multiple LLM agents will be guided to answer the prediction questions from different perspectives, and then exchange opinions and debate to generate their own comments $ E_i $. In the verification phase, a pre-trained assistant model $ \\mathcal{E} $ will conduct a reliability analysis on each LLM's comments combined with case information. The results of the analysis will be provided to the judge LLM for reference together with each agent's comments. The judge LLM will give the prediction $ O_i $ for this round based on the above information $ \\mathcal{E} = E_i \\oplus L_i $. More details are illustrated in the Methodology section. In summary, w",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks about the relationship between the debate model and the Debate-Feedback model, which is the target of the wrong_relation_challenge. It is natural, serious, and can be answered from the provided evidence. It does not expose any hidden labels or metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0020",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0017",
+      "source_challenge_plan_id": "CHP_0017",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Based on the CAIL18 results, the base Debate-Feedback model achieved an accuracy of 0.45, and the version with an assistant component achieved an F1-score of 0.16. Which statement accurately describes how these findings are related? A) The accuracy of the base model supports the improved F1-score of the assistant model. B) The improved F1-score of the assistant model supports the accuracy of the base model. C) The two findings are independent and unrelated.",
+      "surface_intent": "The question asks the model to identify the correct directional relationship between two experimental results.",
+      "target_kc_ids": [
+        "KC54",
+        "KC55"
+      ],
+      "target_edge_ids": [
+        "E20"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E20",
+          "kc_ids": [
+            "KC54",
+            "KC55"
+          ],
+          "text": "CAIL18 Dataset Performance On the Chinese legal dataset CAIL18, the Debate-Feedback model achieved a remarkable accuracy of 0.45, significantly surpassing GPT-4o (accuracy 0.31) and GPT-3.5-turbo (accuracy 0.26). The model with an assistant component further improved the F1-score to 0.16, highlighting the ability of the assistant model to refine predictions and correct any inconsistencies in the debate phase. These results also suggest that the Debate-Feedback model is more versatile in handling cross-linguistic challenges compared to other models."
+        },
+        {
+          "kc_id": "KC54",
+          "text": "CAIL18 Dataset Performance On the Chinese legal dataset CAIL18, the Debate-Feedback model achieved a remarkable accuracy of 0.45, significantly surpassing GPT-4o (accuracy 0.31) and GPT-3.5-turbo (accuracy 0.26). The model with an assistant component further improved the F1-score to 0.16, highlighting the ability of the assistant model to refine predictions and correct any inconsistencies in the debate phase. These results also suggest that the Debate-Feedback model is more versatile in handling cross-linguistic challenges compared to other models.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC55",
+          "text": "CAIL18 Dataset Performance On the Chinese legal dataset CAIL18, the Debate-Feedback model achieved a remarkable accuracy of 0.45, significantly surpassing GPT-4o (accuracy 0.31) and GPT-3.5-turbo (accuracy 0.26). The model with an assistant component further improved the F1-score to 0.16, highlighting the ability of the assistant model to refine predictions and correct any inconsistencies in the debate phase. These results also suggest that the Debate-Feedback model is more versatile in handling cross-linguistic challenges compared to other models.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The challenge plan is not inherently too easy; it defines a clear verified relation (KC54 supports KC55) and a trap (reverse/weaken the relation). However, the generated question focused on separate performance metrics rather than directly probing the support relation between the two knowledge components, allowing solvers to correctly identify independence without triggering the target failure mode. Revision guidance: Rewrite the question to directly test the support relation between KC54 and KC55. For example, ask 'Given that the CAIL18 results show both an accuracy of 0.45 for the Debate-Feedback model and an F1-score improvement to 0.16 with the assistant component, which statement best describes the relationship between these findings? A) The accuracy result supports the conclusion that the assistant component improves performance. B) The accuracy result contradicts the conclusion. C) The findings are unrelated.' Option A would be the trap (reversing the relation because accuracy is for base model, not assistant). The evidence clearly shows KC54 (accuracy) supports KC55 (F1 improvement) only in the sense that both are positive results, but the specific support relation is that the assistant improves F1, not accuracy. Ensure the question requires understanding of the directional support from KC54 to KC55, and avoid ambiguous wording that lets solvers dismiss the relation as independent."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and follows the intended wrong relation failure mode by asking to select the correct directional relationship between two findings. It does not expose hidden labels and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0030",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0007",
+      "source_challenge_plan_id": "CHP_0007",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the evidence from the paper, can we conclude that including an assistant model in the Debate-Feedback framework consistently improves prediction reliability and robustness across different legal datasets?",
+      "surface_intent": "asking about the general effectiveness of the assistant model in improving prediction reliability",
+      "target_kc_ids": [
+        "KC53"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'legal judgment prediction', 'dataset': 'CaseLaw', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC53",
+          "text": "CaseLaw Dataset Performance For the CaseLaw dataset, the Debate-Feedback model outperformed GPT-4o, GPT-3.5-turbo, Legal-BERT, CNN and Lawformer. The model with the assistant achieved an accuracy of 0.67 and an F1-score of 0.66, while the single Debate-Feedback model obtained slightly lower performance with an accuracy of 0.66 and an F1-score of 0.65. These results show that our method improves the performance of pre-train legal domain models, which only achieved an accuracy of 0.63 and an F1-score of 0.61. The assistant model's inclusion in the feedback loop improves the reliability of predictions, making it more robust compared to the single model.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally probes whether the improvement generalizes beyond the reported dataset, directly targeting overclaim without exposing metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0032",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0028",
+      "source_challenge_plan_id": "CHP_0028",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "In the proposed framework, the assistant model E plays a key role in evaluating the reliability of agent arguments. Explain how this evaluation process works and discuss its implications for developing more reliable language models.",
+      "surface_intent": "To understand the specific mechanism of the assistant model and its potential impact on improving language model reliability.",
+      "target_kc_ids": [
+        "KC27"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC27",
+          "text": "The assistant model $ \\mathcal{E} $ evaluates the reliability of the agents' arguments and outputs a probability. If the reliability exceeds a threshold, the main LM adjusts its prediction by weighting the latest information, otherwise it defaults to the initial prediction. The final decision is smoothed over all rounds to produce a stable outcome. (Note that notation $ \\oplus $ does not mean xor, but rather combination in a non-additive sense.)",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; solvers avoided the trap because the question directly asked about general applicability, making it obvious to state limitations. A more subtle question could still elicit overclaim. Revision guidance: Rephrase the question to avoid directly asking about general applicability. For example, ask about the mechanism in a broader context or combine it with another capability, so the solver might inadvertently claim broader applicability. Ensure the surface intent does not cue the limitation response."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, does not expose hidden metadata, aligns with the overclaim target, and can be answered from the provided evidence, though it invites extrapolation that may reveal overclaiming.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0033",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0032",
+      "source_challenge_plan_id": "CHP_0032",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "According to the paper, does the unassisted Debate-Feedback model perform well enough on its own, or was the assistant model necessary to improve reliability?",
+      "surface_intent": "asks whether the assistant model is needed or the unassisted debate model suffices",
+      "target_kc_ids": [
+        "KC36",
+        "KC37"
+      ],
+      "target_edge_ids": [
+        "E55"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1",
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E55",
+          "kc_ids": [
+            "KC36",
+            "KC37"
+          ],
+          "text": "Reliability Analysis Through experiments, we observe that a simple debate model can sometimes lead to worse prediction results. This occurs because legal predictions differ from mathematical problems, as they often involve subjective tendencies. A straightforward example is when we guide multiple LLMs to debate from the perspectives of the plaintiff and defendant, it is challenging for them to reach a consensus. To address this issue, one of our solutions is to train an assistant model that learns from a large corpus of legal event annotations and assists in evaluating the reliability of different debate arguments, as shown in Table $ ^{[1]} $. Specifically, the training set for the assistant model is generated from multiple runs of the unassisted Debate-Feedback model, which we refer to as Debate-Feedback (single) in the subsequent experimental section."
+        },
+        {
+          "kc_id": "KC36",
+          "text": "Reliability Analysis Through experiments, we observe that a simple debate model can sometimes lead to worse prediction results. This occurs because legal predictions differ from mathematical problems, as they often involve subjective tendencies. A straightforward example is when we guide multiple LLMs to debate from the perspectives of the plaintiff and defendant, it is challenging for them to reach a consensus. To address this issue, one of our solutions is to train an assistant model that learns from a large corpus of legal event annotations and assists in evaluating the reliability of different debate arguments, as shown in Table $ ^{[1]} $. Specifically, the training set for the assistant model is generated from multiple runs of the unassisted Debate-Feedback model, which we refer to as Debate-Feedback (single) in the subsequent experimental section.",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC37",
+          "text": "Reliability Analysis Through experiments, we observe that a simple debate model can sometimes lead to worse prediction results. This occurs because legal predictions differ from mathematical problems, as they often involve subjective tendencies. A straightforward example is when we guide multiple LLMs to debate from the perspectives of the plaintiff and defendant, it is challenging for them to reach a consensus. To address this issue, one of our solutions is to train an assistant model that learns from a large corpus of legal event annotations and assists in evaluating the reliability of different debate arguments, as shown in Table $ ^{[1]} $. Specifically, the training set for the assistant model is generated from multiple runs of the unassisted Debate-Feedback model, which we refer to as Debate-Feedback (single) in the subsequent experimental section.",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the necessity of the assistant model, which directly tests the correct relation (assistant solves the debate issue) as per the plan. The answer is clearly supported by the evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0037",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0016",
+      "source_challenge_plan_id": "CHP_0016",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "How does the system use agent reliability to decide whether to adjust its prediction?",
+      "surface_intent": "Ask about the decision rule based on reliability threshold",
+      "target_kc_ids": [
+        "KC28"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC28",
+          "text": "The assistant model $ \\mathcal{E} $ evaluates the reliability of the agents' arguments and outputs a probability. If the reliability exceeds a threshold, the main LM adjusts its prediction by weighting the latest information, otherwise it defaults to the initial prediction. The final decision is smoothed over all rounds to produce a stable outcome. (Note that notation $ \\oplus $ does not mean xor, but rather combination in a non-additive sense.)",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, specific to the paper's decision rule, and does not expose hidden metadata or encourage overclaim.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0042",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0010",
+      "source_challenge_plan_id": "CHP_0010",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the paper, how does the Debate-Feedback model compare to GPT-4o and GPT-3.5-turbo in legal judgment prediction tasks?",
+      "surface_intent": "asks about comparative performance of the Debate-Feedback model against GPT models in legal judgment prediction",
+      "target_kc_ids": [
+        "KC55"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'legal judgment prediction', 'dataset': 'CAIL18', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC55",
+          "text": "CAIL18 Dataset Performance On the Chinese legal dataset CAIL18, the Debate-Feedback model achieved a remarkable accuracy of 0.45, significantly surpassing GPT-4o (accuracy 0.31) and GPT-3.5-turbo (accuracy 0.26). The model with an assistant component further improved the F1-score to 0.16, highlighting the ability of the assistant model to refine predictions and correct any inconsistencies in the debate phase. These results also suggest that the Debate-Feedback model is more versatile in handling cross-linguistic challenges compared to other models.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose hidden labels, follows the plan's intent to test overclaiming by not restricting the dataset, can be answered from the provided evidence (limited to CAIL18), and is not ambiguous in a way that prevents judging overclaim.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0045",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0027",
+      "source_challenge_plan_id": "CHP_0027",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "With an accuracy rate surpassing 0.45 on the CAIL18 dataset, how does the Debate-Feedback model's performance compare to GPT-4o and GPT-3.5-turbo?",
+      "surface_intent": "Comparing the Debate-Feedback model's accuracy on CAIL18 to other models",
+      "target_kc_ids": [
+        "KC55"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The evidence explicitly reports an accuracy of 0.45, not higher.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC55",
+          "text": "CAIL18 Dataset Performance On the Chinese legal dataset CAIL18, the Debate-Feedback model achieved a remarkable accuracy of 0.45, significantly surpassing GPT-4o (accuracy 0.31) and GPT-3.5-turbo (accuracy 0.26). The model with an assistant component further improved the F1-score to 0.16, highlighting the ability of the assistant model to refine predictions and correct any inconsistencies in the debate phase. These results also suggest that the Debate-Feedback model is more versatile in handling cross-linguistic challenges compared to other models.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was not usable. Reason: The question does not embed the false premise that the Debate-Feedback model's accuracy is higher than 0.45; it merely asks for a comparison, allowing the solver to answer correctly without falling into the trap. Revision guidance: Rewrite to explicitly state or imply that the model's accuracy is above 0.45, e.g., 'Given that the Debate-Feedback model achieves an accuracy exceeding 0.45 on CAIL18, how does it compare to GPT-4o and GPT-3.5-turbo?'"
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question presents a false premise (accuracy > 0.45) that directly challenges the evidence stating accuracy is exactly 0.45, matching the intended false_premise failure mode. It is natural, does not expose metadata, and can be unambiguously evaluated.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0002",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0064",
+      "source_challenge_plan_id": "CHP_0064",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Describe how agents A and E exchange opinions during the debate phase in Figure 1.",
+      "surface_intent": "Asking about the structure of the multi-agent debate phase",
+      "target_kc_ids": [
+        "KC76"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_001",
+          "asset_type": "figure",
+          "caption": "Figure 1: A brief introduction of Debate-Feedback Structure",
+          "summary": "The figure illustrates a four-step 'Debate-Feedback Structure' framework. Step 1 involves preprocessing formatted legal cases using a Judge LLM to generate an initial opinion ($O_i$). Step 2 is a multi-agent debate phase where agents (labeled $A$ and $E$) exchange opinions, governed by specific formulas. Step 3 performs verification through trust analysis and a threshold check on the verified value ($V_i$). Step 4 produces the final output ($O_n$) via smoothing. A feedback loop labeled 'Next Round i+1' connects the end back to the beginning, indicating an iterative process.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC76"
+          ],
+          "evidence_bases": [
+            "Listed as limitation in asset explanation"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_image_box_253_154_937_389.jpg",
+              "caption": "Figure 1: A brief introduction of Debate-Feedback Structure"
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The diagram shows arrows connecting every agent in column A to every agent in column E simultaneously, labeled 'exchange opinion', implying interaction within the same step.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC76",
+          "text": "Asset FIG_001 (figure): Figure 1: A brief introduction of Debate-Feedback Structure\nAsset summary: The figure illustrates a four-step 'Debate-Feedback Structure' framework. Step 1 involves preprocessing formatted legal cases using a Judge LLM to generate an initial opinion ($O_i$). Step 2 is a multi-agent debate phase where agents (labeled $A$ and $E$) exchange opinions, governed by specific formulas. Step 3 performs verification through trust analysis and a threshold check on the verified value ($V_i$). Step 4 produces the final output ($O_n$) via smoothing. A feedback loop labeled 'Next Round i+1' connects the end back to the beginning, indicating an iterative process.\nEvidence basis: Listed as limitation in asset explanation\nSupported claim: The figure is a high-level schematic and does not show the internal architecture or specific parameters of the LLMs.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC76",
+          "text": "Asset evidence basis: Listed as limitation in asset explanation",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's false premise (separate sequential phases vs simultaneous exchange) is valid, but the question explicitly presents both options, making it trivial to choose the correct one. Good solvers easily identify the simultaneous exchange from the figure. Revision guidance: Revise the question to avoid directly contrasting the two possibilities. Instead, ask an open-ended question about the interaction pattern, e.g., 'Describe how agents A and E exchange opinions during the debate phase in Figure 1.' This requires solvers to infer the simultaneous interaction, and those inattentive to arrows connecting every A to every E might describe separate phases, triggering the false premise failure."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly probes the intended false premise (misreading of agent interaction in the figure). It does not expose metadata and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0069",
+      "source_challenge_plan_id": "CHP_0069",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Based on Figure 3, does the improvement in performance from round 1 to round 2 confirm that the optimal number of rounds is 2, or could a higher number of rounds, such as 3 or 4, actually yield better performance? Explain using the data from the chart.",
+      "surface_intent": "Ask about the relationship between the performance increase from round 1 to 2 and the optimal number of rounds as depicted in the figure.",
+      "target_kc_ids": [
+        "KC89",
+        "KC90"
+      ],
+      "target_edge_ids": [
+        "E5"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 3: Influence of the number of rounds selected.",
+          "summary": "The line chart displays the relationship between the number of rounds (ranging from 1 to 4) and model performance metrics, specifically Accuracy (Acc) and F1 score. The graph shows that performance for both metrics increases from round 1 to round 2, reaching a peak, and then slightly decreases or stabilizes as the number of rounds increases to 3 and 4.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC89",
+            "KC90"
+          ],
+          "evidence_bases": [
+            "Upward slope of both lines between x=1 and x=2",
+            "Peaks of both lines occur at x=2 with values 0.659 and 0.656"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_chart_box_325_923_864_1332.jpg",
+              "caption": "Figure 3: Influence of the number of rounds selected."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E5",
+          "kc_ids": [
+            "KC89",
+            "KC90"
+          ],
+          "text": "Asset summary: The line chart displays the relationship between the number of rounds (ranging from 1 to 4) and model performance metrics, specifically Accuracy (Acc) and F1 score. The graph shows that performance for both metrics increases from round 1 to round 2, reaching a peak, and then slightly decreases or stabilizes as the number of rounds increases to 3 and 4.\n\nEvidence bases:\n- Upward slope of both lines between x=1 and x=2\n- Peaks of both lines occur at x=2 with values 0.659 and 0.656\n- Downward slope of lines from x=2 to x=3 and x=4\n- Yellow line is physically above the orange dashed line at all points"
+        },
+        {
+          "kc_id": "KC89",
+          "text": "Asset FIG_003 (figure): Figure 3: Influence of the number of rounds selected.\nAsset summary: The line chart displays the relationship between the number of rounds (ranging from 1 to 4) and model performance metrics, specifically Accuracy (Acc) and F1 score. The graph shows that performance for both metrics increases from round 1 to round 2, reaching a peak, and then slightly decreases or stabilizes as the number of rounds increases to 3 and 4.\nEvidence basis: Upward slope of both lines between x=1 and x=2\nSupported claim: Model performance (both Acc and F1) improves when increasing the number of rounds from 1 to 2.",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC90",
+          "text": "Asset FIG_003 (figure): Figure 3: Influence of the number of rounds selected.\nAsset summary: The line chart displays the relationship between the number of rounds (ranging from 1 to 4) and model performance metrics, specifically Accuracy (Acc) and F1 score. The graph shows that performance for both metrics increases from round 1 to round 2, reaching a peak, and then slightly decreases or stabilizes as the number of rounds increases to 3 and 4.\nEvidence basis: Peaks of both lines occur at x=2 with values 0.659 and 0.656\nSupported claim: The optimal number of rounds for this metric is 2, as it yields the highest scores.",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's target failure mode (wrong_relation) is clearly defined, but the generated question only asks for a general description of the figure, which does not require reasoning about the relation between KC89 and KC90. Solvers correctly described the trend without any attempt at relation reversal. Revision guidance: Rephrase the question to explicitly probe the relationship between the two key claims (KC89: performance improves from rounds 1 to 2; KC90: optimal at round 2). For example, ask: 'Based on Figure 3, which of the following best describes the relationship between the improvement from round 1 to 2 and the optimal number of rounds?' or 'Does the evidence in Figure 3 support the claim that performance increases from round 1 to 2 AND that round 2 is optimal? Explain.' This forces the model to either preserve or reverse the verified chain."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly tests the target failure mode by asking whether the improvement from round 1 to 2 confirms the optimal is 2 or if higher rounds could be better. It follows the challenge plan's intended wrong-relation challenge and can be answered from the figure evidence. No hidden labels or ambiguity.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0065",
+      "source_challenge_plan_id": "CHP_0065",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "In the framework shown in Figure 1, what is the relationship between the initial opinion (Step 1) and the multi-agent debate (Step 2)? Does the debate refine the initial opinion, or does the initial opinion drive the debate?",
+      "surface_intent": "asking about the directional relationship between steps in the framework",
+      "target_kc_ids": [
+        "KC73",
+        "KC74"
+      ],
+      "target_edge_ids": [
+        "E1"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_001",
+          "asset_type": "figure",
+          "caption": "Figure 1: A brief introduction of Debate-Feedback Structure",
+          "summary": "The figure illustrates a four-step 'Debate-Feedback Structure' framework. Step 1 involves preprocessing formatted legal cases using a Judge LLM to generate an initial opinion ($O_i$). Step 2 is a multi-agent debate phase where agents (labeled $A$ and $E$) exchange opinions, governed by specific formulas. Step 3 performs verification through trust analysis and a threshold check on the verified value ($V_i$). Step 4 produces the final output ($O_n$) via smoothing. A feedback loop labeled 'Next Round i+1' connects the end back to the beginning, indicating an iterative process.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC73",
+            "KC74"
+          ],
+          "evidence_bases": [
+            "Step 1 flowchart showing database icon to Judge LLM to $O_i$",
+            "Step 2 showing grid of agents with cross-arrows labeled 'exchange opinion'"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_image_box_253_154_937_389.jpg",
+              "caption": "Figure 1: A brief introduction of Debate-Feedback Structure"
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E1",
+          "kc_ids": [
+            "KC73",
+            "KC74"
+          ],
+          "text": "Asset summary: The figure illustrates a four-step 'Debate-Feedback Structure' framework. Step 1 involves preprocessing formatted legal cases using a Judge LLM to generate an initial opinion ($O_i$). Step 2 is a multi-agent debate phase where agents (labeled $A$ and $E$) exchange opinions, governed by specific formulas. Step 3 performs verification through trust analysis and a threshold check on the verified value ($V_i$). Step 4 produces the final output ($O_n$) via smoothing. A feedback loop labeled 'Next Round i+1' connects the end back to the beginning, indicating an iterative process.\n\nEvidence bases:\n- Step 1 flowchart showing database icon to Judge LLM to $O_i$\n- Step 2 showing grid of agents with cross-arrows labeled 'exchange opinion'\n- Arrow labeled 'Next Round i+1' looping from bottom back to start\n- Listed as limitation in asset explanation"
+        },
+        {
+          "kc_id": "KC73",
+          "text": "Asset FIG_001 (figure): Figure 1: A brief introduction of Debate-Feedback Structure\nAsset summary: The figure illustrates a four-step 'Debate-Feedback Structure' framework. Step 1 involves preprocessing formatted legal cases using a Judge LLM to generate an initial opinion ($O_i$). Step 2 is a multi-agent debate phase where agents (labeled $A$ and $E$) exchange opinions, governed by specific formulas. Step 3 performs verification through trust analysis and a threshold check on the verified value ($V_i$). Step 4 produces the final output ($O_n$) via smoothing. A feedback loop labeled 'Next Round i+1' connects the end back to the beginning, indicating an iterative process.\nEvidence basis: Step 1 flowchart showing database icon to Judge LLM to $O_i$\nSupported claim: The system processes formatted legal cases to generate an initial opinion.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC74",
+          "text": "Asset FIG_001 (figure): Figure 1: A brief introduction of Debate-Feedback Structure\nAsset summary: The figure illustrates a four-step 'Debate-Feedback Structure' framework. Step 1 involves preprocessing formatted legal cases using a Judge LLM to generate an initial opinion ($O_i$). Step 2 is a multi-agent debate phase where agents (labeled $A$ and $E$) exchange opinions, governed by specific formulas. Step 3 performs verification through trust analysis and a threshold check on the verified value ($V_i$). Step 4 produces the final output ($O_n$) via smoothing. A feedback loop labeled 'Next Round i+1' connects the end back to the beginning, indicating an iterative process.\nEvidence basis: Step 2 showing grid of agents with cross-arrows labeled 'exchange opinion'\nSupported claim: The debate phase involves multiple agents exchanging opinions in a connected network.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally probes the directional relation between Step 1 and Step 2, matching the target failure mode (wrong_relation). It does not expose hidden labels or metadata, and can be answered from the figure and summary.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0001",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0071",
+      "source_challenge_plan_id": "CHP_0071",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Based on Table 2, which compares models on CaseLaw and CAIL18, what is the architectural relationship between the Debate-Feedback(assistant) model and the GPT-4o model? Does the table suggest that the Debate-Feedback(assistant) model is a variant built on GPT-4o, or is it an entirely separate architecture?",
+      "surface_intent": "Evaluating the model's interpretation of the table's caption and rows to determine the dependency between the best-performing model and the base model.",
+      "target_kc_ids": [
+        "KC79",
+        "KC77"
+      ],
+      "target_edge_ids": [
+        "E7"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "TAB_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_002",
+          "asset_type": "table",
+          "caption": "Table 2: Comparison of models on CaseLaw and CAIL18 datasets. All judge’s and debaters’ LMs in experiments are based on the GPT-4o model and T = 0.5.",
+          "summary": "Table 2 compares several models (CNN, Legal-BERT, Lawformer, GPT-3.5-turbo, GPT-4o, and two Debate-Feedback variants) on the CaseLaw and CAIL18 datasets using Accuracy and F1 scores. The caption notes that all judge's and debaters' LMs are based on GPT-4o with temperature 0.5. The table shows that Debate-Feedback variants achieve the highest scores on both datasets, with Debate-Feedback(assistant) reaching 0.67 Acc and 0.66 F1 on CaseLaw, and 0.45 Acc and 0.16 F1 on CAIL18.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC79",
+            "KC77"
+          ],
+          "evidence_bases": [
+            "Caption of Table 2",
+            "Row 'Debate-Feedback(assistant)', column 'CaseLaw Acc' in table"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_002",
+              "content": "\\begin{tabular}{lllll}\n\\hline\nModel & CaseLaw & CaseLaw & CAIL18 & CAIL18 \\\\\n\\hline\nModel & Acc & F1 & Acc & F1 \\\\\nCNN(with BERT) & 0.58 & 0.54 & 0.39 & 0.11 \\\\\nLegal-BERT & 0.63 & 0.61 & 0.22 & 0.03 \\\\\nLawformer & 0.53 & 0.31 & 0.38 & 0.12 \\\\\nGPT-3.5-turbo & 0.49 & 0.27 & 0.26 & 0.04 \\\\\nGPT-4o & 0.64 & 0.64 & 0.31 & 0.05 \\\\\nDebate-Feedback(single) & 0.66 & 0.65 & 0.42 & 0.16 \\\\\nDebate-Feedback(assistant) & 0.67 & 0.66 & 0.45 & 0.16 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 2: Comparison of models on CaseLaw and CAIL18 datasets. All judge’s and debaters’ LMs in experiments are based on the GPT-4o model and T = 0.5."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E7",
+          "kc_ids": [
+            "KC79",
+            "KC77"
+          ],
+          "text": "Caption: Table 2: Comparison of models on CaseLaw and CAIL18 datasets. All judge’s and debaters’ LMs in experiments are based on the GPT-4o model and T = 0.5.\n\nAsset summary: Table 2 compares several models (CNN, Legal-BERT, Lawformer, GPT-3.5-turbo, GPT-4o, and two Debate-Feedback variants) on the CaseLaw and CAIL18 datasets using Accuracy and F1 scores. The caption notes that all judge's and debaters' LMs are based on GPT-4o with temperature 0.5. The table shows that Debate-Feedback variants achieve the highest scores on both datasets, with Debate-Feedback(assistant) reaching 0.67 Acc and 0.66 F1 on CaseLaw, and 0.45 Acc and 0.16 F1 on CAIL18."
+        },
+        {
+          "kc_id": "KC79",
+          "text": "Asset TAB_002 (table): Table 2: Comparison of models on CaseLaw and CAIL18 datasets. All judge’s and debaters’ LMs in experiments are based on the GPT-4o model and T = 0.5.\nAsset summary: Table 2 compares several models (CNN, Legal-BERT, Lawformer, GPT-3.5-turbo, GPT-4o, and two Debate-Feedback variants) on the CaseLaw and CAIL18 datasets using Accuracy and F1 scores. The caption notes that all judge's and debaters' LMs are based on GPT-4o with temperature 0.5. The table shows that Debate-Feedback variants achieve the highest scores on both datasets, with Debate-Feedback(assistant) reaching 0.67 Acc and 0.66 F1 on CaseLaw, and 0.45 Acc and 0.16 F1 on CAIL18.\nEvidence basis: Caption of Table 2\nSupported claim: All judge's and debaters' LMs are based on the GPT-4o model with T=0.5.",
+          "span_id": "TAB_002",
+          "asset_id": "TAB_002",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC77",
+          "text": "Asset TAB_002 (table): Table 2: Comparison of models on CaseLaw and CAIL18 datasets. All judge’s and debaters’ LMs in experiments are based on the GPT-4o model and T = 0.5.\nAsset summary: Table 2 compares several models (CNN, Legal-BERT, Lawformer, GPT-3.5-turbo, GPT-4o, and two Debate-Feedback variants) on the CaseLaw and CAIL18 datasets using Accuracy and F1 scores. The caption notes that all judge's and debaters' LMs are based on GPT-4o with temperature 0.5. The table shows that Debate-Feedback variants achieve the highest scores on both datasets, with Debate-Feedback(assistant) reaching 0.67 Acc and 0.66 F1 on CaseLaw, and 0.45 Acc and 0.16 F1 on CAIL18.\nEvidence basis: Row 'Debate-Feedback(assistant)', column 'CaseLaw Acc' in table\nSupported claim: Debate-Feedback(assistant) achieves 0.67 Accuracy on CaseLaw.",
+          "span_id": "TAB_002",
+          "asset_id": "TAB_002",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels. It directly targets the intended wrong_relation failure mode by probing the relationship between Debate-Feedback(assistant) and GPT-4o. The answer is clearly derivable from the caption of Table 2. The question is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0003",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0061",
+      "source_challenge_plan_id": "CHP_0061",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "How do the reliability scores in Table 4 support the authors' conclusions about the debate-feedback structure's effectiveness?",
+      "surface_intent": "To test whether the model recognizes that the table is a single illustrative example and that the reliability scores are hypothetical, not empirical evidence.",
+      "target_kc_ids": [
+        "KC96"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "TAB_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_004",
+          "asset_type": "table",
+          "caption": "Table 4: An Example of Debate-Feedback Structure",
+          "summary": "The table presents an example of a debate-feedback structure for legal case prediction, illustrating four steps (Initial, Debate, Verification, Output) across three debaters. The initial step inputs a case and outputs a prediction; the debate step includes opinions and counter-arguments from three debaters; the verification step assigns reliability scores (0.75, 0.8, 0.45); the output step yields a final prediction of 'Plaintiff wins' based on debate summary and reliability.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC96"
+          ],
+          "evidence_bases": [
+            "Limitations field in asset explanation: 'The table contains only one example, so it cannot support general claims about the effectiveness of the debate-feedback structure.'"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_004",
+              "content": "\\begin{tabular}{lll}\n\\hline\n1. Initial Step & 1. Initial Step & 1. Initial Step \\\\\n\\hline\n\\# input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \" & \\# input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \" & \\# input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \" \\\\\n\\# output:Plaintiff wins & \\# output:Plaintiff wins & \\# output:Plaintiff wins \\\\\n2. Debate Step & 2. Debate Step & 2. Debate Step \\\\\nDebater 0 & Debater 1 & Debater 2 \\\\\n\\# input:Here is a legal case, your task is to predict the result of the judge and Debate withother experts, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']Please state your opinion and refer to factual examples whenever possible.Your answer no more than 200 words.Here is the case background:...\\# output:I predict that the judge will rule in favor of the plaintiff, Richard T. Haynes.Although the express company presented a receipt with terms limiting its liability, the crux of the case centers on the allegations of gross negligence and possible fraudulent actions ...\\# inputNow I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...\\# outputI largely agree with the perspective of the first expert regarding the implications of gross negligence and fraud in \"The Adams Express Company v. Richard T. Haynes.\" The pivotal issue is whether Haynes can convincingly demonstrate... & \\# input:Here is a legal case, your task is to predict the result of the judge and Debate withother experts, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']Please state your opinion and refer to factual examples whenever possible.Your answer no more than 200 words.Here is the case background:...\\# outputIn the case of \"The Adams Express Company v. Richard T. Haynes,\" it is likely that the plaintiff, Haynes, would prevail due to the allegations of gross negligence and fraud.Despite the express company's attempt to enforce the terms of limited liability, these clauses typically ...\\# inputNow I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...\\# outputI strongly agree with the assessment of the first expert regarding the likelihood of the plaintiff, Richard T. Haynes, prevailing in \"The Adams Express Company v. Richard T. Haynes.\" The focus on the express company's ... & \\# input:Now I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...\\# outputI find that I am in strong agreement with the opinion of the second expert regarding the case of \"The Adams Express Company v. Richard T. Haynes.\" The emphasis on the express company's potential failure to demonstrate ... \\\\\n3. Verification Step & 3. Verification Step & 3. Verification Step \\\\\n\\{input: the summary of Debater 0's statement to the assistant model\\} \\{output: reliability: 0.75\\} & \\{input: the summary of Debater 1's statement to the assistant model\\} \\{output: reliability: 0.8\\} & \\{input: the summary of Debater 2's statement to the assistant model\\} \\{output: reliability: 0.45\\} \\\\\n4. Output step & 4. Output step & 4. Output step \\\\\n\\# input: \\{Follow the conversation from Step 1\\}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\textbackslash{}V'In the case of ...] \\{insert the reliability from Step 3\\}\\# outputPlaintiff wins & \\# input: \\{Follow the conversation from Step 1\\}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\textbackslash{}V'In the case of ...] \\{insert the reliability from Step 3\\}\\# outputPlaintiff wins & \\# input: \\{Follow the conversation from Step 1\\}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\textbackslash{}V'In the case of ...] \\{insert the reliability from Step 3\\}\\# outputPlaintiff wins \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 4: An Example of Debate-Feedback Structure"
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table is an illustrative example; the scores are hypothetical and not derived from actual data or experiments.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC96",
+          "text": "Asset TAB_004 (table): Table 4: An Example of Debate-Feedback Structure\nAsset summary: The table presents an example of a debate-feedback structure for legal case prediction, illustrating four steps (Initial, Debate, Verification, Output) across three debaters. The initial step inputs a case and outputs a prediction; the debate step includes opinions and counter-arguments from three debaters; the verification step assigns reliability scores (0.75, 0.8, 0.45); the output step yields a final prediction of 'Plaintiff wins' based on debate summary and reliability.\nEvidence basis: Limitations field in asset explanation: 'The table contains only one example, so it cannot support general claims about the effectiveness of the debate-feedback structure.'\nSupported claim: The table contains only one example, so it cannot support general claims about the effectiveness of the debate-feedback structure.",
+          "span_id": "TAB_004",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC96",
+          "text": "Asset evidence basis: Limitations field in asset explanation: 'The table contains only one example, so it cannot support general claims about the effectiveness of the debate-feedback structure.'",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question directly asked to draw conclusions from the reliability scores, prompting solvers to check the asset limitations, which made the false premise too obvious. Revision guidance: Rephrase the question to embed the false premise more subtly. For example, ask: 'How do the reliability scores in Table 4 support the authors' conclusions about the debate-feedback structure's effectiveness?' This may lead solvers to treat the scores as experimental results without immediately invoking the limitation note."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and follows the challenge plan's false-premise intent. It asks how reliability scores support conclusions, which addresses the trap that the scores are empirical. The question can be answered from the table's limitation note, and it does not expose internal metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0010",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0040",
+      "source_challenge_plan_id": "CHP_0040",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 3, does increasing the number of rounds consistently improve model performance?",
+      "surface_intent": "Ask about the trend in model performance as the number of rounds increases.",
+      "target_kc_ids": [
+        "KC89"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 3: Influence of the number of rounds selected.",
+          "summary": "The line chart displays the relationship between the number of rounds (ranging from 1 to 4) and model performance metrics, specifically Accuracy (Acc) and F1 score. The graph shows that performance for both metrics increases from round 1 to round 2, reaching a peak, and then slightly decreases or stabilizes as the number of rounds increases to 3 and 4.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC89"
+          ],
+          "evidence_bases": [
+            "Upward slope of both lines between x=1 and x=2"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_chart_box_325_923_864_1332.jpg",
+              "caption": "Figure 3: Influence of the number of rounds selected."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The chart clearly shows a decline in scores after the peak at round 2.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC89",
+          "text": "Asset FIG_003 (figure): Figure 3: Influence of the number of rounds selected.\nAsset summary: The line chart displays the relationship between the number of rounds (ranging from 1 to 4) and model performance metrics, specifically Accuracy (Acc) and F1 score. The graph shows that performance for both metrics increases from round 1 to round 2, reaching a peak, and then slightly decreases or stabilizes as the number of rounds increases to 3 and 4.\nEvidence basis: Upward slope of both lines between x=1 and x=2\nSupported claim: Model performance (both Acc and F1) improves when increasing the number of rounds from 1 to 2.",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC89",
+          "text": "Asset evidence basis: Upward slope of both lines between x=1 and x=2",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly asks about the trend shown in Figure 3. It does not expose any hidden metadata and correctly targets the false premise that performance consistently improves, which contradicts the evidence of a peak at round 2.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0012",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0043",
+      "source_challenge_plan_id": "CHP_0043",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 2, describe how accuracy changes when the number of debaters increases from 3 to 4.",
+      "surface_intent": "describe performance change from 3 to 4 debaters",
+      "target_kc_ids": [
+        "KC87"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Figure 2: Influence of the number of debaters selected.",
+          "summary": "The figure is a line chart titled 'The Influence of the Number of Debaters Selected', plotting two performance metrics, Accuracy (Acc) and F1 score, against the number of debaters ranging from 2 to 5. Both metrics show an initial increase peaking at 3 debaters, followed by a decline as the number of debaters increases to 4 and 5.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC87"
+          ],
+          "evidence_bases": [
+            "Yellow solid line is positioned above the red dashed line at all x-values"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_chart_box_325_400_866_820.jpg",
+              "caption": "Figure 2: Influence of the number of debaters selected."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "While the trend is downward, the absolute drop is relatively small (e.g., Acc drops from 0.659 to 0.648), not a catastrophic failure.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC87",
+          "text": "Asset FIG_002 (figure): Figure 2: Influence of the number of debaters selected.\nAsset summary: The figure is a line chart titled 'The Influence of the Number of Debaters Selected', plotting two performance metrics, Accuracy (Acc) and F1 score, against the number of debaters ranging from 2 to 5. Both metrics show an initial increase peaking at 3 debaters, followed by a decline as the number of debaters increases to 4 and 5.\nEvidence basis: Yellow solid line is positioned above the red dashed line at all x-values\nSupported claim: Accuracy is consistently higher than F1 score across all tested configurations.",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC87",
+          "text": "Asset evidence basis: Yellow solid line is positioned above the red dashed line at all x-values",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan targets a valid failure mode (exaggerating a small drop), but the question made the trap too obvious by explicitly contrasting 'drastic' vs 'relatively small'. Revision guidance: Ask the model to describe the performance change from 3 to 4 debaters in their own words, without suggesting a dichotomy. For example: 'Based on Figure 2, describe how accuracy changes when the number of debaters increases from 3 to 4.' This allows the model to potentially exaggerate the drop if it misreads the figure."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels. It directly asks about accuracy change from 3 to 4 debaters, which aligns with the challenge plan's trap part (drastic drop) and can be answered from the figure evidence (small drop). The question is unambiguous and allows judging the false premise failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0013",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0054",
+      "source_challenge_plan_id": "CHP_0054",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Table 4 presents an example of the debate-feedback structure. What is the source of the reliability scores shown in the verification step?",
+      "surface_intent": "Asking about the origin or empirical basis of the reliability scores in the table.",
+      "target_kc_ids": [
+        "KC93"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "TAB_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_004",
+          "asset_type": "table",
+          "caption": "Table 4: An Example of Debate-Feedback Structure",
+          "summary": "The table presents an example of a debate-feedback structure for legal case prediction, illustrating four steps (Initial, Debate, Verification, Output) across three debaters. The initial step inputs a case and outputs a prediction; the debate step includes opinions and counter-arguments from three debaters; the verification step assigns reliability scores (0.75, 0.8, 0.45); the output step yields a final prediction of 'Plaintiff wins' based on debate summary and reliability.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC93"
+          ],
+          "evidence_bases": [
+            "Third row (3. Verification Step) shows 'reliability: 0.75', 'reliability: 0.8', 'reliability: 0.45' in the three columns."
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_004",
+              "content": "\\begin{tabular}{lll}\n\\hline\n1. Initial Step & 1. Initial Step & 1. Initial Step \\\\\n\\hline\n\\# input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \" & \\# input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \" & \\# input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \" \\\\\n\\# output:Plaintiff wins & \\# output:Plaintiff wins & \\# output:Plaintiff wins \\\\\n2. Debate Step & 2. Debate Step & 2. Debate Step \\\\\nDebater 0 & Debater 1 & Debater 2 \\\\\n\\# input:Here is a legal case, your task is to predict the result of the judge and Debate withother experts, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']Please state your opinion and refer to factual examples whenever possible.Your answer no more than 200 words.Here is the case background:...\\# output:I predict that the judge will rule in favor of the plaintiff, Richard T. Haynes.Although the express company presented a receipt with terms limiting its liability, the crux of the case centers on the allegations of gross negligence and possible fraudulent actions ...\\# inputNow I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...\\# outputI largely agree with the perspective of the first expert regarding the implications of gross negligence and fraud in \"The Adams Express Company v. Richard T. Haynes.\" The pivotal issue is whether Haynes can convincingly demonstrate... & \\# input:Here is a legal case, your task is to predict the result of the judge and Debate withother experts, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']Please state your opinion and refer to factual examples whenever possible.Your answer no more than 200 words.Here is the case background:...\\# outputIn the case of \"The Adams Express Company v. Richard T. Haynes,\" it is likely that the plaintiff, Haynes, would prevail due to the allegations of gross negligence and fraud.Despite the express company's attempt to enforce the terms of limited liability, these clauses typically ...\\# inputNow I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...\\# outputI strongly agree with the assessment of the first expert regarding the likelihood of the plaintiff, Richard T. Haynes, prevailing in \"The Adams Express Company v. Richard T. Haynes.\" The focus on the express company's ... & \\# input:Now I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...\\# outputI find that I am in strong agreement with the opinion of the second expert regarding the case of \"The Adams Express Company v. Richard T. Haynes.\" The emphasis on the express company's potential failure to demonstrate ... \\\\\n3. Verification Step & 3. Verification Step & 3. Verification Step \\\\\n\\{input: the summary of Debater 0's statement to the assistant model\\} \\{output: reliability: 0.75\\} & \\{input: the summary of Debater 1's statement to the assistant model\\} \\{output: reliability: 0.8\\} & \\{input: the summary of Debater 2's statement to the assistant model\\} \\{output: reliability: 0.45\\} \\\\\n4. Output step & 4. Output step & 4. Output step \\\\\n\\# input: \\{Follow the conversation from Step 1\\}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\textbackslash{}V'In the case of ...] \\{insert the reliability from Step 3\\}\\# outputPlaintiff wins & \\# input: \\{Follow the conversation from Step 1\\}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\textbackslash{}V'In the case of ...] \\{insert the reliability from Step 3\\}\\# outputPlaintiff wins & \\# input: \\{Follow the conversation from Step 1\\}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\textbackslash{}V'In the case of ...] \\{insert the reliability from Step 3\\}\\# outputPlaintiff wins \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 4: An Example of Debate-Feedback Structure"
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table is an illustrative example; the scores are hypothetical and not derived from actual data or experiments.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC93",
+          "text": "Asset TAB_004 (table): Table 4: An Example of Debate-Feedback Structure\nAsset summary: The table presents an example of a debate-feedback structure for legal case prediction, illustrating four steps (Initial, Debate, Verification, Output) across three debaters. The initial step inputs a case and outputs a prediction; the debate step includes opinions and counter-arguments from three debaters; the verification step assigns reliability scores (0.75, 0.8, 0.45); the output step yields a final prediction of 'Plaintiff wins' based on debate summary and reliability.\nEvidence basis: Third row (3. Verification Step) shows 'reliability: 0.75', 'reliability: 0.8', 'reliability: 0.45' in the three columns.\nSupported claim: The verification step assigns reliability scores of 0.75, 0.8, and 0.45 to Debater 0, Debater 1, and Debater 2 respectively.",
+          "span_id": "TAB_004",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC93",
+          "text": "Asset evidence basis: Third row (3. Verification Step) shows 'reliability: 0.75', 'reliability: 0.8', 'reliability: 0.45' in the three columns.",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels or metadata. It aligns with the challenge plan's target failure mode (false premise) by asking for the source of the reliability scores, which are hypothetical and not empirical. The question can be answered from the paper evidence (table caption and summary indicate the scores are illustrative). It is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "thread_challenge_plans_path": "data/Debate-Feedback_NAACL2025_-9pages/cache/questions/thread_challenge_plans.json",
+  "thread_challenge_plan_summary": {
+    "plan_count": 12,
+    "target": 24,
+    "per_thread_limit": 3,
+    "by_type": {
+      "thread_overclaim_challenge": 4,
+      "thread_premise_mutation_challenge": 4,
+      "thread_wrong_bridge_challenge": 4
+    },
+    "by_modality_pool": {
+      "text": 12
+    },
+    "skipped_thread_count": 0,
+    "skipped_threads": []
+  },
+  "thread_challenge_questions_raw_path": "data/Debate-Feedback_NAACL2025_-9pages/cache/questions/thread_challenge_questions_raw.json",
+  "thread_challenge_questions_filtered_path": "data/Debate-Feedback_NAACL2025_-9pages/cache/questions/thread_challenge_questions_filtered.json",
+  "thread_challenge_solver_trials_path": "data/Debate-Feedback_NAACL2025_-9pages/cache/questions/thread_challenge_solver_trials.json",
+  "thread_challenge_filter_summary": {
+    "plan_pool_count": 12,
+    "target_count": 8,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 24,
+    "solver_trial_count": 21,
+    "filtered_count": 8,
+    "human_review_count": 4,
+    "rejected_count": 16,
+    "blacklisted_plan_count": 2,
+    "by_type": {
+      "thread_overclaim_challenge": 3,
+      "thread_premise_mutation_challenge": 4,
+      "thread_wrong_bridge_challenge": 1
+    },
+    "by_modality_pool": {
+      "text": 8
+    },
+    "stop_reason": "target_reached"
+  },
+  "thread_challenge_questions": [
+    {
+      "question_id": "TCQ_0002",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0003",
+      "source_challenge_plan_id": "TCP_0003",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Earlier we established that the architecture integrates multi-agent debate with a reliability evaluation model. However, recent analysis indicates that the debate mechanism alone might drive performance. If the reliability evaluation component were removed and only multi-agent debate remained, how would the accuracy on the CaseLaw dataset compare to the original model?",
+      "surface_intent": "evaluating the impact of removing the reliability evaluation component on model performance",
+      "target_kc_ids": [
+        "KC2",
+        "KC52"
+      ],
+      "target_edge_ids": [
+        "E110"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the integration of multi-agent debate and reliability evaluation.",
+        "evidence": "The answer should mention that Debate-Feedback outperforms GPT-4o, GPT-3.5-turbo, Legal-BERT, CNN, and Lawformer.",
+        "bridge": "The answer should connect the architecture's components (multi-agent debate and reliability evaluation) to the improved accuracy and F1 scores."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the integration of multi-agent debate and reliability evaluation.\n- We discussed this evidence: The answer should mention that Debate-Feedback outperforms GPT-4o, GPT-3.5-turbo, Legal-BERT, CNN, and Lawformer.\n- We connected them cautiously as follows: The answer should connect the architecture's components (multi-agent debate and reliability evaluation) to the improved accuracy and F1 scores.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E110",
+          "kc_ids": [
+            "KC2",
+            "KC52"
+          ],
+          "text": "CaseLaw Dataset Performance For the CaseLaw dataset, the Debate-Feedback model outperformed GPT-4o, GPT-3.5-turbo, Legal-BERT, CNN and Lawformer. The model with the assistant achieved an accuracy of 0.67 and an F1-score of 0.66, while the single Debate-Feedback model obtained slightly lower performance with an accuracy of 0.66 and an F1-score of 0.65. These results show that our method improves the performance of pre-train legal domain models, which only achieved an accuracy of 0.63 and an F1-score of 0.61. The assistant model's inclusion in the feedback loop improves the reliability of predictions, making it more robust compared to the single model."
+        },
+        {
+          "kc_id": "KC2",
+          "text": "The use of AI in legal analysis and prediction (LegalAI) has gained widespread attention, with past research focusing on retrieval-based methods and fine-tuning large models. However, these approaches often require large datasets and underutilize the capabilities of modern large language models (LLMs). In this paper, inspired by the debate phase of real courtroom trials, we propose a novel legal judgment prediction model based on the DebateFeedback architecture, which integrates LLM multi-agent debate and reliability evaluation models. Unlike traditional methods, our model achieves significant improvements in efficiency by minimizing the need for large historical datasets, thus offering a lightweight yet robust solution. Comparative experiments show that it outperforms several general-purpose and domain-specific legal models, offering a dynamic reasoning process and a promising direction for future LegalAI research.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC52",
+          "text": "CaseLaw Dataset Performance For the CaseLaw dataset, the Debate-Feedback model outperformed GPT-4o, GPT-3.5-turbo, Legal-BERT, CNN and Lawformer. The model with the assistant achieved an accuracy of 0.67 and an F1-score of 0.66, while the single Debate-Feedback model obtained slightly lower performance with an accuracy of 0.66 and an F1-score of 0.65. These results show that our method improves the performance of pre-train legal domain models, which only achieved an accuracy of 0.63 and an F1-score of 0.61. The assistant model's inclusion in the feedback loop improves the reliability of predictions, making it more robust compared to the single model.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was not usable. Reason: The question does not mutate the premise as required; it instead challenges the interpretation of evidence while keeping the premise intact. Revision guidance: Rewrite the question to subtly change the premise, e.g., claim that the architecture integrates multi-agent debate with a different component or that the debate mechanism was not used."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, follows the plan's intended mutation of the premise, is answerable from provided evidence (comparison of with/without reliability evaluation), and is unambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0005",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0009",
+      "source_challenge_plan_id": "TCP_0009",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "The paper highlights that fine-tuning methods like LegalBERT depend on large, domain-specific datasets, limiting cross-system applicability. In contrast, the DebateFeedback model claims to reduce this reliance by using multi-agent debate and reliability evaluation. However, could the DebateFeedback model actually require a substantial amount of domain-specific data for its debate phase in order to function effectively, thus still suffering from the same limitation?",
+      "surface_intent": "Determine if the model recognizes that the DebateFeedback model minimizes dataset need and does not require substantial domain-specific data for its debate phase.",
+      "target_kc_ids": [
+        "KC16",
+        "KC2"
+      ],
+      "target_edge_ids": [
+        "E96"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that they rely heavily on large, domain-specific datasets, limiting cross-system applicability.",
+        "evidence": "The answer should mention that it minimizes the need for large historical datasets through multi-agent debate and reliability evaluation.",
+        "bridge": "The answer should connect the problem of dataset dependence to the method's design of using debate and reliability to reduce data needs."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that they rely heavily on large, domain-specific datasets, limiting cross-system applicability.\n- We discussed this evidence: The answer should mention that it minimizes the need for large historical datasets through multi-agent debate and reliability evaluation.\n- We connected them cautiously as follows: The answer should connect the problem of dataset dependence to the method's design of using debate and reliability to reduce data needs.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M2",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E96",
+          "kc_ids": [
+            "KC16",
+            "KC2"
+          ],
+          "text": "In-context Learning(ICL) is a learning paradigm widely applied in large language models (LLMs) by using a set of context examples to guide predictions during reasoning (Dong et al., 2024; Liu et al., 2021; Gutierrez-Pachas et al., 2022; Min et al., 2022). However, due to the often extensive length of legal texts, naive ICL methods are constrained by LLM input length limits. As a result, LegalAI solutions typically combine ICL with fine-tuning or pretraining of models to overcome these limitations. For instance, LegalBERT (Chalkidis et al., 2019) fine-tunes BERT on legal datasets, achieving strong results in legal text classification and provision retrieval. Similarly, Lawformer (Xiao et al., 2021) handles lengthy Chinese legal documents, while CaseLaw-BERT (Paul et al., 2023), fine-tuned on case law datasets, enhances legal case retrieval and judgment prediction. Despite their success, these approaches rely heavily on large, domain-specific datasets, which can limit their applicability across different legal systems and languages."
+        },
+        {
+          "kc_id": "KC16",
+          "text": "In-context Learning(ICL) is a learning paradigm widely applied in large language models (LLMs) by using a set of context examples to guide predictions during reasoning (Dong et al., 2024; Liu et al., 2021; Gutierrez-Pachas et al., 2022; Min et al., 2022). However, due to the often extensive length of legal texts, naive ICL methods are constrained by LLM input length limits. As a result, LegalAI solutions typically combine ICL with fine-tuning or pretraining of models to overcome these limitations. For instance, LegalBERT (Chalkidis et al., 2019) fine-tunes BERT on legal datasets, achieving strong results in legal text classification and provision retrieval. Similarly, Lawformer (Xiao et al., 2021) handles lengthy Chinese legal documents, while CaseLaw-BERT (Paul et al., 2023), fine-tuned on case law datasets, enhances legal case retrieval and judgment prediction. Despite their success, these approaches rely heavily on large, domain-specific datasets, which can limit their applicability across different legal systems and languages.",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC2",
+          "text": "The use of AI in legal analysis and prediction (LegalAI) has gained widespread attention, with past research focusing on retrieval-based methods and fine-tuning large models. However, these approaches often require large datasets and underutilize the capabilities of modern large language models (LLMs). In this paper, inspired by the debate phase of real courtroom trials, we propose a novel legal judgment prediction model based on the DebateFeedback architecture, which integrates LLM multi-agent debate and reliability evaluation models. Unlike traditional methods, our model achieves significant improvements in efficiency by minimizing the need for large historical datasets, thus offering a lightweight yet robust solution. Comparative experiments show that it outperforms several general-purpose and domain-specific legal models, offering a dynamic reasoning process and a promising direction for future LegalAI research.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The question's mutation directly contradicted an explicit statement in the paper, making it trivial to detect. Revision guidance: Make the mutation more subtle by altering a less central detail (e.g., changing the specific method used to reduce dataset dependence, or modifying the evidence's claim about efficiency). Avoid direct contradictions; instead, introduce plausible but incorrect information that requires deeper reasoning from the thread context to correct."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly implements the premise mutation challenge by introducing a contrary hypothesis about data requirements, testing if the model recognizes and corrects the mutated premise.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0008",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0006",
+      "source_challenge_plan_id": "TCP_0006",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Based on the paper's experiments, what were the accuracy and F1-score achieved by the Debate-Feedback model on the CaseLaw dataset?",
+      "surface_intent": "Asking about the specific performance metrics reported for the model on the CaseLaw dataset.",
+      "target_kc_ids": [
+        "KC52",
+        "KC65"
+      ],
+      "target_edge_ids": [
+        "E109"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that it outperforms baselines with accuracy 0.67 and F1 0.66.",
+        "evidence": "The answer should mention that experiments were limited to two datasets and two tasks.",
+        "bridge": "The answer should explain that the strong results might not generalize to other datasets or tasks, as acknowledged."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that it outperforms baselines with accuracy 0.67 and F1 0.66.\n- We discussed this evidence: The answer should mention that experiments were limited to two datasets and two tasks.\n- We connected them cautiously as follows: The answer should explain that the strong results might not generalize to other datasets or tasks, as acknowledged.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M6",
+        "M8"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E109",
+          "kc_ids": [
+            "KC52",
+            "KC65"
+          ],
+          "text": "(a) The experiments were limited to two datasets and two specific tasks, broader evaluations across additional datasets and tasks are necessary to fully validate the model's robustness and generalizability in different legal contexts."
+        },
+        {
+          "kc_id": "KC52",
+          "text": "CaseLaw Dataset Performance For the CaseLaw dataset, the Debate-Feedback model outperformed GPT-4o, GPT-3.5-turbo, Legal-BERT, CNN and Lawformer. The model with the assistant achieved an accuracy of 0.67 and an F1-score of 0.66, while the single Debate-Feedback model obtained slightly lower performance with an accuracy of 0.66 and an F1-score of 0.65. These results show that our method improves the performance of pre-train legal domain models, which only achieved an accuracy of 0.63 and an F1-score of 0.61. The assistant model's inclusion in the feedback loop improves the reliability of predictions, making it more robust compared to the single model.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC65",
+          "text": "(a) The experiments were limited to two datasets and two specific tasks, broader evaluations across additional datasets and tasks are necessary to fully validate the model's robustness and generalizability in different legal contexts.",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The mutation from actual metrics (0.67 accuracy, 0.66 F1) to 0.85 accuracy and 0.82 F1 is too large and obvious, making it easy for solvers to detect the discrepancy. Revision guidance: Make the mutation more subtle by altering a less prominent detail or using numbers closer to the original (e.g., accuracy 0.66 and F1 0.65) to increase difficulty."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly asks about the performance metrics from the paper's evidence, which aligns with the intended premise without exposing hidden labels or metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0009",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0010",
+      "source_challenge_plan_id": "TCP_0010",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "How does the main LM's role as a judge influence the threshold-based weighting applied by the assistant model?",
+      "surface_intent": "Ask about the causal relationship between the judge function and the threshold weighting mechanism.",
+      "target_kc_ids": [
+        "KC28",
+        "KC24"
+      ],
+      "target_edge_ids": [
+        "E48"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the threshold-based weighting: if reliability exceeds a threshold, the main LM adjusts by weighting the latest information; otherwise it defaults to the initial prediction.",
+        "evidence": "The answer should state that it plays the role of the judge, predicting the probability of a legal judgment.",
+        "bridge": "The answer should explain that the adjustment mechanism allows the judge model to incorporate reliable debate information while avoiding degradation from poor debates, thus fulfilling its role effectively."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the threshold-based weighting: if reliability exceeds a threshold, the main LM adjusts by weighting the latest information; otherwise it defaults to the initial prediction.\n- We discussed this evidence: The answer should state that it plays the role of the judge, predicting the probability of a legal judgment.\n- We connected them cautiously as follows: The answer should explain that the adjustment mechanism allows the judge model to incorporate reliable debate information while avoiding degradation from poor debates, thus fulfilling its role effectively.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E48",
+          "kc_ids": [
+            "KC28",
+            "KC24"
+          ],
+          "text": "Overview Algorithm[1] presents the pseudo code for the debate-feedback framework in binary classification. The input is a preprocessed legal event text, labeled as S, and the main language model (LM) plays the role of the judge, predicting the probability of a legal judgment, $ LM : S \\rightarrow [0,1] $. Two agents, $ t_{ne} $ and $ t_{po} $, debate from opposing perspectives, providing inputs to refine the judgment. Each debate round involves these agents exchanging and debating their positions, with n defining the number of iterations.\n\nThe assistant model $ \\mathcal{E} $ evaluates the reliability of the agents' arguments and outputs a probability. If the reliability exceeds a threshold, the main LM adjusts its prediction by weighting the latest information, otherwise it defaults to the initial prediction. The final decision is smoothed over all rounds to produce a stable outcome. (Note that notation $ \\oplus $ does not mean xor, but rather combination in a non-additive sense.)"
+        },
+        {
+          "kc_id": "KC28",
+          "text": "The assistant model $ \\mathcal{E} $ evaluates the reliability of the agents' arguments and outputs a probability. If the reliability exceeds a threshold, the main LM adjusts its prediction by weighting the latest information, otherwise it defaults to the initial prediction. The final decision is smoothed over all rounds to produce a stable outcome. (Note that notation $ \\oplus $ does not mean xor, but rather combination in a non-additive sense.)",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC24",
+          "text": "Overview Algorithm[1] presents the pseudo code for the debate-feedback framework in binary classification. The input is a preprocessed legal event text, labeled as S, and the main language model (LM) plays the role of the judge, predicting the probability of a legal judgment, $ LM : S \\rightarrow [0,1] $. Two agents, $ t_{ne} $ and $ t_{po} $, debate from opposing perspectives, providing inputs to refine the judgment. Each debate round involves these agents exchanging and debating their positions, with n defining the number of iterations.",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally and seriously asks about the causal relationship between the main LM's role as a judge and the threshold-based weighting, directly targeting the intended bridge. It does not expose hidden labels or metadata, and can be answered from the provided paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0012",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0012",
+      "source_challenge_plan_id": "TCP_0012",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "How does the smoothing operation ensure that the model becomes more responsive to the latest arguments over many rounds?",
+      "surface_intent": "To explain how smoothing across debate rounds influences the model's sensitivity to the most recent arguments.",
+      "target_kc_ids": [
+        "KC28",
+        "KC24"
+      ],
+      "target_edge_ids": [
+        "E48"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the threshold-based weighting: if reliability exceeds a threshold, the main LM adjusts by weighting the latest information; otherwise it defaults to the initial prediction.",
+        "evidence": "The answer should state that it plays the role of the judge, predicting the probability of a legal judgment.",
+        "bridge": "The answer should explain that the adjustment mechanism allows the judge model to incorporate reliable debate information while avoiding degradation from poor debates, thus fulfilling its role effectively."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the threshold-based weighting: if reliability exceeds a threshold, the main LM adjusts by weighting the latest information; otherwise it defaults to the initial prediction.\n- We discussed this evidence: The answer should state that it plays the role of the judge, predicting the probability of a legal judgment.\n- We connected them cautiously as follows: The answer should explain that the adjustment mechanism allows the judge model to incorporate reliable debate information while avoiding degradation from poor debates, thus fulfilling its role effectively.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E48",
+          "kc_ids": [
+            "KC28",
+            "KC24"
+          ],
+          "text": "Overview Algorithm[1] presents the pseudo code for the debate-feedback framework in binary classification. The input is a preprocessed legal event text, labeled as S, and the main language model (LM) plays the role of the judge, predicting the probability of a legal judgment, $ LM : S \\rightarrow [0,1] $. Two agents, $ t_{ne} $ and $ t_{po} $, debate from opposing perspectives, providing inputs to refine the judgment. Each debate round involves these agents exchanging and debating their positions, with n defining the number of iterations.\n\nThe assistant model $ \\mathcal{E} $ evaluates the reliability of the agents' arguments and outputs a probability. If the reliability exceeds a threshold, the main LM adjusts its prediction by weighting the latest information, otherwise it defaults to the initial prediction. The final decision is smoothed over all rounds to produce a stable outcome. (Note that notation $ \\oplus $ does not mean xor, but rather combination in a non-additive sense.)"
+        },
+        {
+          "kc_id": "KC28",
+          "text": "The assistant model $ \\mathcal{E} $ evaluates the reliability of the agents' arguments and outputs a probability. If the reliability exceeds a threshold, the main LM adjusts its prediction by weighting the latest information, otherwise it defaults to the initial prediction. The final decision is smoothed over all rounds to produce a stable outcome. (Note that notation $ \\oplus $ does not mean xor, but rather combination in a non-additive sense.)",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC24",
+          "text": "Overview Algorithm[1] presents the pseudo code for the debate-feedback framework in binary classification. The input is a preprocessed legal event text, labeled as S, and the main language model (LM) plays the role of the judge, predicting the probability of a legal judgment, $ LM : S \\rightarrow [0,1] $. Two agents, $ t_{ne} $ and $ t_{po} $, debate from opposing perspectives, providing inputs to refine the judgment. Each debate round involves these agents exchanging and debating their positions, with n defining the number of iterations.",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is not inherently too easy; the mutation was clearly implied by the question, but a more subtle phrasing could still test the failure mode. Revision guidance: The previous question made the mutation too explicit by directly asking about the effect of debate rounds on adjustment likelihood. To better test the failure mode, the next question should embed the mutation in a more innocuous context, e.g., 'How does the smoothing operation ensure that the model becomes more responsive to the latest arguments over many rounds?' This embeds the false implication (more rounds -> more responsiveness) as a presupposition, making it harder to detect."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and follows the intended thread premise mutation pattern by shifting focus to smoothing and responsiveness, which tests if the model identifies and corrects the mutated premise using the established paper context.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0015",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0002",
+      "source_challenge_plan_id": "TCP_0002",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Based on the performance comparison, would you say the Debate-Feedback model is the strongest option for legal judgment prediction?",
+      "surface_intent": "The question asks for a general recommendation or conclusion about the model's superiority over other approaches.",
+      "target_kc_ids": [
+        "KC2",
+        "KC52"
+      ],
+      "target_edge_ids": [
+        "E110"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the integration of multi-agent debate and reliability evaluation.",
+        "evidence": "The answer should mention that Debate-Feedback outperforms GPT-4o, GPT-3.5-turbo, Legal-BERT, CNN, and Lawformer.",
+        "bridge": "The answer should connect the architecture's components (multi-agent debate and reliability evaluation) to the improved accuracy and F1 scores."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the integration of multi-agent debate and reliability evaluation.\n- We discussed this evidence: The answer should mention that Debate-Feedback outperforms GPT-4o, GPT-3.5-turbo, Legal-BERT, CNN, and Lawformer.\n- We connected them cautiously as follows: The answer should connect the architecture's components (multi-agent debate and reliability evaluation) to the improved accuracy and F1 scores.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E110",
+          "kc_ids": [
+            "KC2",
+            "KC52"
+          ],
+          "text": "CaseLaw Dataset Performance For the CaseLaw dataset, the Debate-Feedback model outperformed GPT-4o, GPT-3.5-turbo, Legal-BERT, CNN and Lawformer. The model with the assistant achieved an accuracy of 0.67 and an F1-score of 0.66, while the single Debate-Feedback model obtained slightly lower performance with an accuracy of 0.66 and an F1-score of 0.65. These results show that our method improves the performance of pre-train legal domain models, which only achieved an accuracy of 0.63 and an F1-score of 0.61. The assistant model's inclusion in the feedback loop improves the reliability of predictions, making it more robust compared to the single model."
+        },
+        {
+          "kc_id": "KC2",
+          "text": "The use of AI in legal analysis and prediction (LegalAI) has gained widespread attention, with past research focusing on retrieval-based methods and fine-tuning large models. However, these approaches often require large datasets and underutilize the capabilities of modern large language models (LLMs). In this paper, inspired by the debate phase of real courtroom trials, we propose a novel legal judgment prediction model based on the DebateFeedback architecture, which integrates LLM multi-agent debate and reliability evaluation models. Unlike traditional methods, our model achieves significant improvements in efficiency by minimizing the need for large historical datasets, thus offering a lightweight yet robust solution. Comparative experiments show that it outperforms several general-purpose and domain-specific legal models, offering a dynamic reasoning process and a promising direction for future LegalAI research.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC52",
+          "text": "CaseLaw Dataset Performance For the CaseLaw dataset, the Debate-Feedback model outperformed GPT-4o, GPT-3.5-turbo, Legal-BERT, CNN and Lawformer. The model with the assistant achieved an accuracy of 0.67 and an F1-score of 0.66, while the single Debate-Feedback model obtained slightly lower performance with an accuracy of 0.66 and an F1-score of 0.65. These results show that our method improves the performance of pre-train legal domain models, which only achieved an accuracy of 0.63 and an F1-score of 0.61. The assistant model's inclusion in the feedback loop improves the reliability of predictions, making it more robust compared to the single model.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the trap is subtle and well-defined. The challenge question was too explicit, making the overclaim obvious to models. Revision guidance: Rephrase the question to embed the overclaim more subtly. Avoid direct phrases like 'most effective approach'. Instead, ask for a recommendation or general conclusion based on the results, e.g., 'Given these findings, would you say that Debate-Feedback is the superior legal judgment prediction model?'"
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, does not expose metadata, follows the challenge plan's target overclaim failure mode by asking for a general conclusion beyond the evidence, and can be answered appropriately from the paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0022",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0008",
+      "source_challenge_plan_id": "TCP_0008",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given that the proposed DebateFeedback method reduces the reliance on large historical datasets, does this imply that it can be adapted to other legal domains or systems with only minimal domain-specific adjustments, unlike traditional fine-tuned models?",
+      "surface_intent": "Asking about the adaptability of the method to other legal domains based on its reduced data requirement.",
+      "target_kc_ids": [
+        "KC16",
+        "KC2"
+      ],
+      "target_edge_ids": [
+        "E96"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that they rely heavily on large, domain-specific datasets, limiting cross-system applicability.",
+        "evidence": "The answer should mention that it minimizes the need for large historical datasets through multi-agent debate and reliability evaluation.",
+        "bridge": "The answer should connect the problem of dataset dependence to the method's design of using debate and reliability to reduce data needs."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that they rely heavily on large, domain-specific datasets, limiting cross-system applicability.\n- We discussed this evidence: The answer should mention that it minimizes the need for large historical datasets through multi-agent debate and reliability evaluation.\n- We connected them cautiously as follows: The answer should connect the problem of dataset dependence to the method's design of using debate and reliability to reduce data needs.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M2",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E96",
+          "kc_ids": [
+            "KC16",
+            "KC2"
+          ],
+          "text": "In-context Learning(ICL) is a learning paradigm widely applied in large language models (LLMs) by using a set of context examples to guide predictions during reasoning (Dong et al., 2024; Liu et al., 2021; Gutierrez-Pachas et al., 2022; Min et al., 2022). However, due to the often extensive length of legal texts, naive ICL methods are constrained by LLM input length limits. As a result, LegalAI solutions typically combine ICL with fine-tuning or pretraining of models to overcome these limitations. For instance, LegalBERT (Chalkidis et al., 2019) fine-tunes BERT on legal datasets, achieving strong results in legal text classification and provision retrieval. Similarly, Lawformer (Xiao et al., 2021) handles lengthy Chinese legal documents, while CaseLaw-BERT (Paul et al., 2023), fine-tuned on case law datasets, enhances legal case retrieval and judgment prediction. Despite their success, these approaches rely heavily on large, domain-specific datasets, which can limit their applicability across different legal systems and languages."
+        },
+        {
+          "kc_id": "KC16",
+          "text": "In-context Learning(ICL) is a learning paradigm widely applied in large language models (LLMs) by using a set of context examples to guide predictions during reasoning (Dong et al., 2024; Liu et al., 2021; Gutierrez-Pachas et al., 2022; Min et al., 2022). However, due to the often extensive length of legal texts, naive ICL methods are constrained by LLM input length limits. As a result, LegalAI solutions typically combine ICL with fine-tuning or pretraining of models to overcome these limitations. For instance, LegalBERT (Chalkidis et al., 2019) fine-tunes BERT on legal datasets, achieving strong results in legal text classification and provision retrieval. Similarly, Lawformer (Xiao et al., 2021) handles lengthy Chinese legal documents, while CaseLaw-BERT (Paul et al., 2023), fine-tuned on case law datasets, enhances legal case retrieval and judgment prediction. Despite their success, these approaches rely heavily on large, domain-specific datasets, which can limit their applicability across different legal systems and languages.",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC2",
+          "text": "The use of AI in legal analysis and prediction (LegalAI) has gained widespread attention, with past research focusing on retrieval-based methods and fine-tuning large models. However, these approaches often require large datasets and underutilize the capabilities of modern large language models (LLMs). In this paper, inspired by the debate phase of real courtroom trials, we propose a novel legal judgment prediction model based on the DebateFeedback architecture, which integrates LLM multi-agent debate and reliability evaluation models. Unlike traditional methods, our model achieves significant improvements in efficiency by minimizing the need for large historical datasets, thus offering a lightweight yet robust solution. Comparative experiments show that it outperforms several general-purpose and domain-specific legal models, offering a dynamic reasoning process and a promising direction for future LegalAI research.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan aims to test overclaiming by asking about broad generalizability from reduced data needs, but the question as phrased makes the overgeneralization too obvious. Solvers easily identified the lack of evidence for cross-system deployment, citing the paper's limitations. Revision guidance: Make the overclaim subtler. Instead of directly asking about 'effective deployment across different legal systems and languages without data limitations,' ask about a specific aspect that might seem supported but isn't, e.g., 'Does the reduced dataset requirement imply that the model can be adapted to other legal domains with minimal domain-specific adjustments?' This requires the solver to infer a broader claim that the evidence doesn't fully justify, increasing the chance of overclaiming."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose internal metadata. It follows the challenge plan's intent by prompting a potential overclaim about cross-domain adaptability, which is the target failure mode. The question can be answered from the paper evidence, and the ambiguity is by design to test for overclaiming.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0024",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0011",
+      "source_challenge_plan_id": "TCP_0011",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Based on this description, is the threshold-based weighting crucial for the judge model to avoid degradation from poor debates?",
+      "surface_intent": "Asking whether the weighting mechanism is essential for preventing performance degradation",
+      "target_kc_ids": [
+        "KC28",
+        "KC24"
+      ],
+      "target_edge_ids": [
+        "E48"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the threshold-based weighting: if reliability exceeds a threshold, the main LM adjusts by weighting the latest information; otherwise it defaults to the initial prediction.",
+        "evidence": "The answer should state that it plays the role of the judge, predicting the probability of a legal judgment.",
+        "bridge": "The answer should explain that the adjustment mechanism allows the judge model to incorporate reliable debate information while avoiding degradation from poor debates, thus fulfilling its role effectively."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the threshold-based weighting: if reliability exceeds a threshold, the main LM adjusts by weighting the latest information; otherwise it defaults to the initial prediction.\n- We discussed this evidence: The answer should state that it plays the role of the judge, predicting the probability of a legal judgment.\n- We connected them cautiously as follows: The answer should explain that the adjustment mechanism allows the judge model to incorporate reliable debate information while avoiding degradation from poor debates, thus fulfilling its role effectively.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E48",
+          "kc_ids": [
+            "KC28",
+            "KC24"
+          ],
+          "text": "Overview Algorithm[1] presents the pseudo code for the debate-feedback framework in binary classification. The input is a preprocessed legal event text, labeled as S, and the main language model (LM) plays the role of the judge, predicting the probability of a legal judgment, $ LM : S \\rightarrow [0,1] $. Two agents, $ t_{ne} $ and $ t_{po} $, debate from opposing perspectives, providing inputs to refine the judgment. Each debate round involves these agents exchanging and debating their positions, with n defining the number of iterations.\n\nThe assistant model $ \\mathcal{E} $ evaluates the reliability of the agents' arguments and outputs a probability. If the reliability exceeds a threshold, the main LM adjusts its prediction by weighting the latest information, otherwise it defaults to the initial prediction. The final decision is smoothed over all rounds to produce a stable outcome. (Note that notation $ \\oplus $ does not mean xor, but rather combination in a non-additive sense.)"
+        },
+        {
+          "kc_id": "KC28",
+          "text": "The assistant model $ \\mathcal{E} $ evaluates the reliability of the agents' arguments and outputs a probability. If the reliability exceeds a threshold, the main LM adjusts its prediction by weighting the latest information, otherwise it defaults to the initial prediction. The final decision is smoothed over all rounds to produce a stable outcome. (Note that notation $ \\oplus $ does not mean xor, but rather combination in a non-additive sense.)",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC24",
+          "text": "Overview Algorithm[1] presents the pseudo code for the debate-feedback framework in binary classification. The input is a preprocessed legal event text, labeled as S, and the main language model (LM) plays the role of the judge, predicting the probability of a legal judgment, $ LM : S \\rightarrow [0,1] $. Two agents, $ t_{ne} $ and $ t_{po} $, debate from opposing perspectives, providing inputs to refine the judgment. Each debate round involves these agents exchanging and debating their positions, with n defining the number of iterations.",
+          "span_id": "S7",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's trap about overclaiming exclusivity is valid, but the generated question explicitly asks about exclusivity (\"only way\"), making it too easy for solvers to detect the trap. A more subtle question could still trigger the intended failure mode. Revision guidance: Rephrase the question to avoid directly asking about exclusivity. Instead, frame it as a natural extension of the bridge that could lead the model to overclaim exclusivity. For example: 'Based on this, can we say that the threshold-based weighting is necessary for the judge model to avoid degradation?' Avoid explicit 'only' or 'exclusive' language to reduce trivial detection."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "Question directly asks about the role of threshold-based weighting in avoiding degradation, which aligns with the bridge claim without overclaiming.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "challenge_scheduler_config": {
+    "macro_level_enabled": true,
+    "thread_level_enabled": true,
+    "thread_challenge_enabled": true
+  },
+  "macro_main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "macro_main_question",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC7",
+        "KC9",
+        "KC36"
+      ],
+      "question_text": "What is the key problem in legal judgment prediction that the Debate-Feedback model aims to address, and why is a multi-agent debate approach with reliability evaluation proposed as a solution?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC7",
+          "KC9"
+        ],
+        "optional_cover": [
+          "KC36"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "macro_main_question",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC60",
+        "KC19",
+        "KC16"
+      ],
+      "question_text": "What are the main limitations of existing LegalAI approaches, and why are standard reasoning techniques like Chain-of-Thought and Reflection less effective for legal prediction?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC60",
+          "KC19"
+        ],
+        "optional_cover": [
+          "KC16"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "macro_main_question",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC2",
+        "KC6",
+        "KC24"
+      ],
+      "question_text": "What is the overall architecture of the proposed Debate-Feedback model? Describe how it integrates LLM multi-agent debate and reliability evaluation, the roles of the agents and the judge, and how the final judgment is produced.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC2",
+          "KC6"
+        ],
+        "optional_cover": [
+          "KC24"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "macro_main_question",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC38",
+        "KC28",
+        "KC8",
+        "KC27",
+        "KC37",
+        "KC33"
+      ],
+      "question_text": "How does the Debate-Feedback algorithm work? Describe the four main steps, the role of the assistant model in reliability assessment, the threshold-based weighting mechanism for updating predictions, and the smoothing operation over rounds.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC38",
+          "KC28"
+        ],
+        "optional_cover": [
+          "KC8",
+          "KC27",
+          "KC37",
+          "KC33"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "macro_main_question",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC40",
+        "KC41",
+        "KC43"
+      ],
+      "question_text": "Describe the experimental setup: what datasets and evaluation metrics are used, what baseline models and reasoning methods are compared against Debate-Feedback, and how is the trial prediction task reduced?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC40",
+          "KC41"
+        ],
+        "optional_cover": [
+          "KC43"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "macro_main_question",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC52",
+        "KC53",
+        "KC54",
+        "KC55",
+        "KC56",
+        "KC58",
+        "KC63"
+      ],
+      "question_text": "How does the Debate-Feedback model perform on the CaseLaw and CAIL18 datasets compared to baselines, and what is the effect of including an assistant model?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC52",
+          "KC53"
+        ],
+        "optional_cover": [
+          "KC54",
+          "KC55",
+          "KC56",
+          "KC58",
+          "KC63"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "macro_main_question",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC70",
+        "KC68",
+        "KC72"
+      ],
+      "question_text": "According to the ablation experiments, how does the smoothing mechanism affect prediction degradation, and what range of debaters and debate rounds yields favorable results?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC70",
+          "KC68"
+        ],
+        "optional_cover": [
+          "KC72"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "macro_main_question",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC65",
+        "KC66"
+      ],
+      "question_text": "What limitations does the paper discuss regarding the scope of experiments and the absence of retrieval augmentation?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC65",
+          "KC66"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "thread_question_seeds": [
+    {
+      "question_id": "Q_RT1_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC2"
+      ],
+      "question_goal": "Explain the key innovation of the Debate-Feedback architecture as described in the paper.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M6",
+      "target_kc_ids": [
+        "KC52"
+      ],
+      "question_goal": "What are the main results on the CaseLaw dataset, and which models are outperformed?",
+      "trigger_condition": {
+        "macro_reached": "M6"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M6",
+      "target_kc_ids": [
+        "KC2",
+        "KC52"
+      ],
+      "question_goal": "How does the proposed architecture lead to the observed performance advantage on CaseLaw?",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC2",
+          "KC52"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC2",
+        "KC52"
+      ],
+      "question_goal": "Re-examine the explanation: does the architecture directly account for the performance improvement?",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M6",
+      "target_kc_ids": [
+        "KC52"
+      ],
+      "question_goal": "What performance does the Debate-Feedback model achieve on the CaseLaw dataset?",
+      "trigger_condition": {
+        "macro_reached": "M6"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M8",
+      "target_kc_ids": [
+        "KC65"
+      ],
+      "question_goal": "What limitation does the paper acknowledge regarding the experiments?",
+      "trigger_condition": {
+        "macro_reached": "M8"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M8",
+      "target_kc_ids": [
+        "KC52",
+        "KC65"
+      ],
+      "question_goal": "How does the limited experimental scope affect the generalizability of the performance claims?",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC52",
+          "KC65"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC52",
+        "KC65"
+      ],
+      "question_goal": "Verify that the limitation is logically tied to the performance claim without overstating it.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M2",
+      "target_kc_ids": [
+        "KC16"
+      ],
+      "question_goal": "What is a key limitation of existing Legal LLM approaches?",
+      "trigger_condition": {
+        "macro_reached": "M2"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC2"
+      ],
+      "question_goal": "How does the Debate-Feedback architecture address this limitation?",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC16",
+        "KC2"
+      ],
+      "question_goal": "Why is the proposed method a direct response to the dataset limitation of existing approaches?",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC16",
+          "KC2"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC16",
+        "KC2"
+      ],
+      "question_goal": "Check if the method indeed directly tackles the identified limitation without introducing new dependencies.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC28"
+      ],
+      "question_goal": "How does the algorithm determine when to adjust the prediction?",
+      "trigger_condition": {
+        "macro_reached": "M4"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC24"
+      ],
+      "question_goal": "What is the role of the main language model in the debate framework?",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC28",
+        "KC24"
+      ],
+      "question_goal": "How does the threshold-based adjustment mechanism support the judge model's function?",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC28",
+          "KC24"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC28",
+        "KC24"
+      ],
+      "question_goal": "Verify that the threshold adjustment is correctly positioned as part of the judge model's decision process.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "review_question_seeds": [],
+  "main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "main",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC7",
+        "KC9",
+        "KC36"
+      ],
+      "question_text": "What is the key problem in legal judgment prediction that the Debate-Feedback model aims to address, and why is a multi-agent debate approach with reliability evaluation proposed as a solution?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC7",
+          "KC9"
+        ],
+        "optional_cover": [
+          "KC36"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "main",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC60",
+        "KC19",
+        "KC16"
+      ],
+      "question_text": "What are the main limitations of existing LegalAI approaches, and why are standard reasoning techniques like Chain-of-Thought and Reflection less effective for legal prediction?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC60",
+          "KC19"
+        ],
+        "optional_cover": [
+          "KC16"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "main",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC2",
+        "KC6",
+        "KC24"
+      ],
+      "question_text": "What is the overall architecture of the proposed Debate-Feedback model? Describe how it integrates LLM multi-agent debate and reliability evaluation, the roles of the agents and the judge, and how the final judgment is produced.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC2",
+          "KC6"
+        ],
+        "optional_cover": [
+          "KC24"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "main",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC38",
+        "KC28",
+        "KC8",
+        "KC27",
+        "KC37",
+        "KC33"
+      ],
+      "question_text": "How does the Debate-Feedback algorithm work? Describe the four main steps, the role of the assistant model in reliability assessment, the threshold-based weighting mechanism for updating predictions, and the smoothing operation over rounds.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC38",
+          "KC28"
+        ],
+        "optional_cover": [
+          "KC8",
+          "KC27",
+          "KC37",
+          "KC33"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "main",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC40",
+        "KC41",
+        "KC43"
+      ],
+      "question_text": "Describe the experimental setup: what datasets and evaluation metrics are used, what baseline models and reasoning methods are compared against Debate-Feedback, and how is the trial prediction task reduced?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC40",
+          "KC41"
+        ],
+        "optional_cover": [
+          "KC43"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "main",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC52",
+        "KC53",
+        "KC54",
+        "KC55",
+        "KC56",
+        "KC58",
+        "KC63"
+      ],
+      "question_text": "How does the Debate-Feedback model perform on the CaseLaw and CAIL18 datasets compared to baselines, and what is the effect of including an assistant model?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC52",
+          "KC53"
+        ],
+        "optional_cover": [
+          "KC54",
+          "KC55",
+          "KC56",
+          "KC58",
+          "KC63"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "main",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC70",
+        "KC68",
+        "KC72"
+      ],
+      "question_text": "According to the ablation experiments, how does the smoothing mechanism affect prediction degradation, and what range of debaters and debate rounds yields favorable results?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC70",
+          "KC68"
+        ],
+        "optional_cover": [
+          "KC72"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "main",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC65",
+        "KC66"
+      ],
+      "question_text": "What limitations does the paper discuss regarding the scope of experiments and the absence of retrieval augmentation?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC65",
+          "KC66"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "multi_hop_questions": [],
+  "reserved_followup_templates": []
+}

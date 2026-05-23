@@ -1,0 +1,13 @@
+{
+  "paper_id": "SHIFT_ICCV2025_-11pages",
+  "source_pdf": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\pdfInput\\SHIFT(ICCV2025)-11pages.pdf",
+  "raw_paper_dir": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages",
+  "doc_count": 11,
+  "markdown_image_count": 11,
+  "layout_image_count": 11,
+  "build_graph_env": {
+    "PAPER_INPUT_DIR": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages",
+    "PAPER_ID": "SHIFT_ICCV2025_-11pages"
+  },
+  "papergraph_data_dir": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\papergraph_demo\\data\\SHIFT_ICCV2025_-11pages"
+}

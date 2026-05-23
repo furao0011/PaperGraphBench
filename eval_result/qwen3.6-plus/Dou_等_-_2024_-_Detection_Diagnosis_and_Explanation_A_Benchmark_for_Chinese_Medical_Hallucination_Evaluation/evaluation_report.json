@@ -1,0 +1,177 @@
+{
+  "paper_id": "Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation",
+  "target_model": "qwen3.6-plus",
+  "summary": {
+    "total_turns": 76,
+    "evaluation_status": "completed",
+    "completion_reason": "all scheduled macro, follow-up, thread, and review turns finished",
+    "completed_at_turn": 76,
+    "failed": false,
+    "failure_reason": null
+  },
+  "coverage_metrics": {
+    "global_kc_total": 181,
+    "global_kc_lit_count": 34,
+    "global_kc_coverage_rate": 0.1878,
+    "target_kc_total": 30,
+    "target_kc_lit_count": 26,
+    "target_kc_coverage_rate": 0.8667,
+    "critical_kc_total": 154,
+    "critical_kc_lit_count": 31,
+    "critical_kc_coverage_rate": 0.2013,
+    "graph_coverage_rate": 0.1878,
+    "macro_completion_rate": 0.625,
+    "detail_completion_rate": 0.2286
+  },
+  "macro_metrics": {
+    "macro_total": 8,
+    "macro_main_question_asked_rate": 1.0,
+    "macro_completion_rate": 0.625,
+    "average_active_kc_coverage_per_macro": 0.8939,
+    "macro_order_following_score": 1.0
+  },
+  "kc_bank_metrics": {
+    "kc_bank_total": 181,
+    "active_kc_total": 30,
+    "active_kc_coverage_rate": 0.8667,
+    "active_to_bank_ratio": 0.1657,
+    "kc_bank_supported_claim_rate": 0.0,
+    "claim_verifier_supported_kc_count": 0,
+    "claim_verifier_supported_target_kc_count": 0,
+    "kc_bank_expansion_candidate_count": 0
+  },
+  "hallucination_metrics": {
+    "hallucination_count": 35,
+    "hallucination_turn_count": 35,
+    "hallucination_turn_rate": 0.4605,
+    "hallucination_event_count": 24,
+    "hallucination_event_rate": 0.3158,
+    "hallucination_by_type": {
+      "challenge_false_premise_acceptance": 2,
+      "challenge_overclaim_acceptance": 3,
+      "contradicted_kc_claim": 15,
+      "review_regression": 1,
+      "thread_reasoning_hallucination": 3
+    },
+    "hallucination_by_status": {
+      "exhausted": 3,
+      "resolved": 6,
+      "unresolved": 15
+    },
+    "hallucination_repair_success_rate": 0.25,
+    "hallucination_exhaustion_rate": 0.125,
+    "challenge_induced_hallucination_rate": 0.0,
+    "thread_hallucination_rate": 0.375,
+    "review_regression_rate": 1.0,
+    "new_hallucination_event_count": 24,
+    "hallucination_types": {
+      "challenge_false_premise_acceptance": 2,
+      "challenge_overclaim_acceptance": 3,
+      "contradicted_kc_claim": 15,
+      "review_regression": 1,
+      "thread_reasoning_hallucination": 3
+    }
+  },
+  "correction_metrics": {
+    "self_correction_rate": 0.5,
+    "average_correction_turns": 1.4,
+    "refuse_to_correct_count": 0
+  },
+  "multi_hop_metrics": {
+    "tested_paths": 0,
+    "multi_hop_success_rate": 0.0
+  },
+  "thread_metrics": {
+    "thread_total": 4,
+    "thread_completion_rate": 0.75,
+    "thread_success_rate": 0.25,
+    "bridge_reasoning_tested_count": 1,
+    "bridge_reasoning_success_count": 0,
+    "bridge_reasoning_success_rate": 0.0,
+    "thread_review_consistency_rate": 1.0,
+    "thread_hallucination_count": 3,
+    "thread_hallucination_rate": 1.0
+  },
+  "thread_challenge_metrics": {
+    "thread_challenge_total": 0,
+    "thread_challenge_failure_count": 0,
+    "thread_challenge_resisted_count": 0,
+    "thread_challenge_failure_rate": 0.0,
+    "thread_challenge_resistance_rate": 0.0,
+    "thread_challenge_by_type": {},
+    "thread_challenge_failure_by_type": {},
+    "thread_wrong_bridge_failure_count": 0,
+    "thread_overclaim_failure_count": 0,
+    "thread_premise_mutation_failure_count": 0,
+    "thread_challenge_induced_hallucination_count": 0,
+    "thread_challenge_repair_success_rate": 0.0
+  },
+  "challenge_metrics": {
+    "challenge_total": 20,
+    "challenge_failure_count": 5,
+    "challenge_resisted_count": 15,
+    "challenge_failure_rate": 0.25,
+    "challenge_resistance_rate": 0.75,
+    "challenge_induced_hallucination_count": 0,
+    "challenge_induced_hallucination_rate": 0.0,
+    "challenge_by_type": {
+      "false_premise_challenge": 11,
+      "overclaim_challenge": 6,
+      "wrong_relation_challenge": 3
+    },
+    "challenge_by_scope": {
+      "macro": 20
+    },
+    "challenge_failure_by_scope": {
+      "macro": 5
+    },
+    "challenge_failure_by_hallucination_type": {
+      "challenge_false_premise_acceptance": 2,
+      "challenge_overclaim_acceptance": 3
+    },
+    "challenge_failure_by_modality": {
+      "multimodal": 2,
+      "text": 3
+    },
+    "challenge_failure_by_type_and_modality": {
+      "challenge_false_premise_acceptance|multimodal": 2,
+      "challenge_overclaim_acceptance|text": 3
+    }
+  },
+  "detail_completion_metrics": {
+    "coverage_gap_count": 35,
+    "coverage_gap_resolved_count": 8,
+    "coverage_gap_exhausted_count": 4,
+    "coverage_gap_by_status": {
+      "exhausted": 4,
+      "pending": 23,
+      "resolved": 8
+    },
+    "detail_completion_rate": 0.2286,
+    "detail_exhaustion_rate": 0.1143
+  },
+  "stage_task_metrics": {
+    "stage_task_count": 50,
+    "stage_task_by_type": {
+      "CHALLENGE_EVALUATION": 20,
+      "DETAIL_COMPLETION": 12,
+      "HALLUCINATION_REPAIR": 9,
+      "REVIEW": 1,
+      "THREAD_REASONING": 8
+    },
+    "stage_task_by_status": {
+      "completed": 43,
+      "exhausted": 7
+    },
+    "stage_task_completed_count": 43,
+    "stage_task_exhausted_count": 7
+  },
+  "claim_verification_metrics": {
+    "verified_claim_count": 0,
+    "supported_claim_rate": 0.0,
+    "contradicted_claim_count": 0,
+    "overclaim_count": 0,
+    "not_enough_info_count": 0,
+    "supported_kc_count": 0
+  }
+}

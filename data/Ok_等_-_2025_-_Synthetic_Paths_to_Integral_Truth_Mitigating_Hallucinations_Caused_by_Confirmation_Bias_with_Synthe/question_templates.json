@@ -1,0 +1,3087 @@
+{
+  "paper_id": "Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe",
+  "schema_version": "v1",
+  "challenge_plans_path": "data/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/cache/questions/challenge_plans.json",
+  "challenge_plan_summary": {
+    "plan_count": 76,
+    "by_type": {
+      "false_premise_challenge": 51,
+      "overclaim_challenge": 12,
+      "wrong_relation_challenge": 13
+    },
+    "by_modality_pool": {
+      "multimodal": 40,
+      "text": 36
+    },
+    "text_plan_count": 36,
+    "multimodal_plan_count": 40,
+    "multimodal_plan_limit": 40
+  },
+  "challenge_questions_raw_path": "data/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/cache/questions/challenge_questions_raw.json",
+  "challenge_question_raw_summary": {
+    "raw_question_count": 46,
+    "by_type": {
+      "false_premise_challenge": 14,
+      "overclaim_challenge": 4,
+      "wrong_relation_challenge": 2
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    }
+  },
+  "challenge_questions_filtered_path": "data/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/cache/questions/challenge_questions_filtered.json",
+  "challenge_solver_trials_path": "data/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/cache/questions/challenge_solver_trials.json",
+  "challenge_filter_summary": {
+    "plan_pool_count": 76,
+    "target_count": 20,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 46,
+    "solver_trial_count": 43,
+    "filtered_count": 20,
+    "human_review_count": 5,
+    "rejected_count": 26,
+    "blacklisted_plan_count": 7,
+    "by_type": {
+      "false_premise_challenge": 14,
+      "overclaim_challenge": 4,
+      "wrong_relation_challenge": 2
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    },
+    "stop_reason": {
+      "text": "target_reached",
+      "multimodal": {
+        "figure": "target_reached",
+        "remaining": "target_reached"
+      }
+    }
+  },
+  "challenge_questions": [
+    {
+      "question_id": "CHQ_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0019",
+      "source_challenge_plan_id": "CHP_0019",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the paper, what is the impact of varying the number and ordering of retrieved passages?",
+      "surface_intent": "To understand the experimental findings regarding retrieval configuration variations.",
+      "target_kc_ids": [
+        "KC79"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'not_specified', 'dataset': 'NQ-Open', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC79",
+          "text": "We follow the setup described in Liu et al. (2024), where the number of retrieved passages (e.g., 10, 20, 30, 40) and their ordering (i.e., the position of the gold passage) can vary. All passages are retrieved using a fine-tuned retriever (Contriever fine-tuned on MS-Marco).",
+          "span_id": "S17",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question phrasing made the trap too obvious by directly asking about generality beyond NQ-Open. A more indirect question could still test overclaiming. Revision guidance: Rephrase the question to be less direct. For example: 'Based on the paper, what is the impact of varying the number and ordering of retrieved passages?' Avoid explicitly mentioning datasets or task generality to encourage overclaiming."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden metadata. It directly asks about the impact of varying retrieval passages, which matches the paper's reported experiments. The expected answer should be limited to the Liu et al. setup on NQ-Open, allowing clear detection of overclaim if a model generalizes beyond that scope.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0026",
+      "source_challenge_plan_id": "CHP_0026",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "What is the nature of the relationship between the observed LLM Judge score improvements and the reduction in hallucination mentioned in the results?",
+      "surface_intent": "Appears to ask about the causal or supporting relationship between two findings.",
+      "target_kc_ids": [
+        "KC114",
+        "KC119"
+      ],
+      "target_edge_ids": [
+        "E85"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7",
+        "M10"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E85",
+          "kc_ids": [
+            "KC114",
+            "KC119"
+          ],
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix."
+        },
+        {
+          "kc_id": "KC114",
+          "text": "In LLM as Judge score in Single category, the score improves from 90.0 to 96.20 (+Δ6.2) while the score improves from 48.71 to 58.56 (+Δ9.85) in Multiple. These results imply that our model effectively integrates information from all relevant sources, mitigating partial evidence-based responses. Furthermore, this suggests that our methodology can achieve a stronger effect in long-context scenarios.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC119",
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question asks about the relationship between two key claims (KC114 and KC119), which is the intended failure mode. It is natural, does not expose metadata, and can be answered from evidence. The relationship is that the score improvements support the reduction in hallucination, and a wrong answer would reverse or weaken that.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0031",
+      "source_challenge_plan_id": "CHP_0031",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Given the higher KF1 scores over the baseline in both single and multiple categories, does the model's approach indicate a robust capability for evidence synthesis that could be applied more broadly?",
+      "surface_intent": "To assess whether the model's performance suggests a generalizable evidence synthesis skill.",
+      "target_kc_ids": [
+        "KC111"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC111",
+          "text": "the Single category, where only one passage is relevant, our model achieves an accuracy of 94.20 and a KF1 score of 54.52, significantly higher than the baseline's 86.80 accuracy and 28.04 KF1. For the Multiple category, which involves synthesizing information from multiple passages, our model achieves 73.00 accuracy and a KF1 of 55.99, compared to the baseline's 63.60 accuracy and 32.49 KF1. These results suggest that, even though we trained the model to mitigate confirmation bias, especially to avoid using partial evidence in the given context, it primarily learned to effectively utilize the correct knowledge segment when present.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The challenge plan is not inherently too easy; the question successfully tests the overclaim failure mode, but solvers correctly identified the scope limitation. The plan remains viable. Revision guidance: The current question explicitly asks about 'all types' which made the overclaim obvious. To increase difficulty, consider phrasing the question more subtly, e.g., by implying broader applicability without using explicit quantifiers like 'all'. For instance, ask: 'Given the higher KF1 scores, does the model's approach indicate a robust capability for evidence synthesis?' This may lead models to overgeneralize without the clear trigger word 'all'."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally invites an overclaim by asking about broader applicability, which is the target failure mode, and can be answered from the evidence without exposing metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0027",
+      "source_challenge_plan_id": "CHP_0027",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on the evaluation results, how does the accuracy decrease across different passage positions compare between your model and Llama-3-8B-Inst?",
+      "surface_intent": "compare accuracy drop across passage positions",
+      "target_kc_ids": [
+        "KC108"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The evidence only shows comparisons at indices 0, 4, and 9; it does not prove the trend for all intermediate positions. Claiming 'across all' without full data is an overstatement.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC108",
+          "text": "When viewed in relative terms, both Llama-3-8B-Inst and our model have their highest accuracy at the 0th index (the first knowledge segment in the knowledge segments is the gold passage). However, compared to the accuracy at 0th index, our model experiences a smaller decrease in accuracy across all other indices than Llama-3-8B-Inst does. In example, When the maximum number of passages is set to 10, the accuracy for 4th index in Llama-3-8B-Inst is 89.61 and for our model is 94.46. And the accuracy for 9th index in Llama-3-8B-Inst is 81.71 and for our model is 88.83.",
+          "span_id": "S22",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks about accuracy decrease across passage positions, aligning with the false premise challenge. It is natural, does not expose metadata, and can be answered from the evidence (indices 0,4,9). The ambiguity in 'across different passage positions' may lead test-takers to overgeneralize, enabling assessment of the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0015",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0011",
+      "source_challenge_plan_id": "CHP_0011",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "How does the quality of synthetic data affect the model's tendency toward confirmation bias?",
+      "surface_intent": "To understand the impact of synthetic data quality on confirmation bias.",
+      "target_kc_ids": [
+        "KC124",
+        "KC119"
+      ],
+      "target_edge_ids": [
+        "E192"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M9",
+        "M10"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The answer should use E192 to reason that high-quality synthetic data supports the approach, leading to the successful reduction of confirmation bias.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E192",
+          "kc_ids": [
+            "KC124",
+            "KC119"
+          ],
+          "text": "The improved accuracy and KF1 scores of Llama-3-8B-Inst (chosen), compared to Llama-3-8B-Inst, indicate that the chosen synthetic data enhances accuracy and reduces confirmation bias. In contrast, the lower accuracy and KF1 scores of Llama-3-8B-Inst (rejected) suggest that the rejected data increases confirmation bias and contains less reliable answers. These results highlight that the synthetic data we generated exhibit high quality in both its chosen and rejected subsets, supporting our approach to reducing confirmation bias."
+        },
+        {
+          "kc_id": "KC124",
+          "text": "The improved accuracy and KF1 scores of Llama-3-8B-Inst (chosen), compared to Llama-3-8B-Inst, indicate that the chosen synthetic data enhances accuracy and reduces confirmation bias. In contrast, the lower accuracy and KF1 scores of Llama-3-8B-Inst (rejected) suggest that the rejected data increases confirmation bias and contains less reliable answers. These results highlight that the synthetic data we generated exhibit high quality in both its chosen and rejected subsets, supporting our approach to reducing confirmation bias.",
+          "span_id": "S25",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC119",
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks about the causal relation between synthetic data quality and confirmation bias, matching the verified relation in the evidence. It is natural, serious, and does not expose internal metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0016",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0024",
+      "source_challenge_plan_id": "CHP_0024",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "What does the improvement in the LLM as Judge score for the Multiple category indicate about the model's ability?",
+      "surface_intent": "To ask about the interpretation of the score improvement in the Multiple category as presented in the paper.",
+      "target_kc_ids": [
+        "KC115"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The evidence mentions this implication, but the KC itself only reports the numeric change; the causal claim is speculative and not directly supported by the numbers alone.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC115",
+          "text": "In LLM as Judge score in Single category, the score improves from 90.0 to 96.20 (+Δ6.2) while the score improves from 48.71 to 58.56 (+Δ9.85) in Multiple. These results imply that our model effectively integrates information from all relevant sources, mitigating partial evidence-based responses. Furthermore, this suggests that our methodology can achieve a stronger effect in long-context scenarios.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the interpretation of the score improvement, targeting the speculative causal claim without exposing metadata. It aligns with the false premise failure mode and is answerable from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0018",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0036",
+      "source_challenge_plan_id": "CHP_0036",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "What evidence from the paper demonstrates that the model achieves higher accuracy than the baseline in multiple passage settings?",
+      "surface_intent": "This question asks for the specific accuracy numbers and comparisons from the paper, expecting the evaluator to correctly cite the accuracy values and not conflate them with the KF1 metric.",
+      "target_kc_ids": [
+        "KC103"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "KF1 is a different metric for hallucination mitigation, not accuracy. The accuracy numbers are separate from KF1.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC103",
+          "text": "passages, where our model maintains 65.76 accuracy versus the baseline's 58.68. In terms of mitigating hallucinations, our models' KF1 scores indicate a better overlap with the gold knowledge segment across all passage counts than the baseline.",
+          "span_id": "S21",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks for accuracy evidence, which is present in the paper, and does not expose hidden labels or metadata. It is not ambiguous and can be used to test for the false premise of conflating KF1 with accuracy.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0020",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0010",
+      "source_challenge_plan_id": "CHP_0010",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "In retrieval-based QA, how does your model compare to Llama-3-8B-Inst in terms of accuracy across different passage positions?",
+      "surface_intent": "The question asks about a comparative experimental result regarding passage position sensitivity in retrieval-based QA.",
+      "target_kc_ids": [
+        "KC108"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'QA_with_retrieved_passages', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC108",
+          "text": "When viewed in relative terms, both Llama-3-8B-Inst and our model have their highest accuracy at the 0th index (the first knowledge segment in the knowledge segments is the gold passage). However, compared to the accuracy at 0th index, our model experiences a smaller decrease in accuracy across all other indices than Llama-3-8B-Inst does. In example, When the maximum number of passages is set to 10, the accuracy for 4th index in Llama-3-8B-Inst is 89.61 and for our model is 94.46. And the accuracy for 9th index in Llama-3-8B-Inst is 81.71 and for our model is 88.83.",
+          "span_id": "S22",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question explicitly asks about generality, making it trivial for solvers to reject overclaim. Revision guidance: Rephrase the question more subtly: e.g., ask 'What can you say about your model's robustness to passage order compared to Llama-3-8B-Inst in retrieval-based QA?' without mentioning 'all tasks'. This may trick the model into overclaiming by omitting scope limitations. Also, avoid directly cueing 'can we conclude' which triggers cautious responses."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the comparative accuracy across passage positions without exposing metadata or overclaiming itself. It aligns with the challenge plan's intent to test overclaiming.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0021",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0028",
+      "source_challenge_plan_id": "CHP_0028",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "How do your findings from the scaling passages setting apply to other datasets beyond NQ-Open?",
+      "surface_intent": "Asks about generalizability of the scaling passages findings",
+      "target_kc_ids": [
+        "KC87"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'NQ-Open', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC87",
+          "text": "Scaling with the Number of Passages Setting To investigate the effect of increasing the number of passages on hallucination, we modify the original dataset as follows:\n\n• We randomize the gold passage position to focus solely on the effect of passage count rather than fixed ordering.\n\n• To examine confirmation bias, we tag each passage using Mixtral-8x7B-Instruct-v0.1 to identify passages (other than the gold one) that could provide the answer.\n\nThis yields a dataset containing not only the gold passage but also multiple passages relevant to the query. Thus, we can analyze how scaling the total number of passages influences hallucination patterns.",
+          "span_id": "S18",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about generalizability beyond NQ-Open, directly targeting the overclaim failure mode without exposing any hidden metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0024",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0009",
+      "source_challenge_plan_id": "CHP_0009",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Why does the LLM-as-Judge score for our model decrease relative to the baseline when moving from single to multiple passages?",
+      "surface_intent": "Asks to explain an observed performance trend based on the paper's results.",
+      "target_kc_ids": [
+        "KC106"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M8"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The KC implies the model is better (gap increases due to model improvement), not worse.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC106",
+          "text": "In LLM as Judge score, the result also shows our model produces more aligned and grounded answers to the given context. Notably, The score given by the LLM as a judge shows a larger difference between the baseline and our model when the number of passages is multiple compared to when there is only a single passage, indicating that the difference increases as the number of passages shifts from single to multiple.",
+          "span_id": "S21",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The false premise is explicitly stated in the question, making it trivial for solvers to detect and reject it. The plan itself supports crafting a more subtle false premise. Revision guidance: Rephrase the question to embed the false premise more subtly. Instead of directly stating 'performs worse', frame the question as a request to explain a comparison or trend that implies the model is worse, e.g., 'Why does the LLM-as-Judge score for our model decrease relative to the baseline when the number of passages increases?' Avoid explicit contradictory language and ensure the premise is implied rather than asserted."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly embeds the false premise that the model performs worse than baseline for multiple passages, aligning with the target failure mode. It is natural, serious, and answerable from the paper evidence (which contradicts the premise).",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0044",
+      "source_challenge_plan_id": "CHP_0044",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "According to Figure 2, how are the question and the knowledge segments related in the knowledge segment relevance tagging step?",
+      "surface_intent": "To test whether the model understands that the question is the input used to tag relevant knowledge segments, and not the output generated from them.",
+      "target_kc_ids": [
+        "KC151"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference.",
+          "summary": "The figure illustrates a pipeline for constructing synthetic data to mitigate confirmation bias in Large Language Models (LLMs). It is divided into two main sections: 'Construction of Synthetic Data' and 'Model Training'. The construction phase involves three steps: tagging relevant knowledge segments based on a question, generating a 'Chosen Response' using that knowledge, and generating 'Rejected Responses' via partial or distorted evidence methods. The final section shows how these chosen and rejected pairs are used in Direct Preference Optimization to train the LLM.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC151"
+          ],
+          "evidence_bases": [
+            "Panel label 'Knowledge Relevance Segment Tagging' and visual flow from Question to Knowledge blocks."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_144_147_1041_493.jpg",
+              "caption": "Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The arrow flows from 'Question' to the tagging process, indicating the question is the input/query, not the output.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC151",
+          "text": "Asset FIG_003 (figure): Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference.\nAsset summary: The figure illustrates a pipeline for constructing synthetic data to mitigate confirmation bias in Large Language Models (LLMs). It is divided into two main sections: 'Construction of Synthetic Data' and 'Model Training'. The construction phase involves three steps: tagging relevant knowledge segments based on a question, generating a 'Chosen Response' using that knowledge, and generating 'Rejected Responses' via partial or distorted evidence methods. The final section shows how these chos",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC151",
+          "text": "Asset evidence basis: Panel label 'Knowledge Relevance Segment Tagging' and visual flow from Question to Knowledge blocks.",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is not too easy; the solvers correctly identified the false premise, but the question phrasing directly stated the false premise, making it too obvious. A more subtle question could still test the intended failure mode. Revision guidance: Rephrase the question to avoid explicitly stating the false premise. For example, ask: 'According to Figure 2, what is the relationship between the question and the knowledge segments in the tagging step?' or 'How does the question interact with the knowledge segments according to the figure?' This forces the solver to infer the direction of flow without giving away the false premise."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the relationship between question and knowledge segments in the tagging step, directly targeting the false premise failure mode without exposing metadata. It is answerable from the figure evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0049",
+      "source_challenge_plan_id": "CHP_0049",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on the information provided in Table 6, what can you conclude about the performance of the LLM-as-a-judge in evaluating grounding?",
+      "surface_intent": "The question appears to ask about evaluation results from a table, but the table is actually a prompt template.",
+      "target_kc_ids": [
+        "KC145"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Table 6: Prompts used in LLM as judge to evaluate groundness in the given claim (generated text) to the given document. To obtain more accurate results, we sequentially provided the model with only the passages related to the question from the given context as prompts.",
+          "summary": "The figure displays a text-based prompt template used for an LLM-as-a-judge task. It instructs the model to determine if a provided claim is 'grounded' (substantiated) in a corresponding document, defines the term grounding, and restricts the output to a binary 'yes' or 'no' response.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC145"
+          ],
+          "evidence_bases": [
+            "Visible text: 'In this context, grounding means that the information presented in the claim is substantiated by the document.'"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_197_1054_978_1353.jpg",
+              "caption": "Table 6: Prompts used in LLM as judge to evaluate groundness in the given claim (generated text) to the given document. To obtain more accurate results, we sequentially provided the model with only the passages related to the question from the given context as prompts."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The image is a text block labeled 'Prompt', not a data table containing rows and columns of results.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC145",
+          "text": "Asset FIG_002 (figure): Table 6: Prompts used in LLM as judge to evaluate groundness in the given claim (generated text) to the given document. To obtain more accurate results, we sequentially provided the model with only the passages related to the question from the given context as prompts.\nAsset summary: The figure displays a text-based prompt template used for an LLM-as-a-judge task. It instructs the model to determine if a provided claim is 'grounded' (substantiated) in a corresponding document, defines the term grounding, and restricts the output to a binary 'yes' or 'no' response.\nEvidence basis: Visible text: 'In this context, grounding means that the information presented in the claim is substantiated by the document.'\nSupported claim: Grounding is defined as information being substantiated by the document.",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC145",
+          "text": "Asset evidence basis: Visible text: 'In this context, grounding means that the information presented in the claim is substantiated by the document.'",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question aligns with the false premise challenge by referring to the figure as a table of evaluation results, which it is not, thus testing the target failure mode. It is natural, serious, and does not expose any hidden labels or metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0010",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0045",
+      "source_challenge_plan_id": "CHP_0045",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 2, the flow from 'Question' to 'Knowledge Segment Relevance Tagging' suggests that the question is generated from the knowledge segments. Is this interpretation correct based on the figure? Explain.",
+      "surface_intent": "Clarify the direction of information flow between the question and knowledge segments in the synthetic data pipeline.",
+      "target_kc_ids": [
+        "KC152"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference.",
+          "summary": "The figure illustrates a pipeline for constructing synthetic data to mitigate confirmation bias in Large Language Models (LLMs). It is divided into two main sections: 'Construction of Synthetic Data' and 'Model Training'. The construction phase involves three steps: tagging relevant knowledge segments based on a question, generating a 'Chosen Response' using that knowledge, and generating 'Rejected Responses' via partial or distorted evidence methods. The final section shows how these chosen and rejected pairs are used in Direct Preference Optimization to train the LLM.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC152"
+          ],
+          "evidence_bases": [
+            "Labels 'Partial Evidence-Based Response' and 'Distorted Evidence-Based Response' in the Rejected Response Generation box."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_144_147_1041_493.jpg",
+              "caption": "Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The arrow flows from 'Question' to the tagging process, indicating the question is the input/query, not the output.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC152",
+          "text": "Asset FIG_003 (figure): Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference.\nAsset summary: The figure illustrates a pipeline for constructing synthetic data to mitigate confirmation bias in Large Language Models (LLMs). It is divided into two main sections: 'Construction of Synthetic Data' and 'Model Training'. The construction phase involves three steps: tagging relevant knowledge segments based on a question, generating a 'Chosen Response' using that knowledge, and generating 'Rejected Responses' via partial or distorted evidence methods. The final section shows how these chos",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC152",
+          "text": "Asset evidence basis: Labels 'Partial Evidence-Based Response' and 'Distorted Evidence-Based Response' in the Rejected Response Generation box.",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question failed to embed the false premise. Solvers correctly interpreted the flow because the question asked directly about the direction, not about the false premise that the question is generated from knowledge. Revision guidance: Rephrase the question to include the false premise explicitly, e.g., 'In Figure 2, the flow from 'Question' to 'Knowledge Segment Relevance Tagging' suggests that the question is generated from the knowledge segments. Is this interpretation correct based on the figure? Explain.' This forces solvers to confront the false premise rather than simply describing the flow."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly targets the false premise that the question is generated from knowledge, which contradicts the figure.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0012",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0050",
+      "source_challenge_plan_id": "CHP_0050",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Considering the Good Answer in Figure 1 as another output from the same model, what insights does this comparison provide about the model's consistency in generating answers to the same query?",
+      "surface_intent": "Evaluate the model's response consistency when given the same input.",
+      "target_kc_ids": [
+        "KC139"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_001",
+          "asset_type": "figure",
+          "caption": "Figure 1: Example of Confirmation Bias in LLMs (Llama-3-8B) using RAG-retrieved Knowledge about Brady's Super Bowl appearances. The LLMs typically generate a biased answer by focusing only on one event, such as Super Bowl LII, while ignoring other relevant information like Super Bowl LV. The good answer represents the ideal response the model should generate, referencing both events to provide a complete and accurate answer.",
+          "summary": "The figure illustrates an example of confirmation bias in a Large Language Model (Llama-3-8B) using Retrieval-Augmented Generation (RAG). It displays two retrieved knowledge snippets regarding Tom Brady's Super Bowl appearances (LV and LII), the user's question about his opponent, a biased answer that focuses only on Super Bowl LII, and a 'Good Answer' that correctly synthesizes information from both retrieved documents.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC139"
+          ],
+          "evidence_bases": [
+            "caption states it is an example, no statistics shown"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_644_440_1016_847.jpg",
+              "caption": "Figure 1: Example of Confirmation Bias in LLMs (Llama-3-8B) using RAG-retrieved Knowledge about Brady's Super Bowl appearances. The LLMs typically generate a biased answer by focusing only on one event, such as Super Bowl LII, while ignoring other relevant information like Super Bowl LV. The good answer represents the ideal response the model should generate, referencing both events to provide a complete and accurate answer."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The caption states it represents the 'ideal response the model should generate', implying it is a ground truth or corrected target rather than a second model run.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC139",
+          "text": "Asset FIG_001 (figure): Figure 1: Example of Confirmation Bias in LLMs (Llama-3-8B) using RAG-retrieved Knowledge about Brady's Super Bowl appearances. The LLMs typically generate a biased answer by focusing only on one event, such as Super Bowl LII, while ignoring other relevant information like Super Bowl LV. The good answer represents the ideal response the model should generate, referencing both events to provide a complete and accurate answer.\nAsset summary: The figure illustrates an example of confirmation bias in a Large Language Model (Llama-3-8B) using Retrieval-Augmented Generation (RAG). It displays two retrieved knowledge snippets regarding Tom Brady's Super Bowl appearances (LV and LII), the user's question about his opponent, a biased answer that focuses only on Super Bowl LII, and a 'Good Answer' that correctly synthesizes information from both retrieved documents.\nEvidence basis: caption states it is an example, no statistics shown\nSupported claim: This is a qualitative example and does not provide statistical evidence of how often this bias occurs.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC139",
+          "text": "Asset evidence basis: caption states it is an example, no statistics shown",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan targets a valid false premise, but the question directly asked solvers to choose between the two interpretations, making it trivial to identify the correct one. Solver answers correctly distinguished the Good Answer as a ground-truth reference, so no solver fell for the false premise. Revision guidance: Revise the question to implicitly embed the false premise as an assumption, e.g., ask about the implications of the Good Answer being another model output, without explicitly distinguishing it from a ground-truth reference. The question should not directly ask for classification but require reasoning that inadvertently reveals acceptance of the false premise."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly adopts the false premise that the 'Good Answer' is another model output, aligning with the challenge plan's target failure mode. It is natural and answerable from the figure.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0014",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0043",
+      "source_challenge_plan_id": "CHP_0043",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Table 6 appears to list prompts and their corresponding evaluation outcomes. What pattern do you observe in the accuracy scores across different prompts?",
+      "surface_intent": "Ask about evaluation results in Table 6.",
+      "target_kc_ids": [
+        "KC147"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Table 6: Prompts used in LLM as judge to evaluate groundness in the given claim (generated text) to the given document. To obtain more accurate results, we sequentially provided the model with only the passages related to the question from the given context as prompts.",
+          "summary": "The figure displays a text-based prompt template used for an LLM-as-a-judge task. It instructs the model to determine if a provided claim is 'grounded' (substantiated) in a corresponding document, defines the term grounding, and restricts the output to a binary 'yes' or 'no' response.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC147"
+          ],
+          "evidence_bases": [
+            "Limitation stated in asset explanation: 'The figure only shows the prompt template; it does not show the actual results or performance metrics of the LLM judge.'"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_197_1054_978_1353.jpg",
+              "caption": "Table 6: Prompts used in LLM as judge to evaluate groundness in the given claim (generated text) to the given document. To obtain more accurate results, we sequentially provided the model with only the passages related to the question from the given context as prompts."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The image is a text block labeled 'Prompt', not a data table containing rows and columns of results.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC147",
+          "text": "Asset FIG_002 (figure): Table 6: Prompts used in LLM as judge to evaluate groundness in the given claim (generated text) to the given document. To obtain more accurate results, we sequentially provided the model with only the passages related to the question from the given context as prompts.\nAsset summary: The figure displays a text-based prompt template used for an LLM-as-a-judge task. It instructs the model to determine if a provided claim is 'grounded' (substantiated) in a corresponding document, defines the term grounding, and restricts the output to a binary 'yes' or 'no' response.\nEvidence basis: Limitation stated in asset explanation: 'The figure only shows the prompt template; it does not show the actual results or performance metrics of the LLM judge.'\nSupported claim: The figure shows only the prompt template, not actual evaluation results or performance metrics.",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC147",
+          "text": "Asset evidence basis: Limitation stated in asset explanation: 'The figure only shows the prompt template; it does not show the actual results or performance metrics of the LLM judge.'",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the false premise (figure shows evaluation results) is clear from evidence. However, the generated question directly asks for performance metrics, making the false premise obvious. Solvers easily reject it because they directly look for metrics and find none. Revision guidance: Rephrase the question to be less direct, e.g., 'Based on the data shown in Table 6, what can you conclude about the LLM judge's performance on the grounding task?' This implies the table contains performance data without explicitly asking for metrics. Alternatively, ask about specific elements like 'What is the meaning of the values listed in the rightmost column of Table 6?' if the table structure suggests columns. Ensure the false premise is subtly embedded."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly implies that Table 6 contains evaluation results and accuracy scores, which contradicts the fact that it only shows a prompt template. This tests the false premise target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0001",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0064",
+      "source_challenge_plan_id": "CHP_0064",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Does Table 5 list all the prompts that were used in the dataset generation pipeline, or are these just representative examples? Please base your answer on the content of the table.",
+      "surface_intent": "The question appears to ask whether Table 5 is an exhaustive listing of all prompts used in the pipeline or merely illustrative.",
+      "target_kc_ids": [
+        "KC142"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [
+        "TAB_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_001",
+          "asset_type": "table",
+          "caption": "Table 5: Prompts used in the dataset generation pipeline.",
+          "summary": "This table presents the specific prompt templates used in a dataset generation pipeline for hallucination detection, categorized by type: Knowledge Segment Relevance Tagging, Chosen Responses, and Distorted Evidence-Based Responses.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC142"
+          ],
+          "evidence_bases": [
+            "Rows with Type 'Distorted Evidence-Based Responses' and prompts 'The Given context is UNRELATED… Make WRONG answer…' and 'UNRELATED Context… WRONG Answer'"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_001",
+              "content": "\\begin{tabular}{ll}\n\\hline\nType & Prompt \\\\\n\\hline\nKnowledge Segment Relevance Tagging & Please identify the given knowledge segment is related to the given question. Make answer just TRUE or FALSE. JUST answer the question. DO NOT say the explanation. \\\\\nKnowledge Segment Relevance Tagging & Provide your response as follows: Answer: (TRUE or FALSE) \\\\\nKnowledge Segment Relevance Tagging & Now here are the passage and question. \\\\\nKnowledge Segment Relevance Tagging & Knowledge segment: \\{knowledge segment\\} Question: \\{question\\} Answer: \\\\\nChosen Responses & Answer the question based on the context. You SHOULD use all the information in the context to answer the question. SHOULD NOT say that you answered based on the given context. Context: \\{context\\} Question: \\{question\\} Answer: \\\\\nDistorted Evidence-Based Responses & The Given context is UNRELATED to the question. Make WRONG answer to the question based on the UNRELATED context. SHOULD NOT say that you answered based on the given context. \\\\\nDistorted Evidence-Based Responses & UNRELATED Context: \\{context\\} Question: \\{question\\} WRONG Answer: \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 5: Prompts used in the dataset generation pipeline."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table may only show representative prompts for each category; other variations or steps could exist but are not displayed.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC142",
+          "text": "Asset TAB_001 (table): Table 5: Prompts used in the dataset generation pipeline.\nAsset summary: This table presents the specific prompt templates used in a dataset generation pipeline for hallucination detection, categorized by type: Knowledge Segment Relevance Tagging, Chosen Responses, and Distorted Evidence-Based Responses.\nEvidence basis: Rows with Type 'Distorted Evidence-Based Responses' and prompts 'The Given context is UNRELATED… Make WRONG answer…' and 'UNRELATED Context… WRONG Answer'\nSupported claim: The pipeline includes a 'Distorted Evidence-Based Responses' prompt that instructs the model to produce a wrong answer using unrelated context.",
+          "span_id": "TAB_001",
+          "asset_id": "TAB_001",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC142",
+          "text": "Asset evidence basis: Rows with Type 'Distorted Evidence-Based Responses' and prompts 'The Given context is UNRELATED… Make WRONG answer…' and 'UNRELATED Context… WRONG Answer'",
+          "asset_id": "TAB_001",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden metadata. It directly addresses the target false premise failure mode by asking whether the table is exhaustive or representative, and it can be answered from the table content. The ambiguity is resolved by the table's limited rows, making the intended false premise evaluable.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0002",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0038",
+      "source_challenge_plan_id": "CHP_0038",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Looking at Figure 3, particularly the panel with 30 passages, how does the accuracy of the baseline model compare to the proposed model as the position index increases beyond 5? Some have suggested that the baseline model actually performs better at later positions—is that observation supported by the data?",
+      "surface_intent": "Interpretation of comparative accuracy trends in Figure 3, specifically for the 30-passage condition.",
+      "target_kc_ids": [
+        "KC165"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M8"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0.",
+          "summary": "The figure consists of three line charts comparing the accuracy of a proposed model ('Ours') against a baseline ('Llama-3-8B-Inst') under the 'Lost in the Middle' setting. Each chart corresponds to a different number of total passages (10, 20, and 30). The x-axis represents the position index of the correct answer within the context, while the y-axis represents accuracy. In all three scenarios, the 'Ours' model consistently outperforms the baseline, although both models show a decline in accuracy as the answer's position moves further back in the sequence.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC165"
+          ],
+          "evidence_bases": [
+            "In Panel 3, the blue line drops sharply to ~60% and stays flat, while the green line stays around ~66%."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_144_142_411_379.jpg",
+              "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_442_141_712_392.jpg",
+              "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_742_141_1009_391.jpg",
+              "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The blue line is consistently below the green line in all panels, indicating lower accuracy.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC165",
+          "text": "Asset FIG_004 (figure): Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0.\nAsset summary: The figure consists of three line charts comparing the accuracy of a proposed model ('Ours') against a baseline ('Llama-3-8B-Inst') under the 'Lost in the Middle' setting. Each chart corresponds to a different number of total passages (10, 20, and 30). The x-axis represents the position index of the correct answer within the context, while the y-axis represents accuracy. In all three scenarios, the 'Ours' model consistently outperforms the baseline, although both models show a decline in accuracy as the answer's position moves further back in the sequence.\nEvidence basis: In Panel 3, the blue line drops sharply to ~60% and stays flat, while the green line stays around ~66%.\nSupported claim: For 30 passages, the performance gap between 'Ours' and the baseline widens significantly after position index 5.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC165",
+          "text": "Asset evidence basis: In Panel 3, the blue line drops sharply to ~60% and stays flat, while the green line stays around ~66%.",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly targets the false premise that the baseline model performs better at later positions, which is the intended failure mode. It does not expose any hidden labels or metadata, and it can be answered from the evidence in Figure 3.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0003",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0047",
+      "source_challenge_plan_id": "CHP_0047",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 3, how does the baseline model's accuracy compare to the proposed model at later positions (e.g., near the end of the x-axis) across the different total passage counts?",
+      "surface_intent": "asking about the relative performance of baseline vs proposed model at later positions based on Figure 3",
+      "target_kc_ids": [
+        "KC166"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M8"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0.",
+          "summary": "The figure consists of three line charts comparing the accuracy of a proposed model ('Ours') against a baseline ('Llama-3-8B-Inst') under the 'Lost in the Middle' setting. Each chart corresponds to a different number of total passages (10, 20, and 30). The x-axis represents the position index of the correct answer within the context, while the y-axis represents accuracy. In all three scenarios, the 'Ours' model consistently outperforms the baseline, although both models show a decline in accuracy as the answer's position moves further back in the sequence.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC166"
+          ],
+          "evidence_bases": [
+            "The figure does not show error bars."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_144_142_411_379.jpg",
+              "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_442_141_712_392.jpg",
+              "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_742_141_1009_391.jpg",
+              "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The blue line is consistently below the green line in all panels, indicating lower accuracy.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC166",
+          "text": "Asset FIG_004 (figure): Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0.\nAsset summary: The figure consists of three line charts comparing the accuracy of a proposed model ('Ours') against a baseline ('Llama-3-8B-Inst') under the 'Lost in the Middle' setting. Each chart corresponds to a different number of total passages (10, 20, and 30). The x-axis represents the position index of the correct answer within the context, while the y-axis represents accuracy. In all three scenarios, the 'Ours' model consistently outperforms the baseline, although both models show a decline in accuracy as the answer's position moves further back in the sequence.\nEvidence basis: The figure does not show error bars.\nSupported claim: The figure does not provide error bars, so statistical significance cannot be visually determined.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC166",
+          "text": "Asset evidence basis: The figure does not show error bars.",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, can be answered from the figure, and is not ambiguous. It aligns with the challenge intent of testing interpretation of the figure, though it does not explicitly contain the false premise.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0070",
+      "source_challenge_plan_id": "CHP_0070",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Table 2 presents the Lynx Score on HaluBench. Given these results, would you say our model demonstrates superior question answering performance overall?",
+      "surface_intent": "Asking whether the model can be considered the best for question answering based on the reported table.",
+      "target_kc_ids": [
+        "KC162"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "TAB_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_004",
+          "asset_type": "table",
+          "caption": "Table 2: Experiment results of HaluBench. Bold text indicates superior performance in the same condition.",
+          "summary": "This table reports the Lynx Score on the HaluBench benchmark for two models: Llama-3-8B-Inst and Ours. Ours achieves a higher score (89.11) compared to Llama-3-8B-Inst (83.10).",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC162"
+          ],
+          "evidence_bases": [
+            "Limitations noted in asset explanation"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_004",
+              "content": "\\begin{tabular}{ll}\n\\hline\nModel & Lynx Score \\\\\n\\hline\nLlama-3-8B-Inst & 83.10 \\\\\nOurs & 89.11 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 2: Experiment results of HaluBench. Bold text indicates superior performance in the same condition."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table only reports Lynx Score on HaluBench, not overall QA performance. Other metrics or datasets are not considered.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC162",
+          "text": "Asset TAB_004 (table): Table 2: Experiment results of HaluBench. Bold text indicates superior performance in the same condition.\nAsset summary: This table reports the Lynx Score on the HaluBench benchmark for two models: Llama-3-8B-Inst and Ours. Ours achieves a higher score (89.11) compared to Llama-3-8B-Inst (83.10).\nEvidence basis: Limitations noted in asset explanation\nSupported claim: Only one metric (Lynx Score) and one dataset (HaluBench) are reported, limiting generalizability.",
+          "span_id": "TAB_004",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC162",
+          "text": "Asset evidence basis: Limitations noted in asset explanation",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about overall QA performance based on a table that only shows one metric on one dataset, aligning with the intended false premise failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0073",
+      "source_challenge_plan_id": "CHP_0073",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "List all the prompts shown in Table 5. Then, based solely on this table, determine how many times each prompt type (Knowledge Segment Relevance Tagging, Chosen Responses, Distorted Evidence-Based Responses) was applied and the order in which they were applied in the dataset generation pipeline.",
+      "surface_intent": "The question asks the solver to extract and use information from Table 5 to describe the pipeline steps, including usage counts and order.",
+      "target_kc_ids": [
+        "KC143"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [
+        "TAB_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_001",
+          "asset_type": "table",
+          "caption": "Table 5: Prompts used in the dataset generation pipeline.",
+          "summary": "This table presents the specific prompt templates used in a dataset generation pipeline for hallucination detection, categorized by type: Knowledge Segment Relevance Tagging, Chosen Responses, and Distorted Evidence-Based Responses.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC143"
+          ],
+          "evidence_bases": [
+            "Limitation section: 'The table does not indicate how many times each prompt type was applied or the exact pipeline order.'"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_001",
+              "content": "\\begin{tabular}{ll}\n\\hline\nType & Prompt \\\\\n\\hline\nKnowledge Segment Relevance Tagging & Please identify the given knowledge segment is related to the given question. Make answer just TRUE or FALSE. JUST answer the question. DO NOT say the explanation. \\\\\nKnowledge Segment Relevance Tagging & Provide your response as follows: Answer: (TRUE or FALSE) \\\\\nKnowledge Segment Relevance Tagging & Now here are the passage and question. \\\\\nKnowledge Segment Relevance Tagging & Knowledge segment: \\{knowledge segment\\} Question: \\{question\\} Answer: \\\\\nChosen Responses & Answer the question based on the context. You SHOULD use all the information in the context to answer the question. SHOULD NOT say that you answered based on the given context. Context: \\{context\\} Question: \\{question\\} Answer: \\\\\nDistorted Evidence-Based Responses & The Given context is UNRELATED to the question. Make WRONG answer to the question based on the UNRELATED context. SHOULD NOT say that you answered based on the given context. \\\\\nDistorted Evidence-Based Responses & UNRELATED Context: \\{context\\} Question: \\{question\\} WRONG Answer: \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 5: Prompts used in the dataset generation pipeline."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table may only show representative prompts for each category; other variations or steps could exist but are not displayed.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC143",
+          "text": "Asset TAB_001 (table): Table 5: Prompts used in the dataset generation pipeline.\nAsset summary: This table presents the specific prompt templates used in a dataset generation pipeline for hallucination detection, categorized by type: Knowledge Segment Relevance Tagging, Chosen Responses, and Distorted Evidence-Based Responses.\nEvidence basis: Limitation section: 'The table does not indicate how many times each prompt type was applied or the exact pipeline order.'\nSupported claim: The table does not indicate how many times each prompt type was applied or the exact pipeline order.",
+          "span_id": "TAB_001",
+          "asset_id": "TAB_001",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC143",
+          "text": "Asset evidence basis: Limitation section: 'The table does not indicate how many times each prompt type was applied or the exact pipeline order.'",
+          "asset_id": "TAB_001",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is not inherently too easy; the question directly asked about completeness, guiding solvers to reject the false premise. A more subtle question could better test the false premise. Revision guidance: Rewrite the question to avoid explicitly asking about completeness. Instead, ask the solver to list all prompts from Table 5 and then use the table to answer a related question about the pipeline, such as the number of prompt applications or the order. The false premise should be tested by whether the solver assumes the table is exhaustive without being prompted to question it."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose hidden metadata, and directly targets the false premise that the table provides prompt usage counts and order. It can be answered (or shown unanswerable) from the evidence, and ambiguity does not prevent judging the failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "thread_challenge_plans_path": "data/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/cache/questions/thread_challenge_plans.json",
+  "thread_challenge_plan_summary": {
+    "plan_count": 12,
+    "target": 24,
+    "per_thread_limit": 3,
+    "by_type": {
+      "thread_overclaim_challenge": 4,
+      "thread_premise_mutation_challenge": 4,
+      "thread_wrong_bridge_challenge": 4
+    },
+    "by_modality_pool": {
+      "text": 12
+    },
+    "skipped_thread_count": 0,
+    "skipped_threads": []
+  },
+  "thread_challenge_questions_raw_path": "data/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/cache/questions/thread_challenge_questions_raw.json",
+  "thread_challenge_questions_filtered_path": "data/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/cache/questions/thread_challenge_questions_filtered.json",
+  "thread_challenge_solver_trials_path": "data/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/cache/questions/thread_challenge_solver_trials.json",
+  "thread_challenge_filter_summary": {
+    "plan_pool_count": 12,
+    "target_count": 8,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 25,
+    "solver_trial_count": 23,
+    "filtered_count": 6,
+    "human_review_count": 4,
+    "rejected_count": 19,
+    "blacklisted_plan_count": 2,
+    "by_type": {
+      "thread_overclaim_challenge": 2,
+      "thread_premise_mutation_challenge": 3,
+      "thread_wrong_bridge_challenge": 1
+    },
+    "by_modality_pool": {
+      "text": 6
+    },
+    "stop_reason": "plan_pool_exhausted"
+  },
+  "thread_challenge_questions": [
+    {
+      "question_id": "TCQ_0001",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0012",
+      "source_challenge_plan_id": "TCP_0012",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "The ablation results show that the chosen synthetic data improves accuracy and reduces confirmation bias compared to the baseline. How does this confirm that the success of the method is primarily due to the data quality?",
+      "surface_intent": "Asks about the causal relationship between synthetic data quality and performance improvement, seemingly assuming a direct link.",
+      "target_kc_ids": [
+        "KC124",
+        "KC119"
+      ],
+      "target_edge_ids": [
+        "E192"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the ablation results indicating data quality, without linking to the conclusion.",
+        "evidence": "The answer should present the conclusion without yet referencing the data quality claim.",
+        "bridge": "The answer should use E192 to reason that high-quality synthetic data supports the approach, leading to the successful reduction of confirmation bias."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the ablation results indicating data quality, without linking to the conclusion.\n- We discussed this evidence: The answer should present the conclusion without yet referencing the data quality claim.\n- We connected them cautiously as follows: The answer should use E192 to reason that high-quality synthetic data supports the approach, leading to the successful reduction of confirmation bias.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M9",
+        "M10"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E192",
+          "kc_ids": [
+            "KC124",
+            "KC119"
+          ],
+          "text": "The improved accuracy and KF1 scores of Llama-3-8B-Inst (chosen), compared to Llama-3-8B-Inst, indicate that the chosen synthetic data enhances accuracy and reduces confirmation bias. In contrast, the lower accuracy and KF1 scores of Llama-3-8B-Inst (rejected) suggest that the rejected data increases confirmation bias and contains less reliable answers. These results highlight that the synthetic data we generated exhibit high quality in both its chosen and rejected subsets, supporting our approach to reducing confirmation bias."
+        },
+        {
+          "kc_id": "KC124",
+          "text": "The improved accuracy and KF1 scores of Llama-3-8B-Inst (chosen), compared to Llama-3-8B-Inst, indicate that the chosen synthetic data enhances accuracy and reduces confirmation bias. In contrast, the lower accuracy and KF1 scores of Llama-3-8B-Inst (rejected) suggest that the rejected data increases confirmation bias and contains less reliable answers. These results highlight that the synthetic data we generated exhibit high quality in both its chosen and rejected subsets, supporting our approach to reducing confirmation bias.",
+          "span_id": "S25",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC119",
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question aligns with the thread_premise_mutation challenge: it asks the model to link ablation results to the conclusion (data quality causing success), which is the trap. The question is natural, does not expose internal labels, and can be answered from the evidence. The target failure mode is clearly evaluable.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0005",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0006",
+      "source_challenge_plan_id": "TCP_0006",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Given the earlier premise that the model's learning behavior was inferred from the ablation study, can you explain how the model's training to mitigate confirmation bias by specifically avoiding partial evidence contributes to the high KF1 scores observed in the Single and Multiple categories?",
+      "surface_intent": "Ask the model to connect the model's mitigation of confirmation bias via avoiding partial evidence to the quantitative KF1 results.",
+      "target_kc_ids": [
+        "KC116",
+        "KC111",
+        "KC119"
+      ],
+      "target_edge_ids": [
+        "E76",
+        "E82"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the model's learning behavior as inferred from the ablation study, but not yet mention specific quantitative results.",
+        "evidence": "The answer should provide the quantitative evidence without connecting back to the analysis claim yet.",
+        "bridge": "The answer should use E76 to link the analysis to the KF1 evidence, and E82 to link the evidence to the conclusion, forming a chain: the model learns to use correct knowledge (analysis) which leads to high KF1 (evidence), supporting the reduction of hallucination (conclusion)."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the model's learning behavior as inferred from the ablation study, but not yet mention specific quantitative results.\n- We discussed this evidence: The answer should provide the quantitative evidence without connecting back to the analysis claim yet.\n- We connected them cautiously as follows: The answer should use E76 to link the analysis to the KF1 evidence, and E82 to link the evidence to the conclusion, forming a chain: the model learns to use correct knowledge (analysis) which leads to high KF1 (evidence), supporting the reduction of hallucination (conclusion).\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M8",
+        "M7",
+        "M10"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E76",
+          "kc_ids": [
+            "KC116",
+            "KC111"
+          ],
+          "text": "the Single category, where only one passage is relevant, our model achieves an accuracy of 94.20 and a KF1 score of 54.52, significantly higher than the baseline's 86.80 accuracy and 28.04 KF1. For the Multiple category, which involves synthesizing information from multiple passages, our model achieves 73.00 accuracy and a KF1 of 55.99, compared to the baseline's 63.60 accuracy and 32.49 KF1. These results suggest that, even though we trained the model to mitigate confirmation bias, especially to avoid using partial evidence in the given context, it primarily learned to effectively utilize the correct knowledge segment when present."
+        },
+        {
+          "edge_id": "E82",
+          "kc_ids": [
+            "KC111",
+            "KC119"
+          ],
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix."
+        },
+        {
+          "kc_id": "KC116",
+          "text": "the Single category, where only one passage is relevant, our model achieves an accuracy of 94.20 and a KF1 score of 54.52, significantly higher than the baseline's 86.80 accuracy and 28.04 KF1. For the Multiple category, which involves synthesizing information from multiple passages, our model achieves 73.00 accuracy and a KF1 of 55.99, compared to the baseline's 63.60 accuracy and 32.49 KF1. These results suggest that, even though we trained the model to mitigate confirmation bias, especially to avoid using partial evidence in the given context, it primarily learned to effectively utilize the correct knowledge segment when present.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC111",
+          "text": "the Single category, where only one passage is relevant, our model achieves an accuracy of 94.20 and a KF1 score of 54.52, significantly higher than the baseline's 86.80 accuracy and 28.04 KF1. For the Multiple category, which involves synthesizing information from multiple passages, our model achieves 73.00 accuracy and a KF1 of 55.99, compared to the baseline's 63.60 accuracy and 32.49 KF1. These results suggest that, even though we trained the model to mitigate confirmation bias, especially to avoid using partial evidence in the given context, it primarily learned to effectively utilize the correct knowledge segment when present.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC119",
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden metadata. It follows the challenge plan's intended failure mode by mutating the premise's constraint against mentioning quantitative results, asking for an explanation that links training to KF1 scores. The question can be answered from the provided evidence and is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0011",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0008",
+      "source_challenge_plan_id": "TCP_0008",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given the results for the Multiple category, can we conclude that the model effectively mitigates confirmation bias in complex multi-passage tasks?",
+      "surface_intent": "The question appears to ask whether the model's performance on the Multiple category implies effective mitigation of confirmation bias in complex multi-passage tasks.",
+      "target_kc_ids": [
+        "KC116",
+        "KC113",
+        "KC119"
+      ],
+      "target_edge_ids": [
+        "E78",
+        "E84"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "Same as RT2_STEP1, establishing the premise.",
+        "evidence": "The answer should provide the quantitative evidence for the Multiple category without connecting to the analysis.",
+        "bridge": "The answer should use E78 to link analysis to the Multiple-category evidence, and E84 to link that evidence to the conclusion, showing that the model's behavior in multi-passage settings supports the overall reduction."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: Same as RT2_STEP1, establishing the premise.\n- We discussed this evidence: The answer should provide the quantitative evidence for the Multiple category without connecting to the analysis.\n- We connected them cautiously as follows: The answer should use E78 to link analysis to the Multiple-category evidence, and E84 to link that evidence to the conclusion, showing that the model's behavior in multi-passage settings supports the overall reduction.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M8",
+        "M7",
+        "M10"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E78",
+          "kc_ids": [
+            "KC116",
+            "KC113"
+          ],
+          "text": "the Single category, where only one passage is relevant, our model achieves an accuracy of 94.20 and a KF1 score of 54.52, significantly higher than the baseline's 86.80 accuracy and 28.04 KF1. For the Multiple category, which involves synthesizing information from multiple passages, our model achieves 73.00 accuracy and a KF1 of 55.99, compared to the baseline's 63.60 accuracy and 32.49 KF1. These results suggest that, even though we trained the model to mitigate confirmation bias, especially to avoid using partial evidence in the given context, it primarily learned to effectively utilize the correct knowledge segment when present."
+        },
+        {
+          "edge_id": "E84",
+          "kc_ids": [
+            "KC113",
+            "KC119"
+          ],
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix."
+        },
+        {
+          "kc_id": "KC116",
+          "text": "the Single category, where only one passage is relevant, our model achieves an accuracy of 94.20 and a KF1 score of 54.52, significantly higher than the baseline's 86.80 accuracy and 28.04 KF1. For the Multiple category, which involves synthesizing information from multiple passages, our model achieves 73.00 accuracy and a KF1 of 55.99, compared to the baseline's 63.60 accuracy and 32.49 KF1. These results suggest that, even though we trained the model to mitigate confirmation bias, especially to avoid using partial evidence in the given context, it primarily learned to effectively utilize the correct knowledge segment when present.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC113",
+          "text": "the Single category, where only one passage is relevant, our model achieves an accuracy of 94.20 and a KF1 score of 54.52, significantly higher than the baseline's 86.80 accuracy and 28.04 KF1. For the Multiple category, which involves synthesizing information from multiple passages, our model achieves 73.00 accuracy and a KF1 of 55.99, compared to the baseline's 63.60 accuracy and 32.49 KF1. These results suggest that, even though we trained the model to mitigate confirmation bias, especially to avoid using partial evidence in the given context, it primarily learned to effectively utilize the correct knowledge segment when present.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC119",
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: All solver answers correctly rejected the overgeneralization, indicating the question's trap was too obvious. Revision guidance: To make the question harder, avoid directly asking about 'all' scenarios. Instead, ask about a specific scenario that might seem to support a broader claim, e.g., 'Given the results for the Multiple category, can we conclude that the model effectively mitigates confirmation bias in complex multi-passage tasks?' or probe a more nuanced implication that the evidence doesn't fully support. Ensure the question doesn't explicitly use absolute terms like 'all' or 'eliminate,' which make the overclaim overt."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose internal labels, and asks about a conclusion that could be overclaimed, aligning with the target failure mode. It is answerable from the paper evidence provided in the plan.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0015",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0003",
+      "source_challenge_plan_id": "TCP_0003",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Considering the experimental results you described earlier, what is the primary mechanism behind the model's higher KF1 scores in the Single category? Does it indicate that the model is simply better at selecting the correct passage, or does it specifically show a reduction in confirmation bias? Explain how the data supports your answer.",
+      "surface_intent": "To evaluate the model's ability to interpret experimental results and identify the underlying mechanism for performance improvement.",
+      "target_kc_ids": [
+        "KC111",
+        "KC119"
+      ],
+      "target_edge_ids": [
+        "E82"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the experimental result, including the comparison with baseline, but not yet connect to the conclusion.",
+        "evidence": "The answer should present the conclusion, possibly citing the broader experimental results, but not yet link to the specific KF1 result.",
+        "bridge": "The answer should use the verified edge E82 to reason that the model's higher KF1 in the Single category supports the conclusion that the model reduces hallucination related to confirmation bias."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the experimental result, including the comparison with baseline, but not yet connect to the conclusion.\n- We discussed this evidence: The answer should present the conclusion, possibly citing the broader experimental results, but not yet link to the specific KF1 result.\n- We connected them cautiously as follows: The answer should use the verified edge E82 to reason that the model's higher KF1 in the Single category supports the conclusion that the model reduces hallucination related to confirmation bias.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M7",
+        "M10"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E82",
+          "kc_ids": [
+            "KC111",
+            "KC119"
+          ],
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix."
+        },
+        {
+          "kc_id": "KC111",
+          "text": "the Single category, where only one passage is relevant, our model achieves an accuracy of 94.20 and a KF1 score of 54.52, significantly higher than the baseline's 86.80 accuracy and 28.04 KF1. For the Multiple category, which involves synthesizing information from multiple passages, our model achieves 73.00 accuracy and a KF1 of 55.99, compared to the baseline's 63.60 accuracy and 32.49 KF1. These results suggest that, even though we trained the model to mitigate confirmation bias, especially to avoid using partial evidence in the given context, it primarily learned to effectively utilize the correct knowledge segment when present.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC119",
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question effectively tests the thread_premise_mutation by asking for a mechanism interpretation, which deviates from the established premise of only describing results without connection to conclusion. The question is natural and does not expose metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0018",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0002",
+      "source_challenge_plan_id": "TCP_0002",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given that the model achieved higher KF1 in both Single and Multiple categories, can we conclude that it reduces hallucination related to confirmation bias in general?",
+      "surface_intent": "Asking whether the experimental results justify a general conclusion about the model's effectiveness in reducing confirmation bias hallucination.",
+      "target_kc_ids": [
+        "KC111",
+        "KC119"
+      ],
+      "target_edge_ids": [
+        "E82"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the experimental result, including the comparison with baseline, but not yet connect to the conclusion.",
+        "evidence": "The answer should present the conclusion, possibly citing the broader experimental results, but not yet link to the specific KF1 result.",
+        "bridge": "The answer should use the verified edge E82 to reason that the model's higher KF1 in the Single category supports the conclusion that the model reduces hallucination related to confirmation bias."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the experimental result, including the comparison with baseline, but not yet connect to the conclusion.\n- We discussed this evidence: The answer should present the conclusion, possibly citing the broader experimental results, but not yet link to the specific KF1 result.\n- We connected them cautiously as follows: The answer should use the verified edge E82 to reason that the model's higher KF1 in the Single category supports the conclusion that the model reduces hallucination related to confirmation bias.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M7",
+        "M10"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E82",
+          "kc_ids": [
+            "KC111",
+            "KC119"
+          ],
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix."
+        },
+        {
+          "kc_id": "KC111",
+          "text": "the Single category, where only one passage is relevant, our model achieves an accuracy of 94.20 and a KF1 score of 54.52, significantly higher than the baseline's 86.80 accuracy and 28.04 KF1. For the Multiple category, which involves synthesizing information from multiple passages, our model achieves 73.00 accuracy and a KF1 of 55.99, compared to the baseline's 63.60 accuracy and 32.49 KF1. These results suggest that, even though we trained the model to mitigate confirmation bias, especially to avoid using partial evidence in the given context, it primarily learned to effectively utilize the correct knowledge segment when present.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC119",
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The question explicitly asked about 'various information-seeking tasks', making it easy for models to recognize the overgeneralization and refuse. Revision guidance: Rephrase the question to avoid explicitly mentioning 'various tasks'. Instead, ask about a conclusion that seems supported but subtly overreaches, e.g., 'Given the KF1 improvements, can we conclude that the model effectively reduces hallucination related to confirmation bias in information-seeking contexts?' without specifying tasks, or ask about a specific claim that might be overextended."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks for a general conclusion from specific experimental results, which aligns with the target overclaim trap in the challenge plan. It does not expose any metadata and can be answered using the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0025",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0010",
+      "source_challenge_plan_id": "TCP_0010",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "Given that the model successfully reduced confirmation bias, does this imply that the synthetic data used must be of high quality, as indicated by the improved accuracy and KF1 scores?",
+      "surface_intent": "Asking whether the successful reduction of confirmation bias necessarily indicates high synthetic data quality, potentially reversing the causal direction.",
+      "target_kc_ids": [
+        "KC124",
+        "KC119"
+      ],
+      "target_edge_ids": [
+        "E192"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe the ablation results indicating data quality, without linking to the conclusion.",
+        "evidence": "The answer should present the conclusion without yet referencing the data quality claim.",
+        "bridge": "The answer should use E192 to reason that high-quality synthetic data supports the approach, leading to the successful reduction of confirmation bias."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe the ablation results indicating data quality, without linking to the conclusion.\n- We discussed this evidence: The answer should present the conclusion without yet referencing the data quality claim.\n- We connected them cautiously as follows: The answer should use E192 to reason that high-quality synthetic data supports the approach, leading to the successful reduction of confirmation bias.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M9",
+        "M10"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E192",
+          "kc_ids": [
+            "KC124",
+            "KC119"
+          ],
+          "text": "The improved accuracy and KF1 scores of Llama-3-8B-Inst (chosen), compared to Llama-3-8B-Inst, indicate that the chosen synthetic data enhances accuracy and reduces confirmation bias. In contrast, the lower accuracy and KF1 scores of Llama-3-8B-Inst (rejected) suggest that the rejected data increases confirmation bias and contains less reliable answers. These results highlight that the synthetic data we generated exhibit high quality in both its chosen and rejected subsets, supporting our approach to reducing confirmation bias."
+        },
+        {
+          "kc_id": "KC124",
+          "text": "The improved accuracy and KF1 scores of Llama-3-8B-Inst (chosen), compared to Llama-3-8B-Inst, indicate that the chosen synthetic data enhances accuracy and reduces confirmation bias. In contrast, the lower accuracy and KF1 scores of Llama-3-8B-Inst (rejected) suggest that the rejected data increases confirmation bias and contains less reliable answers. These results highlight that the synthetic data we generated exhibit high quality in both its chosen and rejected subsets, supporting our approach to reducing confirmation bias.",
+          "span_id": "S25",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC119",
+          "text": "Overall, these results show that our model successfully reduces hallucination related to confirmation bias, both in straightforward and more complex scenarios, by incorporating comprehensive evidence during response generation. We show model outputs in Appendix.",
+          "span_id": "S23",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally reverses the causal direction of the established bridge, matching the intended trap for the thread_wrong_bridge challenge. It is answerable from the evidence and does not expose any internal labels.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "challenge_scheduler_config": {
+    "macro_level_enabled": true,
+    "thread_level_enabled": true,
+    "thread_challenge_enabled": true
+  },
+  "macro_main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "macro_main_question",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC125",
+        "KC14",
+        "KC11"
+      ],
+      "question_text": "According to the paper, what problem do large language models using retrieval-augmented generation face, and how does this problem contribute to hallucinations in question answering?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC125",
+          "KC14"
+        ],
+        "optional_cover": [
+          "KC11"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "macro_main_question",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC26",
+        "KC47"
+      ],
+      "question_text": "What are the limitations of existing methods for mitigating hallucinations, specifically regarding long-context understanding in LLMs and the construction of preference datasets without a reward model?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC26",
+          "KC47"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "macro_main_question",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC16",
+        "KC18",
+        "KC2"
+      ],
+      "question_text": "What approach does the paper propose to mitigate confirmation bias in LLMs, particularly in long multi-passage question-answering tasks? Describe the main components and their roles.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC16",
+          "KC18"
+        ],
+        "optional_cover": [
+          "KC2"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "macro_main_question",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC54",
+        "KC28",
+        "KC27"
+      ],
+      "question_text": "What are the three stages of the dataset generation pipeline, and how are the chosen responses generated in this pipeline?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC54",
+          "KC28"
+        ],
+        "optional_cover": [
+          "KC27"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "macro_main_question",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC17",
+        "KC72",
+        "KC43"
+      ],
+      "question_text": "How does the DPO training method incorporate knowledge segments as conditioning variables to reduce confirmation bias?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC17",
+          "KC72"
+        ],
+        "optional_cover": [
+          "KC43"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "macro_main_question",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC79",
+        "KC87",
+        "KC92",
+        "KC93"
+      ],
+      "question_text": "Describe the experimental setup, including the passage retrieval variation based on Liu et al. (2024) and the derived settings (Single and Multiple scenarios) used to investigate hallucination patterns.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC79",
+          "KC87"
+        ],
+        "optional_cover": [
+          "KC92",
+          "KC93"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "macro_main_question",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC114",
+        "KC115",
+        "KC108",
+        "KC103",
+        "KC111",
+        "KC113"
+      ],
+      "question_text": "What are the key findings from the main results regarding accuracy, KF1 scores, and LLM-as-Judge evaluations for both single and multiple passage settings?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC114",
+          "KC115"
+        ],
+        "optional_cover": [
+          "KC108",
+          "KC103",
+          "KC111",
+          "KC113"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "macro_main_question",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC106",
+        "KC116"
+      ],
+      "question_text": "How does the model's performance in terms of LLM-as-Judge score gap between the model and baseline change from single to multiple relevant passage settings, and what do the accuracy and KF1 scores in both settings suggest about the model's primary strategy for mitigating confirmation bias?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC106",
+          "KC116"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M9",
+      "question_type": "macro_main_question",
+      "macro_id": "M9",
+      "target_kc_ids": [
+        "KC120",
+        "KC124"
+      ],
+      "question_text": "How was the quality of synthetic data assessed via fine-tuning, and what does the comparison between chosen-only and rejected-only fine-tuning reveal about the data quality?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC120",
+          "KC124"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M10",
+      "question_type": "macro_main_question",
+      "macro_id": "M10",
+      "target_kc_ids": [
+        "KC119",
+        "KC129"
+      ],
+      "question_text": "What does the paper conclude about the effectiveness of the proposed method in reducing hallucination due to confirmation bias, and what limitation is acknowledged regarding the DPO dataset generation?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC119",
+          "KC129"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "thread_question_seeds": [
+    {
+      "question_id": "Q_RT1_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC111"
+      ],
+      "question_goal": "Ask the model to explain the claim that in the Single category the model achieves a KF1 score of 54.52, higher than baseline.",
+      "trigger_condition": {
+        "macro_reached": "M7"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M10",
+      "target_kc_ids": [
+        "KC119"
+      ],
+      "question_goal": "Ask the model to explain the overarching claim that the model successfully reduces hallucination related to confirmation bias.",
+      "trigger_condition": {
+        "macro_reached": "M10"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M10",
+      "target_kc_ids": [
+        "KC111",
+        "KC119"
+      ],
+      "question_goal": "Ask the model to connect the specific KF1 result from the Single category to the broader conclusion about reducing confirmation bias.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC111",
+          "KC119"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC111",
+        "KC119"
+      ],
+      "question_goal": "Check whether the model preserves the same connection between the KF1 result and the conclusion at review time.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M8",
+      "target_kc_ids": [
+        "KC116"
+      ],
+      "question_goal": "Ask the model to explain the analysis claim that the model primarily learned to effectively utilize the correct knowledge segment when present.",
+      "trigger_condition": {
+        "macro_reached": "M8"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC111"
+      ],
+      "question_goal": "Ask the model to present the evidence that in the Single category the model achieves a KF1 score of 54.52.",
+      "trigger_condition": {
+        "macro_reached": "M7"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M10",
+      "target_kc_ids": [
+        "KC116",
+        "KC111",
+        "KC119"
+      ],
+      "question_goal": "Ask the model to connect the analysis claim and the KF1 evidence to the conclusion that the model reduces hallucination.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC116",
+          "KC111",
+          "KC119"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC116",
+        "KC119"
+      ],
+      "question_goal": "Check whether the model maintains the same chain of reasoning when asked again about the relationship.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M8",
+      "target_kc_ids": [
+        "KC116"
+      ],
+      "question_goal": "Ask the model to explain the analysis claim about the model's learning focus.",
+      "trigger_condition": {
+        "macro_reached": "M8"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC113"
+      ],
+      "question_goal": "Ask the model to present the evidence that in the Multiple category the model achieves a KF1 score of 55.99.",
+      "trigger_condition": {
+        "macro_reached": "M7"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M10",
+      "target_kc_ids": [
+        "KC116",
+        "KC113",
+        "KC119"
+      ],
+      "question_goal": "Ask the model to connect the analysis claim and the Multiple-category KF1 evidence to the conclusion about hallucination reduction.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC116",
+          "KC113",
+          "KC119"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC116",
+        "KC119"
+      ],
+      "question_goal": "Check whether the model remains consistent in the reasoning chain.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M9",
+      "target_kc_ids": [
+        "KC124"
+      ],
+      "question_goal": "Ask the model to explain the claim that the synthetic data is of high quality in both chosen and rejected subsets.",
+      "trigger_condition": {
+        "macro_reached": "M9"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M10",
+      "target_kc_ids": [
+        "KC119"
+      ],
+      "question_goal": "Ask the model to explain the conclusion that the model reduces hallucination related to confirmation bias.",
+      "trigger_condition": {
+        "macro_reached": "M10"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M10",
+      "target_kc_ids": [
+        "KC124",
+        "KC119"
+      ],
+      "question_goal": "Ask the model to connect the synthetic data quality claim to the conclusion about hallucination reduction.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC124",
+          "KC119"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC124",
+        "KC119"
+      ],
+      "question_goal": "Check whether the model maintains the same connection between data quality and conclusion.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "review_question_seeds": [],
+  "main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "main",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC125",
+        "KC14",
+        "KC11"
+      ],
+      "question_text": "According to the paper, what problem do large language models using retrieval-augmented generation face, and how does this problem contribute to hallucinations in question answering?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC125",
+          "KC14"
+        ],
+        "optional_cover": [
+          "KC11"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "main",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC26",
+        "KC47"
+      ],
+      "question_text": "What are the limitations of existing methods for mitigating hallucinations, specifically regarding long-context understanding in LLMs and the construction of preference datasets without a reward model?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC26",
+          "KC47"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "main",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC16",
+        "KC18",
+        "KC2"
+      ],
+      "question_text": "What approach does the paper propose to mitigate confirmation bias in LLMs, particularly in long multi-passage question-answering tasks? Describe the main components and their roles.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC16",
+          "KC18"
+        ],
+        "optional_cover": [
+          "KC2"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "main",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC54",
+        "KC28",
+        "KC27"
+      ],
+      "question_text": "What are the three stages of the dataset generation pipeline, and how are the chosen responses generated in this pipeline?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC54",
+          "KC28"
+        ],
+        "optional_cover": [
+          "KC27"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "main",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC17",
+        "KC72",
+        "KC43"
+      ],
+      "question_text": "How does the DPO training method incorporate knowledge segments as conditioning variables to reduce confirmation bias?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC17",
+          "KC72"
+        ],
+        "optional_cover": [
+          "KC43"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "main",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC79",
+        "KC87",
+        "KC92",
+        "KC93"
+      ],
+      "question_text": "Describe the experimental setup, including the passage retrieval variation based on Liu et al. (2024) and the derived settings (Single and Multiple scenarios) used to investigate hallucination patterns.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC79",
+          "KC87"
+        ],
+        "optional_cover": [
+          "KC92",
+          "KC93"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "main",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC114",
+        "KC115",
+        "KC108",
+        "KC103",
+        "KC111",
+        "KC113"
+      ],
+      "question_text": "What are the key findings from the main results regarding accuracy, KF1 scores, and LLM-as-Judge evaluations for both single and multiple passage settings?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC114",
+          "KC115"
+        ],
+        "optional_cover": [
+          "KC108",
+          "KC103",
+          "KC111",
+          "KC113"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "main",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC106",
+        "KC116"
+      ],
+      "question_text": "How does the model's performance in terms of LLM-as-Judge score gap between the model and baseline change from single to multiple relevant passage settings, and what do the accuracy and KF1 scores in both settings suggest about the model's primary strategy for mitigating confirmation bias?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC106",
+          "KC116"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M9",
+      "question_type": "main",
+      "macro_id": "M9",
+      "target_kc_ids": [
+        "KC120",
+        "KC124"
+      ],
+      "question_text": "How was the quality of synthetic data assessed via fine-tuning, and what does the comparison between chosen-only and rejected-only fine-tuning reveal about the data quality?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC120",
+          "KC124"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M10",
+      "question_type": "main",
+      "macro_id": "M10",
+      "target_kc_ids": [
+        "KC119",
+        "KC129"
+      ],
+      "question_text": "What does the paper conclude about the effectiveness of the proposed method in reducing hallucination due to confirmation bias, and what limitation is acknowledged regarding the DPO dataset generation?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC119",
+          "KC129"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "multi_hop_questions": [],
+  "reserved_followup_templates": []
+}

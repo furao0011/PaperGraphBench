@@ -1,0 +1,3126 @@
+{
+  "paper_id": "Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation",
+  "schema_version": "v1",
+  "challenge_plans_path": "data/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/cache/questions/challenge_plans.json",
+  "challenge_plan_summary": {
+    "plan_count": 76,
+    "by_type": {
+      "false_premise_challenge": 51,
+      "overclaim_challenge": 12,
+      "wrong_relation_challenge": 13
+    },
+    "by_modality_pool": {
+      "multimodal": 40,
+      "text": 36
+    },
+    "text_plan_count": 36,
+    "multimodal_plan_count": 40,
+    "multimodal_plan_limit": 40
+  },
+  "challenge_questions_raw_path": "data/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/cache/questions/challenge_questions_raw.json",
+  "challenge_question_raw_summary": {
+    "raw_question_count": 57,
+    "by_type": {
+      "false_premise_challenge": 11,
+      "overclaim_challenge": 6,
+      "wrong_relation_challenge": 3
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    }
+  },
+  "challenge_questions_filtered_path": "data/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/cache/questions/challenge_questions_filtered.json",
+  "challenge_solver_trials_path": "data/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/cache/questions/challenge_solver_trials.json",
+  "challenge_filter_summary": {
+    "plan_pool_count": 76,
+    "target_count": 20,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 57,
+    "solver_trial_count": 53,
+    "filtered_count": 20,
+    "human_review_count": 9,
+    "rejected_count": 37,
+    "blacklisted_plan_count": 10,
+    "by_type": {
+      "false_premise_challenge": 11,
+      "overclaim_challenge": 6,
+      "wrong_relation_challenge": 3
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    },
+    "stop_reason": {
+      "text": "target_reached",
+      "multimodal": {
+        "figure": "target_reached",
+        "remaining": "target_reached"
+      }
+    }
+  },
+  "challenge_questions": [
+    {
+      "question_id": "CHQ_0001",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0001",
+      "source_challenge_plan_id": "CHP_0001",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Given the paper's results on the CMHE-HD dataset, what can we say about ChatGPT's overall proficiency in hallucination detection relative to other models?",
+      "surface_intent": "asking for interpretation of model comparison and generalization",
+      "target_kc_ids": [
+        "KC105"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'hallucination_detection', 'dataset': 'CMHE-HD (Generated and Tampered subsets)', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC105",
+          "text": "In terms of both \"Generated\" and \"Tampered\" data, ChatGPT exhibits superior performance compared to the other two models, indicating its proficiency in detecting various types of hallucinations. Particularly in the Generated data, ChatGPT outperforms the other models by a significant margin, demonstrating its unmatched ability to identify knowledgeable hallucinations. Among the three models, Qwen achieves the highest performance on the \"Correct\" data, followed by Baichuan in second place, and ChatGPT ranks third. All three models outperform the random model by a considerable margin. By comparing the performances of the \"Generated\", \"Tampered\", and \"Correct\" data, we can speculate that the Qwen consistently rejects hallucinations, while ChatGPT tends to try and identify them even when they don't exist.",
+          "span_id": "S17",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about overall proficiency, inviting potential overclaim beyond the limited scope described in the plan, making it suitable for the overclaim challenge.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0003",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0028",
+      "source_challenge_plan_id": "CHP_0028",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the findings of the study, what can be concluded about the performance of LLMs in real-world clinical environments where patients often provide a lot of irrelevant information?",
+      "surface_intent": "The question asks about the practical implications of the paper's findings regarding LLM performance in noisy settings.",
+      "target_kc_ids": [
+        "KC129"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC129",
+          "text": "Based on the aforementioned experimental results and analysis, several significant findings have been identified on the evaluation of hallucinations. Finding 1: LLMs typically detect hallucinations by evaluating the logical coherence of the sentence context. However, their ability to identify false information, such as manipulated drug names and treatment plans, is limited. Finding 2: LLMs exhibit strong performance in environments devoid of interfering information. However, their performance tends to deteriorate in noisy environments, such as when patients provide a substantial amount of invalid information. Finding 3: LLMs that possess a deeper understanding of medical concepts exhibit improved performance in noisy environments.",
+          "span_id": "S20",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is sound; the question explicitly asked about breadth, prompting cautious answers. Revision guidance: Rephrase the question to avoid directly probing the scope. For example, ask about the practical application of the finding without mentioning 'broadly'. Alternatively, embed the overclaim as a distractor in a multiple-choice question."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose hidden metadata, clearly targets the overclaim failure mode by asking about 'real-world clinical environments' which goes beyond the study's limited scope, and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0032",
+      "source_challenge_plan_id": "CHP_0032",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "The paper discusses both multiple-choice question approaches for hallucination evaluation and the development of specialized benchmarks for healthcare. How are these two aspects connected?",
+      "surface_intent": "Ask about the logical connection between two key concepts in the paper",
+      "target_kc_ids": [
+        "KC42",
+        "KC11"
+      ],
+      "target_edge_ids": [
+        "E122"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E122",
+          "kc_ids": [
+            "KC42",
+            "KC11"
+          ],
+          "text": "purpose. To assess the model's ability to differentiate between factual and hallucinatory statements, multiple-choice questions are frequently employed. For example, HaluEval (Li et al., 2023) employs ChatGPT to generate a substantial amount of high-quality hallucinations and then asks the model to determine whether a statement contains hallucinatory information or not. On the other hand, FACTOR (Muhlgay et al., 2023) requires the LLM to assign higher likelihood scores to factual statements compared to non-factual statements. However, the main difficulty in hallucination evaluation is lack of the intact evaluation system, since the confidence obtained by ROUGE and BLUE is not a direct evaluation of hallucinations."
+        },
+        {
+          "kc_id": "KC42",
+          "text": "purpose. To assess the model's ability to differentiate between factual and hallucinatory statements, multiple-choice questions are frequently employed. For example, HaluEval (Li et al., 2023) employs ChatGPT to generate a substantial amount of high-quality hallucinations and then asks the model to determine whether a statement contains hallucinatory information or not. On the other hand, FACTOR (Muhlgay et al., 2023) requires the LLM to assign higher likelihood scores to factual statements compared to non-factual statements. However, the main difficulty in hallucination evaluation is lack of the intact evaluation system, since the confidence obtained by ROUGE and BLUE is not a direct evaluation of hallucinations.",
+          "span_id": "S6",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC11",
+          "text": "In recent years, Large Language Models (LLMs) have been widely used in various domains, including economics and finance (Wu et al., 2023), law (Cui et al., 2023), e-health (Zhang et al., 2023a), among others. Despite their extensive applications, some research (Rawte et al., 2023; Ji et al., 2023) indicates that LLMs are prone to generating hallucinations, a phenomenon that poses significant safety risks in practical implementation. This issue is particularly critical in healthcare settings, where hallucinatory results of LLM could lead to serious safety hazards, potentially resulting in fatal consequences (Qiu et al., 2023). Traditional evaluation metrics, such as BLEU and ROUGE, are inadequate to detect the presence of hallucinations (Zhang et al., 2023c), highlighting the immediate need for the development of specialized benchmarks. These new benchmarks should aim to accurately assess the safety of LLMs, with a focus on their application within the healthcare sector.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the connection between two key aspects, directly targeting the intended relation (KC42 motivates KC11). It does not expose hidden labels or metadata, and can be answered from the provided evidence. The question is clear and unambiguous for judging the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0007",
+      "source_challenge_plan_id": "CHP_0007",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the creation of the Chinese Medical Hallucination Evaluation Dataset (CMHE), what conclusions can we draw about LLMs' ability to resist snowball hallucination?",
+      "surface_intent": "The question appears to ask about the findings from the CMHE dataset regarding LLMs' resistance to snowball hallucination.",
+      "target_kc_ids": [
+        "KC13"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'CMHE', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC13",
+          "text": "(LLMs) can resist snowball hallucination, we created a Chinese Medical Hallucination Evaluation Dataset (CMHE) with 42,198 samples. This dataset aims to assess LLMs' ability to identify misinformation, perform accurate reasoning in noisy environments, and minimize the generation of erroneous content. The dataset encompasses 2,000 questions related to hallucination detection, 1,622 questions for diagnosis, and 38,576 questions for concept explanation, allowing a comprehensive assessment of each of the aforementioned aspects. In contrast to previous investigations, our dataset does not offer predetermined response options for the model to select from. Instead, we simulate conversational scenarios by prompting the model to generate responses freely.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not reveal hidden metadata. It aligns with the intended target failure mode (overclaim) by asking for conclusions about LLMs' ability based on CMHE creation, which may trigger overgeneralization beyond the reported scope. The evidence supports answering, and ambiguity does not prevent judgment.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0035",
+      "source_challenge_plan_id": "CHP_0035",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Based on the paper, what is the connection between the Chinese Medical Hallucination Evaluation Dataset (CMHE) and the CMHE benchmark comprising CMHE-HD, CMHE-DD, and CMHE-CE?",
+      "surface_intent": "To understand the relationship between the CMHE dataset and the CMHE benchmark.",
+      "target_kc_ids": [
+        "KC13",
+        "KC95"
+      ],
+      "target_edge_ids": [
+        "E130"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E130",
+          "kc_ids": [
+            "KC13",
+            "KC95"
+          ],
+          "text": "(LLMs) can resist snowball hallucination, we created a Chinese Medical Hallucination Evaluation Dataset (CMHE) with 42,198 samples. This dataset aims to assess LLMs' ability to identify misinformation, perform accurate reasoning in noisy environments, and minimize the generation of erroneous content. The dataset encompasses 2,000 questions related to hallucination detection, 1,622 questions for diagnosis, and 38,576 questions for concept explanation, allowing a comprehensive assessment of each of the aforementioned aspects. In contrast to previous investigations, our dataset does not offer predetermined response options for the model to select from. Instead, we simulate conversational scenarios by prompting the model to generate responses freely."
+        },
+        {
+          "kc_id": "KC13",
+          "text": "(LLMs) can resist snowball hallucination, we created a Chinese Medical Hallucination Evaluation Dataset (CMHE) with 42,198 samples. This dataset aims to assess LLMs' ability to identify misinformation, perform accurate reasoning in noisy environments, and minimize the generation of erroneous content. The dataset encompasses 2,000 questions related to hallucination detection, 1,622 questions for diagnosis, and 38,576 questions for concept explanation, allowing a comprehensive assessment of each of the aforementioned aspects. In contrast to previous investigations, our dataset does not offer predetermined response options for the model to select from. Instead, we simulate conversational scenarios by prompting the model to generate responses freely.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC95",
+          "text": "Our proposed CMHE benchmark comprises three individual datasets: CMHE-HD for hallucination detection, CMHE-DD for disease diagnosis, and CMHE-CE for concept explanation. We have performed calculations to determine the number of samples within each fine-grained subset of these datasets, and the resulting statistics are presented in",
+          "span_id": "S14",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks about the relation between CMHE and its benchmark, matching the plan's intended failure mode (wrong relation) and can be answered from evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0013",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0034",
+      "source_challenge_plan_id": "CHP_0034",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the paper's findings, what can be inferred about the impact of Chinese pre-training on the generation of fabricated medical terms in large language models?",
+      "surface_intent": "The question asks about the general impact of Chinese pre-training on LLMs' medical term generation.",
+      "target_kc_ids": [
+        "KC59"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'hallucination_detection', 'dataset': 'CMHE-HD', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC59",
+          "text": "Data Analysis Upon analyzing the samples produced by both strategies, we observed a distinct phenomenon. Llama2, hindered by its absence of\n\npre-training in Chinese, often generates fabricated medical terms. However, the content it produces maintains reasonable contextual logic. In contrast, samples from ChatGPT do not include any fabricated medical terms, but their contextual logic frequently contradicts itself. Consequently, we posit that these two types of hallucination samples complement each other and enhance the completeness of the evaluation of LLMs.",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's trap is not inherently obvious; the question was too direct, making the overgeneralization easy to spot. Revision guidance: Rephrase the question to be more subtle. Avoid explicitly asking about 'any LLM'. Instead, ask about the implications for medical hallucination detection in general, or ask about a different model without Chinese pre-training, requiring the solver to recall that the evidence only applies to Llama2."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "Question is natural, does not expose hidden metadata, follows the plan by testing the scope of the claim, and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0014",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0016",
+      "source_challenge_plan_id": "CHP_0016",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "According to the paper, what can we infer from the substantial decline in F1 score for level-1 classification in the Chat data regarding the model's ability to identify the correct organ?",
+      "surface_intent": "The question asks about the implications of a specific performance decline in the Chat data for the model's disease diagnosis capability.",
+      "target_kc_ids": [
+        "KC118"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'disease_diagnosis', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC118",
+          "text": "When comparing the overall performances of the \"Diagnose-chat\" and \"Diagnose-exam\" settings, a noticeable disparity becomes evident. The performances in the \"Chat\" setting are significantly inferior to those in the \"Exam\" setting. Furthermore, our analysis indicates that the F1 score experiences a substantial decline specifically in level-1 classification within the \"Chat\" data. This phenomenon implies that the model has incorrectly identified the organ in which the disease is present, which is usually unacceptable. Consequently, effectively mitigating the impact of redundant information is a major obstacle in improving the performance of language models for disease diagnosis.",
+          "span_id": "S18",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the inference from the F1 decline, aligning with the paper's reported claim without overgeneralizing or exposing hidden labels.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0022",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0029",
+      "source_challenge_plan_id": "CHP_0029",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "What role does the identification of hallucinations play in the development of the CMHE framework described in the paper?",
+      "surface_intent": "Asks about the relationship between the CMHE framework and hallucination identification.",
+      "target_kc_ids": [
+        "KC134",
+        "KC138"
+      ],
+      "target_edge_ids": [
+        "E85"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3",
+        "M8"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E85",
+          "kc_ids": [
+            "KC134",
+            "KC138"
+          ],
+          "text": "Hallucination evaluation is a major challenge for LLMs' application in the Chinese medical domain, especially snowballing hallucination problems. Most existing studies rely on automatic indicators and lack an intuitive evaluation of hallucinations. To appreciate LLM's ability on hallucination perception sufficiently, we need to decompose this problem into several aspects, e.g., identifying medical hallucinations, making accurate diagnoses in noisy conditions, providing plausible explanations, etc. CMHE specifically targets the assessment of comprehensive hallucinations in Chinese medical chat scenarios. This involves evaluating various processes that could potentially lead to hallucinations, such as errors in identification, reasoning, diagnosis, concept explanation, and exploitation. Our findings demonstrate that LLMs excel at detecting inconsistencies but struggle in noisy environments with redundant information. However, when LLMs possess a solid understanding of concepts, their performance can be greatly enhanced. In conclusion, researchers can easily locate the type of hallucinations and identify the lack of understanding in LLM through failures of CMHE, and CMHE can serve as"
+        },
+        {
+          "kc_id": "KC134",
+          "text": "Hallucination evaluation is a major challenge for LLMs' application in the Chinese medical domain, especially snowballing hallucination problems. Most existing studies rely on automatic indicators and lack an intuitive evaluation of hallucinations. To appreciate LLM's ability on hallucination perception sufficiently, we need to decompose this problem into several aspects, e.g., identifying medical hallucinations, making accurate diagnoses in noisy conditions, providing plausible explanations, etc. CMHE specifically targets the assessment of comprehensive hallucinations in Chinese medical chat scenarios. This involves evaluating various processes that could potentially lead to hallucinations, such as errors in identification, reasoning, diagnosis, concept explanation, and exploitation. Our findings demonstrate that LLMs excel at detecting inconsistencies but struggle in noisy environments with redundant information. However, when LLMs possess a solid understanding of concepts, their performance can be greatly enhanced. In conclusion, researchers can easily locate the type of hallucinations and identify the lack of understanding in LLM through failures of CMHE, and CMHE can serve as",
+          "span_id": "S21",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC138",
+          "text": "Hallucination evaluation is a major challenge for LLMs' application in the Chinese medical domain, especially snowballing hallucination problems. Most existing studies rely on automatic indicators and lack an intuitive evaluation of hallucinations. To appreciate LLM's ability on hallucination perception sufficiently, we need to decompose this problem into several aspects, e.g., identifying medical hallucinations, making accurate diagnoses in noisy conditions, providing plausible explanations, etc. CMHE specifically targets the assessment of comprehensive hallucinations in Chinese medical chat scenarios. This involves evaluating various processes that could potentially lead to hallucinations, such as errors in identification, reasoning, diagnosis, concept explanation, and exploitation. Our findings demonstrate that LLMs excel at detecting inconsistencies but struggle in noisy environments with redundant information. However, when LLMs possess a solid understanding of concepts, their performance can be greatly enhanced. In conclusion, researchers can easily locate the type of hallucinations and identify the lack of understanding in LLM through failures of CMHE, and CMHE can serve as",
+          "span_id": "S21",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and answerable from the evidence. It asks about the role of identification in CMHE, which relates to the supporting relation in the plan without exposing metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0027",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0010",
+      "source_challenge_plan_id": "CHP_0010",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "What does the study reveal about ChatGPT's ability to resist disturbances in medical diagnosis?",
+      "surface_intent": "Asks about ChatGPT's robustness in medical diagnosis based on the study's findings.",
+      "target_kc_ids": [
+        "KC115"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'disease_diagnosis', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC115",
+          "text": "In the \"Diagnose-chat\" setting, ChatGPT demonstrates the highest level of performance, indicating its superior resilience to disturbances compared to the other models. Conversely, in the \"Diagnose-exam\" setting, the Qwen model outperforms the others, showcasing its enhanced capability in disease diagnosis when there is no interference from extraneous information.",
+          "span_id": "S18",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The question directly asks 'according to the paper,' which prompts solvers to stick closely to the explicit evidence, easily avoiding overclaim. The trap part of the plan ('broadly proven') was not tested because the question did not invite generalization. Revision guidance: To challenge overclaim, rephrase the question to avoid explicit reference to the paper's exact wording. For example: 'How does ChatGPT's resilience to disturbances compare to other models in disease diagnosis?' This ambiguity may lead solvers to overgeneralize beyond the 'Diagnose-chat' setting. Alternatively, ask about the implications of the finding, such as 'What can be concluded about ChatGPT's robustness in medical diagnosis?' without specifying the setting, to test if solvers falsely generalize."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, targets the intended claim about ChatGPT's resilience in the Diagnose-chat setting, and allows judgment of overclaim when the model generalizes beyond the evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0033",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0009",
+      "source_challenge_plan_id": "CHP_0009",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "What explains ChatGPT's consistent advantage across both hallucinated and correct data compared to Qwen and Baichuan?",
+      "surface_intent": "Compare model performance across different data types and identify factors behind ChatGPT's superior results.",
+      "target_kc_ids": [
+        "KC105"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The evidence shows ChatGPT ranks third on Correct data, with Qwen first.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC105",
+          "text": "In terms of both \"Generated\" and \"Tampered\" data, ChatGPT exhibits superior performance compared to the other two models, indicating its proficiency in detecting various types of hallucinations. Particularly in the Generated data, ChatGPT outperforms the other models by a significant margin, demonstrating its unmatched ability to identify knowledgeable hallucinations. Among the three models, Qwen achieves the highest performance on the \"Correct\" data, followed by Baichuan in second place, and ChatGPT ranks third. All three models outperform the random model by a considerable margin. By comparing the performances of the \"Generated\", \"Tampered\", and \"Correct\" data, we can speculate that the Qwen consistently rejects hallucinations, while ChatGPT tends to try and identify them even when they don't exist.",
+          "span_id": "S17",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The challenge plan is usable; the question made the false premise too obvious by directly asking if ChatGPT is the most reliable across all categories, which contradicts the evidence. This made it easy for solvers to reject the premise. Revision guidance: Make the false premise implicit. For example, ask 'Why does ChatGPT consistently outperform other models on hallucinated and correct data?' This presupposes ChatGPT performs best on all data, prompting solvers to accept the false premise without direct verification."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question embeds the false premise that ChatGPT has a consistent advantage on all data types, matching the trap part. It is natural, answerable from evidence, and does not expose metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0002",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0041",
+      "source_challenge_plan_id": "CHP_0041",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "According to Figure 6, what is the approximate number of patients in the largest disease category?",
+      "surface_intent": "Appears to ask for a numerical fact from a pie chart, specifically the count for the largest slice.",
+      "target_kc_ids": [
+        "KC160"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_006"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_006",
+          "asset_type": "figure",
+          "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system.",
+          "summary": "Figure 6 presents a pie chart detailing the distribution of disease categories within the CMHE-DD dataset, classified according to the ICD-10 system. The chart is divided into colored segments representing different medical conditions, with percentage values labeling each segment's proportion. A comprehensive legend below the chart lists the specific ICD-10 category names corresponding to each color.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC160"
+          ],
+          "evidence_bases": [
+            "visible label '12.22%' and '12.04%' on large slices"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_006",
+              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_chart_box_614_140_1047_671.jpg",
+              "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The labels clearly include the '%' symbol (e.g., '11.74%').",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC160",
+          "text": "Asset FIG_006 (figure): Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system.\nAsset summary: Figure 6 presents a pie chart detailing the distribution of disease categories within the CMHE-DD dataset, classified according to the ICD-10 system. The chart is divided into colored segments representing different medical conditions, with percentage values labeling each segment's proportion. A comprehensive legend below the chart lists the specific ICD-10 category names corresponding to each color.\nEvidence basis: visible label '12.22%' and '12.04%' on large slices\nSupported claim: Several major disease categories account for approximately 12% of the dataset each.",
+          "span_id": "FIG_006",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC160",
+          "text": "Asset evidence basis: visible label '12.22%' and '12.04%' on large slices",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is not inherently too easy; it tests a reasonable false premise about absolute counts vs percentages. The generated question was too direct, asking explicitly about the nature of the numbers, making it trivial to answer correctly. Revision guidance: Rewrite the question to embed the false premise without direct binary choice. For example, ask: 'From Figure 6, how many patients are in the largest disease category?' or 'What is the total number of patients represented in the chart?' This forces the model to implicitly use the percentages as absolute counts if it falls for the false premise, making the trap less obvious. Ensure the question does not hint at the scale of the numbers."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks for a patient count, which is not available in the chart (only percentages are shown), thus triggering the intended false premise failure mode. It does not expose any internal metadata and is answerable based on the evidence that the chart presents percentages.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0068",
+      "source_challenge_plan_id": "CHP_0068",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "According to Figure 5, under which Level-1 category is Chronic Rhinitis classified?",
+      "surface_intent": "Test the model's ability to trace the hierarchical classification of Chronic Rhinitis in the ICD-10 tree diagram.",
+      "target_kc_ids": [
+        "KC157"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_005"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_005",
+          "asset_type": "figure",
+          "caption": "Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0.",
+          "summary": "The figure displays a hierarchical tree diagram illustrating the ICD-10 classification system for respiratory diseases, organized into three levels (Level 0, Level 1, Level 2). It serves as an example to demonstrate how model predictions are evaluated against ground truth diagnoses using this multi-level taxonomy.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC157"
+          ],
+          "evidence_bases": [
+            "A path connects Bronchitis -> J40 -> Chronic Lower Respiratory Disease"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_005",
+              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_468_1052_722.jpg",
+              "caption": "Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The arrow from J31 points to 'Other diseases of the Upper Respiratory Tract', not the right-hand branch containing 'Chronic Lower...'",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC157",
+          "text": "Asset FIG_005 (figure): Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0.\nAsset summary: The figure displays a hierarchical tree diagram illustrating the ICD-10 classification system for respiratory diseases, organized into three levels (Level 0, Level 1, Level 2). It serves as an example to demonstrate how model predictions are evaluated against ground truth diagnoses using this multi-level taxonomy.\nEvidence basis: A path connects Bronchitis -> J40 -> Chronic Lower Respiratory Disease\nSupported claim: Bronchitis falls under the category 'Chronic Lower Respiratory Disease'.",
+          "span_id": "FIG_005",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC157",
+          "text": "Asset evidence basis: A path connects Bronchitis -> J40 -> Chronic Lower Respiratory Disease",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question directly asks about the false premise, making it trivial to check the figure and reject the false statement. Revision guidance: Rewrite the question to not explicitly mention both conditions together. For example: 'According to Figure 5, under which Level-1 category is Chronic Rhinitis classified?' or 'Using the hierarchy in Figure 5, how would you classify a patient with Chronic Rhinitis? This requires the model to deduce the branching without being prompted about the false relationship."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose hidden labels, follows the plan's false-premise trap, can be answered from the figure, and is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0009",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0042",
+      "source_challenge_plan_id": "CHP_0042",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 7, the yellow text box is retrieved from an external medical knowledge base to provide context for the second question. What is the purpose of this retrieval?",
+      "surface_intent": "Understanding the role of external knowledge in the self-familiar test pipeline",
+      "target_kc_ids": [
+        "KC166"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_007"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_007",
+          "asset_type": "figure",
+          "caption": "Figure 7: The overview of self-familiar test.",
+          "summary": "The figure illustrates a pipeline for a 'self-familiar test' involving an LLM. It begins with an initial question (Question 1) about the causes of POEMS syndrome, which is processed by an LLM to generate a descriptive text block (yellow box). This generated description is then used as context for a second multiple-choice question (Question 2) regarding the diagnosis of the disease. Finally, an LLM processes this question and context to produce a final answer identifying POEMS syndrome.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC166"
+          ],
+          "evidence_bases": [
+            "Limitation noted in asset explanation."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_007",
+              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_125_1049_518.jpg",
+              "caption": "Figure 7: The overview of self-familiar test."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The arrow leading into the yellow box originates directly from the 'LLM' box, indicating it is generated by the model.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC166",
+          "text": "Asset FIG_007 (figure): Figure 7: The overview of self-familiar test.\nAsset summary: The figure illustrates a pipeline for a 'self-familiar test' involving an LLM. It begins with an initial question (Question 1) about the causes of POEMS syndrome, which is processed by an LLM to generate a descriptive text block (yellow box). This generated description is then used as context for a second multiple-choice question (Question 2) regarding the diagnosis of the disease. Finally, an LLM processes this question and context to produce a final answer identifying POEMS syndrome.\nEvidence basis: Limitation noted in asset explanation.\nSupported claim: The diagram does not indicate if the two 'LLM' boxes represent the same model instance or different models.",
+          "span_id": "FIG_007",
+          "asset_id": "FIG_007",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC166",
+          "text": "Asset evidence basis: Limitation noted in asset explanation.",
+          "asset_id": "FIG_007",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question was phrased as an open inquiry rather than embedding the false premise as a statement, making it easy to answer. The plan's intended false premise can still be effective if the question asserts the false premise as fact. Revision guidance: Rewrite the question to assert the false premise directly, e.g., 'In Figure 7, the yellow text box is retrieved from an external medical knowledge base to provide context for the second question. What is the purpose of this retrieval?' This forces the solver to either accept the false premise or reject it, testing the target failure mode."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question explicitly states the false premise (yellow box is retrieved from external knowledge base) which matches the target failure mode. It is natural, serious, and answerable from the figure evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0011",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0037",
+      "source_challenge_plan_id": "CHP_0037",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "According to Figure 6, what is the number of patients in the largest disease category in the CMHE-DD dataset?",
+      "surface_intent": "The question asks for the patient count in the largest disease category, assuming the pie chart displays absolute numbers.",
+      "target_kc_ids": [
+        "KC159"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_006"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_006",
+          "asset_type": "figure",
+          "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system.",
+          "summary": "Figure 6 presents a pie chart detailing the distribution of disease categories within the CMHE-DD dataset, classified according to the ICD-10 system. The chart is divided into colored segments representing different medical conditions, with percentage values labeling each segment's proportion. A comprehensive legend below the chart lists the specific ICD-10 category names corresponding to each color.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC159"
+          ],
+          "evidence_bases": [
+            "caption and long list in legend"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_006",
+              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_chart_box_614_140_1047_671.jpg",
+              "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The labels clearly include the '%' symbol (e.g., '11.74%').",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC159",
+          "text": "Asset FIG_006 (figure): Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system.\nAsset summary: Figure 6 presents a pie chart detailing the distribution of disease categories within the CMHE-DD dataset, classified according to the ICD-10 system. The chart is divided into colored segments representing different medical conditions, with percentage values labeling each segment's proportion. A comprehensive legend below the chart lists the specific ICD-10 category names corresponding to each color.\nEvidence basis: caption and long list in legend\nSupported claim: The CMHE-DD dataset contains a diverse range of diseases covering multiple ICD-10 chapters.",
+          "span_id": "FIG_006",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC159",
+          "text": "Asset evidence basis: caption and long list in legend",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's false premise (absolute counts vs percentages) is clear, but the question directly asks about label type, making it trivial for solvers to verify the figure. The plan is not inherently too easy; a better-worded question could effectively test the failure mode. Revision guidance: Rewrite the question to avoid explicitly asking about label type. Instead, embed the false premise into a task that requires assuming the labels are absolute counts, e.g., 'How many patients are in the largest disease category according to Figure 6?' This forces the solver to accept the false premise without prompting to check the label units."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally embeds the false premise that the chart shows absolute patient counts, matching the intended trap part. It is serious, does not expose metadata, and can be answered from the figure evidence (which actually shows percentages, leading to a false premise response).",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0013",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0066",
+      "source_challenge_plan_id": "CHP_0066",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In the pipeline depicted in Figure 7, what external knowledge source is used to generate the context for Question 2?",
+      "surface_intent": "Asks about the source of the context for the second question, testing understanding of the information flow in the figure.",
+      "target_kc_ids": [
+        "KC165"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_007"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_007",
+          "asset_type": "figure",
+          "caption": "Figure 7: The overview of self-familiar test.",
+          "summary": "The figure illustrates a pipeline for a 'self-familiar test' involving an LLM. It begins with an initial question (Question 1) about the causes of POEMS syndrome, which is processed by an LLM to generate a descriptive text block (yellow box). This generated description is then used as context for a second multiple-choice question (Question 2) regarding the diagnosis of the disease. Finally, an LLM processes this question and context to produce a final answer identifying POEMS syndrome.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC165"
+          ],
+          "evidence_bases": [
+            "Text in the purple box at the bottom right."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_007",
+              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_125_1049_518.jpg",
+              "caption": "Figure 7: The overview of self-familiar test."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The arrow leading into the yellow box originates directly from the 'LLM' box, indicating it is generated by the model.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC165",
+          "text": "Asset FIG_007 (figure): Figure 7: The overview of self-familiar test.\nAsset summary: The figure illustrates a pipeline for a 'self-familiar test' involving an LLM. It begins with an initial question (Question 1) about the causes of POEMS syndrome, which is processed by an LLM to generate a descriptive text block (yellow box). This generated description is then used as context for a second multiple-choice question (Question 2) regarding the diagnosis of the disease. Finally, an LLM processes this question and context to produce a final answer identifying POEMS syndrome.\nEvidence basis: Text in the purple box at the bottom right.\nSupported claim: The final output identifies option (C) POEMS syndrome as the correct answer.",
+          "span_id": "FIG_007",
+          "asset_id": "FIG_007",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC165",
+          "text": "Asset evidence basis: Text in the purple box at the bottom right.",
+          "asset_id": "FIG_007",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's false premise (yellow box as external knowledge) is a valid subtle interpretation, but the question directly asks for the source of the yellow box, making it trivial for solvers to see the arrow from the LLM. Revision guidance: Revise the question to avoid directly asking about the yellow box's origin. Instead, ask about the pipeline's information flow, e.g., 'What external knowledge source is used to generate the answer to Question 2?' This prompts solvers to incorrectly assume a retrieval step for the yellow box, testing the intended failure mode."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally introduces the false premise that an external knowledge source is used, consistent with the challenge plan's target. It can be answered by examining the figure, which shows the yellow box is LLM-generated, not external.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0001",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0069",
+      "source_challenge_plan_id": "CHP_0069",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "According to the hierarchical tree in Figure 5, under which level-1 category is Chronic Rhinitis (J31) classified?",
+      "surface_intent": "Ask about the classification of Chronic Rhinitis in the ICD-10 hierarchy depicted in Figure 5.",
+      "target_kc_ids": [
+        "KC158"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_005"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_005",
+          "asset_type": "figure",
+          "caption": "Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0.",
+          "summary": "The figure displays a hierarchical tree diagram illustrating the ICD-10 classification system for respiratory diseases, organized into three levels (Level 0, Level 1, Level 2). It serves as an example to demonstrate how model predictions are evaluated against ground truth diagnoses using this multi-level taxonomy.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC158"
+          ],
+          "evidence_bases": [
+            "No legend in the figure itself to confirm this semantic mapping."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_005",
+              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_468_1052_722.jpg",
+              "caption": "Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The arrow from J31 points to 'Other diseases of the Upper Respiratory Tract', not the right-hand branch containing 'Chronic Lower...'",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC158",
+          "text": "Asset FIG_005 (figure): Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0.\nAsset summary: The figure displays a hierarchical tree diagram illustrating the ICD-10 classification system for respiratory diseases, organized into three levels (Level 0, Level 1, Level 2). It serves as an example to demonstrate how model predictions are evaluated against ground truth diagnoses using this multi-level taxonomy.\nEvidence basis: No legend in the figure itself to confirm this semantic mapping.\nSupported claim: The visual encoding of 'correctness' via color is ambiguous without the accompanying caption text.",
+          "span_id": "FIG_005",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC158",
+          "text": "Asset evidence basis: No legend in the figure itself to confirm this semantic mapping.",
+          "asset_id": "FIG_005",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and aligns with the challenge plan's target false premise about the classification of Chronic Rhinitis. It can be answered from Figure 5 without exposing internal metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0003",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0075",
+      "source_challenge_plan_id": "CHP_0075",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on the results in Table 2, would you say that Qwen is the best performing model overall?",
+      "surface_intent": "Evaluate overall model performance based on table data.",
+      "target_kc_ids": [
+        "KC173"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "TAB_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_002",
+          "asset_type": "table",
+          "caption": "Table 2: Performances of the mainstream medical large language models on CMHE-HD dataset. Note that 'Generated', 'Modified', and 'Correct' denote that data partition with various generation mode. 'All' denotes the whole dataset. 'Random' denotes that the results are generated randomly and accuracy is used as the metrics.",
+          "summary": "This table reports accuracy percentages of three medical large language models (ChatGPT, Baichuan, Qwen) and a random baseline on the CMHE-HD dataset, across three data partitions (Generated, Tampered, Correct) and the overall dataset (All).",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC173"
+          ],
+          "evidence_bases": [
+            "Row: Random, Columns: Generated, Tampered, Correct, All"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_002",
+              "content": "\\begin{tabular}{lllll}\n\\hline\nModel & Generated & Tampered & Correct & All \\\\\n\\hline\nChatGPT & 29.2 & 49.5 & 59.8 & 50.8 \\\\\nBaichuan & 8.0 & 42.7 & 80.7 & 55.0 \\\\\nQwen & 2.0 & 25.3 & 97.4 & 56.9 \\\\\nRandom & 50.0 & 50.0 & 50.0 & 50.0 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 2: Performances of the mainstream medical large language models on CMHE-HD dataset. Note that 'Generated', 'Modified', and 'Correct' denote that data partition with various generation mode. 'All' denotes the whole dataset. 'Random' denotes that the results are generated randomly and accuracy is used as the metrics."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "Qwen performs very poorly on Generated (2.0) and Tampered (25.3), so its overall performance is not uniformly superior; the All accuracy is only slightly higher than others, and no statistical significance is provided.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC173",
+          "text": "Asset TAB_002 (table): Table 2: Performances of the mainstream medical large language models on CMHE-HD dataset. Note that 'Generated', 'Modified', and 'Correct' denote that data partition with various generation mode. 'All' denotes the whole dataset. 'Random' denotes that the results are generated randomly and accuracy is used as the metrics.\nAsset summary: This table reports accuracy percentages of three medical large language models (ChatGPT, Baichuan, Qwen) and a random baseline on the CMHE-HD dataset, across three data partitions (Generated, Tampered, Correct) and the overall dataset (All).\nEvidence basis: Row: Random, Columns: Generated, Tampered, Correct, All\nSupported claim: Random baseline accuracy is 50.0 for all partitions.",
+          "span_id": "TAB_002",
+          "asset_id": "TAB_002",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC173",
+          "text": "Asset evidence basis: Row: Random, Columns: Generated, Tampered, Correct, All",
+          "asset_id": "TAB_002",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question explicitly directed solvers to consider data from different partitions, making the false premise easy to identify. The plan itself is valid but the question wording reduced difficulty. Revision guidance: Rephrase the question to not explicitly mention examining different partitions. For example, ask simply 'Based on the results in Table 2, would you say that Qwen is the best performing model overall?' without additional hints. This makes the trap more subtle and tests whether the solver reads the entire table."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, does not expose hidden labels or metadata, aligns with the false premise target failure mode (suggesting Qwen is best overall), is answerable from the table, and is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0067",
+      "source_challenge_plan_id": "CHP_0067",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Figure 4 shows a completed example of the ICD-10 extraction task with actual patient data. How does the paper validate the correctness of the model's outputs in this scenario?",
+      "surface_intent": "Asks about validation of model outputs based on the completed example in the figure.",
+      "target_kc_ids": [
+        "KC154"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Instructions for extracting ICD-10 codes.",
+          "summary": "Figure 4 illustrates the prompt structure used for a medical information extraction task. It displays a chat-based interface with two distinct sections: a green 'System Prompt' box that defines the AI's role as a loyal assistant, and a blue 'User Prompt' box containing a placeholder for a diagnostic report and specific instructions to extract diseases and convert them into ICD-10 codes.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC154"
+          ],
+          "evidence_bases": [
+            "Limitation listed in asset explanation."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_616_129_1050_387.jpg",
+              "caption": "Figure 4: Instructions for extracting ICD-10 codes."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The text '[diagnostic report]' is clearly a placeholder enclosed in brackets, indicating a template rather than a filled-in example.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC154",
+          "text": "Asset FIG_004 (figure): Figure 4: Instructions for extracting ICD-10 codes.\nAsset summary: Figure 4 illustrates the prompt structure used for a medical information extraction task. It displays a chat-based interface with two distinct sections: a green 'System Prompt' box that defines the AI's role as a loyal assistant, and a blue 'User Prompt' box containing a placeholder for a diagnostic report and specific instructions to extract diseases and convert them into ICD-10 codes.\nEvidence basis: Limitation listed in asset explanation.\nSupported claim: The figure only shows the input prompt template; it does not show the model's output or the evaluation criteria for correctness.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC154",
+          "text": "Asset evidence basis: Limitation listed in asset explanation.",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally embeds the false premise (the figure shows a completed example) without exposing hidden labels or evaluation metadata. It follows the challenge plan's target failure mode and can be answered from the provided evidence that the figure is only a template.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0047",
+      "source_challenge_plan_id": "CHP_0047",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "How many patients are represented by the smallest slice in Figure 6?",
+      "surface_intent": "asking about patient distribution from Figure 6",
+      "target_kc_ids": [
+        "KC161"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_006"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_006",
+          "asset_type": "figure",
+          "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system.",
+          "summary": "Figure 6 presents a pie chart detailing the distribution of disease categories within the CMHE-DD dataset, classified according to the ICD-10 system. The chart is divided into colored segments representing different medical conditions, with percentage values labeling each segment's proportion. A comprehensive legend below the chart lists the specific ICD-10 category names corresponding to each color.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC161"
+          ],
+          "evidence_bases": [
+            "visible labels like '0.12%', '0.83%', '0.95%'"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_006",
+              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_chart_box_614_140_1047_671.jpg",
+              "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The labels clearly include the '%' symbol (e.g., '11.74%').",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC161",
+          "text": "Asset FIG_006 (figure): Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system.\nAsset summary: Figure 6 presents a pie chart detailing the distribution of disease categories within the CMHE-DD dataset, classified according to the ICD-10 system. The chart is divided into colored segments representing different medical conditions, with percentage values labeling each segment's proportion. A comprehensive legend below the chart lists the specific ICD-10 category names corresponding to each color.\nEvidence basis: visible labels like '0.12%', '0.83%', '0.95%'\nSupported claim: Some disease categories are very rare, comprising less than 1% of the total.",
+          "span_id": "FIG_006",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC161",
+          "text": "Asset evidence basis: visible labels like '0.12%', '0.83%', '0.95%'",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was not usable. Reason: The question is neutrally phrased and does not embed the false premise (that the chart shows absolute counts). It would not trigger the intended failure mode because the solver can simply state that the labels show percentages. Revision guidance: Rewrite to implicitly assume that the chart shows absolute patient counts, e.g., 'According to Figure 6, which disease categories have the highest absolute patient counts?' or 'How many patients are represented by the smallest slice in Figure 6?' This forces the solver to rely on the mistaken premise that the labels are absolute numbers, triggering the false premise failure mode."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly sets up a false premise by asking for patient count while the chart shows percentages, aligning with the intended failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0011",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0044",
+      "source_challenge_plan_id": "CHP_0044",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "What specific tampered sentence is displayed in Figure 3 of the dataset construction instructions?",
+      "surface_intent": "Requesting the actual tampered sentence example shown in the figure.",
+      "target_kc_ids": [
+        "KC150"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 3: Instructions of dataset construction for hallucination testing.",
+          "summary": "Figure 3 illustrates the prompt templates used for constructing a dataset for hallucination testing. It displays a 'System Prompt' instructing an AI model to act as a 'troublemaker' that modifies sentences by inserting up to five key pieces of false information while maintaining fluency, and a 'User Prompt' placeholder for the input text.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC150"
+          ],
+          "evidence_bases": [
+            "Limitation stated: 'The figure only shows the prompt templates and does not display the actual generated dataset entries or examples of the output.'"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_145_129_579_448.jpg",
+              "caption": "Figure 3: Instructions of dataset construction for hallucination testing."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The User Prompt box contains a placeholder '[Sentences that need to be tampered with]' rather than actual text, indicating this is a template/instruction set.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC150",
+          "text": "Asset FIG_003 (figure): Figure 3: Instructions of dataset construction for hallucination testing.\nAsset summary: Figure 3 illustrates the prompt templates used for constructing a dataset for hallucination testing. It displays a 'System Prompt' instructing an AI model to act as a 'troublemaker' that modifies sentences by inserting up to five key pieces of false information while maintaining fluency, and a 'User Prompt' placeholder for the input text.\nEvidence basis: Limitation stated: 'The figure only shows the prompt templates and does not display the actual generated dataset entries or examples of the output.'\nSupported claim: The figure only shows the prompt templates and does not display the actual generated dataset entries or examples of the output.",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC150",
+          "text": "Asset evidence basis: Limitation stated: 'The figure only shows the prompt templates and does not display the actual generated dataset entries or examples of the output.'",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's false premise (figure shows a tampered sentence example) is sound, but the question explicitly asks 'does it include an example?', making it trivial to reject. Revision guidance: Rephrase the question to implicitly assume the false premise, e.g., 'What is the tampered sentence shown in Figure 3?' This forces the solver to either correctly reject (by noting no example exists) or incorrectly fabricate one, better testing the target failure mode of false premise acceptance."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly implements the false premise challenge by asking for a specific tampered sentence that does not exist in the figure (only templates shown).",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "thread_challenge_plans_path": "data/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/cache/questions/thread_challenge_plans.json",
+  "thread_challenge_plan_summary": {
+    "plan_count": 12,
+    "target": 24,
+    "per_thread_limit": 3,
+    "by_type": {
+      "thread_overclaim_challenge": 4,
+      "thread_premise_mutation_challenge": 4,
+      "thread_wrong_bridge_challenge": 4
+    },
+    "by_modality_pool": {
+      "text": 12
+    },
+    "skipped_thread_count": 0,
+    "skipped_threads": []
+  },
+  "thread_challenge_questions_raw_path": "data/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/cache/questions/thread_challenge_questions_raw.json",
+  "thread_challenge_questions_filtered_path": "data/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/cache/questions/thread_challenge_questions_filtered.json",
+  "thread_challenge_solver_trials_path": "data/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/cache/questions/thread_challenge_solver_trials.json",
+  "thread_challenge_filter_summary": {
+    "plan_pool_count": 12,
+    "target_count": 8,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 19,
+    "solver_trial_count": 18,
+    "filtered_count": 8,
+    "human_review_count": 2,
+    "rejected_count": 11,
+    "blacklisted_plan_count": 2,
+    "by_type": {
+      "thread_overclaim_challenge": 4,
+      "thread_premise_mutation_challenge": 2,
+      "thread_wrong_bridge_challenge": 2
+    },
+    "by_modality_pool": {
+      "text": 8
+    },
+    "stop_reason": "target_reached"
+  },
+  "thread_challenge_questions": [
+    {
+      "question_id": "TCQ_0003",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0011",
+      "source_challenge_plan_id": "TCP_0011",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given that the same hyperparameters were used for all models, what can you say about the performance across the three evaluation aspects?",
+      "surface_intent": "To ask the model to summarize the performance implications of the uniform hyperparameter setting across the different evaluation tasks.",
+      "target_kc_ids": [
+        "KC98",
+        "KC99"
+      ],
+      "target_edge_ids": [
+        "E177"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should list temperature 0.5, Top-P 0.7, Top-K 200, and repetition penalty 1.1.",
+        "evidence": "The answer should state that the baselines were evaluated on disease diagnosis, concept understanding, and error identification using the respective datasets.",
+        "bridge": "The answer should use the verified edge to state that the hyperparameters were uniformly applied to all models during the evaluation, ensuring consistency."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should list temperature 0.5, Top-P 0.7, Top-K 200, and repetition penalty 1.1.\n- We discussed this evidence: The answer should state that the baselines were evaluated on disease diagnosis, concept understanding, and error identification using the respective datasets.\n- We connected them cautiously as follows: The answer should use the verified edge to state that the hyperparameters were uniformly applied to all models during the evaluation, ensuring consistency.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M6",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E177",
+          "kc_ids": [
+            "KC98",
+            "KC99"
+          ],
+          "text": "For all of LLMs used in our experiments, the hyperparameters are set as follows. The temperature is set to 0.5, the Top-P is 0.7, the Top-K is 200, and the repetition penalty is 1.1."
+        },
+        {
+          "kc_id": "KC98",
+          "text": "For all of LLMs used in our experiments, the hyperparameters are set as follows. The temperature is set to 0.5, the Top-P is 0.7, the Top-K is 200, and the repetition penalty is 1.1.",
+          "span_id": "S15",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC99",
+          "text": "In this section, the experimental results of three baseline systems in Chinese medical consultation are evaluated from three aspects, i.e., disease diagnosis, concept understanding, and error identification with the CMHE-HD, CMHE-DD and CMHE-CE datasets, respectively.",
+          "span_id": "S16",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The question explicitly asks about optimality, which is clearly beyond the evidence. Solvers correctly refuse to overclaim, so the failure mode was not triggered. Revision guidance: Make the question more subtle: instead of asking about optimality, frame it as a request to generalize or summarize the results across tasks using the uniform hyperparameters, e.g., 'Given that the same hyperparameters were used for all models, what can you say about the performance across the three evaluation aspects?' This may lead to overclaiming without explicitly mentioning optimality."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose hidden metadata, and aligns with the challenge plan's target failure mode of thread_overclaim by prompting the model to infer performance beyond the evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0004",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0009",
+      "source_challenge_plan_id": "TCP_0009",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Could you list the baseline models again? I recall they were GPT-3.5, Baichuan2-13B Chat, and Qwen-14B Chat.",
+      "surface_intent": "Requesting a repetition of the baseline models with a slight misstatement.",
+      "target_kc_ids": [
+        "KC96",
+        "KC99"
+      ],
+      "target_edge_ids": [
+        "E176"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should list ChatGPT, Baichuan2-13B Chat, and Qwen-14B Chat.",
+        "evidence": "The answer should state that the baselines were evaluated on disease diagnosis, concept understanding, and error identification using the respective datasets.",
+        "bridge": "The answer should use the verified edge to state that the three baseline models were evaluated on the CMHE tasks as part of the experimental setup."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should list ChatGPT, Baichuan2-13B Chat, and Qwen-14B Chat.\n- We discussed this evidence: The answer should state that the baselines were evaluated on disease diagnosis, concept understanding, and error identification using the respective datasets.\n- We connected them cautiously as follows: The answer should use the verified edge to state that the three baseline models were evaluated on the CMHE tasks as part of the experimental setup.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M6",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E176",
+          "kc_ids": [
+            "KC96",
+            "KC99"
+          ],
+          "text": "Three well-known LLMs are examined to assess their performance in detecting medical hallucinations in Chinese text. All three models are capable of processing input in Chinese.\n\n(1)ChatGPT $ ^{4} $ is a large generative language model created by OpenAI, which can generate human-like texts based on past conversations. We exploit GPT-3.5 as the backbone of ChatGPT in our experiments. (2) Baichuan(Yang et al., 2023) in the second version is a series of large-scale multilingual language models containing 7 billion and 13 billion parameters trained from scratch. The Baichuan2-13B chat is utilized in our evaluations. (3) Qwen (Bai et al., 2023) is a collection of language models that includes different models with different numbers of parameters. In our evaluation of the baseline models, we rely on Qwen-14B Chat as the foundation."
+        },
+        {
+          "kc_id": "KC96",
+          "text": "Three well-known LLMs are examined to assess their performance in detecting medical hallucinations in Chinese text. All three models are capable of processing input in Chinese.\n\n(1)ChatGPT $ ^{4} $ is a large generative language model created by OpenAI, which can generate human-like texts based on past conversations. We exploit GPT-3.5 as the backbone of ChatGPT in our experiments. (2) Baichuan(Yang et al., 2023) in the second version is a series of large-scale multilingual language models containing 7 billion and 13 billion parameters trained from scratch. The Baichuan2-13B chat is utilized in our evaluations. (3) Qwen (Bai et al., 2023) is a collection of language models that includes different models with different numbers of parameters. In our evaluation of the baseline models, we rely on Qwen-14B Chat as the foundation.",
+          "span_id": "S15",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC99",
+          "text": "In this section, the experimental results of three baseline systems in Chinese medical consultation are evaluated from three aspects, i.e., disease diagnosis, concept understanding, and error identification with the CMHE-HD, CMHE-DD and CMHE-CE datasets, respectively.",
+          "span_id": "S16",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question subtly mutates the premise by replacing 'ChatGPT' with 'GPT-3.5', aligning with the target failure mode; it is natural and can be answered from evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0010",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0008",
+      "source_challenge_plan_id": "TCP_0008",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Based on their evaluation across disease diagnosis, concept understanding, and error identification, what does the performance of ChatGPT, Baichuan2-13B Chat, and Qwen-14B Chat suggest about their position among large language models for detecting medical hallucinations in Chinese text?",
+      "surface_intent": "To infer the relative ranking or state-of-the-art status of these three models based on the reported evaluations.",
+      "target_kc_ids": [
+        "KC96",
+        "KC99"
+      ],
+      "target_edge_ids": [
+        "E176"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should list ChatGPT, Baichuan2-13B Chat, and Qwen-14B Chat.",
+        "evidence": "The answer should state that the baselines were evaluated on disease diagnosis, concept understanding, and error identification using the respective datasets.",
+        "bridge": "The answer should use the verified edge to state that the three baseline models were evaluated on the CMHE tasks as part of the experimental setup."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should list ChatGPT, Baichuan2-13B Chat, and Qwen-14B Chat.\n- We discussed this evidence: The answer should state that the baselines were evaluated on disease diagnosis, concept understanding, and error identification using the respective datasets.\n- We connected them cautiously as follows: The answer should use the verified edge to state that the three baseline models were evaluated on the CMHE tasks as part of the experimental setup.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M6",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E176",
+          "kc_ids": [
+            "KC96",
+            "KC99"
+          ],
+          "text": "Three well-known LLMs are examined to assess their performance in detecting medical hallucinations in Chinese text. All three models are capable of processing input in Chinese.\n\n(1)ChatGPT $ ^{4} $ is a large generative language model created by OpenAI, which can generate human-like texts based on past conversations. We exploit GPT-3.5 as the backbone of ChatGPT in our experiments. (2) Baichuan(Yang et al., 2023) in the second version is a series of large-scale multilingual language models containing 7 billion and 13 billion parameters trained from scratch. The Baichuan2-13B chat is utilized in our evaluations. (3) Qwen (Bai et al., 2023) is a collection of language models that includes different models with different numbers of parameters. In our evaluation of the baseline models, we rely on Qwen-14B Chat as the foundation."
+        },
+        {
+          "kc_id": "KC96",
+          "text": "Three well-known LLMs are examined to assess their performance in detecting medical hallucinations in Chinese text. All three models are capable of processing input in Chinese.\n\n(1)ChatGPT $ ^{4} $ is a large generative language model created by OpenAI, which can generate human-like texts based on past conversations. We exploit GPT-3.5 as the backbone of ChatGPT in our experiments. (2) Baichuan(Yang et al., 2023) in the second version is a series of large-scale multilingual language models containing 7 billion and 13 billion parameters trained from scratch. The Baichuan2-13B chat is utilized in our evaluations. (3) Qwen (Bai et al., 2023) is a collection of language models that includes different models with different numbers of parameters. In our evaluation of the baseline models, we rely on Qwen-14B Chat as the foundation.",
+          "span_id": "S15",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC99",
+          "text": "In this section, the experimental results of three baseline systems in Chinese medical consultation are evaluated from three aspects, i.e., disease diagnosis, concept understanding, and error identification with the CMHE-HD, CMHE-DD and CMHE-CE datasets, respectively.",
+          "span_id": "S16",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's trap is valid but the question made the overclaim too explicit, allowing solvers to easily detect and refuse it. Revision guidance: Rewrite the question to imply the overclaim more subtly, e.g., by asking whether the evaluation demonstrates that these models outperform others or are considered leading in the field, without directly using 'state-of-the-art'."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "Question appropriately triggers the target overclaim failure mode by asking for the models' position among LLMs, which goes beyond the evidence that only states they were evaluated on specific tasks.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0012",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0003",
+      "source_challenge_plan_id": "TCP_0003",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Some researchers argue that snowballing in LLMs is due to overfitting, while others attribute it to the model's attempt to maintain contextual consistency. What does this paper identify as the cause of snowballing, and how does the CMHE dataset help study this phenomenon?",
+      "surface_intent": "Asks about the cause of snowballing and the purpose of the CMHE dataset, subtly presenting an alternative explanation.",
+      "target_kc_ids": [
+        "KC12",
+        "KC13"
+      ],
+      "target_edge_ids": [
+        "E94"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe that LLMs generate more erroneous content to maintain contextual consistency after encountering early errors.",
+        "evidence": "The answer should state that CMHE was created with 42,198 samples to assess LLMs' resistance to snowballing, among other abilities.",
+        "bridge": "The answer should use the verified edge to connect: because snowballing causes LLMs to produce more errors, the CMHE dataset was created to evaluate and understand this behavior."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe that LLMs generate more erroneous content to maintain contextual consistency after encountering early errors.\n- We discussed this evidence: The answer should state that CMHE was created with 42,198 samples to assess LLMs' resistance to snowballing, among other abilities.\n- We connected them cautiously as follows: The answer should use the verified edge to connect: because snowballing causes LLMs to produce more errors, the CMHE dataset was created to evaluate and understand this behavior.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E94",
+          "kc_ids": [
+            "KC12",
+            "KC13"
+          ],
+          "text": "Currently, most methods (Wang et al., 2023; Pal et al., 2023) for evaluating LLM hallucinations rely on discriminatory tasks, which assess the LLM's ability to recognize hallucinations. However, recent research has highlighted (Zhang et al., 2023b; Ji et al., 2023) that the ability of LLM to detect hallucinations does not prevent it from generating erroneous content, even though it can identify its own errors. This phenomenon, known as snowballing (shown in Figure 1), occurs because LLMs\n\ntend to generate more erroneous content in order to maintain contextual consistency when they encounter early erroneous content.\n\nTo understand how Large Language Models\n\n<!-- page 2: doc_1.md -->\n\n(LLMs) can resist snowball hallucination, we created a Chinese Medical Hallucination Evaluation Dataset (CMHE) with 42,198 samples. This dataset aims to assess LLMs' ability to identify misinformation, perform accurate reasoning in noisy environments, and minimize the generation of erroneous content. The dataset encompasses 2,000 questions related to hallucination detection, 1,622 questions for diagnosis, and 38,576 questions for concept explanation, allowing a comprehensive assessment of each of the af"
+        },
+        {
+          "kc_id": "KC12",
+          "text": "Currently, most methods (Wang et al., 2023; Pal et al., 2023) for evaluating LLM hallucinations rely on discriminatory tasks, which assess the LLM's ability to recognize hallucinations. However, recent research has highlighted (Zhang et al., 2023b; Ji et al., 2023) that the ability of LLM to detect hallucinations does not prevent it from generating erroneous content, even though it can identify its own errors. This phenomenon, known as snowballing (shown in Figure 1), occurs because LLMs\n\ntend to generate more erroneous content in order to maintain contextual consistency when they encounter early erroneous content.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC13",
+          "text": "(LLMs) can resist snowball hallucination, we created a Chinese Medical Hallucination Evaluation Dataset (CMHE) with 42,198 samples. This dataset aims to assess LLMs' ability to identify misinformation, perform accurate reasoning in noisy environments, and minimize the generation of erroneous content. The dataset encompasses 2,000 questions related to hallucination detection, 1,622 questions for diagnosis, and 38,576 questions for concept explanation, allowing a comprehensive assessment of each of the aforementioned aspects. In contrast to previous investigations, our dataset does not offer predetermined response options for the model to select from. Instead, we simulate conversational scenarios by prompting the model to generate responses freely.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, targets the intended premise mutation failure mode, is answerable from the provided evidence, and is unambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0013",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0004",
+      "source_challenge_plan_id": "TCP_0004",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "Based on the paper, how are the three datasets—CMHE-HD, CMHE-DD, and CMHE-CE—linked to the evaluation tasks? Specifically, does the paper evaluate disease diagnosis using CMHE-HD, concept understanding using CMHE-DD, and error identification using CMHE-CE?",
+      "surface_intent": "ask for clarification on the mapping between CMHE datasets and evaluation tasks",
+      "target_kc_ids": [
+        "KC95",
+        "KC99"
+      ],
+      "target_edge_ids": [
+        "E184"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should name CMHE-HD, CMHE-DD, and CMHE-CE and their purposes.",
+        "evidence": "The answer should state that the baselines were evaluated on disease diagnosis, concept understanding, and error identification using the respective datasets.",
+        "bridge": "The answer should use the verified edge to state that the benchmark's three datasets provide the necessary tasks for evaluating the systems' performance."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should name CMHE-HD, CMHE-DD, and CMHE-CE and their purposes.\n- We discussed this evidence: The answer should state that the baselines were evaluated on disease diagnosis, concept understanding, and error identification using the respective datasets.\n- We connected them cautiously as follows: The answer should use the verified edge to state that the benchmark's three datasets provide the necessary tasks for evaluating the systems' performance.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E184",
+          "kc_ids": [
+            "KC95",
+            "KC99"
+          ],
+          "text": "In this section, the experimental results of three baseline systems in Chinese medical consultation are evaluated from three aspects, i.e., disease diagnosis, concept understanding, and error identification with the CMHE-HD, CMHE-DD and CMHE-CE datasets, respectively."
+        },
+        {
+          "kc_id": "KC95",
+          "text": "Our proposed CMHE benchmark comprises three individual datasets: CMHE-HD for hallucination detection, CMHE-DD for disease diagnosis, and CMHE-CE for concept explanation. We have performed calculations to determine the number of samples within each fine-grained subset of these datasets, and the resulting statistics are presented in",
+          "span_id": "S14",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC99",
+          "text": "In this section, the experimental results of three baseline systems in Chinese medical consultation are evaluated from three aspects, i.e., disease diagnosis, concept understanding, and error identification with the CMHE-HD, CMHE-DD and CMHE-CE datasets, respectively.",
+          "span_id": "S16",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels or metadata. It follows the challenge plan's intended target failure mode by asking about the mapping between datasets and tasks, which is directly supported by the provided evidence. The question can be answered from the paper evidence and is not ambiguous in a way that prevents judging the failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0016",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0002",
+      "source_challenge_plan_id": "TCP_0002",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Based on the paper, does the CMHE dataset primarily evaluate LLMs' resistance to snowball hallucination, and only secondarily address other forms of hallucination?",
+      "surface_intent": "Asks about the primary focus of the CMHE dataset as described in the paper.",
+      "target_kc_ids": [
+        "KC12",
+        "KC13"
+      ],
+      "target_edge_ids": [
+        "E94"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe that LLMs generate more erroneous content to maintain contextual consistency after encountering early errors.",
+        "evidence": "The answer should state that CMHE was created with 42,198 samples to assess LLMs' resistance to snowballing, among other abilities.",
+        "bridge": "The answer should use the verified edge to connect: because snowballing causes LLMs to produce more errors, the CMHE dataset was created to evaluate and understand this behavior."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe that LLMs generate more erroneous content to maintain contextual consistency after encountering early errors.\n- We discussed this evidence: The answer should state that CMHE was created with 42,198 samples to assess LLMs' resistance to snowballing, among other abilities.\n- We connected them cautiously as follows: The answer should use the verified edge to connect: because snowballing causes LLMs to produce more errors, the CMHE dataset was created to evaluate and understand this behavior.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E94",
+          "kc_ids": [
+            "KC12",
+            "KC13"
+          ],
+          "text": "Currently, most methods (Wang et al., 2023; Pal et al., 2023) for evaluating LLM hallucinations rely on discriminatory tasks, which assess the LLM's ability to recognize hallucinations. However, recent research has highlighted (Zhang et al., 2023b; Ji et al., 2023) that the ability of LLM to detect hallucinations does not prevent it from generating erroneous content, even though it can identify its own errors. This phenomenon, known as snowballing (shown in Figure 1), occurs because LLMs\n\ntend to generate more erroneous content in order to maintain contextual consistency when they encounter early erroneous content.\n\nTo understand how Large Language Models\n\n<!-- page 2: doc_1.md -->\n\n(LLMs) can resist snowball hallucination, we created a Chinese Medical Hallucination Evaluation Dataset (CMHE) with 42,198 samples. This dataset aims to assess LLMs' ability to identify misinformation, perform accurate reasoning in noisy environments, and minimize the generation of erroneous content. The dataset encompasses 2,000 questions related to hallucination detection, 1,622 questions for diagnosis, and 38,576 questions for concept explanation, allowing a comprehensive assessment of each of the af"
+        },
+        {
+          "kc_id": "KC12",
+          "text": "Currently, most methods (Wang et al., 2023; Pal et al., 2023) for evaluating LLM hallucinations rely on discriminatory tasks, which assess the LLM's ability to recognize hallucinations. However, recent research has highlighted (Zhang et al., 2023b; Ji et al., 2023) that the ability of LLM to detect hallucinations does not prevent it from generating erroneous content, even though it can identify its own errors. This phenomenon, known as snowballing (shown in Figure 1), occurs because LLMs\n\ntend to generate more erroneous content in order to maintain contextual consistency when they encounter early erroneous content.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC13",
+          "text": "(LLMs) can resist snowball hallucination, we created a Chinese Medical Hallucination Evaluation Dataset (CMHE) with 42,198 samples. This dataset aims to assess LLMs' ability to identify misinformation, perform accurate reasoning in noisy environments, and minimize the generation of erroneous content. The dataset encompasses 2,000 questions related to hallucination detection, 1,622 questions for diagnosis, and 38,576 questions for concept explanation, allowing a comprehensive assessment of each of the aforementioned aspects. In contrast to previous investigations, our dataset does not offer predetermined response options for the model to select from. Instead, we simulate conversational scenarios by prompting the model to generate responses freely.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan targets a thread_overclaim where the trap invites asserting an exclusive or broadly general claim beyond the evidence. The generated question asked if 'addressing snowballing is the key to reducing LLM hallucinations', which is clearly an overclaim and solvers easily rejected it. The plan itself is still viable. Revision guidance: To make the question less obvious, avoid binary 'key' phrasing. Instead, ask about a more nuanced claim that could be misinterpreted as slightly beyond the evidence, e.g., 'Does the paper suggest that the CMHE dataset primarily evaluates LLMs' ability to resist snowballing, while downplaying other hallucination aspects?' This requires closer reading to detect overclaim."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally probes the thread_overclaim failure mode by asking for a primary-secondary distinction not supported by the evidence, without exposing internal metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0017",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0010",
+      "source_challenge_plan_id": "TCP_0010",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "Given the hyperparameters listed (temperature 0.5, Top-P 0.7, Top-K 200, repetition penalty 1.1), how were they set when the baselines were evaluated on the three tasks: disease diagnosis, concept understanding, and error identification?",
+      "surface_intent": "Asking for the application of hyperparameters across different evaluation tasks.",
+      "target_kc_ids": [
+        "KC98",
+        "KC99"
+      ],
+      "target_edge_ids": [
+        "E177"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should list temperature 0.5, Top-P 0.7, Top-K 200, and repetition penalty 1.1.",
+        "evidence": "The answer should state that the baselines were evaluated on disease diagnosis, concept understanding, and error identification using the respective datasets.",
+        "bridge": "The answer should use the verified edge to state that the hyperparameters were uniformly applied to all models during the evaluation, ensuring consistency."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should list temperature 0.5, Top-P 0.7, Top-K 200, and repetition penalty 1.1.\n- We discussed this evidence: The answer should state that the baselines were evaluated on disease diagnosis, concept understanding, and error identification using the respective datasets.\n- We connected them cautiously as follows: The answer should use the verified edge to state that the hyperparameters were uniformly applied to all models during the evaluation, ensuring consistency.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M6",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E177",
+          "kc_ids": [
+            "KC98",
+            "KC99"
+          ],
+          "text": "For all of LLMs used in our experiments, the hyperparameters are set as follows. The temperature is set to 0.5, the Top-P is 0.7, the Top-K is 200, and the repetition penalty is 1.1."
+        },
+        {
+          "kc_id": "KC98",
+          "text": "For all of LLMs used in our experiments, the hyperparameters are set as follows. The temperature is set to 0.5, the Top-P is 0.7, the Top-K is 200, and the repetition penalty is 1.1.",
+          "span_id": "S15",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC99",
+          "text": "In this section, the experimental results of three baseline systems in Chinese medical consultation are evaluated from three aspects, i.e., disease diagnosis, concept understanding, and error identification with the CMHE-HD, CMHE-DD and CMHE-CE datasets, respectively.",
+          "span_id": "S16",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly tests the target failure mode by asking how hyperparameters were applied during evaluation, which the plan indicates should be uniformly applied. It does not expose hidden labels or metadata, and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0019",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0005",
+      "source_challenge_plan_id": "TCP_0005",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Based on the earlier discussion, can we conclude that the three datasets (CMHE-HD, CMHE-DD, CMHE-CE) are sufficient to evaluate all key aspects of the baseline systems' performance?",
+      "surface_intent": "To determine if the model considers the three datasets as covering all necessary evaluation aspects.",
+      "target_kc_ids": [
+        "KC95",
+        "KC99"
+      ],
+      "target_edge_ids": [
+        "E184"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should name CMHE-HD, CMHE-DD, and CMHE-CE and their purposes.",
+        "evidence": "The answer should state that the baselines were evaluated on disease diagnosis, concept understanding, and error identification using the respective datasets.",
+        "bridge": "The answer should use the verified edge to state that the benchmark's three datasets provide the necessary tasks for evaluating the systems' performance."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should name CMHE-HD, CMHE-DD, and CMHE-CE and their purposes.\n- We discussed this evidence: The answer should state that the baselines were evaluated on disease diagnosis, concept understanding, and error identification using the respective datasets.\n- We connected them cautiously as follows: The answer should use the verified edge to state that the benchmark's three datasets provide the necessary tasks for evaluating the systems' performance.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E184",
+          "kc_ids": [
+            "KC95",
+            "KC99"
+          ],
+          "text": "In this section, the experimental results of three baseline systems in Chinese medical consultation are evaluated from three aspects, i.e., disease diagnosis, concept understanding, and error identification with the CMHE-HD, CMHE-DD and CMHE-CE datasets, respectively."
+        },
+        {
+          "kc_id": "KC95",
+          "text": "Our proposed CMHE benchmark comprises three individual datasets: CMHE-HD for hallucination detection, CMHE-DD for disease diagnosis, and CMHE-CE for concept explanation. We have performed calculations to determine the number of samples within each fine-grained subset of these datasets, and the resulting statistics are presented in",
+          "span_id": "S14",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC99",
+          "text": "In this section, the experimental results of three baseline systems in Chinese medical consultation are evaluated from three aspects, i.e., disease diagnosis, concept understanding, and error identification with the CMHE-HD, CMHE-DD and CMHE-CE datasets, respectively.",
+          "span_id": "S16",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question asks if the three datasets are sufficient to evaluate all key aspects, which matches the trap of overclaiming exhaustiveness beyond the evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "challenge_scheduler_config": {
+    "macro_level_enabled": true,
+    "thread_level_enabled": true,
+    "thread_challenge_enabled": true
+  },
+  "macro_main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "macro_main_question",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC12",
+        "KC42",
+        "KC11"
+      ],
+      "question_text": "What challenges motivate the introduction of the Chinese Medical Hallucination Evaluation (CMHE) benchmark, and how do these challenges relate to the limitations of existing evaluation methods?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC12",
+          "KC42"
+        ],
+        "optional_cover": [
+          "KC11"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "macro_main_question",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC31",
+        "KC46"
+      ],
+      "question_text": "How do current medical hallucination evaluation benchmarks fall short, and what novel features does the CMHE benchmark introduce to overcome these shortcomings?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC31",
+          "KC46"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "macro_main_question",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC13",
+        "KC95",
+        "KC134"
+      ],
+      "question_text": "Describe the structure of the CMHE benchmark: what are its constituent tasks and what processes related to hallucinations do they evaluate?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC13",
+          "KC95"
+        ],
+        "optional_cover": [
+          "KC134"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "macro_main_question",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC67",
+        "KC61",
+        "KC59",
+        "KC55"
+      ],
+      "question_text": "What are the three tasks defined in this module and how are the datasets created for each task?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC67",
+          "KC61"
+        ],
+        "optional_cover": [
+          "KC59",
+          "KC55"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "macro_main_question",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC75",
+        "KC77"
+      ],
+      "question_text": "What are the key statistics of the MedQA-USMLE and CMHE-DD datasets, including the number of instances selected from Mainland China and the number of distinct illnesses and ICD-10 categories in CMHE-DD?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC75",
+          "KC77"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "macro_main_question",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC96",
+        "KC98"
+      ],
+      "question_text": "Which three LLMs are used as baselines for detecting medical hallucinations in Chinese text, and what hyperparameters (temperature, Top-P, Top-K, repetition penalty) are set for all models?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC96",
+          "KC98"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "macro_main_question",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC105",
+        "KC25",
+        "KC115",
+        "KC116",
+        "KC118",
+        "KC111",
+        "KC129",
+        "KC110",
+        "KC24",
+        "KC106",
+        "KC99"
+      ],
+      "question_text": "What are the key experimental results and findings in the paper, covering performance on hallucination detection and disease diagnosis tasks, as well as general insights about LLM behavior?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC105",
+          "KC25"
+        ],
+        "optional_cover": [
+          "KC115",
+          "KC116",
+          "KC118",
+          "KC111",
+          "KC129",
+          "KC110",
+          "KC24",
+          "KC106",
+          "KC99"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "macro_main_question",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC138",
+        "KC137",
+        "KC123"
+      ],
+      "question_text": "Based on the conclusion and limitations of the paper, what is the value of the CMHE benchmark and what challenge does it face in evaluating concept understanding?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC138",
+          "KC137"
+        ],
+        "optional_cover": [
+          "KC123"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "thread_question_seeds": [
+    {
+      "question_id": "Q_RT1_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC12"
+      ],
+      "question_goal": "Ask the model to explain the snowballing phenomenon in LLMs.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC13"
+      ],
+      "question_goal": "Ask the model to describe the creation of the CMHE dataset and its purpose.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC12",
+        "KC13"
+      ],
+      "question_goal": "Ask the model to explain how the snowballing phenomenon motivated the creation of the CMHE dataset.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC12",
+          "KC13"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC12",
+        "KC13"
+      ],
+      "question_goal": "Ask the model to confirm the relationship between snowballing and CMHE dataset creation.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC95"
+      ],
+      "question_goal": "Ask the model to list the three datasets that constitute the CMHE benchmark.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC99"
+      ],
+      "question_goal": "Ask the model to describe the evaluation of three baseline systems on the CMHE tasks.",
+      "trigger_condition": {
+        "macro_reached": "M7"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC95",
+        "KC99"
+      ],
+      "question_goal": "Ask the model to explain how the composition of the CMHE benchmark supports the evaluation of baseline systems.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC95",
+          "KC99"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC95",
+        "KC99"
+      ],
+      "question_goal": "Ask the model to reiterate the relationship between the benchmark composition and the evaluation.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M6",
+      "target_kc_ids": [
+        "KC96"
+      ],
+      "question_goal": "Ask the model to name the three baseline LLMs used in the experiments.",
+      "trigger_condition": {
+        "macro_reached": "M6"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC99"
+      ],
+      "question_goal": "Ask the model to describe the evaluation of three baseline systems on the CMHE tasks.",
+      "trigger_condition": {
+        "macro_reached": "M7"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC96",
+        "KC99"
+      ],
+      "question_goal": "Ask the model to explain how the baseline models were used in the evaluation of CMHE tasks.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC96",
+          "KC99"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC96",
+        "KC99"
+      ],
+      "question_goal": "Ask the model to confirm that the same baseline models were evaluated on the CMHE tasks.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M6",
+      "target_kc_ids": [
+        "KC98"
+      ],
+      "question_goal": "Ask the model to specify the hyperparameters used in the experiments.",
+      "trigger_condition": {
+        "macro_reached": "M6"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC99"
+      ],
+      "question_goal": "Ask the model to describe the evaluation of three baseline systems on the CMHE tasks.",
+      "trigger_condition": {
+        "macro_reached": "M7"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC98",
+        "KC99"
+      ],
+      "question_goal": "Ask the model to explain how the fixed hyperparameters relate to the evaluation of baseline systems on CMHE tasks.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC98",
+          "KC99"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC98",
+        "KC99"
+      ],
+      "question_goal": "Ask the model to confirm that the hyperparameters were set as described and used in the evaluation.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "review_question_seeds": [],
+  "main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "main",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC12",
+        "KC42",
+        "KC11"
+      ],
+      "question_text": "What challenges motivate the introduction of the Chinese Medical Hallucination Evaluation (CMHE) benchmark, and how do these challenges relate to the limitations of existing evaluation methods?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC12",
+          "KC42"
+        ],
+        "optional_cover": [
+          "KC11"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "main",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC31",
+        "KC46"
+      ],
+      "question_text": "How do current medical hallucination evaluation benchmarks fall short, and what novel features does the CMHE benchmark introduce to overcome these shortcomings?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC31",
+          "KC46"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "main",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC13",
+        "KC95",
+        "KC134"
+      ],
+      "question_text": "Describe the structure of the CMHE benchmark: what are its constituent tasks and what processes related to hallucinations do they evaluate?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC13",
+          "KC95"
+        ],
+        "optional_cover": [
+          "KC134"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "main",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC67",
+        "KC61",
+        "KC59",
+        "KC55"
+      ],
+      "question_text": "What are the three tasks defined in this module and how are the datasets created for each task?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC67",
+          "KC61"
+        ],
+        "optional_cover": [
+          "KC59",
+          "KC55"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "main",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC75",
+        "KC77"
+      ],
+      "question_text": "What are the key statistics of the MedQA-USMLE and CMHE-DD datasets, including the number of instances selected from Mainland China and the number of distinct illnesses and ICD-10 categories in CMHE-DD?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC75",
+          "KC77"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "main",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC96",
+        "KC98"
+      ],
+      "question_text": "Which three LLMs are used as baselines for detecting medical hallucinations in Chinese text, and what hyperparameters (temperature, Top-P, Top-K, repetition penalty) are set for all models?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC96",
+          "KC98"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "main",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC105",
+        "KC25",
+        "KC115",
+        "KC116",
+        "KC118",
+        "KC111",
+        "KC129",
+        "KC110",
+        "KC24",
+        "KC106",
+        "KC99"
+      ],
+      "question_text": "What are the key experimental results and findings in the paper, covering performance on hallucination detection and disease diagnosis tasks, as well as general insights about LLM behavior?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC105",
+          "KC25"
+        ],
+        "optional_cover": [
+          "KC115",
+          "KC116",
+          "KC118",
+          "KC111",
+          "KC129",
+          "KC110",
+          "KC24",
+          "KC106",
+          "KC99"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "main",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC138",
+        "KC137",
+        "KC123"
+      ],
+      "question_text": "Based on the conclusion and limitations of the paper, what is the value of the CMHE benchmark and what challenge does it face in evaluating concept understanding?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC138",
+          "KC137"
+        ],
+        "optional_cover": [
+          "KC123"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "multi_hop_questions": [],
+  "reserved_followup_templates": []
+}

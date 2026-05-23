@@ -1,0 +1,13 @@
+{
+  "paper_id": "Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding",
+  "source_pdf": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\pdfInput\\Multi-Granular Multimodal Clue Fusion for Meme Understanding.pdf",
+  "raw_paper_dir": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding",
+  "doc_count": 9,
+  "markdown_image_count": 14,
+  "layout_image_count": 9,
+  "build_graph_env": {
+    "PAPER_INPUT_DIR": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding",
+    "PAPER_ID": "Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding"
+  },
+  "papergraph_data_dir": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\papergraph_demo\\data\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding"
+}

@@ -1,0 +1,1402 @@
+{
+  "paper_id": "ConVis",
+  "schema_version": "v1",
+  "table_explainer_model": "deepseek-v4-flash",
+  "figure_explainer_model": "qwen3.6-flash",
+  "figure_explainer_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "asset_explanations": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S3",
+      "macro_id": "M1",
+      "caption": "Figure 1: The text-to-image model visualizes hallucinations (e.g., book') in the semantically reconstructed images based on the hallucinated caption, exhibiting differences (e.g., missing clock') from the original image.",
+      "summary": "The figure illustrates a pipeline for analyzing image hallucinations in text-to-image models. It shows an 'Original Image' of a man on a beach being processed by an MLLM (Multimodal Large Language Model) with the prompt 'Describe this image in detail'. The MLLM generates a 'Hallucinated Caption' mentioning a 'book'. This caption is then fed into a 'T2I Model' (Text-to-Image), which produces a 'Generated Image' where the man is holding a large, distinct blue book. The figure highlights how the generated image emphasizes the 'book' mentioned in the caption.",
+      "key_elements": [
+        {
+          "name": "Original Image",
+          "role": "Input image showing a man on a beach holding an object"
+        },
+        {
+          "name": "Prompt",
+          "role": "Instruction given to the MLLM ('Describe this image in detail')"
+        },
+        {
+          "name": "MLLM",
+          "role": "Model block processing the image and prompt to generate text"
+        },
+        {
+          "name": "Hallucinated Caption",
+          "role": "Text output describing the scene, specifically mentioning 'carrying a book'"
+        },
+        {
+          "name": "T2I Model",
+          "role": "Model block generating an image from the text caption"
+        },
+        {
+          "name": "Generated Image",
+          "role": "Output image showing the man holding a large blue book"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Original Image",
+          "target": "MLLM",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Prompt",
+          "target": "MLLM",
+          "relation": "guides"
+        },
+        {
+          "source": "MLLM",
+          "target": "Hallucinated Caption",
+          "relation": "produces"
+        },
+        {
+          "source": "Hallucinated Caption",
+          "target": "T2I Model",
+          "relation": "conditions"
+        },
+        {
+          "source": "T2I Model",
+          "target": "Generated Image",
+          "relation": "generates"
+        },
+        {
+          "source": "Hallucinated Caption",
+          "target": "Generated Image",
+          "relation": "describes_content_of"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The pipeline uses an MLLM to generate a caption from an original image.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Arrows connecting Original Image and Prompt to MLLM, and MLLM to Hallucinated Caption.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The generated caption explicitly mentions a 'book'.",
+          "support_level": "visible_label",
+          "evidence_basis": "Text inside the 'Hallucinated Caption' box reads '...carrying a book in his hand...'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The T2I model generates an image based on the hallucinated caption.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Arrow from 'Hallucinated Caption' to 'T2I Model' to 'Generated Image'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The generated image depicts a prominent blue book held by the man.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Visual content of the 'Generated Image' panel.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The original image clearly shows a large blue book.",
+          "why_wrong": "The 'Original Image' shows a man holding a dark, indistinct rectangular object, not a clearly defined large blue book like in the generated image."
+        },
+        {
+          "claim": "The figure proves that the T2I model always hallucinates books.",
+          "why_wrong": "This is a single qualitative example ('qualitative_example'), not a statistical proof of universal behavior."
+        },
+        {
+          "claim": "A clock is visible in the original image but missing in the generated one.",
+          "why_wrong": "While the caption mentions 'missing clock', no clock is clearly visible in the provided 'Original Image' or 'Generated Image' crops to verify this difference visually."
+        }
+      ],
+      "limitations": [
+        "The figure only provides a single illustrative example, limiting generalizability.",
+        "The caption mentions a 'missing clock' difference, but this element is not clearly visible in the provided image panels to verify the claim.",
+        "The specific nature of the 'hallucination' regarding the book (whether it was present in the original or invented) relies on interpretation of the low-res original image."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "qualitative_example",
+      "section_id": "S3",
+      "macro_id": "M1",
+      "caption": "Figure 2: The original and reconstructed image generate the contrastive logit distribution for the hallucinated tokens (e.g., ‘book’). The reconstructed image tends to amplify the logits of tokens corresponding to the visualized hallucination.",
+      "summary": "The figure illustrates a qualitative comparison of how an original image versus a generated (reconstructed) image influences the logit distribution of a Multimodal Large Language Model (MLLM). It shows two parallel processing streams where both images are paired with the same text input sequence containing a masked token. The top stream uses the original image, resulting in a logit distribution where 'book' is predicted but shares prominence with other tokens like 'clock'. The bottom stream uses the generated image, which clearly depicts a book, resulting in a significantly amplified logit for the token 'book' compared to others.",
+      "key_elements": [
+        {
+          "name": "Original Image v",
+          "role": "Input visual showing a man on a beach with an indistinct object"
+        },
+        {
+          "name": "Generated Image v'",
+          "role": "Input visual showing a man on a beach clearly holding a book"
+        },
+        {
+          "name": "Input Sequence x",
+          "role": "Text prompt describing the scene with a masked token '[?]'"
+        },
+        {
+          "name": "MLLM",
+          "role": "Model block processing the image and text inputs"
+        },
+        {
+          "name": "Logit Distribution Charts",
+          "role": "Bar charts showing model confidence scores for tokens: bottle, clock, book, towel"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Original Image v",
+          "target": "MLLM",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Generated Image v'",
+          "target": "MLLM",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Input Sequence x",
+          "target": "MLLM",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "MLLM",
+          "target": "Logit Distribution Charts",
+          "relation": "produces"
+        },
+        {
+          "source": "Generated Image v'",
+          "target": "Logit Distribution Charts (bottom)",
+          "relation": "amplifies_logit_for"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The original image leads to a logit distribution where 'book' is a likely token but less dominant than in the generated case.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Top bar chart shows 'book' as highest but 'clock' is also high; caption mentions contrastive distribution.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The generated image amplifies the logits for the token 'book'.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption explicitly states 'The reconstructed image tends to amplify the logits of tokens corresponding to the visualized hallucination.' Visuals show 'book' bar is much taller in the bottom chart.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The input sequence contains a masked token represented by a question mark inside brackets.",
+          "support_level": "visible_label",
+          "evidence_basis": "Text 'carrying a [?]' is visible next to both images.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The figure proves that the MLLM cannot recognize the object in the original image.",
+          "why_wrong": "The top chart shows 'book' is still the highest or near-highest logit, indicating recognition is possible, just less certain or amplified than with the generated image."
+        },
+        {
+          "claim": "The figure shows the process of generating the image from the text.",
+          "why_wrong": "The arrows flow from Image + Text -> MLLM -> Logits. The generation process itself is not depicted, only the effect of the resulting image on the model's output."
+        }
+      ],
+      "limitations": [
+        "The figure presents a single qualitative example and does not provide statistical data across multiple samples.",
+        "The exact numerical values of the logits are not provided, only relative bar heights.",
+        "The specific method used to generate 'Image v'' is not shown in this figure."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S6",
+      "macro_id": "M3",
+      "caption": "The original and generated image produce the contrastive distribution for the hallucinated tokens (e.g., ‘book’). The generated image tends to amplify the logits of tokens corresponding to the visualized hallucination.",
+      "summary": "The figure illustrates a pipeline for visualizing hallucinations in multimodal models. It shows an original image of a man on a beach being processed by an MLLM to generate a caption containing a hallucination ('carrying a book'). This caption is used by a Text-to-Image (T2I) model to create synthetic images depicting the hallucination. Finally, both the original and generated images are encoded and fed into a language model to compute logits, demonstrating that the generated image amplifies the probability of the hallucinated token compared to the original image.",
+      "key_elements": [
+        {
+          "name": "Original Image v",
+          "role": "Source input showing a man on a beach without a book"
+        },
+        {
+          "name": "MLLM $\theta$",
+          "role": "Multimodal Large Language Model generating the caption"
+        },
+        {
+          "name": "Caption c",
+          "role": "Generated text containing a hallucination ('book')"
+        },
+        {
+          "name": "T2I Model",
+          "role": "Text-to-Image model generating images from the caption"
+        },
+        {
+          "name": "Generated Images v'",
+          "role": "Synthetic images depicting the hallucinated object (man with a book)"
+        },
+        {
+          "name": "Image Encoder",
+          "role": "Component encoding images for the LLM"
+        },
+        {
+          "name": "LLM",
+          "role": "Language model computing token logits"
+        },
+        {
+          "name": "Contrastive Distribution",
+          "role": "Comparison mechanism between original and generated image processing paths"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Original Image v",
+          "target": "MLLM $\theta$",
+          "relation": "inputs_to"
+        },
+        {
+          "source": "MLLM $\theta$",
+          "target": "Caption c",
+          "relation": "generates"
+        },
+        {
+          "source": "Caption c",
+          "target": "T2I Model",
+          "relation": "guides_generation_of"
+        },
+        {
+          "source": "T2I Model",
+          "target": "Generated Images v'",
+          "relation": "produces"
+        },
+        {
+          "source": "Original Image v",
+          "target": "Image Encoder",
+          "relation": "encoded_by_top_branch"
+        },
+        {
+          "source": "Generated Images v'",
+          "target": "Image Encoder",
+          "relation": "encoded_by_bottom_branch"
+        },
+        {
+          "source": "Top Branch Logits",
+          "target": "Bottom Branch Logits",
+          "relation": "compared_in_contrastive_distribution"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The pipeline uses generated images to highlight specific hallucinated tokens.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "flowchart structure connecting Caption to T2I Model to Generated Images",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "The generated image leads to higher logits for the hallucinated token 'book'.",
+          "support_level": "caption_supported",
+          "evidence_basis": "caption stating 'generated image tends to amplify the logits' and visual bar chart comparison",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "The word 'book' is identified as a hallucination because it appears in the generated image but not the original.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visual comparison of Original Image (no book) vs Generated Images (has book)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The T2I model is part of the standard inference loop for the MLLM.",
+          "why_wrong": "The diagram separates the 'Hallucination Visualization' block (left) from the 'Contrastive Decoding' block (right), suggesting the T2I generation is an auxiliary step for analysis, not standard operation."
+        },
+        {
+          "claim": "The bar charts represent accuracy scores.",
+          "why_wrong": "The labels $f_\theta(y_t|...)$ indicate log probabilities or logits, not accuracy metrics."
+        }
+      ],
+      "limitations": [
+        "This is a single qualitative example and does not demonstrate statistical significance across a dataset.",
+        "The specific architecture of the MLLM and T2I models is abstracted ($\theta$, generic boxes)."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S9",
+      "macro_id": "M5",
+      "caption": "Table 1: Evaluation results on the CHAIR benchmark using the MSCOCO dataset (val2014 split). We conduct experiments with three different sets of 500 images, each selected by random seeds. The reported value is the mean of the results from the three different seeds, with the $ \\pm $ symbol representing the standard deviation.",
+      "summary": "This table reports CHAIR_S and CHAIR_I evaluation results for three multimodal models (LLaVA-1.5, mPLUG-Owl2, MiniGPT-4) under seven decoding methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, Ours) on the MSCOCO dataset (val2014 split). Each value is the mean ± standard deviation across three runs with different random seeds. Lower CHAIR_S and CHAIR_I scores indicate fewer hallucinations.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "For LLaVA-1.5 under Greedy Search, CHAIR_S is 22.4 ± 1.11 and CHAIR_I is 7.4 ± 0.27.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: Greedy Search, Columns: LLaVA-1.5 CHAIR_S and CHAIR_I",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "For mPLUG-Owl2 under Ours method, CHAIR_S is 17.6 ± 3.54 and CHAIR_I is 6.0 ± 0.89.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: Ours, Columns: mPLUG-Owl2 CHAIR_S and CHAIR_I",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "Ours method yields lower CHAIR_S than Greedy Search on all three models: LLaVA-1.5 (18.4 vs 22.4), mPLUG-Owl2 (17.6 vs 22.2), MiniGPT-4 (23.5 vs 34.0).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison between Ours and Greedy Search rows across models",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "For LLaVA-1.5, Ours and Beam Search achieve the lowest CHAIR_I (both 6.4).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Row: Ours and Beam Search, Column: LLaVA-1.5 CHAIR_I",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Ours method is superior to all others on every metric.",
+          "why_wrong": "While Ours has the lowest CHAIR_S in all models, CHAIR_I is sometimes tied with Beam Search (e.g., LLaVA-1.5: both 6.4; mPLUG-Owl2: both 6.0). Moreover, standard deviations overlap, so differences may not be statistically significant."
+        },
+        {
+          "claim": "The CHAIR metric fully captures hallucination.",
+          "why_wrong": "CHAIR only measures object-level hallucination and does not cover other types (e.g., attribute, relational)."
+        },
+        {
+          "claim": "Results generalize to other datasets or models.",
+          "why_wrong": "The table only uses MSCOCO val2014 and three specific models; different datasets or models may yield different rankings."
+        }
+      ],
+      "limitations": [
+        "Only three random seeds were used; variance may not be fully captured.",
+        "Evaluation is limited to the MSCOCO dataset (val2014 split).",
+        "CHAIR metric focuses on object hallucination only.",
+        "No statistical significance tests are reported.",
+        "Only three models were tested; newer models may behave differently."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S9",
+      "macro_id": "M5",
+      "caption": "Table 2: Evaluation results on HallusionBench. We report Figure Acc and All Acc using LLaVA-1.5.",
+      "summary": "This table reports evaluation results on HallusionBench using LLaVA-1.5, comparing eight methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, and Ours) on two metrics: Figure Acc (fAcc) and All Acc (aAcc). The method 'Ours' achieves the highest scores on both metrics: 23.5 fAcc and 50.8 aAcc.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Greedy Search achieves Figure Acc of 22.2",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Greedy Search', column 'Figure Acc (fAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Nucleus Sampling achieves Figure Acc of 17.8",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Nucleus Sampling', column 'Figure Acc (fAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Beam Search achieves Figure Acc of 19.1",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Beam Search', column 'Figure Acc (fAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "VCD achieves Figure Acc of 21.7",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'VCD', column 'Figure Acc (fAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "OPERA achieves Figure Acc of 20.9",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'OPERA', column 'Figure Acc (fAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "HALC achieves Figure Acc of 21.7",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'HALC', column 'Figure Acc (fAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Ours achieves Figure Acc of 23.5",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Ours', column 'Figure Acc (fAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Greedy Search achieves All Acc of 50.1",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Greedy Search', column 'All Acc (aAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Nucleus Sampling achieves All Acc of 46.2",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Nucleus Sampling', column 'All Acc (aAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Beam Search achieves All Acc of 48.4",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Beam Search', column 'All Acc (aAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "VCD achieves All Acc of 47.5",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'VCD', column 'All Acc (aAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "OPERA achieves All Acc of 49.9",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'OPERA', column 'All Acc (aAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "HALC achieves All Acc of 50.6",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'HALC', column 'All Acc (aAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Ours achieves All Acc of 50.8",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Ours', column 'All Acc (aAcc)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Ours has the highest Figure Acc among all methods (23.5)",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of Figure Acc column values; Ours (23.5) > all others",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Ours has the highest All Acc among all methods (50.8)",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of All Acc column values; Ours (50.8) > all others",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Ours significantly outperforms all baselines on HallusionBench.",
+          "why_wrong": "The performance margins are small: Ours achieves only +1.8 over Greedy Search in Figure Acc and +0.2 over HALC in All Acc. 'Significant' is subjective and not supported by statistical tests."
+        },
+        {
+          "claim": "The table reports results on multiple benchmarks.",
+          "why_wrong": "The caption explicitly states 'Evaluation results on HallusionBench'. Only one benchmark is used."
+        },
+        {
+          "claim": "All Acc is overall accuracy across all question types.",
+          "why_wrong": "The table does not define what 'All Acc' encompasses. It could be accuracy across all images, or across all questions types, but the definition is not provided in the table."
+        }
+      ],
+      "limitations": [
+        "The table only covers one benchmark (HallusionBench), so results may not generalize.",
+        "Only two accuracy metrics are reported; other metrics such as robustness or efficiency are absent.",
+        "No statistical significance or confidence intervals are provided.",
+        "The table does not describe the experimental setup (e.g., hyperparameters, random seeds) which could affect reproducibility."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S10",
+      "macro_id": "M6",
+      "caption": "Table 3: Evaluation results on the POPE benchmark using the MSCOCO dataset (val2014 split).",
+      "summary": "Table reports evaluation results (accuracy) on the POPE benchmark (MSCOCO val2014) for four methods (VCD, OPERA, HALC, Ours) across three models (LLaVA-1.5, mPLUG-Owl2, MiniGPT-4) and their average.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Ours achieves an average score of 78.6 across the three models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Ours', column 'Average'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "HALC achieves 83.4 on mPLUG-Owl2, the highest among all methods for that model.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of values in column 'mPLUG-Owl2'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "Ours achieves 83.0 on LLaVA-1.5, tying with OPERA.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Ours' and 'OPERA', column 'LLaVA-1.5'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "VCD achieves 82.8 on LLaVA-1.5.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'VCD', column 'LLaVA-1.5'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Ours outperforms all methods on every model.",
+          "why_wrong": "Ours ties with OPERA on LLaVA-1.5 (both 83.0) and is second to HALC (83.4 vs 83.0) on mPLUG-Owl2."
+        },
+        {
+          "claim": "HALC is the worst method overall.",
+          "why_wrong": "HALC has the highest score on mPLUG-Owl2 (83.4) and its average (67.9) is lower than others, but it is not uniformly worst."
+        }
+      ],
+      "limitations": [
+        "Results are limited to the POPE benchmark using MSCOCO val2014 split.",
+        "Only three models (LLaVA-1.5, mPLUG-Owl2, MiniGPT-4) and four methods are compared.",
+        "No confidence intervals or statistical significance are provided.",
+        "Only a single evaluation metric is reported."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S10",
+      "macro_id": "M6",
+      "caption": "Table 4: Evaluation results on the MME using LLaVA-1.5.",
+      "summary": "Table 4 presents evaluation results on the MME benchmark using LLaVA-1.5, comparing seven decoding methods: Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, and Ours. Scores are reported for Perception, Cognition, and Total metrics.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Ours achieves a Total score of 1793.7.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Ours', column 'Total' in the table; caption indicates MME evaluation.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "VCD obtains a Cognition score of 374.6, the highest in that category.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparing all rows in the 'Cognition' column; VCD score 374.6 exceeds others.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "HALC scores 887.7 on Perception, the lowest among all methods.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparing all rows in the 'Perception' column; HALC score 887.7 is the minimum.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Ours is the best method across all categories (Perception, Cognition, Total).",
+          "why_wrong": "Ours has the highest Total (1793.7) and Perception (1487.6), but VCD scores higher on Cognition (374.6 vs 306.1). Thus, Ours is not best in all categories."
+        },
+        {
+          "claim": "The table shows that beam search outperforms greedy search overall.",
+          "why_wrong": "Beam Search Total (1765.5) is slightly lower than Greedy Search (1776.4), so beam search does not outperform greedy search on Total."
+        }
+      ],
+      "limitations": [
+        "Results are limited to the MME benchmark and LLaVA-1.5 model; may not generalize to other datasets or models.",
+        "No measures of variance or statistical significance are provided.",
+        "Only three metrics (Perception, Cognition, Total) are reported; other relevant aspects may be missing."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_005",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S10",
+      "macro_id": "M6",
+      "caption": "Table 5: Evaluation results on LLaVA-Bench using LLaVA-1.5.",
+      "summary": "This table reports evaluation results on LLaVA-Bench using the LLaVA-1.5 model, comparing seven decoding methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, and Ours) across four metrics: Complex, Conv, Detail, and All. The scores are numeric values likely representing quality or accuracy percentages.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Ours achieved the highest overall score (All) of 73.3 among the listed methods.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'Ours' column 'All' in table",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "HALC had the lowest scores on all four metrics (Complex: 55.8, Conv: 31.1, Detail: 50.4, All: 47.1).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "rows 'HALC' for columns Complex, Conv, Detail, All",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "The table evaluates seven decoding methods using LLaVA-1.5 on LLaVA-Bench.",
+          "support_level": "caption_supported",
+          "evidence_basis": "caption: 'Table 5: Evaluation results on LLaVA-Bench using LLaVA-1.5.'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Ours is the best decoding method overall.",
+          "why_wrong": "The table only shows results on LLaVA-Bench and for LLaVA-1.5; performance may differ on other benchmarks or models."
+        },
+        {
+          "claim": "The scores are accuracy percentages.",
+          "why_wrong": "The table does not define the metric; LLaVA-Bench scores are not necessarily accuracy."
+        },
+        {
+          "claim": "Beam Search outperforms Greedy Search on all metrics.",
+          "why_wrong": "Beam Search has a lower score on Detail (58.8 vs 64.1), so it does not outperform on all metrics."
+        }
+      ],
+      "limitations": [
+        "Results are specific to LLaVA-1.5 and LLaVA-Bench, may not generalize to other models or benchmarks.",
+        "No statistical significance or variance is reported.",
+        "The metric definitions and scales are not provided."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_006",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S11",
+      "macro_id": "M7",
+      "caption": "Table 6: Our performance when differentiating the T2I models for visualizing hallucinations. We generate captions with nucleus sampling and set max new token for 64 and generate the image with those captions. Inference step for diffusion set to be all 1.",
+      "summary": "This table compares the performance of three text-to-image (T2I) models (Hyper-SD1.5, SDXL-Turbo, Hyper-SDXL) in terms of CLIPScore, CHAIRs, and CHAIRI when evaluated with three different LLMs (LLaVA-1.5, mPLUG-Owl2, MiniGPT-4). The T2I models generate images from captions produced by the LLMs, and all diffusion inference steps are set to 1.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Hyper-SDXL achieves the highest CLIPScore of 32.85 among the three T2I models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 5 (Hyper-SDXL), column 2 (CLIPScore): value 32.85",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "Hyper-SD1.5 has a CLIPScore of 30.87.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 3 (Hyper-SD1.5), column 2 (CLIPScore): value 30.87",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "Hyper-SDXL achieves the lowest CHAIRs (17) for both LLaVA-1.5 and mPLUG-Owl2, and the lowest (24.4) for MiniGPT-4 among the three T2I models.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Rows 3-5, columns 3 (LLaVA-1.5 CHAIRs), 5 (mPLUG-Owl2 CHAIRs), 7 (MiniGPT-4 CHAIRs): Hyper-SDXL values 17, 17, 24.4 are each lower than corresponding values for Hyper-SD1.5 (20.2, 19.4, 28.2) and SDXL-Turbo (18.8, 20.2, 25.2).",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "SDXL-Turbo has a slightly lower CHAIRI for MiniGPT-4 (9.9) compared to Hyper-SDXL (10.0).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 4 (SDXL-Turbo), column 8 (MiniGPT-4 CHAIRI): value 9.9; Row 5 (Hyper-SDXL), column 8: value 10.0",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "Hyper-SDXL achieves the lowest CHAIRI for LLaVA-1.5 (5.6) and mPLUG-Owl2 (5.3) among the three T2I models.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Rows 3-5, columns 4 (LLaVA-1.5 CHAIRI) and 6 (mPLUG-Owl2 CHAIRI): Hyper-SDXL values 5.6 and 5.3 are lower than corresponding values for Hyper-SD1.5 (6.6, 6.4) and SDXL-Turbo (6.6, 6.68).",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Higher CLIPScore correlates with better hallucination detection across all metrics.",
+          "why_wrong": "While Hyper-SDXL has the highest CLIPScore and generally lower CHAIRs/CHAIRI, SDXL-Turbo has higher CLIPScore than Hyper-SD1.5 but does not consistently outperform it on CHAIRs/CHAIRI (e.g., CHAIRs for mPLUG-Owl2: Hyper-SD1.5 19.4 vs SDXL-Turbo 20.2). Thus, no monotonic relationship is established."
+        },
+        {
+          "claim": "The results generalize to other LLMs not tested (e.g., GPT-4, Claude).",
+          "why_wrong": "The table only evaluates LLaVA-1.5, mPLUG-Owl2, and MiniGPT-4. Performance may differ with other LLMs due to variations in caption quality or biases."
+        },
+        {
+          "claim": "Hyper-SDXL is the best T2I model overall for hallucination visualization.",
+          "why_wrong": "Although Hyper-SDXL often has the best scores, it does not win on every metric (e.g., CHAIRI for MiniGPT-4 is slightly worse than SDXL-Turbo). The table does not provide a holistic ranking or significance testing."
+        }
+      ],
+      "limitations": [
+        "Only three T2I models are compared; results may not extend to other models.",
+        "Only three LLMs are used for caption generation; LLMs may differ in performance.",
+        "Sampling parameters (nucleus sampling, max new tokens=64) and diffusion inference steps (all 1) are fixed; other settings may alter outcomes.",
+        "Metrics (CLIPScore, CHAIRs, CHAIRI) capture specific aspects but do not fully represent hallucination severity or image quality.",
+        "No statistical significance measures are provided."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_007",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S11",
+      "macro_id": "M7",
+      "caption": "Table 7: Comparison of performance using a single image $ (n = 1) $ generated by two different decoding strategies, Greedy search and Nucleus sampling.",
+      "summary": "Table 7 reports CHAIR_S and CHAIR_I scores for three vision-language models (LLaVA-1.5, mPLUG-Owl2, MiniGPT-4) using two decoding strategies (Greedy Search and Nucleus Sampling) on a single image (n=1). Lower scores indicate less hallucination.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "For LLaVA-1.5, Nucleus Sampling yields lower CHAIR_S (18.8) than Greedy Search (19.4).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Rows 'Greedy Search' and 'Nucleus Sampling' under 'CHAIR_S', column 'LLaVA-1.5'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "For mPLUG-Owl2, Nucleus Sampling yields lower CHAIR_S (15.2) than Greedy Search (19.4).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Rows 'Greedy Search' and 'Nucleus Sampling' under 'CHAIR_S', column 'mPLUG-Owl2'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "For MiniGPT-4, Nucleus Sampling yields lower CHAIR_S (24.4) than Greedy Search (27.2).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Rows 'Greedy Search' and 'Nucleus Sampling' under 'CHAIR_S', column 'MiniGPT-4'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "For LLaVA-1.5, Greedy Search yields lower CHAIR_I (6.6) than Nucleus Sampling (6.7).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Rows 'Greedy Search' and 'Nucleus Sampling' under 'CHAIR_I', column 'LLaVA-1.5'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "For mPLUG-Owl2, Nucleus Sampling yields lower CHAIR_I (5.1) than Greedy Search (6.4).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Rows 'Greedy Search' and 'Nucleus Sampling' under 'CHAIR_I', column 'mPLUG-Owl2'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "For MiniGPT-4, Nucleus Sampling yields lower CHAIR_I (10.3) than Greedy Search (11.6).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Rows 'Greedy Search' and 'Nucleus Sampling' under 'CHAIR_I', column 'MiniGPT-4'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "Nucleus Sampling reduces CHAIR_S for all three models compared to Greedy Search.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "All three model columns under 'CHAIR_S' showing lower values for Nucleus Sampling",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "For CHAIR_I, Nucleus Sampling reduces scores for mPLUG-Owl2 and MiniGPT-4 but increases for LLaVA-1.5.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "CHAIR_I values: LLaVA-1.5 (G:6.6, N:6.7), mPLUG-Owl2 (G:6.4, N:5.1), MiniGPT-4 (G:11.6, N:10.3)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Nucleus Sampling is always better than Greedy Search for both metrics across all models.",
+          "why_wrong": "For LLaVA-1.5 CHAIR_I, Greedy Search (6.6) outperforms Nucleus Sampling (6.7)."
+        },
+        {
+          "claim": "The results generalize to multiple images or other decoding strategies.",
+          "why_wrong": "The table only reports results for a single image (n=1) and two specific decoding strategies; no evidence for other conditions."
+        },
+        {
+          "claim": "CHAIR scores are directly comparable across models without considering model size or training data.",
+          "why_wrong": "The table does not provide model details like parameter count or training data, so cross-model comparisons may be confounded."
+        }
+      ],
+      "limitations": [
+        "Results based on a single image (n=1), not representative of multi-image performance.",
+        "Only three models evaluated; limited generalizability.",
+        "Only two decoding strategies tested.",
+        "Only CHAIR metrics reported; no other hallucination or quality metrics.",
+        "No statistical significance or variance information provided.",
+        "Potential reproduction issues if not strictly replicating the same setting."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S11",
+      "macro_id": "M7",
+      "caption": "Figure 4: Effect of the number of images with different captions.",
+      "summary": "Figure 4 consists of two line charts (Panel 1 and Panel 2) analyzing the effect of the number of images (n) on model performance. It compares three models: MiniGPT-4, LLaVA-1.5, and mPLUG-Owl2. Both panels feature a broken y-axis to separate MiniGPT-4's higher scores from the other models. Panel 1 displays data for MiniGPT-4 and mPLUG-Owl2, while Panel 2 displays data for all three models.",
+      "key_elements": [
+        {
+          "name": "MiniGPT-4",
+          "role": "Model represented by the blue line, consistently showing the highest scores in both panels."
+        },
+        {
+          "name": "mPLUG-Owl2",
+          "role": "Model represented by the green line, showing lower scores than MiniGPT-4 in both panels."
+        },
+        {
+          "name": "LLaVA-1.5",
+          "role": "Model represented by the orange line, visible in Panel 2 but absent in Panel 1."
+        },
+        {
+          "name": "n",
+          "role": "X-axis variable representing the number of images (values 1, 2, 3, 4)."
+        },
+        {
+          "name": "Broken Y-axis",
+          "role": "Visual separator indicating a discontinuity in scale between MiniGPT-4 and the other models."
+        }
+      ],
+      "relations": [
+        {
+          "source": "MiniGPT-4",
+          "target": "mPLUG-Owl2",
+          "relation": "has_higher_scores_than"
+        },
+        {
+          "source": "LLaVA-1.5",
+          "target": "mPLUG-Owl2",
+          "relation": "has_similar_scores_to"
+        },
+        {
+          "source": "n",
+          "target": "scores",
+          "relation": "influences_trend_of"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "MiniGPT-4 achieves higher scores than mPLUG-Owl2 across all values of n.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible label, panel",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "Increasing the number of images (n) generally leads to a decrease in scores for all models.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible label, panel",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "LLaVA-1.5 and mPLUG-Owl2 exhibit comparable performance in Panel 2.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible label, panel",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The figure displays bar charts.",
+          "why_wrong": "The visual evidence clearly shows line charts with markers, contradicting the nearby context description."
+        },
+        {
+          "claim": "LLaVA-1.5 was not evaluated in Panel 1.",
+          "why_wrong": "While the orange line is not visible, it may be hidden behind the green line or off-scale, rather than absent."
+        }
+      ],
+      "limitations": [
+        "The specific metric names (CHAIR_S vs CHAIR_I) are not explicitly labeled on the axes in the provided images.",
+        "The absence of the LLaVA-1.5 (orange) line in Panel 1 prevents direct comparison for that specific metric.",
+        "The direction of 'better' performance (higher vs lower score) is not explicitly defined in the figure."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "chart",
+      "section_id": "S11",
+      "macro_id": "M7",
+      "caption": "Figure 5: KL divergence between output distributions across each decoding step when the MLLM is provided with the images and caption from Figure 6 (a). The KL divergence is significantly elevated for the hallucinated token “car”.",
+      "summary": "The figure is a bar chart displaying the Kullback-Leibler (KL) divergence values for a sequence of tokens: 'ing', 'over', 'a', 'car', 'in', 'a', and 'par'. The chart visually demonstrates that the token 'car' has a significantly higher KL divergence compared to all other tokens shown, with its bar extending beyond the value of 6 on the y-axis.",
+      "key_elements": [
+        {
+          "name": "KL Divergence",
+          "role": "Y-axis label indicating the metric measured"
+        },
+        {
+          "name": "car",
+          "role": "X-axis label corresponding to the tallest bar"
+        },
+        {
+          "name": "par",
+          "role": "X-axis label corresponding to the second tallest bar"
+        },
+        {
+          "name": "ing, over, a, in",
+          "role": "X-axis labels corresponding to shorter bars"
+        }
+      ],
+      "relations": [
+        {
+          "source": "car",
+          "target": "highest bar",
+          "relation": "corresponds_to"
+        },
+        {
+          "source": "par",
+          "target": "second highest bar",
+          "relation": "corresponds_to"
+        },
+        {
+          "source": "car",
+          "target": "KL Divergence > 6",
+          "relation": "exceeds"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The KL divergence for the token 'car' is the highest among the displayed tokens.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible_label, bar height",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "The KL divergence for the token 'car' is greater than 6.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible_label, axis scale",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "The KL divergence for the token 'par' is approximately 3.5.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible_label, axis scale",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The x-axis represents time steps in the decoding process.",
+          "why_wrong": "The x-axis labels are clearly text tokens ('car', 'ing', etc.), not numerical step indices."
+        },
+        {
+          "claim": "The token 'a' appears only once.",
+          "why_wrong": "The label 'a' appears twice on the x-axis with different bar heights."
+        }
+      ],
+      "limitations": [
+        "The exact numerical values for each bar are not explicitly labeled, requiring estimation from the y-axis.",
+        "The context of why specific tokens were chosen or their order is not fully explained by the visual alone without the caption."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_006",
+      "asset_type": "figure",
+      "modality_class": "unknown",
+      "subtype": "unknown_figure",
+      "section_id": "S11",
+      "macro_id": "M7",
+      "caption": "",
+      "summary": "The figure displays two comparative examples involving image generation and understanding. The left panel contrasts an 'Original Image' of a black and white dog jumping a pool with a 'Generated Image' of a brown dog jumping a car, accompanied by the caption used for the generated image and a description ('Ours Decoding') of the original image. The right panel shows a fruit stand scene (labeled both Original and Generated), its generation caption, and a Visual Question Answering (VQA) task where the model ('Ours Decoding') correctly answers 'No' to the presence of a bed.",
+      "key_elements": [
+        {
+          "name": "Original Image (Left)",
+          "role": "A real photograph of a black and white dog jumping over a swimming pool."
+        },
+        {
+          "name": "Generated Image (Left)",
+          "role": "An AI-generated image of a brown dog jumping over a car in a parking lot."
+        },
+        {
+          "name": "Caption used for image generation (Left)",
+          "role": "Text describing the content of the Generated Image (dog jumping car)."
+        },
+        {
+          "name": "Ours Decoding (Left)",
+          "role": "Text describing the content of the Original Image (dog jumping pool)."
+        },
+        {
+          "name": "Original Image (Right)",
+          "role": "A photograph of a fruit stand filled with oranges."
+        },
+        {
+          "name": "Generated Image (Right)",
+          "role": "A generated image of a fruit stand, appearing very similar to the original."
+        },
+        {
+          "name": "Caption used for image generation (Right)",
+          "role": "Text describing the fruit stand scene."
+        },
+        {
+          "name": "Question",
+          "role": "A VQA prompt asking if there is a bed in the image."
+        },
+        {
+          "name": "Greedy Decoding",
+          "role": "Baseline model output answering the question."
+        },
+        {
+          "name": "Ours Decoding (Right)",
+          "role": "Proposed model output answering the question."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Caption used for image generation (Left)",
+          "target": "Generated Image (Left)",
+          "relation": "describes"
+        },
+        {
+          "source": "Ours Decoding (Left)",
+          "target": "Original Image (Left)",
+          "relation": "describes"
+        },
+        {
+          "source": "Caption used for image generation (Right)",
+          "target": "Original Image (Right)",
+          "relation": "describes"
+        },
+        {
+          "source": "Question",
+          "target": "Generated Image (Right)",
+          "relation": "asks_about"
+        },
+        {
+          "source": "Ours Decoding (Right)",
+          "target": "Question",
+          "relation": "answers"
+        },
+        {
+          "source": "Greedy Decoding",
+          "target": "Question",
+          "relation": "answers"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The left panel shows a contrast between a real image of a dog jumping a pool and a generated image of a dog jumping a car.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Visual content of the top images and their labels.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        },
+        {
+          "claim": "The text labeled 'Ours Decoding' on the left describes the 'Original Image' rather than the 'Generated Image'.",
+          "support_level": "visible_label",
+          "evidence_basis": "Text mentions 'pool' and 'black and white dog', matching the Original Image visual.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        },
+        {
+          "claim": "The right panel demonstrates a VQA task where the model correctly identifies the absence of a bed.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Text boxes showing the question and the 'No' answer from 'Ours Decoding'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The 'Ours Decoding' text on the left describes the generated image.",
+          "why_wrong": "The text explicitly mentions a 'pool' and 'black and white dog', which corresponds to the 'Original Image', while the 'Generated Image' depicts a car and a colored dog."
+        },
+        {
+          "claim": "The 'Original Image' and 'Generated Image' on the right are completely different scenes.",
+          "why_wrong": "Visually, both images depict the same fruit stand scene with oranges, suggesting high fidelity or minor edits rather than distinct scenes."
+        }
+      ],
+      "limitations": [
+        "The figure does not explicitly state the relationship between the Original and Generated images in the left panel (e.g., whether it is an editing task, a retrieval failure, or a comparison of modalities).",
+        "Quantitative performance metrics are not provided, only qualitative examples."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    }
+  ],
+  "summary": {
+    "asset_explanation_count": 13,
+    "by_asset_type": {
+      "figure": 6,
+      "table": 7
+    },
+    "needs_review_count": 0,
+    "supported_claim_count": 62,
+    "possible_misreading_count": 32
+  }
+}

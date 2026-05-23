@@ -1,0 +1,13 @@
+{
+  "paper_id": "Learning_Auxiliary_ACL2025_-10pages",
+  "source_pdf": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\pdfInput\\Learning Auxiliary(ACL2025)-10pages.pdf",
+  "raw_paper_dir": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages",
+  "doc_count": 10,
+  "markdown_image_count": 8,
+  "layout_image_count": 10,
+  "build_graph_env": {
+    "PAPER_INPUT_DIR": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages",
+    "PAPER_ID": "Learning_Auxiliary_ACL2025_-10pages"
+  },
+  "papergraph_data_dir": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\papergraph_demo\\data\\Learning_Auxiliary_ACL2025_-10pages"
+}

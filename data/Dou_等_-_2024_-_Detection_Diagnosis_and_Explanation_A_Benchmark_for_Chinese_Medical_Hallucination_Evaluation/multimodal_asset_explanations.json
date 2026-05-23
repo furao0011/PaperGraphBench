@@ -1,0 +1,1310 @@
+{
+  "paper_id": "Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation",
+  "schema_version": "v1",
+  "table_explainer_model": "deepseek-v4-flash",
+  "figure_explainer_model": "qwen3.6-flash",
+  "figure_explainer_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "asset_explanations": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S3",
+      "macro_id": "M1",
+      "macro_resolution_status": "resolved",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem Motivation and Need for CMHE Benchmark",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "caption": "Figure 1: An example of snowballing hallucinations. We formulate a multi-choice question with options A, B, and D as correct answers, and specifically instruct ChatGPT, a specific LLM, to select only one option. ChatGPT follows our instructions without questioning them, chooses option A as the answer and then provides explanations for why both options B and D are incorrect. We discover that ChatGPT possesses the capability to identify its own errors when prompted with questions.",
+      "summary": "The figure illustrates a multi-turn chat interaction with an LLM (ChatGPT) demonstrating 'snowballing hallucinations.' It starts with a user posing a multiple-choice question about vascular diagnostic protocols. The model selects 'Digital subtraction angiography' and explicitly states that 'Fluorescein angiography' is not commonly used for this purpose. In the final turn, the user quotes the model's statement about Fluorescein angiography and asks for verification, prompting the model to contradict itself by stating the assertion is incorrect.",
+      "key_elements": [
+        {
+          "name": "User Question Box",
+          "role": "Contains the medical scenario and four multiple-choice options (A, B, C, D)."
+        },
+        {
+          "name": "Model Response 1 (Green Box)",
+          "role": "Shows the model selecting Option A and providing a rationale that dismisses Option D."
+        },
+        {
+          "name": "User Follow-up Text",
+          "role": "Repeats the model's claim about Option D being uncommon and asks if it is correct."
+        },
+        {
+          "name": "Model Response 2 (Small Green Box)",
+          "role": "Shows the model contradicting its previous statement by labeling the assertion as incorrect."
+        }
+      ],
+      "relations": [
+        {
+          "source": "User Question Box",
+          "target": "Model Response 1",
+          "relation": "triggers"
+        },
+        {
+          "source": "Model Response 1",
+          "target": "User Follow-up Text",
+          "relation": "provides_content_for"
+        },
+        {
+          "source": "User Follow-up Text",
+          "target": "Model Response 2",
+          "relation": "triggers_contradiction"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The model selected 'Digital subtraction angiography' as the answer to the medical question.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Visible text in the first green response box.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The model initially claimed that Fluorescein angiography is not commonly used in vascular disease diagnosis.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Visible text in the first green response box.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "When asked to verify its own previous statement, the model stated that the assertion was incorrect.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Visible text in the bottom right green box.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The model consistently maintained that Fluorescein angiography is not useful for vascular diseases.",
+          "why_wrong": "The final panel explicitly contradicts the earlier statement by saying 'The assertion is incorrect,' indicating the model recognized its previous claim was false when prompted directly."
+        },
+        {
+          "claim": "The question had only one valid answer among the choices.",
+          "why_wrong": "The caption clarifies that options A, B, and D were formulated as correct answers, implying the question was designed to test how the model handles multiple valid options under a single-choice constraint."
+        }
+      ],
+      "limitations": [
+        "This figure only demonstrates a specific instance of self-contradiction on a medical question; it does not prove general behavior across all topics or models.",
+        "The visual evidence is limited to a single screenshot and cannot show the internal reasoning process of the model."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "pipeline_diagram",
+      "section_id": "S6",
+      "macro_id": null,
+      "macro_resolution_status": "unresolved",
+      "macro_candidates": [],
+      "caption": "Figure 2: Overview of the CMHE dataset construction, which contains three components (A), (B), and (C) corresponding to CMHE-HD, CMHE-DD, and CMHE-CE, respectively. Note that orange color denotes the data source and blue color denotes the generated data. Parallelograms represent operations, where the red ones represent operations involving humans, while the green ones represent operations involving machines.",
+      "summary": "Figure 2 illustrates the construction pipeline of the CMHE dataset, divided into three components: (A) CMHE-HD, (B) CMHE-DD, and (C) CMHE-CE. The diagram uses color coding to distinguish data sources (orange), generated/intermediate data (blue cylinders), and processing operations (parallelograms). Operations are further categorized by agent: red parallelograms indicate human involvement, while green parallelograms indicate machine-based operations.",
+      "key_elements": [
+        {
+          "name": "Data Sources",
+          "role": "Initial inputs for the pipeline, colored orange (CMD, CMedQA2, KaMed, MedQA, ICD-10, MeSH)"
+        },
+        {
+          "name": "Machine Operations",
+          "role": "Automated processing steps, colored green parallelograms (Generation, Tampering, Disease Standardization, Question Design)"
+        },
+        {
+          "name": "Human Operations",
+          "role": "Manual processing steps, colored red parallelograms (Human Filtering, Manual IE, Terms Filtering)"
+        },
+        {
+          "name": "Intermediate Data",
+          "role": "Raw data stores, blue cylinders (Hall Dect Raw Data, Diagnostic Raw Data)"
+        },
+        {
+          "name": "Final Datasets",
+          "role": "Output components, blue cylinders (CMHE-HD, CMHE-DD, CMHE-CE)"
+        },
+        {
+          "name": "Panel (A)",
+          "role": "Pipeline for CMHE-HD (Hallucination Detection)"
+        },
+        {
+          "name": "Panel (B)",
+          "role": "Pipeline for CMHE-DD (Diagnosis Description)"
+        },
+        {
+          "name": "Panel (C)",
+          "role": "Pipeline for CMHE-CE (Clinical Explanation)"
+        }
+      ],
+      "relations": [
+        {
+          "source": "CMD",
+          "target": "Generation",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "CMedQA2",
+          "target": "Tampering",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Generation",
+          "target": "Hall Dect Raw Data",
+          "relation": "produces"
+        },
+        {
+          "source": "Tampering",
+          "target": "Hall Dect Raw Data",
+          "relation": "produces"
+        },
+        {
+          "source": "Hall Dect Raw Data",
+          "target": "Human Filtering",
+          "relation": "undergoes"
+        },
+        {
+          "source": "Human Filtering",
+          "target": "CMHE-HD",
+          "relation": "results_in"
+        },
+        {
+          "source": "KaMed",
+          "target": "Manual IE",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "MedQA",
+          "target": "Diagnostic Raw Data",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Manual IE",
+          "target": "Diagnostic Raw Data",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Diagnostic Raw Data",
+          "target": "Disease Standardization",
+          "relation": "undergoes"
+        },
+        {
+          "source": "ICD-10",
+          "target": "Disease Standardization",
+          "relation": "supports"
+        },
+        {
+          "source": "Disease Standardization",
+          "target": "CMHE-DD",
+          "relation": "results_in"
+        },
+        {
+          "source": "MeSH",
+          "target": "Terms Filtering",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Terms Filtering",
+          "target": "Question Design",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Question Design",
+          "target": "CMHE-CE",
+          "relation": "results_in"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The CMHE-HD component is constructed from CMD and CMedQA2 sources via generation and tampering.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel (A) shows arrows originating from CMD and CMedQA2 boxes leading to Generation and Tampering parallelograms.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Human intervention is explicitly required for filtering hallucination detection data.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption states red parallelograms represent operations involving humans; Panel (A) shows 'Human Filtering' in red.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The CMHE-DD component utilizes ICD-10 codes for disease standardization.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel (B) shows an arrow from the orange 'ICD-10' box to the green 'Disease Standardization' parallelogram.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The CMHE-CE component starts with MeSH terminology.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel (C) shows the pipeline beginning with the orange 'MeSH' box.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Manual Information Extraction (IE) is a human-involved step in the CMHE-DD pipeline.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption defines red parallelograms as human operations; 'Manual IE' is a red parallelogram in Panel (B).",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Terms Filtering is an automated machine process.",
+          "why_wrong": "The parallelogram for 'Terms Filtering' is colored red, which the caption explicitly defines as representing operations involving humans."
+        },
+        {
+          "claim": "All blue cylinders represent final datasets.",
+          "why_wrong": "While CMHE-HD, CMHE-DD, and CMHE-CE are final outputs, 'Hall Dect Raw Data' and 'Diagnostic Raw Data' are intermediate stages that feed into further processing steps."
+        },
+        {
+          "claim": "MedQA is used for generating hallucinations in Panel (A).",
+          "why_wrong": "MedQA is located in Panel (B) and feeds into 'Diagnostic Raw Data', not the hallucination detection pipeline in Panel (A)."
+        }
+      ],
+      "limitations": [
+        "The figure describes the logical flow and methodology but does not provide quantitative data on the volume of data processed or the specific metrics of quality improvement.",
+        "The internal logic of the 'Generation' or 'Tampering' processes is abstracted and not detailed."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "pipeline_diagram",
+      "section_id": "S10",
+      "macro_id": "M4",
+      "macro_resolution_status": "resolved",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Task Definitions and Creation",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "caption": "Figure 3: Instructions of dataset construction for hallucination testing.",
+      "summary": "Figure 3 illustrates the prompt templates used for constructing a dataset for hallucination testing. It displays a 'System Prompt' instructing an AI model to act as a 'troublemaker' that modifies sentences by inserting up to five key pieces of false information while maintaining fluency, and a 'User Prompt' placeholder for the input text.",
+      "key_elements": [
+        {
+          "name": "System Prompt",
+          "role": "Instruction block defining the task of generating harmful/false content"
+        },
+        {
+          "name": "User Prompt",
+          "role": "Input block containing a placeholder for sentences to be modified"
+        },
+        {
+          "name": "Output Format",
+          "role": "Structural requirement within the System Prompt specifying how the response should be formatted"
+        }
+      ],
+      "relations": [
+        {
+          "source": "System Prompt",
+          "target": "User Prompt",
+          "relation": "guides modification of"
+        },
+        {
+          "source": "System Prompt",
+          "target": "Output Format",
+          "relation": "specifies"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The dataset construction process involves prompting an LLM to alter existing sentences.",
+          "support_level": "visible_label",
+          "evidence_basis": "Visible labels 'System Prompt' and 'User Prompt' with instructional text.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "The modification task requires selecting up to 5 key parts of a sentence to insert false information.",
+          "support_level": "visible_label",
+          "evidence_basis": "Text in System Prompt: 'selecting up to 5 key parts so that it contains harmful, false information'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "The generated content must maintain a mix of true and false information and remain smooth.",
+          "support_level": "visible_label",
+          "evidence_basis": "Text in System Prompt: 'modified sentence has a mix of true and false content and that the sentence is smooth and easy to read'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The figure shows a specific example of a tampered sentence.",
+          "why_wrong": "The User Prompt box contains a placeholder '[Sentences that need to be tampered with]' rather than actual text, indicating this is a template/instruction set."
+        },
+        {
+          "claim": "The figure demonstrates the evaluation metrics for hallucination.",
+          "why_wrong": "The figure only shows the generation instructions (prompts), not any evaluation or scoring mechanism."
+        }
+      ],
+      "limitations": [
+        "The figure only shows the prompt templates and does not display the actual generated dataset entries or examples of the output.",
+        "It does not show the full pipeline of dataset construction, only the instruction component."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S10",
+      "macro_id": "M4",
+      "macro_resolution_status": "resolved",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Task Definitions and Creation",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "caption": "Figure 4: Instructions for extracting ICD-10 codes.",
+      "summary": "Figure 4 illustrates the prompt structure used for a medical information extraction task. It displays a chat-based interface with two distinct sections: a green 'System Prompt' box that defines the AI's role as a loyal assistant, and a blue 'User Prompt' box containing a placeholder for a diagnostic report and specific instructions to extract diseases and convert them into ICD-10 codes.",
+      "key_elements": [
+        {
+          "name": "System Prompt",
+          "role": "Defines the AI's persona and general instruction to read reports and complete tasks."
+        },
+        {
+          "name": "User Prompt",
+          "role": "Provides the specific input context and step-by-step instructions for the task."
+        },
+        {
+          "name": "[diagnostic report]",
+          "role": "Placeholder indicating where the source medical text should be inserted."
+        },
+        {
+          "name": "Step 1",
+          "role": "Instruction to extract possible diseases from the provided report."
+        },
+        {
+          "name": "Step 2",
+          "role": "Instruction to convert the extracted disease names into ICD-10 codes."
+        }
+      ],
+      "relations": [
+        {
+          "source": "System Prompt",
+          "target": "User Prompt",
+          "relation": "sets_context_for"
+        },
+        {
+          "source": "User Prompt",
+          "target": "[diagnostic report]",
+          "relation": "contains_placeholder"
+        },
+        {
+          "source": "User Prompt",
+          "target": "Step 1",
+          "relation": "contains_instruction"
+        },
+        {
+          "source": "User Prompt",
+          "target": "Step 2",
+          "relation": "contains_instruction"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The task requires extracting potential diseases from a diagnostic report.",
+          "support_level": "visible_label",
+          "evidence_basis": "Text in User Prompt: 'Please extract the possible diseases of the patients in the report.'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "The task involves converting disease names into ICD-10 codes.",
+          "support_level": "visible_label",
+          "evidence_basis": "Text in User Prompt: 'Please convert the disease names into ICD-10 codes.'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "The prompt design separates system-level instructions from user-level inputs.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Visual layout showing distinct green and blue boxes labeled 'System Prompt' and 'User Prompt'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The figure shows a completed example with actual patient data.",
+          "why_wrong": "The text '[diagnostic report]' is clearly a placeholder enclosed in brackets, indicating a template rather than a filled-in example."
+        },
+        {
+          "claim": "The system prompt instructs the AI to diagnose the patient independently.",
+          "why_wrong": "The system prompt says 'complete the following tasks,' which are explicitly defined in the user prompt as extraction and coding steps, not independent diagnosis generation."
+        }
+      ],
+      "limitations": [
+        "The figure only shows the input prompt template; it does not show the model's output or the evaluation criteria for correctness.",
+        "It does not illustrate how the ICD-10 conversion is performed (e.g., via a lookup table or LLM generation)."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S10",
+      "macro_id": "M4",
+      "macro_resolution_status": "resolved",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Task Definitions and Creation",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "caption": "Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0.",
+      "summary": "The figure displays a hierarchical tree diagram illustrating the ICD-10 classification system for respiratory diseases, organized into three levels (Level 0, Level 1, Level 2). It serves as an example to demonstrate how model predictions are evaluated against ground truth diagnoses using this multi-level taxonomy.",
+      "key_elements": [
+        {
+          "name": "Respiratory Diseases (J00-J99)",
+          "role": "Top-level category (Level 0) representing the broadest group in this example."
+        },
+        {
+          "name": "Other diseases of the Upper Respiratory Tract (J30-J39)",
+          "role": "Mid-level category (Level 1) branching from Level 0."
+        },
+        {
+          "name": "Chronic Lower Respiratory Disease (J40-J47)",
+          "role": "Mid-level category (Level 1) branching from Level 0."
+        },
+        {
+          "name": "J30",
+          "role": "Specific code at Level 2 under 'Other diseases...'."
+        },
+        {
+          "name": "J31",
+          "role": "Specific code at Level 2 under 'Other diseases...'."
+        },
+        {
+          "name": "J40",
+          "role": "Specific code at Level 2 under 'Chronic Lower...'."
+        },
+        {
+          "name": "Allergic Rhinitis (J30.401)",
+          "role": "Specific diagnosis at the lowest level, identified in the caption as the correct answer."
+        },
+        {
+          "name": "Chronic Rhinitis (J31.0)",
+          "role": "Specific diagnosis predicted by Model A."
+        },
+        {
+          "name": "Bronchitis (J40)",
+          "role": "Specific diagnosis predicted by Model B."
+        },
+        {
+          "name": "Arrows",
+          "role": "Indicate hierarchical relationships and flow from specific diagnoses up to broader categories."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Respiratory Diseases (J00-J99)",
+          "target": "Other diseases of the Upper Respiratory Tract (J30-J39)",
+          "relation": "contains"
+        },
+        {
+          "source": "Respiratory Diseases (J00-J99)",
+          "target": "Chronic Lower Respiratory Disease (J40-J47)",
+          "relation": "contains"
+        },
+        {
+          "source": "Other diseases of the Upper Respiratory Tract (J30-J39)",
+          "target": "J30",
+          "relation": "contains"
+        },
+        {
+          "source": "Other diseases of the Upper Respiratory Tract (J30-J39)",
+          "target": "J31",
+          "relation": "contains"
+        },
+        {
+          "source": "Chronic Lower Respiratory Disease (J40-J47)",
+          "target": "J40",
+          "relation": "contains"
+        },
+        {
+          "source": "J30",
+          "target": "Allergic Rhinitis (J30.401)",
+          "relation": "corresponds_to"
+        },
+        {
+          "source": "J31",
+          "target": "Chronic Rhinitis (J31.0)",
+          "relation": "corresponds_to"
+        },
+        {
+          "source": "J40",
+          "target": "Bronchitis (J40)",
+          "relation": "corresponds_to"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The evaluation framework utilizes a 3-level hierarchy based on ICD-10 codes.",
+          "support_level": "visible_label",
+          "evidence_basis": "Labels 'Level 0', 'Level 1', and 'Level 2' are explicitly shown on the left side.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "Allergic Rhinitis falls under the category 'Other diseases of the Upper Respiratory Tract'.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "A path connects Allergic Rhinitis -> J30 -> Other diseases...",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "Bronchitis falls under the category 'Chronic Lower Respiratory Disease'.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "A path connects Bronchitis -> J40 -> Chronic Lower Respiratory Disease",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "Chronic Rhinitis and Allergic Rhinitis share the same Level 1 parent category.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Both J31 and J30 branch upwards to 'Other diseases of the Upper Respiratory Tract'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The figure implies that 'Chronic Rhinitis' is a subtype of 'Chronic Lower Respiratory Disease'.",
+          "why_wrong": "The arrow from J31 points to 'Other diseases of the Upper Respiratory Tract', not the right-hand branch containing 'Chronic Lower...'"
+        },
+        {
+          "claim": "The colors (green, pink, yellow) definitively indicate correctness or incorrectness without context.",
+          "why_wrong": "While likely related to the example's logic (e.g., green for correct path, pink for incorrect), there is no legend in the figure itself to confirm this semantic mapping."
+        }
+      ],
+      "limitations": [
+        "The figure only illustrates a small subset of the ICD-10 taxonomy relevant to respiratory diseases.",
+        "It does not show the full range of possible codes or categories outside this specific example.",
+        "The visual encoding of 'correctness' via color is ambiguous without the accompanying caption text."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_006",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S12",
+      "macro_id": "M4",
+      "macro_resolution_status": "resolved",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Task Definitions and Creation",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system.",
+      "summary": "Figure 6 presents a pie chart detailing the distribution of disease categories within the CMHE-DD dataset, classified according to the ICD-10 system. The chart is divided into colored segments representing different medical conditions, with percentage values labeling each segment's proportion. A comprehensive legend below the chart lists the specific ICD-10 category names corresponding to each color.",
+      "key_elements": [
+        {
+          "name": "Pie Chart",
+          "role": "Visualizes the proportional distribution of disease categories"
+        },
+        {
+          "name": "Percentage Labels",
+          "role": "Indicates the numerical value (percentage) for each slice"
+        },
+        {
+          "name": "ICD-10 Legend",
+          "role": "Maps colors to specific disease category names"
+        },
+        {
+          "name": "Colored Slices",
+          "role": "Represent individual disease categories"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Percentage Labels",
+          "target": "Colored Slices",
+          "relation": "quantifies"
+        },
+        {
+          "source": "ICD-10 Legend",
+          "target": "Colored Slices",
+          "relation": "identifies"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The CMHE-DD dataset contains a diverse range of diseases covering multiple ICD-10 chapters.",
+          "support_level": "caption_supported",
+          "evidence_basis": "caption and long list in legend",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        },
+        {
+          "claim": "Several major disease categories account for approximately 12% of the dataset each.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible label '12.22%' and '12.04%' on large slices",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        },
+        {
+          "claim": "Some disease categories are very rare, comprising less than 1% of the total.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible labels like '0.12%', '0.83%', '0.95%'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The chart displays absolute patient counts rather than percentages.",
+          "why_wrong": "The labels clearly include the '%' symbol (e.g., '11.74%')."
+        },
+        {
+          "claim": "The legend order strictly matches the clockwise order of the slices starting from the top.",
+          "why_wrong": "The top slice is small (1.01%) while the first legend item corresponds to a large blue slice (11.74%), indicating no strict sequential alignment."
+        }
+      ],
+      "limitations": [
+        "It is difficult to precisely match every slice to its legend entry due to similar colors (e.g., various shades of blue and green) and small text size.",
+        "The exact sample size (N) of the dataset is not provided in the figure."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_007",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "pipeline_diagram",
+      "section_id": "S13",
+      "macro_id": "M4",
+      "macro_resolution_status": "resolved",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Task Definitions and Creation",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "caption": "Figure 7: The overview of self-familiar test.",
+      "summary": "The figure illustrates a pipeline for a 'self-familiar test' involving an LLM. It begins with an initial question (Question 1) about the causes of POEMS syndrome, which is processed by an LLM to generate a descriptive text block (yellow box). This generated description is then used as context for a second multiple-choice question (Question 2) regarding the diagnosis of the disease. Finally, an LLM processes this question and context to produce a final answer identifying POEMS syndrome.",
+      "key_elements": [
+        {
+          "name": "Question 1",
+          "role": "Initial input prompt asking about causes"
+        },
+        {
+          "name": "LLM (Top)",
+          "role": "First processing unit generating context"
+        },
+        {
+          "name": "POEMS syndrome description",
+          "role": "Generated intermediate knowledge/context"
+        },
+        {
+          "name": "Question 2",
+          "role": "Multiple-choice evaluation query"
+        },
+        {
+          "name": "LLM (Bottom)",
+          "role": "Second processing unit for answering"
+        },
+        {
+          "name": "Final Answer",
+          "role": "Output conclusion identifying the correct option"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Question 1",
+          "target": "LLM (Top)",
+          "relation": "flows_to"
+        },
+        {
+          "source": "LLM (Top)",
+          "target": "POEMS syndrome description",
+          "relation": "generates"
+        },
+        {
+          "source": "POEMS syndrome description",
+          "target": "Question 2",
+          "relation": "provides_context_for"
+        },
+        {
+          "source": "Question 2",
+          "target": "LLM (Bottom)",
+          "relation": "flows_to"
+        },
+        {
+          "source": "LLM (Bottom)",
+          "target": "Final Answer",
+          "relation": "produces"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The process involves generating a descriptive text based on an initial question.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Arrow from top LLM box to yellow text box containing disease description.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_007"
+          }
+        },
+        {
+          "claim": "The generated text is used as context for a subsequent multiple-choice question.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Large white arrow pointing from the yellow description box to the green question box.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_007"
+          }
+        },
+        {
+          "claim": "The final output identifies option (C) POEMS syndrome as the correct answer.",
+          "support_level": "visible_label",
+          "evidence_basis": "Text in the purple box at the bottom right.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_007"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The yellow text box represents external retrieved knowledge rather than model generation.",
+          "why_wrong": "The arrow leading into the yellow box originates directly from the 'LLM' box, indicating it is generated by the model."
+        },
+        {
+          "claim": "Question 2 is independent of the text in the yellow box.",
+          "why_wrong": "A prominent arrow connects the yellow box to the green box, indicating the text serves as input or context for the question."
+        }
+      ],
+      "limitations": [
+        "The diagram shows the logical flow but does not indicate if the two 'LLM' boxes represent the same model instance or different models.",
+        "It does not provide metrics on the accuracy or confidence of the generated text or final answer."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "explanatory",
+      "subtype": "dataset_statistics_table",
+      "section_id": "S13",
+      "macro_id": "M4",
+      "macro_resolution_status": "resolved",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Task Definitions and Creation",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "caption": "Table 1: The statistics of each sub-category in the CMHE dataset.",
+      "summary": "This table reports the number of samples for each sub-category (CMHE-HD, CMHE-DD, CMHE-CE) in the CMHE dataset, broken down by partition, along with the total samples per sub-category.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "CMHE-HD has a total of 2,000 samples.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'CMHE-HD', column 'Total'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "CMHE-DD has a total of 1,622 samples.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'CMHE-DD', column 'Total'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "CMHE-CE has a total of 38,576 samples.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'CMHE-CE', column 'Total'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "CMHE-HD has three partitions: Generated (387 samples), Tampered (613 samples), and Correct (1,000 samples).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'CMHE-HD', columns 'Partition'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "CMHE-DD has two partitions: Chat (327 samples) and Exam (1,295 samples).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'CMHE-DD', columns 'Partition' (third column is empty)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "CMHE-CE has three partitions with multiplicative factors: Medicine (1,753 × 4), Disease (7,096 × 4), and Checkup (1,060 × 2).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'CMHE-CE', columns 'Partition'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The total for CMHE-CE (38,576) equals the sum of the partition values (1,753 × 4 + 7,096 × 4 + 1,060 × 2 = 37,516).",
+          "why_wrong": "The table does not explain how the total is computed; the sum of the partition products is 37,516, not 38,576, so the total is not simply the sum of the products."
+        },
+        {
+          "claim": "The partition numbers for CMHE-CE (1,753, 7,096, 1,060) are the actual sample counts before multiplication.",
+          "why_wrong": "The table explicitly shows these numbers with a multiplication sign (×4 or ×2), indicating that the sample counts per partition are larger, but the exact meaning of the multiplier is not specified in the table."
+        }
+      ],
+      "limitations": [
+        "The table does not explain the meaning of the multiplication factors (×4, ×2) for CMHE-CE partitions.",
+        "The table does not describe the dataset creation process or partition definitions.",
+        "The table does not provide total dataset size across all sub-categories."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S16",
+      "macro_id": "M7",
+      "macro_resolution_status": "resolved",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Results and Findings",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "caption": "Table 2: Performances of the mainstream medical large language models on CMHE-HD dataset. Note that 'Generated', 'Modified', and 'Correct' denote that data partition with various generation mode. 'All' denotes the whole dataset. 'Random' denotes that the results are generated randomly and accuracy is used as the metrics.",
+      "summary": "This table reports accuracy percentages of three medical large language models (ChatGPT, Baichuan, Qwen) and a random baseline on the CMHE-HD dataset, across three data partitions (Generated, Tampered, Correct) and the overall dataset (All).",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Qwen achieves an accuracy of 97.4 on the Correct partition.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: Qwen, Column: Correct",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "ChatGPT achieves an accuracy of 29.2 on the Generated partition.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: ChatGPT, Column: Generated",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Random baseline accuracy is 50.0 for all partitions.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: Random, Columns: Generated, Tampered, Correct, All",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Qwen has the highest All accuracy (56.9) among the models listed.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Column: All, comparison of values across rows",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Qwen is the best model overall because it has the highest All accuracy.",
+          "why_wrong": "Qwen performs very poorly on Generated (2.0) and Tampered (25.3), so its overall performance is not uniformly superior; the All accuracy is only slightly higher than others, and no statistical significance is provided."
+        },
+        {
+          "claim": "The models perform well on the CMHE-HD dataset.",
+          "why_wrong": "The accuracies are low, especially on Generated and Tampered partitions (e.g., ChatGPT 29.2, Baichuan 8.0, Qwen 2.0), indicating poor performance relative to random baseline on some partitions."
+        }
+      ],
+      "limitations": [
+        "Only accuracy is reported; no precision, recall, F1, or other metrics are provided.",
+        "Only four models (including random) are compared, limiting generalizability.",
+        "No confidence intervals or statistical significance tests are given.",
+        "The specifics of the CMHE-HD dataset (e.g., size, class balance) are not provided in this table."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S18",
+      "macro_id": "M7",
+      "macro_resolution_status": "resolved",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Results and Findings",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "caption": "Table 3: Performances of the mainstream medical large language models on CMHE-DD dataset. Note that \"Diagnose-chat\" and \"Diagnose-exam\" denote the data source, and \"Level=0,1,2\" denotes the category level in the ICD-10. Bold number denotes the best result of three models.",
+      "summary": "Table 3 reports precision, recall, and F1-scores of three large language models (ChatGPT, Baichuan, Qwen) on the CMHE-DD dataset across three subsets (Diagnose-chat, Diagnose-exam, Diagnose-all) and three ICD-10 category levels (0, 1, 2). The best performance per metric and subset-level combination is highlighted (bold in original).",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "On the Diagnose-chat subset at ICD-10 level 0, ChatGPT achieves the highest F1-score (51.1) among the three models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'ChatGPT', column 'F1-score' under 'Level=0' in 'Diagnose-chat' block.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "On the Diagnose-exam subset at ICD-10 level 2, Qwen achieves the highest recall (43.3) among the three models.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Qwen', column 'Recall' under 'Level=2' in 'Diagnose-exam' block.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "On the Diagnose-all subset at all three ICD-10 levels, Qwen achieves the highest precision, recall, and F1-score among the three models.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of rows 'Qwen' vs 'ChatGPT' and 'Baichuan' across all metric columns in 'Diagnose-all' block; Qwen has highest values in each of the nine cells.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "On the Diagnose-chat subset, ChatGPT consistently outperforms the other two models at all three ICD-10 levels in precision, recall, and F1-score.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of rows in 'Diagnose-chat' block; for each level and metric, ChatGPT has the highest value.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "ChatGPT is the best overall model across all subsets.",
+          "why_wrong": "Although ChatGPT leads on the Diagnose-chat subset, Qwen achieves higher scores on Diagnose-exam and Diagnose-all subsets, indicating that no single model is universally best."
+        },
+        {
+          "claim": "The models perform well enough for clinical use.",
+          "why_wrong": "The table only reports raw F1-scores, precision, and recall without any clinical benchmarks or confidence intervals; thus, it does not address clinical acceptability."
+        },
+        {
+          "claim": "Baichuan is the worst model on all metrics.",
+          "why_wrong": "Baichuan outperforms ChatGPT on some metrics (e.g., precision on Diagnose-exam Level 0, 64.8 vs 64.0), so it is not universally the worst."
+        }
+      ],
+      "limitations": [
+        "Only three models are compared, so results may not generalize to other LLMs.",
+        "Dataset is specific (CMHE-DD) and may not represent general medical diagnosis tasks.",
+        "No statistical significance or confidence intervals are provided.",
+        "Only precision, recall, and F1-score are reported; other metrics (e.g., specificity, accuracy) are absent."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S19",
+      "macro_id": "M7",
+      "macro_resolution_status": "resolved",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Results and Findings",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "caption": "Table 4: Performances of the mainstream medical large language models on CMHE-CE dataset. Note that “Medicine”, “Disease” and “Test” denote the data partition based on concept categories, and “All” denotes the whole dataset and accuracy is used as the metrics.",
+      "summary": "Table 4 reports the accuracy of three medical large language models (ChatGPT, Baichuan, Qwen) on the CMHE-CE dataset, broken down by concept categories (Medicine, Disease, Test) and overall (All).",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "ChatGPT achieves 66.7% accuracy on the Medicine category.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'ChatGPT', column 'Medicine'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "ChatGPT achieves 65.4% accuracy on the Disease category.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'ChatGPT', column 'Disease'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "ChatGPT achieves 78.8% accuracy on the Test category.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'ChatGPT', column 'Test'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "ChatGPT achieves 67.1% overall accuracy across all categories.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'ChatGPT', column 'All'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "Baichuan achieves 57.4% accuracy on Medicine, 57.3% on Disease, 81.7% on Test, and 59.9% overall.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'Baichuan', columns 'Medicine', 'Disease', 'Test', 'All'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "Qwen achieves 60.1% accuracy on Medicine, 61.7% on Disease, 74.0% on Test, and 62.8% overall.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'Qwen', columns 'Medicine', 'Disease', 'Test', 'All'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "ChatGPT has the highest accuracy among the three models on the Medicine, Disease, and overall (All) categories.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "comparison of values in columns 'Medicine', 'Disease', 'All' across rows",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "Baichuan has the highest accuracy among the three models on the Test category.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "comparison of values in column 'Test' across rows",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "ChatGPT is the best model on all categories.",
+          "why_wrong": "ChatGPT has the highest accuracy on Medicine, Disease, and All, but Baichuan outperforms it on Test (81.7% vs 78.8%)."
+        },
+        {
+          "claim": "Qwen is the worst model across all categories.",
+          "why_wrong": "On Disease, Qwen (61.7%) outperforms Baichuan (57.3%). On Medicine, Qwen (60.1%) is better than Baichuan (57.4%). Only on Test is Qwen the lowest."
+        },
+        {
+          "claim": "The overall accuracy reflects the average of category accuracies.",
+          "why_wrong": "The 'All' column is not necessarily a simple average of the three category accuracies; it likely reflects accuracy over the entire dataset, which may have imbalanced category sizes."
+        }
+      ],
+      "limitations": [
+        "Only accuracy is reported; no other metrics (e.g., precision, recall, F1) are given.",
+        "The dataset is limited to CMHE-CE; results may not generalize to other medical datasets.",
+        "Only three models are compared; performance on additional models is unknown.",
+        "No statistical significance tests are provided to confirm whether differences are meaningful."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    }
+  ],
+  "summary": {
+    "asset_explanation_count": 11,
+    "by_asset_type": {
+      "figure": 7,
+      "table": 4
+    },
+    "needs_review_count": 0,
+    "supported_claim_count": 46,
+    "possible_misreading_count": 25
+  }
+}

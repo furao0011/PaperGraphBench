@@ -1,0 +1,798 @@
+{
+  "paper_id": "Debate-Feedback_NAACL2025_-9pages",
+  "schema_version": "v3_latex_table_assets",
+  "assets": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S3",
+      "section_title": "1 Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem Motivation",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S3_0001",
+      "source_block_ids": [
+        "P002_B0001",
+        "P002_B0002"
+      ],
+      "media_block_ids": [
+        "P002_B0001"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_image_box_253_154_937_389.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_001",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_image_box_253_154_937_389.jpg",
+          "caption": "Figure 1: A brief introduction of Debate-Feedback Structure"
+        }
+      ],
+      "caption": "Figure 1: A brief introduction of Debate-Feedback Structure",
+      "caption_kind": "figure",
+      "caption_number": "1",
+      "nearby_context": "Figure with caption 'Figure 1: A brief introduction of Debate-Feedback Structure'. Image path indicates visual content.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P002_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 1: A brief introduction of Debate-Feedback Structure",
+        "caption_kind": "figure",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P002_B0001",
+          "P002_B0002"
+        ],
+        "media_block_ids": [
+          "P002_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P002_B0001"
+        ],
+        "description_from_html": "Figure with caption 'Figure 1: A brief introduction of Debate-Feedback Structure'. Image path indicates visual content.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "dataset_statistics_table",
+      "section_id": "S7",
+      "section_title": "3 Methodology",
+      "macro_id": null,
+      "macro_candidates": [
+        {
+          "macro_id": "M3",
+          "title": "Proposed Method Overview",
+          "role": "method_overview",
+          "order": 3
+        },
+        {
+          "macro_id": "M4",
+          "title": "Algorithm and Mechanism",
+          "role": "mechanism",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "ambiguous",
+      "source_group_id": "MAG_S7_0002",
+      "source_block_ids": [
+        "P003_B0020",
+        "P003_B0021"
+      ],
+      "media_block_ids": [
+        "P003_B0020"
+      ],
+      "caption": "Table 1: Dataset of assistant model.",
+      "caption_kind": "table",
+      "caption_number": "1",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td colspan=\"2\">TrainingSet of Assistant model</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Training_X</td><td style='text-align: center; word-wrap: break-word;'>$ \\{Case\\_background + Debater&#x27;s opinion\\} $</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Training_Y</td><td style='text-align: center; word-wrap: break-word;'>$ \\{Ground\\_truth XOR Debater&#x27;s position\\} $</td></tr></table>",
+      "normalized_markdown": "| TrainingSet of Assistant model | TrainingSet of Assistant model |\n| --- | --- |\n| Training_X | $ \\{Case\\_background + Debater's opinion\\} $ |\n| Training_Y | $ \\{Ground\\_truth XOR Debater's position\\} $ |",
+      "normalized_latex": "\\begin{tabular}{ll}\n\\hline\nTrainingSet of Assistant model & TrainingSet of Assistant model \\\\\n\\hline\nTraining\\_X & \\$ \\textbackslash{}\\{Case\\textbackslash{}\\_background + Debater's opinion\\textbackslash{}\\} \\$ \\\\\nTraining\\_Y & \\$ \\textbackslash{}\\{Ground\\textbackslash{}\\_truth XOR Debater's position\\textbackslash{}\\} \\$ \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "TrainingSet of Assistant model",
+          "TrainingSet of Assistant model"
+        ],
+        [
+          "Training_X",
+          "$ \\{Case\\_background + Debater's opinion\\} $"
+        ],
+        [
+          "Training_Y",
+          "$ \\{Ground\\_truth XOR Debater's position\\} $"
+        ]
+      ],
+      "nearby_context": "Table showing dataset of assistant model: Training_X = {Case_background + Debater's opinion}, Training_Y = {Ground_truth XOR Debater's position}.",
+      "table_shape": {
+        "rows": 3,
+        "columns": 2
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "dataset_statistics_table",
+        "caption": "Table 1: Dataset of assistant model.",
+        "caption_kind": "table",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P003_B0020",
+          "P003_B0021"
+        ],
+        "media_block_ids": [
+          "P003_B0020"
+        ],
+        "table_block_ids": [
+          "P003_B0020"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table showing dataset of assistant model: Training_X = {Case_background + Debater's opinion}, Training_Y = {Ground_truth XOR Debater's position}.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S10",
+      "section_title": "4.3 Evaluation Metrics",
+      "macro_id": "M5",
+      "macro_candidates": [
+        {
+          "macro_id": "M5",
+          "title": "Experiment Setup",
+          "role": "experiment_setup",
+          "order": 5
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S10_0003",
+      "source_block_ids": [
+        "P004_B0017",
+        "P004_B0018"
+      ],
+      "media_block_ids": [
+        "P004_B0017"
+      ],
+      "caption": "Table 2: Comparison of models on CaseLaw and CAIL18 datasets. All judge’s and debaters’ LMs in experiments are based on the GPT-4o model and T = 0.5.",
+      "caption_kind": "table",
+      "caption_number": "2",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Model</td><td colspan=\"2\">CaseLaw</td><td colspan=\"2\">CAIL18</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>F1</td><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>F1</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>CNN(with BERT)</td><td style='text-align: center; word-wrap: break-word;'>0.58</td><td style='text-align: center; word-wrap: break-word;'>0.54</td><td style='text-align: center; word-wrap: break-word;'>0.39</td><td style='text-align: center; word-wrap: break-word;'>0.11</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Legal-BERT</td><td style='text-align: center; word-wrap: break-word;'>0.63</td><td style='text-align: center; word-wrap: break-word;'>0.61</td><td style='text-align: center; word-wrap: break-word;'>0.22</td><td style='text-align: center; word-wrap: break-word;'>0.03</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Lawformer</td><td style='text-align: center; word-wrap: break-word;'>0.53</td><td style='text-align: center; word-wrap: break-word;'>0.31</td><td style='text-align: center; word-wrap: break-word;'>0.38</td><td style='text-align: center; word-wrap: break-word;'>0.12</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>GPT-3.5-turbo</td><td style='text-align: center; word-wrap: break-word;'>0.49</td><td style='text-align: center; word-wrap: break-word;'>0.27</td><td style='text-align: center; word-wrap: break-word;'>0.26</td><td style='text-align: center; word-wrap: break-word;'>0.04</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>GPT-4o</td><td style='text-align: center; word-wrap: break-word;'>0.64</td><td style='text-align: center; word-wrap: break-word;'>0.64</td><td style='text-align: center; word-wrap: break-word;'>0.31</td><td style='text-align: center; word-wrap: break-word;'>0.05</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Debate-Feedback(single)</td><td style='text-align: center; word-wrap: break-word;'>0.66</td><td style='text-align: center; word-wrap: break-word;'>0.65</td><td style='text-align: center; word-wrap: break-word;'>0.42</td><td style='text-align: center; word-wrap: break-word;'>0.16</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Debate-Feedback(assistant)</td><td style='text-align: center; word-wrap: break-word;'>0.67</td><td style='text-align: center; word-wrap: break-word;'>0.66</td><td style='text-align: center; word-wrap: break-word;'>0.45</td><td style='text-align: center; word-wrap: break-word;'>0.16</td></tr></table>",
+      "normalized_markdown": "| Model | CaseLaw | CaseLaw | CAIL18 | CAIL18 |\n| --- | --- | --- | --- | --- |\n| Model | Acc | F1 | Acc | F1 |\n| CNN(with BERT) | 0.58 | 0.54 | 0.39 | 0.11 |\n| Legal-BERT | 0.63 | 0.61 | 0.22 | 0.03 |\n| Lawformer | 0.53 | 0.31 | 0.38 | 0.12 |\n| GPT-3.5-turbo | 0.49 | 0.27 | 0.26 | 0.04 |\n| GPT-4o | 0.64 | 0.64 | 0.31 | 0.05 |\n| Debate-Feedback(single) | 0.66 | 0.65 | 0.42 | 0.16 |\n| Debate-Feedback(assistant) | 0.67 | 0.66 | 0.45 | 0.16 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nModel & CaseLaw & CaseLaw & CAIL18 & CAIL18 \\\\\n\\hline\nModel & Acc & F1 & Acc & F1 \\\\\nCNN(with BERT) & 0.58 & 0.54 & 0.39 & 0.11 \\\\\nLegal-BERT & 0.63 & 0.61 & 0.22 & 0.03 \\\\\nLawformer & 0.53 & 0.31 & 0.38 & 0.12 \\\\\nGPT-3.5-turbo & 0.49 & 0.27 & 0.26 & 0.04 \\\\\nGPT-4o & 0.64 & 0.64 & 0.31 & 0.05 \\\\\nDebate-Feedback(single) & 0.66 & 0.65 & 0.42 & 0.16 \\\\\nDebate-Feedback(assistant) & 0.67 & 0.66 & 0.45 & 0.16 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "CaseLaw",
+          "CaseLaw",
+          "CAIL18",
+          "CAIL18"
+        ],
+        [
+          "Model",
+          "Acc",
+          "F1",
+          "Acc",
+          "F1"
+        ],
+        [
+          "CNN(with BERT)",
+          "0.58",
+          "0.54",
+          "0.39",
+          "0.11"
+        ],
+        [
+          "Legal-BERT",
+          "0.63",
+          "0.61",
+          "0.22",
+          "0.03"
+        ],
+        [
+          "Lawformer",
+          "0.53",
+          "0.31",
+          "0.38",
+          "0.12"
+        ],
+        [
+          "GPT-3.5-turbo",
+          "0.49",
+          "0.27",
+          "0.26",
+          "0.04"
+        ],
+        [
+          "GPT-4o",
+          "0.64",
+          "0.64",
+          "0.31",
+          "0.05"
+        ],
+        [
+          "Debate-Feedback(single)",
+          "0.66",
+          "0.65",
+          "0.42",
+          "0.16"
+        ],
+        [
+          "Debate-Feedback(assistant)",
+          "0.67",
+          "0.66",
+          "0.45",
+          "0.16"
+        ]
+      ],
+      "nearby_context": "Table comparing models (CNN, Legal-BERT, Lawformer, GPT-3.5-turbo, GPT-4o, Debate-Feedback variants) on Acc and F1 for CaseLaw and CAIL18 datasets.",
+      "table_shape": {
+        "rows": 9,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 2: Comparison of models on CaseLaw and CAIL18 datasets. All judge’s and debaters’ LMs in experiments are based on the GPT-4o model and T = 0.5.",
+        "caption_kind": "table",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P004_B0017",
+          "P004_B0018"
+        ],
+        "media_block_ids": [
+          "P004_B0017"
+        ],
+        "table_block_ids": [
+          "P004_B0017"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing models (CNN, Legal-BERT, Lawformer, GPT-3.5-turbo, GPT-4o, Debate-Feedback variants) on Acc and F1 for CaseLaw and CAIL18 datasets.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S11",
+      "section_title": "4.4 Experimental Results",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Main Results",
+          "role": "main_result",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S11_0004",
+      "source_block_ids": [
+        "P005_B0001",
+        "P005_B0002"
+      ],
+      "media_block_ids": [
+        "P005_B0001"
+      ],
+      "caption": "Table 3: Performance comparison of different reasoning methods on CaseLaw and CAIL18 datasets.",
+      "caption_kind": "table",
+      "caption_number": "3",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Model</td><td colspan=\"2\">CaseLaw</td><td colspan=\"2\">CAIL18</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>F1</td><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>F1</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Few-shot</td><td style='text-align: center; word-wrap: break-word;'>63.8%</td><td style='text-align: center; word-wrap: break-word;'>64.1%</td><td style='text-align: center; word-wrap: break-word;'>29.7%</td><td style='text-align: center; word-wrap: break-word;'>5.03%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>CoT (4-steps)</td><td style='text-align: center; word-wrap: break-word;'>63.7%</td><td style='text-align: center; word-wrap: break-word;'>64.0%</td><td style='text-align: center; word-wrap: break-word;'>31.2%</td><td style='text-align: center; word-wrap: break-word;'>6.17%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Reflexion</td><td style='text-align: center; word-wrap: break-word;'>64.5%</td><td style='text-align: center; word-wrap: break-word;'>65.0%</td><td style='text-align: center; word-wrap: break-word;'>31.8%</td><td style='text-align: center; word-wrap: break-word;'>8.12%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Debate-Feedback (single)</td><td style='text-align: center; word-wrap: break-word;'>66.2%</td><td style='text-align: center; word-wrap: break-word;'>65.7%</td><td style='text-align: center; word-wrap: break-word;'>41.9%</td><td style='text-align: center; word-wrap: break-word;'>16.1%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Debate-Feedback (assistant)</td><td style='text-align: center; word-wrap: break-word;'>67.1%</td><td style='text-align: center; word-wrap: break-word;'>66.1%</td><td style='text-align: center; word-wrap: break-word;'>44.8%</td><td style='text-align: center; word-wrap: break-word;'>16.3%</td></tr></table>",
+      "normalized_markdown": "| Model | CaseLaw | CaseLaw | CAIL18 | CAIL18 |\n| --- | --- | --- | --- | --- |\n| Model | Acc | F1 | Acc | F1 |\n| Few-shot | 63.8% | 64.1% | 29.7% | 5.03% |\n| CoT (4-steps) | 63.7% | 64.0% | 31.2% | 6.17% |\n| Reflexion | 64.5% | 65.0% | 31.8% | 8.12% |\n| Debate-Feedback (single) | 66.2% | 65.7% | 41.9% | 16.1% |\n| Debate-Feedback (assistant) | 67.1% | 66.1% | 44.8% | 16.3% |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nModel & CaseLaw & CaseLaw & CAIL18 & CAIL18 \\\\\n\\hline\nModel & Acc & F1 & Acc & F1 \\\\\nFew-shot & 63.8\\% & 64.1\\% & 29.7\\% & 5.03\\% \\\\\nCoT (4-steps) & 63.7\\% & 64.0\\% & 31.2\\% & 6.17\\% \\\\\nReflexion & 64.5\\% & 65.0\\% & 31.8\\% & 8.12\\% \\\\\nDebate-Feedback (single) & 66.2\\% & 65.7\\% & 41.9\\% & 16.1\\% \\\\\nDebate-Feedback (assistant) & 67.1\\% & 66.1\\% & 44.8\\% & 16.3\\% \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "CaseLaw",
+          "CaseLaw",
+          "CAIL18",
+          "CAIL18"
+        ],
+        [
+          "Model",
+          "Acc",
+          "F1",
+          "Acc",
+          "F1"
+        ],
+        [
+          "Few-shot",
+          "63.8%",
+          "64.1%",
+          "29.7%",
+          "5.03%"
+        ],
+        [
+          "CoT (4-steps)",
+          "63.7%",
+          "64.0%",
+          "31.2%",
+          "6.17%"
+        ],
+        [
+          "Reflexion",
+          "64.5%",
+          "65.0%",
+          "31.8%",
+          "8.12%"
+        ],
+        [
+          "Debate-Feedback (single)",
+          "66.2%",
+          "65.7%",
+          "41.9%",
+          "16.1%"
+        ],
+        [
+          "Debate-Feedback (assistant)",
+          "67.1%",
+          "66.1%",
+          "44.8%",
+          "16.3%"
+        ]
+      ],
+      "nearby_context": "Performance comparison of reasoning methods (Few-shot, CoT, Reflexion, Debate-Feedback) on CaseLaw and CAIL18 datasets, reporting Acc and F1 scores.",
+      "table_shape": {
+        "rows": 7,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 3: Performance comparison of different reasoning methods on CaseLaw and CAIL18 datasets.",
+        "caption_kind": "table",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P005_B0001",
+          "P005_B0002"
+        ],
+        "media_block_ids": [
+          "P005_B0001"
+        ],
+        "table_block_ids": [
+          "P005_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Performance comparison of reasoning methods (Few-shot, CoT, Reflexion, Debate-Feedback) on CaseLaw and CAIL18 datasets, reporting Acc and F1 scores.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S14",
+      "section_title": "A Appendix",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Analysis and Ablation",
+          "role": "ablation_analysis",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S14_0005",
+      "source_block_ids": [
+        "P007_B0004",
+        "P007_B0005"
+      ],
+      "media_block_ids": [
+        "P007_B0004"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_chart_box_325_400_866_820.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_002",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_chart_box_325_400_866_820.jpg",
+          "caption": "Figure 2: Influence of the number of debaters selected."
+        }
+      ],
+      "caption": "Figure 2: Influence of the number of debaters selected.",
+      "caption_kind": "figure",
+      "caption_number": "2",
+      "nearby_context": "Image: imgs/img_in_chart_box_325_400_866_820.jpg. Caption: Influence of the number of debaters selected.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P007_B0004",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 2: Influence of the number of debaters selected.",
+        "caption_kind": "figure",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P007_B0004",
+          "P007_B0005"
+        ],
+        "media_block_ids": [
+          "P007_B0004"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P007_B0004"
+        ],
+        "description_from_html": "Image: imgs/img_in_chart_box_325_400_866_820.jpg. Caption: Influence of the number of debaters selected.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S14",
+      "section_title": "A Appendix",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Analysis and Ablation",
+          "role": "ablation_analysis",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S14_0005",
+      "source_block_ids": [
+        "P007_B0006",
+        "P007_B0007"
+      ],
+      "media_block_ids": [
+        "P007_B0006"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_chart_box_325_923_864_1332.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_chart_box_325_923_864_1332.jpg",
+          "caption": "Figure 3: Influence of the number of rounds selected."
+        }
+      ],
+      "caption": "Figure 3: Influence of the number of rounds selected.",
+      "caption_kind": "figure",
+      "caption_number": "3",
+      "nearby_context": "Image: imgs/img_in_chart_box_325_923_864_1332.jpg. Caption: Influence of the number of rounds selected.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P007_B0006",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 3: Influence of the number of rounds selected.",
+        "caption_kind": "figure",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P007_B0006",
+          "P007_B0007"
+        ],
+        "media_block_ids": [
+          "P007_B0006"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P007_B0006"
+        ],
+        "description_from_html": "Image: imgs/img_in_chart_box_325_923_864_1332.jpg. Caption: Influence of the number of rounds selected.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S14",
+      "section_title": "A Appendix",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Analysis and Ablation",
+          "role": "ablation_analysis",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S14_0006",
+      "source_block_ids": [
+        "P008_B0001",
+        "P008_B0002"
+      ],
+      "media_block_ids": [
+        "P008_B0001"
+      ],
+      "caption": "Table 4: An Example of Debate-Feedback Structure",
+      "caption_kind": "table",
+      "caption_number": "4",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td colspan=\"3\">1. Initial Step</td></tr><tr><td colspan=\"3\"># input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\V&#x27;Plaintiff wins&#x27;,\\V&#x27;Defendant wins&#x27;]ONLY output the one of the labels without anything else.Here is the case background:The case, &quot;The Adams Express Company v. Richard T. Haynes,&quot; took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... &quot;</td></tr><tr><td colspan=\"3\"># output:Plaintiff wins</td></tr><tr><td colspan=\"3\">2. Debate Step</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Debater 0</td><td style='text-align: center; word-wrap: break-word;'>Debater 1</td><td style='text-align: center; word-wrap: break-word;'>Debater 2</td></tr><tr><td style='text-align: center; word-wrap: break-word;'># input:Here is a legal case, your task is to predict the result of the judge and Debate withother experts, the labels can be one of the following:[\\V&#x27;Plaintiff wins&#x27;,\\V&#x27;Defendant wins&#x27;]Please state your opinion and refer to factual examples whenever possible.Your answer no more than 200 words.Here is the case background:...# output:I predict that the judge will rule in favor of the plaintiff, Richard T. Haynes.Although the express company presented a receipt with terms limiting its liability, the crux of the case centers on the allegations of gross negligence and possible fraudulent actions ...# inputNow I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...# outputI largely agree with the perspective of the first expert regarding the implications of gross negligence and fraud in &quot;The Adams Express Company v. Richard T. Haynes.&quot; The pivotal issue is whether Haynes can convincingly demonstrate...</td><td style='text-align: center; word-wrap: break-word;'># input:Here is a legal case, your task is to predict the result of the judge and Debate withother experts, the labels can be one of the following:[\\V&#x27;Plaintiff wins&#x27;,\\V&#x27;Defendant wins&#x27;]Please state your opinion and refer to factual examples whenever possible.Your answer no more than 200 words.Here is the case background:...# outputIn the case of &quot;The Adams Express Company v. Richard T. Haynes,&quot; it is likely that the plaintiff, Haynes, would prevail due to the allegations of gross negligence and fraud.Despite the express company&#x27;s attempt to enforce the terms of limited liability, these clauses typically ...# inputNow I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...# outputI strongly agree with the assessment of the first expert regarding the likelihood of the plaintiff, Richard T. Haynes, prevailing in &quot;The Adams Express Company v. Richard T. Haynes.&quot; The focus on the express company&#x27;s ...</td><td style='text-align: center; word-wrap: break-word;'># input:Now I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...# outputI find that I am in strong agreement with the opinion of the second expert regarding the case of &quot;The Adams Express Company v. Richard T. Haynes.&quot; The emphasis on the express company&#x27;s potential failure to demonstrate ...</td></tr><tr><td colspan=\"3\">3. Verification Step</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>{input: the summary of Debater 0&#x27;s statement to the assistant model} {output: reliability: 0.75}</td><td style='text-align: center; word-wrap: break-word;'>{input: the summary of Debater 1&#x27;s statement to the assistant model} {output: reliability: 0.8}</td><td style='text-align: center; word-wrap: break-word;'>{input: the summary of Debater 2&#x27;s statement to the assistant model} {output: reliability: 0.45}</td></tr><tr><td colspan=\"3\">4. Output step</td></tr><tr><td colspan=\"3\"># input: {Follow the conversation from Step 1}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\V&#x27;In the case of ...] {insert the reliability from Step 3}# outputPlaintiff wins</td></tr></table>",
+      "normalized_markdown": "| 1. Initial Step | 1. Initial Step | 1. Initial Step |\n| --- | --- | --- |\n| # input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\V'Plaintiff wins',\\V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \" | # input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\V'Plaintiff wins',\\V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \" | # input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\V'Plaintiff wins',\\V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \" |\n| # output:Plaintiff wins | # output:Plaintiff wins | # output:Plaintiff wins |\n| 2. Debate Step | 2. Debate Step | 2. Debate Step |\n| Debater 0 | Debater 1 | Debater 2 |\n| # input:Here is a legal case, your task is to predict the result of the judge and Debate withother experts, the labels can be one of the following:[\\V'Plaintiff wins',\\V'Defendant wins']Please state your opinion and refer to factual examples whenever possible.Your answer no more than 200 words.Here is the case background:...# output:I predict that the judge will rule in favor of the plaintiff, Richard T. Haynes.Although the express company presented a receipt with terms limiting its liability, the crux of the case centers on the allegations of gross negligence and possible fraudulent actions ...# inputNow I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...# outputI largely agree with the perspective of the first expert regarding the implications of gross negligence and fraud in \"The Adams Express Company v. Richard T. Haynes.\" The pivotal issue is whether Haynes can convincingly demonstrate... | # input:Here is a legal case, your task is to predict the result of the judge and Debate withother experts, the labels can be one of the following:[\\V'Plaintiff wins',\\V'Defendant wins']Please state your opinion and refer to factual examples whenever possible.Your answer no more than 200 words.Here is the case background:...# outputIn the case of \"The Adams Express Company v. Richard T. Haynes,\" it is likely that the plaintiff, Haynes, would prevail due to the allegations of gross negligence and fraud.Despite the express company's attempt to enforce the terms of limited liability, these clauses typically ...# inputNow I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...# outputI strongly agree with the assessment of the first expert regarding the likelihood of the plaintiff, Richard T. Haynes, prevailing in \"The Adams Express Company v. Richard T. Haynes.\" The focus on the express company's ... | # input:Now I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...# outputI find that I am in strong agreement with the opinion of the second expert regarding the case of \"The Adams Express Company v. Richard T. Haynes.\" The emphasis on the express company's potential failure to demonstrate ... |\n| 3. Verification Step | 3. Verification Step | 3. Verification Step |\n| {input: the summary of Debater 0's statement to the assistant model} {output: reliability: 0.75} | {input: the summary of Debater 1's statement to the assistant model} {output: reliability: 0.8} | {input: the summary of Debater 2's statement to the assistant model} {output: reliability: 0.45} |\n| 4. Output step | 4. Output step | 4. Output step |\n| # input: {Follow the conversation from Step 1}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\V'In the case of ...] {insert the reliability from Step 3}# outputPlaintiff wins | # input: {Follow the conversation from Step 1}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\V'In the case of ...] {insert the reliability from Step 3}# outputPlaintiff wins | # input: {Follow the conversation from Step 1}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\V'In the case of ...] {insert the reliability from Step 3}# outputPlaintiff wins |",
+      "normalized_latex": "\\begin{tabular}{lll}\n\\hline\n1. Initial Step & 1. Initial Step & 1. Initial Step \\\\\n\\hline\n\\# input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \" & \\# input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \" & \\# input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \" \\\\\n\\# output:Plaintiff wins & \\# output:Plaintiff wins & \\# output:Plaintiff wins \\\\\n2. Debate Step & 2. Debate Step & 2. Debate Step \\\\\nDebater 0 & Debater 1 & Debater 2 \\\\\n\\# input:Here is a legal case, your task is to predict the result of the judge and Debate withother experts, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']Please state your opinion and refer to factual examples whenever possible.Your answer no more than 200 words.Here is the case background:...\\# output:I predict that the judge will rule in favor of the plaintiff, Richard T. Haynes.Although the express company presented a receipt with terms limiting its liability, the crux of the case centers on the allegations of gross negligence and possible fraudulent actions ...\\# inputNow I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...\\# outputI largely agree with the perspective of the first expert regarding the implications of gross negligence and fraud in \"The Adams Express Company v. Richard T. Haynes.\" The pivotal issue is whether Haynes can convincingly demonstrate... & \\# input:Here is a legal case, your task is to predict the result of the judge and Debate withother experts, the labels can be one of the following:[\\textbackslash{}V'Plaintiff wins',\\textbackslash{}V'Defendant wins']Please state your opinion and refer to factual examples whenever possible.Your answer no more than 200 words.Here is the case background:...\\# outputIn the case of \"The Adams Express Company v. Richard T. Haynes,\" it is likely that the plaintiff, Haynes, would prevail due to the allegations of gross negligence and fraud.Despite the express company's attempt to enforce the terms of limited liability, these clauses typically ...\\# inputNow I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...\\# outputI strongly agree with the assessment of the first expert regarding the likelihood of the plaintiff, Richard T. Haynes, prevailing in \"The Adams Express Company v. Richard T. Haynes.\" The focus on the express company's ... & \\# input:Now I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...\\# outputI find that I am in strong agreement with the opinion of the second expert regarding the case of \"The Adams Express Company v. Richard T. Haynes.\" The emphasis on the express company's potential failure to demonstrate ... \\\\\n3. Verification Step & 3. Verification Step & 3. Verification Step \\\\\n\\{input: the summary of Debater 0's statement to the assistant model\\} \\{output: reliability: 0.75\\} & \\{input: the summary of Debater 1's statement to the assistant model\\} \\{output: reliability: 0.8\\} & \\{input: the summary of Debater 2's statement to the assistant model\\} \\{output: reliability: 0.45\\} \\\\\n4. Output step & 4. Output step & 4. Output step \\\\\n\\# input: \\{Follow the conversation from Step 1\\}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\textbackslash{}V'In the case of ...] \\{insert the reliability from Step 3\\}\\# outputPlaintiff wins & \\# input: \\{Follow the conversation from Step 1\\}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\textbackslash{}V'In the case of ...] \\{insert the reliability from Step 3\\}\\# outputPlaintiff wins & \\# input: \\{Follow the conversation from Step 1\\}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\textbackslash{}V'In the case of ...] \\{insert the reliability from Step 3\\}\\# outputPlaintiff wins \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "1. Initial Step",
+          "1. Initial Step",
+          "1. Initial Step"
+        ],
+        [
+          "# input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\V'Plaintiff wins',\\V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \"",
+          "# input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\V'Plaintiff wins',\\V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \"",
+          "# input:Here is a legal case, your task is to predict the result of the judge, the labels can be one of the following:[\\V'Plaintiff wins',\\V'Defendant wins']ONLY output the one of the labels without anything else.Here is the case background:The case, \"The Adams Express Company v. Richard T. Haynes,\" took place in 1865, involving a transaction where Richard T. Haynes entrusted a trunk to the Adams Express Company for transport from Nashville, Tennessee, to Chicago, Illinois. Haynes claimed that the contents of the trunk were lost due to the negligence and fraudulent actions of the express company. The express company provided a receipt outlining the terms of service, which limited their liability ... \""
+        ],
+        [
+          "# output:Plaintiff wins",
+          "# output:Plaintiff wins",
+          "# output:Plaintiff wins"
+        ],
+        [
+          "2. Debate Step",
+          "2. Debate Step",
+          "2. Debate Step"
+        ],
+        [
+          "Debater 0",
+          "Debater 1",
+          "Debater 2"
+        ],
+        [
+          "# input:Here is a legal case, your task is to predict the result of the judge and Debate withother experts, the labels can be one of the following:[\\V'Plaintiff wins',\\V'Defendant wins']Please state your opinion and refer to factual examples whenever possible.Your answer no more than 200 words.Here is the case background:...# output:I predict that the judge will rule in favor of the plaintiff, Richard T. Haynes.Although the express company presented a receipt with terms limiting its liability, the crux of the case centers on the allegations of gross negligence and possible fraudulent actions ...# inputNow I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...# outputI largely agree with the perspective of the first expert regarding the implications of gross negligence and fraud in \"The Adams Express Company v. Richard T. Haynes.\" The pivotal issue is whether Haynes can convincingly demonstrate...",
+          "# input:Here is a legal case, your task is to predict the result of the judge and Debate withother experts, the labels can be one of the following:[\\V'Plaintiff wins',\\V'Defendant wins']Please state your opinion and refer to factual examples whenever possible.Your answer no more than 200 words.Here is the case background:...# outputIn the case of \"The Adams Express Company v. Richard T. Haynes,\" it is likely that the plaintiff, Haynes, would prevail due to the allegations of gross negligence and fraud.Despite the express company's attempt to enforce the terms of limited liability, these clauses typically ...# inputNow I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...# outputI strongly agree with the assessment of the first expert regarding the likelihood of the plaintiff, Richard T. Haynes, prevailing in \"The Adams Express Company v. Richard T. Haynes.\" The focus on the express company's ...",
+          "# input:Now I will give you the opinion of another expert, if their opinions differ from yours, you can support their views or offer a counter-argument.This round of conversation will be provided to the judge for reference, so remember to express your stance clearly.Your answer no more than 200 words.Here are their opinions:...# outputI find that I am in strong agreement with the opinion of the second expert regarding the case of \"The Adams Express Company v. Richard T. Haynes.\" The emphasis on the express company's potential failure to demonstrate ..."
+        ],
+        [
+          "3. Verification Step",
+          "3. Verification Step",
+          "3. Verification Step"
+        ],
+        [
+          "{input: the summary of Debater 0's statement to the assistant model} {output: reliability: 0.75}",
+          "{input: the summary of Debater 1's statement to the assistant model} {output: reliability: 0.8}",
+          "{input: the summary of Debater 2's statement to the assistant model} {output: reliability: 0.45}"
+        ],
+        [
+          "4. Output step",
+          "4. Output step",
+          "4. Output step"
+        ],
+        [
+          "# input: {Follow the conversation from Step 1}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\V'In the case of ...] {insert the reliability from Step 3}# outputPlaintiff wins",
+          "# input: {Follow the conversation from Step 1}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\V'In the case of ...] {insert the reliability from Step 3}# outputPlaintiff wins",
+          "# input: {Follow the conversation from Step 1}Some experts discussed the case in this round and here is the summary, please provide your final opinion.Same as above, ONLY output the one of the labels without anything else.Here is the debate summary:[\\V'In the case of ...] {insert the reliability from Step 3}# outputPlaintiff wins"
+        ]
+      ],
+      "nearby_context": "Table showing a debate-feedback structure with four steps: Initial Step (input case and output prediction), Debate Step (three debaters providing opinions and counter-arguments), Verification Step (reliability scores for each debater), and Output Step (final prediction based on debate summary).",
+      "table_shape": {
+        "rows": 10,
+        "columns": 3
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "Table 4: An Example of Debate-Feedback Structure",
+        "caption_kind": "table",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P008_B0001",
+          "P008_B0002"
+        ],
+        "media_block_ids": [
+          "P008_B0001"
+        ],
+        "table_block_ids": [
+          "P008_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table showing a debate-feedback structure with four steps: Initial Step (input case and output prediction), Debate Step (three debaters providing opinions and counter-arguments), Verification Step (reliability scores for each debater), and Output Step (final prediction based on debate summary).",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_005",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S14",
+      "section_title": "A Appendix",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Analysis and Ablation",
+          "role": "ablation_analysis",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S14_0007",
+      "source_block_ids": [
+        "P008_B0004",
+        "P008_B0005"
+      ],
+      "media_block_ids": [
+        "P008_B0004"
+      ],
+      "caption": "Table 5: Performance of smoothing mechanism.",
+      "caption_kind": "table",
+      "caption_number": "5",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Debate-Feedback Mechanism</td><td style='text-align: center; word-wrap: break-word;'>Prediction Correction</td><td style='text-align: center; word-wrap: break-word;'>Prediction Degradation</td><td style='text-align: center; word-wrap: break-word;'>Accuracy Rate</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Without Smoothing</td><td style='text-align: center; word-wrap: break-word;'>102</td><td style='text-align: center; word-wrap: break-word;'>115</td><td style='text-align: center; word-wrap: break-word;'>62.8%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>With Smoothing</td><td style='text-align: center; word-wrap: break-word;'>93</td><td style='text-align: center; word-wrap: break-word;'>11</td><td style='text-align: center; word-wrap: break-word;'>65.7%</td></tr></table>",
+      "normalized_markdown": "| Debate-Feedback Mechanism | Prediction Correction | Prediction Degradation | Accuracy Rate |\n| --- | --- | --- | --- |\n| Without Smoothing | 102 | 115 | 62.8% |\n| With Smoothing | 93 | 11 | 65.7% |",
+      "normalized_latex": "\\begin{tabular}{llll}\n\\hline\nDebate-Feedback Mechanism & Prediction Correction & Prediction Degradation & Accuracy Rate \\\\\n\\hline\nWithout Smoothing & 102 & 115 & 62.8\\% \\\\\nWith Smoothing & 93 & 11 & 65.7\\% \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Debate-Feedback Mechanism",
+          "Prediction Correction",
+          "Prediction Degradation",
+          "Accuracy Rate"
+        ],
+        [
+          "Without Smoothing",
+          "102",
+          "115",
+          "62.8%"
+        ],
+        [
+          "With Smoothing",
+          "93",
+          "11",
+          "65.7%"
+        ]
+      ],
+      "nearby_context": "Table showing performance of smoothing mechanism with metrics Prediction Correction, Prediction Degradation, and Accuracy Rate for without and with smoothing.",
+      "table_shape": {
+        "rows": 3,
+        "columns": 4
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "ablation_table",
+        "caption": "Table 5: Performance of smoothing mechanism.",
+        "caption_kind": "table",
+        "caption_number": "5",
+        "source_block_ids": [
+          "P008_B0004",
+          "P008_B0005"
+        ],
+        "media_block_ids": [
+          "P008_B0004"
+        ],
+        "table_block_ids": [
+          "P008_B0004"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table showing performance of smoothing mechanism with metrics Prediction Correction, Prediction Degradation, and Accuracy Rate for without and with smoothing.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    }
+  ],
+  "summary": {
+    "asset_count": 8,
+    "by_asset_type": {
+      "figure": 3,
+      "table": 5
+    },
+    "by_modality_class": {
+      "explanatory": 2,
+      "evidential": 6
+    },
+    "macro_unresolved_count": 1
+  }
+}

@@ -1,0 +1,23 @@
+
+<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Type</td><td style='text-align: center; word-wrap: break-word;'>Question</td><td style='text-align: center; word-wrap: break-word;'>Knowledge segment(s)</td><td style='text-align: center; word-wrap: break-word;'>Llama-3-8B-Inst</td><td style='text-align: center; word-wrap: break-word;'>Ours</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Single</td><td style='text-align: center; word-wrap: break-word;'>when do the walking dead comics come out</td><td style='text-align: center; word-wrap: break-word;'>Title: The Walking Dead (comic book)The Walking Dead debuted in 2003, published by Image Comics, with art by Tony Moore for the first six issues and Cliff Rathburn shading the art after issue five (...)</td><td style='text-align: center; word-wrap: break-word;'>According to the document, there is no information about when the Walking Dead comics come out.</td><td style='text-align: center; word-wrap: break-word;'>The Walking Dead comic book series debuted in 2003 and has been published by Image Comics.</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Multiple</td><td style='text-align: center; word-wrap: break-word;'>where do they film take me out Fernando’s</td><td style='text-align: center; word-wrap: break-word;'>Title: Se Me Va la Voz to the script.Adriana Ontiveros, a model from Jalisco also participated in the video (...)Title: Take Me Out (UK game show) (...) In the first series, the successful couples conducted their date at Fernando’s! In the first date at Fernando’s! in Manchester, which is actually Club Bijou on Chapel Street (...)For the second series, the date took place abroad on the Isle of FERNANDO’S!, a fictional location based in Puerto de la Cruz, Tenerife (...)</td><td style='text-align: center; word-wrap: break-word;'>According to the document, the answer is: Puerto de la Cruz, Tenerife.</td><td style='text-align: center; word-wrap: break-word;'>For the Take Me Out Fernandos!, the date took place in two different locations.In the first series, the successful couples conducted their date at FERNANDO’S! in Manchester, which is actually Club Bijou on Chapel Street.In the second series, the date took place abroad on the Isle of FERNANDO’S!, a fictional location based in Puerto de la Cruz, Tenerife.</td></tr></table>
+
+<div style="text-align: center;">Table 7: Comparison in the performance of the Llama-3-8B-Inst model with our proposed model on both Single and Multiple knowledge segment(s) question answering tasks in 'Scaling with the number of relevant passages' dataset. The highlighted text in different colors indicates the specific parts of these segments that serve as evidence for the answer.</div>
+
+
+## C Scaling with the number of relevant passages
+
+Table 7 presents a comparison of responses between Llama-3-8B-Inst and our model for questions involving both single and multiple knowledge segments in ‘Scaling with the number of relevant passages’ dataset.
+
+- Single Question The question is "When do The Walking Dead comics come out?". The relevant knowledge segment(red-highlighted text) describes that "The Walking Dead debuted in 2003". Llama-3-8B-Inst responds with, "There is no information about when The Walking Dead comics come out," failing to extract the relevant information and answer the question. In contrast, our model successfully identifies the relevant information from given context and answers properly, stating, "The Walking Dead comic book series debuted in 2003 and has been published by Image Comics."
+
+• Multiple Question: The question is "Where do they film Take Me Out at Fernando's?" The knowledge segment provides two pieces of evidence: (1) In the first series, the filming location was "Club Bijou on Chapel Street," and (2) in the second series, it occurred "Puerto de la Cruz, Tenerife." Llama-3-8B-Inst gives an partial evidence based answer, "Puerto de la Cruz, Tenerife." However, our model captures the entire relevant knowledge segments and integrates them properly, stating both filming locations correctly.
+
+
+
+This demonstrates the effectiveness of the our model in accurately extracting the information and integrating them to make answers, including specific details missed by Llama-3-8B-Inst.
+
+## D Training Details
+
+Hardware Details The training of mitigating Hallucination model A100 80GB 1 node. The max length of the backbone model is 8192 tokens.
+
+DPO hyperparameter Details we use Dubey et al. (2024)'s optimal hyperparameter. the optimal parameter was utilized with a learning rate of 1e-5, beta of 0.1 and global batch of 256.

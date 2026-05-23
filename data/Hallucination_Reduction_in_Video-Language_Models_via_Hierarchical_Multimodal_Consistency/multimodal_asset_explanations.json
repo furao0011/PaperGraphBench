@@ -1,0 +1,869 @@
+{
+  "paper_id": "Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency",
+  "schema_version": "v1",
+  "table_explainer_model": "deepseek-v4-flash",
+  "figure_explainer_model": "qwen3.6-flash",
+  "figure_explainer_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "asset_explanations": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S4",
+      "macro_id": "M3",
+      "caption": "Figure 1: (Top-left) Existing methods utilize visual features that are not semantically aligned for text decoding. (Bottom-left) Our MMA employs a multi-level multimodal semantic alignment strategy to mitigate the hallucinations. (Right) Our method effectively identifies confusable objects, showcasing its capability to grasp complex semantics. It significantly outperforms MA-LMM in reducing hallucinations and enhancing answer accuracy.",
+      "summary": "The figure presents a comparative framework diagram and qualitative results for a video-language model. The left side contrasts the architecture of 'Existing methods' (a) with the proposed method '(b) Ours', highlighting the addition of a Text Encoder and multi-level alignment blocks in the latter. The right side displays qualitative examples where the proposed method ('Ours') correctly identifies objects, relationships, and scene descriptions, whereas the baseline 'MA-LMM' produces hallucinatory answers.",
+      "key_elements": [
+        {
+          "name": "Existing methods architecture",
+          "role": "Baseline framework showing visual encoder, memory bank, and querying transformer"
+        },
+        {
+          "name": "Proposed method architecture (Ours)",
+          "role": "Enhanced framework adding a Text Encoder and multi-level interaction blocks"
+        },
+        {
+          "name": "Long-Term Memory Bank",
+          "role": "Stores visual features V1...Vt from the video input"
+        },
+        {
+          "name": "Text Encoder",
+          "role": "Component unique to the proposed method, processing text labels T1...T3"
+        },
+        {
+          "name": "Multi-level alignment blocks",
+          "role": "Grid showing interactions between text labels (T) and queries (Q)"
+        },
+        {
+          "name": "LLM",
+          "role": "Large Language Model generating the final text output"
+        },
+        {
+          "name": "MA-LMM results",
+          "role": "Example of baseline performance showing incorrect/hallucinatory object recognition"
+        },
+        {
+          "name": "Ours results",
+          "role": "Example of proposed method performance showing correct object recognition"
+        },
+        {
+          "name": "Relationship example",
+          "role": "Qualitative result showing correct identification of 'Husband and wife'"
+        },
+        {
+          "name": "Description example",
+          "role": "Qualitative result showing accurate scene description of a baby watching TV"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Visual Encoder",
+          "target": "Long-Term Memory Bank",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Long-Term Memory Bank",
+          "target": "Querying Transformer",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Text Encoder",
+          "target": "Multi-level alignment blocks",
+          "relation": "connects_to"
+        },
+        {
+          "source": "Multi-level alignment blocks",
+          "target": "LLM",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "MA-LMM results",
+          "target": "Hallucination answers",
+          "relation": "labeled_as"
+        },
+        {
+          "source": "Ours results",
+          "target": "Correct answers",
+          "relation": "labeled_as"
+        },
+        {
+          "source": "Video Recognition Results",
+          "target": "Question",
+          "relation": "context_for"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The proposed method introduces a Text Encoder and multi-level alignment mechanism not present in existing methods.",
+          "support_level": "visible_label",
+          "evidence_basis": "Panel (b) shows 'Text Encoder' and a grid of T:Q interactions absent in Panel (a).",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The baseline method MA-LMM produces hallucinatory answers for object recognition tasks.",
+          "support_level": "caption_supported",
+          "evidence_basis": "The 'MA-LMM' box lists incorrect items (magma, watermelon) marked with red Xs under 'Hallucination answers'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The proposed method correctly identifies confusable objects like tomato, carrot, and orange.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "The 'Ours' box lists these items marked with green checkmarks under 'Correct answers'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The method can accurately reason about relationships between people in videos.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "The middle right panel shows a video strip and the answer 'Husband and wife' with a green checkmark.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The method can generate detailed scene descriptions.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "The bottom right panel shows the answer 'There is a baby watching TV in front of a table' with a green checkmark.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The figure provides quantitative performance metrics like accuracy percentages.",
+          "why_wrong": "The figure only contains qualitative examples and architectural diagrams; no numerical tables or charts are visible."
+        },
+        {
+          "claim": "The 'Long-Term Memory Bank' functions identically in both architectures.",
+          "why_wrong": "While labeled similarly, the proposed method adds text-based inputs (T1, T2, T3) that interact with the queries, suggesting a different utilization of memory or context compared to the top architecture."
+        }
+      ],
+      "limitations": [
+        "The figure only provides qualitative examples and does not show statistical significance or overall dataset performance.",
+        "It is unclear if the 'Text Encoder' uses pre-trained weights or is trained from scratch based on this image alone."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S4",
+      "macro_id": "M3",
+      "caption": "Figure 2: (Left) Framework overview. Framework overview. Long-Term Memory Bank and Q-Former are employed to encode visual features. Text encoder extracts joint semantic features from the prompt and text label, achieving multi-level semantic alignment with visual features through contrastive learning. The LLM then generates text outputs for various downstream tasks in video understanding. (Right) Two-stage training strategy. In the auxiliary pre-training stage, semantic discriminant loss is utilized on a larger and more diverse video-language dataset. In the task-specific training stage, both semantic discriminant loss and text decoding loss are applied to train on downstream task datasets.",
+      "summary": "The figure illustrates a video-language model framework featuring a Long-Term Memory Bank and a two-stage training strategy. The left panel details the architecture, showing how visual features are encoded into a memory bank, processed by a Q-Former to generate visual queries, and aligned with text features via a cross-modal similarity matrix. The right panel contrasts the auxiliary pre-training stage (Stage 1), which uses video-caption data and discriminative loss, with the task-specific training stage (Stage 2), which utilizes VQA data and an LLM for text generation.",
+      "key_elements": [
+        {
+          "name": "Visual Encoder",
+          "role": "Encodes video frames into visual features"
+        },
+        {
+          "name": "Long-Term Memory Bank",
+          "role": "Stores visual features (f) and query features (q)"
+        },
+        {
+          "name": "Q-Former",
+          "role": "Generates visual queries (Q) from memory bank inputs"
+        },
+        {
+          "name": "Text Encoder",
+          "role": "Extracts semantic features from prompts or labels"
+        },
+        {
+          "name": "Multi-Level Cross-Modal Similarity Matrix",
+          "role": "Calculates alignment between text (T) and visual queries (Q)"
+        },
+        {
+          "name": "LLM",
+          "role": "Generates text outputs for downstream tasks"
+        },
+        {
+          "name": "Stage 1: Auxiliary Pre-Training Stage",
+          "role": "Training phase using video-caption data and discriminative loss"
+        },
+        {
+          "name": "Stage 2: Task-Specific Training Stage",
+          "role": "Training phase using VQA data and text decoding loss"
+        },
+        {
+          "name": "Discriminative Loss",
+          "role": "Loss function used for semantic alignment"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Visual Encoder",
+          "target": "Long-Term Memory Bank",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Long-Term Memory Bank",
+          "target": "Q-Former",
+          "relation": "feeds_into"
+        },
+        {
+          "source": "Q-Former",
+          "target": "Multi-Level Cross-Modal Similarity Matrix",
+          "relation": "contributes_to"
+        },
+        {
+          "source": "Text Encoder",
+          "target": "Multi-Level Cross-Modal Similarity Matrix",
+          "relation": "contributes_to"
+        },
+        {
+          "source": "Stage 1",
+          "target": "Video-Caption Data",
+          "relation": "uses"
+        },
+        {
+          "source": "Stage 2",
+          "target": "VQA Data",
+          "relation": "uses"
+        },
+        {
+          "source": "Q-Former",
+          "target": "FC",
+          "relation": "connects_to"
+        },
+        {
+          "source": "FC",
+          "target": "LLM",
+          "relation": "feeds_into"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The framework uses a Long-Term Memory Bank containing both visual features (f) and query features (q).",
+          "support_level": "visible_label",
+          "evidence_basis": "Label 'Long-Term Memory Bank' grouping 'Visual Memory Bank' and 'Query Memory Bank'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The Q-Former generates visual queries (Q) based on inputs from the memory banks.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Arrows from Visual/Query Memory Banks pointing to Q-Former, outputting Q1...QN",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Stage 1 training focuses on semantic discriminant loss using video-caption pairs.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption mentions 'semantic discriminant loss is utilized on a larger and more diverse video-language dataset' and diagram shows 'Discriminative Loss' in Stage 1",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "Stage 2 training involves generating text via an LLM using VQA data.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Diagram shows VQA Data input leading to Text Encoder and Visual Encoder, eventually feeding into LLM which outputs 'Text'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The LLM is trained only in Stage 2 and has no role in Stage 1.",
+          "why_wrong": "While the LLM is explicitly shown in the Stage 2 flow, the caption states the LLM generates outputs for various tasks, implying it's part of the overall framework. The diagram structure suggests the LLM might be fine-tuned in Stage 2 but its architecture is likely present throughout."
+        },
+        {
+          "claim": "The 'Visual Memory Bank' and 'Query Memory Bank' are independent modules not related to each other.",
+          "why_wrong": "They are visually grouped under the single label 'Long-Term Memory Bank', indicating they function together as a unified storage mechanism."
+        }
+      ],
+      "limitations": [
+        "The specific mathematical formulation of the 'Discriminative Loss' is not visible.",
+        "The internal architecture of the 'Q-Former' and 'FC' layers is abstracted and not detailed."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S12",
+      "macro_id": "M6",
+      "caption": "Table 1: Comparison with state-of-the-art methods on long-term video understanding task using the LVU dataset.",
+      "summary": "This table compares various models (Obj_T4mer, Performer, Orthformer, VideoBERT, LST, VIS4mer, MA-LMM, and the proposed MMA) on the LVU dataset for long-term video understanding. It reports performance on seven tasks: Relation, Speak, Scene, Director, Genre, Writer, Year, and an overall Avg column. MMA (Ours) achieves the highest average score of 65.0.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "MMA (Ours) achieves an average score of 65.0.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Avg column, last row",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "MA-LMM achieves an average score of 63.0.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Avg column, second-to-last row",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "Obj_T4mer achieves the lowest average score of 45.0 among all models.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Avg column, first row (45.0) is the minimum",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "MMA (Ours) achieves the highest scores in Scene (83.0) and Director (79.9) tasks.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Scene and Director columns, last row",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "MA-LMM achieves the highest score in the Speak task (44.8).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Speak column, second-to-last row",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "MMA (Ours) outperforms all other models on every individual task.",
+          "why_wrong": "While MMA has the highest average, it does not have the highest score on every task; for example, MA-LMM scores higher on Speak (44.8 vs 41.9)."
+        },
+        {
+          "claim": "The table reports statistically significant differences between models.",
+          "why_wrong": "The table only presents raw accuracy-like numbers without any indication of statistical significance or error margins, so differences may not be meaningful."
+        }
+      ],
+      "limitations": [
+        "The table does not provide any measure of variance or statistical significance (e.g., confidence intervals, p-values).",
+        "Results are only reported on the LVU dataset and may not generalize to other video understanding benchmarks.",
+        "The table lacks details on evaluation protocol, such as train/test splits or number of runs."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S14",
+      "macro_id": "M7",
+      "caption": "Table 2: Comparison with state-of-the-art methods on the video question answering task using MSVD dataset.",
+      "summary": "This table reports the performance of various models on the MSVD benchmark for video question answering, with MMA (Ours) achieving the highest score of 60.9, followed by MA-LMM at 60.6.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "MMA (Ours) achieves a score of 60.9 on MSVD.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: 'MMA (Ours)', Column: 'MSVD'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "MA-LMM achieves a score of 60.6 on MSVD.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: 'MA-LMM', Column: 'MSVD'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Video-LLaMA achieves a score of 58.3 on MSVD.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: 'Video-LLaMA', Column: 'MSVD'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "FrozenBiLM achieves a score of 54.8 on MSVD.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: 'FrozenBiLM', Column: 'MSVD'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "GiT achieves a score of 56.8 on MSVD.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: 'GiT', Column: 'MSVD'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "mPLUG-2 achieves a score of 58.1 on MSVD.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: 'mPLUG-2', Column: 'MSVD'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "UMT-L achieves a score of 55.2 on MSVD.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: 'UMT-L', Column: 'MSVD'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "VideoCoCa achieves a score of 56.9 on MSVD.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: 'VideoCoCa', Column: 'MSVD'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "MMA (Ours) outperforms all other listed models on MSVD.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Caption: 'Comparison with state-of-the-art methods' and observed highest score for MMA (Ours) (60.9 vs next 60.6)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "MMA is the best model on all video QA datasets.",
+          "why_wrong": "The table only reports results on the MSVD dataset; performance on other datasets may differ."
+        },
+        {
+          "claim": "The scores shown are accuracy percentages.",
+          "why_wrong": "The table does not specify the metric; it could be a different score (e.g., accuracy, F1, etc.). The metric is implied but not explicitly stated in the table."
+        },
+        {
+          "claim": "The improvement of MMA over MA-LMM (0.3) is statistically significant.",
+          "why_wrong": "The table does not include error bars, confidence intervals, or significance tests, so significance cannot be assessed."
+        },
+        {
+          "claim": "The listed models are exhaustive of all state-of-the-art methods.",
+          "why_wrong": "The caption says 'Comparison with state-of-the-art methods' but the list may not be comprehensive; other methods may exist."
+        }
+      ],
+      "limitations": [
+        "Only one dataset (MSVD) is reported, limiting generalizability.",
+        "The metric used for scoring is not explicitly defined in the table (assumed accuracy but not confirmed).",
+        "No measures of variance (e.g., standard deviation, confidence intervals) are provided.",
+        "The table does not include model details such as parameter count or computational cost.",
+        "The list of compared methods may not be exhaustive."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S14",
+      "macro_id": "M7",
+      "caption": "Figure 3: Ablation results of effect of multi-level multimodal alignment and two-stage training on the LVU Relation.",
+      "summary": "The figure is a horizontal bar chart presenting ablation study results for the LVU Relation task. It compares the Top-1 Accuracy (%) of three model configurations: a baseline without multi-level alignment or two-stage training, a variant with only multi-level alignment, and the full model with both components. The chart visually demonstrates that adding these components incrementally improves performance.",
+      "key_elements": [
+        {
+          "name": "Horizontal Bar Chart",
+          "role": "Visualizes performance metrics for different model configurations"
+        },
+        {
+          "name": "X-axis: Top-1 Accuracy (%)",
+          "role": "Quantitative metric being measured"
+        },
+        {
+          "name": "Top Bar (Green)",
+          "role": "Represents the full model configuration: 'With Multi-Level Alignment, With Two-Stage Training' achieving 62.6%"
+        },
+        {
+          "name": "Middle Bar (Orange)",
+          "role": "Represents the partial configuration: 'With Multi-Level Alignment, No Two-Stage Training' achieving 61.5%"
+        },
+        {
+          "name": "Bottom Bar (Purple)",
+          "role": "Represents the baseline configuration: 'No Multi-Level Alignment, No Two-Stage Training' achieving 58.2%"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Top Bar",
+          "target": "Middle Bar",
+          "relation": "outperforms"
+        },
+        {
+          "source": "Middle Bar",
+          "target": "Bottom Bar",
+          "relation": "outperforms"
+        },
+        {
+          "source": "Top Bar",
+          "target": "Bottom Bar",
+          "relation": "significantly outperforms"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The model with both Multi-Level Alignment and Two-Stage Training achieves the highest Top-1 Accuracy of 62.6%.",
+          "support_level": "visible_label",
+          "evidence_basis": "Visible label next to the top bar showing '62.6'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Adding Two-Stage Training improves accuracy from 61.5% to 62.6% when Multi-Level Alignment is present.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Comparison between the top bar (62.6) and middle bar (61.5) labels",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Adding Multi-Level Alignment improves accuracy from 58.2% to 61.5% when Two-Stage Training is absent.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Comparison between the middle bar (61.5) and bottom bar (58.2) labels",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "The baseline model without either component achieves a Top-1 Accuracy of 58.2%.",
+          "support_level": "visible_label",
+          "evidence_basis": "Visible label next to the bottom bar showing '58.2'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The chart shows the effect of varying learning rates or batch sizes.",
+          "why_wrong": "The axis labels and bar descriptions explicitly refer to architectural/training components ('Multi-Level Alignment', 'Two-Stage Training'), not hyperparameters."
+        },
+        {
+          "claim": "The missing combination 'No Alignment, Yes Training' was tested and performed poorly.",
+          "why_wrong": "This specific combination is not represented in the chart; its absence implies it was likely not tested or included in this specific ablation set."
+        }
+      ],
+      "limitations": [
+        "The chart only displays Top-1 Accuracy, omitting other potential metrics like mAP or F1 scores.",
+        "One possible ablation combination ('No Alignment, Yes Training') is missing from the visualization, limiting the ability to fully isolate the independent contribution of Two-Stage Training without Alignment."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S14",
+      "macro_id": "M7",
+      "caption": "Figure 4: Ablation experiment of multi-level alignment module.",
+      "summary": "The figure presents an ablation study chart illustrating the impact of different alignment module configurations on Top-1 Accuracy (%). It compares a Baseline method against Single-Level Alignment, various Multi-Level Alignment setups (differing in frame and batch settings), and a final configuration involving Two-stage Training. The chart demonstrates a general upward trend in accuracy as more complex alignment strategies are introduced.",
+      "key_elements": [
+        {
+          "name": "X-axis: Method",
+          "role": "Categorical variable listing the different experimental configurations tested."
+        },
+        {
+          "name": "Y-axis: Top-1 Accuracy (%)",
+          "role": "Quantitative metric measuring model performance."
+        },
+        {
+          "name": "Baseline",
+          "role": "Reference point with the lowest accuracy value of 58.2%."
+        },
+        {
+          "name": "Single-Level Alignment",
+          "role": "Intermediate configuration showing improved accuracy over baseline at 60.4%."
+        },
+        {
+          "name": "Multi-Level Alignment Frame=1&2 Batch=4",
+          "role": "Configuration achieving 61.5% accuracy."
+        },
+        {
+          "name": "Multi-Level Alignment Frame=1&T Batch=4",
+          "role": "Configuration achieving identical accuracy (61.5%) to the previous setting."
+        },
+        {
+          "name": "Multi-Level Alignment with Two-stage Training",
+          "role": "Final configuration achieving the highest accuracy of 62.6%."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Baseline",
+          "target": "Single-Level Alignment",
+          "relation": "leads_to_improvement"
+        },
+        {
+          "source": "Single-Level Alignment",
+          "target": "Multi-Level Alignment Frame=1&2 Batch=4",
+          "relation": "leads_to_improvement"
+        },
+        {
+          "source": "Multi-Level Alignment Frame=1&2 Batch=4",
+          "target": "Multi-Level Alignment Frame=1&T Batch=4",
+          "relation": "yields_similar_performance"
+        },
+        {
+          "source": "Multi-Level Alignment Frame=1&T Batch=4",
+          "target": "Multi-Level Alignment with Two-stage Training",
+          "relation": "leads_to_further_improvement"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The Baseline method achieves a Top-1 Accuracy of 58.2%.",
+          "support_level": "visible_label",
+          "evidence_basis": "Data label '58.2' above the 'Baseline' point on the x-axis.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "Switching from 'Frame=1&2' to 'Frame=1&T' in the Multi-Level Alignment module does not change accuracy.",
+          "support_level": "visible_label",
+          "evidence_basis": "Both data points are labeled '61.5'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "Two-stage training provides the best performance among the tested ablations.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "The rightmost data point is the highest on the Y-axis at 62.6%.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The 'Frame=1&T Batch=4' configuration performs worse than 'Frame=1&2 Batch=4'.",
+          "why_wrong": "The chart explicitly labels both points with the value '61.5', indicating equal performance, connected by a flat line segment."
+        },
+        {
+          "claim": "The chart shows computational cost or inference time.",
+          "why_wrong": "The Y-axis is strictly labeled 'Top-1 Accuracy (%)', with no other metrics displayed."
+        }
+      ],
+      "limitations": [
+        "The figure only displays Top-1 Accuracy and does not provide information on computational efficiency, memory usage, or other evaluation metrics.",
+        "It does not show error bars or variance, so statistical significance cannot be visually assessed."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S14",
+      "macro_id": "M7",
+      "caption": "Figure 5: Visualization results of our method on long-term video recognition task on LVU dataset.",
+      "summary": "The figure presents three qualitative examples of a video recognition method labeled 'Ours'. Each row displays a sequence of video frames as input, followed by a specific question about the movie (genre, relationship, or scene). The output shows the model's prediction in a blue box accompanied by a green checkmark, indicating a correct answer.",
+      "key_elements": [
+        {
+          "name": "Video Frames",
+          "role": "Input visual data for each example"
+        },
+        {
+          "name": "Question Bubbles",
+          "role": "User queries regarding genre, relationship, and scene"
+        },
+        {
+          "name": "Blue Boxes",
+          "role": "Display the predicted answers ('comedy', 'friend', 'office')"
+        },
+        {
+          "name": "Green Checkmarks",
+          "role": "Indicate that the predicted answer is correct"
+        },
+        {
+          "name": "Robot Icon ('Ours')",
+          "role": "Represents the proposed method generating the results"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Video Frames",
+          "target": "Question Bubbles",
+          "relation": "provides_context_for"
+        },
+        {
+          "source": "Robot Icon ('Ours')",
+          "target": "Blue Boxes",
+          "relation": "generates"
+        },
+        {
+          "source": "Green Checkmarks",
+          "target": "Blue Boxes",
+          "relation": "validates"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The method can identify the genre of a movie from video frames.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Row 1 shows video frames leading to the answer 'comedy' with a checkmark.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "The method can identify relationships between characters in a video.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Row 2 shows video frames leading to the answer 'friend' with a checkmark.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "The method can identify the scene setting of a video.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Row 3 shows video frames leading to the answer 'office' with a checkmark.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "The results shown are produced by the authors' method.",
+          "support_level": "visible_label",
+          "evidence_basis": "Label 'Ours' next to the robot icon pointing to the results.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The figure proves the model has 100% accuracy on the entire dataset.",
+          "why_wrong": "The figure only displays three selected successful examples (qualitative), not a statistical summary of performance."
+        },
+        {
+          "claim": "The text in the blue boxes is extracted directly from the video frames via OCR.",
+          "why_wrong": "The text boxes represent answers to natural language questions (genre, relationship), which are semantic interpretations, not literal text extraction."
+        }
+      ],
+      "limitations": [
+        "Only shows successful predictions; failure cases are not visible.",
+        "Does not provide quantitative metrics like accuracy percentages or F1 scores.",
+        "Limited to three specific examples, so generalizability cannot be fully assessed visually."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    }
+  ],
+  "summary": {
+    "asset_explanation_count": 7,
+    "by_asset_type": {
+      "figure": 5,
+      "table": 2
+    },
+    "needs_review_count": 0,
+    "supported_claim_count": 34,
+    "possible_misreading_count": 16
+  }
+}

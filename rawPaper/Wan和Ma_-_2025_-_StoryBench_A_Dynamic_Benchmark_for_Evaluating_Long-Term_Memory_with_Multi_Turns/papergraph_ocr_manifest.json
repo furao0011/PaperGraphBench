@@ -1,0 +1,13 @@
+{
+  "paper_id": "Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns",
+  "source_pdf": "E:\\作业\\研究生牛马日记\\科研\\galgamebench\\paper2Bench\\pdfInput\\Wan和Ma - 2025 - StoryBench A Dynamic Benchmark for Evaluating Long-Term Memory with Multi Turns.pdf",
+  "raw_paper_dir": "E:\\作业\\研究生牛马日记\\科研\\galgamebench\\paper2Bench\\rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns",
+  "doc_count": 16,
+  "markdown_image_count": 15,
+  "layout_image_count": 16,
+  "build_graph_env": {
+    "PAPER_INPUT_DIR": "E:\\作业\\研究生牛马日记\\科研\\galgamebench\\paper2Bench\\rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns",
+    "PAPER_ID": "Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns"
+  },
+  "papergraph_data_dir": "E:\\作业\\研究生牛马日记\\科研\\galgamebench\\paper2Bench\\papergraph_demo\\data\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns"
+}

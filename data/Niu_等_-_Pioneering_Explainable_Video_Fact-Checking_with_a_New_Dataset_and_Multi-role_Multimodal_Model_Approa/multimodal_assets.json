@@ -1,0 +1,1364 @@
+{
+  "paper_id": "Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa",
+  "schema_version": "v3_latex_table_assets",
+  "assets": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "qualitative_example",
+      "section_id": "S3",
+      "section_title": "1 Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem and Prior Work Limitations",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S3_0001",
+      "source_block_ids": [
+        "P001_B0013",
+        "P001_B0014"
+      ],
+      "media_block_ids": [
+        "P001_B0013"
+      ],
+      "image_paths": [
+        "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_639_432_1115_882.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_001",
+          "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_639_432_1115_882.jpg",
+          "caption": "Figure 1: A sample in the proposed TRUE Dataset. It includes the claim, video, and video background information. Besides, three types of annotations are provided: 1) label, 2) evidences, and 3) original and summary rationales."
+        }
+      ],
+      "caption": "Figure 1: A sample in the proposed TRUE Dataset. It includes the claim, video, and video background information. Besides, three types of annotations are provided: 1) label, 2) evidences, and 3) original and summary rationales.",
+      "caption_kind": "figure",
+      "caption_number": "1",
+      "nearby_context": "Figure showing a sample from the TRUE Dataset with claim, video, background info, and annotations.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P001_B0013",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 1: A sample in the proposed TRUE Dataset. It includes the claim, video, and video background information. Besides, three types of annotations are provided: 1) label, 2) evidences, and 3) original and summary rationales.",
+        "caption_kind": "figure",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P001_B0013",
+          "P001_B0014"
+        ],
+        "media_block_ids": [
+          "P001_B0013"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P001_B0013"
+        ],
+        "description_from_html": "Figure showing a sample from the TRUE Dataset with claim, video, background info, and annotations.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "explanatory",
+      "subtype": "dataset_statistics_table",
+      "section_id": "S3",
+      "section_title": "1 Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem and Prior Work Limitations",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S3_0002",
+      "source_block_ids": [
+        "P002_B0001",
+        "P002_B0002"
+      ],
+      "media_block_ids": [
+        "P002_B0001"
+      ],
+      "caption": "Table 1: Comparison of the proposed TRUE with other datasets. ECR indicates the Expert-Crafted Rationale, LSR stands for the specific LLM-Summary-Rationale. 1;2 See Figure 2(a) for the sub_labels and their sizes. Abbreviations: T: text, A: audio, V: video, I: image. ⚖: Not Enough Information, ✓: True (Real), ∅: False (Fake/Misleading), ✰: Debunk",
+      "caption_kind": "table",
+      "caption_number": "1",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Dataset</td><td colspan=\"2\">Modality</td><td colspan=\"2\">Label</td><td colspan=\"2\">Explanation Related</td><td colspan=\"2\">Time</td><td colspan=\"2\">Size</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>T</td><td style='text-align: center; word-wrap: break-word;'>I</td><td style='text-align: center; word-wrap: break-word;'>A</td><td style='text-align: center; word-wrap: break-word;'>V</td><td style='text-align: center; word-wrap: break-word;'>Categories</td><td style='text-align: center; word-wrap: break-word;'>ECR</td><td style='text-align: center; word-wrap: break-word;'>LSR</td><td style='text-align: center; word-wrap: break-word;'>Evidence</td><td style='text-align: center; word-wrap: break-word;'>2,000+</td><td style='text-align: center; word-wrap: break-word;'>True / False</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>CHECKED</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>☑, ☑</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>19-20</td><td style='text-align: center; word-wrap: break-word;'>1760 ✓ / 344 ☑</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>(Shang et al. 2021)</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>☑, ☑</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>21-21</td><td style='text-align: center; word-wrap: break-word;'>665 ✓ / 226 ☑</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Mocheg</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>☑, ☑, ☑</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>5,144 ✓ / 5,855 ✓ / 4,602 ☑</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>FakeSV</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>☑, ☑, ☑</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>17-22</td><td style='text-align: center; word-wrap: break-word;'>1827 ✓ / 1,827 ✓ / 1,884 ☑</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>VMH</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>☑, ☑</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>14-16</td><td style='text-align: center; word-wrap: break-word;'>341 ✓ / 1,906 ☑</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>TRUE (Ours)</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>☑, ☑ + 8 sub 1</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>16-24</td><td style='text-align: center; word-wrap: break-word;'>1,097 ✓ / 1,828 ☑ 2</td></tr></table>",
+      "normalized_markdown": "| Dataset | Modality | Modality | Label | Label | Explanation Related | Explanation Related | Time | Time | Size | Size |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Dataset | T | I | A | V | Categories | ECR | LSR | Evidence | 2,000+ | True / False |\n| CHECKED | ✓ | ✓ | ✗ | ✓ | ☑, ☑ | ✗ | ✗ | ✗ | 19-20 | 1760 ✓ / 344 ☑ |\n| (Shang et al. 2021) | ✓ | ✗ | ✓ | ✓ | ☑, ☑ | ✗ | ✗ | ✗ | 21-21 | 665 ✓ / 226 ☑ |\n| Mocheg | ✓ | ✓ | ✗ | ✗ | ☑, ☑, ☑ | ✗ | ✗ | ✓ | - | 5,144 ✓ / 5,855 ✓ / 4,602 ☑ |\n| FakeSV | ✓ | ✗ | ✓ | ✓ | ☑, ☑, ☑ | ✗ | ✗ | ✓ | 17-22 | 1827 ✓ / 1,827 ✓ / 1,884 ☑ |\n| VMH | ✓ | ✗ | ✓ | ✓ | ☑, ☑ | ✓ | ✗ | ✗ | 14-16 | 341 ✓ / 1,906 ☑ |\n| TRUE (Ours) | ✓ | ✗ | ✓ | ✓ | ☑, ☑ + 8 sub 1 | ✓ | ✓ | ✓ | 16-24 | 1,097 ✓ / 1,828 ☑ 2 |",
+      "normalized_latex": "\\begin{tabular}{lllllllllll}\n\\hline\nDataset & Modality & Modality & Label & Label & Explanation Related & Explanation Related & Time & Time & Size & Size \\\\\n\\hline\nDataset & T & I & A & V & Categories & ECR & LSR & Evidence & 2,000+ & True / False \\\\\nCHECKED & ✓ & ✓ & ✗ & ✓ & ☑, ☑ & ✗ & ✗ & ✗ & 19-20 & 1760 ✓ / 344 ☑ \\\\\n(Shang et al. 2021) & ✓ & ✗ & ✓ & ✓ & ☑, ☑ & ✗ & ✗ & ✗ & 21-21 & 665 ✓ / 226 ☑ \\\\\nMocheg & ✓ & ✓ & ✗ & ✗ & ☑, ☑, ☑ & ✗ & ✗ & ✓ & - & 5,144 ✓ / 5,855 ✓ / 4,602 ☑ \\\\\nFakeSV & ✓ & ✗ & ✓ & ✓ & ☑, ☑, ☑ & ✗ & ✗ & ✓ & 17-22 & 1827 ✓ / 1,827 ✓ / 1,884 ☑ \\\\\nVMH & ✓ & ✗ & ✓ & ✓ & ☑, ☑ & ✓ & ✗ & ✗ & 14-16 & 341 ✓ / 1,906 ☑ \\\\\nTRUE (Ours) & ✓ & ✗ & ✓ & ✓ & ☑, ☑ + 8 sub 1 & ✓ & ✓ & ✓ & 16-24 & 1,097 ✓ / 1,828 ☑ 2 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Dataset",
+          "Modality",
+          "Modality",
+          "Label",
+          "Label",
+          "Explanation Related",
+          "Explanation Related",
+          "Time",
+          "Time",
+          "Size",
+          "Size"
+        ],
+        [
+          "Dataset",
+          "T",
+          "I",
+          "A",
+          "V",
+          "Categories",
+          "ECR",
+          "LSR",
+          "Evidence",
+          "2,000+",
+          "True / False"
+        ],
+        [
+          "CHECKED",
+          "✓",
+          "✓",
+          "✗",
+          "✓",
+          "☑, ☑",
+          "✗",
+          "✗",
+          "✗",
+          "19-20",
+          "1760 ✓ / 344 ☑"
+        ],
+        [
+          "(Shang et al. 2021)",
+          "✓",
+          "✗",
+          "✓",
+          "✓",
+          "☑, ☑",
+          "✗",
+          "✗",
+          "✗",
+          "21-21",
+          "665 ✓ / 226 ☑"
+        ],
+        [
+          "Mocheg",
+          "✓",
+          "✓",
+          "✗",
+          "✗",
+          "☑, ☑, ☑",
+          "✗",
+          "✗",
+          "✓",
+          "-",
+          "5,144 ✓ / 5,855 ✓ / 4,602 ☑"
+        ],
+        [
+          "FakeSV",
+          "✓",
+          "✗",
+          "✓",
+          "✓",
+          "☑, ☑, ☑",
+          "✗",
+          "✗",
+          "✓",
+          "17-22",
+          "1827 ✓ / 1,827 ✓ / 1,884 ☑"
+        ],
+        [
+          "VMH",
+          "✓",
+          "✗",
+          "✓",
+          "✓",
+          "☑, ☑",
+          "✓",
+          "✗",
+          "✗",
+          "14-16",
+          "341 ✓ / 1,906 ☑"
+        ],
+        [
+          "TRUE (Ours)",
+          "✓",
+          "✗",
+          "✓",
+          "✓",
+          "☑, ☑ + 8 sub 1",
+          "✓",
+          "✓",
+          "✓",
+          "16-24",
+          "1,097 ✓ / 1,828 ☑ 2"
+        ]
+      ],
+      "nearby_context": "Table comparing datasets (CHECKED, (Shang et al. 2021), Mocheg, FakeSV, VMH, TRUE (Ours)) across modalities (T, I, A, V), labels (Categories, ECR, LSR, Evidence), time span, and size (True/False counts). Caption explains abbreviations and references Figure 2(a).",
+      "table_shape": {
+        "rows": 8,
+        "columns": 11
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "explanatory",
+        "subtype_hint": "dataset_statistics_table",
+        "caption": "Table 1: Comparison of the proposed TRUE with other datasets. ECR indicates the Expert-Crafted Rationale, LSR stands for the specific LLM-Summary-Rationale. 1;2 See Figure 2(a) for the sub_labels and their sizes. Abbreviations: T: text, A: audio, V: video, I: image. ⚖: Not Enough Information, ✓: True (Real), ∅: False (Fake/Misleading), ✰: Debunk",
+        "caption_kind": "table",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P002_B0001",
+          "P002_B0002"
+        ],
+        "media_block_ids": [
+          "P002_B0001"
+        ],
+        "table_block_ids": [
+          "P002_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing datasets (CHECKED, (Shang et al. 2021), Mocheg, FakeSV, VMH, TRUE (Ours)) across modalities (T, I, A, V), labels (Categories, ECR, LSR, Evidence), time span, and size (True/False counts). Caption explains abbreviations and references Figure 2(a).",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S6",
+      "section_title": "3.1 Dataset Construction",
+      "macro_id": "M2",
+      "macro_candidates": [
+        {
+          "macro_id": "M2",
+          "title": "TRUE Dataset",
+          "role": "dataset_or_resource",
+          "order": 2
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S6_0003",
+      "source_block_ids": [
+        "P003_B0007"
+      ],
+      "media_block_ids": [
+        "P003_B0007"
+      ],
+      "caption": "",
+      "caption_kind": "none",
+      "caption_number": "None",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'></td><td style='text-align: center; word-wrap: break-word;'>Originality $ ^{1} $</td><td style='text-align: center; word-wrap: break-word;'>Accuracy $ ^{2} $</td><td style='text-align: center; word-wrap: break-word;'>Comprehensiveness $ ^{3} $</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ECR</td><td style='text-align: center; word-wrap: break-word;'>100%</td><td style='text-align: center; word-wrap: break-word;'>70.90%</td><td style='text-align: center; word-wrap: break-word;'>33.70%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LSR</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>92.30%</td><td style='text-align: center; word-wrap: break-word;'>98.40%</td></tr></table>",
+      "normalized_markdown": "|  | Originality $ ^{1} $ | Accuracy $ ^{2} $ | Comprehensiveness $ ^{3} $ |\n| --- | --- | --- | --- |\n| ECR | 100% | 70.90% | 33.70% |\n| LSR | - | 92.30% | 98.40% |",
+      "normalized_latex": "\\begin{tabular}{llll}\n\\hline\n & Originality \\$ \\textasciicircum{}\\{1\\} \\$ & Accuracy \\$ \\textasciicircum{}\\{2\\} \\$ & Comprehensiveness \\$ \\textasciicircum{}\\{3\\} \\$ \\\\\n\\hline\nECR & 100\\% & 70.90\\% & 33.70\\% \\\\\nLSR & - & 92.30\\% & 98.40\\% \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "",
+          "Originality $ ^{1} $",
+          "Accuracy $ ^{2} $",
+          "Comprehensiveness $ ^{3} $"
+        ],
+        [
+          "ECR",
+          "100%",
+          "70.90%",
+          "33.70%"
+        ],
+        [
+          "LSR",
+          "-",
+          "92.30%",
+          "98.40%"
+        ]
+      ],
+      "nearby_context": "Table with columns Originality, Accuracy, Comprehensiveness and rows ECR, LSR showing percentage values.",
+      "table_shape": {
+        "rows": 3,
+        "columns": 4
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "",
+        "caption_kind": "none",
+        "caption_number": "None",
+        "source_block_ids": [
+          "P003_B0007"
+        ],
+        "media_block_ids": [
+          "P003_B0007"
+        ],
+        "table_block_ids": [
+          "P003_B0007"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table with columns Originality, Accuracy, Comprehensiveness and rows ECR, LSR showing percentage values.",
+        "notes": "The table includes superscript markers (e.g., $^{1}$, $^{2}$, $^{3}$) but no explicit caption."
+      },
+      "diagnostics": {
+        "has_caption": false,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "chart",
+      "section_id": "S6",
+      "section_title": "3.1 Dataset Construction",
+      "macro_id": "M2",
+      "macro_candidates": [
+        {
+          "macro_id": "M2",
+          "title": "TRUE Dataset",
+          "role": "dataset_or_resource",
+          "order": 2
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S6_0004",
+      "source_block_ids": [
+        "P003_B0013",
+        "P003_B0014",
+        "P003_B0015",
+        "P003_B0016",
+        "P003_B0017"
+      ],
+      "media_block_ids": [
+        "P003_B0013",
+        "P003_B0015"
+      ],
+      "image_paths": [
+        "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_644_700_881_893.jpg",
+        "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_903_699_1110_886.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_002",
+          "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_644_700_881_893.jpg",
+          "caption": "Figure 2: (a) Label Composition: False labels include False (1062), Miscaptioned (268), Mixture (305), Fake (52), and Mostly False (MF, 126). True labels include True (798), Mostly True (MT, 100), and Correct Attribution (CA, 199). (b) Social Media (SM): Platforms include Instagram (IG), TikTok (TT), Facebook (FB), X (formerly Twitter), and YouTube (YT). Official Media (OM): Sources include the New York Times (NYT), CNBC, and Fox News (FN)."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_002",
+          "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_903_699_1110_886.jpg",
+          "caption": "Figure 2: (a) Label Composition: False labels include False (1062), Miscaptioned (268), Mixture (305), Fake (52), and Mostly False (MF, 126). True labels include True (798), Mostly True (MT, 100), and Correct Attribution (CA, 199). (b) Social Media (SM): Platforms include Instagram (IG), TikTok (TT), Facebook (FB), X (formerly Twitter), and YouTube (YT). Official Media (OM): Sources include the New York Times (NYT), CNBC, and Fox News (FN)."
+        }
+      ],
+      "caption": "Figure 2: (a) Label Composition: False labels include False (1062), Miscaptioned (268), Mixture (305), Fake (52), and Mostly False (MF, 126). True labels include True (798), Mostly True (MT, 100), and Correct Attribution (CA, 199). (b) Social Media (SM): Platforms include Instagram (IG), TikTok (TT), Facebook (FB), X (formerly Twitter), and YouTube (YT). Official Media (OM): Sources include the New York Times (NYT), CNBC, and Fox News (FN).",
+      "caption_kind": "figure",
+      "caption_number": "2",
+      "nearby_context": "The figure contains two subfigures: (a) shows label composition with counts for different false and true labels, (b) shows social media platforms and official media sources.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": "(a)",
+          "source_block_id": "P003_B0013",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_2",
+          "panel_label": "(b)",
+          "source_block_id": "P003_B0015",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "chart",
+        "caption": "Figure 2: (a) Label Composition: False labels include False (1062), Miscaptioned (268), Mixture (305), Fake (52), and Mostly False (MF, 126). True labels include True (798), Mostly True (MT, 100), and Correct Attribution (CA, 199). (b) Social Media (SM): Platforms include Instagram (IG), TikTok (TT), Facebook (FB), X (formerly Twitter), and YouTube (YT). Official Media (OM): Sources include the New York Times (NYT), CNBC, and Fox News (FN).",
+        "caption_kind": "figure",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P003_B0013",
+          "P003_B0014",
+          "P003_B0015",
+          "P003_B0016",
+          "P003_B0017"
+        ],
+        "media_block_ids": [
+          "P003_B0013",
+          "P003_B0015"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P003_B0013",
+          "P003_B0015"
+        ],
+        "description_from_html": "The figure contains two subfigures: (a) shows label composition with counts for different false and true labels, (b) shows social media platforms and official media sources.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 2
+      }
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S7",
+      "section_title": "3.2 Dataset Statistics",
+      "macro_id": "M2",
+      "macro_candidates": [
+        {
+          "macro_id": "M2",
+          "title": "TRUE Dataset",
+          "role": "dataset_or_resource",
+          "order": 2
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S7_0005",
+      "source_block_ids": [
+        "P004_B0001",
+        "P004_B0002",
+        "P004_B0003",
+        "P004_B0004",
+        "P004_B0005",
+        "P004_B0006",
+        "P004_B0007",
+        "P004_B0008",
+        "P004_B0009"
+      ],
+      "media_block_ids": [
+        "P004_B0001",
+        "P004_B0002",
+        "P004_B0005",
+        "P004_B0007"
+      ],
+      "image_paths": [
+        "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_122_107_370_285.jpg",
+        "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_383_107_632_291.jpg",
+        "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_644_105_858_290.jpg",
+        "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_873_111_1099_292.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_122_107_370_285.jpg",
+          "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_383_107_632_291.jpg",
+          "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_644_105_858_290.jpg",
+          "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_873_111_1099_292.jpg",
+          "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
+        }
+      ],
+      "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment.",
+      "caption_kind": "figure",
+      "caption_number": "3",
+      "nearby_context": "Figure showing dataset statistics: average claim length, entropy, scene transition counts, and average count of fact-checking materials per claim.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": "(a)",
+          "source_block_id": "P004_B0001",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_2",
+          "panel_label": "(b)",
+          "source_block_id": "P004_B0002",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_3",
+          "panel_label": "(c)",
+          "source_block_id": "P004_B0005",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_4",
+          "panel_label": "(d)",
+          "source_block_id": "P004_B0007",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment.",
+        "caption_kind": "figure",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P004_B0001",
+          "P004_B0002",
+          "P004_B0003",
+          "P004_B0004",
+          "P004_B0005",
+          "P004_B0006",
+          "P004_B0007",
+          "P004_B0008",
+          "P004_B0009"
+        ],
+        "media_block_ids": [
+          "P004_B0001",
+          "P004_B0002",
+          "P004_B0005",
+          "P004_B0007"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P004_B0001",
+          "P004_B0002",
+          "P004_B0005",
+          "P004_B0007"
+        ],
+        "description_from_html": "Figure showing dataset statistics: average claim length, entropy, scene transition counts, and average count of fact-checking materials per claim.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 4
+      }
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S12",
+      "section_title": "4.3 Claim Verifier",
+      "macro_id": "M4",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Framework Modules",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S12_0006",
+      "source_block_ids": [
+        "P005_B0001",
+        "P005_B0002"
+      ],
+      "media_block_ids": [
+        "P005_B0001"
+      ],
+      "image_paths": [
+        "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_113_110_1113_367.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_113_110_1113_367.jpg",
+          "caption": "Figure 4: Overview of the proposed 3MFact framework, comprising five components: Video Descriptor (video-to-text conversion), Claim Verifier (assesses evidence sufficiency), Question Manager (generates questions and retrieves answers), Information Retriever (searches for evidence), and Reasoner (synthesizes judgment with rationale and evidence)."
+        }
+      ],
+      "caption": "Figure 4: Overview of the proposed 3MFact framework, comprising five components: Video Descriptor (video-to-text conversion), Claim Verifier (assesses evidence sufficiency), Question Manager (generates questions and retrieves answers), Information Retriever (searches for evidence), and Reasoner (synthesizes judgment with rationale and evidence).",
+      "caption_kind": "figure",
+      "caption_number": "4",
+      "nearby_context": "Figure 4 shows an overview of the 3MFact framework with five components: Video Descriptor, Claim Verifier, Question Manager, Information Retriever, and Reasoner.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P005_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 4: Overview of the proposed 3MFact framework, comprising five components: Video Descriptor (video-to-text conversion), Claim Verifier (assesses evidence sufficiency), Question Manager (generates questions and retrieves answers), Information Retriever (searches for evidence), and Reasoner (synthesizes judgment with rationale and evidence).",
+        "caption_kind": "figure",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P005_B0001",
+          "P005_B0002"
+        ],
+        "media_block_ids": [
+          "P005_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P005_B0001"
+        ],
+        "description_from_html": "Figure 4 shows an overview of the 3MFact framework with five components: Video Descriptor, Claim Verifier, Question Manager, Information Retriever, and Reasoner.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S17",
+      "section_title": "5.2 Model Comparison Experiments",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Main Results and Case Study",
+          "role": "main_result",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S17_0007",
+      "source_block_ids": [
+        "P006_B0010",
+        "P006_B0011"
+      ],
+      "media_block_ids": [
+        "P006_B0010"
+      ],
+      "caption": "Table 3: Comparison of Models for 2-Class Classification. Trad.: traditional methods; LLM.: LLM-based approaches. 3MFact $ _{(C+V)} $ uses CogVLM (Wang et al. 2023) as ImageLMM and VideoLLaVa as VideoLMM, and 3MFact $ _{(M+M)} $ uses MiniCPM-V 2.6 as both ImageLMM and VideoLMM.",
+      "caption_kind": "table",
+      "caption_number": "3",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Approach</td><td style='text-align: center; word-wrap: break-word;'>Model</td><td style='text-align: center; word-wrap: break-word;'>Acc.</td><td style='text-align: center; word-wrap: break-word;'>Recall</td><td style='text-align: center; word-wrap: break-word;'>Prec.</td><td style='text-align: center; word-wrap: break-word;'>F1</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Trad.</td><td style='text-align: center; word-wrap: break-word;'>SV-FEND</td><td style='text-align: center; word-wrap: break-word;'>62.80%</td><td style='text-align: center; word-wrap: break-word;'>50.00%</td><td style='text-align: center; word-wrap: break-word;'>31.40%</td><td style='text-align: center; word-wrap: break-word;'>38.56%</td></tr><tr><td rowspan=\"4\">LLM.</td><td style='text-align: center; word-wrap: break-word;'>VideoLLaVa</td><td style='text-align: center; word-wrap: break-word;'>44.11%</td><td style='text-align: center; word-wrap: break-word;'>95.40%</td><td style='text-align: center; word-wrap: break-word;'>41.50%</td><td style='text-align: center; word-wrap: break-word;'>57.84%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MiniCPM-V 2.6</td><td style='text-align: center; word-wrap: break-word;'>62.73%</td><td style='text-align: center; word-wrap: break-word;'>20.81%</td><td style='text-align: center; word-wrap: break-word;'>60.00%</td><td style='text-align: center; word-wrap: break-word;'>30.90%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>3MFact $ _{(C+V)} $</td><td style='text-align: center; word-wrap: break-word;'>74.83%</td><td style='text-align: center; word-wrap: break-word;'>72.41%</td><td style='text-align: center; word-wrap: break-word;'>67.38%</td><td style='text-align: center; word-wrap: break-word;'>69.81%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>3MFact $ _{(M+M)} $</td><td style='text-align: center; word-wrap: break-word;'>79.63%</td><td style='text-align: center; word-wrap: break-word;'>87.23%</td><td style='text-align: center; word-wrap: break-word;'>71.93%</td><td style='text-align: center; word-wrap: break-word;'>73.85%</td></tr></table>",
+      "normalized_markdown": "| Approach | Model | Acc. | Recall | Prec. | F1 |\n| --- | --- | --- | --- | --- | --- |\n| Trad. | SV-FEND | 62.80% | 50.00% | 31.40% | 38.56% |\n| LLM. | VideoLLaVa | 44.11% | 95.40% | 41.50% | 57.84% |\n| LLM. | MiniCPM-V 2.6 | 62.73% | 20.81% | 60.00% | 30.90% |\n| LLM. | 3MFact $ _{(C+V)} $ | 74.83% | 72.41% | 67.38% | 69.81% |\n| LLM. | 3MFact $ _{(M+M)} $ | 79.63% | 87.23% | 71.93% | 73.85% |",
+      "normalized_latex": "\\begin{tabular}{llllll}\n\\hline\nApproach & Model & Acc. & Recall & Prec. & F1 \\\\\n\\hline\nTrad. & SV-FEND & 62.80\\% & 50.00\\% & 31.40\\% & 38.56\\% \\\\\nLLM. & VideoLLaVa & 44.11\\% & 95.40\\% & 41.50\\% & 57.84\\% \\\\\nLLM. & MiniCPM-V 2.6 & 62.73\\% & 20.81\\% & 60.00\\% & 30.90\\% \\\\\nLLM. & 3MFact \\$ \\_\\{(C+V)\\} \\$ & 74.83\\% & 72.41\\% & 67.38\\% & 69.81\\% \\\\\nLLM. & 3MFact \\$ \\_\\{(M+M)\\} \\$ & 79.63\\% & 87.23\\% & 71.93\\% & 73.85\\% \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Approach",
+          "Model",
+          "Acc.",
+          "Recall",
+          "Prec.",
+          "F1"
+        ],
+        [
+          "Trad.",
+          "SV-FEND",
+          "62.80%",
+          "50.00%",
+          "31.40%",
+          "38.56%"
+        ],
+        [
+          "LLM.",
+          "VideoLLaVa",
+          "44.11%",
+          "95.40%",
+          "41.50%",
+          "57.84%"
+        ],
+        [
+          "LLM.",
+          "MiniCPM-V 2.6",
+          "62.73%",
+          "20.81%",
+          "60.00%",
+          "30.90%"
+        ],
+        [
+          "LLM.",
+          "3MFact $ _{(C+V)} $",
+          "74.83%",
+          "72.41%",
+          "67.38%",
+          "69.81%"
+        ],
+        [
+          "LLM.",
+          "3MFact $ _{(M+M)} $",
+          "79.63%",
+          "87.23%",
+          "71.93%",
+          "73.85%"
+        ]
+      ],
+      "nearby_context": "Table comparing models (SV-FEND, VideoLLaVa, MiniCPM-V 2.6, 3MFact variants) on accuracy, recall, precision, and F1 for 2-class classification.",
+      "table_shape": {
+        "rows": 6,
+        "columns": 6
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 3: Comparison of Models for 2-Class Classification. Trad.: traditional methods; LLM.: LLM-based approaches. 3MFact $ _{(C+V)} $ uses CogVLM (Wang et al. 2023) as ImageLMM and VideoLLaVa as VideoLMM, and 3MFact $ _{(M+M)} $ uses MiniCPM-V 2.6 as both ImageLMM and VideoLMM.",
+        "caption_kind": "table",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P006_B0010",
+          "P006_B0011"
+        ],
+        "media_block_ids": [
+          "P006_B0010"
+        ],
+        "table_block_ids": [
+          "P006_B0010"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing models (SV-FEND, VideoLLaVa, MiniCPM-V 2.6, 3MFact variants) on accuracy, recall, precision, and F1 for 2-class classification.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S17",
+      "section_title": "5.2 Model Comparison Experiments",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Main Results and Case Study",
+          "role": "main_result",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S17_0007",
+      "source_block_ids": [
+        "P006_B0012",
+        "P006_B0013"
+      ],
+      "media_block_ids": [
+        "P006_B0012"
+      ],
+      "caption": "Table 4: Evaluation of Models on Explanation Metrics. R-O: Reasons/Evidence Omission, LC: Logical Consistency, SoE: Strength of Evidence, COM: Comprehensiveness, CUR: Currency, CON: Conciseness, FAI: Faithfulness, FH: Fact Hallucination.",
+      "caption_kind": "table",
+      "caption_number": "4",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Model</td><td style='text-align: center; word-wrap: break-word;'>Trad.</td><td colspan=\"3\">Content Credibility Analysis (G-E.)</td><td style='text-align: center; word-wrap: break-word;'></td></tr><tr><td style='text-align: center; word-wrap: break-word;'>B.</td><td style='text-align: center; word-wrap: break-word;'>RG.</td><td style='text-align: center; word-wrap: break-word;'>R-O</td><td style='text-align: center; word-wrap: break-word;'>LC SoE COM CUR CON FAI FH</td><td style='text-align: center; word-wrap: break-word;'></td></tr><tr><td style='text-align: center; word-wrap: break-word;'>VideoLLaVa</td><td style='text-align: center; word-wrap: break-word;'>0.00</td><td style='text-align: center; word-wrap: break-word;'>0.16</td><td style='text-align: center; word-wrap: break-word;'>1.18</td><td style='text-align: center; word-wrap: break-word;'>3.20</td><td style='text-align: center; word-wrap: break-word;'>1.82</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MiniCPM-V</td><td style='text-align: center; word-wrap: break-word;'>0.00</td><td style='text-align: center; word-wrap: break-word;'>0.16</td><td style='text-align: center; word-wrap: break-word;'>1.43</td><td style='text-align: center; word-wrap: break-word;'>3.69</td><td style='text-align: center; word-wrap: break-word;'>2.08</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>3MFact $ _{(C+V)} $</td><td style='text-align: center; word-wrap: break-word;'>0.03</td><td style='text-align: center; word-wrap: break-word;'>0.26</td><td style='text-align: center; word-wrap: break-word;'>2.24</td><td style='text-align: center; word-wrap: break-word;'>4.48</td><td style='text-align: center; word-wrap: break-word;'>3.98</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>3MFact $ _{(M+M)} $</td><td style='text-align: center; word-wrap: break-word;'>0.04</td><td style='text-align: center; word-wrap: break-word;'>0.25</td><td style='text-align: center; word-wrap: break-word;'>2.37</td><td style='text-align: center; word-wrap: break-word;'>4.47</td><td style='text-align: center; word-wrap: break-word;'>3.96</td></tr></table>",
+      "normalized_markdown": "| Model | Trad. | Content Credibility Analysis (G-E.) | Content Credibility Analysis (G-E.) | Content Credibility Analysis (G-E.) |  |\n| --- | --- | --- | --- | --- | --- |\n| Model | B. | RG. | R-O | LC SoE COM CUR CON FAI FH |  |\n| VideoLLaVa | 0.00 | 0.16 | 1.18 | 3.20 | 1.82 |\n| MiniCPM-V | 0.00 | 0.16 | 1.43 | 3.69 | 2.08 |\n| 3MFact $ _{(C+V)} $ | 0.03 | 0.26 | 2.24 | 4.48 | 3.98 |\n| 3MFact $ _{(M+M)} $ | 0.04 | 0.25 | 2.37 | 4.47 | 3.96 |",
+      "normalized_latex": "\\begin{tabular}{llllll}\n\\hline\nModel & Trad. & Content Credibility Analysis (G-E.) & Content Credibility Analysis (G-E.) & Content Credibility Analysis (G-E.) &  \\\\\n\\hline\nModel & B. & RG. & R-O & LC SoE COM CUR CON FAI FH &  \\\\\nVideoLLaVa & 0.00 & 0.16 & 1.18 & 3.20 & 1.82 \\\\\nMiniCPM-V & 0.00 & 0.16 & 1.43 & 3.69 & 2.08 \\\\\n3MFact \\$ \\_\\{(C+V)\\} \\$ & 0.03 & 0.26 & 2.24 & 4.48 & 3.98 \\\\\n3MFact \\$ \\_\\{(M+M)\\} \\$ & 0.04 & 0.25 & 2.37 & 4.47 & 3.96 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "Trad.",
+          "Content Credibility Analysis (G-E.)",
+          "Content Credibility Analysis (G-E.)",
+          "Content Credibility Analysis (G-E.)",
+          ""
+        ],
+        [
+          "Model",
+          "B.",
+          "RG.",
+          "R-O",
+          "LC SoE COM CUR CON FAI FH",
+          ""
+        ],
+        [
+          "VideoLLaVa",
+          "0.00",
+          "0.16",
+          "1.18",
+          "3.20",
+          "1.82"
+        ],
+        [
+          "MiniCPM-V",
+          "0.00",
+          "0.16",
+          "1.43",
+          "3.69",
+          "2.08"
+        ],
+        [
+          "3MFact $ _{(C+V)} $",
+          "0.03",
+          "0.26",
+          "2.24",
+          "4.48",
+          "3.98"
+        ],
+        [
+          "3MFact $ _{(M+M)} $",
+          "0.04",
+          "0.25",
+          "2.37",
+          "4.47",
+          "3.96"
+        ]
+      ],
+      "nearby_context": "Table evaluating models (VideoLLaVa, MiniCPM-V, 3MFact variants) on explanation metrics including B., RG., R-O, LC SoE COM CUR CON FAI FH.",
+      "table_shape": {
+        "rows": 6,
+        "columns": 6
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 4: Evaluation of Models on Explanation Metrics. R-O: Reasons/Evidence Omission, LC: Logical Consistency, SoE: Strength of Evidence, COM: Comprehensiveness, CUR: Currency, CON: Conciseness, FAI: Faithfulness, FH: Fact Hallucination.",
+        "caption_kind": "table",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P006_B0012",
+          "P006_B0013"
+        ],
+        "media_block_ids": [
+          "P006_B0012"
+        ],
+        "table_block_ids": [
+          "P006_B0012"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table evaluating models (VideoLLaVa, MiniCPM-V, 3MFact variants) on explanation metrics including B., RG., R-O, LC SoE COM CUR CON FAI FH.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_005",
+      "asset_type": "table",
+      "modality_class": "explanatory",
+      "subtype": "ablation_table",
+      "section_id": "S18",
+      "section_title": "5.3 Ablation Study",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Ablation Study",
+          "role": "ablation_analysis",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S18_0008",
+      "source_block_ids": [
+        "P007_B0002",
+        "P007_B0003"
+      ],
+      "media_block_ids": [
+        "P007_B0002"
+      ],
+      "caption": "Table 5: Ablation Study on Different Modules. IR: Information Retriever module, QA $ _{LMM} $: Question Answering with VideoLMM, VD: Video Descriptor module, 2Val: Validation of P and Validation of $ E_{q} $",
+      "caption_kind": "table",
+      "caption_number": "5",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Model</td><td style='text-align: center; word-wrap: break-word;'>Acc.</td><td style='text-align: center; word-wrap: break-word;'>Recall</td><td style='text-align: center; word-wrap: break-word;'>Prec.</td><td style='text-align: center; word-wrap: break-word;'>F1</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>3MFact $ _{(M+M)} $</td><td style='text-align: center; word-wrap: break-word;'>79.63%</td><td style='text-align: center; word-wrap: break-word;'>87.23%</td><td style='text-align: center; word-wrap: break-word;'>71.93%</td><td style='text-align: center; word-wrap: break-word;'>78.85%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o IR</td><td style='text-align: center; word-wrap: break-word;'>69.98%</td><td style='text-align: center; word-wrap: break-word;'>60.12%</td><td style='text-align: center; word-wrap: break-word;'>63.03%</td><td style='text-align: center; word-wrap: break-word;'>61.54%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o QA $ _{LMM} $</td><td style='text-align: center; word-wrap: break-word;'>76.18%</td><td style='text-align: center; word-wrap: break-word;'>81.58%</td><td style='text-align: center; word-wrap: break-word;'>66.31%</td><td style='text-align: center; word-wrap: break-word;'>73.16%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o VD</td><td style='text-align: center; word-wrap: break-word;'>79.42%</td><td style='text-align: center; word-wrap: break-word;'>85.71%</td><td style='text-align: center; word-wrap: break-word;'>68.67%</td><td style='text-align: center; word-wrap: break-word;'>76.25%</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o 2Val</td><td style='text-align: center; word-wrap: break-word;'>72.09%</td><td style='text-align: center; word-wrap: break-word;'>74.85%</td><td style='text-align: center; word-wrap: break-word;'>64.00%</td><td style='text-align: center; word-wrap: break-word;'>69.00%</td></tr></table>",
+      "normalized_markdown": "| Model | Acc. | Recall | Prec. | F1 |\n| --- | --- | --- | --- | --- |\n| 3MFact $ _{(M+M)} $ | 79.63% | 87.23% | 71.93% | 78.85% |\n| w/o IR | 69.98% | 60.12% | 63.03% | 61.54% |\n| w/o QA $ _{LMM} $ | 76.18% | 81.58% | 66.31% | 73.16% |\n| w/o VD | 79.42% | 85.71% | 68.67% | 76.25% |\n| w/o 2Val | 72.09% | 74.85% | 64.00% | 69.00% |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nModel & Acc. & Recall & Prec. & F1 \\\\\n\\hline\n3MFact \\$ \\_\\{(M+M)\\} \\$ & 79.63\\% & 87.23\\% & 71.93\\% & 78.85\\% \\\\\nw/o IR & 69.98\\% & 60.12\\% & 63.03\\% & 61.54\\% \\\\\nw/o QA \\$ \\_\\{LMM\\} \\$ & 76.18\\% & 81.58\\% & 66.31\\% & 73.16\\% \\\\\nw/o VD & 79.42\\% & 85.71\\% & 68.67\\% & 76.25\\% \\\\\nw/o 2Val & 72.09\\% & 74.85\\% & 64.00\\% & 69.00\\% \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "Acc.",
+          "Recall",
+          "Prec.",
+          "F1"
+        ],
+        [
+          "3MFact $ _{(M+M)} $",
+          "79.63%",
+          "87.23%",
+          "71.93%",
+          "78.85%"
+        ],
+        [
+          "w/o IR",
+          "69.98%",
+          "60.12%",
+          "63.03%",
+          "61.54%"
+        ],
+        [
+          "w/o QA $ _{LMM} $",
+          "76.18%",
+          "81.58%",
+          "66.31%",
+          "73.16%"
+        ],
+        [
+          "w/o VD",
+          "79.42%",
+          "85.71%",
+          "68.67%",
+          "76.25%"
+        ],
+        [
+          "w/o 2Val",
+          "72.09%",
+          "74.85%",
+          "64.00%",
+          "69.00%"
+        ]
+      ],
+      "nearby_context": "Ablation study table comparing model variants: 3MFact, w/o IR, w/o QA LMM, w/o VD, w/o 2Val, with metrics Acc., Recall, Prec., F1.",
+      "table_shape": {
+        "rows": 6,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "explanatory",
+        "subtype_hint": "ablation_table",
+        "caption": "Table 5: Ablation Study on Different Modules. IR: Information Retriever module, QA $ _{LMM} $: Question Answering with VideoLMM, VD: Video Descriptor module, 2Val: Validation of P and Validation of $ E_{q} $",
+        "caption_kind": "table",
+        "caption_number": "5",
+        "source_block_ids": [
+          "P007_B0002",
+          "P007_B0003"
+        ],
+        "media_block_ids": [
+          "P007_B0002"
+        ],
+        "table_block_ids": [
+          "P007_B0002"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Ablation study table comparing model variants: 3MFact, w/o IR, w/o QA LMM, w/o VD, w/o 2Val, with metrics Acc., Recall, Prec., F1.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_006",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S20",
+      "section_title": "5.5 Case study",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Main Results and Case Study",
+          "role": "main_result",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S20_0009",
+      "source_block_ids": [
+        "P007_B0008",
+        "P007_B0009"
+      ],
+      "media_block_ids": [
+        "P007_B0008"
+      ],
+      "caption": "Table 6: Ablation Study Evaluation on Explanation Metrics.",
+      "caption_kind": "table",
+      "caption_number": "6",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Model</td><td style='text-align: center; word-wrap: break-word;'>Trad.</td><td colspan=\"4\">Content Credibility Analysis(G-E.)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>B</td><td style='text-align: center; word-wrap: break-word;'>RG</td><td style='text-align: center; word-wrap: break-word;'>R-O</td><td style='text-align: center; word-wrap: break-word;'>LC</td><td style='text-align: center; word-wrap: break-word;'>SoE</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>3MFact $ _{(M+M)} $</td><td style='text-align: center; word-wrap: break-word;'>0.04</td><td style='text-align: center; word-wrap: break-word;'>0.25</td><td style='text-align: center; word-wrap: break-word;'>2.37</td><td style='text-align: center; word-wrap: break-word;'>4.47</td><td style='text-align: center; word-wrap: break-word;'>3.96</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o IR</td><td style='text-align: center; word-wrap: break-word;'>0.03</td><td style='text-align: center; word-wrap: break-word;'>0.24</td><td style='text-align: center; word-wrap: break-word;'>1.70</td><td style='text-align: center; word-wrap: break-word;'>4.22</td><td style='text-align: center; word-wrap: break-word;'>2.72</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o QA $ _{LMM} $</td><td style='text-align: center; word-wrap: break-word;'>0.03</td><td style='text-align: center; word-wrap: break-word;'>0.25</td><td style='text-align: center; word-wrap: break-word;'>2.30</td><td style='text-align: center; word-wrap: break-word;'>4.46</td><td style='text-align: center; word-wrap: break-word;'>4.24</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o VD</td><td style='text-align: center; word-wrap: break-word;'>0.03</td><td style='text-align: center; word-wrap: break-word;'>0.26</td><td style='text-align: center; word-wrap: break-word;'>2.25</td><td style='text-align: center; word-wrap: break-word;'>4.41</td><td style='text-align: center; word-wrap: break-word;'>4.01</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o 2Val</td><td style='text-align: center; word-wrap: break-word;'>0.04</td><td style='text-align: center; word-wrap: break-word;'>0.25</td><td style='text-align: center; word-wrap: break-word;'>2.17</td><td style='text-align: center; word-wrap: break-word;'>4.41</td><td style='text-align: center; word-wrap: break-word;'>3.92</td></tr></table>",
+      "normalized_markdown": "| Model | Trad. | Content Credibility Analysis(G-E.) | Content Credibility Analysis(G-E.) | Content Credibility Analysis(G-E.) | Content Credibility Analysis(G-E.) |\n| --- | --- | --- | --- | --- | --- |\n| Model | B | RG | R-O | LC | SoE |\n| 3MFact $ _{(M+M)} $ | 0.04 | 0.25 | 2.37 | 4.47 | 3.96 |\n| w/o IR | 0.03 | 0.24 | 1.70 | 4.22 | 2.72 |\n| w/o QA $ _{LMM} $ | 0.03 | 0.25 | 2.30 | 4.46 | 4.24 |\n| w/o VD | 0.03 | 0.26 | 2.25 | 4.41 | 4.01 |\n| w/o 2Val | 0.04 | 0.25 | 2.17 | 4.41 | 3.92 |",
+      "normalized_latex": "\\begin{tabular}{llllll}\n\\hline\nModel & Trad. & Content Credibility Analysis(G-E.) & Content Credibility Analysis(G-E.) & Content Credibility Analysis(G-E.) & Content Credibility Analysis(G-E.) \\\\\n\\hline\nModel & B & RG & R-O & LC & SoE \\\\\n3MFact \\$ \\_\\{(M+M)\\} \\$ & 0.04 & 0.25 & 2.37 & 4.47 & 3.96 \\\\\nw/o IR & 0.03 & 0.24 & 1.70 & 4.22 & 2.72 \\\\\nw/o QA \\$ \\_\\{LMM\\} \\$ & 0.03 & 0.25 & 2.30 & 4.46 & 4.24 \\\\\nw/o VD & 0.03 & 0.26 & 2.25 & 4.41 & 4.01 \\\\\nw/o 2Val & 0.04 & 0.25 & 2.17 & 4.41 & 3.92 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "Trad.",
+          "Content Credibility Analysis(G-E.)",
+          "Content Credibility Analysis(G-E.)",
+          "Content Credibility Analysis(G-E.)",
+          "Content Credibility Analysis(G-E.)"
+        ],
+        [
+          "Model",
+          "B",
+          "RG",
+          "R-O",
+          "LC",
+          "SoE"
+        ],
+        [
+          "3MFact $ _{(M+M)} $",
+          "0.04",
+          "0.25",
+          "2.37",
+          "4.47",
+          "3.96"
+        ],
+        [
+          "w/o IR",
+          "0.03",
+          "0.24",
+          "1.70",
+          "4.22",
+          "2.72"
+        ],
+        [
+          "w/o QA $ _{LMM} $",
+          "0.03",
+          "0.25",
+          "2.30",
+          "4.46",
+          "4.24"
+        ],
+        [
+          "w/o VD",
+          "0.03",
+          "0.26",
+          "2.25",
+          "4.41",
+          "4.01"
+        ],
+        [
+          "w/o 2Val",
+          "0.04",
+          "0.25",
+          "2.17",
+          "4.41",
+          "3.92"
+        ]
+      ],
+      "nearby_context": "Ablation study results comparing 3MFact model variants on explanation metrics B, RG, R-O, LC, SoE.",
+      "table_shape": {
+        "rows": 7,
+        "columns": 6
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "ablation_table",
+        "caption": "Table 6: Ablation Study Evaluation on Explanation Metrics.",
+        "caption_kind": "table",
+        "caption_number": "6",
+        "source_block_ids": [
+          "P007_B0008",
+          "P007_B0009"
+        ],
+        "media_block_ids": [
+          "P007_B0008"
+        ],
+        "table_block_ids": [
+          "P007_B0008"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Ablation study results comparing 3MFact model variants on explanation metrics B, RG, R-O, LC, SoE.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_007",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "comparison_table",
+      "section_id": "S20",
+      "section_title": "5.5 Case study",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Main Results and Case Study",
+          "role": "main_result",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S20_0009",
+      "source_block_ids": [
+        "P007_B0010",
+        "P007_B0011"
+      ],
+      "media_block_ids": [
+        "P007_B0010"
+      ],
+      "caption": "Table 7: Comparison of Results on Different GT-R (Ground Truth Rationale) type. GT-R type: Ground Truth Rationale Type. ECR: the Expert-Crafted Rationale, LSR: the specific LLM-Summary-Rationale",
+      "caption_kind": "table",
+      "caption_number": "7",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>GT-R type</td><td style='text-align: center; word-wrap: break-word;'>BLEU-4</td><td style='text-align: center; word-wrap: break-word;'>ROUGE-L</td><td style='text-align: center; word-wrap: break-word;'>R-O(G-E.)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ECR+LSR</td><td style='text-align: center; word-wrap: break-word;'>0.024</td><td style='text-align: center; word-wrap: break-word;'>0.242</td><td style='text-align: center; word-wrap: break-word;'>2.157</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ECR</td><td style='text-align: center; word-wrap: break-word;'>0.021</td><td style='text-align: center; word-wrap: break-word;'>0.194</td><td style='text-align: center; word-wrap: break-word;'>2.166</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LSR</td><td style='text-align: center; word-wrap: break-word;'>0.037</td><td style='text-align: center; word-wrap: break-word;'>0.252</td><td style='text-align: center; word-wrap: break-word;'>2.370</td></tr></table>",
+      "normalized_markdown": "| GT-R type | BLEU-4 | ROUGE-L | R-O(G-E.) |\n| --- | --- | --- | --- |\n| ECR+LSR | 0.024 | 0.242 | 2.157 |\n| ECR | 0.021 | 0.194 | 2.166 |\n| LSR | 0.037 | 0.252 | 2.370 |",
+      "normalized_latex": "\\begin{tabular}{llll}\n\\hline\nGT-R type & BLEU-4 & ROUGE-L & R-O(G-E.) \\\\\n\\hline\nECR+LSR & 0.024 & 0.242 & 2.157 \\\\\nECR & 0.021 & 0.194 & 2.166 \\\\\nLSR & 0.037 & 0.252 & 2.370 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "GT-R type",
+          "BLEU-4",
+          "ROUGE-L",
+          "R-O(G-E.)"
+        ],
+        [
+          "ECR+LSR",
+          "0.024",
+          "0.242",
+          "2.157"
+        ],
+        [
+          "ECR",
+          "0.021",
+          "0.194",
+          "2.166"
+        ],
+        [
+          "LSR",
+          "0.037",
+          "0.252",
+          "2.370"
+        ]
+      ],
+      "nearby_context": "Comparison of results on different GT-R types (ECR+LSR, ECR, LSR) on BLEU-4, ROUGE-L, R-O(G-E.).",
+      "table_shape": {
+        "rows": 4,
+        "columns": 4
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "comparison_table",
+        "caption": "Table 7: Comparison of Results on Different GT-R (Ground Truth Rationale) type. GT-R type: Ground Truth Rationale Type. ECR: the Expert-Crafted Rationale, LSR: the specific LLM-Summary-Rationale",
+        "caption_kind": "table",
+        "caption_number": "7",
+        "source_block_ids": [
+          "P007_B0010",
+          "P007_B0011"
+        ],
+        "media_block_ids": [
+          "P007_B0010"
+        ],
+        "table_block_ids": [
+          "P007_B0010"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Comparison of results on different GT-R types (ECR+LSR, ECR, LSR) on BLEU-4, ROUGE-L, R-O(G-E.).",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S20",
+      "section_title": "5.5 Case study",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Main Results and Case Study",
+          "role": "main_result",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S20_0009",
+      "source_block_ids": [
+        "P007_B0012",
+        "P007_B0013",
+        "P007_B0014",
+        "P007_B0015",
+        "P007_B0016",
+        "P007_B0017",
+        "P007_B0018"
+      ],
+      "media_block_ids": [
+        "P007_B0012",
+        "P007_B0013",
+        "P007_B0015",
+        "P007_B0016"
+      ],
+      "image_paths": [
+        "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_645_632_870_778.jpg",
+        "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_647_779_871_867.jpg",
+        "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_885_632_1109_778.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_005",
+          "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_645_632_870_778.jpg",
+          "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_005",
+          "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_647_779_871_867.jpg",
+          "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_005",
+          "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_885_632_1109_778.jpg",
+          "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework."
+        }
+      ],
+      "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework.",
+      "caption_kind": "figure",
+      "caption_number": "5",
+      "nearby_context": "Figure shows two examples: (a) Successful detection example with an image and a table showing framework result with rating False; (b) Failed detection due to video miscaption with an image.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P007_B0012",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_2",
+          "panel_label": null,
+          "source_block_id": "P007_B0013",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_3",
+          "panel_label": null,
+          "source_block_id": "P007_B0015",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A3",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework.",
+        "caption_kind": "figure",
+        "caption_number": "5",
+        "source_block_ids": [
+          "P007_B0012",
+          "P007_B0013",
+          "P007_B0014",
+          "P007_B0015",
+          "P007_B0016",
+          "P007_B0017",
+          "P007_B0018"
+        ],
+        "media_block_ids": [
+          "P007_B0012",
+          "P007_B0013",
+          "P007_B0015",
+          "P007_B0016"
+        ],
+        "table_block_ids": [
+          "P007_B0016"
+        ],
+        "image_block_ids": [
+          "P007_B0012",
+          "P007_B0013",
+          "P007_B0015"
+        ],
+        "description_from_html": "Figure shows two examples: (a) Successful detection example with an image and a table showing framework result with rating False; (b) Failed detection due to video miscaption with an image.",
+        "notes": "The ordering of subfigure elements is ambiguous; grouped all as one figure based on shared caption."
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 3
+      }
+    }
+  ],
+  "summary": {
+    "asset_count": 12,
+    "by_asset_type": {
+      "figure": 5,
+      "table": 7
+    },
+    "by_modality_class": {
+      "evidential": 7,
+      "explanatory": 5
+    },
+    "macro_unresolved_count": 0
+  }
+}

@@ -1,0 +1,1327 @@
+{
+  "paper_id": "Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns",
+  "schema_version": "v3_latex_table_assets",
+  "assets": [
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "dataset_statistics_table",
+      "section_id": "S3",
+      "section_title": "1 Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem: Evaluating Long-Term Memory in LLMs",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S3_0001",
+      "source_block_ids": [
+        "P002_B0007",
+        "P002_B0008"
+      ],
+      "media_block_ids": [
+        "P002_B0008"
+      ],
+      "caption": "Table 1: Comparison of Existing Benchmarks across Multiple Dimensions.",
+      "caption_kind": "table",
+      "caption_number": "1",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Benchmark</td><td rowspan=\"2\">Type</td><td colspan=\"2\">Knowledge Retention</td><td colspan=\"3\">Sequential Reasoning</td><td colspan=\"2\">Flexibility</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>L-ctx</td><td style='text-align: center; word-wrap: break-word;'>Conty</td><td style='text-align: center; word-wrap: break-word;'>Comp.</td><td style='text-align: center; word-wrap: break-word;'>Dyn.</td><td style='text-align: center; word-wrap: break-word;'>M-turn</td><td style='text-align: center; word-wrap: break-word;'>M-sol</td><td style='text-align: center; word-wrap: break-word;'>LTM+STM</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>NeedleInHaystack</td><td style='text-align: center; word-wrap: break-word;'>Synthetic</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>RULER</td><td style='text-align: center; word-wrap: break-word;'>Synthetic</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LTM Benchmark</td><td style='text-align: center; word-wrap: break-word;'>Synthetic</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>BABILong</td><td style='text-align: center; word-wrap: break-word;'>Synthetic</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>L-Eval</td><td style='text-align: center; word-wrap: break-word;'>Realistic</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LongBench</td><td style='text-align: center; word-wrap: break-word;'>Hybrid</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LooGLE</td><td style='text-align: center; word-wrap: break-word;'>Hybrid</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>InfiniteBench</td><td style='text-align: center; word-wrap: break-word;'>Hybrid</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✗</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Ours(StoryBench)</td><td style='text-align: center; word-wrap: break-word;'>Hybrid</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td><td style='text-align: center; word-wrap: break-word;'>✓</td></tr></table>",
+      "normalized_markdown": "| Benchmark | Type | Knowledge Retention | Knowledge Retention | Sequential Reasoning | Sequential Reasoning | Sequential Reasoning | Flexibility | Flexibility |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Benchmark | Type | L-ctx | Conty | Comp. | Dyn. | M-turn | M-sol | LTM+STM |\n| NeedleInHaystack | Synthetic | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |\n| RULER | Synthetic | ✓ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ |\n| LTM Benchmark | Synthetic | ✓ | ✗ | ✓ | ✗ | ✓ | ✗ | ✓ |\n| BABILong | Synthetic | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ |\n| L-Eval | Realistic | ✓ | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ |\n| LongBench | Hybrid | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ |\n| LooGLE | Hybrid | ✓ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ |\n| InfiniteBench | Hybrid | ✓ | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ |\n| Ours(StoryBench) | Hybrid | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |",
+      "normalized_latex": "\\begin{tabular}{lllllllll}\n\\hline\nBenchmark & Type & Knowledge Retention & Knowledge Retention & Sequential Reasoning & Sequential Reasoning & Sequential Reasoning & Flexibility & Flexibility \\\\\n\\hline\nBenchmark & Type & L-ctx & Conty & Comp. & Dyn. & M-turn & M-sol & LTM+STM \\\\\nNeedleInHaystack & Synthetic & ✓ & ✗ & ✗ & ✗ & ✗ & ✗ & ✗ \\\\\nRULER & Synthetic & ✓ & ✗ & ✓ & ✗ & ✗ & ✗ & ✗ \\\\\nLTM Benchmark & Synthetic & ✓ & ✗ & ✓ & ✗ & ✓ & ✗ & ✓ \\\\\nBABILong & Synthetic & ✓ & ✗ & ✗ & ✗ & ✗ & ✗ & ✓ \\\\\nL-Eval & Realistic & ✓ & ✗ & ✗ & ✗ & ✗ & ✓ & ✓ \\\\\nLongBench & Hybrid & ✓ & ✗ & ✗ & ✗ & ✗ & ✗ & ✓ \\\\\nLooGLE & Hybrid & ✓ & ✗ & ✓ & ✗ & ✗ & ✗ & ✗ \\\\\nInfiniteBench & Hybrid & ✓ & ✗ & ✗ & ✗ & ✗ & ✓ & ✓ \\\\\nOurs(StoryBench) & Hybrid & ✓ & ✓ & ✓ & ✓ & ✓ & ✓ & ✓ \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Benchmark",
+          "Type",
+          "Knowledge Retention",
+          "Knowledge Retention",
+          "Sequential Reasoning",
+          "Sequential Reasoning",
+          "Sequential Reasoning",
+          "Flexibility",
+          "Flexibility"
+        ],
+        [
+          "Benchmark",
+          "Type",
+          "L-ctx",
+          "Conty",
+          "Comp.",
+          "Dyn.",
+          "M-turn",
+          "M-sol",
+          "LTM+STM"
+        ],
+        [
+          "NeedleInHaystack",
+          "Synthetic",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✗"
+        ],
+        [
+          "RULER",
+          "Synthetic",
+          "✓",
+          "✗",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "✗"
+        ],
+        [
+          "LTM Benchmark",
+          "Synthetic",
+          "✓",
+          "✗",
+          "✓",
+          "✗",
+          "✓",
+          "✗",
+          "✓"
+        ],
+        [
+          "BABILong",
+          "Synthetic",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✓"
+        ],
+        [
+          "L-Eval",
+          "Realistic",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✓",
+          "✓"
+        ],
+        [
+          "LongBench",
+          "Hybrid",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✓"
+        ],
+        [
+          "LooGLE",
+          "Hybrid",
+          "✓",
+          "✗",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "✗"
+        ],
+        [
+          "InfiniteBench",
+          "Hybrid",
+          "✓",
+          "✗",
+          "✗",
+          "✗",
+          "✗",
+          "✓",
+          "✓"
+        ],
+        [
+          "Ours(StoryBench)",
+          "Hybrid",
+          "✓",
+          "✓",
+          "✓",
+          "✓",
+          "✓",
+          "✓",
+          "✓"
+        ]
+      ],
+      "nearby_context": "A table comparing various benchmarks (NeedleInHaystack, RULER, LTM Benchmark, BABILong, L-Eval, LongBench, LooGLE, InfiniteBench, Ours(StoryBench)) across dimensions: Type, Knowledge Retention (L-ctx, Conty), Sequential Reasoning (Comp., Dyn., M-turn), Flexibility (M-sol, LTM+STM).",
+      "table_shape": {
+        "rows": 11,
+        "columns": 9
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "dataset_statistics_table",
+        "caption": "Table 1: Comparison of Existing Benchmarks across Multiple Dimensions.",
+        "caption_kind": "table",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P002_B0007",
+          "P002_B0008"
+        ],
+        "media_block_ids": [
+          "P002_B0008"
+        ],
+        "table_block_ids": [
+          "P002_B0008"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "A table comparing various benchmarks (NeedleInHaystack, RULER, LTM Benchmark, BABILong, L-Eval, LongBench, LooGLE, InfiniteBench, Ours(StoryBench)) across dimensions: Type, Knowledge Retention (L-ctx, Conty), Sequential Reasoning (Comp., Dyn., M-turn), Flexibility (M-sol, LTM+STM).",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "chart",
+      "section_id": "S3",
+      "section_title": "1 Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem: Evaluating Long-Term Memory in LLMs",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S3_0002",
+      "source_block_ids": [
+        "P003_B0001",
+        "P003_B0002"
+      ],
+      "media_block_ids": [
+        "P003_B0001"
+      ],
+      "image_paths": [
+        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_221_149_1004_447.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_001",
+          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_221_149_1004_447.jpg",
+          "caption": "Figure 6: Model multidimensional performance in Immediate Feedback and Self Recovery modes."
+        }
+      ],
+      "caption": "Figure 6: Model multidimensional performance in Immediate Feedback and Self Recovery modes.",
+      "caption_kind": "figure",
+      "caption_number": "6",
+      "nearby_context": "Figure 6 with one image showing model multidimensional performance in Immediate Feedback and Self Recovery modes.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P003_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "chart",
+        "caption": "Figure 6: Model multidimensional performance in Immediate Feedback and Self Recovery modes.",
+        "caption_kind": "figure",
+        "caption_number": "6",
+        "source_block_ids": [
+          "P003_B0001",
+          "P003_B0002"
+        ],
+        "media_block_ids": [
+          "P003_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P003_B0001"
+        ],
+        "description_from_html": "Figure 6 with one image showing model multidimensional performance in Immediate Feedback and Self Recovery modes.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "chart",
+      "section_id": "S3",
+      "section_title": "1 Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem: Evaluating Long-Term Memory in LLMs",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S3_0002",
+      "source_block_ids": [
+        "P003_B0003",
+        "P003_B0004",
+        "P003_B0005"
+      ],
+      "media_block_ids": [
+        "P003_B0003",
+        "P003_B0004"
+      ],
+      "image_paths": [
+        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_217_539_605_834.jpg",
+        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_611_543_1004_840.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_002",
+          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_217_539_605_834.jpg",
+          "caption": "Figure 7: Accuracy disparities across Models: overall, easy & hard tasks."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_002",
+          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_611_543_1004_840.jpg",
+          "caption": "Figure 7: Accuracy disparities across Models: overall, easy & hard tasks."
+        }
+      ],
+      "caption": "Figure 7: Accuracy disparities across Models: overall, easy & hard tasks.",
+      "caption_kind": "figure",
+      "caption_number": "7",
+      "nearby_context": "Figure 7 with two images showing accuracy disparities across models for overall, easy and hard tasks.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P003_B0003",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_2",
+          "panel_label": null,
+          "source_block_id": "P003_B0004",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "chart",
+        "caption": "Figure 7: Accuracy disparities across Models: overall, easy & hard tasks.",
+        "caption_kind": "figure",
+        "caption_number": "7",
+        "source_block_ids": [
+          "P003_B0003",
+          "P003_B0004",
+          "P003_B0005"
+        ],
+        "media_block_ids": [
+          "P003_B0003",
+          "P003_B0004"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P003_B0003",
+          "P003_B0004"
+        ],
+        "description_from_html": "Figure 7 with two images showing accuracy disparities across models for overall, easy and hard tasks.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 2
+      }
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S4",
+      "section_title": "5.2.2 Insights of Distinctions Between Two Modes",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Key Findings from Model Evaluation",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S4_0003",
+      "source_block_ids": [
+        "P004_B0001",
+        "P004_B0002",
+        "P004_B0003"
+      ],
+      "media_block_ids": [
+        "P004_B0001",
+        "P004_B0002"
+      ],
+      "image_paths": [
+        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_220_147_610_484.jpg",
+        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_612_148_1002_482.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_220_147_610_484.jpg",
+          "caption": "Figure 8: Mode impact on models: First-Try Accuracy & Longest Consecutive Correct Sequence metrics."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_612_148_1002_482.jpg",
+          "caption": "Figure 8: Mode impact on models: First-Try Accuracy & Longest Consecutive Correct Sequence metrics."
+        }
+      ],
+      "caption": "Figure 8: Mode impact on models: First-Try Accuracy & Longest Consecutive Correct Sequence metrics.",
+      "caption_kind": "figure",
+      "caption_number": "8",
+      "nearby_context": "Two images showing mode impact on models with First-Try Accuracy and Longest Consecutive Correct Sequence metrics.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P004_B0001",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_2",
+          "panel_label": null,
+          "source_block_id": "P004_B0002",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 8: Mode impact on models: First-Try Accuracy & Longest Consecutive Correct Sequence metrics.",
+        "caption_kind": "figure",
+        "caption_number": "8",
+        "source_block_ids": [
+          "P004_B0001",
+          "P004_B0002",
+          "P004_B0003"
+        ],
+        "media_block_ids": [
+          "P004_B0001",
+          "P004_B0002"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P004_B0001",
+          "P004_B0002"
+        ],
+        "description_from_html": "Two images showing mode impact on models with First-Try Accuracy and Longest Consecutive Correct Sequence metrics.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 2
+      }
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S12",
+      "section_title": "3.3 Two Task Modes for Evaluating LTM",
+      "macro_id": "M4",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Two Task Modes and Tailored Metrics",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S12_0004",
+      "source_block_ids": [
+        "P011_B0004",
+        "P011_B0005"
+      ],
+      "media_block_ids": [
+        "P011_B0004"
+      ],
+      "image_paths": [
+        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_264_463_955_620.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_264_463_955_620.jpg",
+          "caption": "Figure 1: Immediate Feedback. The model is informed immediately after each incorrect choice and prompted to retry until the correct option is selected."
+        }
+      ],
+      "caption": "Figure 1: Immediate Feedback. The model is informed immediately after each incorrect choice and prompted to retry until the correct option is selected.",
+      "caption_kind": "figure",
+      "caption_number": "1",
+      "nearby_context": "A figure illustrating immediate feedback model: after incorrect choice, model is informed and retries until correct.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P011_B0004",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 1: Immediate Feedback. The model is informed immediately after each incorrect choice and prompted to retry until the correct option is selected.",
+        "caption_kind": "figure",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P011_B0004",
+          "P011_B0005"
+        ],
+        "media_block_ids": [
+          "P011_B0004"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P011_B0004"
+        ],
+        "description_from_html": "A figure illustrating immediate feedback model: after incorrect choice, model is informed and retries until correct.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S12",
+      "section_title": "3.3 Two Task Modes for Evaluating LTM",
+      "macro_id": "M4",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Two Task Modes and Tailored Metrics",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S12_0005",
+      "source_block_ids": [
+        "P011_B0007",
+        "P011_B0008"
+      ],
+      "media_block_ids": [
+        "P011_B0007"
+      ],
+      "image_paths": [
+        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_269_861_943_1119.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_005",
+          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_269_861_943_1119.jpg",
+          "caption": "Figure 2: Self Recovery. An incorrect choice leads to a failure ending either immediately or after several scenes. The model is then asked to identify the earliest point in the story where it believes the incorrect decision occurred and to attempt recovery from that point."
+        }
+      ],
+      "caption": "Figure 2: Self Recovery. An incorrect choice leads to a failure ending either immediately or after several scenes. The model is then asked to identify the earliest point in the story where it believes the incorrect decision occurred and to attempt recovery from that point.",
+      "caption_kind": "figure",
+      "caption_number": "2",
+      "nearby_context": "Figure 2: Self Recovery. An incorrect choice leads to a failure ending. Model identifies earliest wrong decision and attempts recovery.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P011_B0007",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 2: Self Recovery. An incorrect choice leads to a failure ending either immediately or after several scenes. The model is then asked to identify the earliest point in the story where it believes the incorrect decision occurred and to attempt recovery from that point.",
+        "caption_kind": "figure",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P011_B0007",
+          "P011_B0008"
+        ],
+        "media_block_ids": [
+          "P011_B0007"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P011_B0007"
+        ],
+        "description_from_html": "Figure 2: Self Recovery. An incorrect choice leads to a failure ending. Model identifies earliest wrong decision and attempts recovery.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_006",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S17",
+      "section_title": "4.2 Structural Organization",
+      "macro_id": "M5",
+      "macro_candidates": [
+        {
+          "macro_id": "M5",
+          "title": "Dataset: Interactive Fiction Graph Structure",
+          "role": "dataset_or_resource",
+          "order": 5
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S17_0006",
+      "source_block_ids": [
+        "P013_B0008",
+        "P013_B0009",
+        "P013_B0010",
+        "P013_B0011",
+        "P013_B0012"
+      ],
+      "media_block_ids": [
+        "P013_B0008"
+      ],
+      "image_paths": [
+        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_297_1068_937_1361.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_006",
+          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_297_1068_937_1361.jpg",
+          "caption": "Figure 3: Four typical patterns illustrating dataset structure complexity."
+        }
+      ],
+      "caption": "Figure 3: Four typical patterns illustrating dataset structure complexity.",
+      "caption_kind": "figure",
+      "caption_number": "3",
+      "nearby_context": "Figure showing four patterns with subfigure labels (c) and (d) and a note about Cn and Sn.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P013_B0008",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 3: Four typical patterns illustrating dataset structure complexity.",
+        "caption_kind": "figure",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P013_B0008",
+          "P013_B0009",
+          "P013_B0010",
+          "P013_B0011",
+          "P013_B0012"
+        ],
+        "media_block_ids": [
+          "P013_B0008"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P013_B0008"
+        ],
+        "description_from_html": "Figure showing four patterns with subfigure labels (c) and (d) and a note about Cn and Sn.",
+        "notes": "Subfigures (a) and (b) are not present as separate HTML blocks; likely embedded in the single image."
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_007",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S18",
+      "section_title": "4.3 Data Source and Annotation Process",
+      "macro_id": "M5",
+      "macro_candidates": [
+        {
+          "macro_id": "M5",
+          "title": "Dataset: Interactive Fiction Graph Structure",
+          "role": "dataset_or_resource",
+          "order": 5
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S18_0007",
+      "source_block_ids": [
+        "P014_B0004",
+        "P014_B0005"
+      ],
+      "media_block_ids": [
+        "P014_B0004"
+      ],
+      "image_paths": [
+        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_223_660_985_1011.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_007",
+          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_223_660_985_1011.jpg",
+          "caption": "Figure 4: Scene node example with character descriptions, dialogues, and other details."
+        }
+      ],
+      "caption": "Figure 4: Scene node example with character descriptions, dialogues, and other details.",
+      "caption_kind": "figure",
+      "caption_number": "4",
+      "nearby_context": "Image showing a scene node example with character descriptions, dialogues, and other details.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P014_B0004",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 4: Scene node example with character descriptions, dialogues, and other details.",
+        "caption_kind": "figure",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P014_B0004",
+          "P014_B0005"
+        ],
+        "media_block_ids": [
+          "P014_B0004"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P014_B0004"
+        ],
+        "description_from_html": "Image showing a scene node example with character descriptions, dialogues, and other details.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_008",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S18",
+      "section_title": "4.3 Data Source and Annotation Process",
+      "macro_id": "M5",
+      "macro_candidates": [
+        {
+          "macro_id": "M5",
+          "title": "Dataset: Interactive Fiction Graph Structure",
+          "role": "dataset_or_resource",
+          "order": 5
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S18_0007",
+      "source_block_ids": [
+        "P014_B0006",
+        "P014_B0007"
+      ],
+      "media_block_ids": [
+        "P014_B0006"
+      ],
+      "image_paths": [
+        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_300_1157_922_1346.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_008",
+          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_300_1157_922_1346.jpg",
+          "caption": "Figure 5: Choice node example with choice text, branches, and other details."
+        }
+      ],
+      "caption": "Figure 5: Choice node example with choice text, branches, and other details.",
+      "caption_kind": "figure",
+      "caption_number": "5",
+      "nearby_context": "Image showing a choice node example with choice text, branches, and other details.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P014_B0006",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 5: Choice node example with choice text, branches, and other details.",
+        "caption_kind": "figure",
+        "caption_number": "5",
+        "source_block_ids": [
+          "P014_B0006",
+          "P014_B0007"
+        ],
+        "media_block_ids": [
+          "P014_B0006"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P014_B0006"
+        ],
+        "description_from_html": "Image showing a choice node example with choice text, branches, and other details.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S19",
+      "section_title": "5.1 Experimental Setup",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Experimental Setup and Models",
+          "role": "experiment_setup",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S19_0008",
+      "source_block_ids": [
+        "P015_B0006",
+        "P015_B0007"
+      ],
+      "media_block_ids": [
+        "P015_B0007"
+      ],
+      "caption": "Table 2: Performance of different models (Immediate Feedback).",
+      "caption_kind": "table",
+      "caption_number": "2",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Metrics</td><td style='text-align: center; word-wrap: break-word;'>Doubao1.5-pro</td><td style='text-align: center; word-wrap: break-word;'>GPT-4o</td><td style='text-align: center; word-wrap: break-word;'>Claude 3.5 Sonnet</td><td style='text-align: center; word-wrap: break-word;'>Deepseek-R1</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Overall Acc (%)</td><td style='text-align: center; word-wrap: break-word;'>80.98  $ \\pm $ 1.31</td><td style='text-align: center; word-wrap: break-word;'>71.88  $ \\pm $ 1.03</td><td style='text-align: center; word-wrap: break-word;'>74.86  $ \\pm $ 1.05</td><td style='text-align: center; word-wrap: break-word;'>70.45  $ \\pm $ 4.62</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>First-Try Acc (%)</td><td style='text-align: center; word-wrap: break-word;'>79.14  $ \\pm $ 1.33</td><td style='text-align: center; word-wrap: break-word;'>63.49  $ \\pm $ 2.59</td><td style='text-align: center; word-wrap: break-word;'>68.21  $ \\pm $ 1.55</td><td style='text-align: center; word-wrap: break-word;'>65.16  $ \\pm $ 2.41</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Hard Acc (%)</td><td style='text-align: center; word-wrap: break-word;'>74.47  $ \\pm $ 2.26</td><td style='text-align: center; word-wrap: break-word;'>66.94  $ \\pm $ 1.38</td><td style='text-align: center; word-wrap: break-word;'>69.38  $ \\pm $ 1.26</td><td style='text-align: center; word-wrap: break-word;'>60.21  $ \\pm $ 4.61</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Easy Acc (%)</td><td style='text-align: center; word-wrap: break-word;'>88.68  $ \\pm $ 0.15</td><td style='text-align: center; word-wrap: break-word;'>77.43  $ \\pm $ 0.88</td><td style='text-align: center; word-wrap: break-word;'>81.35  $ \\pm $ 1.67</td><td style='text-align: center; word-wrap: break-word;'>84.94  $ \\pm $ 4.44</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Retry Count</td><td style='text-align: center; word-wrap: break-word;'>14.67  $ \\pm $ 1.25</td><td style='text-align: center; word-wrap: break-word;'>24.67  $ \\pm $ 1.25</td><td style='text-align: center; word-wrap: break-word;'>20.88  $ \\pm $ 1.17</td><td style='text-align: center; word-wrap: break-word;'>26.40  $ \\pm $ 5.95</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Longest Corr</td><td style='text-align: center; word-wrap: break-word;'>10.00  $ \\pm $ 0.00</td><td style='text-align: center; word-wrap: break-word;'>8.00  $ \\pm $ 0.82</td><td style='text-align: center; word-wrap: break-word;'>8.50  $ \\pm $ 2.12</td><td style='text-align: center; word-wrap: break-word;'>10.20  $ \\pm $ 1.47</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Runtime Cost (s)</td><td style='text-align: center; word-wrap: break-word;'>0.65k  $ \\pm $ 0.02k</td><td style='text-align: center; word-wrap: break-word;'>0.44k  $ \\pm $ 0.08k</td><td style='text-align: center; word-wrap: break-word;'>2.14k  $ \\pm $ 0.16k</td><td style='text-align: center; word-wrap: break-word;'>2.72k  $ \\pm $ 0.23k</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Token Cons</td><td style='text-align: center; word-wrap: break-word;'>2043k  $ \\pm $ 53k</td><td style='text-align: center; word-wrap: break-word;'>342k  $ \\pm $ 5.8k</td><td style='text-align: center; word-wrap: break-word;'>3405k  $ \\pm $ 150k</td><td style='text-align: center; word-wrap: break-word;'>2396k  $ \\pm $ 264k</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Success Count</td><td style='text-align: center; word-wrap: break-word;'>3.00</td><td style='text-align: center; word-wrap: break-word;'>3.00</td><td style='text-align: center; word-wrap: break-word;'>8.00</td><td style='text-align: center; word-wrap: break-word;'>5.00</td></tr></table>",
+      "normalized_markdown": "| Metrics | Doubao1.5-pro | GPT-4o | Claude 3.5 Sonnet | Deepseek-R1 |\n| --- | --- | --- | --- | --- |\n| Overall Acc (%) | 80.98 $ \\pm $ 1.31 | 71.88 $ \\pm $ 1.03 | 74.86 $ \\pm $ 1.05 | 70.45 $ \\pm $ 4.62 |\n| First-Try Acc (%) | 79.14 $ \\pm $ 1.33 | 63.49 $ \\pm $ 2.59 | 68.21 $ \\pm $ 1.55 | 65.16 $ \\pm $ 2.41 |\n| Hard Acc (%) | 74.47 $ \\pm $ 2.26 | 66.94 $ \\pm $ 1.38 | 69.38 $ \\pm $ 1.26 | 60.21 $ \\pm $ 4.61 |\n| Easy Acc (%) | 88.68 $ \\pm $ 0.15 | 77.43 $ \\pm $ 0.88 | 81.35 $ \\pm $ 1.67 | 84.94 $ \\pm $ 4.44 |\n| Retry Count | 14.67 $ \\pm $ 1.25 | 24.67 $ \\pm $ 1.25 | 20.88 $ \\pm $ 1.17 | 26.40 $ \\pm $ 5.95 |\n| Longest Corr | 10.00 $ \\pm $ 0.00 | 8.00 $ \\pm $ 0.82 | 8.50 $ \\pm $ 2.12 | 10.20 $ \\pm $ 1.47 |\n| Runtime Cost (s) | 0.65k $ \\pm $ 0.02k | 0.44k $ \\pm $ 0.08k | 2.14k $ \\pm $ 0.16k | 2.72k $ \\pm $ 0.23k |\n| Token Cons | 2043k $ \\pm $ 53k | 342k $ \\pm $ 5.8k | 3405k $ \\pm $ 150k | 2396k $ \\pm $ 264k |\n| Success Count | 3.00 | 3.00 | 8.00 | 5.00 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nMetrics & Doubao1.5-pro & GPT-4o & Claude 3.5 Sonnet & Deepseek-R1 \\\\\n\\hline\nOverall Acc (\\%) & 80.98 \\$ \\textbackslash{}pm \\$ 1.31 & 71.88 \\$ \\textbackslash{}pm \\$ 1.03 & 74.86 \\$ \\textbackslash{}pm \\$ 1.05 & 70.45 \\$ \\textbackslash{}pm \\$ 4.62 \\\\\nFirst-Try Acc (\\%) & 79.14 \\$ \\textbackslash{}pm \\$ 1.33 & 63.49 \\$ \\textbackslash{}pm \\$ 2.59 & 68.21 \\$ \\textbackslash{}pm \\$ 1.55 & 65.16 \\$ \\textbackslash{}pm \\$ 2.41 \\\\\nHard Acc (\\%) & 74.47 \\$ \\textbackslash{}pm \\$ 2.26 & 66.94 \\$ \\textbackslash{}pm \\$ 1.38 & 69.38 \\$ \\textbackslash{}pm \\$ 1.26 & 60.21 \\$ \\textbackslash{}pm \\$ 4.61 \\\\\nEasy Acc (\\%) & 88.68 \\$ \\textbackslash{}pm \\$ 0.15 & 77.43 \\$ \\textbackslash{}pm \\$ 0.88 & 81.35 \\$ \\textbackslash{}pm \\$ 1.67 & 84.94 \\$ \\textbackslash{}pm \\$ 4.44 \\\\\nRetry Count & 14.67 \\$ \\textbackslash{}pm \\$ 1.25 & 24.67 \\$ \\textbackslash{}pm \\$ 1.25 & 20.88 \\$ \\textbackslash{}pm \\$ 1.17 & 26.40 \\$ \\textbackslash{}pm \\$ 5.95 \\\\\nLongest Corr & 10.00 \\$ \\textbackslash{}pm \\$ 0.00 & 8.00 \\$ \\textbackslash{}pm \\$ 0.82 & 8.50 \\$ \\textbackslash{}pm \\$ 2.12 & 10.20 \\$ \\textbackslash{}pm \\$ 1.47 \\\\\nRuntime Cost (s) & 0.65k \\$ \\textbackslash{}pm \\$ 0.02k & 0.44k \\$ \\textbackslash{}pm \\$ 0.08k & 2.14k \\$ \\textbackslash{}pm \\$ 0.16k & 2.72k \\$ \\textbackslash{}pm \\$ 0.23k \\\\\nToken Cons & 2043k \\$ \\textbackslash{}pm \\$ 53k & 342k \\$ \\textbackslash{}pm \\$ 5.8k & 3405k \\$ \\textbackslash{}pm \\$ 150k & 2396k \\$ \\textbackslash{}pm \\$ 264k \\\\\nSuccess Count & 3.00 & 3.00 & 8.00 & 5.00 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Metrics",
+          "Doubao1.5-pro",
+          "GPT-4o",
+          "Claude 3.5 Sonnet",
+          "Deepseek-R1"
+        ],
+        [
+          "Overall Acc (%)",
+          "80.98 $ \\pm $ 1.31",
+          "71.88 $ \\pm $ 1.03",
+          "74.86 $ \\pm $ 1.05",
+          "70.45 $ \\pm $ 4.62"
+        ],
+        [
+          "First-Try Acc (%)",
+          "79.14 $ \\pm $ 1.33",
+          "63.49 $ \\pm $ 2.59",
+          "68.21 $ \\pm $ 1.55",
+          "65.16 $ \\pm $ 2.41"
+        ],
+        [
+          "Hard Acc (%)",
+          "74.47 $ \\pm $ 2.26",
+          "66.94 $ \\pm $ 1.38",
+          "69.38 $ \\pm $ 1.26",
+          "60.21 $ \\pm $ 4.61"
+        ],
+        [
+          "Easy Acc (%)",
+          "88.68 $ \\pm $ 0.15",
+          "77.43 $ \\pm $ 0.88",
+          "81.35 $ \\pm $ 1.67",
+          "84.94 $ \\pm $ 4.44"
+        ],
+        [
+          "Retry Count",
+          "14.67 $ \\pm $ 1.25",
+          "24.67 $ \\pm $ 1.25",
+          "20.88 $ \\pm $ 1.17",
+          "26.40 $ \\pm $ 5.95"
+        ],
+        [
+          "Longest Corr",
+          "10.00 $ \\pm $ 0.00",
+          "8.00 $ \\pm $ 0.82",
+          "8.50 $ \\pm $ 2.12",
+          "10.20 $ \\pm $ 1.47"
+        ],
+        [
+          "Runtime Cost (s)",
+          "0.65k $ \\pm $ 0.02k",
+          "0.44k $ \\pm $ 0.08k",
+          "2.14k $ \\pm $ 0.16k",
+          "2.72k $ \\pm $ 0.23k"
+        ],
+        [
+          "Token Cons",
+          "2043k $ \\pm $ 53k",
+          "342k $ \\pm $ 5.8k",
+          "3405k $ \\pm $ 150k",
+          "2396k $ \\pm $ 264k"
+        ],
+        [
+          "Success Count",
+          "3.00",
+          "3.00",
+          "8.00",
+          "5.00"
+        ]
+      ],
+      "nearby_context": "Table comparing model performance across metrics including Overall Acc, First-Try Acc, Hard Acc, Easy Acc, Retry Count, Longest Corr, Runtime Cost, Token Cons, and Success Count for Doubao1.5-pro, GPT-4o, Claude 3.5 Sonnet, and Deepseek-R1.",
+      "table_shape": {
+        "rows": 10,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 2: Performance of different models (Immediate Feedback).",
+        "caption_kind": "table",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P015_B0006",
+          "P015_B0007"
+        ],
+        "media_block_ids": [
+          "P015_B0007"
+        ],
+        "table_block_ids": [
+          "P015_B0007"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing model performance across metrics including Overall Acc, First-Try Acc, Hard Acc, Easy Acc, Retry Count, Longest Corr, Runtime Cost, Token Cons, and Success Count for Doubao1.5-pro, GPT-4o, Claude 3.5 Sonnet, and Deepseek-R1.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S20",
+      "section_title": "5.2.1 Model Analysis",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Key Findings from Model Evaluation",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S20_0009",
+      "source_block_ids": [
+        "P016_B0001",
+        "P016_B0002"
+      ],
+      "media_block_ids": [
+        "P016_B0002"
+      ],
+      "caption": "Table 3: Performance of different models (Original Self Recovery).",
+      "caption_kind": "table",
+      "caption_number": "3",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Metrics</td><td style='text-align: center; word-wrap: break-word;'>Doubao1.5-pro</td><td style='text-align: center; word-wrap: break-word;'>GPT-4o</td><td style='text-align: center; word-wrap: break-word;'>Claude 3.5 Sonnet</td><td style='text-align: center; word-wrap: break-word;'>Deepseek-R1</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Overall Acc (%)</td><td style='text-align: center; word-wrap: break-word;'>69.66</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>68.40  $ \\pm $ 2.88</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>First-Try Acc (%)</td><td style='text-align: center; word-wrap: break-word;'>83.05</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>68.28  $ \\pm $ 1.07</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Hard Acc (%)</td><td style='text-align: center; word-wrap: break-word;'>58.33</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>60.35  $ \\pm $ 4.09</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Easy Acc (%)</td><td style='text-align: center; word-wrap: break-word;'>93.10</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>77.23  $ \\pm $ 0.31</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Retry Count</td><td style='text-align: center; word-wrap: break-word;'>21.00</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>21.50  $ \\pm $ 2.50</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Longest Corr</td><td style='text-align: center; word-wrap: break-word;'>15.00</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>13.50  $ \\pm $ 1.50</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Max Err/Choice</td><td style='text-align: center; word-wrap: break-word;'>9.00</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>6.00  $ \\pm $ 2.00</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ErrorCount $ ≥ 9 $</td><td style='text-align: center; word-wrap: break-word;'>2.00</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>0.00  $ \\pm $ 0.00</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Runtime Cost (s)</td><td style='text-align: center; word-wrap: break-word;'>1.00k</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>3.24k  $ \\pm $ 0.36k</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Token Cons</td><td style='text-align: center; word-wrap: break-word;'>4158k</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>5532k  $ \\pm $ 37k</td><td style='text-align: center; word-wrap: break-word;'>-</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Success Count</td><td style='text-align: center; word-wrap: break-word;'>1.00</td><td style='text-align: center; word-wrap: break-word;'>0.00</td><td style='text-align: center; word-wrap: break-word;'>2.00</td><td style='text-align: center; word-wrap: break-word;'>0.00</td></tr></table>",
+      "normalized_markdown": "| Metrics | Doubao1.5-pro | GPT-4o | Claude 3.5 Sonnet | Deepseek-R1 |\n| --- | --- | --- | --- | --- |\n| Overall Acc (%) | 69.66 | - | 68.40 $ \\pm $ 2.88 | - |\n| First-Try Acc (%) | 83.05 | - | 68.28 $ \\pm $ 1.07 | - |\n| Hard Acc (%) | 58.33 | - | 60.35 $ \\pm $ 4.09 | - |\n| Easy Acc (%) | 93.10 | - | 77.23 $ \\pm $ 0.31 | - |\n| Retry Count | 21.00 | - | 21.50 $ \\pm $ 2.50 | - |\n| Longest Corr | 15.00 | - | 13.50 $ \\pm $ 1.50 | - |\n| Max Err/Choice | 9.00 | - | 6.00 $ \\pm $ 2.00 | - |\n| ErrorCount $ ≥ 9 $ | 2.00 | - | 0.00 $ \\pm $ 0.00 | - |\n| Runtime Cost (s) | 1.00k | - | 3.24k $ \\pm $ 0.36k | - |\n| Token Cons | 4158k | - | 5532k $ \\pm $ 37k | - |\n| Success Count | 1.00 | 0.00 | 2.00 | 0.00 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nMetrics & Doubao1.5-pro & GPT-4o & Claude 3.5 Sonnet & Deepseek-R1 \\\\\n\\hline\nOverall Acc (\\%) & 69.66 & - & 68.40 \\$ \\textbackslash{}pm \\$ 2.88 & - \\\\\nFirst-Try Acc (\\%) & 83.05 & - & 68.28 \\$ \\textbackslash{}pm \\$ 1.07 & - \\\\\nHard Acc (\\%) & 58.33 & - & 60.35 \\$ \\textbackslash{}pm \\$ 4.09 & - \\\\\nEasy Acc (\\%) & 93.10 & - & 77.23 \\$ \\textbackslash{}pm \\$ 0.31 & - \\\\\nRetry Count & 21.00 & - & 21.50 \\$ \\textbackslash{}pm \\$ 2.50 & - \\\\\nLongest Corr & 15.00 & - & 13.50 \\$ \\textbackslash{}pm \\$ 1.50 & - \\\\\nMax Err/Choice & 9.00 & - & 6.00 \\$ \\textbackslash{}pm \\$ 2.00 & - \\\\\nErrorCount \\$ ≥ 9 \\$ & 2.00 & - & 0.00 \\$ \\textbackslash{}pm \\$ 0.00 & - \\\\\nRuntime Cost (s) & 1.00k & - & 3.24k \\$ \\textbackslash{}pm \\$ 0.36k & - \\\\\nToken Cons & 4158k & - & 5532k \\$ \\textbackslash{}pm \\$ 37k & - \\\\\nSuccess Count & 1.00 & 0.00 & 2.00 & 0.00 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Metrics",
+          "Doubao1.5-pro",
+          "GPT-4o",
+          "Claude 3.5 Sonnet",
+          "Deepseek-R1"
+        ],
+        [
+          "Overall Acc (%)",
+          "69.66",
+          "-",
+          "68.40 $ \\pm $ 2.88",
+          "-"
+        ],
+        [
+          "First-Try Acc (%)",
+          "83.05",
+          "-",
+          "68.28 $ \\pm $ 1.07",
+          "-"
+        ],
+        [
+          "Hard Acc (%)",
+          "58.33",
+          "-",
+          "60.35 $ \\pm $ 4.09",
+          "-"
+        ],
+        [
+          "Easy Acc (%)",
+          "93.10",
+          "-",
+          "77.23 $ \\pm $ 0.31",
+          "-"
+        ],
+        [
+          "Retry Count",
+          "21.00",
+          "-",
+          "21.50 $ \\pm $ 2.50",
+          "-"
+        ],
+        [
+          "Longest Corr",
+          "15.00",
+          "-",
+          "13.50 $ \\pm $ 1.50",
+          "-"
+        ],
+        [
+          "Max Err/Choice",
+          "9.00",
+          "-",
+          "6.00 $ \\pm $ 2.00",
+          "-"
+        ],
+        [
+          "ErrorCount $ ≥ 9 $",
+          "2.00",
+          "-",
+          "0.00 $ \\pm $ 0.00",
+          "-"
+        ],
+        [
+          "Runtime Cost (s)",
+          "1.00k",
+          "-",
+          "3.24k $ \\pm $ 0.36k",
+          "-"
+        ],
+        [
+          "Token Cons",
+          "4158k",
+          "-",
+          "5532k $ \\pm $ 37k",
+          "-"
+        ],
+        [
+          "Success Count",
+          "1.00",
+          "0.00",
+          "2.00",
+          "0.00"
+        ]
+      ],
+      "nearby_context": "Performance comparison of models (Doubao1.5-pro, GPT-4o, Claude 3.5 Sonnet, Deepseek-R1) under Original Self Recovery, with metrics: Overall Acc, First-Try Acc, Hard Acc, Easy Acc, Retry Count, Longest Corr, Max Err/Choice, ErrorCount ≥ 9, Runtime Cost, Token Cons, Success Count.",
+      "table_shape": {
+        "rows": 12,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 3: Performance of different models (Original Self Recovery).",
+        "caption_kind": "table",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P016_B0001",
+          "P016_B0002"
+        ],
+        "media_block_ids": [
+          "P016_B0002"
+        ],
+        "table_block_ids": [
+          "P016_B0002"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Performance comparison of models (Doubao1.5-pro, GPT-4o, Claude 3.5 Sonnet, Deepseek-R1) under Original Self Recovery, with metrics: Overall Acc, First-Try Acc, Hard Acc, Easy Acc, Retry Count, Longest Corr, Max Err/Choice, ErrorCount ≥ 9, Runtime Cost, Token Cons, Success Count.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S20",
+      "section_title": "5.2.1 Model Analysis",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Key Findings from Model Evaluation",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S20_0009",
+      "source_block_ids": [
+        "P016_B0003",
+        "P016_B0004"
+      ],
+      "media_block_ids": [
+        "P016_B0004"
+      ],
+      "caption": "Table 4: Performance of different models (Improved Self Recovery).",
+      "caption_kind": "table",
+      "caption_number": "4",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Metrics</td><td style='text-align: center; word-wrap: break-word;'>Doubao1.5-pro</td><td style='text-align: center; word-wrap: break-word;'>GPT-4o</td><td style='text-align: center; word-wrap: break-word;'>Claude 3.5 Sonnet</td><td style='text-align: center; word-wrap: break-word;'>Deepseek-R1</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Overall Acc (%)</td><td style='text-align: center; word-wrap: break-word;'>73.68</td><td style='text-align: center; word-wrap: break-word;'>60.76  $ \\pm $ 1.35</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>70.18</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>First-Try Acc (%)</td><td style='text-align: center; word-wrap: break-word;'>83.33</td><td style='text-align: center; word-wrap: break-word;'>58.57  $ \\pm $ 1.43</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>75.41</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Hard Acc (%)</td><td style='text-align: center; word-wrap: break-word;'>62.22</td><td style='text-align: center; word-wrap: break-word;'>52.84  $ \\pm $ 2.06</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>62.50</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Easy Acc (%)</td><td style='text-align: center; word-wrap: break-word;'>90.32</td><td style='text-align: center; word-wrap: break-word;'>72.72  $ \\pm $ 2.27</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>88.24</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Retry Count</td><td style='text-align: center; word-wrap: break-word;'>17.00</td><td style='text-align: center; word-wrap: break-word;'>30.50  $ \\pm $ 4.50</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>26.00</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Longest Corr</td><td style='text-align: center; word-wrap: break-word;'>16.00</td><td style='text-align: center; word-wrap: break-word;'>8.00  $ \\pm $ 1.00</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>12.00</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Max Err/Choice</td><td style='text-align: center; word-wrap: break-word;'>9.00</td><td style='text-align: center; word-wrap: break-word;'>7.00  $ \\pm $ 2.00</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>9.00</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ErrorCount $ ≥ 9 $</td><td style='text-align: center; word-wrap: break-word;'>1.00</td><td style='text-align: center; word-wrap: break-word;'>0.00  $ \\pm $ 0.00</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>2.00</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Runtime Cost (s)</td><td style='text-align: center; word-wrap: break-word;'>0.60k</td><td style='text-align: center; word-wrap: break-word;'>0.58k  $ \\pm $ 0.05k</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>4.64k</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Token Cons</td><td style='text-align: center; word-wrap: break-word;'>343k</td><td style='text-align: center; word-wrap: break-word;'>510k  $ \\pm $ 40k</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>549k</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Success Count</td><td style='text-align: center; word-wrap: break-word;'>1.00</td><td style='text-align: center; word-wrap: break-word;'>2.00</td><td style='text-align: center; word-wrap: break-word;'>0.00</td><td style='text-align: center; word-wrap: break-word;'>1.00</td></tr></table>",
+      "normalized_markdown": "| Metrics | Doubao1.5-pro | GPT-4o | Claude 3.5 Sonnet | Deepseek-R1 |\n| --- | --- | --- | --- | --- |\n| Overall Acc (%) | 73.68 | 60.76 $ \\pm $ 1.35 | - | 70.18 |\n| First-Try Acc (%) | 83.33 | 58.57 $ \\pm $ 1.43 | - | 75.41 |\n| Hard Acc (%) | 62.22 | 52.84 $ \\pm $ 2.06 | - | 62.50 |\n| Easy Acc (%) | 90.32 | 72.72 $ \\pm $ 2.27 | - | 88.24 |\n| Retry Count | 17.00 | 30.50 $ \\pm $ 4.50 | - | 26.00 |\n| Longest Corr | 16.00 | 8.00 $ \\pm $ 1.00 | - | 12.00 |\n| Max Err/Choice | 9.00 | 7.00 $ \\pm $ 2.00 | - | 9.00 |\n| ErrorCount $ ≥ 9 $ | 1.00 | 0.00 $ \\pm $ 0.00 | - | 2.00 |\n| Runtime Cost (s) | 0.60k | 0.58k $ \\pm $ 0.05k | - | 4.64k |\n| Token Cons | 343k | 510k $ \\pm $ 40k | - | 549k |\n| Success Count | 1.00 | 2.00 | 0.00 | 1.00 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nMetrics & Doubao1.5-pro & GPT-4o & Claude 3.5 Sonnet & Deepseek-R1 \\\\\n\\hline\nOverall Acc (\\%) & 73.68 & 60.76 \\$ \\textbackslash{}pm \\$ 1.35 & - & 70.18 \\\\\nFirst-Try Acc (\\%) & 83.33 & 58.57 \\$ \\textbackslash{}pm \\$ 1.43 & - & 75.41 \\\\\nHard Acc (\\%) & 62.22 & 52.84 \\$ \\textbackslash{}pm \\$ 2.06 & - & 62.50 \\\\\nEasy Acc (\\%) & 90.32 & 72.72 \\$ \\textbackslash{}pm \\$ 2.27 & - & 88.24 \\\\\nRetry Count & 17.00 & 30.50 \\$ \\textbackslash{}pm \\$ 4.50 & - & 26.00 \\\\\nLongest Corr & 16.00 & 8.00 \\$ \\textbackslash{}pm \\$ 1.00 & - & 12.00 \\\\\nMax Err/Choice & 9.00 & 7.00 \\$ \\textbackslash{}pm \\$ 2.00 & - & 9.00 \\\\\nErrorCount \\$ ≥ 9 \\$ & 1.00 & 0.00 \\$ \\textbackslash{}pm \\$ 0.00 & - & 2.00 \\\\\nRuntime Cost (s) & 0.60k & 0.58k \\$ \\textbackslash{}pm \\$ 0.05k & - & 4.64k \\\\\nToken Cons & 343k & 510k \\$ \\textbackslash{}pm \\$ 40k & - & 549k \\\\\nSuccess Count & 1.00 & 2.00 & 0.00 & 1.00 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Metrics",
+          "Doubao1.5-pro",
+          "GPT-4o",
+          "Claude 3.5 Sonnet",
+          "Deepseek-R1"
+        ],
+        [
+          "Overall Acc (%)",
+          "73.68",
+          "60.76 $ \\pm $ 1.35",
+          "-",
+          "70.18"
+        ],
+        [
+          "First-Try Acc (%)",
+          "83.33",
+          "58.57 $ \\pm $ 1.43",
+          "-",
+          "75.41"
+        ],
+        [
+          "Hard Acc (%)",
+          "62.22",
+          "52.84 $ \\pm $ 2.06",
+          "-",
+          "62.50"
+        ],
+        [
+          "Easy Acc (%)",
+          "90.32",
+          "72.72 $ \\pm $ 2.27",
+          "-",
+          "88.24"
+        ],
+        [
+          "Retry Count",
+          "17.00",
+          "30.50 $ \\pm $ 4.50",
+          "-",
+          "26.00"
+        ],
+        [
+          "Longest Corr",
+          "16.00",
+          "8.00 $ \\pm $ 1.00",
+          "-",
+          "12.00"
+        ],
+        [
+          "Max Err/Choice",
+          "9.00",
+          "7.00 $ \\pm $ 2.00",
+          "-",
+          "9.00"
+        ],
+        [
+          "ErrorCount $ ≥ 9 $",
+          "1.00",
+          "0.00 $ \\pm $ 0.00",
+          "-",
+          "2.00"
+        ],
+        [
+          "Runtime Cost (s)",
+          "0.60k",
+          "0.58k $ \\pm $ 0.05k",
+          "-",
+          "4.64k"
+        ],
+        [
+          "Token Cons",
+          "343k",
+          "510k $ \\pm $ 40k",
+          "-",
+          "549k"
+        ],
+        [
+          "Success Count",
+          "1.00",
+          "2.00",
+          "0.00",
+          "1.00"
+        ]
+      ],
+      "nearby_context": "Performance comparison of models (Doubao1.5-pro, GPT-4o, Claude 3.5 Sonnet, Deepseek-R1) under Improved Self Recovery, with metrics: Overall Acc, First-Try Acc, Hard Acc, Easy Acc, Retry Count, Longest Corr, Max Err/Choice, ErrorCount ≥ 9, Runtime Cost, Token Cons, Success Count.",
+      "table_shape": {
+        "rows": 12,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 4: Performance of different models (Improved Self Recovery).",
+        "caption_kind": "table",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P016_B0003",
+          "P016_B0004"
+        ],
+        "media_block_ids": [
+          "P016_B0004"
+        ],
+        "table_block_ids": [
+          "P016_B0004"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Performance comparison of models (Doubao1.5-pro, GPT-4o, Claude 3.5 Sonnet, Deepseek-R1) under Improved Self Recovery, with metrics: Overall Acc, First-Try Acc, Hard Acc, Easy Acc, Retry Count, Longest Corr, Max Err/Choice, ErrorCount ≥ 9, Runtime Cost, Token Cons, Success Count.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    }
+  ],
+  "summary": {
+    "asset_count": 12,
+    "by_asset_type": {
+      "table": 4,
+      "figure": 8
+    },
+    "by_modality_class": {
+      "evidential": 5,
+      "explanatory": 7
+    },
+    "macro_unresolved_count": 0
+  }
+}

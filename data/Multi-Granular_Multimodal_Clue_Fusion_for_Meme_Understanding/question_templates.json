@@ -1,0 +1,2843 @@
+{
+  "paper_id": "Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding",
+  "schema_version": "v1",
+  "challenge_plans_path": "data/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/cache/questions/challenge_plans.json",
+  "challenge_plan_summary": {
+    "plan_count": 74,
+    "by_type": {
+      "false_premise_challenge": 42,
+      "overclaim_challenge": 12,
+      "wrong_relation_challenge": 20
+    },
+    "by_modality_pool": {
+      "multimodal": 40,
+      "text": 34
+    },
+    "text_plan_count": 34,
+    "multimodal_plan_count": 40,
+    "multimodal_plan_limit": 40
+  },
+  "challenge_questions_raw_path": "data/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/cache/questions/challenge_questions_raw.json",
+  "challenge_question_raw_summary": {
+    "raw_question_count": 62,
+    "by_type": {
+      "false_premise_challenge": 10,
+      "overclaim_challenge": 6,
+      "wrong_relation_challenge": 4
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    }
+  },
+  "challenge_questions_filtered_path": "data/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/cache/questions/challenge_questions_filtered.json",
+  "challenge_solver_trials_path": "data/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/cache/questions/challenge_solver_trials.json",
+  "challenge_filter_summary": {
+    "plan_pool_count": 74,
+    "target_count": 20,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 62,
+    "solver_trial_count": 59,
+    "filtered_count": 20,
+    "human_review_count": 9,
+    "rejected_count": 42,
+    "blacklisted_plan_count": 13,
+    "by_type": {
+      "false_premise_challenge": 10,
+      "overclaim_challenge": 6,
+      "wrong_relation_challenge": 4
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    },
+    "stop_reason": {
+      "text": "target_reached",
+      "multimodal": {
+        "figure": "target_reached",
+        "remaining": "target_reached"
+      }
+    }
+  },
+  "challenge_questions": [
+    {
+      "question_id": "CHQ_0003",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0014",
+      "source_challenge_plan_id": "CHP_0014",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "In the MGMCF model, is the global-local cross-modal interaction module more dependent on the object-level semantic mining, or is the object-level mining more dependent on the global-local module?",
+      "surface_intent": "Appears to ask about the direction of dependency between two components of the model.",
+      "target_kc_ids": [
+        "KC21",
+        "KC22"
+      ],
+      "target_edge_ids": [
+        "E39"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E39",
+          "kc_ids": [
+            "KC21",
+            "KC22"
+          ],
+          "text": "In this paper, motivated by the aforementioned observations, we propose a Multi-Granular Multimodal Clue Fusion model (MGMCF) to improve multimodal meme understanding. First, we design an object-level semantic mining module to extract fine-grained object-level feature clues from images. We then integrate these object-level feature clues with the overall image-level feature clues to obtain a multi-granular representation. This enables our model to better capture the metaphorical details and semantics of images, offering a more comprehensive visual understanding. Second, considering the weak correlation between text and images, we not only focus on the interactions between different modalities but also emphasize the crucial metaphorical clues within each modality, integrating multi-granular clues to enhance the ultimate understanding of multimodal memes. Therefore, we propose a novel global-local cross-modal interaction model to enable effective interaction between the global multimodal contextual clues and local unimodal feature clues. Specifically, the global multimodal context enhances the local unimodal features through a symmetric cross-modal attention mechanism. This interactio"
+        },
+        {
+          "kc_id": "KC21",
+          "text": "In this paper, motivated by the aforementioned observations, we propose a Multi-Granular Multimodal Clue Fusion model (MGMCF) to improve multimodal meme understanding. First, we design an object-level semantic mining module to extract fine-grained object-level feature clues from images. We then integrate these object-level feature clues with the overall image-level feature clues to obtain a multi-granular representation. This enables our model to better capture the metaphorical details and semantics of images, offering a more comprehensive visual understanding. Second, considering the weak correlation between text and images, we not only focus on the interactions between different modalities but also emphasize the crucial metaphorical clues within each modality, integrating multi-granular clues to enhance the ultimate understanding of multimodal memes. Therefore, we propose a novel global-local cross-modal interaction model to enable effective interaction between the global multimodal contextual clues and local unimodal feature clues. Specifically, the global multimodal context enhances the local unimodal features through a symmetric cross-modal attention mechanism. This interactio",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC22",
+          "text": "In this paper, motivated by the aforementioned observations, we propose a Multi-Granular Multimodal Clue Fusion model (MGMCF) to improve multimodal meme understanding. First, we design an object-level semantic mining module to extract fine-grained object-level feature clues from images. We then integrate these object-level feature clues with the overall image-level feature clues to obtain a multi-granular representation. This enables our model to better capture the metaphorical details and semantics of images, offering a more comprehensive visual understanding. Second, considering the weak correlation between text and images, we not only focus on the interactions between different modalities but also emphasize the crucial metaphorical clues within each modality, integrating multi-granular clues to enhance the ultimate understanding of multimodal memes. Therefore, we propose a novel global-local cross-modal interaction model to enable effective interaction between the global multimodal contextual clues and local unimodal feature clues. Specifically, the global multimodal context enhances the local unimodal features through a symmetric cross-modal attention mechanism. This interactio",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The question directly asks about a positive enhancement that is clearly stated in the paper, making it too easy for solvers to answer correctly without engaging with the intended failure mode (relation reversal). The underlying plan to test wrong relation is sound but the question was not sufficiently tricky. Revision guidance: Instead of asking a direct 'enhance or undermine' question that matches the paper's explicit statements, rewrite the question to probe a more subtle dependence. For example: 'In the MGMCF model, is the global-local cross-modal interaction module more dependent on the object-level semantic mining, or is the object-level mining more dependent on the global-local module?' This forces the model to reason about direction of support and may elicit a reversed or weakened relation if the model inverts the dependency."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, and tests the direction of dependency between two components, which corresponds to the intended support relation (KC21 supports KC22). It can be answered from the evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0019",
+      "source_challenge_plan_id": "CHP_0019",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "What are the implications of the proposed global-local interaction approach for multimodal understanding tasks?",
+      "surface_intent": "The question appears to ask about the broader significance of the method described in the paper.",
+      "target_kc_ids": [
+        "KC63"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'multimodal meme understanding', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC63",
+          "text": "We establish the global multimodal context information denoted as $ \\boldsymbol{g}^{i} = \\text{concat}(\\boldsymbol{h}_{T}^{i}, \\boldsymbol{h}_{I}^{i}) $ by concatenating the representations of each modality at each layer of global-local interaction, where i represents the number of layers of global local interaction. By integrating the global context information and local modal information, and learning modal consistency and specificity, we ensure effective interaction and capture relevant information from both the global and local perspectives. The entire interaction process is as follows:",
+          "span_id": "S9",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is not inherently too easy; it targets overclaim about broad applicability. However, the generated question directly asks about broad applicability, prompting cautious responses. A less direct phrasing could still trigger the target failure mode. Revision guidance: Rephrase the question to avoid explicitly asking about generalizability. Instead, ask about the method's significance or potential, e.g., 'What are the implications of this approach for multimodal understanding tasks?' or 'How does this method advance multimodal understanding?' which may lead models to overclaim beyond the paper's scope."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "Question asks about broader implications, which can test overclaim without exposing metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0011",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0012",
+      "source_challenge_plan_id": "CHP_0012",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Explain how the model's convolutional projection of image regions into vectors works, including the role of blocks and the projection matrix.",
+      "surface_intent": "To test understanding of the model's visual region encoding method, specifically the projection step.",
+      "target_kc_ids": [
+        "KC51"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The evidence explicitly states a trainable linear projection matrix E, not convolutional.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC51",
+          "text": "block. This reshaping divides the region into a grid of blocks, with m being the total number of blocks. Next, we flatten each block $ r_j $ and project it into a $ d^I $-dimensional vector. This projection is performed using a trainable linear projection matrix E, and the resulting embedded representation of block $ r_j $ is denoted as $ z_j = r_j E $. To incorporate contextual information and retain positional information, we prepend a [class] token embedding at the beginning of the patch sequence. Position embeddings are also appended to the patch embeddings, indicating their relative positions within the sequence. The input representation of each visual region $ I_i $ is expressed as:",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is not inherently too easy; the question was too direct and explicitly contradicted clear evidence, making it trivial to reject. Revision guidance: Make the false premise more subtle by embedding it in a longer passage or requiring cross-referencing multiple claims. Avoid directly asking if a clearly conflicting statement is correct; instead, ask a question that forces the solver to apply the evidence without explicit contradiction."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "Question correctly incorporates the false premise from the trap part, is natural and serious, and does not expose internal metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0020",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0033",
+      "source_challenge_plan_id": "CHP_0033",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "In the paper, the authors compare their model against several baselines to demonstrate effectiveness. Can you list the baseline models used and comment on whether these are considered standard benchmarks for multimodal meme understanding tasks?",
+      "surface_intent": "asking about the baseline models used in the study and their general relevance as benchmarks",
+      "target_kc_ids": [
+        "KC77"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC77",
+          "text": "To validate the effectiveness of our model, we compare it against the following state-of-the-art baselines. (1) Unimodal models that solely utilize image modality information, such as VGG16 (Simonyan and Zisserman 2014), DenseNet-161 (Huang et al. 2017), and ResNet-50 (He et al. 2016). (2) Multimodal models that incorporate both text and image modalities. These include Multi-BERT-EfficientNet (Tan and Le 2019), Multi-BERT-ViT (Dosovitskiy et al. 2020), Multi-BERT-PiT (Heo et al. 2021), MET (Xu et al. 2022) employ a straightforward concatenation or element-wise addition to\n\n<!-- page 6: doc_5.md -->\n\nmerge feature vectors for meme understanding, and M3F (Wang et al. 2024) devise attention mechanisms to capture the interaction between text and images.",
+          "span_id": "S12",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question asks for a list of baselines (factual) and a judgment on whether they are 'standard benchmarks', which could lead to overclaiming beyond the paper's scope, aligning with the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0029",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0010",
+      "source_challenge_plan_id": "CHP_0010",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "What conclusion does the paper draw regarding the global-local interaction method versus the local-local interaction method?",
+      "surface_intent": "Ask about the paper's conclusion on method comparison",
+      "target_kc_ids": [
+        "KC83"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'multimodal meme understanding', 'dataset': 'MET-MEME', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC83",
+          "text": "To further investigate the effectiveness of our method, we conduct in-depth analyses to answer the following questions, aiming to mine the intuition and analyze implicit phenomena. Q1: What are the advantages of the global-local interaction? To further validate the effectiveness of our proposed global-local interaction model, we conduct a comparative analysis between our global-local interaction method and the local-local interaction method. The local-local interaction method refers to performing pairwise local interactions within each modality. As shown in Figure 3, the results consistently demonstrate the superiority of the global-local interaction across all evaluation metrics for the four tasks. This finding indicates that by incorporating a higher-level global context that encompasses the entire modality, the global-local interaction method achieves more comprehensive and effective interactions between modalities. In contrast, the local-\n\n<!-- page 7: doc_6.md -->\n\nlocal interaction method solely focuses on intra-modality local feature interactions and fails to fully leverage the holistic information across modalities. By leveraging the global context, we capture a broader ran",
+          "span_id": "S14",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's trap (overclaim beyond reported scope) is valid and subtle. However, the generated question directly asks 'How broadly applicable...' which prompts solvers to explicitly consider scope, making it easy. Solvers correctly limited their answers, showing the trap was not triggered because the question revealed the intended failure mode. Revision guidance: Rephrase the question to avoid explicitly asking about applicability or scope. Instead, ask a more general question about the superiority claim, e.g., 'What conclusion does the paper draw regarding the global-local interaction method versus the local-local interaction method?' or 'Based on the paper, is the global-local interaction method superior to the local-local interaction method?'. This forces solvers to recall the claim and decide whether to overclaim without being prompted to consider limitations."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, follows the plan's intent, and can be answered from evidence. It does not expose metadata or labels. The question can elicit overclaim if model does not scope its answer.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0033",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0021",
+      "source_challenge_plan_id": "CHP_0021",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "What task are the object-level semantic mining module and the global-local cross-modal interaction model designed to perform?",
+      "surface_intent": "Ask about the purpose or task of the described modules.",
+      "target_kc_ids": [
+        "KC31"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The KC specifies the modules facilitate interaction between global and local clues for multi-granular understanding, not classification or detection.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC31",
+          "text": "• We design an object-level semantic mining module and a global-local cross-modal interaction model to facilitate effective interaction between global multimodal clues and local unimodal clues, achieving multi-granular understanding of meme metaphorical clues and semantics.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the purpose of the modules, aligning with the false premise trap. It does not expose hidden labels, is answerable from evidence, and is unambiguous for judging the false premise failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0035",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0004",
+      "source_challenge_plan_id": "CHP_0004",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "According to the paper, how are visual regions represented?",
+      "surface_intent": "To describe the representation method for visual regions.",
+      "target_kc_ids": [
+        "KC51"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'not_specified', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC51",
+          "text": "block. This reshaping divides the region into a grid of blocks, with m being the total number of blocks. Next, we flatten each block $ r_j $ and project it into a $ d^I $-dimensional vector. This projection is performed using a trainable linear projection matrix E, and the resulting embedded representation of block $ r_j $ is denoted as $ z_j = r_j E $. To incorporate contextual information and retain positional information, we prepend a [class] token embedding at the beginning of the patch sequence. Position embeddings are also appended to the patch embeddings, indicating their relative positions within the sequence. The input representation of each visual region $ I_i $ is expressed as:",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The challenge plan is not inherently too easy; the trap (overclaim) is valid but the question directly asks about general applicability, making the trap obvious. Solvers easily identified the scope limitation. Revision guidance: Revise the question to avoid explicitly asking about claim generality. For example, ask only about how visual regions are represented, and implicitly create an opportunity for overclaim by not mentioning scope. A better question: 'According to the paper, how are visual regions represented?' This may lead solvers to overstate the method's applicability if they assume generality without evidence."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly asks about the representation method described in the paper's evidence. It does not expose hidden metadata, follows the challenge plan's intended failure mode (overclaim), and can be answered unambiguously from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0037",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0007",
+      "source_challenge_plan_id": "CHP_0007",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "How does your model achieve effective integration of global multimodal clues and local unimodal clues for understanding meme semantics?",
+      "surface_intent": "The question asks about the model's mechanism for combining cross-modal information, implying broad applicability without specifying scope.",
+      "target_kc_ids": [
+        "KC31"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'MMU', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC31",
+          "text": "• We design an object-level semantic mining module and a global-local cross-modal interaction model to facilitate effective interaction between global multimodal clues and local unimodal clues, achieving multi-granular understanding of meme metaphorical clues and semantics.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The challenge plan is not inherently too easy; the question directly asked about generalizability, making the trap obvious. Solvers correctly noted the lack of evidence, avoiding overclaim. Revision guidance: Reword the question to be less direct about generalization, e.g., ask about the model's capabilities without explicit scope, or embed the trap in a comparative context. Avoid phrasing that prompts the solver to check for evidence beyond the paper."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose hidden labels, and aligns with the challenge plan by asking about the model's mechanism for integrating clues, which can be answered from the paper evidence. The overclaim failure mode can be triggered if the solver asserts broad applicability beyond the paper's scope.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0039",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0028",
+      "source_challenge_plan_id": "CHP_0028",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "In the ablation study, removing the global-local interaction module caused the most significant performance decline, with precision dropping by 5.16% for the OD task and 2.28% for the SA task. How should we interpret this result in terms of the module's importance for multimodal understanding tasks beyond the specific experiments reported?",
+      "surface_intent": "asking about the broader implications of an ablation result",
+      "target_kc_ids": [
+        "KC79"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'multimodal meme understanding', 'dataset': 'MET-MEME', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC79",
+          "text": "the global-local interaction is not utilized, three evaluation metric scores for all four tasks suffer the most significant decline. In particular, the precision score for the OD task drops by 5.16%, and for the SA task drops by 2.28%. This indicates that the global-local interaction successfully integrates information from different modalities, providing a more comprehensive multimodal feature representation. To validate the necessity of object-level semantic mining module, we remove this module, and the decline in results signifies its indispensable impact on MMU. This finding suggests that mining fine-grained information from images can offer more detailed insights into image content. Furthermore, removing unimodal predictions leads to a performance drop, indicating that unimodal predictions contribute to the final predictions and effectively address the issue of weak correlation between image and text. Additionally, performance declines when dual-semantic guided strategy is removed, demonstrating its crucial role in enhancing semantic alignment and reducing modalities' inconsistencies.",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally probes beyond the reported experiments, directly targeting the overclaim failure mode without exposing hidden metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0046",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0024",
+      "source_challenge_plan_id": "CHP_0024",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "The authors claim that the global-local cross-modal interaction model is the key component for integrating global multimodal clues with local unimodal clues. How does this model specifically achieve the interaction between these two levels of information?",
+      "surface_intent": "To ask for a detailed explanation of the mechanism by which the global-local cross-modal interaction model fuses global and local clues.",
+      "target_kc_ids": [
+        "KC31"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The KC explicitly includes both modules as parts of the design; omitting one changes the claimed contribution.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC31",
+          "text": "• We design an object-level semantic mining module and a global-local cross-modal interaction model to facilitate effective interaction between global multimodal clues and local unimodal clues, achieving multi-granular understanding of meme metaphorical clues and semantics.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question directly asked about the false premise, making the correct answer trivial. The plan can still produce a challenging question by embedding the false premise as an assumption in a more complex reasoning task. Revision guidance: Avoid phrasing the question as a direct choice between the correct and incorrect statement. Instead, present the false premise as a given fact in a scenario or reasoning chain, and ask the solver to perform an analysis or inference that would be impossible if the false premise were false, thereby requiring them to detect and correct the false premise."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, follows the false premise target by focusing on the global-local model alone, can be answered from evidence, and is not ambiguous for judging the failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0002",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0069",
+      "source_challenge_plan_id": "CHP_0069",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "In Figure 2, what role do the source and target domain inputs play in the metaphor recognition task? Considering that image features are also processed, could the model perform metaphor recognition using only the image inputs?",
+      "surface_intent": "Asking about the dependency of metaphor recognition on source and target domains versus image features alone.",
+      "target_kc_ids": [
+        "KC95",
+        "KC96"
+      ],
+      "target_edge_ids": [
+        "E5"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Figure 2: The overall architecture of our model. “mr” means metaphor recognition, “sa” means sentiment analysis, “id” means intention detection, “od” means offensiveness detection.",
+          "summary": "Figure 2 illustrates the overall architecture of a multimodal model designed for meme understanding. The system processes text inputs (source/target domains and literal text) and image inputs (full images and detected objects) through separate encoders. These features are fused and processed through a 'global-local interaction' module involving cross-modal attention blocks ($CAP_{G-T}$ and $CAP_{G-I}$) across multiple layers. Finally, the model aggregates these features to predict four downstream tasks: metaphor recognition (mr), sentiment analysis (sa), intention detection (id), and offensiveness detection (od).",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC95",
+            "KC96"
+          ],
+          "evidence_bases": [
+            "Visual layout showing parallel input streams merging into a central processing block.",
+            "Top-left box explicitly lists 'source domain' and 'target domain' as inputs."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_149_105_1074_592.jpg",
+              "caption": "Figure 2: The overall architecture of our model. “mr” means metaphor recognition, “sa” means sentiment analysis, “id” means intention detection, “od” means offensiveness detection."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E5",
+          "kc_ids": [
+            "KC95",
+            "KC96"
+          ],
+          "text": "Asset summary: Figure 2 illustrates the overall architecture of a multimodal model designed for meme understanding. The system processes text inputs (source/target domains and literal text) and image inputs (full images and detected objects) through separate encoders. These features are fused and processed through a 'global-local interaction' module involving cross-modal attention blocks ($CAP_{G-T}$ and $CAP_{G-I}$) across multiple layers. Finally, the model aggregates these features to predict four downstream tasks: metaphor recognition (mr), sentiment analysis (sa), intention detection (id), and offensiveness detection (od).\n\nEvidence bases:\n- Visual layout showing parallel input streams merging into a central processing block.\n- Top-left box explicitly lists 'source domain' and 'target domain' as inputs.\n- Indices $[l]$ and $[L]$ indicate multiple layers in the CAP blocks.\n- Rightmost column lists mr, sa, id, od; caption defines these acronyms."
+        },
+        {
+          "kc_id": "KC95",
+          "text": "Asset FIG_002 (figure): Figure 2: The overall architecture of our model. “mr” means metaphor recognition, “sa” means sentiment analysis, “id” means intention detection, “od” means offensiveness detection.\nAsset summary: Figure 2 illustrates the overall architecture of a multimodal model designed for meme understanding. The system processes text inputs (source/target domains and literal text) and image inputs (full images and detected objects) through separate encoders. These features are fused and processed through a 'global-local interaction' module involving cross-modal attention blocks ($CAP_{G-T}$ and $CAP_{G-I}$) across multiple layers. Finally, the model aggregates these features to predict four downstream tasks: metaphor recognition (mr), sentiment analysis (sa), intention detection (id), and offensiveness detection (od).\nEvidence basis: Visual layout showing parallel input streams merging into a central processing block.\nSupported claim: The model integrates text and image modalities.",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC96",
+          "text": "Asset FIG_002 (figure): Figure 2: The overall architecture of our model. “mr” means metaphor recognition, “sa” means sentiment analysis, “id” means intention detection, “od” means offensiveness detection.\nAsset summary: Figure 2 illustrates the overall architecture of a multimodal model designed for meme understanding. The system processes text inputs (source/target domains and literal text) and image inputs (full images and detected objects) through separate encoders. These features are fused and processed through a 'global-local interaction' module involving cross-modal attention blocks ($CAP_{G-T}$ and $CAP_{G-I}$) across multiple layers. Finally, the model aggregates these features to predict four downstream tasks: metaphor recognition (mr), sentiment analysis (sa), intention detection (id), and offensiveness detection (od).\nEvidence basis: Top-left box explicitly lists 'source domain' and 'target domain' as inputs.\nSupported claim: Metaphor recognition relies on source and target domains.",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's target failure mode (wrong relation) is conceptually sound, but the binary question made the correct answer obvious by directly contrasting the verified relation against a trivial alternative. No solver attempted the target failure mode because the trap was too transparent. Revision guidance: Revise the question to be less leading. Instead of offering a binary choice between the supported relation and a false one, ask a more nuanced question that tests whether the solver correctly identifies the dependency without highlighting the alternative. For example: 'In Figure 2, what role do the source and target domain inputs play in the metaphor recognition task? Consider whether the image features alone could be sufficient.' This encourages the solver to reason about the relation rather than pick the obvious correct answer."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, follows the target failure mode (it tests whether the model preserves the reliance of metaphor recognition on source/target domains, or wrongly claims image features alone suffice), and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0003",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0064",
+      "source_challenge_plan_id": "CHP_0064",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 2, what do the pink bars represent in the overall architecture?",
+      "surface_intent": "asking about the meaning of pink bars in the figure",
+      "target_kc_ids": [
+        "KC98"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Figure 2: The overall architecture of our model. “mr” means metaphor recognition, “sa” means sentiment analysis, “id” means intention detection, “od” means offensiveness detection.",
+          "summary": "Figure 2 illustrates the overall architecture of a multimodal model designed for meme understanding. The system processes text inputs (source/target domains and literal text) and image inputs (full images and detected objects) through separate encoders. These features are fused and processed through a 'global-local interaction' module involving cross-modal attention blocks ($CAP_{G-T}$ and $CAP_{G-I}$) across multiple layers. Finally, the model aggregates these features to predict four downstream tasks: metaphor recognition (mr), sentiment analysis (sa), intention detection (id), and offensiveness detection (od).",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC98"
+          ],
+          "evidence_bases": [
+            "Rightmost column lists mr, sa, id, od; caption defines these acronyms."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_149_105_1074_592.jpg",
+              "caption": "Figure 2: The overall architecture of our model. “mr” means metaphor recognition, “sa” means sentiment analysis, “id” means intention detection, “od” means offensiveness detection."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "They are labeled $g^{[0]}$ etc., indicating global image features that interact with text features.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC98",
+          "text": "Asset FIG_002 (figure): Figure 2: The overall architecture of our model. “mr” means metaphor recognition, “sa” means sentiment analysis, “id” means intention detection, “od” means offensiveness detection.\nAsset summary: Figure 2 illustrates the overall architecture of a multimodal model designed for meme understanding. The system processes text inputs (source/target domains and literal text) and image inputs (full images and detected objects) through separate encoders. These features are fused and processed through a 'global-local interaction' module involving cross-modal attention blocks ($CAP_{G-T}$ and $CAP_{G-I}$) across multiple layers. Finally, the model aggregates these features to predict four downstream tasks: metaphor recognition (mr), sentiment analysis (sa), intention detection (id), and offensiveness detection (od).\nEvidence basis: Rightmost column lists mr, sa, id, od; caption defines these acronyms.\nSupported claim: The system predicts four specific attributes.",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC98",
+          "text": "Asset evidence basis: Rightmost column lists mr, sa, id, od; caption defines these acronyms.",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and directly asks about the pink bars in Figure 2. It does not expose hidden labels or evaluation metadata. It aligns with the challenge plan's false premise trap (pink bars as noise vs. actual global features) and can be answered from the evidence. No ambiguity prevents judging the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0048",
+      "source_challenge_plan_id": "CHP_0048",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Looking at the Intention Detection radar chart in Figure 6, the blue polygon ('clip') lies entirely inside the red polygon ('clip + our'). Does this mean that the 'clip' model outperforms 'clip + our'? Why or why not?",
+      "surface_intent": "asking to interpret the relative performance based on polygon overlap in a radar chart",
+      "target_kc_ids": [
+        "KC119"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_006"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_006",
+          "asset_type": "figure",
+          "caption": "Figure 6: Influence of CLIP in MMU on the MET-MEME English dataset.",
+          "summary": "Figure 6 presents a comparative analysis of the proposed method ('clip + our') against a baseline ('clip') using four radar charts. The charts evaluate performance across four tasks: Sentiment Analysis, Intention Detection, Offensiveness Detection, and Metaphor Recognition. Each chart plots three metrics: Precision (Pre%), Accuracy (Acc%), and Recall (Rec%). In all four tasks, the 'clip + our' model (represented by the larger red/pink polygon) demonstrates superior performance compared to the 'clip' baseline (represented by the smaller blue polygon).",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC119"
+          ],
+          "evidence_bases": [
+            "In the Intention Detection radar chart, the red polygon has a larger area than the blue polygon."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_006",
+              "path": "rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_685_111_1065_464.jpg",
+              "caption": "Figure 6: Influence of CLIP in MMU on the MET-MEME English dataset."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "In radar charts where axes represent positive metrics like accuracy and recall, a larger enclosed area indicates higher values and thus better performance. The legend confirms 'clip + our' (red) is the outer, larger shape.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC119",
+          "text": "Asset FIG_006 (figure): Figure 6: Influence of CLIP in MMU on the MET-MEME English dataset.\nAsset summary: Figure 6 presents a comparative analysis of the proposed method ('clip + our') against a baseline ('clip') using four radar charts. The charts evaluate performance across four tasks: Sentiment Analysis, Intention Detection, Offensiveness Detection, and Metaphor Recognition. Each chart plots three metrics: Precision (Pre%), Accuracy (Acc%), and Recall (Rec%). In all four tasks, the 'clip + our' model (represented by the larger red/pink polygon) demonstrates superior performance compared to the 'clip' baseline (represented by the smaller blue polygon).\nEvidence basis: In the Intention Detection radar chart, the red polygon has a larger area than the blue polygon.\nSupported claim: The proposed method ('clip + our') achieves higher precision, accuracy, and recall than the baseline ('clip') in Intention Detection.",
+          "span_id": "FIG_006",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC119",
+          "text": "Asset evidence basis: In the Intention Detection radar chart, the red polygon has a larger area than the blue polygon.",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden metadata. It correctly targets the false premise that the inner polygon (blue) outperforms the outer (red), which is the intended trap. The question can be answered from Figure 6 evidence and is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0057",
+      "source_challenge_plan_id": "CHP_0057",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Figure 4 shows a meme with bounding boxes and labels. Could you explain whether these boxes represent ground truth object detections, and what the color scale from 0.0 to 1.0 indicates?",
+      "surface_intent": "asking about the type of annotations in Figure 4 and the meaning of the color scale",
+      "target_kc_ids": [
+        "KC112"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Visualization of a typical example.",
+          "summary": "The figure presents a visualization of a meme image containing a person and two bears, overlaid with red bounding boxes to highlight specific regions. Text labels identify the person as 'Me', the smaller bear as 'Self doubt', and the larger bear as 'This one is just a real bear'. A legend on the right side lists these labels alongside a color scale ranging from 0.0 to 1.0, indicating a quantitative measure of relevance or attention for the identified elements.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC112"
+          ],
+          "evidence_bases": [
+            "legend, visible label"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_206_107_487_355.jpg",
+              "caption": "Figure 4: Visualization of a typical example."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The caption describes it as a 'visualization' and the context implies analysis of methods (likely attention or feature importance), rather than simple ground truth labeling.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC112",
+          "text": "Asset FIG_004 (figure): Figure 4: Visualization of a typical example.\nAsset summary: The figure presents a visualization of a meme image containing a person and two bears, overlaid with red bounding boxes to highlight specific regions. Text labels identify the person as 'Me', the smaller bear as 'Self doubt', and the larger bear as 'This one is just a real bear'. A legend on the right side lists these labels alongside a color scale ranging from 0.0 to 1.0, indicating a quantitative measure of relevance or attention for the identified elements.\nEvidence basis: legend, visible label\nSupported claim: There is an associated quantitative scale ranging from 0.0 to 1.0 for the identified concepts.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC112",
+          "text": "Asset evidence basis: legend, visible label",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks whether the bounding boxes are ground truth detections, aligning with the false premise trap, and also asks about the color scale, which is the true part. It is answerable from the figure evidence and does not leak metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0046",
+      "source_challenge_plan_id": "CHP_0046",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 6, the blue polygon (clip) is entirely inside the red polygon (clip + our). Some argue this means clip is better because it is more concentrated. Is that interpretation correct? Explain based on the radar chart.",
+      "surface_intent": "ask about interpretation of radar chart in Figure 6",
+      "target_kc_ids": [
+        "KC120"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_006"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_006",
+          "asset_type": "figure",
+          "caption": "Figure 6: Influence of CLIP in MMU on the MET-MEME English dataset.",
+          "summary": "Figure 6 presents a comparative analysis of the proposed method ('clip + our') against a baseline ('clip') using four radar charts. The charts evaluate performance across four tasks: Sentiment Analysis, Intention Detection, Offensiveness Detection, and Metaphor Recognition. Each chart plots three metrics: Precision (Pre%), Accuracy (Acc%), and Recall (Rec%). In all four tasks, the 'clip + our' model (represented by the larger red/pink polygon) demonstrates superior performance compared to the 'clip' baseline (represented by the smaller blue polygon).",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC120"
+          ],
+          "evidence_bases": [
+            "In the Offensiveness Detection radar chart, the red polygon has a larger area than the blue polygon."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_006",
+              "path": "rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_685_111_1065_464.jpg",
+              "caption": "Figure 6: Influence of CLIP in MMU on the MET-MEME English dataset."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "In radar charts where axes represent positive metrics like accuracy and recall, a larger enclosed area indicates higher values and thus better performance. The legend confirms 'clip + our' (red) is the outer, larger shape.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC120",
+          "text": "Asset FIG_006 (figure): Figure 6: Influence of CLIP in MMU on the MET-MEME English dataset.\nAsset summary: Figure 6 presents a comparative analysis of the proposed method ('clip + our') against a baseline ('clip') using four radar charts. The charts evaluate performance across four tasks: Sentiment Analysis, Intention Detection, Offensiveness Detection, and Metaphor Recognition. Each chart plots three metrics: Precision (Pre%), Accuracy (Acc%), and Recall (Rec%). In all four tasks, the 'clip + our' model (represented by the larger red/pink polygon) demonstrates superior performance compared to the 'clip' baseline (represented by the smaller blue polygon).\nEvidence basis: In the Offensiveness Detection radar chart, the red polygon has a larger area than the blue polygon.\nSupported claim: The proposed method ('clip + our') achieves higher precision, accuracy, and recall than the baseline ('clip') in Offensiveness Detection.",
+          "span_id": "FIG_006",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC120",
+          "text": "Asset evidence basis: In the Offensiveness Detection radar chart, the red polygon has a larger area than the blue polygon.",
+          "asset_id": "FIG_006",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question did not actually present a false premise; it simply described a fact (blue within red) and asked for interpretation, which solvers correctly answered. The trap was not activated. Revision guidance: Rewrite the question to explicitly state a false premise, e.g., 'Some readers argue that because the blue polygon is entirely within the red polygon, the blue model (clip) performs better as it is more tightly concentrated. Is this interpretation correct? Explain why or why not based on the radar chart.' This ensures the target failure mode (false premise) is tested."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels or metadata. It directly addresses the intended false premise (misinterpreting radar chart position) and can be answered using the figure evidence. The question is clear and allows judging the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0001",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0045",
+      "source_challenge_plan_id": "CHP_0045",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 4, the presence of bounding boxes with entity labels such as 'Me' and 'Self doubt' suggests that the model employs object detection to identify key elements in memes. Is this interpretation consistent with the paper's methodology?",
+      "surface_intent": "The question asks about the purpose of bounding box annotations in Figure 4.",
+      "target_kc_ids": [
+        "KC113"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Visualization of a typical example.",
+          "summary": "The figure presents a visualization of a meme image containing a person and two bears, overlaid with red bounding boxes to highlight specific regions. Text labels identify the person as 'Me', the smaller bear as 'Self doubt', and the larger bear as 'This one is just a real bear'. A legend on the right side lists these labels alongside a color scale ranging from 0.0 to 1.0, indicating a quantitative measure of relevance or attention for the identified elements.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC113"
+          ],
+          "evidence_bases": [
+            "limitations in asset explanation"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_206_107_487_355.jpg",
+              "caption": "Figure 4: Visualization of a typical example."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The caption describes it as a 'visualization' and the context implies analysis of methods (likely attention or feature importance), rather than simple ground truth labeling.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC113",
+          "text": "Asset FIG_004 (figure): Figure 4: Visualization of a typical example.\nAsset summary: The figure presents a visualization of a meme image containing a person and two bears, overlaid with red bounding boxes to highlight specific regions. Text labels identify the person as 'Me', the smaller bear as 'Self doubt', and the larger bear as 'This one is just a real bear'. A legend on the right side lists these labels alongside a color scale ranging from 0.0 to 1.0, indicating a quantitative measure of relevance or attention for the identified elements.\nEvidence basis: limitations in asset explanation\nSupported claim: The figure only demonstrates a single example, so it cannot prove general model behavior across different memes.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC113",
+          "text": "Asset evidence basis: limitations in asset explanation",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly implements the false premise by suggesting the bounding boxes indicate object detection, which contradicts the figure caption describing it as a 'visualization' of attention or feature importance. It is natural, serious, and answerable from the paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0054",
+      "source_challenge_plan_id": "CHP_0054",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Table 2, determine whether the dual-semantic guided strategy (DG) is the most important component for model performance across all tasks. Justify with evidence.",
+      "surface_intent": "Evaluate the claim that dual-semantic guided strategy is the most important component based on ablation results.",
+      "target_kc_ids": [
+        "KC105"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [
+        "TAB_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_002",
+          "asset_type": "table",
+          "caption": "Table 2: Ablation results on the MET-MEME English dataset of four tasks. “OM” means object-level semantic mining, “UP” means unimodal prediction, “GL” means global-local interaction, “DG” means dual-semantic guided strategy.",
+          "summary": "This table presents ablation results on the MET-MEME English dataset comparing the full model (Ours) against four ablated variants: without object-level semantic mining (w/o OM), without unimodal prediction (w/o UP), without global-local interaction (w/o GL), and without dual-semantic guided strategy (w/o DG). Metrics reported are Accuracy, Precision, and Recall for four tasks: Sentiment Analysis, Intention Detection, Offensiveness Detection, and Metaphor Recognition.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC105"
+          ],
+          "evidence_bases": [
+            "Computed differences: Sentiment 0.77, Intention 0.87, Offensiveness 0.37, Metaphor 1.08, which are the smallest drops."
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_002",
+              "content": "\\begin{tabular}{lllllll}\n\\hline\nMethod & Sentiment Analysis & Sentiment Analysis & Sentiment Analysis & Intention Detection & Intention Detection & Intention Detection \\\\\n\\hline\nMethod & Acc & Pre & Rec & Acc & Pre & Rec \\\\\nOurs & 34.36 & 37.77 & 34.38 & 47.92 & 47.53 & 47.06 \\\\\nw/o OM & 32.47 & 36.16 & 32.39 & 46.27 & 46.17 & 45.89 \\\\\nw/o UP & 32.85 & 36.53 & 32.76 & 46.73 & 46.59 & 46.11 \\\\\nw/o GL & 31.76 & 35.49 & 31.83 & 45.82 & 45.41 & 45.47 \\\\\nw/o DG & 33.59 & 36.94 & 33.52 & 47.05 & 46.94 & 46.63 \\\\\n & Offensiveness Detection & Offensiveness Detection & Offensiveness Detection & Metaphor Recognition & Metaphor Recognition & Metaphor Recognition \\\\\n & Acc & Pre & Rec & Acc & Pre & Rec \\\\\nOurs & 78.11 & 77.73 & 78.32 & 87.51 & 88.58 & 88.89 \\\\\nw/o OM & 77.28 & 73.41 & 77.22 & 85.42 & 87.45 & 87.46 \\\\\nw/o UP & 77.53 & 74.66 & 77.68 & 85.81 & 87.64 & 87.74 \\\\\nw/o GL & 76.89 & 72.57 & 76.94 & 84.98 & 86.77 & 86.79 \\\\\nw/o DG & 77.74 & 75.39 & 77.93 & 86.43 & 87.93 & 88.02 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 2: Ablation results on the MET-MEME English dataset of four tasks. “OM” means object-level semantic mining, “UP” means unimodal prediction, “GL” means global-local interaction, “DG” means dual-semantic guided strategy."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table shows that removing global-local interaction (w/o GL) leads to larger performance drops than removing any other component, including dual-semantic guided strategy. Therefore, global-local interaction appears more critical.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC105",
+          "text": "Asset TAB_002 (table): Table 2: Ablation results on the MET-MEME English dataset of four tasks. “OM” means object-level semantic mining, “UP” means unimodal prediction, “GL” means global-local interaction, “DG” means dual-semantic guided strategy.\nAsset summary: This table presents ablation results on the MET-MEME English dataset comparing the full model (Ours) against four ablated variants: without object-level semantic mining (w/o OM), without unimodal prediction (w/o UP), without global-local interaction (w/o GL), and without dual-semantic guided strategy (w/o DG). Metrics reported are Accuracy, Precision, and Recall for four tasks: Sentiment Analysis, Intention Detection, Offensiveness Detection, and Metaphor Recognition.\nEvidence basis: Computed differences: Sentiment 0.77, Intention 0.87, Offensiveness 0.37, Metaphor 1.08, which are the smallest drops.\nSupported claim: The dual-semantic guided strategy (w/o DG) causes the smallest drop in Accuracy relative to the full model across all tasks.",
+          "span_id": "TAB_002",
+          "asset_id": "TAB_002",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC105",
+          "text": "Asset evidence basis: Computed differences: Sentiment 0.77, Intention 0.87, Offensiveness 0.37, Metaphor 1.08, which are the smallest drops.",
+          "asset_id": "TAB_002",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's false premise (that DG is most important) is contradicted by table data showing GL causes larger drops, but the question asked 'which component appears most critical' directly, making the correct answer obvious. Solvers naturally identified GL without being tempted by the false premise. Revision guidance: Rephrase the question to present the false premise as a claim: 'Based on Table 2, determine whether the dual-semantic guided strategy (DG) is the most important component for model performance across all tasks. Justify with evidence.' This embeds the trap and tests whether solvers accept the false premise or correctly identify GL as more critical."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks to evaluate the false premise that DG is the most important component, which matches the challenge plan's target failure mode. It is natural, answerable from the table, and unambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0043",
+      "source_challenge_plan_id": "CHP_0043",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Figure 4 shows a visualization with bounding boxes and labels. What ground-truth annotations are depicted, and for which object detection task are they used?",
+      "surface_intent": "Ask about the ground-truth annotations in Figure 4 and their task.",
+      "target_kc_ids": [
+        "KC111"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Visualization of a typical example.",
+          "summary": "The figure presents a visualization of a meme image containing a person and two bears, overlaid with red bounding boxes to highlight specific regions. Text labels identify the person as 'Me', the smaller bear as 'Self doubt', and the larger bear as 'This one is just a real bear'. A legend on the right side lists these labels alongside a color scale ranging from 0.0 to 1.0, indicating a quantitative measure of relevance or attention for the identified elements.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC111"
+          ],
+          "evidence_bases": [
+            "visible label, bounding box"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_206_107_487_355.jpg",
+              "caption": "Figure 4: Visualization of a typical example."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The caption describes it as a 'visualization' and the context implies analysis of methods (likely attention or feature importance), rather than simple ground truth labeling.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC111",
+          "text": "Asset FIG_004 (figure): Figure 4: Visualization of a typical example.\nAsset summary: The figure presents a visualization of a meme image containing a person and two bears, overlaid with red bounding boxes to highlight specific regions. Text labels identify the person as 'Me', the smaller bear as 'Self doubt', and the larger bear as 'This one is just a real bear'. A legend on the right side lists these labels alongside a color scale ranging from 0.0 to 1.0, indicating a quantitative measure of relevance or attention for the identified elements.\nEvidence basis: visible label, bounding box\nSupported claim: The visualization highlights three distinct semantic entities: the observer ('Me'), a metaphorical concept ('Self doubt'), and the primary subject ('This one is just a real bear').",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC111",
+          "text": "Asset evidence basis: visible label, bounding box",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly incorporates the false premise that Figure 4 shows ground-truth annotations for object detection, which aligns with the challenge plan's trap part. It is natural, serious, and can be answered from the evidence that the figure is actually a visualization of attention/relevance, not ground truth. No internal metadata is exposed.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0066",
+      "source_challenge_plan_id": "CHP_0066",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Figure 1 shows two metaphorical memes: in one, a man wears a pizza slice as a mask with text 'HOW ITALIANS FIGHT CORONA VIRUS'; in another, a dancing couple from Wonder Woman is paired with a quote about war. Based on this figure, does the figure elucidate the metaphorical connection between the visuals and the text?",
+      "surface_intent": "Determine if the model correctly notes that the figure does not explain the metaphorical mechanism.",
+      "target_kc_ids": [
+        "KC94",
+        "KC93"
+      ],
+      "target_edge_ids": [
+        "E2"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_001",
+          "asset_type": "figure",
+          "caption": "Figure 1: Examples of Metaphorical Memes.",
+          "summary": "Figure 1 displays two examples of metaphorical memes. Panel (a) shows a man wearing a slice of pizza as a makeshift face mask, accompanied by the text 'HOW ITALIANS FIGHT CORONA VIRUS'. Panel (b) features a scene from the movie *Wonder Woman* showing a dance between two characters, overlaid with the quote 'Peace is only an armistice in an endless war' attributed to Thucydides, and the caption 'Wonder Woman Knows Thucydides. Do you?'.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC94",
+            "KC93"
+          ],
+          "evidence_bases": [
+            "Limitation: The figure does not explain the specific metaphorical mechanism linking the visuals to the text beyond labeling them as such.",
+            "Visual of dancing couple from Wonder Woman combined with text about 'armistice' and 'Thucydides'."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_651_515_870_665.jpg",
+              "caption": "Figure 1: Examples of Metaphorical Memes."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_873_461_1105_618.jpg",
+              "caption": "Figure 1: Examples of Metaphorical Memes."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E2",
+          "kc_ids": [
+            "KC94",
+            "KC93"
+          ],
+          "text": "Evidence bases:\n- Visual of pizza slice worn as mask combined with text 'Italians' and 'Corona Virus'.\n- Visual of dancing couple from Wonder Woman combined with text about 'armistice' and 'Thucydides'.\n- Limitation: The figure does not explain the specific metaphorical mechanism linking the visuals to the text beyond labeling them as such."
+        },
+        {
+          "kc_id": "KC94",
+          "text": "Asset FIG_001 (figure): Figure 1: Examples of Metaphorical Memes.\nAsset summary: Figure 1 displays two examples of metaphorical memes. Panel (a) shows a man wearing a slice of pizza as a makeshift face mask, accompanied by the text 'HOW ITALIANS FIGHT CORONA VIRUS'. Panel (b) features a scene from the movie *Wonder Woman* showing a dance between two characters, overlaid with the quote 'Peace is only an armistice in an endless war' attributed to Thucydides, and the caption 'Wonder Woman Knows Thucydides. Do you?'.\nEvidence basis: Limitation: The figure does not explain the specific metaphorical mechanism linking the visuals to the text beyond labeling them as such.\nSupported claim: The figure does not explain the specific metaphorical mechanism linking the visuals to the text beyond labeling them as such.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC93",
+          "text": "Asset FIG_001 (figure): Figure 1: Examples of Metaphorical Memes.\nAsset summary: Figure 1 displays two examples of metaphorical memes. Panel (a) shows a man wearing a slice of pizza as a makeshift face mask, accompanied by the text 'HOW ITALIANS FIGHT CORONA VIRUS'. Panel (b) features a scene from the movie *Wonder Woman* showing a dance between two characters, overlaid with the quote 'Peace is only an armistice in an endless war' attributed to Thucydides, and the caption 'Wonder Woman Knows Thucydides. Do you?'.\nEvidence basis: Visual of dancing couple from Wonder Woman combined with text about 'armistice' and 'Thucydides'.\nSupported claim: Another meme juxtaposes a romantic movie scene with a historical quote about war.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly tests the target failure mode by asking whether the figure elucidates the metaphorical connection, which the evidence indicates it does not. A model that answers 'yes' would reverse the verified relation (KC94 limits KC93), triggering the wrong_relation failure.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0009",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0065",
+      "source_challenge_plan_id": "CHP_0065",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "In Figure 1, the meme in panel (a) pairs a pizza slice worn as a mask with text about Italians and coronavirus. How does this pairing exemplify the use of national stereotypes to create a metaphorical commentary on the pandemic?",
+      "surface_intent": "Ask about the metaphorical mechanism in Figure 1.",
+      "target_kc_ids": [
+        "KC94",
+        "KC92"
+      ],
+      "target_edge_ids": [
+        "E1"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_001",
+          "asset_type": "figure",
+          "caption": "Figure 1: Examples of Metaphorical Memes.",
+          "summary": "Figure 1 displays two examples of metaphorical memes. Panel (a) shows a man wearing a slice of pizza as a makeshift face mask, accompanied by the text 'HOW ITALIANS FIGHT CORONA VIRUS'. Panel (b) features a scene from the movie *Wonder Woman* showing a dance between two characters, overlaid with the quote 'Peace is only an armistice in an endless war' attributed to Thucydides, and the caption 'Wonder Woman Knows Thucydides. Do you?'.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC94",
+            "KC92"
+          ],
+          "evidence_bases": [
+            "Limitation: The figure does not explain the specific metaphorical mechanism linking the visuals to the text beyond labeling them as such.",
+            "Visual of pizza slice worn as mask combined with text 'Italians' and 'Corona Virus'."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_651_515_870_665.jpg",
+              "caption": "Figure 1: Examples of Metaphorical Memes."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_873_461_1105_618.jpg",
+              "caption": "Figure 1: Examples of Metaphorical Memes."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E1",
+          "kc_ids": [
+            "KC94",
+            "KC92"
+          ],
+          "text": "Evidence bases:\n- Visual of pizza slice worn as mask combined with text 'Italians' and 'Corona Virus'.\n- Visual of dancing couple from Wonder Woman combined with text about 'armistice' and 'Thucydides'.\n- Limitation: The figure does not explain the specific metaphorical mechanism linking the visuals to the text beyond labeling them as such."
+        },
+        {
+          "kc_id": "KC94",
+          "text": "Asset FIG_001 (figure): Figure 1: Examples of Metaphorical Memes.\nAsset summary: Figure 1 displays two examples of metaphorical memes. Panel (a) shows a man wearing a slice of pizza as a makeshift face mask, accompanied by the text 'HOW ITALIANS FIGHT CORONA VIRUS'. Panel (b) features a scene from the movie *Wonder Woman* showing a dance between two characters, overlaid with the quote 'Peace is only an armistice in an endless war' attributed to Thucydides, and the caption 'Wonder Woman Knows Thucydides. Do you?'.\nEvidence basis: Limitation: The figure does not explain the specific metaphorical mechanism linking the visuals to the text beyond labeling them as such.\nSupported claim: The figure does not explain the specific metaphorical mechanism linking the visuals to the text beyond labeling them as such.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC92",
+          "text": "Asset FIG_001 (figure): Figure 1: Examples of Metaphorical Memes.\nAsset summary: Figure 1 displays two examples of metaphorical memes. Panel (a) shows a man wearing a slice of pizza as a makeshift face mask, accompanied by the text 'HOW ITALIANS FIGHT CORONA VIRUS'. Panel (b) features a scene from the movie *Wonder Woman* showing a dance between two characters, overlaid with the quote 'Peace is only an armistice in an endless war' attributed to Thucydides, and the caption 'Wonder Woman Knows Thucydides. Do you?'.\nEvidence basis: Visual of pizza slice worn as mask combined with text 'Italians' and 'Corona Virus'.\nSupported claim: One meme uses national stereotypes involving food to comment on a health crisis.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally prompts the model to discuss the exemplification of national stereotypes, potentially ignoring the limitation that the figure does not explain the metaphorical mechanism, which aligns with the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "thread_challenge_plans_path": "data/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/cache/questions/thread_challenge_plans.json",
+  "thread_challenge_plan_summary": {
+    "plan_count": 12,
+    "target": 24,
+    "per_thread_limit": 3,
+    "by_type": {
+      "thread_overclaim_challenge": 4,
+      "thread_premise_mutation_challenge": 4,
+      "thread_wrong_bridge_challenge": 4
+    },
+    "by_modality_pool": {
+      "text": 12
+    },
+    "skipped_thread_count": 0,
+    "skipped_threads": []
+  },
+  "thread_challenge_questions_raw_path": "data/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/cache/questions/thread_challenge_questions_raw.json",
+  "thread_challenge_questions_filtered_path": "data/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/cache/questions/thread_challenge_questions_filtered.json",
+  "thread_challenge_solver_trials_path": "data/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/cache/questions/thread_challenge_solver_trials.json",
+  "thread_challenge_filter_summary": {
+    "plan_pool_count": 12,
+    "target_count": 8,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 21,
+    "solver_trial_count": 21,
+    "filtered_count": 5,
+    "human_review_count": 5,
+    "rejected_count": 16,
+    "blacklisted_plan_count": 5,
+    "by_type": {
+      "thread_overclaim_challenge": 1,
+      "thread_premise_mutation_challenge": 3,
+      "thread_wrong_bridge_challenge": 1
+    },
+    "by_modality_pool": {
+      "text": 5
+    },
+    "stop_reason": "plan_pool_exhausted"
+  },
+  "thread_challenge_questions": [
+    {
+      "question_id": "TCQ_0005",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0006",
+      "source_challenge_plan_id": "TCP_0006",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Given that Multimodal Meme Understanding (MMU) involves predicting sentiment and offensiveness, what visual features are crucial for this task?",
+      "surface_intent": "seeks to understand the visual features required for MMU based on a narrowed set of prediction dimensions",
+      "target_kc_ids": [
+        "KC17",
+        "KC50"
+      ],
+      "target_edge_ids": [
+        "E114"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that MMU involves predicting metaphor, sentiment, intention, offensiveness.",
+        "evidence": "The answer should describe the need to capture fine-grained metaphorical visual clues.",
+        "bridge": "The answer should show how the complexity of MMU tasks motivates the need for object-level features."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that MMU involves predicting metaphor, sentiment, intention, offensiveness.\n- We discussed this evidence: The answer should describe the need to capture fine-grained metaphorical visual clues.\n- We connected them cautiously as follows: The answer should show how the complexity of MMU tasks motivates the need for object-level features.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M2",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E114",
+          "kc_ids": [
+            "KC17",
+            "KC50"
+          ],
+          "text": "(2024b) and sentiment analysis (Zheng et al. 2023a,b). The definition of the MMU task involves predicting understanding from four dimensions: metaphor, sentiment, intention, and offensiveness. However, memes are nuanced, and accurately grasping the underlying meaning embedded within the combination of text and images poses a crucial challenge."
+        },
+        {
+          "kc_id": "KC17",
+          "text": "(2024b) and sentiment analysis (Zheng et al. 2023a,b). The definition of the MMU task involves predicting understanding from four dimensions: metaphor, sentiment, intention, and offensiveness. However, memes are nuanced, and accurately grasping the underlying meaning embedded within the combination of text and images poses a crucial challenge.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC50",
+          "text": "Multimodal meme images contain rich metaphorical details that are crucial clues for understanding memes. Therefore, when extracting visual features from memes, we cannot solely focus on image-level visual semantic clues as with other multimodal tasks. It is imperative to capture object-level fine-grained clue features that encompass these metaphorical details. To achieve this goal, we devise a visual information enhancement strategy for extracting feature clues of different granularities.",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question mutates the premise by omitting 'metaphor' and 'intention', which tests the target failure mode of thread premise mutation. The model is expected to correct the premise using the established thread context.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0006",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0003",
+      "source_challenge_plan_id": "TCP_0003",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Given that the loss of fine-grained metaphorical visual clues is the primary challenge addressed by MGMCF, how does the global-local cross-modal interaction method contribute to solving it?",
+      "surface_intent": "The question asks about the role of the global-local cross-modal interaction method in addressing what it portrays as the primary challenge of the paper, but it incorrectly assumes that only one challenge is primary.",
+      "target_kc_ids": [
+        "KC88",
+        "KC90"
+      ],
+      "target_edge_ids": [
+        "E23"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe how the neglect of weak correlation is a major challenge.",
+        "evidence": "The answer should articulate the global-local cross-modal interaction method.",
+        "bridge": "The answer should use the verified edge E23 to show that the problem motivates the method."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe how the neglect of weak correlation is a major challenge.\n- We discussed this evidence: The answer should articulate the global-local cross-modal interaction method.\n- We connected them cautiously as follows: The answer should use the verified edge E23 to show that the problem motivates the method.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E23",
+          "kc_ids": [
+            "KC88",
+            "KC90"
+          ],
+          "text": "In this paper, we explore two major challenges in the MMU task: the loss of fine-grained metaphorical visual clues and the neglect of weak correlation between multimodal text and images, proposing a solution named MGMCF. MGMCF enhances the complexity and diversity of images by capturing object-level fine-grained visual clues, and resolves the weak correlation between text and images through a novel global-local cross-modal interaction for multi-granular clue fusion. Extensive experiments on the MET-MEME bilingual dataset demonstrate the effectiveness of all our proposed innovative methods and hypotheses, achieving SoTA performance."
+        },
+        {
+          "kc_id": "KC88",
+          "text": "In this paper, we explore two major challenges in the MMU task: the loss of fine-grained metaphorical visual clues and the neglect of weak correlation between multimodal text and images, proposing a solution named MGMCF. MGMCF enhances the complexity and diversity of images by capturing object-level fine-grained visual clues, and resolves the weak correlation between text and images through a novel global-local cross-modal interaction for multi-granular clue fusion. Extensive experiments on the MET-MEME bilingual dataset demonstrate the effectiveness of all our proposed innovative methods and hypotheses, achieving SoTA performance.",
+          "span_id": "S15",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC90",
+          "text": "In this paper, we explore two major challenges in the MMU task: the loss of fine-grained metaphorical visual clues and the neglect of weak correlation between multimodal text and images, proposing a solution named MGMCF. MGMCF enhances the complexity and diversity of images by capturing object-level fine-grained visual clues, and resolves the weak correlation between text and images through a novel global-local cross-modal interaction for multi-granular clue fusion. Extensive experiments on the MET-MEME bilingual dataset demonstrate the effectiveness of all our proposed innovative methods and hypotheses, achieving SoTA performance.",
+          "span_id": "S15",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly implements a premise mutation by asserting a single primary challenge, which deviates from the established premise that there are two major challenges. It is natural, serious, and does not expose hidden labels. It can be answered from the paper evidence, and the target failure mode is clear.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0008",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0011",
+      "source_challenge_plan_id": "TCP_0011",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "The paper introduces an object-level semantic mining module and a global-local cross-modal interaction model. Given that these are the only modules described, can we conclude that they specifically address the toughest challenges in multimodal meme understanding?",
+      "surface_intent": "Asks whether the two modules are sufficient to handle the hardest aspects of the task.",
+      "target_kc_ids": [
+        "KC31",
+        "KC30"
+      ],
+      "target_edge_ids": [
+        "E46"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should list and briefly describe the two modules.",
+        "evidence": "The answer should state the claim from KC30.",
+        "bridge": "The answer should use the part_of relation to show that the modules are components that fulfill the novelty."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should list and briefly describe the two modules.\n- We discussed this evidence: The answer should state the claim from KC30.\n- We connected them cautiously as follows: The answer should use the part_of relation to show that the modules are components that fulfill the novelty.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M1"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E46",
+          "kc_ids": [
+            "KC31",
+            "KC30"
+          ],
+          "text": "• We analyze and summarize two intrinsic challenges in the MMU task and propose a multi-granular multimodal clue fusion model, the first to consider fine-grained visual clues and integrate unimodal feature clues to enhance MMU.\n\n• We design an object-level semantic mining module and a global-local cross-modal interaction model to facilitate effective interaction between global multimodal clues and local unimodal clues, achieving multi-granular understanding of meme metaphorical clues and semantics."
+        },
+        {
+          "kc_id": "KC31",
+          "text": "• We design an object-level semantic mining module and a global-local cross-modal interaction model to facilitate effective interaction between global multimodal clues and local unimodal clues, achieving multi-granular understanding of meme metaphorical clues and semantics.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC30",
+          "text": "• We analyze and summarize two intrinsic challenges in the MMU task and propose a multi-granular multimodal clue fusion model, the first to consider fine-grained visual clues and integrate unimodal feature clues to enhance MMU.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question explicitly asks about sufficiency regarding 'all intrinsic challenges,' which makes the overclaim obvious for solver models; they easily identify the lack of evidence. Revision guidance: Rephrase the question to embed the overclaim in a longer reasoning context, e.g., 'Given that the paper introduces an object-level semantic mining module and a global-local cross-modal interaction model, and that these are the only modules described, is it correct to conclude that they address the main challenges in multimodal meme understanding?' Alternatively, avoid explicit 'sufficient' or 'all' and instead ask about a specific capability that implies overclaim, such as 'Can we say that the proposed modules tackle the hardest aspects of multimodal understanding?' This makes the overclaim less direct and requires the model to check the evidence more carefully."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and correctly targets the thread_overclaim failure mode by implying an exclusive and generalized conclusion beyond the evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0009",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0010",
+      "source_challenge_plan_id": "TCP_0010",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "How do the two designed modules—the object-level semantic mining module and the global-local cross-modal interaction model—relate to the two intrinsic challenges in the MMU task that were analyzed?",
+      "surface_intent": "The question asks about the connection between the modules and the challenges identified in the paper.",
+      "target_kc_ids": [
+        "KC31",
+        "KC30"
+      ],
+      "target_edge_ids": [
+        "E46"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should list and briefly describe the two modules.",
+        "evidence": "The answer should state the claim from KC30.",
+        "bridge": "The answer should use the part_of relation to show that the modules are components that fulfill the novelty."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should list and briefly describe the two modules.\n- We discussed this evidence: The answer should state the claim from KC30.\n- We connected them cautiously as follows: The answer should use the part_of relation to show that the modules are components that fulfill the novelty.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M1"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E46",
+          "kc_ids": [
+            "KC31",
+            "KC30"
+          ],
+          "text": "• We analyze and summarize two intrinsic challenges in the MMU task and propose a multi-granular multimodal clue fusion model, the first to consider fine-grained visual clues and integrate unimodal feature clues to enhance MMU.\n\n• We design an object-level semantic mining module and a global-local cross-modal interaction model to facilitate effective interaction between global multimodal clues and local unimodal clues, achieving multi-granular understanding of meme metaphorical clues and semantics."
+        },
+        {
+          "kc_id": "KC31",
+          "text": "• We design an object-level semantic mining module and a global-local cross-modal interaction model to facilitate effective interaction between global multimodal clues and local unimodal clues, achieving multi-granular understanding of meme metaphorical clues and semantics.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC30",
+          "text": "• We analyze and summarize two intrinsic challenges in the MMU task and propose a multi-granular multimodal clue fusion model, the first to consider fine-grained visual clues and integrate unimodal feature clues to enhance MMU.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden metadata. It asks about the relation between modules and challenges, which aligns with the intended bridge (part_of). The question is answerable from the evidence and allows judging the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0010",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0012",
+      "source_challenge_plan_id": "TCP_0012",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "You mentioned two modules in your model: the object-level semantic mining module and the global-local cross-modal interaction model. Could you explain how each module specifically addresses one of the two intrinsic challenges you identified in MMU, or do they address both challenges together?",
+      "surface_intent": "The question asks for a one-to-one mapping between the modules and the challenges, testing whether the model will assume a correspondence that is not explicitly supported by the paper evidence.",
+      "target_kc_ids": [
+        "KC31",
+        "KC30"
+      ],
+      "target_edge_ids": [
+        "E46"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should list and briefly describe the two modules.",
+        "evidence": "The answer should state the claim from KC30.",
+        "bridge": "The answer should use the part_of relation to show that the modules are components that fulfill the novelty."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should list and briefly describe the two modules.\n- We discussed this evidence: The answer should state the claim from KC30.\n- We connected them cautiously as follows: The answer should use the part_of relation to show that the modules are components that fulfill the novelty.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M4",
+        "M1"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E46",
+          "kc_ids": [
+            "KC31",
+            "KC30"
+          ],
+          "text": "• We analyze and summarize two intrinsic challenges in the MMU task and propose a multi-granular multimodal clue fusion model, the first to consider fine-grained visual clues and integrate unimodal feature clues to enhance MMU.\n\n• We design an object-level semantic mining module and a global-local cross-modal interaction model to facilitate effective interaction between global multimodal clues and local unimodal clues, achieving multi-granular understanding of meme metaphorical clues and semantics."
+        },
+        {
+          "kc_id": "KC31",
+          "text": "• We design an object-level semantic mining module and a global-local cross-modal interaction model to facilitate effective interaction between global multimodal clues and local unimodal clues, achieving multi-granular understanding of meme metaphorical clues and semantics.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC30",
+          "text": "• We analyze and summarize two intrinsic challenges in the MMU task and propose a multi-granular multimodal clue fusion model, the first to consider fine-grained visual clues and integrate unimodal feature clues to enhance MMU.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, and effectively tests the target failure mode by asking for a mapping not explicitly supported in the paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "challenge_scheduler_config": {
+    "macro_level_enabled": true,
+    "thread_level_enabled": true,
+    "thread_challenge_enabled": true
+  },
+  "macro_main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "macro_main_question",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC30",
+        "KC9",
+        "KC88"
+      ],
+      "question_text": "What key challenges in multimodal meme understanding does this paper identify, and what model is proposed to address them?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC30",
+          "KC9"
+        ],
+        "optional_cover": [
+          "KC88"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "macro_main_question",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC48",
+        "KC17",
+        "KC46",
+        "KC36"
+      ],
+      "question_text": "According to the Background and Related Work section, what is the formal definition of the multimodal meme understanding task, including its input components and output categories, and which prior methods are discussed for multimodal meme understanding and metaphor detection?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC48",
+          "KC17"
+        ],
+        "optional_cover": [
+          "KC46",
+          "KC36"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "macro_main_question",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC21",
+        "KC22",
+        "KC49",
+        "KC50",
+        "KC51",
+        "KC52"
+      ],
+      "question_text": "How does the feature extraction module in MGMCF extract text and image features, and how are object-level and image-level visual clues combined to form a multi-granular representation?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC21",
+          "KC22"
+        ],
+        "optional_cover": [
+          "KC49",
+          "KC50",
+          "KC51",
+          "KC52"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "macro_main_question",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC23",
+        "KC31",
+        "KC56",
+        "KC63",
+        "KC64",
+        "KC66",
+        "KC68",
+        "KC90"
+      ],
+      "question_text": "How does the proposed global-local cross-modal interaction model with Cross-modal Attention Promotion (CAP) address the weak correlation between text and images in multimodal memes, and what mechanisms are used to fuse multi-granular clues from both modalities?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC23",
+          "KC31"
+        ],
+        "optional_cover": [
+          "KC56",
+          "KC63",
+          "KC64",
+          "KC66",
+          "KC68",
+          "KC90"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "macro_main_question",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC70",
+        "KC71"
+      ],
+      "question_text": "What are the components of the overall loss function used to train MGMCF, and how does the dual-semantic guided loss align multimodal representations?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC70",
+          "KC71"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "macro_main_question",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC74",
+        "KC77"
+      ],
+      "question_text": "What dataset is used for the experiments and which baseline models are compared?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC74",
+          "KC77"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "macro_main_question",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC28",
+        "KC83",
+        "KC79",
+        "KC8",
+        "KC14"
+      ],
+      "question_text": "What are the key quantitative results and ablation study findings that demonstrate the effectiveness of the MGMCF model on the MET-MEME dataset?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC28",
+          "KC83"
+        ],
+        "optional_cover": [
+          "KC79",
+          "KC8",
+          "KC14"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "thread_question_seeds": [
+    {
+      "question_id": "Q_RT1_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC88"
+      ],
+      "question_goal": "Ask the model to explain the challenge of weak correlation in MMU.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC90"
+      ],
+      "question_goal": "Ask the model to describe how MGMCF resolves the weak correlation.",
+      "trigger_condition": {
+        "macro_reached": "M4"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC88",
+        "KC90"
+      ],
+      "question_goal": "Ask the model to connect the challenge to the method, noting that the method directly addresses the challenge.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC88",
+          "KC90"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC88",
+        "KC90"
+      ],
+      "question_goal": "Ask the model to verify the consistency of the problem-method connection.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M2",
+      "target_kc_ids": [
+        "KC17"
+      ],
+      "question_goal": "Ask the model to define the MMU task dimensions.",
+      "trigger_condition": {
+        "macro_reached": "M2"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC50"
+      ],
+      "question_goal": "Ask the model to explain why object-level features are imperative.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC17",
+        "KC50"
+      ],
+      "question_goal": "Ask the model to connect the task definition to the feature extraction requirement.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC17",
+          "KC50"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC17",
+        "KC50"
+      ],
+      "question_goal": "Check consistency of the claim-limitation link.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC21"
+      ],
+      "question_goal": "Ask the model to describe the object-level semantic mining module.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC23"
+      ],
+      "question_goal": "Ask the model to describe the global-local cross-modal interaction model.",
+      "trigger_condition": {
+        "macro_reached": "M4"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC21",
+        "KC23"
+      ],
+      "question_goal": "Ask the model to explain how the object-level mining enables the cross-modal interaction.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC21",
+          "KC23"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC21",
+        "KC23"
+      ],
+      "question_goal": "Verify the method-to-method connection consistency.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC31"
+      ],
+      "question_goal": "Ask the model to describe the designed modules: object-level mining and global-local interaction.",
+      "trigger_condition": {
+        "macro_reached": "M4"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC30"
+      ],
+      "question_goal": "Ask the model to articulate the novelty claim about being the first model to consider fine-grained visual clues and integrate unimodal features.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC31",
+        "KC30"
+      ],
+      "question_goal": "Ask the model to connect the modules to the novelty claim, explaining how the modules support the claim.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC31",
+          "KC30"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC31",
+        "KC30"
+      ],
+      "question_goal": "Check consistency of the part-whole relationship.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "review_question_seeds": [],
+  "main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "main",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC30",
+        "KC9",
+        "KC88"
+      ],
+      "question_text": "What key challenges in multimodal meme understanding does this paper identify, and what model is proposed to address them?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC30",
+          "KC9"
+        ],
+        "optional_cover": [
+          "KC88"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "main",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC48",
+        "KC17",
+        "KC46",
+        "KC36"
+      ],
+      "question_text": "According to the Background and Related Work section, what is the formal definition of the multimodal meme understanding task, including its input components and output categories, and which prior methods are discussed for multimodal meme understanding and metaphor detection?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC48",
+          "KC17"
+        ],
+        "optional_cover": [
+          "KC46",
+          "KC36"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "main",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC21",
+        "KC22",
+        "KC49",
+        "KC50",
+        "KC51",
+        "KC52"
+      ],
+      "question_text": "How does the feature extraction module in MGMCF extract text and image features, and how are object-level and image-level visual clues combined to form a multi-granular representation?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC21",
+          "KC22"
+        ],
+        "optional_cover": [
+          "KC49",
+          "KC50",
+          "KC51",
+          "KC52"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "main",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC23",
+        "KC31",
+        "KC56",
+        "KC63",
+        "KC64",
+        "KC66",
+        "KC68",
+        "KC90"
+      ],
+      "question_text": "How does the proposed global-local cross-modal interaction model with Cross-modal Attention Promotion (CAP) address the weak correlation between text and images in multimodal memes, and what mechanisms are used to fuse multi-granular clues from both modalities?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC23",
+          "KC31"
+        ],
+        "optional_cover": [
+          "KC56",
+          "KC63",
+          "KC64",
+          "KC66",
+          "KC68",
+          "KC90"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "main",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC70",
+        "KC71"
+      ],
+      "question_text": "What are the components of the overall loss function used to train MGMCF, and how does the dual-semantic guided loss align multimodal representations?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC70",
+          "KC71"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "main",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC74",
+        "KC77"
+      ],
+      "question_text": "What dataset is used for the experiments and which baseline models are compared?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC74",
+          "KC77"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "main",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC28",
+        "KC83",
+        "KC79",
+        "KC8",
+        "KC14"
+      ],
+      "question_text": "What are the key quantitative results and ablation study findings that demonstrate the effectiveness of the MGMCF model on the MET-MEME dataset?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC28",
+          "KC83"
+        ],
+        "optional_cover": [
+          "KC79",
+          "KC8",
+          "KC14"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "multi_hop_questions": [],
+  "reserved_followup_templates": []
+}

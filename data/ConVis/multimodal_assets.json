@@ -1,0 +1,1354 @@
+{
+  "paper_id": "ConVis",
+  "schema_version": "v3_latex_table_assets",
+  "assets": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S3",
+      "section_title": "Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem Motivation and Central Claim",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S3_0001",
+      "source_block_ids": [
+        "P001_B0011",
+        "P001_B0012"
+      ],
+      "media_block_ids": [
+        "P001_B0011"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_641_436_1114_714.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_001",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_641_436_1114_714.jpg",
+          "caption": "Figure 1: The text-to-image model visualizes hallucinations (e.g., book') in the semantically reconstructed images based on the hallucinated caption, exhibiting differences (e.g., missing clock') from the original image."
+        }
+      ],
+      "caption": "Figure 1: The text-to-image model visualizes hallucinations (e.g., book') in the semantically reconstructed images based on the hallucinated caption, exhibiting differences (e.g., missing clock') from the original image.",
+      "caption_kind": "figure",
+      "caption_number": "1",
+      "nearby_context": "Image of a text-to-image model output showing hallucinations. Caption describes hallucinated reconstruction.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P001_B0011",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 1: The text-to-image model visualizes hallucinations (e.g., book') in the semantically reconstructed images based on the hallucinated caption, exhibiting differences (e.g., missing clock') from the original image.",
+        "caption_kind": "figure",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P001_B0011",
+          "P001_B0012"
+        ],
+        "media_block_ids": [
+          "P001_B0011"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P001_B0011"
+        ],
+        "description_from_html": "Image of a text-to-image model output showing hallucinations. Caption describes hallucinated reconstruction.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "qualitative_example",
+      "section_id": "S3",
+      "section_title": "Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem Motivation and Central Claim",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S3_0002",
+      "source_block_ids": [
+        "P002_B0001",
+        "P002_B0002"
+      ],
+      "media_block_ids": [
+        "P002_B0001"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_113_112_584_354.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_002",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_113_112_584_354.jpg",
+          "caption": "Figure 2: The original and reconstructed image generate the contrastive logit distribution for the hallucinated tokens (e.g., ‘book’). The reconstructed image tends to amplify the logits of tokens corresponding to the visualized hallucination."
+        }
+      ],
+      "caption": "Figure 2: The original and reconstructed image generate the contrastive logit distribution for the hallucinated tokens (e.g., ‘book’). The reconstructed image tends to amplify the logits of tokens corresponding to the visualized hallucination.",
+      "caption_kind": "figure",
+      "caption_number": "2",
+      "nearby_context": "Image from path imgs/img_in_image_box_113_112_584_354.jpg with caption describing contrastive logit distribution for hallucinated tokens.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P002_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 2: The original and reconstructed image generate the contrastive logit distribution for the hallucinated tokens (e.g., ‘book’). The reconstructed image tends to amplify the logits of tokens corresponding to the visualized hallucination.",
+        "caption_kind": "figure",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P002_B0001",
+          "P002_B0002"
+        ],
+        "media_block_ids": [
+          "P002_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P002_B0001"
+        ],
+        "description_from_html": "Image from path imgs/img_in_image_box_113_112_584_354.jpg with caption describing contrastive logit distribution for hallucinated tokens.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S6",
+      "section_title": "Preliminaries",
+      "macro_id": "M3",
+      "macro_candidates": [
+        {
+          "macro_id": "M3",
+          "title": "Preliminaries: MLLM Decoding and T2I Generation",
+          "role": "background",
+          "order": 3
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S6_0003",
+      "source_block_ids": [
+        "P003_B0001",
+        "P003_B0002"
+      ],
+      "media_block_ids": [
+        "P003_B0001"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_110_113_1110_358.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_110_113_1110_358.jpg",
+          "caption": "The original and generated image produce the contrastive distribution for the hallucinated tokens (e.g., ‘book’). The generated image tends to amplify the logits of tokens corresponding to the visualized hallucination."
+        }
+      ],
+      "caption": "The original and generated image produce the contrastive distribution for the hallucinated tokens (e.g., ‘book’). The generated image tends to amplify the logits of tokens corresponding to the visualized hallucination.",
+      "caption_kind": "figure",
+      "caption_number": "3",
+      "nearby_context": "Figure showing original and generated image for contrastive distribution of hallucinated tokens.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P003_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "The original and generated image produce the contrastive distribution for the hallucinated tokens (e.g., ‘book’). The generated image tends to amplify the logits of tokens corresponding to the visualized hallucination.",
+        "caption_kind": "figure",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P003_B0001",
+          "P003_B0002"
+        ],
+        "media_block_ids": [
+          "P003_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P003_B0001"
+        ],
+        "description_from_html": "Figure showing original and generated image for contrastive distribution of hallucinated tokens.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S9",
+      "section_title": "Experiments",
+      "macro_id": "M5",
+      "macro_candidates": [
+        {
+          "macro_id": "M5",
+          "title": "Experimental Setup",
+          "role": "experiment_setup",
+          "order": 5
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S9_0004",
+      "source_block_ids": [
+        "P004_B0001",
+        "P004_B0002"
+      ],
+      "media_block_ids": [
+        "P004_B0001"
+      ],
+      "caption": "Table 1: Evaluation results on the CHAIR benchmark using the MSCOCO dataset (val2014 split). We conduct experiments with three different sets of 500 images, each selected by random seeds. The reported value is the mean of the results from the three different seeds, with the $ \\pm $ symbol representing the standard deviation.",
+      "caption_kind": "table",
+      "caption_number": "1",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Method</td><td colspan=\"2\">LLaVA-1.5</td><td colspan=\"2\">mPLUG-Owl2</td><td colspan=\"2\">MiniGPT-4</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>$ \\text{CHAIR}_{S}\\downarrow $</td><td style='text-align: center; word-wrap: break-word;'>$ \\text{CHAIR}_{I}\\downarrow $</td><td style='text-align: center; word-wrap: break-word;'>$ \\text{CHAIR}_{S}\\downarrow $</td><td style='text-align: center; word-wrap: break-word;'>$ \\text{CHAIR}_{I}\\downarrow $</td><td style='text-align: center; word-wrap: break-word;'>$ \\text{CHAIR}_{S}\\downarrow $</td><td style='text-align: center; word-wrap: break-word;'>$ \\text{CHAIR}_{I}\\downarrow $</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Greedy Search</td><td style='text-align: center; word-wrap: break-word;'>22.4  $ \\pm $ 1.11</td><td style='text-align: center; word-wrap: break-word;'>7.4  $ \\pm $ 0.27</td><td style='text-align: center; word-wrap: break-word;'>22.2  $ \\pm $ 1.10</td><td style='text-align: center; word-wrap: break-word;'>7.3  $ \\pm $ 0.24</td><td style='text-align: center; word-wrap: break-word;'>34.0  $ \\pm $ 1.11</td><td style='text-align: center; word-wrap: break-word;'>13.8  $ \\pm $ 0.85</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Nucleus Sampling</td><td style='text-align: center; word-wrap: break-word;'>26.0  $ \\pm $ 1.93</td><td style='text-align: center; word-wrap: break-word;'>9.5  $ \\pm $ 0.76</td><td style='text-align: center; word-wrap: break-word;'>25.2  $ \\pm $ 1.59</td><td style='text-align: center; word-wrap: break-word;'>9.3  $ \\pm $ 0.34</td><td style='text-align: center; word-wrap: break-word;'>30.1  $ \\pm $ 1.45</td><td style='text-align: center; word-wrap: break-word;'>14.2  $ \\pm $ 0.90</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Beam Search</td><td style='text-align: center; word-wrap: break-word;'>19.5  $ \\pm $ 1.42</td><td style='text-align: center; word-wrap: break-word;'>6.4  $ \\pm $ 0.09</td><td style='text-align: center; word-wrap: break-word;'>18.3  $ \\pm $ 0.42</td><td style='text-align: center; word-wrap: break-word;'>6.0  $ \\pm $ 0.34</td><td style='text-align: center; word-wrap: break-word;'>31.1  $ \\pm $ 1.03</td><td style='text-align: center; word-wrap: break-word;'>12.4  $ \\pm $ 0.59</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>VCD</td><td style='text-align: center; word-wrap: break-word;'>23.7  $ \\pm $ 1.90</td><td style='text-align: center; word-wrap: break-word;'>8.2  $ \\pm $ 0.80</td><td style='text-align: center; word-wrap: break-word;'>25.7  $ \\pm $ 1.30</td><td style='text-align: center; word-wrap: break-word;'>9.0  $ \\pm $ 0.28</td><td style='text-align: center; word-wrap: break-word;'>31.6  $ \\pm $ 1.83</td><td style='text-align: center; word-wrap: break-word;'>13.8  $ \\pm $ 0.83</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>OPERA</td><td style='text-align: center; word-wrap: break-word;'>18.5  $ \\pm $ 0.90</td><td style='text-align: center; word-wrap: break-word;'>6.6  $ \\pm $ 0.23</td><td style='text-align: center; word-wrap: break-word;'>18.2  $ \\pm $ 0.40</td><td style='text-align: center; word-wrap: break-word;'>6.2  $ \\pm $ 0.18</td><td style='text-align: center; word-wrap: break-word;'>30.6  $ \\pm $ 1.06</td><td style='text-align: center; word-wrap: break-word;'>12.5  $ \\pm $ 0.91</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>HALC</td><td style='text-align: center; word-wrap: break-word;'>23.7  $ \\pm $ 2.66</td><td style='text-align: center; word-wrap: break-word;'>9.1  $ \\pm $ 0.41</td><td style='text-align: center; word-wrap: break-word;'>24.3  $ \\pm $ 1.22</td><td style='text-align: center; word-wrap: break-word;'>9.4  $ \\pm $ 0.19</td><td style='text-align: center; word-wrap: break-word;'>24.2  $ \\pm $ 1.91</td><td style='text-align: center; word-wrap: break-word;'>10.8  $ \\pm $ 0.53</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Ours</td><td style='text-align: center; word-wrap: break-word;'>18.4  $ \\pm $ 0.53</td><td style='text-align: center; word-wrap: break-word;'>6.4  $ \\pm $ 0.37</td><td style='text-align: center; word-wrap: break-word;'>17.6  $ \\pm $ 3.54</td><td style='text-align: center; word-wrap: break-word;'>6.0  $ \\pm $ 0.89</td><td style='text-align: center; word-wrap: break-word;'>23.5  $ \\pm $ 0.31</td><td style='text-align: center; word-wrap: break-word;'>10.0  $ \\pm $ 0.69</td></tr></table>",
+      "normalized_markdown": "| Method | LLaVA-1.5 | LLaVA-1.5 | mPLUG-Owl2 | mPLUG-Owl2 | MiniGPT-4 | MiniGPT-4 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Method | $ \\text{CHAIR}_{S}\\downarrow $ | $ \\text{CHAIR}_{I}\\downarrow $ | $ \\text{CHAIR}_{S}\\downarrow $ | $ \\text{CHAIR}_{I}\\downarrow $ | $ \\text{CHAIR}_{S}\\downarrow $ | $ \\text{CHAIR}_{I}\\downarrow $ |\n| Greedy Search | 22.4 $ \\pm $ 1.11 | 7.4 $ \\pm $ 0.27 | 22.2 $ \\pm $ 1.10 | 7.3 $ \\pm $ 0.24 | 34.0 $ \\pm $ 1.11 | 13.8 $ \\pm $ 0.85 |\n| Nucleus Sampling | 26.0 $ \\pm $ 1.93 | 9.5 $ \\pm $ 0.76 | 25.2 $ \\pm $ 1.59 | 9.3 $ \\pm $ 0.34 | 30.1 $ \\pm $ 1.45 | 14.2 $ \\pm $ 0.90 |\n| Beam Search | 19.5 $ \\pm $ 1.42 | 6.4 $ \\pm $ 0.09 | 18.3 $ \\pm $ 0.42 | 6.0 $ \\pm $ 0.34 | 31.1 $ \\pm $ 1.03 | 12.4 $ \\pm $ 0.59 |\n| VCD | 23.7 $ \\pm $ 1.90 | 8.2 $ \\pm $ 0.80 | 25.7 $ \\pm $ 1.30 | 9.0 $ \\pm $ 0.28 | 31.6 $ \\pm $ 1.83 | 13.8 $ \\pm $ 0.83 |\n| OPERA | 18.5 $ \\pm $ 0.90 | 6.6 $ \\pm $ 0.23 | 18.2 $ \\pm $ 0.40 | 6.2 $ \\pm $ 0.18 | 30.6 $ \\pm $ 1.06 | 12.5 $ \\pm $ 0.91 |\n| HALC | 23.7 $ \\pm $ 2.66 | 9.1 $ \\pm $ 0.41 | 24.3 $ \\pm $ 1.22 | 9.4 $ \\pm $ 0.19 | 24.2 $ \\pm $ 1.91 | 10.8 $ \\pm $ 0.53 |\n| Ours | 18.4 $ \\pm $ 0.53 | 6.4 $ \\pm $ 0.37 | 17.6 $ \\pm $ 3.54 | 6.0 $ \\pm $ 0.89 | 23.5 $ \\pm $ 0.31 | 10.0 $ \\pm $ 0.69 |",
+      "normalized_latex": "\\begin{tabular}{lllllll}\n\\hline\nMethod & LLaVA-1.5 & LLaVA-1.5 & mPLUG-Owl2 & mPLUG-Owl2 & MiniGPT-4 & MiniGPT-4 \\\\\n\\hline\nMethod & \\$ \\textbackslash{}text\\{CHAIR\\}\\_\\{S\\}\\textbackslash{}downarrow \\$ & \\$ \\textbackslash{}text\\{CHAIR\\}\\_\\{I\\}\\textbackslash{}downarrow \\$ & \\$ \\textbackslash{}text\\{CHAIR\\}\\_\\{S\\}\\textbackslash{}downarrow \\$ & \\$ \\textbackslash{}text\\{CHAIR\\}\\_\\{I\\}\\textbackslash{}downarrow \\$ & \\$ \\textbackslash{}text\\{CHAIR\\}\\_\\{S\\}\\textbackslash{}downarrow \\$ & \\$ \\textbackslash{}text\\{CHAIR\\}\\_\\{I\\}\\textbackslash{}downarrow \\$ \\\\\nGreedy Search & 22.4 \\$ \\textbackslash{}pm \\$ 1.11 & 7.4 \\$ \\textbackslash{}pm \\$ 0.27 & 22.2 \\$ \\textbackslash{}pm \\$ 1.10 & 7.3 \\$ \\textbackslash{}pm \\$ 0.24 & 34.0 \\$ \\textbackslash{}pm \\$ 1.11 & 13.8 \\$ \\textbackslash{}pm \\$ 0.85 \\\\\nNucleus Sampling & 26.0 \\$ \\textbackslash{}pm \\$ 1.93 & 9.5 \\$ \\textbackslash{}pm \\$ 0.76 & 25.2 \\$ \\textbackslash{}pm \\$ 1.59 & 9.3 \\$ \\textbackslash{}pm \\$ 0.34 & 30.1 \\$ \\textbackslash{}pm \\$ 1.45 & 14.2 \\$ \\textbackslash{}pm \\$ 0.90 \\\\\nBeam Search & 19.5 \\$ \\textbackslash{}pm \\$ 1.42 & 6.4 \\$ \\textbackslash{}pm \\$ 0.09 & 18.3 \\$ \\textbackslash{}pm \\$ 0.42 & 6.0 \\$ \\textbackslash{}pm \\$ 0.34 & 31.1 \\$ \\textbackslash{}pm \\$ 1.03 & 12.4 \\$ \\textbackslash{}pm \\$ 0.59 \\\\\nVCD & 23.7 \\$ \\textbackslash{}pm \\$ 1.90 & 8.2 \\$ \\textbackslash{}pm \\$ 0.80 & 25.7 \\$ \\textbackslash{}pm \\$ 1.30 & 9.0 \\$ \\textbackslash{}pm \\$ 0.28 & 31.6 \\$ \\textbackslash{}pm \\$ 1.83 & 13.8 \\$ \\textbackslash{}pm \\$ 0.83 \\\\\nOPERA & 18.5 \\$ \\textbackslash{}pm \\$ 0.90 & 6.6 \\$ \\textbackslash{}pm \\$ 0.23 & 18.2 \\$ \\textbackslash{}pm \\$ 0.40 & 6.2 \\$ \\textbackslash{}pm \\$ 0.18 & 30.6 \\$ \\textbackslash{}pm \\$ 1.06 & 12.5 \\$ \\textbackslash{}pm \\$ 0.91 \\\\\nHALC & 23.7 \\$ \\textbackslash{}pm \\$ 2.66 & 9.1 \\$ \\textbackslash{}pm \\$ 0.41 & 24.3 \\$ \\textbackslash{}pm \\$ 1.22 & 9.4 \\$ \\textbackslash{}pm \\$ 0.19 & 24.2 \\$ \\textbackslash{}pm \\$ 1.91 & 10.8 \\$ \\textbackslash{}pm \\$ 0.53 \\\\\nOurs & 18.4 \\$ \\textbackslash{}pm \\$ 0.53 & 6.4 \\$ \\textbackslash{}pm \\$ 0.37 & 17.6 \\$ \\textbackslash{}pm \\$ 3.54 & 6.0 \\$ \\textbackslash{}pm \\$ 0.89 & 23.5 \\$ \\textbackslash{}pm \\$ 0.31 & 10.0 \\$ \\textbackslash{}pm \\$ 0.69 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Method",
+          "LLaVA-1.5",
+          "LLaVA-1.5",
+          "mPLUG-Owl2",
+          "mPLUG-Owl2",
+          "MiniGPT-4",
+          "MiniGPT-4"
+        ],
+        [
+          "Method",
+          "$ \\text{CHAIR}_{S}\\downarrow $",
+          "$ \\text{CHAIR}_{I}\\downarrow $",
+          "$ \\text{CHAIR}_{S}\\downarrow $",
+          "$ \\text{CHAIR}_{I}\\downarrow $",
+          "$ \\text{CHAIR}_{S}\\downarrow $",
+          "$ \\text{CHAIR}_{I}\\downarrow $"
+        ],
+        [
+          "Greedy Search",
+          "22.4 $ \\pm $ 1.11",
+          "7.4 $ \\pm $ 0.27",
+          "22.2 $ \\pm $ 1.10",
+          "7.3 $ \\pm $ 0.24",
+          "34.0 $ \\pm $ 1.11",
+          "13.8 $ \\pm $ 0.85"
+        ],
+        [
+          "Nucleus Sampling",
+          "26.0 $ \\pm $ 1.93",
+          "9.5 $ \\pm $ 0.76",
+          "25.2 $ \\pm $ 1.59",
+          "9.3 $ \\pm $ 0.34",
+          "30.1 $ \\pm $ 1.45",
+          "14.2 $ \\pm $ 0.90"
+        ],
+        [
+          "Beam Search",
+          "19.5 $ \\pm $ 1.42",
+          "6.4 $ \\pm $ 0.09",
+          "18.3 $ \\pm $ 0.42",
+          "6.0 $ \\pm $ 0.34",
+          "31.1 $ \\pm $ 1.03",
+          "12.4 $ \\pm $ 0.59"
+        ],
+        [
+          "VCD",
+          "23.7 $ \\pm $ 1.90",
+          "8.2 $ \\pm $ 0.80",
+          "25.7 $ \\pm $ 1.30",
+          "9.0 $ \\pm $ 0.28",
+          "31.6 $ \\pm $ 1.83",
+          "13.8 $ \\pm $ 0.83"
+        ],
+        [
+          "OPERA",
+          "18.5 $ \\pm $ 0.90",
+          "6.6 $ \\pm $ 0.23",
+          "18.2 $ \\pm $ 0.40",
+          "6.2 $ \\pm $ 0.18",
+          "30.6 $ \\pm $ 1.06",
+          "12.5 $ \\pm $ 0.91"
+        ],
+        [
+          "HALC",
+          "23.7 $ \\pm $ 2.66",
+          "9.1 $ \\pm $ 0.41",
+          "24.3 $ \\pm $ 1.22",
+          "9.4 $ \\pm $ 0.19",
+          "24.2 $ \\pm $ 1.91",
+          "10.8 $ \\pm $ 0.53"
+        ],
+        [
+          "Ours",
+          "18.4 $ \\pm $ 0.53",
+          "6.4 $ \\pm $ 0.37",
+          "17.6 $ \\pm $ 3.54",
+          "6.0 $ \\pm $ 0.89",
+          "23.5 $ \\pm $ 0.31",
+          "10.0 $ \\pm $ 0.69"
+        ]
+      ],
+      "nearby_context": "A table comparing CHAIR_S and CHAIR_I metrics for LLaVA-1.5, mPLUG-Owl2, and MiniGPT-4 under various decoding methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, Ours). Values are mean ± std from three seeds.",
+      "table_shape": {
+        "rows": 9,
+        "columns": 7
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 1: Evaluation results on the CHAIR benchmark using the MSCOCO dataset (val2014 split). We conduct experiments with three different sets of 500 images, each selected by random seeds. The reported value is the mean of the results from the three different seeds, with the $ \\pm $ symbol representing the standard deviation.",
+        "caption_kind": "table",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P004_B0001",
+          "P004_B0002"
+        ],
+        "media_block_ids": [
+          "P004_B0001"
+        ],
+        "table_block_ids": [
+          "P004_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "A table comparing CHAIR_S and CHAIR_I metrics for LLaVA-1.5, mPLUG-Owl2, and MiniGPT-4 under various decoding methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, Ours). Values are mean ± std from three seeds.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S9",
+      "section_title": "Experiments",
+      "macro_id": "M5",
+      "macro_candidates": [
+        {
+          "macro_id": "M5",
+          "title": "Experimental Setup",
+          "role": "experiment_setup",
+          "order": 5
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S9_0005",
+      "source_block_ids": [
+        "P004_B0010",
+        "P004_B0011"
+      ],
+      "media_block_ids": [
+        "P004_B0010"
+      ],
+      "caption": "Table 2: Evaluation results on HallusionBench. We report Figure Acc and All Acc using LLaVA-1.5.",
+      "caption_kind": "table",
+      "caption_number": "2",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Method</td><td style='text-align: center; word-wrap: break-word;'>Figure Acc (fAcc)</td><td style='text-align: center; word-wrap: break-word;'>All Acc (aAcc)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Greedy Search</td><td style='text-align: center; word-wrap: break-word;'>22.2</td><td style='text-align: center; word-wrap: break-word;'>50.1</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Nucleus Sampling</td><td style='text-align: center; word-wrap: break-word;'>17.8</td><td style='text-align: center; word-wrap: break-word;'>46.2</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Beam Search</td><td style='text-align: center; word-wrap: break-word;'>19.1</td><td style='text-align: center; word-wrap: break-word;'>48.4</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>VCD</td><td style='text-align: center; word-wrap: break-word;'>21.7</td><td style='text-align: center; word-wrap: break-word;'>47.5</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>OPERA</td><td style='text-align: center; word-wrap: break-word;'>20.9</td><td style='text-align: center; word-wrap: break-word;'>49.9</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>HALC</td><td style='text-align: center; word-wrap: break-word;'>21.7</td><td style='text-align: center; word-wrap: break-word;'>50.6</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Ours</td><td style='text-align: center; word-wrap: break-word;'>23.5</td><td style='text-align: center; word-wrap: break-word;'>50.8</td></tr></table>",
+      "normalized_markdown": "| Method | Figure Acc (fAcc) | All Acc (aAcc) |\n| --- | --- | --- |\n| Greedy Search | 22.2 | 50.1 |\n| Nucleus Sampling | 17.8 | 46.2 |\n| Beam Search | 19.1 | 48.4 |\n| VCD | 21.7 | 47.5 |\n| OPERA | 20.9 | 49.9 |\n| HALC | 21.7 | 50.6 |\n| Ours | 23.5 | 50.8 |",
+      "normalized_latex": "\\begin{tabular}{lll}\n\\hline\nMethod & Figure Acc (fAcc) & All Acc (aAcc) \\\\\n\\hline\nGreedy Search & 22.2 & 50.1 \\\\\nNucleus Sampling & 17.8 & 46.2 \\\\\nBeam Search & 19.1 & 48.4 \\\\\nVCD & 21.7 & 47.5 \\\\\nOPERA & 20.9 & 49.9 \\\\\nHALC & 21.7 & 50.6 \\\\\nOurs & 23.5 & 50.8 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Method",
+          "Figure Acc (fAcc)",
+          "All Acc (aAcc)"
+        ],
+        [
+          "Greedy Search",
+          "22.2",
+          "50.1"
+        ],
+        [
+          "Nucleus Sampling",
+          "17.8",
+          "46.2"
+        ],
+        [
+          "Beam Search",
+          "19.1",
+          "48.4"
+        ],
+        [
+          "VCD",
+          "21.7",
+          "47.5"
+        ],
+        [
+          "OPERA",
+          "20.9",
+          "49.9"
+        ],
+        [
+          "HALC",
+          "21.7",
+          "50.6"
+        ],
+        [
+          "Ours",
+          "23.5",
+          "50.8"
+        ]
+      ],
+      "nearby_context": "Table comparing methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, Ours) on Figure Acc and All Acc metrics, with Ours achieving highest fAcc 23.5 and highest aAcc 50.8.",
+      "table_shape": {
+        "rows": 8,
+        "columns": 3
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 2: Evaluation results on HallusionBench. We report Figure Acc and All Acc using LLaVA-1.5.",
+        "caption_kind": "table",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P004_B0010",
+          "P004_B0011"
+        ],
+        "media_block_ids": [
+          "P004_B0010"
+        ],
+        "table_block_ids": [
+          "P004_B0010"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, Ours) on Figure Acc and All Acc metrics, with Ours achieving highest fAcc 23.5 and highest aAcc 50.8.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S10",
+      "section_title": "Experimental Results",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Main Results",
+          "role": "main_result",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S10_0006",
+      "source_block_ids": [
+        "P005_B0001",
+        "P005_B0002"
+      ],
+      "media_block_ids": [
+        "P005_B0001"
+      ],
+      "caption": "Table 3: Evaluation results on the POPE benchmark using the MSCOCO dataset (val2014 split).",
+      "caption_kind": "table",
+      "caption_number": "3",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Method</td><td style='text-align: center; word-wrap: break-word;'>LLaVA-1.5</td><td style='text-align: center; word-wrap: break-word;'>mPLUG-Owl2</td><td style='text-align: center; word-wrap: break-word;'>MiniGPT-4</td><td style='text-align: center; word-wrap: break-word;'>Average</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>VCD</td><td style='text-align: center; word-wrap: break-word;'>82.8</td><td style='text-align: center; word-wrap: break-word;'>81.6</td><td style='text-align: center; word-wrap: break-word;'>59.8</td><td style='text-align: center; word-wrap: break-word;'>74.7</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>OPERA</td><td style='text-align: center; word-wrap: break-word;'>83.0</td><td style='text-align: center; word-wrap: break-word;'>83.3</td><td style='text-align: center; word-wrap: break-word;'>66.1</td><td style='text-align: center; word-wrap: break-word;'>77.4</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>HALC</td><td style='text-align: center; word-wrap: break-word;'>50.6</td><td style='text-align: center; word-wrap: break-word;'>83.4</td><td style='text-align: center; word-wrap: break-word;'>69.7</td><td style='text-align: center; word-wrap: break-word;'>67.9</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Ours</td><td style='text-align: center; word-wrap: break-word;'>83.0</td><td style='text-align: center; word-wrap: break-word;'>83.0</td><td style='text-align: center; word-wrap: break-word;'>69.9</td><td style='text-align: center; word-wrap: break-word;'>78.6</td></tr></table>",
+      "normalized_markdown": "| Method | LLaVA-1.5 | mPLUG-Owl2 | MiniGPT-4 | Average |\n| --- | --- | --- | --- | --- |\n| VCD | 82.8 | 81.6 | 59.8 | 74.7 |\n| OPERA | 83.0 | 83.3 | 66.1 | 77.4 |\n| HALC | 50.6 | 83.4 | 69.7 | 67.9 |\n| Ours | 83.0 | 83.0 | 69.9 | 78.6 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nMethod & LLaVA-1.5 & mPLUG-Owl2 & MiniGPT-4 & Average \\\\\n\\hline\nVCD & 82.8 & 81.6 & 59.8 & 74.7 \\\\\nOPERA & 83.0 & 83.3 & 66.1 & 77.4 \\\\\nHALC & 50.6 & 83.4 & 69.7 & 67.9 \\\\\nOurs & 83.0 & 83.0 & 69.9 & 78.6 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Method",
+          "LLaVA-1.5",
+          "mPLUG-Owl2",
+          "MiniGPT-4",
+          "Average"
+        ],
+        [
+          "VCD",
+          "82.8",
+          "81.6",
+          "59.8",
+          "74.7"
+        ],
+        [
+          "OPERA",
+          "83.0",
+          "83.3",
+          "66.1",
+          "77.4"
+        ],
+        [
+          "HALC",
+          "50.6",
+          "83.4",
+          "69.7",
+          "67.9"
+        ],
+        [
+          "Ours",
+          "83.0",
+          "83.0",
+          "69.9",
+          "78.6"
+        ]
+      ],
+      "nearby_context": "Table comparing methods VCD, OPERA, HALC, Ours on LLaVA-1.5, mPLUG-Owl2, MiniGPT-4, and Average across POPE benchmark.",
+      "table_shape": {
+        "rows": 5,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 3: Evaluation results on the POPE benchmark using the MSCOCO dataset (val2014 split).",
+        "caption_kind": "table",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P005_B0001",
+          "P005_B0002"
+        ],
+        "media_block_ids": [
+          "P005_B0001"
+        ],
+        "table_block_ids": [
+          "P005_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing methods VCD, OPERA, HALC, Ours on LLaVA-1.5, mPLUG-Owl2, MiniGPT-4, and Average across POPE benchmark.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S10",
+      "section_title": "Experimental Results",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Main Results",
+          "role": "main_result",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S10_0006",
+      "source_block_ids": [
+        "P005_B0003",
+        "P005_B0004"
+      ],
+      "media_block_ids": [
+        "P005_B0003"
+      ],
+      "caption": "Table 4: Evaluation results on the MME using LLaVA-1.5.",
+      "caption_kind": "table",
+      "caption_number": "4",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Method</td><td colspan=\"2\">Category</td><td rowspan=\"2\">Total</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Perception</td><td style='text-align: center; word-wrap: break-word;'>Cognition</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Greedy Search</td><td style='text-align: center; word-wrap: break-word;'>1472.5</td><td style='text-align: center; word-wrap: break-word;'>303.9</td><td style='text-align: center; word-wrap: break-word;'>1776.4</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Nucleus Sampling</td><td style='text-align: center; word-wrap: break-word;'>1203.4</td><td style='text-align: center; word-wrap: break-word;'>311.1</td><td style='text-align: center; word-wrap: break-word;'>1514.5</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Beam Search</td><td style='text-align: center; word-wrap: break-word;'>1478.0</td><td style='text-align: center; word-wrap: break-word;'>287.5</td><td style='text-align: center; word-wrap: break-word;'>1765.5</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>VCD</td><td style='text-align: center; word-wrap: break-word;'>1326.7</td><td style='text-align: center; word-wrap: break-word;'>374.6</td><td style='text-align: center; word-wrap: break-word;'>1701.3</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>OPERA</td><td style='text-align: center; word-wrap: break-word;'>1456.9</td><td style='text-align: center; word-wrap: break-word;'>306.4</td><td style='text-align: center; word-wrap: break-word;'>1763.3</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>HALC</td><td style='text-align: center; word-wrap: break-word;'>887.7</td><td style='text-align: center; word-wrap: break-word;'>269.6</td><td style='text-align: center; word-wrap: break-word;'>1157.3</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Ours</td><td style='text-align: center; word-wrap: break-word;'>1487.6</td><td style='text-align: center; word-wrap: break-word;'>306.1</td><td style='text-align: center; word-wrap: break-word;'>1793.7</td></tr></table>",
+      "normalized_markdown": "| Method | Category | Category | Total |\n| --- | --- | --- | --- |\n| Method | Perception | Cognition | Total |\n| Greedy Search | 1472.5 | 303.9 | 1776.4 |\n| Nucleus Sampling | 1203.4 | 311.1 | 1514.5 |\n| Beam Search | 1478.0 | 287.5 | 1765.5 |\n| VCD | 1326.7 | 374.6 | 1701.3 |\n| OPERA | 1456.9 | 306.4 | 1763.3 |\n| HALC | 887.7 | 269.6 | 1157.3 |\n| Ours | 1487.6 | 306.1 | 1793.7 |",
+      "normalized_latex": "\\begin{tabular}{llll}\n\\hline\nMethod & Category & Category & Total \\\\\n\\hline\nMethod & Perception & Cognition & Total \\\\\nGreedy Search & 1472.5 & 303.9 & 1776.4 \\\\\nNucleus Sampling & 1203.4 & 311.1 & 1514.5 \\\\\nBeam Search & 1478.0 & 287.5 & 1765.5 \\\\\nVCD & 1326.7 & 374.6 & 1701.3 \\\\\nOPERA & 1456.9 & 306.4 & 1763.3 \\\\\nHALC & 887.7 & 269.6 & 1157.3 \\\\\nOurs & 1487.6 & 306.1 & 1793.7 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Method",
+          "Category",
+          "Category",
+          "Total"
+        ],
+        [
+          "Method",
+          "Perception",
+          "Cognition",
+          "Total"
+        ],
+        [
+          "Greedy Search",
+          "1472.5",
+          "303.9",
+          "1776.4"
+        ],
+        [
+          "Nucleus Sampling",
+          "1203.4",
+          "311.1",
+          "1514.5"
+        ],
+        [
+          "Beam Search",
+          "1478.0",
+          "287.5",
+          "1765.5"
+        ],
+        [
+          "VCD",
+          "1326.7",
+          "374.6",
+          "1701.3"
+        ],
+        [
+          "OPERA",
+          "1456.9",
+          "306.4",
+          "1763.3"
+        ],
+        [
+          "HALC",
+          "887.7",
+          "269.6",
+          "1157.3"
+        ],
+        [
+          "Ours",
+          "1487.6",
+          "306.1",
+          "1793.7"
+        ]
+      ],
+      "nearby_context": "Table comparing greedy search, nucleus sampling, beam search, VCD, OPERA, HALC, Ours on MME Perception, Cognition, and Total scores.",
+      "table_shape": {
+        "rows": 9,
+        "columns": 4
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "ablation_table",
+        "caption": "Table 4: Evaluation results on the MME using LLaVA-1.5.",
+        "caption_kind": "table",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P005_B0003",
+          "P005_B0004"
+        ],
+        "media_block_ids": [
+          "P005_B0003"
+        ],
+        "table_block_ids": [
+          "P005_B0003"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing greedy search, nucleus sampling, beam search, VCD, OPERA, HALC, Ours on MME Perception, Cognition, and Total scores.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_005",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S10",
+      "section_title": "Experimental Results",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Main Results",
+          "role": "main_result",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S10_0007",
+      "source_block_ids": [
+        "P005_B0009",
+        "P005_B0010"
+      ],
+      "media_block_ids": [
+        "P005_B0009"
+      ],
+      "caption": "Table 5: Evaluation results on LLaVA-Bench using LLaVA-1.5.",
+      "caption_kind": "table",
+      "caption_number": "5",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Method</td><td style='text-align: center; word-wrap: break-word;'>Complex</td><td style='text-align: center; word-wrap: break-word;'>Conv</td><td style='text-align: center; word-wrap: break-word;'>Detail</td><td style='text-align: center; word-wrap: break-word;'>All</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Greedy Search</td><td style='text-align: center; word-wrap: break-word;'>82.0</td><td style='text-align: center; word-wrap: break-word;'>47.3</td><td style='text-align: center; word-wrap: break-word;'>64.1</td><td style='text-align: center; word-wrap: break-word;'>67.0</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Nucleus Sampling</td><td style='text-align: center; word-wrap: break-word;'>76.2</td><td style='text-align: center; word-wrap: break-word;'>41.2</td><td style='text-align: center; word-wrap: break-word;'>52.6</td><td style='text-align: center; word-wrap: break-word;'>59.9</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Beam Search</td><td style='text-align: center; word-wrap: break-word;'>83.9</td><td style='text-align: center; word-wrap: break-word;'>58.7</td><td style='text-align: center; word-wrap: break-word;'>58.8</td><td style='text-align: center; word-wrap: break-word;'>70.0</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>VCD</td><td style='text-align: center; word-wrap: break-word;'>79.9</td><td style='text-align: center; word-wrap: break-word;'>53.5</td><td style='text-align: center; word-wrap: break-word;'>56.3</td><td style='text-align: center; word-wrap: break-word;'>66.2</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>OPERA</td><td style='text-align: center; word-wrap: break-word;'>78.7</td><td style='text-align: center; word-wrap: break-word;'>53.0</td><td style='text-align: center; word-wrap: break-word;'>58.3</td><td style='text-align: center; word-wrap: break-word;'>66.0</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>HALC</td><td style='text-align: center; word-wrap: break-word;'>55.8</td><td style='text-align: center; word-wrap: break-word;'>31.1</td><td style='text-align: center; word-wrap: break-word;'>50.4</td><td style='text-align: center; word-wrap: break-word;'>47.1</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Ours</td><td style='text-align: center; word-wrap: break-word;'>84.2</td><td style='text-align: center; word-wrap: break-word;'>63.5</td><td style='text-align: center; word-wrap: break-word;'>64.8</td><td style='text-align: center; word-wrap: break-word;'>73.3</td></tr></table>",
+      "normalized_markdown": "| Method | Complex | Conv | Detail | All |\n| --- | --- | --- | --- | --- |\n| Greedy Search | 82.0 | 47.3 | 64.1 | 67.0 |\n| Nucleus Sampling | 76.2 | 41.2 | 52.6 | 59.9 |\n| Beam Search | 83.9 | 58.7 | 58.8 | 70.0 |\n| VCD | 79.9 | 53.5 | 56.3 | 66.2 |\n| OPERA | 78.7 | 53.0 | 58.3 | 66.0 |\n| HALC | 55.8 | 31.1 | 50.4 | 47.1 |\n| Ours | 84.2 | 63.5 | 64.8 | 73.3 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nMethod & Complex & Conv & Detail & All \\\\\n\\hline\nGreedy Search & 82.0 & 47.3 & 64.1 & 67.0 \\\\\nNucleus Sampling & 76.2 & 41.2 & 52.6 & 59.9 \\\\\nBeam Search & 83.9 & 58.7 & 58.8 & 70.0 \\\\\nVCD & 79.9 & 53.5 & 56.3 & 66.2 \\\\\nOPERA & 78.7 & 53.0 & 58.3 & 66.0 \\\\\nHALC & 55.8 & 31.1 & 50.4 & 47.1 \\\\\nOurs & 84.2 & 63.5 & 64.8 & 73.3 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Method",
+          "Complex",
+          "Conv",
+          "Detail",
+          "All"
+        ],
+        [
+          "Greedy Search",
+          "82.0",
+          "47.3",
+          "64.1",
+          "67.0"
+        ],
+        [
+          "Nucleus Sampling",
+          "76.2",
+          "41.2",
+          "52.6",
+          "59.9"
+        ],
+        [
+          "Beam Search",
+          "83.9",
+          "58.7",
+          "58.8",
+          "70.0"
+        ],
+        [
+          "VCD",
+          "79.9",
+          "53.5",
+          "56.3",
+          "66.2"
+        ],
+        [
+          "OPERA",
+          "78.7",
+          "53.0",
+          "58.3",
+          "66.0"
+        ],
+        [
+          "HALC",
+          "55.8",
+          "31.1",
+          "50.4",
+          "47.1"
+        ],
+        [
+          "Ours",
+          "84.2",
+          "63.5",
+          "64.8",
+          "73.3"
+        ]
+      ],
+      "nearby_context": "Table comparing methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, Ours) on LLaVA-Bench metrics: Complex, Conv, Detail, All.",
+      "table_shape": {
+        "rows": 8,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 5: Evaluation results on LLaVA-Bench using LLaVA-1.5.",
+        "caption_kind": "table",
+        "caption_number": "5",
+        "source_block_ids": [
+          "P005_B0009",
+          "P005_B0010"
+        ],
+        "media_block_ids": [
+          "P005_B0009"
+        ],
+        "table_block_ids": [
+          "P005_B0009"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing methods (Greedy Search, Nucleus Sampling, Beam Search, VCD, OPERA, HALC, Ours) on LLaVA-Bench metrics: Complex, Conv, Detail, All.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_006",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S11",
+      "section_title": "Analysis and Discussion",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Analysis and Discussion",
+          "role": "ablation_analysis",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S11_0008",
+      "source_block_ids": [
+        "P006_B0001",
+        "P006_B0002"
+      ],
+      "media_block_ids": [
+        "P006_B0001"
+      ],
+      "caption": "Table 6: Our performance when differentiating the T2I models for visualizing hallucinations. We generate captions with nucleus sampling and set max new token for 64 and generate the image with those captions. Inference step for diffusion set to be all 1.",
+      "caption_kind": "table",
+      "caption_number": "6",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">T2I Model</td><td rowspan=\"2\">CLIPScore  $ \\uparrow $</td><td colspan=\"2\">LLaVA-1.5</td><td colspan=\"2\">mPLUG-Owl2</td><td colspan=\"2\">MiniGPT-4</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>CHAIRs  $ \\downarrow $</td><td style='text-align: center; word-wrap: break-word;'>CHAIRI  $ \\downarrow $</td><td style='text-align: center; word-wrap: break-word;'>CHAIRs  $ \\downarrow $</td><td style='text-align: center; word-wrap: break-word;'>CHAIRI  $ \\downarrow $</td><td style='text-align: center; word-wrap: break-word;'>CHAIRs  $ \\downarrow $</td><td style='text-align: center; word-wrap: break-word;'>CHAIRI  $ \\downarrow $</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Hyper-SD1.5</td><td style='text-align: center; word-wrap: break-word;'>30.87</td><td style='text-align: center; word-wrap: break-word;'>20.2</td><td style='text-align: center; word-wrap: break-word;'>6.6</td><td style='text-align: center; word-wrap: break-word;'>19.4</td><td style='text-align: center; word-wrap: break-word;'>6.4</td><td style='text-align: center; word-wrap: break-word;'>28.2</td><td style='text-align: center; word-wrap: break-word;'>11.8</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>SDXL-Turbo</td><td style='text-align: center; word-wrap: break-word;'>32.33</td><td style='text-align: center; word-wrap: break-word;'>18.8</td><td style='text-align: center; word-wrap: break-word;'>6.6</td><td style='text-align: center; word-wrap: break-word;'>20.2</td><td style='text-align: center; word-wrap: break-word;'>6.68</td><td style='text-align: center; word-wrap: break-word;'>25.2</td><td style='text-align: center; word-wrap: break-word;'>9.9</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Hyper-SDXL</td><td style='text-align: center; word-wrap: break-word;'>32.85</td><td style='text-align: center; word-wrap: break-word;'>17</td><td style='text-align: center; word-wrap: break-word;'>5.6</td><td style='text-align: center; word-wrap: break-word;'>17</td><td style='text-align: center; word-wrap: break-word;'>5.3</td><td style='text-align: center; word-wrap: break-word;'>24.4</td><td style='text-align: center; word-wrap: break-word;'>10.0</td></tr></table>",
+      "normalized_markdown": "| T2I Model | CLIPScore $ \\uparrow $ | LLaVA-1.5 | LLaVA-1.5 | mPLUG-Owl2 | mPLUG-Owl2 | MiniGPT-4 | MiniGPT-4 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| T2I Model | CLIPScore $ \\uparrow $ | CHAIRs $ \\downarrow $ | CHAIRI $ \\downarrow $ | CHAIRs $ \\downarrow $ | CHAIRI $ \\downarrow $ | CHAIRs $ \\downarrow $ | CHAIRI $ \\downarrow $ |\n| Hyper-SD1.5 | 30.87 | 20.2 | 6.6 | 19.4 | 6.4 | 28.2 | 11.8 |\n| SDXL-Turbo | 32.33 | 18.8 | 6.6 | 20.2 | 6.68 | 25.2 | 9.9 |\n| Hyper-SDXL | 32.85 | 17 | 5.6 | 17 | 5.3 | 24.4 | 10.0 |",
+      "normalized_latex": "\\begin{tabular}{llllllll}\n\\hline\nT2I Model & CLIPScore \\$ \\textbackslash{}uparrow \\$ & LLaVA-1.5 & LLaVA-1.5 & mPLUG-Owl2 & mPLUG-Owl2 & MiniGPT-4 & MiniGPT-4 \\\\\n\\hline\nT2I Model & CLIPScore \\$ \\textbackslash{}uparrow \\$ & CHAIRs \\$ \\textbackslash{}downarrow \\$ & CHAIRI \\$ \\textbackslash{}downarrow \\$ & CHAIRs \\$ \\textbackslash{}downarrow \\$ & CHAIRI \\$ \\textbackslash{}downarrow \\$ & CHAIRs \\$ \\textbackslash{}downarrow \\$ & CHAIRI \\$ \\textbackslash{}downarrow \\$ \\\\\nHyper-SD1.5 & 30.87 & 20.2 & 6.6 & 19.4 & 6.4 & 28.2 & 11.8 \\\\\nSDXL-Turbo & 32.33 & 18.8 & 6.6 & 20.2 & 6.68 & 25.2 & 9.9 \\\\\nHyper-SDXL & 32.85 & 17 & 5.6 & 17 & 5.3 & 24.4 & 10.0 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "T2I Model",
+          "CLIPScore $ \\uparrow $",
+          "LLaVA-1.5",
+          "LLaVA-1.5",
+          "mPLUG-Owl2",
+          "mPLUG-Owl2",
+          "MiniGPT-4",
+          "MiniGPT-4"
+        ],
+        [
+          "T2I Model",
+          "CLIPScore $ \\uparrow $",
+          "CHAIRs $ \\downarrow $",
+          "CHAIRI $ \\downarrow $",
+          "CHAIRs $ \\downarrow $",
+          "CHAIRI $ \\downarrow $",
+          "CHAIRs $ \\downarrow $",
+          "CHAIRI $ \\downarrow $"
+        ],
+        [
+          "Hyper-SD1.5",
+          "30.87",
+          "20.2",
+          "6.6",
+          "19.4",
+          "6.4",
+          "28.2",
+          "11.8"
+        ],
+        [
+          "SDXL-Turbo",
+          "32.33",
+          "18.8",
+          "6.6",
+          "20.2",
+          "6.68",
+          "25.2",
+          "9.9"
+        ],
+        [
+          "Hyper-SDXL",
+          "32.85",
+          "17",
+          "5.6",
+          "17",
+          "5.3",
+          "24.4",
+          "10.0"
+        ]
+      ],
+      "nearby_context": "Table comparing CLIPScore, CHAIRs, and CHAIRI across LLaVA-1.5, mPLUG-Owl2, and MiniGPT-4 for Hyper-SD1.5, SDXL-Turbo, and Hyper-SDXL models.",
+      "table_shape": {
+        "rows": 5,
+        "columns": 8
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 6: Our performance when differentiating the T2I models for visualizing hallucinations. We generate captions with nucleus sampling and set max new token for 64 and generate the image with those captions. Inference step for diffusion set to be all 1.",
+        "caption_kind": "table",
+        "caption_number": "6",
+        "source_block_ids": [
+          "P006_B0001",
+          "P006_B0002"
+        ],
+        "media_block_ids": [
+          "P006_B0001"
+        ],
+        "table_block_ids": [
+          "P006_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing CLIPScore, CHAIRs, and CHAIRI across LLaVA-1.5, mPLUG-Owl2, and MiniGPT-4 for Hyper-SD1.5, SDXL-Turbo, and Hyper-SDXL models.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_007",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S11",
+      "section_title": "Analysis and Discussion",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Analysis and Discussion",
+          "role": "ablation_analysis",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S11_0008",
+      "source_block_ids": [
+        "P006_B0003",
+        "P006_B0004"
+      ],
+      "media_block_ids": [
+        "P006_B0003"
+      ],
+      "caption": "Table 7: Comparison of performance using a single image $ (n = 1) $ generated by two different decoding strategies, Greedy search and Nucleus sampling.",
+      "caption_kind": "table",
+      "caption_number": "7",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Captioning by</td><td style='text-align: center; word-wrap: break-word;'>LLaVA-1.5</td><td style='text-align: center; word-wrap: break-word;'>mPLUG-Owl2</td><td style='text-align: center; word-wrap: break-word;'>MiniGPT-4</td></tr><tr><td colspan=\"4\">CHAIR $ _{S} $  $ \\downarrow $</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Greedy Search</td><td style='text-align: center; word-wrap: break-word;'>19.4</td><td style='text-align: center; word-wrap: break-word;'>19.4</td><td style='text-align: center; word-wrap: break-word;'>27.2</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Nucleus Sampling</td><td style='text-align: center; word-wrap: break-word;'>18.8</td><td style='text-align: center; word-wrap: break-word;'>15.2</td><td style='text-align: center; word-wrap: break-word;'>24.4</td></tr><tr><td colspan=\"4\">CHAIR $ _{I} $  $ \\downarrow $</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Greedy Search</td><td style='text-align: center; word-wrap: break-word;'>6.6</td><td style='text-align: center; word-wrap: break-word;'>6.4</td><td style='text-align: center; word-wrap: break-word;'>11.6</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Nucleus Sampling</td><td style='text-align: center; word-wrap: break-word;'>6.7</td><td style='text-align: center; word-wrap: break-word;'>5.1</td><td style='text-align: center; word-wrap: break-word;'>10.3</td></tr></table>",
+      "normalized_markdown": "| Captioning by | LLaVA-1.5 | mPLUG-Owl2 | MiniGPT-4 |\n| --- | --- | --- | --- |\n| CHAIR $ _{S} $ $ \\downarrow $ | CHAIR $ _{S} $ $ \\downarrow $ | CHAIR $ _{S} $ $ \\downarrow $ | CHAIR $ _{S} $ $ \\downarrow $ |\n| Greedy Search | 19.4 | 19.4 | 27.2 |\n| Nucleus Sampling | 18.8 | 15.2 | 24.4 |\n| CHAIR $ _{I} $ $ \\downarrow $ | CHAIR $ _{I} $ $ \\downarrow $ | CHAIR $ _{I} $ $ \\downarrow $ | CHAIR $ _{I} $ $ \\downarrow $ |\n| Greedy Search | 6.6 | 6.4 | 11.6 |\n| Nucleus Sampling | 6.7 | 5.1 | 10.3 |",
+      "normalized_latex": "\\begin{tabular}{llll}\n\\hline\nCaptioning by & LLaVA-1.5 & mPLUG-Owl2 & MiniGPT-4 \\\\\n\\hline\nCHAIR \\$ \\_\\{S\\} \\$ \\$ \\textbackslash{}downarrow \\$ & CHAIR \\$ \\_\\{S\\} \\$ \\$ \\textbackslash{}downarrow \\$ & CHAIR \\$ \\_\\{S\\} \\$ \\$ \\textbackslash{}downarrow \\$ & CHAIR \\$ \\_\\{S\\} \\$ \\$ \\textbackslash{}downarrow \\$ \\\\\nGreedy Search & 19.4 & 19.4 & 27.2 \\\\\nNucleus Sampling & 18.8 & 15.2 & 24.4 \\\\\nCHAIR \\$ \\_\\{I\\} \\$ \\$ \\textbackslash{}downarrow \\$ & CHAIR \\$ \\_\\{I\\} \\$ \\$ \\textbackslash{}downarrow \\$ & CHAIR \\$ \\_\\{I\\} \\$ \\$ \\textbackslash{}downarrow \\$ & CHAIR \\$ \\_\\{I\\} \\$ \\$ \\textbackslash{}downarrow \\$ \\\\\nGreedy Search & 6.6 & 6.4 & 11.6 \\\\\nNucleus Sampling & 6.7 & 5.1 & 10.3 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Captioning by",
+          "LLaVA-1.5",
+          "mPLUG-Owl2",
+          "MiniGPT-4"
+        ],
+        [
+          "CHAIR $ _{S} $ $ \\downarrow $",
+          "CHAIR $ _{S} $ $ \\downarrow $",
+          "CHAIR $ _{S} $ $ \\downarrow $",
+          "CHAIR $ _{S} $ $ \\downarrow $"
+        ],
+        [
+          "Greedy Search",
+          "19.4",
+          "19.4",
+          "27.2"
+        ],
+        [
+          "Nucleus Sampling",
+          "18.8",
+          "15.2",
+          "24.4"
+        ],
+        [
+          "CHAIR $ _{I} $ $ \\downarrow $",
+          "CHAIR $ _{I} $ $ \\downarrow $",
+          "CHAIR $ _{I} $ $ \\downarrow $",
+          "CHAIR $ _{I} $ $ \\downarrow $"
+        ],
+        [
+          "Greedy Search",
+          "6.6",
+          "6.4",
+          "11.6"
+        ],
+        [
+          "Nucleus Sampling",
+          "6.7",
+          "5.1",
+          "10.3"
+        ]
+      ],
+      "nearby_context": "Table comparing CHAIR_S and CHAIR_I for Greedy Search and Nucleus Sampling across LLaVA-1.5, mPLUG-Owl2, and MiniGPT-4.",
+      "table_shape": {
+        "rows": 7,
+        "columns": 4
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "ablation_table",
+        "caption": "Table 7: Comparison of performance using a single image $ (n = 1) $ generated by two different decoding strategies, Greedy search and Nucleus sampling.",
+        "caption_kind": "table",
+        "caption_number": "7",
+        "source_block_ids": [
+          "P006_B0003",
+          "P006_B0004"
+        ],
+        "media_block_ids": [
+          "P006_B0003"
+        ],
+        "table_block_ids": [
+          "P006_B0003"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing CHAIR_S and CHAIR_I for Greedy Search and Nucleus Sampling across LLaVA-1.5, mPLUG-Owl2, and MiniGPT-4.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S11",
+      "section_title": "Analysis and Discussion",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Analysis and Discussion",
+          "role": "ablation_analysis",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S11_0008",
+      "source_block_ids": [
+        "P006_B0005",
+        "P006_B0006",
+        "P006_B0007",
+        "P006_B0008",
+        "P006_B0009"
+      ],
+      "media_block_ids": [
+        "P006_B0005",
+        "P006_B0007"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_chart_box_109_657_342_897.jpg",
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_chart_box_350_657_578_897.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_chart_box_109_657_342_897.jpg",
+          "caption": "Figure 4: Effect of the number of images with different captions."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_chart_box_350_657_578_897.jpg",
+          "caption": "Figure 4: Effect of the number of images with different captions."
+        }
+      ],
+      "caption": "Figure 4: Effect of the number of images with different captions.",
+      "caption_kind": "figure",
+      "caption_number": "4",
+      "nearby_context": "Two bar charts: (a) CHAIR_S Score and (b) CHAIR_I Score.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P006_B0005",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_2",
+          "panel_label": null,
+          "source_block_id": "P006_B0007",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A3",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 4: Effect of the number of images with different captions.",
+        "caption_kind": "figure",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P006_B0005",
+          "P006_B0006",
+          "P006_B0007",
+          "P006_B0008",
+          "P006_B0009"
+        ],
+        "media_block_ids": [
+          "P006_B0005",
+          "P006_B0007"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P006_B0005",
+          "P006_B0007"
+        ],
+        "description_from_html": "Two bar charts: (a) CHAIR_S Score and (b) CHAIR_I Score.",
+        "notes": "Subfigures labeled (a) and (b) with a shared caption."
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 2
+      }
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "chart",
+      "section_id": "S11",
+      "section_title": "Analysis and Discussion",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Analysis and Discussion",
+          "role": "ablation_analysis",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S11_0009",
+      "source_block_ids": [
+        "P006_B0012",
+        "P006_B0013"
+      ],
+      "media_block_ids": [
+        "P006_B0012"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_chart_box_682_360_1072_578.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_005",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_chart_box_682_360_1072_578.jpg",
+          "caption": "Figure 5: KL divergence between output distributions across each decoding step when the MLLM is provided with the images and caption from Figure 6 (a). The KL divergence is significantly elevated for the hallucinated token “car”."
+        }
+      ],
+      "caption": "Figure 5: KL divergence between output distributions across each decoding step when the MLLM is provided with the images and caption from Figure 6 (a). The KL divergence is significantly elevated for the hallucinated token “car”.",
+      "caption_kind": "figure",
+      "caption_number": "5",
+      "nearby_context": "Image from imgs/img_in_chart_box_682_360_1072_578.jpg with caption describing KL divergence chart.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": "(a)",
+          "source_block_id": "P006_B0012",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "chart",
+        "caption": "Figure 5: KL divergence between output distributions across each decoding step when the MLLM is provided with the images and caption from Figure 6 (a). The KL divergence is significantly elevated for the hallucinated token “car”.",
+        "caption_kind": "figure",
+        "caption_number": "5",
+        "source_block_ids": [
+          "P006_B0012",
+          "P006_B0013"
+        ],
+        "media_block_ids": [
+          "P006_B0012"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P006_B0012"
+        ],
+        "description_from_html": "Image from imgs/img_in_chart_box_682_360_1072_578.jpg with caption describing KL divergence chart.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_006",
+      "asset_type": "figure",
+      "modality_class": "unknown",
+      "subtype": "unknown_figure",
+      "section_id": "S11",
+      "section_title": "Analysis and Discussion",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Analysis and Discussion",
+          "role": "ablation_analysis",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S11_0010",
+      "source_block_ids": [
+        "P007_B0001"
+      ],
+      "media_block_ids": [
+        "P007_B0001"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_127_110_1096_682.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_006",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_127_110_1096_682.jpg",
+          "caption": ""
+        }
+      ],
+      "caption": "",
+      "caption_kind": "none",
+      "caption_number": "None",
+      "nearby_context": "Image from path imgs/img_in_image_box_127_110_1096_682.jpg.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P007_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "unknown",
+        "subtype_hint": "unknown",
+        "caption": "",
+        "caption_kind": "none",
+        "caption_number": "None",
+        "source_block_ids": [
+          "P007_B0001"
+        ],
+        "media_block_ids": [
+          "P007_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P007_B0001"
+        ],
+        "description_from_html": "Image from path imgs/img_in_image_box_127_110_1096_682.jpg.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": false,
+        "image_count": 1
+      }
+    }
+  ],
+  "summary": {
+    "asset_count": 13,
+    "by_asset_type": {
+      "figure": 6,
+      "table": 7
+    },
+    "by_modality_class": {
+      "explanatory": 3,
+      "evidential": 9,
+      "unknown": 1
+    },
+    "macro_unresolved_count": 0
+  }
+}

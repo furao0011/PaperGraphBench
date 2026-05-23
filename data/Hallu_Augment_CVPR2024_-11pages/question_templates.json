@@ -1,0 +1,3072 @@
+{
+  "paper_id": "Hallu_Augment_CVPR2024_-11pages",
+  "schema_version": "v1",
+  "challenge_plans_path": "data/Hallu_Augment_CVPR2024_-11pages/cache/questions/challenge_plans.json",
+  "challenge_plan_summary": {
+    "plan_count": 76,
+    "by_type": {
+      "false_premise_challenge": 52,
+      "overclaim_challenge": 12,
+      "wrong_relation_challenge": 12
+    },
+    "by_modality_pool": {
+      "multimodal": 40,
+      "text": 36
+    },
+    "text_plan_count": 36,
+    "multimodal_plan_count": 40,
+    "multimodal_plan_limit": 40
+  },
+  "challenge_questions_raw_path": "data/Hallu_Augment_CVPR2024_-11pages/cache/questions/challenge_questions_raw.json",
+  "challenge_question_raw_summary": {
+    "raw_question_count": 59,
+    "by_type": {
+      "false_premise_challenge": 12,
+      "overclaim_challenge": 6,
+      "wrong_relation_challenge": 2
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    }
+  },
+  "challenge_questions_filtered_path": "data/Hallu_Augment_CVPR2024_-11pages/cache/questions/challenge_questions_filtered.json",
+  "challenge_solver_trials_path": "data/Hallu_Augment_CVPR2024_-11pages/cache/questions/challenge_solver_trials.json",
+  "challenge_filter_summary": {
+    "plan_pool_count": 76,
+    "target_count": 20,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 59,
+    "solver_trial_count": 52,
+    "filtered_count": 20,
+    "human_review_count": 4,
+    "rejected_count": 39,
+    "blacklisted_plan_count": 7,
+    "by_type": {
+      "false_premise_challenge": 12,
+      "overclaim_challenge": 6,
+      "wrong_relation_challenge": 2
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    },
+    "stop_reason": {
+      "text": "target_reached",
+      "multimodal": {
+        "figure": "target_reached",
+        "remaining": "target_reached"
+      }
+    }
+  },
+  "challenge_questions": [
+    {
+      "question_id": "CHQ_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0023",
+      "source_challenge_plan_id": "CHP_0023",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "How does the paper connect the entanglement of text representations to the ineffectiveness of current learned interfaces in multimodal LLMs?",
+      "surface_intent": "to understand the causal relationship between text representation entanglement and interface effectiveness",
+      "target_kc_ids": [
+        "KC5",
+        "KC6"
+      ],
+      "target_edge_ids": [
+        "E46"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1",
+        "M2"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E46",
+          "kc_ids": [
+            "KC5",
+            "KC6"
+          ],
+          "text": "• Representations of texts that contain and do not contain hallucinations are entangled, making it challenging to differentiate them.\n\nThese preliminary observations indicate that the current learned interfaces are not effective enough to map visual representations into the textual representation space of LLMs. As a result, it is difficult for MLLMs to discriminate between texts containing minor errors at the level of objects or attributes and those manifesting typical hallucinative expressions. This issue potentially heightens the tendency for MLLMs to generate more hallucinations. Therefore, exploring more effective approaches to align visual representations with LLMs' textual representation space to address hallucinations is crucial."
+        },
+        {
+          "kc_id": "KC5",
+          "text": "• Representations of texts that contain and do not contain hallucinations are entangled, making it challenging to differentiate them.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC6",
+          "text": "These preliminary observations indicate that the current learned interfaces are not effective enough to map visual representations into the textual representation space of LLMs. As a result, it is difficult for MLLMs to discriminate between texts containing minor errors at the level of objects or attributes and those manifesting typical hallucinative expressions. This issue potentially heightens the tendency for MLLMs to generate more hallucinations. Therefore, exploring more effective approaches to align visual representations with LLMs' textual representation space to address hallucinations is crucial.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "Question asks for causal connection between KC5 and KC6, matching target relation without exposing metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0011",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0001",
+      "source_challenge_plan_id": "CHP_0001",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Given that HACL uses hallucinative captions generated by GPT-4 as hard negative examples in cross-modal contrastive learning, can we conclude that this approach effectively reduces hallucinations in multimodal models across various tasks and datasets?",
+      "surface_intent": "Asking about the generality of the method's effectiveness.",
+      "target_kc_ids": [
+        "KC8"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'not_specified', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC8",
+          "text": "Inspired by the findings above, we propose hallucination-augmented cross-modal contrastive learning (HACL), which enhances the alignment between visual and textual representations to alleviate hallucinations. Texts with hallucination are used as hard negative examples for image anchors, naturally pulling closer representations of non-hallucinating text and visual samples while pushing way representations of non-hallucinating and hallucinating text. Specifically, we separately feed the visual and textual token sequences into LLMs to obtain global representations for each modality, which is used for contrastive learning. We generate hallucinative image captions with GPT-4 [39]. These hallucinative texts contain partial object attribute errors or introduce additional non-existent information compared to the original image captions. As shown in",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about generalization beyond the paper's limited scope, directly targeting overclaim as intended.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0017",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0034",
+      "source_challenge_plan_id": "CHP_0034",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Does the paper provide evidence that HACL is effective at reducing hallucinations across a wide range of vision-language models?",
+      "surface_intent": "Asking about the general effectiveness of HACL in reducing hallucinations.",
+      "target_kc_ids": [
+        "KC46"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'hallucination mitigation', 'dataset': 'MMHal-Bench', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC46",
+          "text": "Evaluation on MMHal-Bench For the MMHal-Bench [44]. We apply our method to iniGPT-4 [55], LLaVA [33], LLaVA1.5 [32] and compare the results with other recent vision-language models, including MKosmos-2 [40], IDEFICS [22], InstructBLIP [10], and anther LLaVA-RLHF [44]. Following [44], we use GPT-4 to evaluate the overall score and hallucination rate of different MLLMs.",
+          "span_id": "S9",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question targets the overclaim failure mode by asking about effectiveness across a wide range, which is not fully supported by the limited evidence. It is natural, serious, and answerable from the paper.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0022",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0036",
+      "source_challenge_plan_id": "CHP_0036",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "HACL is designed to align textual representations to visual representations. How does this alignment help reduce hallucinations in multimodal models?",
+      "surface_intent": "asking about the mechanism of HACL in aligning representations to reduce hallucinations",
+      "target_kc_ids": [
+        "KC58"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The KC states aligning visual to textual, not the reverse. Reversing the direction misinterprets HACL.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC58",
+          "text": "The objective of our research is the introduction of HACL, to further enhance the visual representation output of our interface. The aim is to closely align the output to the correct textual representation within the representation space of Language Models (LLMs) and, at the same time, distance it from hallucinative and other incorrect textual representations. To substantiate our objective, we randomly selected 200 image-text pairs from the COCO [29] val2017 dataset. Using GPT-4, we generated hallucination samples and subsequently reduced these samples using the hidden state representation of the last token through LLMs for visualization purposes. The data distribution under three conditions: without employing HACL, instigating cross-modal contrastive learning but without the use of hallucination-enhanced samples, and usage of hallucination-enhanced sample contrast learning was visualized respectively. The MLLM utilized in our study was LLaVA. As illustrated in",
+          "span_id": "S12",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally presents the intended false premise (reversing the alignment direction) without exposing any hidden metadata. It is clear and evaluable based on the paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0027",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0020",
+      "source_challenge_plan_id": "CHP_0020",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Based on the paper's description of the experiment using COCO dataset and GPT-4 generated hallucinations with LLaVA, does the evidence indicate that the HACL method enables the differentiation of hallucination samples from ground truth samples?",
+      "surface_intent": "To check if the model correctly interprets the experimental results regarding HACL's effectiveness.",
+      "target_kc_ids": [
+        "KC60",
+        "KC58"
+      ],
+      "target_edge_ids": [
+        "E38"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M8",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E38",
+          "kc_ids": [
+            "KC60",
+            "KC58"
+          ],
+          "text": "The objective of our research is the introduction of HACL, to further enhance the visual representation output of our interface. The aim is to closely align the output to the correct textual representation within the representation space of Language Models (LLMs) and, at the same time, distance it from hallucinative and other incorrect textual representations. To substantiate our objective, we randomly selected 200 image-text pairs from the COCO [29] val2017 dataset. Using GPT-4, we generated hallucination samples and subsequently reduced these samples using the hidden state representation of the last token through LLMs for visualization purposes. The data distribution under three conditions: without employing HACL, instigating cross-modal contrastive learning but without the use of hallucination-enhanced samples, and usage of hallucination-enhanced sample contrast learning was visualized respectively. The MLLM utilized in our study was LLaVA. As illustrated in\n\n<!-- page 10: doc_8.md -->\n\nlearning, although the modal gap decreased, a differentiation in the distribution of hallucination samples and ground truth samples was unattainable. In"
+        },
+        {
+          "kc_id": "KC60",
+          "text": "The objective of our research is the introduction of HACL, to further enhance the visual representation output of our interface. The aim is to closely align the output to the correct textual representation within the representation space of Language Models (LLMs) and, at the same time, distance it from hallucinative and other incorrect textual representations. To substantiate our objective, we randomly selected 200 image-text pairs from the COCO [29] val2017 dataset. Using GPT-4, we generated hallucination samples and subsequently reduced these samples using the hidden state representation of the last token through LLMs for visualization purposes. The data distribution under three conditions: without employing HACL, instigating cross-modal contrastive learning but without the use of hallucination-enhanced samples, and usage of hallucination-enhanced sample contrast learning was visualized respectively. The MLLM utilized in our study was LLaVA. As illustrated in\n\n<!-- page 10: doc_8.md -->\n\nlearning, although the modal gap decreased, a differentiation in the distribution of hallucination samples and ground truth samples was unattainable. In",
+          "span_id": "S12",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC58",
+          "text": "The objective of our research is the introduction of HACL, to further enhance the visual representation output of our interface. The aim is to closely align the output to the correct textual representation within the representation space of Language Models (LLMs) and, at the same time, distance it from hallucinative and other incorrect textual representations. To substantiate our objective, we randomly selected 200 image-text pairs from the COCO [29] val2017 dataset. Using GPT-4, we generated hallucination samples and subsequently reduced these samples using the hidden state representation of the last token through LLMs for visualization purposes. The data distribution under three conditions: without employing HACL, instigating cross-modal contrastive learning but without the use of hallucination-enhanced samples, and usage of hallucination-enhanced sample contrast learning was visualized respectively. The MLLM utilized in our study was LLaVA. As illustrated in",
+          "span_id": "S12",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was not usable. Reason: The question forces a binary causal choice between modal gap reduction and hallucination differentiation, but the evidence only shows that modal gap reduction does not enable differentiation; it does not support the reverse direction. This makes the question ambiguous for judging the target failure mode of wrong_relation. Revision guidance: Revise to directly ask about the relation between the HACL method (KC60) and the ability to differentiate hallucination samples (KC58), e.g., 'Does the paper's evidence show that the HACL method enables the differentiation of hallucination samples from ground truth samples?'"
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels or metadata. It is grounded in the provided evidence and can be answered directly. The question indirectly relates to the verified relation by asking about the experimental outcome, allowing assessment of the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0028",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0019",
+      "source_challenge_plan_id": "CHP_0019",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Considering the contrastive learning loss equations defined in paragraphs P2 and P4, how broadly can this approach be applied to vision-language pretraining tasks beyond the specific architecture described?",
+      "surface_intent": "A question about the generalizability of the proposed contrastive learning method.",
+      "target_kc_ids": [
+        "KC26"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'not_specified', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC26",
+          "text": "Afterwards, similar to many existing methods in the field of vision-language pretraining [3, 18–20, 25, 26, 48, 53], we introduce the following contrastive learning strategy. Assuming a batch size of B during the training process, we compute the text-to-image contrastive learning loss as follows:\n\n$$ \\mathcal{L}_{C L}^{t}=-\\sum_{i=1:B}\\frac{1}{B}l o g\\left\\lfloor\\frac{f\\left(\\hat{e}_{t}^{i},\\hat{e}_{v}^{i}\\right)}{f\\left(\\hat{e}_{t}^{i},\\hat{e}_{v}^{i}\\right)+\\sum_{k\\neq i}f\\left(\\hat{e}_{t}^{i},\\hat{e}_{v}^{k}\\right)}\\right\\rfloor $$\n\nwhere $f\\left(\\hat{e}_{t}^{i},\\hat{e}_{v}^{i}\\right)$ measures the distance between $\\hat{e}_{t}^{i}$ and $\\hat{e}_{v}^{i}$ in a semantic space. Similar, the image-to-text contrastive learning loss as follows:\n\n$$ \\mathcal{L}_{C L}^{v}=-\\sum_{i=1:B}\\frac{1}{B}l o g\\left[\\frac{f\\left(\\hat{e}_{v}^{i},\\hat{e}_{t}^{i}\\right)}{f\\left(\\hat{e}_{v}^{i},\\hat{e}_{t}^{i}\\right)+\\sum_{k\\neq i}f\\left(\\hat{e}_{v}^{i},\\hat{e}_{t}^{k}\\right)}\\right] $$",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose internal metadata, aligns with the overclaim target by probing generalizability beyond the limited context, is answerable from the evidence, and is unambiguous for judging overclaim.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0029",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0016",
+      "source_challenge_plan_id": "CHP_0016",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the paper, can the approach of using hallucinative captions as negative samples in image-text contrastive learning be applied to any dataset or task, or is it limited to the specific setting described?",
+      "surface_intent": "asking about the generality of the method for using hallucinative captions as negative samples",
+      "target_kc_ids": [
+        "KC29"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC29",
+          "text": "Hallucination Augmented Contrastive Learning Assuming that we have generated an hallucinative caption $ \\hat{T}_i $ based on the original caption $ T_i $ for the image $ I_i $, and obtained the global representation $ \\hat{e}_t^i $ of the hallucinative caption using the approach described in subsection 3.1, we can treat it as a negative sample in the image-text contrastive learning. Therefore, the new formula for the image-to-text contrastive learning becomes:",
+          "span_id": "S6",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly addresses the overclaim risk by asking about the generality of the method, does not expose any hidden labels or metadata, and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0034",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0024",
+      "source_challenge_plan_id": "CHP_0024",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "What percentage of the training dataset did MiniGPT-4 use hallucinative captions for contrastive learning?",
+      "surface_intent": "Asks about the proportion of training data used for contrastive learning with hallucinative captions in MiniGPT-4.",
+      "target_kc_ids": [
+        "KC35"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The evidence explicitly states that generating hallucinative captions for the entire dataset is too costly and that they only sampled 10% of the data, not using hallucinative captions for the remaining 90%.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC35",
+          "text": "Data sets For MiniGPT-4, the pre-training phase utilized significantly large datasets such as LAION[42] (115 million), Conceptual Captions [6] (CC3M/CC12M), and others. However, generating hallucinative captions for such enormous datasets is very costly. As a result, for MiniGPT-4, we randomly sampled about 10 million data, representing 10% of the total, and didn't use hallucinative captions for contrastive learning for the remaining data during training. Moreover, we discovered that regardless of not using hallucinative captions for enhancement, our model still significantly enhances models such as MiniGPT-4 [55]. On the other hand, for the LLaVA [33] and LLaVA1.5 [32], which used subsets of LAION/CC/SBU datasets with roughly 558K data, we generated hallucinative captions for every training datum.",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the generated question directly asked about the false premise, making it trivial for solvers to reject. A more indirect question could still test the intended failure mode. Revision guidance: Reword the question to avoid directly asking about the false premise. Instead, ask for a specific detail that implicitly requires knowledge of the proportion, e.g., 'What percentage of the training dataset did MiniGPT-4 use hallucinative captions for contrastive learning?' This would trick models that recall the false premise into answering 100%."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden metadata. It aligns with the target failure mode by asking for the percentage of data used with hallucinative captions; the correct answer (10%) contrasts with the false premise (100%). The evidence directly supports the answer, and the question is unambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0037",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0031",
+      "source_challenge_plan_id": "CHP_0031",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "The paper suggests that hallucinative captions help MLLMs avoid hallucinations. From the experimental results presented, how broadly applicable is this conclusion?",
+      "surface_intent": "Asks about the generalizability of the paper's claim about hallucinative captions.",
+      "target_kc_ids": [
+        "KC54"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=author_hypothesis and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC54",
+          "text": "lucinative captions, and the contrastive learning loss was calculated solely based on the equations 3 and 9 discussed in subsection 3.1 of our paper. We conducted experiments on MLLMs including LLaVA [33], MiniGPT-4 [55], and LLaVA1.5 [32], and reported the results on benchmarks such as POPE and MMHal-Bench. Additionally, we also reported results on the MME and VQA benchmarks. As illustrated in the Table 5, absent the facilitation from hallucinative captions, the models displayed moderate improvements on hallucination benchmarks such as MMhal-Bench, yet these improvements were somewhat constrained. However, the subsequent inclusion of hallucinative captions resulted in a marked enhancement on the same hallucination benchmark, thus affirming the potency of the hallucinative captions. Furthermore, we observed analogous improvements in the model's performance on both MME and VQA. Our hypothesis asserts that hallucinative captions aid MLLMs in diverting the visual representation from hallucinations and other textual inaccuracies. This action helps avoid instances of hallucination. Furthermore, contrastive learning supports the model by aligning the semantics of image-text, which ultima",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally probes the generalizability of the claim, aligning with the overclaim target failure mode. It does not expose hidden metadata and can be answered from the provided evidence which indicates limited scope.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0042",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0007",
+      "source_challenge_plan_id": "CHP_0007",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "What are the advantages of using GPT-4 to generate hallucinative captions for training LVLMs?",
+      "surface_intent": "Asks about the benefits of the GPT-4 based method for generating hallucinative captions, potentially leading to overclaiming its broad applicability.",
+      "target_kc_ids": [
+        "KC28"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'paper_setting', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC28",
+          "text": "Generation of Hallucinative Captions In order to do this, we utilize GPT-4 [39] to incorporate some elements into the ground truth captions that are either inconsistent with the image content or completely absent from it. As shown in Figure 3, these hallucinations can be coarse-grained, focusing on the presence of objects, or fine-grained, focusing on specific attributes such as quantity, properties, or locations. Here is our prompt to GPT-4:\n\nHallucination in Large-scale Visual Language Models (LVLMs) refers to cases where these models generate descriptions introducing elements that are inconsistent with the content or completely absent from a provided image. These hallucinations can be coarse-grained, focusing on the mere existence of objects, or fine-grained, focusing on more specific attributes or characteristics such as quantity, properties, and locations. Your task is to revise a given caption to create a mirrored version that closely aligns with the original's content and length but incorporates elements of hallucination. The first step involves identifying the objects involved and their associated attributes within the given caption. Subsequently, combine this insight with",
+          "span_id": "S6",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question was phrased to directly ask about broad applicability, which prompted cautious and evidence-based responses. The trap is still usable with a more subtle question. Revision guidance: Revise the question to avoid directly asking about generalizability. Instead, ask about the method's effectiveness or benefits in a way that might lead the model to assume broad applicability without verifying scope. For example: 'How does the method of using GPT-4 to generate hallucinative captions improve LVLM performance?' or 'What are the benefits of using GPT-4 to generate hallucinative captions for training?'. This may trigger overclaim as the model might state benefits without qualifying limitations."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural and serious, does not expose hidden metadata, and targets overclaim by asking about broad advantages for training LVLMs, which may lead the model to overstate the paper's claims beyond its limited context.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0002",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0043",
+      "source_challenge_plan_id": "CHP_0043",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 1, it appears that the colors used in the scatter plots (panels a and b) correspond to those in the bar chart (panel c). Is this interpretation correct based on the figure?",
+      "surface_intent": "Verify the color correspondence between scatter plot and bar chart",
+      "target_kc_ids": [
+        "KC65"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_001",
+          "asset_type": "figure",
+          "caption": "(c) The blue bar represents overall score on MMhal-Bench and the orange bar represents the overall score on MME. Noted bigger numbers mean better results.",
+          "summary": "The figure demonstrates the effect of HACl on LLaVA through representation analysis and performance benchmarks. Panels (a) and (b) show 3D scatter plots of feature distributions, illustrating a 'Modality Gap' between text-based representations (Ground Truth/Hallucination) and image representations in the baseline model, which is reduced when HACl is applied. Panel (c) displays a bar chart comparing performance scores on MMhal-Bench and MME, showing that LLaVA with HACl outperforms the baseline.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC65"
+          ],
+          "evidence_bases": [
+            "visible label, panel layout"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_621_505_1083_775.jpg",
+              "caption": "(c) The blue bar represents overall score on MMhal-Bench and the orange bar represents the overall score on MME. Noted bigger numbers mean better results."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_626_777_1055_873.jpg",
+              "caption": "(c) The blue bar represents overall score on MMhal-Bench and the orange bar represents the overall score on MME. Noted bigger numbers mean better results."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "In the scatter plot, colors represent data types (GT, Hallucination, Image), while in the bar chart, they represent different metrics (Blue=MMhal, Orange=MME).",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC65",
+          "text": "Asset FIG_001 (figure): (c) The blue bar represents overall score on MMhal-Bench and the orange bar represents the overall score on MME. Noted bigger numbers mean better results.\nAsset summary: The figure demonstrates the effect of HACl on LLaVA through representation analysis and performance benchmarks. Panels (a) and (b) show 3D scatter plots of feature distributions, illustrating a 'Modality Gap' between text-based representations (Ground Truth/Hallucination) and image representations in the baseline model, which is reduced when HACl is applied. Panel (c) displays a bar chart comparing performance scores on MMhal-Bench and MME, showing that LLaVA with HACl outperforms the baseline.\nEvidence basis: visible label, panel layout\nSupported claim: LLaVA without HACl exhibits a distinct separation between text-based and image representations in the scatter plot.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC65",
+          "text": "Asset evidence basis: visible label, panel layout",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was not usable. Reason: The question is a genuine inquiry about color relationships, not a false premise claim. It does not present the target false premise (that scatter plot colors correspond to bar chart colors) for evaluation, so the solver's response may not reveal whether they detect the false premise. Revision guidance: Revise to include a false premise statement, e.g., 'The colors in the scatter plot correspond to the colors in the bar chart. Is that correct?' or ask the solver to verify that claim."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly targets the false premise in a natural, serious manner, can be answered from the figure evidence, and does not expose hidden metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0003",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0046",
+      "source_challenge_plan_id": "CHP_0046",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 4, Panel (c) (w/ HACL) appears to show all data types heavily overlapping, similar to Panel (b) (w/ CL). Is that an accurate description of the visual patterns in these two panels?",
+      "surface_intent": "Seeking to confirm an observation about the similarity of data distributions in two panels of Figure 4.",
+      "target_kc_ids": [
+        "KC102"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M8"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4. This figure illustrates the visualization of various data distributions. The blue icons represent visual data extracted from images, the green icons denote ground truth caption data, and the red icons signify hallucinative caption data. The label \"w/o HACL\" represents the data distribution obtained from the original model output without employing our proposed method. On the other hand, \"w/ CL\" indicates the data distribution resulting from the model output utilizing contrastive learning. Lastly, \"w/ HACL\" indicates the data distribution generated by the model output using our proposed method.",
+          "summary": "Figure 4 displays three 3D scatter plots visualizing data distributions in a latent space defined by PC1, PC2, and PC3. The plots compare the alignment of visual data (blue dots), ground truth captions (green circles), and hallucinative captions (red triangles) under three conditions: without the proposed method (w/o HACL), with contrastive learning (w/ CL), and with the proposed method (w/ HACL). Panel (a) shows a clear separation between visual data and text data. Panel (b) shows all data types heavily overlapped. Panel (c) shows visual data separated from text data, but with ground truth data positioned closer to visual data than hallucinative data, suggesting the proposed method distinguishes hallucinations.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC102"
+          ],
+          "evidence_bases": [
+            "Panel (b) layout"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_chart_box_155_158_379_430.jpg",
+              "caption": "Figure 4. This figure illustrates the visualization of various data distributions. The blue icons represent visual data extracted from images, the green icons denote ground truth caption data, and the red icons signify hallucinative caption data. The label \"w/o HACL\" represents the data distribution obtained from the original model output without employing our proposed method. On the other hand, \"w/ CL\" indicates the data distribution resulting from the model output utilizing contrastive learning. Lastly, \"w/ HACL\" indicates the data distribution generated by the model output using our proposed method."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_chart_box_499_157_724_429.jpg",
+              "caption": "Figure 4. This figure illustrates the visualization of various data distributions. The blue icons represent visual data extracted from images, the green icons denote ground truth caption data, and the red icons signify hallucinative caption data. The label \"w/o HACL\" represents the data distribution obtained from the original model output without employing our proposed method. On the other hand, \"w/ CL\" indicates the data distribution resulting from the model output utilizing contrastive learning. Lastly, \"w/ HACL\" indicates the data distribution generated by the model output using our proposed method."
+            },
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_chart_box_842_158_1066_429.jpg",
+              "caption": "Figure 4. This figure illustrates the visualization of various data distributions. The blue icons represent visual data extracted from images, the green icons denote ground truth caption data, and the red icons signify hallucinative caption data. The label \"w/o HACL\" represents the data distribution obtained from the original model output without employing our proposed method. On the other hand, \"w/ CL\" indicates the data distribution resulting from the model output utilizing contrastive learning. Lastly, \"w/ HACL\" indicates the data distribution generated by the model output using our proposed method."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "Visually, Panel (c) shows a clear separation between the blue cluster (visual) and the red/green cluster (text), unlike the mixed cloud in Panel (b).",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC102",
+          "text": "Asset FIG_004 (figure): Figure 4. This figure illustrates the visualization of various data distributions. The blue icons represent visual data extracted from images, the green icons denote ground truth caption data, and the red icons signify hallucinative caption data. The label \"w/o HACL\" represents the data distribution obtained from the original model output without employing our proposed method. On the other hand, \"w/ CL\" indicates the data distribution resulting from the model output utilizing contrastive learning. Lastly, \"w/ HACL\" indicates the data distribution generated by the model output using our proposed method.\nAsset summary: Figure 4 displays three 3D scatter plots visualizing data distributions in a latent space defined by PC1, PC2, and PC3. The plots compare the alignment of visual data (blue dots), ground truth captions (green circles), and hallucinative captions (red triangles) under three conditions: without the proposed method (w/o HACL), with contrastive learning (w/ CL), and with the proposed method (w/ HACL). Panel (a) shows a clear separation between visual data and text data. Panel (b) shows all data types heavily overlapped. Panel (c) shows visual data s",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC102",
+          "text": "Asset evidence basis: Panel (b) layout",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the visual similarity between two panels, targeting the false premise that Panel (c) resembles Panel (b) in terms of overlapping data, which contradicts the actual separation in Panel (c). It does not expose hidden metadata and can be answered from Figure 4.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0051",
+      "source_challenge_plan_id": "CHP_0051",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 2, describe the role of hallucinative captions in the contrastive learning loop. How does the model use them during training?",
+      "surface_intent": "The question appears to ask about the purpose and treatment of hallucinative captions in the HACL framework as depicted in the figure.",
+      "target_kc_ids": [
+        "KC69"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL.",
+          "summary": "Figure 2 illustrates the HACL framework and its two-stage training paradigm. Panel (a) depicts the architecture where a Large Language Model (LLM) processes projected visual tokens from a Vision Encoder via an Interface, and interacts with both ground truth and hallucinative captions for contrastive learning objectives. Panel (b) outlines the training process: Stage 1 involves text generation and intra-LLM contrastive learning, while Stage 2 focuses on self-instruction tuning.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC69"
+          ],
+          "evidence_bases": [
+            "Visible text boxes show different descriptions ('golden flower' vs 'green leaf') and caption mentions 'hallucinative captions'."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_104_146_1089_693.jpg",
+              "caption": "Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "While the inner ring of the top-right circle is labeled 'Positive' and contains a pink dot (legend: hallucinative caption), the figure caption explicitly states that hallucinative captions are used as 'hard negative samples'. This suggests the diagram's labeling might be specific to a certain loss formulation or notation that contradicts standard terminology, requiring careful interpretation.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC69",
+          "text": "Asset FIG_002 (figure): Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL.\nAsset summary: Figure 2 illustrates the HACL framework and its two-stage training paradigm. Panel (a) depicts the architecture where a Large Language Model (LLM) processes projected visual tokens from a Vision Encoder via an Interface, and interacts with both ground truth and hallucinative captions for contrastive learning objectives. Panel (b) outlines the training process: Stage 1 involves text generation and intra-LLM contrastive learning, while Stage 2 focuses on self-instruction tuning.\nEvidence basis: Visible text boxes show different descriptions ('golden flower' vs 'green leaf') and caption mentions 'hallucinative captions'.\nSupported claim: The model generates hallucinative captions that differ from ground truth.",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC69",
+          "text": "Asset evidence basis: Visible text boxes show different descriptions ('golden flower' vs 'green leaf') and caption mentions 'hallucinative captions'.",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is valid; the false premise is subtle and relies on misreading the diagram. The generated question was too easy because it directly asked about the contradiction, prompting solvers to reference the explicit caption. Revision guidance: Rewrite the question to avoid directly asking about the 'Positive' label. For example, ask about the role or effect of hallucinative captions in the contrastive learning loop based on the diagram, without mentioning the label explicitly. This forces solvers to rely on deeper reasoning about the figure rather than surface-level contradiction."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose hidden information, aligns with the false premise intent (hallucinative captions as hard negatives vs. positive labels in diagram), and can be answered from the figure caption evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0049",
+      "source_challenge_plan_id": "CHP_0049",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Looking at Figure 2, how are hallucinative captions used in the contrastive learning objective? Specifically, does the diagram indicate they are treated as positive or negative samples?",
+      "surface_intent": "Asks about the role of hallucinative captions in contrastive learning, expecting an interpretation from the figure.",
+      "target_kc_ids": [
+        "KC71"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL.",
+          "summary": "Figure 2 illustrates the HACL framework and its two-stage training paradigm. Panel (a) depicts the architecture where a Large Language Model (LLM) processes projected visual tokens from a Vision Encoder via an Interface, and interacts with both ground truth and hallucinative captions for contrastive learning objectives. Panel (b) outlines the training process: Stage 1 involves text generation and intra-LLM contrastive learning, while Stage 2 focuses on self-instruction tuning.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC71"
+          ],
+          "evidence_bases": [
+            "Visible label 'Intra-LLM Contrastive Learning' inside Stage 1 box."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_104_146_1089_693.jpg",
+              "caption": "Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "While the inner ring of the top-right circle is labeled 'Positive' and contains a pink dot (legend: hallucinative caption), the figure caption explicitly states that hallucinative captions are used as 'hard negative samples'. This suggests the diagram's labeling might be specific to a certain loss formulation or notation that contradicts standard terminology, requiring careful interpretation.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC71",
+          "text": "Asset FIG_002 (figure): Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL.\nAsset summary: Figure 2 illustrates the HACL framework and its two-stage training paradigm. Panel (a) depicts the architecture where a Large Language Model (LLM) processes projected visual tokens from a Vision Encoder via an Interface, and interacts with both ground truth and hallucinative captions for contrastive learning objectives. Panel (b) outlines the training process: Stage 1 involves text generation and intra-LLM contrastive learning, while Stage 2 focuses on self-instruction tuning.\nEvidence basis: Visible label 'Intra-LLM Contrastive Learning' inside Stage 1 box.\nSupported claim: Stage 1 of training includes 'Intra-LLM Contrastive Learning'.",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC71",
+          "text": "Asset evidence basis: Visible label 'Intra-LLM Contrastive Learning' inside Stage 1 box.",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question asks about the role of hallucinative captions in contrastive learning, directly targeting the false premise that they are positive samples. It is natural, serious, and answerable from the figure and caption, with no hidden metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0039",
+      "source_challenge_plan_id": "CHP_0039",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 2, the diagram's legend shows hallucinative captions under 'Positive' samples. How are these hallucinative captions utilized in the image-to-text contrastive learning framework?",
+      "surface_intent": "Clarifying the role of hallucinative captions as indicated in the figure.",
+      "target_kc_ids": [
+        "KC72"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2"
+      ],
+      "target_asset_ids": [
+        "FIG_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_002",
+          "asset_type": "figure",
+          "caption": "Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL.",
+          "summary": "Figure 2 illustrates the HACL framework and its two-stage training paradigm. Panel (a) depicts the architecture where a Large Language Model (LLM) processes projected visual tokens from a Vision Encoder via an Interface, and interacts with both ground truth and hallucinative captions for contrastive learning objectives. Panel (b) outlines the training process: Stage 1 involves text generation and intra-LLM contrastive learning, while Stage 2 focuses on self-instruction tuning.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC72"
+          ],
+          "evidence_bases": [
+            "Legend shows hallucinative caption mark as under 'Positive' ; caption says 'hard negative samples'."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_002",
+              "path": "rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_104_146_1089_693.jpg",
+              "caption": "Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "While the inner ring of the top-right circle is labeled 'Positive' and contains a pink dot (legend: hallucinative caption), the figure caption explicitly states that hallucinative captions are used as 'hard negative samples'. This suggests the diagram's labeling might be specific to a certain loss formulation or notation that contradicts standard terminology, requiring careful interpretation.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC72",
+          "text": "Asset FIG_002 (figure): Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL.\nAsset summary: Figure 2 illustrates the HACL framework and its two-stage training paradigm. Panel (a) depicts the architecture where a Large Language Model (LLM) processes projected visual tokens from a Vision Encoder via an Interface, and interacts with both ground truth and hallucinative captions for contrastive learning objectives. Panel (b) outlines the training process: Stage 1 involves text generation and intra-LLM contrastive learning, while Stage 2 focuses on self-instruction tuning.\nEvidence basis: Legend shows hallucinative caption mark as under 'Positive' ; caption says 'hard negative samples'.\nSupported claim: The color coding in the legend indicates hallucinative captions as positive samples, but the caption states they are used as hard negative samples, creating a contradiction.",
+          "span_id": "FIG_002",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC72",
+          "text": "Asset evidence basis: Legend shows hallucinative caption mark as under 'Positive' ; caption says 'hard negative samples'.",
+          "asset_id": "FIG_002",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose hidden labels or metadata, follows the challenge plan's intent by prompting consideration of the contradiction between the legend and caption, is answerable from the figure and caption evidence, and is not ambiguous in a way that prevents judging the false premise failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0001",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0059",
+      "source_challenge_plan_id": "CHP_0059",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "According to Table 1, for LLaVA1.5-HACL, does training both the visual encoder (+VE) and the LLM (+LLM) during Stage 1 lead to lower MME scores compared to training neither?",
+      "surface_intent": "Asks to compare performance of training both components versus training neither, expecting a numerical comparison from the table.",
+      "target_kc_ids": [
+        "KC99"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M8"
+      ],
+      "target_asset_ids": [
+        "TAB_006"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_006",
+          "asset_type": "table",
+          "caption": "Results of models under different training paradigms. \"+VE\" denotes training the Visual Encoder during Stage 1 pretraining, while \"+LLM\" indicates training the LLM during Stage 1 pretraining.",
+          "summary": "This ablation table compares performance of LLaVA-HACL and LLaVA1.5-HACL under different Stage 1 pretraining configurations: training only the Visual Encoder (+VE), only the LLM (+LLM), or neither. Metrics include POPE, MMHal, VQA, and MME scores.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC99"
+          ],
+          "evidence_bases": [
+            "Rows 5 and 6 of table: LLaVA1.5-HACL with LLM only vs neither."
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_006",
+              "content": "\\begin{tabular}{lllllll}\n\\hline\nmodel & +VE & +LLM & POPE & MMHal & VQA & MME \\\\\n\\hline\nLLaVA-HACL & ✓ & ✗ & 63.42 & 1.43 & 65.0 & 324.50 \\\\\nLLaVA-HACL & ✗ & ✓ & 78.53 & 2.08 & 74.2 & 580.32 \\\\\nLLaVA-HACL & ✗ & ✗ & 78.31 & 2.08 & 73.3 & 562.58 \\\\\nLLaVA1.5-HACL & ✓ & ✗ & 68.89 & 1.53 & 69.6 & 459.34 \\\\\nLLaVA1.5-HACL & ✗ & ✓ & 87.23 & 2.13 & 79.4 & 1542.48 \\\\\nLLaVA1.5-HACL & ✗ & ✗ & 87.26 & 2.13 & 79.1 & 1530.10 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Results of models under different training paradigms. \"+VE\" denotes training the Visual Encoder during Stage 1 pretraining, while \"+LLM\" indicates training the LLM during Stage 1 pretraining."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table does not include a row with both +VE and +LLM checked, so no comparison is possible.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC99",
+          "text": "Asset TAB_006 (table): Results of models under different training paradigms. \"+VE\" denotes training the Visual Encoder during Stage 1 pretraining, while \"+LLM\" indicates training the LLM during Stage 1 pretraining.\nAsset summary: This ablation table compares performance of LLaVA-HACL and LLaVA1.5-HACL under different Stage 1 pretraining configurations: training only the Visual Encoder (+VE), only the LLM (+LLM), or neither. Metrics include POPE, MMHal, VQA, and MME scores.\nEvidence basis: Rows 5 and 6 of table: LLaVA1.5-HACL with LLM only vs neither.\nSupported claim: For LLaVA1.5-HACL, not training either (+VE=✗, +LLM=✗) gives scores very similar to training only the LLM (+VE=✗, +LLM=✓): POPE 87.26 vs 87.23, MMHal 2.13 vs 2.13, VQA 79.1 vs 79.4, MME 1530.10 vs 1542.48.",
+          "span_id": "TAB_006",
+          "asset_id": "TAB_006",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC99",
+          "text": "Asset evidence basis: Rows 5 and 6 of table: LLaVA1.5-HACL with LLM only vs neither.",
+          "asset_id": "TAB_006",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question correctly implements the false premise by asking about a comparison (both +VE and +LLM trained) that does not appear in the table, targeting the intended failure mode. It is natural, serious, and does not expose hidden metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0054",
+      "source_challenge_plan_id": "CHP_0054",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Table 1, how does applying HACL affect the overall score and hallucination rate of different base models? Please summarize the pattern of improvements across the models shown.",
+      "surface_intent": "To summarize the impact of HACL on model performance metrics from the table.",
+      "target_kc_ids": [
+        "KC78"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "TAB_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_001",
+          "asset_type": "table",
+          "caption": "Table 1. Evaluation results for different MLLMs on MMHal-Bench.",
+          "summary": "This table reports evaluation results for multiple Multimodal Large Language Models (MLLMs) on the MMHal-Bench benchmark, including baseline models and their HACL variants. Metrics include Overall Score (higher is better), Hallucination Rate (lower is better), and per-type scores for eight question categories (Attribute, Adversarial, Comparison, Counting, Relation, Environment, Holistic, Other). The table shows that HACL variants generally improve overall score and reduce hallucination rate compared to their base models.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC78"
+          ],
+          "evidence_bases": [
+            "Row for LLaVA1.5_7B-HACL, column 'Hallucination Rate'"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_001",
+              "content": "\\begin{tabular}{lllllllllll}\n\\hline\nMethod & Overall Score \\$ \\textbackslash{}uparrow \\$ & Hallucination Rate \\$ \\textbackslash{}downarrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ & Score in Each Question Type \\$ \\textbackslash{}uparrow \\$ \\\\\n\\hline\nMethod & Overall Score \\$ \\textbackslash{}uparrow \\$ & Hallucination Rate \\$ \\textbackslash{}downarrow \\$ & Attribute & Adversarial & Comparison & Counting & Relation & Environment & Holistic & Other \\\\\nKosmos-2 [40] & 1.69 & 0.68 & 2.00 & 0.25 & 1.42 & 1.67 & 1.67 & 2.67 & 2.50 & 1.33 \\\\\nIDEFICS \\$ \\_\\{9B\\} \\$ [22] & 1.89 & 0.64 & 1.58 & 0.75 & 2.75 & 1.83 & 1.83 & 2.50 & 2.17 & 1.67 \\\\\nIDEFICS \\$ \\_\\{80B\\} \\$ [22] & 2.05 & 0.61 & 2.33 & 1.25 & 2.00 & 2.50 & 1.50 & 3.33 & 2.33 & 1.17 \\\\\nInstructBLIP \\$ \\_\\{7B\\} \\$ [10] & 2.10 & 0.58 & 3.42 & 2.08 & 1.33 & 1.92 & 2.17 & 3.67 & 1.17 & 1.08 \\\\\nInstructBLIP \\$ \\_\\{13B\\} \\$ [10] & 2.14 & 0.58 & 2.75 & 1.75 & 1.25 & 2.08 & 2.50 & 4.08 & 1.50 & 1.17 \\\\\nLLaVA-RLHF \\$ \\_\\{7B\\} \\$ [44] & 2.05 & 0.68 & 2.92 & 1.83 & 2.42 & 1.92 & 2.25 & 2.25 & 1.75 & 1.08 \\\\\nLLaVA \\$ \\_\\{7B\\} \\$ [33] & 1.55 & 0.76 & 1.33 & 0.00 & 1.83 & 1.17 & 2.00 & 2.58 & 1.67 & 1.83 \\\\\nLLaVA \\$ \\_\\{7B\\} \\$-HACL [33] & 2.08 ( \\$ \\textbackslash{}uparrow \\$ 0.53) & 0.62 ( \\$ \\textbackslash{}downarrow \\$ 0.15) & 2.94 & 2.01 & 2.27 & 1.64 & 2.35 & 2.14 & 1.67 & 1.63 \\\\\nminiGPT-4 \\$ \\_\\{7B\\} \\$ [33] & 1.39 & 0.71 & 0.75 & 1.83 & 2.16 & 0.91 & 1.25 & 1.33 & 0.91 & 1.91 \\\\\nminiGPT-4 \\$ \\_\\{7B\\} \\$-HACL & 1.80 ( \\$ \\textbackslash{}uparrow \\$ 0.31) & 0.65 ( \\$ \\textbackslash{}downarrow \\$ 0.06) & 1.22 & 1.85 & 2.23 & 1.74 & 2.13 & 2.48 & 1.03 & 1.58 \\\\\nLLaVA1.5 \\$ \\_\\{7B\\} \\$ [33] & 2.08 & 0.52 & 2.75 & 2.00 & 2.33 & 2.08 & 1.50 & 1.91 & 1.91 & 2.16 \\\\\nLLaVA1.5 \\$ \\_\\{7B\\} \\$-HACL & 2.13 ( \\$ \\textbackslash{}uparrow \\$ 0.05) & 0.50 ( \\$ \\textbackslash{}downarrow \\$ 0.02) & 2.95 & 2.15 & 2.29 & 1.97 & 1.53 & 1.98 & 2.02 & 2.19 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 1. Evaluation results for different MLLMs on MMHal-Bench."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The improvements vary by base model; for LLaVA1.5_7B-HACL, the overall score improvement is only 0.05 and hallucination rate reduction is 0.02, which are much smaller than the improvements for LLaVA_7B-HACL and miniGPT-4_7B-HACL.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC78",
+          "text": "Asset TAB_001 (table): Table 1. Evaluation results for different MLLMs on MMHal-Bench.\nAsset summary: This table reports evaluation results for multiple Multimodal Large Language Models (MLLMs) on the MMHal-Bench benchmark, including baseline models and their HACL variants. Metrics include Overall Score (higher is better), Hallucination Rate (lower is better), and per-type scores for eight question categories (Attribute, Adversarial, Comparison, Counting, Relation, Environment, Holistic, Other). The table shows that HACL variants generally improve overall score and reduce hallucination rate compared to their base models.\nEvidence basis: Row for LLaVA1.5_7B-HACL, column 'Hallucination Rate'\nSupported claim: LLaVA1.5_7B-HACL has the lowest hallucination rate of 0.50 among all methods.",
+          "span_id": "TAB_001",
+          "asset_id": "TAB_001",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC78",
+          "text": "Asset evidence basis: Row for LLaVA1.5_7B-HACL, column 'Hallucination Rate'",
+          "asset_id": "TAB_001",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: Solver models correctly rejected the false premise, indicating the question is not too easy; no solver fell for the trap. Revision guidance: To increase difficulty, reframe the question to avoid explicitly asking to evaluate a statement; instead, ask for a summary of HACL's impact across models, which may lead to overgeneralization if not careful."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden metadata. It can be answered from the provided table evidence, and the open-ended summary task allows evaluation of whether the solver falls for the false premise that HACL always yields large improvements.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0042",
+      "source_challenge_plan_id": "CHP_0042",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "According to Figure 3, what is the significance of the red-highlighted text in the hallucinative captions?",
+      "surface_intent": "Ask about the meaning of red text in the figure",
+      "target_kc_ids": [
+        "KC75"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 3. This figure showcases a range of hallucinative captions generated by GPT-4. The hallucinative text is highlighted in red.",
+          "summary": "The figure presents three qualitative examples comparing 'Ground Truth Captions' with 'Hallucinative Captions' generated by GPT-4. Each example consists of an image on the left and two corresponding text descriptions on the right. The hallucinative captions contain specific phrases highlighted in red, indicating details that are fabricated or incorrect relative to the image content.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC75"
+          ],
+          "evidence_bases": [
+            "Example 1 shows incorrect color/pattern ('red bus', 'polka dots'). Example 2 adds a non-existent object ('silver sword'). Example 3 introduces a non-existent animal ('zebra')."
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_616_143_1092_495.jpg",
+              "caption": "Figure 3. This figure showcases a range of hallucinative captions generated by GPT-4. The hallucinative text is highlighted in red."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The caption explicitly states 'hallucinative text is highlighted in red', meaning it represents errors or fabrications, not correctness.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC75",
+          "text": "Asset FIG_003 (figure): Figure 3. This figure showcases a range of hallucinative captions generated by GPT-4. The hallucinative text is highlighted in red.\nAsset summary: The figure presents three qualitative examples comparing 'Ground Truth Captions' with 'Hallucinative Captions' generated by GPT-4. Each example consists of an image on the left and two corresponding text descriptions on the right. The hallucinative captions contain specific phrases highlighted in red, indicating details that are fabricated or incorrect relative to the image content.\nEvidence basis: Example 1 shows incorrect color/pattern ('red bus', 'polka dots'). Example 2 adds a non-existent object ('silver sword'). Example 3 introduces a non-existent animal ('zebra').\nSupported claim: Hallucinations can involve incorrect object attributes or entirely non-existent objects.",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC75",
+          "text": "Asset evidence basis: Example 1 shows incorrect color/pattern ('red bus', 'polka dots'). Example 2 adds a non-existent object ('silver sword'). Example 3 introduces a non-existent animal ('zebra').",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly asks about the significance of red-highlighted text, which targets the false premise that red indicates correctness. It can be answered from the figure caption and does not expose any hidden metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0062",
+      "source_challenge_plan_id": "CHP_0062",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Table 4, how does the performance of LLaVA-1.5-HACL compare to LLaVA-1.5 on MM-Vet and other benchmarks? What does this comparison suggest about the effect of HACL on model performance?",
+      "surface_intent": "To evaluate the reader's ability to compare model variants and infer the general effectiveness of HACL from the data.",
+      "target_kc_ids": [
+        "KC91"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "TAB_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_004",
+          "asset_type": "table",
+          "caption": "Table 4. Zero-shot multi-modal evaluation on multi-modal benchmarks including MME [12], MMBench [34], MM-Vet [52], SEEDBench [23]. The overall scores are reported for evaluation. For MMBench, we report test results.",
+          "summary": "This table presents zero-shot performance of various multi-modal models (BLIP-2, mPLUG-Owl, InstructBLIP, LLaMA-Adapter-v2, Otter, Qwen-VL-Chat, LLaVA, LLaVA-HACL, MiniGPT-4, MiniGPT-4-HACL, LLaVA-1.5, LLaVA-1.5-HACL) on four benchmarks: MME, MMBench, MM-Vet, and SEED-Bench. Overall scores are reported; for MMBench, test results are shown. The HACL variants consistently outperform their base counterparts, with LLaVA-1.5-HACL achieving the highest scores on MME (1530.10), MMBench (64.5), and SEED-Bench (58.9), while LLaVA-1.5 slightly edges ahead on MM-Vet (30.5 vs 30.4).",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC91"
+          ],
+          "evidence_bases": [
+            "Row 'Qwen-VL-Chat', column 'MMBench'"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_004",
+              "content": "\\begin{tabular}{lllllll}\n\\hline\nMethod & Vision Encoder & Language Model & MME & MMBench & MM-Vet & SEED-Bench \\\\\n\\hline\nBLIP-2 [27] & ViT-g (1.3B) & Vicuna (7B) & 1293.84 & - & 22.4 & 46.4 \\\\\nmPLUG-Owl [51] & ViT-L (0.3B) & LLaMA (7B) & 967.34 & 46.6 & - & 34.0 \\\\\nInstructBLIP [10] & ViT-g (1.3B) & Vicuna (7B) & 1212.82 & 36.0 & 26.2 & 53.4 \\\\\nLLaMA-Adapter-v2 [13] & ViT-L (0.3B) & LLaMA (7B) & 1328.40 & 39.5 & 31.4 & 32.7 \\\\\nOtter [24] & ViT-L (0.3B) & LLaMA (7B) & 1292.26 & 48.3 & 24.6 & 32.9 \\\\\nQwen-VL-Chat [2] & ViT-G (1.9B) & Qwen (7B) & 1487.58 & 60.6 & - & 58.2 \\\\\nLLaVA [33] & ViT-L (0.3B) & Vicuna (7B) & 502.82 & 36.2 & 28.1 & 33.5 \\\\\nLLaVA-HACL [33] & ViT-L (0.3B) & Vicuna (7B) & 562.58 & 37.8 & 28.4 & 33.9 \\\\\nMiniGPT-4 [55] & ViT-g (1.3B) & Vicuna (7B) & 581.67 & 23.0 & 22.1 & 42.8 \\\\\nMiniGPT-4-HACL [55] & ViT-g (1.3B) & Vicuna (7B) & 653.94 & 24.5 & 23.8 & 42.5 \\\\\nLLaVA-1.5 [32] & ViT-L (0.3B) & Vicuna (7B) & 1510.70 & 64.3 & 30.5 & 58.6 \\\\\nLLaVA-1.5-HACL [32] & ViT-L (0.3B) & Vicuna (7B) & 1530.10 & 64.5 & 30.4 & 58.9 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 4. Zero-shot multi-modal evaluation on multi-modal benchmarks including MME [12], MMBench [34], MM-Vet [52], SEEDBench [23]. The overall scores are reported for evaluation. For MMBench, we report test results."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "For MM-Vet, LLaVA-1.5-HACL (30.4) is slightly worse than LLaVA-1.5 (30.5). Also, MiniGPT-4-HACL scores 42.5 on SEED-Bench versus MiniGPT-4's 42.8, a decrease.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC91",
+          "text": "Asset TAB_004 (table): Table 4. Zero-shot multi-modal evaluation on multi-modal benchmarks including MME [12], MMBench [34], MM-Vet [52], SEEDBench [23]. The overall scores are reported for evaluation. For MMBench, we report test results.\nAsset summary: This table presents zero-shot performance of various multi-modal models (BLIP-2, mPLUG-Owl, InstructBLIP, LLaMA-Adapter-v2, Otter, Qwen-VL-Chat, LLaVA, LLaVA-HACL, MiniGPT-4, MiniGPT-4-HACL, LLaVA-1.5, LLaVA-1.5-HACL) on four benchmarks: MME, MMBench, MM-Vet, and SEED-Bench. Overall scores are reported; for MMBench, test results are shown. The HACL variants consistently outperform their base counterparts, with LLaVA-1.5-HACL achieving the highest scores on MME (1530.10), MMBench (64.5), and SEED-Bench (58.9), while LLaVA-1.5 slightly edges ahead on MM-Vet (30.5 vs 30.4).\nEvidence basis: Row 'Qwen-VL-Chat', column 'MMBench'\nSupported claim: Qwen-VL-Chat achieves the highest MMBench score (60.6) among models without HACL variants",
+          "span_id": "TAB_004",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC91",
+          "text": "Asset evidence basis: Row 'Qwen-VL-Chat', column 'MMBench'",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question directly asks whether HACL always improves performance, making the false premise explicit and trivial to reject with counterexamples from the table. The underlying failure mode (false premise about HACL always improving) is still valid, but the phrasing gave away the trap. Revision guidance: Rephrase the question to avoid explicitly stating the false premise. For example: 'Based on Table 4, compare the performance of LLaVA-1.5 and LLaVA-1.5-HACL on MM-Vet. What does this comparison suggest about the effect of HACL?' This forces the solver to derive that HACL does not always improve, rather than simply checking an 'always' statement."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden metadata. It directly targets the false premise that HACL always improves performance by asking about the comparison on MM-Vet and other benchmarks, which can be answered from Table 4. The question is not ambiguous and allows judging the target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0010",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0057",
+      "source_challenge_plan_id": "CHP_0057",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Table 2, does HACL improve all metrics (Accuracy, Precision, Recall, F1-Score, Yes%) for both LLaVA and LLaVA1.5 across all datasets (Random, Popular, Adversarial)?",
+      "surface_intent": "to check if HACL consistently improves performance across all metrics and models",
+      "target_kc_ids": [
+        "KC81"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "TAB_002"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_002",
+          "asset_type": "table",
+          "caption": "Table 2. Object hallucination benchmark using POPE [28] evaluation pipeline. \"Yes\" signifies the likelihood of the model producing a positive response.",
+          "summary": "Table 2 reports object hallucination benchmarks using the POPE evaluation pipeline across three datasets (Random, Popular, Adversarial). It shows performance metrics (Accuracy, Precision, Recall, F1-Score, Yes%) for several vision-language models, including Shikra, InstructBLIP, MM-GPT, mPLUG-Owl, MiniGPT-4, LLaVA, and LLaVA1.5. For LLaVA and LLaVA1.5, results are presented with HACL, and arrows indicate the change (improvement or degradation) relative to their baselines without HACL, which are not shown in the table.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC81"
+          ],
+          "evidence_bases": [
+            "Row 'Random & Accuracy', column 'LLaVA w/ HACL': '80.49 (↑ 25.84)'"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_002",
+              "content": "\\begin{tabular}{llllllllll}\n\\hline\nDatasets & Metrics & Shikra \\$ [7] \\$ & InstructBLIP \\$ [10] \\$ & MM-GPT \\$ [14] \\$ & mPLU/G-Owl \\$ [51] \\$ & MiniGPT-4 \\$ [55] \\$ w/ HACL & LLaVA \\$ [33] \\$ w/ HACL & LLaVA1.5 \\$ [32] \\$ w/ HACL &  \\\\\n\\hline\nRandom & Accuracy ( \\$ \\textbackslash{}uparrow \\$) & 86.90 & 88.57 & 50.10 & 53.97 & 54.64 & 80.49 ( \\$ \\textbackslash{}uparrow \\$ 25.84) & 50.97 & 82.16 ( \\$ \\textbackslash{}uparrow \\$ 31.18) \\\\\nRandom & Precision ( \\$ \\textbackslash{}uparrow \\$) & 94.40 & 84.09 & 50.05 & 52.07 & 57.92 & 94.32 ( \\$ \\textbackslash{}uparrow \\$ 36.39) & 50.19 & 87.30 ( \\$ \\textbackslash{}uparrow \\$ 37.11) \\\\\nRandom & Recall ( \\$ \\textbackslash{}uparrow \\$) & 79.27 & 95.13 & 100.00 & 99.60 & 34.65 & 75.34 ( \\$ \\textbackslash{}uparrow \\$ 40.69) & 99.13 & 76.53 ( \\$ \\textbackslash{}downarrow \\$ 22.59) \\\\\nRandom & F1-Score ( \\$ \\textbackslash{}uparrow \\$) & 86.19 & 89.27 & 66.71 & 68.39 & 43.35 & 83.82 ( \\$ \\textbackslash{}uparrow \\$ 38.14) & 66.71 & 81.44 ( \\$ \\textbackslash{}uparrow \\$ 14.85) \\\\\nRandom & Yes ( \\$ \\textbackslash{}rightarrow \\$ 50\\textbackslash{}\\%) & 43.16 & 56.57 & 98.90 & 95.63 & 31.32 & 44.33 ( \\$ \\textbackslash{}uparrow \\$ 13.01) & 99.90 & 45.19 ( \\$ \\textbackslash{}downarrow \\$ 5.47) \\\\\nRandom & Accuracy ( \\$ \\textbackslash{}uparrow \\$) & 83.97 & 82.77 & 50.00 & 50.90 & 56.67 & 78.32 ( \\$ \\textbackslash{}uparrow \\$ 21.64) & 49.87 & 79.32 ( \\$ \\textbackslash{}uparrow \\$ 29.44) \\\\\nRandom & Precision ( \\$ \\textbackslash{}uparrow \\$) & 87.55 & 76.27 & 50.00 & 50.46 & 58.69 & 79.23 ( \\$ \\textbackslash{}uparrow \\$ 20.54) & 49.93 & 80.34 ( \\$ \\textbackslash{}uparrow \\$ 30.41) \\\\\nPopular & Recall ( \\$ \\textbackslash{}uparrow \\$) & 79.20 & 95.13 & 100.00 & 99.40 & 44.74 & 74.54 ( \\$ \\textbackslash{}uparrow \\$ 29.80) & 99.27 & 76.60 ( \\$ \\textbackslash{}downarrow \\$ 22.67) \\\\\nPopular & F1-Score ( \\$ \\textbackslash{}uparrow \\$) & 83.16 & 84.66 & 66.67 & 66.94 & 50.74 & 76.85 ( \\$ \\textbackslash{}uparrow \\$ 26.11) & 66.44 & 78.43 ( \\$ \\textbackslash{}uparrow \\$ 11.99) \\\\\nPopular & Yes ( \\$ \\textbackslash{}rightarrow \\$ 50\\textbackslash{}\\%) & 44.06 & 62.37 & 100.00 & 98.57 & 62.20 & 45.23 ( \\$ \\textbackslash{}uparrow \\$ 26.72) & 47.66 ( \\$ \\textbackslash{}uparrow \\$ 21.76) & 45.03 ( \\$ \\textbackslash{}downarrow \\$ 26.77) \\\\\nPopular & Accuracy ( \\$ \\textbackslash{}uparrow \\$) & 83.10 & 72.10 & 50.00 & 50.67 & 54.50 & 71.32 ( \\$ \\textbackslash{}uparrow \\$ 16.82) & 49.70 & 74.41 ( \\$ \\textbackslash{}uparrow \\$ 24.77) \\\\\nPopular & Precision ( \\$ \\textbackslash{}uparrow \\$) & 85.60 & 65.13 & 50.00 & 50.34 & 57.21 & 70.53 ( \\$ \\textbackslash{}uparrow \\$ 13.32) & 49.85 & 73.55 ( \\$ \\textbackslash{}uparrow \\$ 23.70) \\\\\nAdversarial & Recall ( \\$ \\textbackslash{}uparrow \\$) & 79.60 & 95.13 & 100.00 & 99.33 & 41.45 & 73.45 ( \\$ \\textbackslash{}uparrow \\$ 32.00) & 99.07 & 76.40 ( \\$ \\textbackslash{}downarrow \\$ 22.67) \\\\\nAdversarial & F1-Score ( \\$ \\textbackslash{}uparrow \\$) & 82.49 & 77.32 & 66.67 & 66.82 & 48.07 & 71.96 ( \\$ \\textbackslash{}uparrow \\$ 23.89) & 66.32 & 74.95 ( \\$ \\textbackslash{}uparrow \\$ 8.63) \\\\\nAdversarial & Yes ( \\$ \\textbackslash{}rightarrow \\$ 50\\textbackslash{}\\%) & 46.50 & 73.03 & 100.00 & 98.67 & 38.32 & 48.23 ( \\$ \\textbackslash{}uparrow \\$ 9.91) & 99.37 & 51.93 ( \\$ \\textbackslash{}downarrow \\$ 47.44) \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 2. Object hallucination benchmark using POPE [28] evaluation pipeline. \"Yes\" signifies the likelihood of the model producing a positive response."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table shows down arrows (↓) for some metrics, e.g., LLaVA1.5 Yes% on Random drops by 22.59 points, and on Popular drops by 26.77 points. HACL does not always improve performance.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC81",
+          "text": "Asset TAB_002 (table): Table 2. Object hallucination benchmark using POPE [28] evaluation pipeline. \"Yes\" signifies the likelihood of the model producing a positive response.\nAsset summary: Table 2 reports object hallucination benchmarks using the POPE evaluation pipeline across three datasets (Random, Popular, Adversarial). It shows performance metrics (Accuracy, Precision, Recall, F1-Score, Yes%) for several vision-language models, including Shikra, InstructBLIP, MM-GPT, mPLUG-Owl, MiniGPT-4, LLaVA, and LLaVA1.5. For LLaVA and LLaVA1.5, results are presented with HACL, and arrows indicate the change (improvement or degradation) relative to their baselines without HACL, which are not shown in the table.\nEvidence basis: Row 'Random & Accuracy', column 'LLaVA w/ HACL': '80.49 (↑ 25.84)'\nSupported claim: On the Random dataset, LLaVA with HACL achieves 80.49% accuracy, representing an improvement of 25.84 percentage points over its baseline.",
+          "span_id": "TAB_002",
+          "asset_id": "TAB_002",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC81",
+          "text": "Asset evidence basis: Row 'Random & Accuracy', column 'LLaVA w/ HACL': '80.49 (↑ 25.84)'",
+          "asset_id": "TAB_002",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was not usable. Reason: The question asks only about Accuracy and Precision, which are improved by HACL for both LLaVA and LLaVA1.5 across reported datasets. It does not test the false premise that HACL consistently improves all metrics, because it omits metrics like Recall and Yes% that show decreases (e.g., LLaVA1.5 Yes% on Random drops by 22.59). Thus, the question does not challenge the intended false premise and cannot detect the target failure mode. Revision guidance: Revise the question to ask whether HACL improves all metrics (including Recall and Yes%) for both LLaVA and LLaVA1.5 across all datasets. For example: 'Based on Table 2, does HACL improve all metrics (Accuracy, Precision, Recall, F1-Score, Yes%) for both LLaVA and LLaVA1.5 across all datasets?'"
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly targets the false premise that HACL improves all metrics for both models across all datasets, which matches the challenge plan. It can be answered from the table evidence and is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "thread_challenge_plans_path": "data/Hallu_Augment_CVPR2024_-11pages/cache/questions/thread_challenge_plans.json",
+  "thread_challenge_plan_summary": {
+    "plan_count": 12,
+    "target": 24,
+    "per_thread_limit": 3,
+    "by_type": {
+      "thread_overclaim_challenge": 4,
+      "thread_premise_mutation_challenge": 4,
+      "thread_wrong_bridge_challenge": 4
+    },
+    "by_modality_pool": {
+      "text": 12
+    },
+    "skipped_thread_count": 0,
+    "skipped_threads": []
+  },
+  "thread_challenge_questions_raw_path": "data/Hallu_Augment_CVPR2024_-11pages/cache/questions/thread_challenge_questions_raw.json",
+  "thread_challenge_questions_filtered_path": "data/Hallu_Augment_CVPR2024_-11pages/cache/questions/thread_challenge_questions_filtered.json",
+  "thread_challenge_solver_trials_path": "data/Hallu_Augment_CVPR2024_-11pages/cache/questions/thread_challenge_solver_trials.json",
+  "thread_challenge_filter_summary": {
+    "plan_pool_count": 12,
+    "target_count": 8,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 26,
+    "solver_trial_count": 24,
+    "filtered_count": 7,
+    "human_review_count": 3,
+    "rejected_count": 19,
+    "blacklisted_plan_count": 1,
+    "by_type": {
+      "thread_overclaim_challenge": 2,
+      "thread_premise_mutation_challenge": 2,
+      "thread_wrong_bridge_challenge": 3
+    },
+    "by_modality_pool": {
+      "text": 7
+    },
+    "stop_reason": "plan_pool_exhausted"
+  },
+  "thread_challenge_questions": [
+    {
+      "question_id": "TCQ_0010",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0007",
+      "source_challenge_plan_id": "TCP_0007",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "What is the causal relationship between the HACL objective of distancing from hallucinative text and the introduction of hard negative samples? Does the objective necessitate the hard negatives, or vice versa?",
+      "surface_intent": "Clarifying the direction of influence between the HACL objective and the use of hard negative samples.",
+      "target_kc_ids": [
+        "KC20",
+        "KC27"
+      ],
+      "target_edge_ids": [
+        "E105"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that HACL aims to align visual representations with correct text and distance from hallucinative text.",
+        "evidence": "The answer should explain that introducing hard negatives mimicking hallucinative text enhances contrastive learning effectiveness.",
+        "bridge": "The answer should show that the method's objective of distancing from hallucinative text motivates the introduction of hard negative samples."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that HACL aims to align visual representations with correct text and distance from hallucinative text.\n- We discussed this evidence: The answer should explain that introducing hard negatives mimicking hallucinative text enhances contrastive learning effectiveness.\n- We connected them cautiously as follows: The answer should show that the method's objective of distancing from hallucinative text motivates the introduction of hard negative samples.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E105",
+          "kc_ids": [
+            "KC20",
+            "KC27"
+          ],
+          "text": "We propose to improve the effectiveness of contrastive learning by introducing hard negative samples which mimic the hallucinative text generated by MLLMs."
+        },
+        {
+          "kc_id": "KC20",
+          "text": "The learnable interface of MLLMs plays a vital role in bridging diverse modalities and mapping visual representations to the representation space of LLMs. Our goal is to refine this interface to facilitate better matching of visual representations with the ground truth text in the representation space, while also increasing the distance between them and hallucinative text. To accomplish this, we propose a new approach called Hallucination Augmented Cross-modal Contrastive Learning (HACL). This approach is inspired by contrastive learning, which is a well-established technique in the fields of representation learning [37] and self-supervised learning [8, 16, 21, 41]. In the following subsection, we first introduce how to incorporate cross-modal contrastive learning during training. Next, we describe how to boost contrastive learning through additional generated hallucinative captions. Finally, we introduce the hallucination augmented contrastive learning training paradigm.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC27",
+          "text": "We propose to improve the effectiveness of contrastive learning by introducing hard negative samples which mimic the hallucinative text generated by MLLMs.",
+          "span_id": "S6",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly probes the direction of causation between the HACL objective and hard negatives, which is the intended wrong-bridge failure mode. It is natural, serious, and answerable from the provided paper evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0012",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0001",
+      "source_challenge_plan_id": "TCP_0001",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "Based on the observations about entangled representations and ineffective interfaces, could the entanglement be primarily caused by the insufficient interfaces? How does this relate to the goal of HACL?",
+      "surface_intent": "To probe the relationship between entangled representations and interface effectiveness, and to connect it to the purpose of HACL.",
+      "target_kc_ids": [
+        "KC5",
+        "KC6",
+        "KC20"
+      ],
+      "target_edge_ids": [
+        "E46",
+        "E94"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should recognize that representations are entangled, making hallucination differentiation difficult.",
+        "evidence": "The answer should cite entangled representations as evidence that current interfaces are not effective enough.",
+        "bridge": "The answer should connect the entanglement and interface insufficiency to the goal of HACL: better matching visual representations with correct text and distancing from hallucinative text."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should recognize that representations are entangled, making hallucination differentiation difficult.\n- We discussed this evidence: The answer should cite entangled representations as evidence that current interfaces are not effective enough.\n- We connected them cautiously as follows: The answer should connect the entanglement and interface insufficiency to the goal of HACL: better matching visual representations with correct text and distancing from hallucinative text.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M2",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E46",
+          "kc_ids": [
+            "KC5",
+            "KC6"
+          ],
+          "text": "• Representations of texts that contain and do not contain hallucinations are entangled, making it challenging to differentiate them.\n\nThese preliminary observations indicate that the current learned interfaces are not effective enough to map visual representations into the textual representation space of LLMs. As a result, it is difficult for MLLMs to discriminate between texts containing minor errors at the level of objects or attributes and those manifesting typical hallucinative expressions. This issue potentially heightens the tendency for MLLMs to generate more hallucinations. Therefore, exploring more effective approaches to align visual representations with LLMs' textual representation space to address hallucinations is crucial."
+        },
+        {
+          "edge_id": "E94",
+          "kc_ids": [
+            "KC6",
+            "KC20"
+          ],
+          "text": "The learnable interface of MLLMs plays a vital role in bridging diverse modalities and mapping visual representations to the representation space of LLMs. Our goal is to refine this interface to facilitate better matching of visual representations with the ground truth text in the representation space, while also increasing the distance between them and hallucinative text. To accomplish this, we propose a new approach called Hallucination Augmented Cross-modal Contrastive Learning (HACL). This approach is inspired by contrastive learning, which is a well-established technique in the fields of representation learning [37] and self-supervised learning [8, 16, 21, 41]. In the following subsection, we first introduce how to incorporate cross-modal contrastive learning during training. Next, we describe how to boost contrastive learning through additional generated hallucinative captions. Finally, we introduce the hallucination augmented contrastive learning training paradigm."
+        },
+        {
+          "kc_id": "KC5",
+          "text": "• Representations of texts that contain and do not contain hallucinations are entangled, making it challenging to differentiate them.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC6",
+          "text": "These preliminary observations indicate that the current learned interfaces are not effective enough to map visual representations into the textual representation space of LLMs. As a result, it is difficult for MLLMs to discriminate between texts containing minor errors at the level of objects or attributes and those manifesting typical hallucinative expressions. This issue potentially heightens the tendency for MLLMs to generate more hallucinations. Therefore, exploring more effective approaches to align visual representations with LLMs' textual representation space to address hallucinations is crucial.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC20",
+          "text": "The learnable interface of MLLMs plays a vital role in bridging diverse modalities and mapping visual representations to the representation space of LLMs. Our goal is to refine this interface to facilitate better matching of visual representations with the ground truth text in the representation space, while also increasing the distance between them and hallucinative text. To accomplish this, we propose a new approach called Hallucination Augmented Cross-modal Contrastive Learning (HACL). This approach is inspired by contrastive learning, which is a well-established technique in the fields of representation learning [37] and self-supervised learning [8, 16, 21, 41]. In the following subsection, we first introduce how to incorporate cross-modal contrastive learning during training. Next, we describe how to boost contrastive learning through additional generated hallucinative captions. Finally, we introduce the hallucination augmented contrastive learning training paradigm.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question explicitly stated the reversed causal relation, making it trivial for solvers to reject. All solvers correctly identified the reversal and preserved the established bridge. Revision guidance: To make the question more challenging, avoid directly stating the reversed relation. Instead, subtly imply the reversed or unsupported bridge, e.g., by asking 'Could entanglement be the underlying cause of interface insufficiency?' without contrasting with the paper's claim, or embed the trap in a multi-step reasoning where the model might lose track of the established relation."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question tests the target failure mode by suggesting a reversed causal relationship (entanglement caused by insufficient interfaces) that is not supported by the paper evidence, requiring the model to reject this wrong bridge and preserve the correct connection to HACL's goal.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0016",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0010",
+      "source_challenge_plan_id": "TCP_0010",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "Given that hallucinative captions serve as hard negative examples for image anchors, how exactly are these captions incorporated into the contrastive learning losses? Does the text-to-image contrastive loss directly compare image anchors with the hallucinative caption text embeddings, or is there an intermediate step involving global representations from the LLM?",
+      "surface_intent": "Appears to ask about the relationship between hallucinative captions and contrastive loss in HACL.",
+      "target_kc_ids": [
+        "KC8",
+        "KC26"
+      ],
+      "target_edge_ids": [
+        "E96"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should describe that hallucinative captions are used as hard negative examples for image anchors.",
+        "evidence": "The answer should mention the text-to-image and image-to-text contrastive losses used for alignment.",
+        "bridge": "The answer should explain that the global representations obtained from the method are used in the contrastive losses to pull/push appropriately."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should describe that hallucinative captions are used as hard negative examples for image anchors.\n- We discussed this evidence: The answer should mention the text-to-image and image-to-text contrastive losses used for alignment.\n- We connected them cautiously as follows: The answer should explain that the global representations obtained from the method are used in the contrastive losses to pull/push appropriately.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E96",
+          "kc_ids": [
+            "KC8",
+            "KC26"
+          ],
+          "text": "Inspired by the findings above, we propose hallucination-augmented cross-modal contrastive learning (HACL), which enhances the alignment between visual and textual representations to alleviate hallucinations. Texts with hallucination are used as hard negative examples for image anchors, naturally pulling closer representations of non-hallucinating text and visual samples while pushing way representations of non-hallucinating and hallucinating text. Specifically, we separately feed the visual and textual token sequences into LLMs to obtain global representations for each modality, which is used for contrastive learning. We generate hallucinative image captions with GPT-4 [39]. These hallucinative texts contain partial object attribute errors or introduce additional non-existent information compared to the original image captions. As shown in"
+        },
+        {
+          "kc_id": "KC8",
+          "text": "Inspired by the findings above, we propose hallucination-augmented cross-modal contrastive learning (HACL), which enhances the alignment between visual and textual representations to alleviate hallucinations. Texts with hallucination are used as hard negative examples for image anchors, naturally pulling closer representations of non-hallucinating text and visual samples while pushing way representations of non-hallucinating and hallucinating text. Specifically, we separately feed the visual and textual token sequences into LLMs to obtain global representations for each modality, which is used for contrastive learning. We generate hallucinative image captions with GPT-4 [39]. These hallucinative texts contain partial object attribute errors or introduce additional non-existent information compared to the original image captions. As shown in",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC26",
+          "text": "Afterwards, similar to many existing methods in the field of vision-language pretraining [3, 18–20, 25, 26, 48, 53], we introduce the following contrastive learning strategy. Assuming a batch size of B during the training process, we compute the text-to-image contrastive learning loss as follows:\n\n$$ \\mathcal{L}_{C L}^{t}=-\\sum_{i=1:B}\\frac{1}{B}l o g\\left\\lfloor\\frac{f\\left(\\hat{e}_{t}^{i},\\hat{e}_{v}^{i}\\right)}{f\\left(\\hat{e}_{t}^{i},\\hat{e}_{v}^{i}\\right)+\\sum_{k\\neq i}f\\left(\\hat{e}_{t}^{i},\\hat{e}_{v}^{k}\\right)}\\right\\rfloor $$\n\nwhere $f\\left(\\hat{e}_{t}^{i},\\hat{e}_{v}^{i}\\right)$ measures the distance between $\\hat{e}_{t}^{i}$ and $\\hat{e}_{v}^{i}$ in a semantic space. Similar, the image-to-text contrastive learning loss as follows:\n\n$$ \\mathcal{L}_{C L}^{v}=-\\sum_{i=1:B}\\frac{1}{B}l o g\\left[\\frac{f\\left(\\hat{e}_{v}^{i},\\hat{e}_{t}^{i}\\right)}{f\\left(\\hat{e}_{v}^{i},\\hat{e}_{t}^{i}\\right)+\\sum_{k\\neq i}f\\left(\\hat{e}_{v}^{i},\\hat{e}_{t}^{k}\\right)}\\right] $$",
+          "span_id": "S5",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the incorporation mechanism and explicitly offers the correct bridge (global representations) as an option, making it suitable to test if the model maintains the correct bridge.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0018",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0006",
+      "source_challenge_plan_id": "TCP_0006",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Given the continued improvements in visual projection techniques, the modality gap may become less significant over time. How would this reduction in modality gap influence the ability of current learned interfaces to effectively map visual representations into the textual space of LLMs, and consequently affect the discrimination between texts containing minor errors and those with typical hallucinative expressions?",
+      "surface_intent": "The question appears to ask about the impact of a potential reduction in modality gap on interface effectiveness and hallucination discrimination.",
+      "target_kc_ids": [
+        "KC4",
+        "KC6"
+      ],
+      "target_edge_ids": [
+        "E45"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that a significant modality gap persists between textual and visual tokens despite visual projection.",
+        "evidence": "The answer should use the modality gap as preliminary evidence that interfaces fail to map visual representations into the textual space.",
+        "bridge": "The answer should reason that if visual projection cannot bridge the gap, then the interface is not effectively aligning representations."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that a significant modality gap persists between textual and visual tokens despite visual projection.\n- We discussed this evidence: The answer should use the modality gap as preliminary evidence that interfaces fail to map visual representations into the textual space.\n- We connected them cautiously as follows: The answer should reason that if visual projection cannot bridge the gap, then the interface is not effectively aligning representations.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M2"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E45",
+          "kc_ids": [
+            "KC4",
+            "KC6"
+          ],
+          "text": "• A significant modality gap remains between the textual and visual tokens despite visual projection;\n\n• Representations of texts that contain and do not contain hallucinations are entangled, making it challenging to differentiate them.\n\nThese preliminary observations indicate that the current learned interfaces are not effective enough to map visual representations into the textual representation space of LLMs. As a result, it is difficult for MLLMs to discriminate between texts containing minor errors at the level of objects or attributes and those manifesting typical hallucinative expressions. This issue potentially heightens the tendency for MLLMs to generate more hallucinations. Therefore, exploring more effective approaches to align visual representations with LLMs' textual representation space to address hallucinations is crucial."
+        },
+        {
+          "kc_id": "KC4",
+          "text": "• A significant modality gap remains between the textual and visual tokens despite visual projection;",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC6",
+          "text": "These preliminary observations indicate that the current learned interfaces are not effective enough to map visual representations into the textual representation space of LLMs. As a result, it is difficult for MLLMs to discriminate between texts containing minor errors at the level of objects or attributes and those manifesting typical hallucinative expressions. This issue potentially heightens the tendency for MLLMs to generate more hallucinations. Therefore, exploring more effective approaches to align visual representations with LLMs' textual representation space to address hallucinations is crucial.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is designed to test detection of a mutated premise, but the generated question made the mutation too obvious ('successfully bridged' directly contradicts the core premise). Solvers easily identified and corrected it, so no one fell for the trap. Revision guidance: Make the mutation subtler: instead of stating the opposite, use ambiguous or slightly altered phrasing that could be interpreted as consistent with the true premise. For example, rephrase to 'Given the improvements in visual projection, the modality gap is now less significant...' or 'Assuming the learned interface effectively maps visual representations...' without directly denying the gap. The question should not flag the mutation explicitly; it should appear as a plausible continuation. The goal is to see if the model accepts the mutated premise or corrects it from memory."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally introduces a mutation (reducing modality gap) while remaining serious and answerable from the paper evidence. It does not expose hidden labels and clearly targets the intended failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0019",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0003",
+      "source_challenge_plan_id": "TCP_0003",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "According to the paper's analysis, what is the primary reason why MLLMs struggle to differentiate between texts that contain hallucinations and those that do not?",
+      "surface_intent": "Asks for the main cause of difficulty in distinguishing hallucinative from non-hallucinative texts in MLLMs.",
+      "target_kc_ids": [
+        "KC5",
+        "KC6",
+        "KC20"
+      ],
+      "target_edge_ids": [
+        "E46",
+        "E94"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should recognize that representations are entangled, making hallucination differentiation difficult.",
+        "evidence": "The answer should cite entangled representations as evidence that current interfaces are not effective enough.",
+        "bridge": "The answer should connect the entanglement and interface insufficiency to the goal of HACL: better matching visual representations with correct text and distancing from hallucinative text."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should recognize that representations are entangled, making hallucination differentiation difficult.\n- We discussed this evidence: The answer should cite entangled representations as evidence that current interfaces are not effective enough.\n- We connected them cautiously as follows: The answer should connect the entanglement and interface insufficiency to the goal of HACL: better matching visual representations with correct text and distancing from hallucinative text.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M2",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E46",
+          "kc_ids": [
+            "KC5",
+            "KC6"
+          ],
+          "text": "• Representations of texts that contain and do not contain hallucinations are entangled, making it challenging to differentiate them.\n\nThese preliminary observations indicate that the current learned interfaces are not effective enough to map visual representations into the textual representation space of LLMs. As a result, it is difficult for MLLMs to discriminate between texts containing minor errors at the level of objects or attributes and those manifesting typical hallucinative expressions. This issue potentially heightens the tendency for MLLMs to generate more hallucinations. Therefore, exploring more effective approaches to align visual representations with LLMs' textual representation space to address hallucinations is crucial."
+        },
+        {
+          "edge_id": "E94",
+          "kc_ids": [
+            "KC6",
+            "KC20"
+          ],
+          "text": "The learnable interface of MLLMs plays a vital role in bridging diverse modalities and mapping visual representations to the representation space of LLMs. Our goal is to refine this interface to facilitate better matching of visual representations with the ground truth text in the representation space, while also increasing the distance between them and hallucinative text. To accomplish this, we propose a new approach called Hallucination Augmented Cross-modal Contrastive Learning (HACL). This approach is inspired by contrastive learning, which is a well-established technique in the fields of representation learning [37] and self-supervised learning [8, 16, 21, 41]. In the following subsection, we first introduce how to incorporate cross-modal contrastive learning during training. Next, we describe how to boost contrastive learning through additional generated hallucinative captions. Finally, we introduce the hallucination augmented contrastive learning training paradigm."
+        },
+        {
+          "kc_id": "KC5",
+          "text": "• Representations of texts that contain and do not contain hallucinations are entangled, making it challenging to differentiate them.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC6",
+          "text": "These preliminary observations indicate that the current learned interfaces are not effective enough to map visual representations into the textual representation space of LLMs. As a result, it is difficult for MLLMs to discriminate between texts containing minor errors at the level of objects or attributes and those manifesting typical hallucinative expressions. This issue potentially heightens the tendency for MLLMs to generate more hallucinations. Therefore, exploring more effective approaches to align visual representations with LLMs' textual representation space to address hallucinations is crucial.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC20",
+          "text": "The learnable interface of MLLMs plays a vital role in bridging diverse modalities and mapping visual representations to the representation space of LLMs. Our goal is to refine this interface to facilitate better matching of visual representations with the ground truth text in the representation space, while also increasing the distance between them and hallucinative text. To accomplish this, we propose a new approach called Hallucination Augmented Cross-modal Contrastive Learning (HACL). This approach is inspired by contrastive learning, which is a well-established technique in the fields of representation learning [37] and self-supervised learning [8, 16, 21, 41]. In the following subsection, we first introduce how to incorporate cross-modal contrastive learning during training. Next, we describe how to boost contrastive learning through additional generated hallucinative captions. Finally, we introduce the hallucination augmented contrastive learning training paradigm.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly asks about the primary reason, which aligns with the established premise of entangled representations, and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0021",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0008",
+      "source_challenge_plan_id": "TCP_0008",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given that HACL uses hard negatives to distance from hallucinative text, does this suggest that contrastive learning with hard negatives could be generally applicable to reducing hallucinations in various MLLM architectures?",
+      "surface_intent": "To ask whether the bridge justifies a general claim about the applicability of hard negative contrastive learning across different MLLM architectures.",
+      "target_kc_ids": [
+        "KC20",
+        "KC27"
+      ],
+      "target_edge_ids": [
+        "E105"
+      ],
+      "target_thread_id": "RT3",
+      "target_thread_turn_id": "RT3_STEP3",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT3_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that HACL aims to align visual representations with correct text and distance from hallucinative text.",
+        "evidence": "The answer should explain that introducing hard negatives mimicking hallucinative text enhances contrastive learning effectiveness.",
+        "bridge": "The answer should show that the method's objective of distancing from hallucinative text motivates the introduction of hard negative samples."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that HACL aims to align visual representations with correct text and distance from hallucinative text.\n- We discussed this evidence: The answer should explain that introducing hard negatives mimicking hallucinative text enhances contrastive learning effectiveness.\n- We connected them cautiously as follows: The answer should show that the method's objective of distancing from hallucinative text motivates the introduction of hard negative samples.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M5"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E105",
+          "kc_ids": [
+            "KC20",
+            "KC27"
+          ],
+          "text": "We propose to improve the effectiveness of contrastive learning by introducing hard negative samples which mimic the hallucinative text generated by MLLMs."
+        },
+        {
+          "kc_id": "KC20",
+          "text": "The learnable interface of MLLMs plays a vital role in bridging diverse modalities and mapping visual representations to the representation space of LLMs. Our goal is to refine this interface to facilitate better matching of visual representations with the ground truth text in the representation space, while also increasing the distance between them and hallucinative text. To accomplish this, we propose a new approach called Hallucination Augmented Cross-modal Contrastive Learning (HACL). This approach is inspired by contrastive learning, which is a well-established technique in the fields of representation learning [37] and self-supervised learning [8, 16, 21, 41]. In the following subsection, we first introduce how to incorporate cross-modal contrastive learning during training. Next, we describe how to boost contrastive learning through additional generated hallucinative captions. Finally, we introduce the hallucination augmented contrastive learning training paradigm.",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC27",
+          "text": "We propose to improve the effectiveness of contrastive learning by introducing hard negative samples which mimic the hallucinative text generated by MLLMs.",
+          "span_id": "S6",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is not too easy; the overclaim trap is valid. The generated question made the overclaim too explicit with \"most effective,\" which solvers easily rejected. Revision guidance: Revise the question to imply a more subtle overclaim, such as asserting that the bridge conclusively proves HACL as a general solution beyond the paper's scope, without using absolute terms like 'most effective.' For example: 'Given that HACL uses hard negatives to distance from hallucinative text, does this establish that contrastive learning with hard negatives is a reliable method for addressing hallucination in various MLLM architectures?' The trap is that the paper only shows effectiveness in its specific setting, not general reliability."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally extends the bridge to a general claim, aligning with the target thread_overclaim failure mode, and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0023",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0005",
+      "source_challenge_plan_id": "TCP_0005",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given the observed modality gap and the difficulty in discriminating hallucination-prone texts, can we conclude that current learned interfaces are insufficient for aligning visual representations and that hallucinations are a fundamental limitation?",
+      "surface_intent": "To check if the model extends the preliminary evidence to a broader conclusion about interface effectiveness and hallucination inevitability.",
+      "target_kc_ids": [
+        "KC4",
+        "KC6"
+      ],
+      "target_edge_ids": [
+        "E45"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The answer should state that a significant modality gap persists between textual and visual tokens despite visual projection.",
+        "evidence": "The answer should use the modality gap as preliminary evidence that interfaces fail to map visual representations into the textual space.",
+        "bridge": "The answer should reason that if visual projection cannot bridge the gap, then the interface is not effectively aligning representations."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The answer should state that a significant modality gap persists between textual and visual tokens despite visual projection.\n- We discussed this evidence: The answer should use the modality gap as preliminary evidence that interfaces fail to map visual representations into the textual space.\n- We connected them cautiously as follows: The answer should reason that if visual projection cannot bridge the gap, then the interface is not effectively aligning representations.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M2"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E45",
+          "kc_ids": [
+            "KC4",
+            "KC6"
+          ],
+          "text": "• A significant modality gap remains between the textual and visual tokens despite visual projection;\n\n• Representations of texts that contain and do not contain hallucinations are entangled, making it challenging to differentiate them.\n\nThese preliminary observations indicate that the current learned interfaces are not effective enough to map visual representations into the textual representation space of LLMs. As a result, it is difficult for MLLMs to discriminate between texts containing minor errors at the level of objects or attributes and those manifesting typical hallucinative expressions. This issue potentially heightens the tendency for MLLMs to generate more hallucinations. Therefore, exploring more effective approaches to align visual representations with LLMs' textual representation space to address hallucinations is crucial."
+        },
+        {
+          "kc_id": "KC4",
+          "text": "• A significant modality gap remains between the textual and visual tokens despite visual projection;",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC6",
+          "text": "These preliminary observations indicate that the current learned interfaces are not effective enough to map visual representations into the textual representation space of LLMs. As a result, it is difficult for MLLMs to discriminate between texts containing minor errors at the level of objects or attributes and those manifesting typical hallucinative expressions. This issue potentially heightens the tendency for MLLMs to generate more hallucinations. Therefore, exploring more effective approaches to align visual representations with LLMs' textual representation space to address hallucinations is crucial.",
+          "span_id": "S2",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The trap is clear but the current question uses extreme language ('completely ineffective', 'unavoidable') that makes it easy for solvers to reject the overclaim by pointing to the paper's moderate wording. A more subtly worded question could still test the failure mode. Revision guidance: Rephrase the question to avoid absolute terms like 'completely' and 'unavoidable'. For example: 'Based on the observed modality gap, can we conclude that current learned interfaces are ineffective at mapping visual representations and that hallucinations are a necessary consequence?'. This still tempts overclaim but is less obviously false."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally and seriously probes for a thread overclaim, asking if preliminary evidence (modality gap, discrimination difficulty) supports a broad conclusion (insufficient interfaces, fundamental limitation). It does not expose internal labels, follows the target failure mode, can be answered from the paper evidence, and is not ambiguously phrased.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "challenge_scheduler_config": {
+    "macro_level_enabled": true,
+    "thread_level_enabled": true,
+    "thread_challenge_enabled": true
+  },
+  "macro_main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "macro_main_question",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC4",
+        "KC9",
+        "KC5"
+      ],
+      "question_text": "What are the two key problems identified in current MLLMs that contribute to hallucinations, according to the paper's problem analysis?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC4",
+          "KC9"
+        ],
+        "optional_cover": [
+          "KC5"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "macro_main_question",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC6",
+        "KC3",
+        "KC16"
+      ],
+      "question_text": "Based on the paper, what are the key limitations of existing Multimodal Large Language Models (MLLMs) that contribute to hallucinations?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC6",
+          "KC3"
+        ],
+        "optional_cover": [
+          "KC16"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "macro_main_question",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC8",
+        "KC20",
+        "KC10",
+        "KC58"
+      ],
+      "question_text": "How does HACL use hallucinative captions in contrastive learning to align visual and textual representations and reduce hallucinations?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC8",
+          "KC20"
+        ],
+        "optional_cover": [
+          "KC10",
+          "KC58"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "macro_main_question",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC26",
+        "KC23",
+        "KC24"
+      ],
+      "question_text": "How does the proposed cross-modal contrastive learning approach leverage <EOS> tokens to obtain global representations and align visual and textual modalities?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC26",
+          "KC23"
+        ],
+        "optional_cover": [
+          "KC24"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "macro_main_question",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC28",
+        "KC17",
+        "KC29",
+        "KC27",
+        "KC54",
+        "KC64"
+      ],
+      "question_text": "How does the paper generate hallucinative captions and use them in contrastive learning to reduce hallucinations?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC28",
+          "KC17"
+        ],
+        "optional_cover": [
+          "KC29",
+          "KC27",
+          "KC54",
+          "KC64"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "macro_main_question",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC35",
+        "KC37"
+      ],
+      "question_text": "How did the use of hallucinative captions for contrastive learning differ between MiniGPT-4 and LLaVA/LLaVA1.5 during training?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC35",
+          "KC37"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "macro_main_question",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC46",
+        "KC11",
+        "KC36",
+        "KC34",
+        "KC45"
+      ],
+      "question_text": "How does HACL perform in reducing hallucinations, and on which benchmarks and models was it evaluated? Include the comparison models used and mention whether enhancement was achieved even without hallucinative captions.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC46",
+          "KC11"
+        ],
+        "optional_cover": [
+          "KC36",
+          "KC34",
+          "KC45"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "macro_main_question",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC53",
+        "KC60"
+      ],
+      "question_text": "What do the ablation and visualization experiments reveal about the role and effectiveness of hallucinative captions in contrastive learning? Specifically, how does including hallucinative captions as hard negatives affect performance on hallucination benchmarks and general VQA/MME benchmarks, and what happens to the representation space when hallucination-enhanced samples are omitted?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC53",
+          "KC60"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "thread_question_seeds": [
+    {
+      "question_id": "Q_RT1_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC5"
+      ],
+      "question_goal": "Ask the model to explain the observed representation entanglement between hallucinated and non-hallucinated text in MLLMs.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M2",
+      "target_kc_ids": [
+        "KC6"
+      ],
+      "question_goal": "Ask the model why current learnable interfaces are insufficient to map visual representations into the LLM textual space.",
+      "trigger_condition": {
+        "macro_reached": "M2"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC5",
+        "KC6",
+        "KC20"
+      ],
+      "question_goal": "Ask the model how the limitations of current interfaces motivate the design of HACL to refine the learnable interface.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC5",
+          "KC6"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC5",
+        "KC20"
+      ],
+      "question_goal": "Ask the model to verify that the HACL method remains consistent with the original problem of representation entanglement.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC4"
+      ],
+      "question_goal": "Ask the model to describe the modality gap that remains after visual projection.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M2",
+      "target_kc_ids": [
+        "KC6"
+      ],
+      "question_goal": "Ask the model how the modality gap indicates that current learned interfaces are not effective.",
+      "trigger_condition": {
+        "macro_reached": "M2"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M2",
+      "target_kc_ids": [
+        "KC4",
+        "KC6"
+      ],
+      "question_goal": "Ask the model to explain why the modality gap directly implies that current interfaces are inadequate.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC4",
+          "KC6"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC4",
+        "KC6"
+      ],
+      "question_goal": "Ask the model to confirm that the modality gap is indeed a key reason for interface limitation.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC20"
+      ],
+      "question_goal": "Ask the model to describe the goal of HACL in refining the learnable interface.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M5",
+      "target_kc_ids": [
+        "KC27"
+      ],
+      "question_goal": "Ask the model how HACL proposes to improve contrastive learning by using hard negative samples.",
+      "trigger_condition": {
+        "macro_reached": "M5"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M5",
+      "target_kc_ids": [
+        "KC20",
+        "KC27"
+      ],
+      "question_goal": "Ask the model to connect the goal of HACL to the use of hard negative samples.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC20",
+          "KC27"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC20",
+        "KC27"
+      ],
+      "question_goal": "Ask the model to verify that the hard negative approach remains aligned with the original HACL objective.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC8"
+      ],
+      "question_goal": "Ask the model to explain how HACL uses hallucinative captions in contrastive learning.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC26"
+      ],
+      "question_goal": "Ask the model to describe the cross-modal contrastive learning loss formulation.",
+      "trigger_condition": {
+        "macro_reached": "M4"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M4",
+      "target_kc_ids": [
+        "KC8",
+        "KC26"
+      ],
+      "question_goal": "Ask the model to connect the hallucinative caption usage to the contrastive loss formulation.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC8",
+          "KC26"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC8",
+        "KC26"
+      ],
+      "question_goal": "Ask the model to verify that the contrastive loss directly implements the use of hallucinative captions as negatives.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "review_question_seeds": [],
+  "main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "main",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC4",
+        "KC9",
+        "KC5"
+      ],
+      "question_text": "What are the two key problems identified in current MLLMs that contribute to hallucinations, according to the paper's problem analysis?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC4",
+          "KC9"
+        ],
+        "optional_cover": [
+          "KC5"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "main",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC6",
+        "KC3",
+        "KC16"
+      ],
+      "question_text": "Based on the paper, what are the key limitations of existing Multimodal Large Language Models (MLLMs) that contribute to hallucinations?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC6",
+          "KC3"
+        ],
+        "optional_cover": [
+          "KC16"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "main",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC8",
+        "KC20",
+        "KC10",
+        "KC58"
+      ],
+      "question_text": "How does HACL use hallucinative captions in contrastive learning to align visual and textual representations and reduce hallucinations?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC8",
+          "KC20"
+        ],
+        "optional_cover": [
+          "KC10",
+          "KC58"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "main",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC26",
+        "KC23",
+        "KC24"
+      ],
+      "question_text": "How does the proposed cross-modal contrastive learning approach leverage <EOS> tokens to obtain global representations and align visual and textual modalities?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC26",
+          "KC23"
+        ],
+        "optional_cover": [
+          "KC24"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "main",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC28",
+        "KC17",
+        "KC29",
+        "KC27",
+        "KC54",
+        "KC64"
+      ],
+      "question_text": "How does the paper generate hallucinative captions and use them in contrastive learning to reduce hallucinations?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC28",
+          "KC17"
+        ],
+        "optional_cover": [
+          "KC29",
+          "KC27",
+          "KC54",
+          "KC64"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "main",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC35",
+        "KC37"
+      ],
+      "question_text": "How did the use of hallucinative captions for contrastive learning differ between MiniGPT-4 and LLaVA/LLaVA1.5 during training?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC35",
+          "KC37"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "main",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC46",
+        "KC11",
+        "KC36",
+        "KC34",
+        "KC45"
+      ],
+      "question_text": "How does HACL perform in reducing hallucinations, and on which benchmarks and models was it evaluated? Include the comparison models used and mention whether enhancement was achieved even without hallucinative captions.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC46",
+          "KC11"
+        ],
+        "optional_cover": [
+          "KC36",
+          "KC34",
+          "KC45"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "main",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC53",
+        "KC60"
+      ],
+      "question_text": "What do the ablation and visualization experiments reveal about the role and effectiveness of hallucinative captions in contrastive learning? Specifically, how does including hallucinative captions as hard negatives affect performance on hallucination benchmarks and general VQA/MME benchmarks, and what happens to the representation space when hallucination-enhanced samples are omitted?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC53",
+          "KC60"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "multi_hop_questions": [],
+  "reserved_followup_templates": []
+}

@@ -1,0 +1,999 @@
+{
+  "paper_id": "Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks",
+  "schema_version": "v3_latex_table_assets",
+  "assets": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S3",
+      "section_title": "Introduction",
+      "macro_id": null,
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem Motivation and Challenges",
+          "role": "problem_motivation",
+          "order": 1
+        },
+        {
+          "macro_id": "M2",
+          "title": "Limitations of Existing Methods",
+          "role": "prior_work_limitation",
+          "order": 2
+        }
+      ],
+      "macro_resolution_status": "ambiguous",
+      "source_group_id": "MAG_S3_0001",
+      "source_block_ids": [
+        "P001_B0013",
+        "P001_B0014"
+      ],
+      "media_block_ids": [
+        "P001_B0013"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_637_436_1116_799.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_001",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_637_436_1116_799.jpg",
+          "caption": "Figure 1: Example of our long trajectory for knowledge-intensive scenarios (Top) and optimization comparison of multi-agent frameworks (Bottom). Solid and dashed arrows indicate inference and optimization paths, respectively."
+        }
+      ],
+      "caption": "Figure 1: Example of our long trajectory for knowledge-intensive scenarios (Top) and optimization comparison of multi-agent frameworks (Bottom). Solid and dashed arrows indicate inference and optimization paths, respectively.",
+      "caption_kind": "figure",
+      "caption_number": "1",
+      "nearby_context": "Figure showing example of long trajectory and optimization comparison of multi-agent frameworks, with solid and dashed arrows indicating inference and optimization paths respectively.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P001_B0013",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 1: Example of our long trajectory for knowledge-intensive scenarios (Top) and optimization comparison of multi-agent frameworks (Bottom). Solid and dashed arrows indicate inference and optimization paths, respectively.",
+        "caption_kind": "figure",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P001_B0013",
+          "P001_B0014"
+        ],
+        "media_block_ids": [
+          "P001_B0013"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P001_B0013"
+        ],
+        "description_from_html": "Figure showing example of long trajectory and optimization comparison of multi-agent frameworks, with solid and dashed arrows indicating inference and optimization paths respectively.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S4",
+      "section_title": "Multi-Agent Framework",
+      "macro_id": "M3",
+      "macro_candidates": [
+        {
+          "macro_id": "M3",
+          "title": "SMART Multi-Agent Framework Overview",
+          "role": "method_overview",
+          "order": 3
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S4_0002",
+      "source_block_ids": [
+        "P003_B0001",
+        "P003_B0002"
+      ],
+      "media_block_ids": [
+        "P003_B0001"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_109_109_1110_603.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_002",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_109_109_1110_603.jpg",
+          "caption": "Figure 2: Overview of our multi-agent framework with long- and short-trajectory learning. This framework incorporates four agents: intent reconstructor, knowledge retriever, fac locator, and response generator."
+        }
+      ],
+      "caption": "Figure 2: Overview of our multi-agent framework with long- and short-trajectory learning. This framework incorporates four agents: intent reconstructor, knowledge retriever, fac locator, and response generator.",
+      "caption_kind": "figure",
+      "caption_number": "2",
+      "nearby_context": "Overview of multi-agent framework with four agents, image from imgs/img_in_image_box_109_109_1110_603.jpg.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P003_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 2: Overview of our multi-agent framework with long- and short-trajectory learning. This framework incorporates four agents: intent reconstructor, knowledge retriever, fac locator, and response generator.",
+        "caption_kind": "figure",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P003_B0001",
+          "P003_B0002"
+        ],
+        "media_block_ids": [
+          "P003_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P003_B0001"
+        ],
+        "description_from_html": "Overview of multi-agent framework with four agents, image from imgs/img_in_image_box_109_109_1110_603.jpg.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S5",
+      "section_title": "Trajectory Dataset Construction",
+      "macro_id": "M4",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Trajectory Dataset Construction",
+          "role": "dataset_or_resource",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S5_0003",
+      "source_block_ids": [
+        "P004_B0001",
+        "P004_B0002"
+      ],
+      "media_block_ids": [
+        "P004_B0001"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_162_124_1062_493.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_162_124_1062_493.jpg",
+          "caption": "Figure 3: Overview of Long-Short Trajectory Learning. It consists of two stages, for short trajectory learning, under a given trajectory head, requires insight into the various explicit and implicit signals in each particular task. For long-trajectory learning, LLM executes the entire process by predicting different trajectory tokens, ensuring the synergism of different short-trajectories."
+        }
+      ],
+      "caption": "Figure 3: Overview of Long-Short Trajectory Learning. It consists of two stages, for short trajectory learning, under a given trajectory head, requires insight into the various explicit and implicit signals in each particular task. For long-trajectory learning, LLM executes the entire process by predicting different trajectory tokens, ensuring the synergism of different short-trajectories.",
+      "caption_kind": "figure",
+      "caption_number": "3",
+      "nearby_context": "Figure showing overview of Long-Short Trajectory Learning with two stages: short trajectory learning requiring insight into explicit and implicit signals, and long-trajectory learning where LLM predicts trajectory tokens.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P004_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 3: Overview of Long-Short Trajectory Learning. It consists of two stages, for short trajectory learning, under a given trajectory head, requires insight into the various explicit and implicit signals in each particular task. For long-trajectory learning, LLM executes the entire process by predicting different trajectory tokens, ensuring the synergism of different short-trajectories.",
+        "caption_kind": "figure",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P004_B0001",
+          "P004_B0002"
+        ],
+        "media_block_ids": [
+          "P004_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P004_B0001"
+        ],
+        "description_from_html": "Figure showing overview of Long-Short Trajectory Learning with two stages: short trajectory learning requiring insight into explicit and implicit signals, and long-trajectory learning where LLM predicts trajectory tokens.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "explanatory",
+      "subtype": "unknown_table",
+      "section_id": "S5",
+      "section_title": "Trajectory Dataset Construction",
+      "macro_id": "M4",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Trajectory Dataset Construction",
+          "role": "dataset_or_resource",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S5_0003",
+      "source_block_ids": [
+        "P004_B0003",
+        "P004_B0004"
+      ],
+      "media_block_ids": [
+        "P004_B0003"
+      ],
+      "caption": "Table 1: Four types of trajectory tokens. $ x $, $ \\bar{q} $, $ \\bar{d} $, $ \\gamma $, $ \\bar{f} $ and $ \\bar{y} $ indicate instruction, intent, knowledge document, relevance tag, fact evidence and response, respectively.",
+      "caption_kind": "table",
+      "caption_number": "1",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Type</td><td colspan=\"2\">Trajectory Tokens</td><td rowspan=\"2\">Input</td><td rowspan=\"2\">Output</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Head</td><td style='text-align: center; word-wrap: break-word;'>End</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>$ \\mathcal{A}_i $</td><td style='text-align: center; word-wrap: break-word;'>&lt;Reconstructor&gt;</td><td style='text-align: center; word-wrap: break-word;'>&lt;/eor&gt;</td><td style='text-align: center; word-wrap: break-word;'>x</td><td style='text-align: center; word-wrap: break-word;'>$ \\bar{q} $</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>$ \\mathcal{A}_r $</td><td style='text-align: center; word-wrap: break-word;'>&lt;retrieval&gt;</td><td style='text-align: center; word-wrap: break-word;'>&lt;/retrieval&gt;</td><td style='text-align: center; word-wrap: break-word;'>$ \\bar{q} $</td><td style='text-align: center; word-wrap: break-word;'>$ \\bar{d} $</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>$ \\mathcal{A}_l $</td><td style='text-align: center; word-wrap: break-word;'>&lt;Locator&gt;</td><td style='text-align: center; word-wrap: break-word;'>&lt;/eol&gt;</td><td style='text-align: center; word-wrap: break-word;'>x,  $ \\bar{d} $</td><td style='text-align: center; word-wrap: break-word;'>$ \\gamma,\\bar{f} $</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>$ \\mathcal{A}_g $</td><td style='text-align: center; word-wrap: break-word;'>&lt;Generator&gt;</td><td style='text-align: center; word-wrap: break-word;'>&lt;/eog&gt;</td><td style='text-align: center; word-wrap: break-word;'>x,  $ \\bar{d}/x $</td><td style='text-align: center; word-wrap: break-word;'>y</td></tr></table>",
+      "normalized_markdown": "| Type | Trajectory Tokens | Trajectory Tokens | Input | Output |\n| --- | --- | --- | --- | --- |\n| Type | Head | End | Input | Output |\n| $ \\mathcal{A}_i $ | <Reconstructor> | </eor> | x | $ \\bar{q} $ |\n| $ \\mathcal{A}_r $ | <retrieval> | </retrieval> | $ \\bar{q} $ | $ \\bar{d} $ |\n| $ \\mathcal{A}_l $ | <Locator> | </eol> | x, $ \\bar{d} $ | $ \\gamma,\\bar{f} $ |\n| $ \\mathcal{A}_g $ | <Generator> | </eog> | x, $ \\bar{d}/x $ | y |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nType & Trajectory Tokens & Trajectory Tokens & Input & Output \\\\\n\\hline\nType & Head & End & Input & Output \\\\\n\\$ \\textbackslash{}mathcal\\{A\\}\\_i \\$ & <Reconstructor> & </eor> & x & \\$ \\textbackslash{}bar\\{q\\} \\$ \\\\\n\\$ \\textbackslash{}mathcal\\{A\\}\\_r \\$ & <retrieval> & </retrieval> & \\$ \\textbackslash{}bar\\{q\\} \\$ & \\$ \\textbackslash{}bar\\{d\\} \\$ \\\\\n\\$ \\textbackslash{}mathcal\\{A\\}\\_l \\$ & <Locator> & </eol> & x, \\$ \\textbackslash{}bar\\{d\\} \\$ & \\$ \\textbackslash{}gamma,\\textbackslash{}bar\\{f\\} \\$ \\\\\n\\$ \\textbackslash{}mathcal\\{A\\}\\_g \\$ & <Generator> & </eog> & x, \\$ \\textbackslash{}bar\\{d\\}/x \\$ & y \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Type",
+          "Trajectory Tokens",
+          "Trajectory Tokens",
+          "Input",
+          "Output"
+        ],
+        [
+          "Type",
+          "Head",
+          "End",
+          "Input",
+          "Output"
+        ],
+        [
+          "$ \\mathcal{A}_i $",
+          "<Reconstructor>",
+          "</eor>",
+          "x",
+          "$ \\bar{q} $"
+        ],
+        [
+          "$ \\mathcal{A}_r $",
+          "<retrieval>",
+          "</retrieval>",
+          "$ \\bar{q} $",
+          "$ \\bar{d} $"
+        ],
+        [
+          "$ \\mathcal{A}_l $",
+          "<Locator>",
+          "</eol>",
+          "x, $ \\bar{d} $",
+          "$ \\gamma,\\bar{f} $"
+        ],
+        [
+          "$ \\mathcal{A}_g $",
+          "<Generator>",
+          "</eog>",
+          "x, $ \\bar{d}/x $",
+          "y"
+        ]
+      ],
+      "nearby_context": "Table listing four types of trajectory tokens with their head and end tokens, input, and output: Reconstructor, Retrieval, Locator, Generator.",
+      "table_shape": {
+        "rows": 6,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "explanatory",
+        "subtype_hint": "unknown",
+        "caption": "Table 1: Four types of trajectory tokens. $ x $, $ \\bar{q} $, $ \\bar{d} $, $ \\gamma $, $ \\bar{f} $ and $ \\bar{y} $ indicate instruction, intent, knowledge document, relevance tag, fact evidence and response, respectively.",
+        "caption_kind": "table",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P004_B0003",
+          "P004_B0004"
+        ],
+        "media_block_ids": [
+          "P004_B0003"
+        ],
+        "table_block_ids": [
+          "P004_B0003"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table listing four types of trajectory tokens with their head and end tokens, input, and output: Reconstructor, Retrieval, Locator, Generator.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S6",
+      "section_title": "Long-Short Trajectory Learning",
+      "macro_id": "M5",
+      "macro_candidates": [
+        {
+          "macro_id": "M5",
+          "title": "Long-Short Trajectory Learning",
+          "role": "training_or_algorithm",
+          "order": 5
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S6_0004",
+      "source_block_ids": [
+        "P005_B0001",
+        "P005_B0002"
+      ],
+      "media_block_ids": [
+        "P005_B0001"
+      ],
+      "caption": "Table 2: Comparison results against knowledge internalization and knowledge enhancement methods. * denotes the method we reproduce based on the same base. * denotes re-implemented methods based on the same initial model. The  $ \\underline{\\text{bold}} $ numbers represent the best results and the  $ \\underline{\\text{underlined}} $ numbers represent the second.",
+      "caption_kind": "table",
+      "caption_number": "2",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Task</td><td style='text-align: center; word-wrap: break-word;'>Health</td><td style='text-align: center; word-wrap: break-word;'>ARC-C</td><td style='text-align: center; word-wrap: break-word;'>PopQA</td><td style='text-align: center; word-wrap: break-word;'>Squad1</td><td colspan=\"3\">ASQA</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Metric</td><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>Acc</td><td style='text-align: center; word-wrap: break-word;'>Str_EM</td><td style='text-align: center; word-wrap: break-word;'>R-L</td><td style='text-align: center; word-wrap: break-word;'>Mauve</td></tr><tr><td colspan=\"8\">Knowledge internalization methods</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Alpaca2  $ _{7B*} $</td><td style='text-align: center; word-wrap: break-word;'>44.78</td><td style='text-align: center; word-wrap: break-word;'>36.43</td><td style='text-align: center; word-wrap: break-word;'>25.58</td><td style='text-align: center; word-wrap: break-word;'>11.50</td><td style='text-align: center; word-wrap: break-word;'>14.42</td><td style='text-align: center; word-wrap: break-word;'>28.72</td><td style='text-align: center; word-wrap: break-word;'>51.24</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Mistral-Instruct  $ _{7B} $</td><td style='text-align: center; word-wrap: break-word;'>65.45</td><td style='text-align: center; word-wrap: break-word;'>57.84</td><td style='text-align: center; word-wrap: break-word;'>22.37</td><td style='text-align: center; word-wrap: break-word;'>14.97</td><td style='text-align: center; word-wrap: break-word;'>20.80</td><td style='text-align: center; word-wrap: break-word;'>32.20</td><td style='text-align: center; word-wrap: break-word;'>33.47</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Llama-2-Chat  $ _{7B} $</td><td style='text-align: center; word-wrap: break-word;'>47.95</td><td style='text-align: center; word-wrap: break-word;'>47.95</td><td style='text-align: center; word-wrap: break-word;'>25.44</td><td style='text-align: center; word-wrap: break-word;'>14.13</td><td style='text-align: center; word-wrap: break-word;'>16.79</td><td style='text-align: center; word-wrap: break-word;'>32.35</td><td style='text-align: center; word-wrap: break-word;'>24.21</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Vicuna-v1.5  $ _{13B} $</td><td style='text-align: center; word-wrap: break-word;'>63.01</td><td style='text-align: center; word-wrap: break-word;'>57.59</td><td style='text-align: center; word-wrap: break-word;'>17.94</td><td style='text-align: center; word-wrap: break-word;'>15.25</td><td style='text-align: center; word-wrap: break-word;'>31.95</td><td style='text-align: center; word-wrap: break-word;'>22.99</td><td style='text-align: center; word-wrap: break-word;'>68.41</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Llama-2-Chat  $ _{13B} $</td><td style='text-align: center; word-wrap: break-word;'>62.20</td><td style='text-align: center; word-wrap: break-word;'>48.72</td><td style='text-align: center; word-wrap: break-word;'>21.22</td><td style='text-align: center; word-wrap: break-word;'>15.97</td><td style='text-align: center; word-wrap: break-word;'>19.97</td><td style='text-align: center; word-wrap: break-word;'>30.37</td><td style='text-align: center; word-wrap: break-word;'>40.23</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ChatGPT</td><td style='text-align: center; word-wrap: break-word;'>76.08</td><td style='text-align: center; word-wrap: break-word;'>77.3</td><td style='text-align: center; word-wrap: break-word;'>29.30</td><td style='text-align: center; word-wrap: break-word;'>22.90</td><td style='text-align: center; word-wrap: break-word;'>39.94</td><td style='text-align: center; word-wrap: break-word;'>35.73</td><td style='text-align: center; word-wrap: break-word;'>44.63</td></tr><tr><td colspan=\"8\">Knowledge enhancement methods</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Alpaca2  $ _{7B*} $</td><td style='text-align: center; word-wrap: break-word;'>26.44</td><td style='text-align: center; word-wrap: break-word;'>35.15</td><td style='text-align: center; word-wrap: break-word;'>33.38</td><td style='text-align: center; word-wrap: break-word;'>21.41</td><td style='text-align: center; word-wrap: break-word;'>23.59</td><td style='text-align: center; word-wrap: break-word;'>27.21</td><td style='text-align: center; word-wrap: break-word;'>50.09</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>REPLUG  $ _{7B*} $</td><td style='text-align: center; word-wrap: break-word;'>41.72</td><td style='text-align: center; word-wrap: break-word;'>47.26</td><td style='text-align: center; word-wrap: break-word;'>37.24</td><td style='text-align: center; word-wrap: break-word;'>24.23</td><td style='text-align: center; word-wrap: break-word;'>26.54</td><td style='text-align: center; word-wrap: break-word;'>33.25</td><td style='text-align: center; word-wrap: break-word;'>54.03</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>VANILLA  $ _{7B*} $</td><td style='text-align: center; word-wrap: break-word;'>29.52</td><td style='text-align: center; word-wrap: break-word;'>42.74</td><td style='text-align: center; word-wrap: break-word;'>37.52</td><td style='text-align: center; word-wrap: break-word;'>25.92</td><td style='text-align: center; word-wrap: break-word;'>32.25</td><td style='text-align: center; word-wrap: break-word;'>34.93</td><td style='text-align: center; word-wrap: break-word;'>39.54</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>RAIT  $ _{7B*} $</td><td style='text-align: center; word-wrap: break-word;'>52.98</td><td style='text-align: center; word-wrap: break-word;'>62.10</td><td style='text-align: center; word-wrap: break-word;'>38.02</td><td style='text-align: center; word-wrap: break-word;'>23.86</td><td style='text-align: center; word-wrap: break-word;'>25.68</td><td style='text-align: center; word-wrap: break-word;'>15.99</td><td style='text-align: center; word-wrap: break-word;'>12.35</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>INTERACT  $ _{7B*} $</td><td style='text-align: center; word-wrap: break-word;'>65.45</td><td style='text-align: center; word-wrap: break-word;'>48.12</td><td style='text-align: center; word-wrap: break-word;'>41.31</td><td style='text-align: center; word-wrap: break-word;'>31.52</td><td style='text-align: center; word-wrap: break-word;'>34.54</td><td style='text-align: center; word-wrap: break-word;'>35.51</td><td style='text-align: center; word-wrap: break-word;'>43.45</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>SelfRag  $ _{7B} $</td><td style='text-align: center; word-wrap: break-word;'>68.99</td><td style='text-align: center; word-wrap: break-word;'>65.52</td><td style='text-align: center; word-wrap: break-word;'>40.67</td><td style='text-align: center; word-wrap: break-word;'>22.39</td><td style='text-align: center; word-wrap: break-word;'>28.68</td><td style='text-align: center; word-wrap: break-word;'>34.11</td><td style='text-align: center; word-wrap: break-word;'>83.00</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>MMAgent  $ _{3*7B*} $</td><td style='text-align: center; word-wrap: break-word;'>70.82</td><td style='text-align: center; word-wrap: break-word;'>63.99</td><td style='text-align: center; word-wrap: break-word;'>36.88</td><td style='text-align: center; word-wrap: break-word;'>23.79</td><td style='text-align: center; word-wrap: break-word;'>33.04</td><td style='text-align: center; word-wrap: break-word;'>36.49</td><td style='text-align: center; word-wrap: break-word;'>88.98</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>SMART (OURS)</td><td style='text-align: center; word-wrap: break-word;'>73.18</td><td style='text-align: center; word-wrap: break-word;'>65.58</td><td style='text-align: center; word-wrap: break-word;'>42.60</td><td style='text-align: center; word-wrap: break-word;'>27.80</td><td style='text-align: center; word-wrap: break-word;'>41.16</td><td style='text-align: center; word-wrap: break-word;'>40.66</td><td style='text-align: center; word-wrap: break-word;'>91.47</td></tr></table>",
+      "normalized_markdown": "| Task | Health | ARC-C | PopQA | Squad1 | ASQA | ASQA | ASQA |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| Metric | Acc | Acc | Acc | Acc | Str_EM | R-L | Mauve |\n| Knowledge internalization methods | Knowledge internalization methods | Knowledge internalization methods | Knowledge internalization methods | Knowledge internalization methods | Knowledge internalization methods | Knowledge internalization methods | Knowledge internalization methods |\n| Alpaca2 $ _{7B*} $ | 44.78 | 36.43 | 25.58 | 11.50 | 14.42 | 28.72 | 51.24 |\n| Mistral-Instruct $ _{7B} $ | 65.45 | 57.84 | 22.37 | 14.97 | 20.80 | 32.20 | 33.47 |\n| Llama-2-Chat $ _{7B} $ | 47.95 | 47.95 | 25.44 | 14.13 | 16.79 | 32.35 | 24.21 |\n| Vicuna-v1.5 $ _{13B} $ | 63.01 | 57.59 | 17.94 | 15.25 | 31.95 | 22.99 | 68.41 |\n| Llama-2-Chat $ _{13B} $ | 62.20 | 48.72 | 21.22 | 15.97 | 19.97 | 30.37 | 40.23 |\n| ChatGPT | 76.08 | 77.3 | 29.30 | 22.90 | 39.94 | 35.73 | 44.63 |\n| Knowledge enhancement methods | Knowledge enhancement methods | Knowledge enhancement methods | Knowledge enhancement methods | Knowledge enhancement methods | Knowledge enhancement methods | Knowledge enhancement methods | Knowledge enhancement methods |\n| Alpaca2 $ _{7B*} $ | 26.44 | 35.15 | 33.38 | 21.41 | 23.59 | 27.21 | 50.09 |\n| REPLUG $ _{7B*} $ | 41.72 | 47.26 | 37.24 | 24.23 | 26.54 | 33.25 | 54.03 |\n| VANILLA $ _{7B*} $ | 29.52 | 42.74 | 37.52 | 25.92 | 32.25 | 34.93 | 39.54 |\n| RAIT $ _{7B*} $ | 52.98 | 62.10 | 38.02 | 23.86 | 25.68 | 15.99 | 12.35 |\n| INTERACT $ _{7B*} $ | 65.45 | 48.12 | 41.31 | 31.52 | 34.54 | 35.51 | 43.45 |\n| SelfRag $ _{7B} $ | 68.99 | 65.52 | 40.67 | 22.39 | 28.68 | 34.11 | 83.00 |\n| MMAgent $ _{3*7B*} $ | 70.82 | 63.99 | 36.88 | 23.79 | 33.04 | 36.49 | 88.98 |\n| SMART (OURS) | 73.18 | 65.58 | 42.60 | 27.80 | 41.16 | 40.66 | 91.47 |",
+      "normalized_latex": "\\begin{tabular}{llllllll}\n\\hline\nTask & Health & ARC-C & PopQA & Squad1 & ASQA & ASQA & ASQA \\\\\n\\hline\nMetric & Acc & Acc & Acc & Acc & Str\\_EM & R-L & Mauve \\\\\nKnowledge internalization methods & Knowledge internalization methods & Knowledge internalization methods & Knowledge internalization methods & Knowledge internalization methods & Knowledge internalization methods & Knowledge internalization methods & Knowledge internalization methods \\\\\nAlpaca2 \\$ \\_\\{7B*\\} \\$ & 44.78 & 36.43 & 25.58 & 11.50 & 14.42 & 28.72 & 51.24 \\\\\nMistral-Instruct \\$ \\_\\{7B\\} \\$ & 65.45 & 57.84 & 22.37 & 14.97 & 20.80 & 32.20 & 33.47 \\\\\nLlama-2-Chat \\$ \\_\\{7B\\} \\$ & 47.95 & 47.95 & 25.44 & 14.13 & 16.79 & 32.35 & 24.21 \\\\\nVicuna-v1.5 \\$ \\_\\{13B\\} \\$ & 63.01 & 57.59 & 17.94 & 15.25 & 31.95 & 22.99 & 68.41 \\\\\nLlama-2-Chat \\$ \\_\\{13B\\} \\$ & 62.20 & 48.72 & 21.22 & 15.97 & 19.97 & 30.37 & 40.23 \\\\\nChatGPT & 76.08 & 77.3 & 29.30 & 22.90 & 39.94 & 35.73 & 44.63 \\\\\nKnowledge enhancement methods & Knowledge enhancement methods & Knowledge enhancement methods & Knowledge enhancement methods & Knowledge enhancement methods & Knowledge enhancement methods & Knowledge enhancement methods & Knowledge enhancement methods \\\\\nAlpaca2 \\$ \\_\\{7B*\\} \\$ & 26.44 & 35.15 & 33.38 & 21.41 & 23.59 & 27.21 & 50.09 \\\\\nREPLUG \\$ \\_\\{7B*\\} \\$ & 41.72 & 47.26 & 37.24 & 24.23 & 26.54 & 33.25 & 54.03 \\\\\nVANILLA \\$ \\_\\{7B*\\} \\$ & 29.52 & 42.74 & 37.52 & 25.92 & 32.25 & 34.93 & 39.54 \\\\\nRAIT \\$ \\_\\{7B*\\} \\$ & 52.98 & 62.10 & 38.02 & 23.86 & 25.68 & 15.99 & 12.35 \\\\\nINTERACT \\$ \\_\\{7B*\\} \\$ & 65.45 & 48.12 & 41.31 & 31.52 & 34.54 & 35.51 & 43.45 \\\\\nSelfRag \\$ \\_\\{7B\\} \\$ & 68.99 & 65.52 & 40.67 & 22.39 & 28.68 & 34.11 & 83.00 \\\\\nMMAgent \\$ \\_\\{3*7B*\\} \\$ & 70.82 & 63.99 & 36.88 & 23.79 & 33.04 & 36.49 & 88.98 \\\\\nSMART (OURS) & 73.18 & 65.58 & 42.60 & 27.80 & 41.16 & 40.66 & 91.47 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Task",
+          "Health",
+          "ARC-C",
+          "PopQA",
+          "Squad1",
+          "ASQA",
+          "ASQA",
+          "ASQA"
+        ],
+        [
+          "Metric",
+          "Acc",
+          "Acc",
+          "Acc",
+          "Acc",
+          "Str_EM",
+          "R-L",
+          "Mauve"
+        ],
+        [
+          "Knowledge internalization methods",
+          "Knowledge internalization methods",
+          "Knowledge internalization methods",
+          "Knowledge internalization methods",
+          "Knowledge internalization methods",
+          "Knowledge internalization methods",
+          "Knowledge internalization methods",
+          "Knowledge internalization methods"
+        ],
+        [
+          "Alpaca2 $ _{7B*} $",
+          "44.78",
+          "36.43",
+          "25.58",
+          "11.50",
+          "14.42",
+          "28.72",
+          "51.24"
+        ],
+        [
+          "Mistral-Instruct $ _{7B} $",
+          "65.45",
+          "57.84",
+          "22.37",
+          "14.97",
+          "20.80",
+          "32.20",
+          "33.47"
+        ],
+        [
+          "Llama-2-Chat $ _{7B} $",
+          "47.95",
+          "47.95",
+          "25.44",
+          "14.13",
+          "16.79",
+          "32.35",
+          "24.21"
+        ],
+        [
+          "Vicuna-v1.5 $ _{13B} $",
+          "63.01",
+          "57.59",
+          "17.94",
+          "15.25",
+          "31.95",
+          "22.99",
+          "68.41"
+        ],
+        [
+          "Llama-2-Chat $ _{13B} $",
+          "62.20",
+          "48.72",
+          "21.22",
+          "15.97",
+          "19.97",
+          "30.37",
+          "40.23"
+        ],
+        [
+          "ChatGPT",
+          "76.08",
+          "77.3",
+          "29.30",
+          "22.90",
+          "39.94",
+          "35.73",
+          "44.63"
+        ],
+        [
+          "Knowledge enhancement methods",
+          "Knowledge enhancement methods",
+          "Knowledge enhancement methods",
+          "Knowledge enhancement methods",
+          "Knowledge enhancement methods",
+          "Knowledge enhancement methods",
+          "Knowledge enhancement methods",
+          "Knowledge enhancement methods"
+        ],
+        [
+          "Alpaca2 $ _{7B*} $",
+          "26.44",
+          "35.15",
+          "33.38",
+          "21.41",
+          "23.59",
+          "27.21",
+          "50.09"
+        ],
+        [
+          "REPLUG $ _{7B*} $",
+          "41.72",
+          "47.26",
+          "37.24",
+          "24.23",
+          "26.54",
+          "33.25",
+          "54.03"
+        ],
+        [
+          "VANILLA $ _{7B*} $",
+          "29.52",
+          "42.74",
+          "37.52",
+          "25.92",
+          "32.25",
+          "34.93",
+          "39.54"
+        ],
+        [
+          "RAIT $ _{7B*} $",
+          "52.98",
+          "62.10",
+          "38.02",
+          "23.86",
+          "25.68",
+          "15.99",
+          "12.35"
+        ],
+        [
+          "INTERACT $ _{7B*} $",
+          "65.45",
+          "48.12",
+          "41.31",
+          "31.52",
+          "34.54",
+          "35.51",
+          "43.45"
+        ],
+        [
+          "SelfRag $ _{7B} $",
+          "68.99",
+          "65.52",
+          "40.67",
+          "22.39",
+          "28.68",
+          "34.11",
+          "83.00"
+        ],
+        [
+          "MMAgent $ _{3*7B*} $",
+          "70.82",
+          "63.99",
+          "36.88",
+          "23.79",
+          "33.04",
+          "36.49",
+          "88.98"
+        ],
+        [
+          "SMART (OURS)",
+          "73.18",
+          "65.58",
+          "42.60",
+          "27.80",
+          "41.16",
+          "40.66",
+          "91.47"
+        ]
+      ],
+      "nearby_context": "This table presents comparison results of various methods on multiple tasks (Health, ARC-C, PopQA, Squad1, ASQA) with metrics (Acc, Str_EM, R-L, Mauve). Methods are grouped into knowledge internalization (Alpaca2, Mistral-Instruct, Llama-2-Chat variants, Vicuna-v1.5, ChatGPT) and knowledge enhancement (Alpaca2, REPLUG, VANILLA, RAIT, INTERACT, SelfRag, MMAgent, SMART). Best results are bold, second underlined. SMART (OURS) achieves the highest on several metrics.",
+      "table_shape": {
+        "rows": 18,
+        "columns": 8
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 2: Comparison results against knowledge internalization and knowledge enhancement methods. * denotes the method we reproduce based on the same base. * denotes re-implemented methods based on the same initial model. The  $ \\underline{\\text{bold}} $ numbers represent the best results and the  $ \\underline{\\text{underlined}} $ numbers represent the second.",
+        "caption_kind": "table",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P005_B0001",
+          "P005_B0002"
+        ],
+        "media_block_ids": [
+          "P005_B0001"
+        ],
+        "table_block_ids": [
+          "P005_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "This table presents comparison results of various methods on multiple tasks (Health, ARC-C, PopQA, Squad1, ASQA) with metrics (Acc, Str_EM, R-L, Mauve). Methods are grouped into knowledge internalization (Alpaca2, Mistral-Instruct, Llama-2-Chat variants, Vicuna-v1.5, ChatGPT) and knowledge enhancement (Alpaca2, REPLUG, VANILLA, RAIT, INTERACT, SelfRag, MMAgent, SMART). Best results are bold, second underlined. SMART (OURS) achieves the highest on several metrics.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S8",
+      "section_title": "Experiment Result",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Main Results",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S8_0005",
+      "source_block_ids": [
+        "P006_B0001",
+        "P006_B0002"
+      ],
+      "media_block_ids": [
+        "P006_B0001"
+      ],
+      "caption": "Table 3: Training Ablation and inference ablation for the contribution of different agents. L and S denote long-trajectory and short-trajectory learning, respectively. w/o $ \\mathcal{A}_{f} $, w/o $ \\mathcal{A}_{i} $, and w/o All denote no fact Locator, no intent reconstructor, and only response generator.",
+      "caption_kind": "table",
+      "caption_number": "3",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'></td><td style='text-align: center; word-wrap: break-word;'>Health (Acc)</td><td style='text-align: center; word-wrap: break-word;'>ARC-C (Acc)</td><td style='text-align: center; word-wrap: break-word;'>Pop (Acc)</td><td style='text-align: center; word-wrap: break-word;'>AS (Em)</td></tr><tr><td colspan=\"5\">Training ablation</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>SMART (L)</td><td style='text-align: center; word-wrap: break-word;'>72.15</td><td style='text-align: center; word-wrap: break-word;'>60.22</td><td style='text-align: center; word-wrap: break-word;'>37.27</td><td style='text-align: center; word-wrap: break-word;'>36.10</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o  $ \\mathcal{A}_{\\mathrm{f}} $</td><td style='text-align: center; word-wrap: break-word;'>70.13</td><td style='text-align: center; word-wrap: break-word;'>58.95</td><td style='text-align: center; word-wrap: break-word;'>34.31</td><td style='text-align: center; word-wrap: break-word;'>34.77</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o  $ \\mathcal{A}_{\\mathrm{i}} $</td><td style='text-align: center; word-wrap: break-word;'>69.82</td><td style='text-align: center; word-wrap: break-word;'>54.94</td><td style='text-align: center; word-wrap: break-word;'>35.17</td><td style='text-align: center; word-wrap: break-word;'>34.41</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o All</td><td style='text-align: center; word-wrap: break-word;'>57.95</td><td style='text-align: center; word-wrap: break-word;'>56.99</td><td style='text-align: center; word-wrap: break-word;'>21.15</td><td style='text-align: center; word-wrap: break-word;'>20.05</td></tr><tr><td colspan=\"5\">Inference ablation</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>SMART (L+S)</td><td style='text-align: center; word-wrap: break-word;'>73.18</td><td style='text-align: center; word-wrap: break-word;'>65.58</td><td style='text-align: center; word-wrap: break-word;'>42.60</td><td style='text-align: center; word-wrap: break-word;'>41.16</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o  $ \\mathcal{A}_{\\mathrm{f}} $</td><td style='text-align: center; word-wrap: break-word;'>71.63</td><td style='text-align: center; word-wrap: break-word;'>62.45</td><td style='text-align: center; word-wrap: break-word;'>37.45</td><td style='text-align: center; word-wrap: break-word;'>36.10</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o  $ \\mathcal{A}_{\\mathrm{i}} $</td><td style='text-align: center; word-wrap: break-word;'>71.22</td><td style='text-align: center; word-wrap: break-word;'>60.11</td><td style='text-align: center; word-wrap: break-word;'>39.88</td><td style='text-align: center; word-wrap: break-word;'>35.30</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>w/o All</td><td style='text-align: center; word-wrap: break-word;'>69.32</td><td style='text-align: center; word-wrap: break-word;'>58.81</td><td style='text-align: center; word-wrap: break-word;'>16.79</td><td style='text-align: center; word-wrap: break-word;'>31.32</td></tr></table>",
+      "normalized_markdown": "|  | Health (Acc) | ARC-C (Acc) | Pop (Acc) | AS (Em) |\n| --- | --- | --- | --- | --- |\n| Training ablation | Training ablation | Training ablation | Training ablation | Training ablation |\n| SMART (L) | 72.15 | 60.22 | 37.27 | 36.10 |\n| w/o $ \\mathcal{A}_{\\mathrm{f}} $ | 70.13 | 58.95 | 34.31 | 34.77 |\n| w/o $ \\mathcal{A}_{\\mathrm{i}} $ | 69.82 | 54.94 | 35.17 | 34.41 |\n| w/o All | 57.95 | 56.99 | 21.15 | 20.05 |\n| Inference ablation | Inference ablation | Inference ablation | Inference ablation | Inference ablation |\n| SMART (L+S) | 73.18 | 65.58 | 42.60 | 41.16 |\n| w/o $ \\mathcal{A}_{\\mathrm{f}} $ | 71.63 | 62.45 | 37.45 | 36.10 |\n| w/o $ \\mathcal{A}_{\\mathrm{i}} $ | 71.22 | 60.11 | 39.88 | 35.30 |\n| w/o All | 69.32 | 58.81 | 16.79 | 31.32 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\n & Health (Acc) & ARC-C (Acc) & Pop (Acc) & AS (Em) \\\\\n\\hline\nTraining ablation & Training ablation & Training ablation & Training ablation & Training ablation \\\\\nSMART (L) & 72.15 & 60.22 & 37.27 & 36.10 \\\\\nw/o \\$ \\textbackslash{}mathcal\\{A\\}\\_\\{\\textbackslash{}mathrm\\{f\\}\\} \\$ & 70.13 & 58.95 & 34.31 & 34.77 \\\\\nw/o \\$ \\textbackslash{}mathcal\\{A\\}\\_\\{\\textbackslash{}mathrm\\{i\\}\\} \\$ & 69.82 & 54.94 & 35.17 & 34.41 \\\\\nw/o All & 57.95 & 56.99 & 21.15 & 20.05 \\\\\nInference ablation & Inference ablation & Inference ablation & Inference ablation & Inference ablation \\\\\nSMART (L+S) & 73.18 & 65.58 & 42.60 & 41.16 \\\\\nw/o \\$ \\textbackslash{}mathcal\\{A\\}\\_\\{\\textbackslash{}mathrm\\{f\\}\\} \\$ & 71.63 & 62.45 & 37.45 & 36.10 \\\\\nw/o \\$ \\textbackslash{}mathcal\\{A\\}\\_\\{\\textbackslash{}mathrm\\{i\\}\\} \\$ & 71.22 & 60.11 & 39.88 & 35.30 \\\\\nw/o All & 69.32 & 58.81 & 16.79 & 31.32 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "",
+          "Health (Acc)",
+          "ARC-C (Acc)",
+          "Pop (Acc)",
+          "AS (Em)"
+        ],
+        [
+          "Training ablation",
+          "Training ablation",
+          "Training ablation",
+          "Training ablation",
+          "Training ablation"
+        ],
+        [
+          "SMART (L)",
+          "72.15",
+          "60.22",
+          "37.27",
+          "36.10"
+        ],
+        [
+          "w/o $ \\mathcal{A}_{\\mathrm{f}} $",
+          "70.13",
+          "58.95",
+          "34.31",
+          "34.77"
+        ],
+        [
+          "w/o $ \\mathcal{A}_{\\mathrm{i}} $",
+          "69.82",
+          "54.94",
+          "35.17",
+          "34.41"
+        ],
+        [
+          "w/o All",
+          "57.95",
+          "56.99",
+          "21.15",
+          "20.05"
+        ],
+        [
+          "Inference ablation",
+          "Inference ablation",
+          "Inference ablation",
+          "Inference ablation",
+          "Inference ablation"
+        ],
+        [
+          "SMART (L+S)",
+          "73.18",
+          "65.58",
+          "42.60",
+          "41.16"
+        ],
+        [
+          "w/o $ \\mathcal{A}_{\\mathrm{f}} $",
+          "71.63",
+          "62.45",
+          "37.45",
+          "36.10"
+        ],
+        [
+          "w/o $ \\mathcal{A}_{\\mathrm{i}} $",
+          "71.22",
+          "60.11",
+          "39.88",
+          "35.30"
+        ],
+        [
+          "w/o All",
+          "69.32",
+          "58.81",
+          "16.79",
+          "31.32"
+        ]
+      ],
+      "nearby_context": "Ablation table comparing SMART model with and without fact locator and intent reconstructor on Health, ARC-C, Pop, and AS metrics.",
+      "table_shape": {
+        "rows": 11,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "ablation_table",
+        "caption": "Table 3: Training Ablation and inference ablation for the contribution of different agents. L and S denote long-trajectory and short-trajectory learning, respectively. w/o $ \\mathcal{A}_{f} $, w/o $ \\mathcal{A}_{i} $, and w/o All denote no fact Locator, no intent reconstructor, and only response generator.",
+        "caption_kind": "table",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P006_B0001",
+          "P006_B0002"
+        ],
+        "media_block_ids": [
+          "P006_B0001"
+        ],
+        "table_block_ids": [
+          "P006_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Ablation table comparing SMART model with and without fact locator and intent reconstructor on Health, ARC-C, Pop, and AS metrics.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S9",
+      "section_title": "Ablation Studies",
+      "macro_id": "M8",
+      "macro_candidates": [
+        {
+          "macro_id": "M8",
+          "title": "Ablation Studies",
+          "role": "ablation_analysis",
+          "order": 8
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S9_0006",
+      "source_block_ids": [
+        "P006_B0007",
+        "P006_B0008"
+      ],
+      "media_block_ids": [
+        "P006_B0007"
+      ],
+      "caption": "Table 4: Ablation studies of long-trajectory (Long) and short-trajectory (Short) learning.",
+      "caption_kind": "table",
+      "caption_number": "4",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Methods</td><td style='text-align: center; word-wrap: break-word;'>Health</td><td style='text-align: center; word-wrap: break-word;'>PopQA</td><td colspan=\"2\">ASQA</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>(Acc)</td><td style='text-align: center; word-wrap: break-word;'>(Acc)</td><td style='text-align: center; word-wrap: break-word;'>(Em)</td><td style='text-align: center; word-wrap: break-word;'>(R-L)</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Vanilla LLM</td><td style='text-align: center; word-wrap: break-word;'>9.80</td><td style='text-align: center; word-wrap: break-word;'>22.69</td><td style='text-align: center; word-wrap: break-word;'>14.11</td><td style='text-align: center; word-wrap: break-word;'>6.45</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>+ Short</td><td style='text-align: center; word-wrap: break-word;'>62.00</td><td style='text-align: center; word-wrap: break-word;'>32.23</td><td style='text-align: center; word-wrap: break-word;'>23.95</td><td style='text-align: center; word-wrap: break-word;'>19.91</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>+ Long</td><td style='text-align: center; word-wrap: break-word;'>72.9</td><td style='text-align: center; word-wrap: break-word;'>37.66</td><td style='text-align: center; word-wrap: break-word;'>39.86</td><td style='text-align: center; word-wrap: break-word;'>39.51</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>+ Short &amp; Long</td><td style='text-align: center; word-wrap: break-word;'>73.18</td><td style='text-align: center; word-wrap: break-word;'>42.60</td><td style='text-align: center; word-wrap: break-word;'>41.16</td><td style='text-align: center; word-wrap: break-word;'>40.66</td></tr></table>",
+      "normalized_markdown": "| Methods | Health | PopQA | ASQA | ASQA |\n| --- | --- | --- | --- | --- |\n| Methods | (Acc) | (Acc) | (Em) | (R-L) |\n| Vanilla LLM | 9.80 | 22.69 | 14.11 | 6.45 |\n| + Short | 62.00 | 32.23 | 23.95 | 19.91 |\n| + Long | 72.9 | 37.66 | 39.86 | 39.51 |\n| + Short & Long | 73.18 | 42.60 | 41.16 | 40.66 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nMethods & Health & PopQA & ASQA & ASQA \\\\\n\\hline\nMethods & (Acc) & (Acc) & (Em) & (R-L) \\\\\nVanilla LLM & 9.80 & 22.69 & 14.11 & 6.45 \\\\\n+ Short & 62.00 & 32.23 & 23.95 & 19.91 \\\\\n+ Long & 72.9 & 37.66 & 39.86 & 39.51 \\\\\n+ Short \\& Long & 73.18 & 42.60 & 41.16 & 40.66 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Methods",
+          "Health",
+          "PopQA",
+          "ASQA",
+          "ASQA"
+        ],
+        [
+          "Methods",
+          "(Acc)",
+          "(Acc)",
+          "(Em)",
+          "(R-L)"
+        ],
+        [
+          "Vanilla LLM",
+          "9.80",
+          "22.69",
+          "14.11",
+          "6.45"
+        ],
+        [
+          "+ Short",
+          "62.00",
+          "32.23",
+          "23.95",
+          "19.91"
+        ],
+        [
+          "+ Long",
+          "72.9",
+          "37.66",
+          "39.86",
+          "39.51"
+        ],
+        [
+          "+ Short & Long",
+          "73.18",
+          "42.60",
+          "41.16",
+          "40.66"
+        ]
+      ],
+      "nearby_context": "Ablation table comparing methods Vanilla LLM, +Short, +Long, +Short & Long on Health (Acc), PopQA (Acc), ASQA (Em) and (R-L) metrics.",
+      "table_shape": {
+        "rows": 6,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "ablation_table",
+        "caption": "Table 4: Ablation studies of long-trajectory (Long) and short-trajectory (Short) learning.",
+        "caption_kind": "table",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P006_B0007",
+          "P006_B0008"
+        ],
+        "media_block_ids": [
+          "P006_B0007"
+        ],
+        "table_block_ids": [
+          "P006_B0007"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Ablation table comparing methods Vanilla LLM, +Short, +Long, +Short & Long on Health (Acc), PopQA (Acc), ASQA (Em) and (R-L) metrics.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S9",
+      "section_title": "Ablation Studies",
+      "macro_id": "M8",
+      "macro_candidates": [
+        {
+          "macro_id": "M8",
+          "title": "Ablation Studies",
+          "role": "ablation_analysis",
+          "order": 8
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S9_0007",
+      "source_block_ids": [
+        "P007_B0001",
+        "P007_B0002",
+        "P007_B0003",
+        "P007_B0004",
+        "P007_B0005",
+        "P007_B0006",
+        "P007_B0007"
+      ],
+      "media_block_ids": [
+        "P007_B0001",
+        "P007_B0003",
+        "P007_B0005"
+      ],
+      "image_paths": [
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_138_110_454_334.jpg",
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_456_110_772_336.jpg",
+        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_774_111_1088_334.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_138_110_454_334.jpg",
+          "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_456_110_772_336.jpg",
+          "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
+        },
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_774_111_1088_334.jpg",
+          "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
+        }
+      ],
+      "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA.",
+      "caption_kind": "figure",
+      "caption_number": "4",
+      "nearby_context": "Three bar charts titled (a) ARC-C, (b) PopQA, (c) ASQA showing effects of long-trajectory training data size K.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": "(K)",
+          "source_block_id": "P007_B0001",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_2",
+          "panel_label": null,
+          "source_block_id": "P007_B0003",
+          "description_hint": ""
+        },
+        {
+          "panel_id": "panel_3",
+          "panel_label": null,
+          "source_block_id": "P007_B0005",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA.",
+        "caption_kind": "figure",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P007_B0001",
+          "P007_B0002",
+          "P007_B0003",
+          "P007_B0004",
+          "P007_B0005",
+          "P007_B0006",
+          "P007_B0007"
+        ],
+        "media_block_ids": [
+          "P007_B0001",
+          "P007_B0003",
+          "P007_B0005"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P007_B0001",
+          "P007_B0003",
+          "P007_B0005"
+        ],
+        "description_from_html": "Three bar charts titled (a) ARC-C, (b) PopQA, (c) ASQA showing effects of long-trajectory training data size K.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 3
+      }
+    }
+  ],
+  "summary": {
+    "asset_count": 8,
+    "by_asset_type": {
+      "figure": 4,
+      "table": 4
+    },
+    "by_modality_class": {
+      "explanatory": 4,
+      "evidential": 4
+    },
+    "macro_unresolved_count": 1
+  }
+}

@@ -1,0 +1,2912 @@
+{
+  "paper_id": "Learning_Auxiliary_ACL2025_-10pages",
+  "schema_version": "v1",
+  "challenge_plans_path": "data/Learning_Auxiliary_ACL2025_-10pages/cache/questions/challenge_plans.json",
+  "challenge_plan_summary": {
+    "plan_count": 76,
+    "by_type": {
+      "false_premise_challenge": 42,
+      "overclaim_challenge": 12,
+      "wrong_relation_challenge": 22
+    },
+    "by_modality_pool": {
+      "multimodal": 40,
+      "text": 36
+    },
+    "text_plan_count": 36,
+    "multimodal_plan_count": 40,
+    "multimodal_plan_limit": 40
+  },
+  "challenge_questions_raw_path": "data/Learning_Auxiliary_ACL2025_-10pages/cache/questions/challenge_questions_raw.json",
+  "challenge_question_raw_summary": {
+    "raw_question_count": 58,
+    "by_type": {
+      "false_premise_challenge": 9,
+      "overclaim_challenge": 6,
+      "wrong_relation_challenge": 5
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    }
+  },
+  "challenge_questions_filtered_path": "data/Learning_Auxiliary_ACL2025_-10pages/cache/questions/challenge_questions_filtered.json",
+  "challenge_solver_trials_path": "data/Learning_Auxiliary_ACL2025_-10pages/cache/questions/challenge_solver_trials.json",
+  "challenge_filter_summary": {
+    "plan_pool_count": 76,
+    "target_count": 20,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 58,
+    "solver_trial_count": 56,
+    "filtered_count": 20,
+    "human_review_count": 10,
+    "rejected_count": 38,
+    "blacklisted_plan_count": 13,
+    "by_type": {
+      "false_premise_challenge": 9,
+      "overclaim_challenge": 6,
+      "wrong_relation_challenge": 5
+    },
+    "by_modality_pool": {
+      "multimodal": 10,
+      "text": 10
+    },
+    "stop_reason": {
+      "text": "target_reached",
+      "multimodal": {
+        "figure": "target_reached",
+        "remaining": "target_reached"
+      }
+    }
+  },
+  "challenge_questions": [
+    {
+      "question_id": "CHQ_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0031",
+      "source_challenge_plan_id": "CHP_0031",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the paper, what can we conclude about the effectiveness of incorporating model uncertainty for hallucination detection?",
+      "surface_intent": "Asks about the paper's findings on a specific technique, expecting a summary that may overextend the scope.",
+      "target_kc_ids": [
+        "KC91"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'hallucination_detection', 'dataset': 'LongFact', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC91",
+          "text": "process ensures that BAcc on the validation set exceeds 70%, while also maximizing BAcc-unknown. The goal is to strike a balance between performance and efficiency by achieving high BAcc-unknown without generating an excessive number of 'unknown' predictions, which could substantially increase detection costs. We conduct experiments on LongFact using Llama-3-8B-Instruct and report the results in Table 8, which demonstrate that incorporating model uncertainty greatly enhances hallucination detection, as evidenced by the BAcc-unknown metric's superior performance compared to standard BAcc in resolving ambiguous cases. Moreover, RATE-FT continues to outperform all other methods with respect to the BAcc-unknown metric, highlighting its robustness and effectiveness.",
+          "span_id": "S18",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan's trap is clear but the question explicitly asks about broad generalizability, prompting models to spot the limited scope. A less direct question could still induce overclaim. Revision guidance: Replace the question with a more neutral one, e.g., 'Based on the paper, what can we conclude about the effectiveness of incorporating model uncertainty for hallucination detection?' This avoids cueing the model to consider scope and may lead to overclaiming broader applicability."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, and aligns with the plan's target failure mode (overclaim) by asking for conclusions about effectiveness without prompting for scope limitations.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0006",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0022",
+      "source_challenge_plan_id": "CHP_0022",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the paper, what can we conclude about the effectiveness of using model uncertainty for hallucination detection in open-domain long-form generation?",
+      "surface_intent": "Ask for a summary of the paper's key finding regarding hallucination detection performance.",
+      "target_kc_ids": [
+        "KC88"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'hallucination_detection_in_open_domain_long_form_generation', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC88",
+          "text": "To enhance hallucination detection, we propose incorporating model uncertainty into the detection process, enabling a hybrid pipeline that combines the strengths of the model and external tools. Specifically, when the model is uncertain about whether a claim is factual or hallucinated, we leverage external tools to handle ambiguous cases, improving overall performance. The process involves setting two thresholds, $ \\alpha_{low} $ and $ \\alpha_{high} $, for classification. A claim is classified as ‘factual’ if $ P_{\\text{factual}} > \\alpha_{high} $ and ‘hallucinated’ if $ P_{\\text{factual}} < \\alpha_{low} $. Claims falling between these thresholds are classified as ‘unknown’ and delegated to external tools for further evaluation. Assuming the external tools’ output is the ground truth, predictions classified as ‘unknown’ are treated as correct. To evaluate the hybrid pipeline, we define the BAcc-unknown metric as follows:",
+          "span_id": "S18",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "Question naturally prompts for a conclusion about effectiveness, which could lead to overclaiming beyond limited context, aligning with target failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0019",
+      "source_challenge_plan_id": "CHP_0019",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "How do the authors' findings regarding the reliability of LLM internal states for factuality detection compare to those reported in SelfCheckGPT, and what implications do these findings have for the broader field of hallucination detection?",
+      "surface_intent": "Ask about the paper's comparison to SelfCheckGPT and its broader implications.",
+      "target_kc_ids": [
+        "KC72"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M2"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'open-domain long-form generation hallucination detection', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC72",
+          "text": "(ii) Our findings differ significantly from those reported in SelfCheckGPT. While SelfCheckGPT suggests that LLM probabilities correlate well with factuality, our experiments demonstrate that neither internal state reliably, i.e., better than random",
+          "span_id": "S13",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question appropriately probes whether the model overclaims by asking for broader implications beyond the paper's limited scope.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0008",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0016",
+      "source_challenge_plan_id": "CHP_0016",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the paper's experiments, how does Chain-of-Thought reasoning affect hallucination detection performance, and what is the scope of this finding?",
+      "surface_intent": "Ask about the effect of CoT on hallucination detection and its scope.",
+      "target_kc_ids": [
+        "KC48"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'hallucination detection', 'dataset': 'not_specified', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC48",
+          "text": "While hallucination detection is not regarded as a reasoning task in the conventional sense, incorporating Chain-of-Thought (CoT) (Wei et al., 2022) explaining the judgment can still be beneficial for distinguishing factual content from hallucinated information as it enables LLMs to better evaluate the correctness of claims by systematically analyzing underlying components. To examine the impact of rationales, we prompt the model to generate a reasoning path before making a judgment (i.e., 'True' or 'False'), referred to as Prompt $ _{CoT-TF} $. This approach improves performance from 69.9 (using Prompt $ _{TF} $) to 74.9, highlighting the effectiveness of incorporating CoT reasoning.",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and asks about the effect and scope based on the paper's experiments, which aligns with the challenge's target failure mode without exposing meta-information.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0011",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0027",
+      "source_challenge_plan_id": "CHP_0027",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "What alternative method does RATE-FT use for data augmentation, given that it does not rely on converting claims to QA format?",
+      "surface_intent": "Seeking clarification on the augmentation method of RATE-FT.",
+      "target_kc_ids": [
+        "KC16"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The evidence explicitly states: 'we convert the original claims into auxiliary question answering (QA) examples for augmentation'.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC16",
+          "text": "Building on this, we introduce a novel method Rationale and Auxiliary Task Enhanced Fine-Tuning (RATE-FT) (Figure 1). Specifically, we convert the original claims into auxiliary question answering (QA) examples for augmentation, providing a complementary learning perspective for the model, which enables better generalization. Additionally, we incorporate collected rationales into the training process for better reasoning. Extensive experiments and analysis using different models demonstrate the effectiveness and generalizability of our approach. Furthermore, we investigate the integration of model uncertainty into hallucination detection in Appendix A.8. In summary, our main contributions are:",
+          "span_id": "S4",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question embeds the false premise that RATE-FT does not convert claims to QA format, aligning with the trap part, and is answerable from the evidence. It is natural and does not expose metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0012",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0002",
+      "source_challenge_plan_id": "CHP_0002",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Based on the paper, did the authors' evaluation of various detection methods (prompting, probing, fine-tuning) lead them to identify the hallucination problem as a key challenge, or was the hallucination problem well-known prior to their study?",
+      "surface_intent": "to ask about the causal relationship between the hallucination challenge and the systematic study",
+      "target_kc_ids": [
+        "KC1",
+        "KC61"
+      ],
+      "target_edge_ids": [
+        "E128"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should connect the challenge of hallucination to the systematic exploration of methods, culminating in the conclusion that fine-tuning is the best.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E128",
+          "kc_ids": [
+            "KC1",
+            "KC61"
+          ],
+          "text": "Hallucination, the generation of factually incorrect information, remains a significant challenge for large language models (LLMs), especially in open-domain long-form generation. Existing approaches for detecting hallucination in long-form tasks either focus on limited domains or rely heavily on external fact-checking tools, which may not always be available."
+        },
+        {
+          "kc_id": "KC1",
+          "text": "Hallucination, the generation of factually incorrect information, remains a significant challenge for large language models (LLMs), especially in open-domain long-form generation. Existing approaches for detecting hallucination in long-form tasks either focus on limited domains or rely heavily on external fact-checking tools, which may not always be available.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC61",
+          "text": "In this work, we systematically investigate reference-free hallucination detection in opendomain long-form generation. Our study begins with an analysis of the model's internal states, demonstrating that these states alone cannot reliably detect hallucinations. We then evaluate several existing approaches, including prompting, probing, and fine-tuning, with fine-tuning emerging as the most effective method. Building on these findings, we introduce Rationale and Auxiliary Task Enhanced Fine-Tuning (RATE-FT), a novel approach",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, follows the challenge plan's target failure mode (wrong relation), is answerable from evidence, and is not ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0015",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0036",
+      "source_challenge_plan_id": "CHP_0036",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "How do the architectures of Fine-Tuning_para and RATE-FT_half differ?",
+      "surface_intent": "Asks about architectural differences between two model variants.",
+      "target_kc_ids": [
+        "KC80"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The variants are designed to isolate the effect of additional data augmentation vs. the auxiliary QA task, not model architecture. Both variants likely use the same base model.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC80",
+          "text": "To isolate the effect of additional data augmentation versus the auxiliary QA task, we design two variants: (i) we paraphrase the original claim using GPT-4 for data augmentation and fine-tune the model on the combined data, referred to as Fine-Tuning $ _{para} $, which has roughly the same amount of training data as RATE-FT; and (ii) we reduce the training data for RATE-FT by half (approximately the same amount as Fine-Tuning), referred to as RATE-FT $ _{half} $. We conduct experi-",
+          "span_id": "S16",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is not too easy; the question was too direct, allowing solvers to easily find the correct answer. A more subtle question that implies the false premise could still be effective. Revision guidance: Rewrite the question to be less direct about the purpose. Instead, ask a question that presupposes the false premise, such as 'How do the architectures of Fine-Tuning_para and RATE-FT_half differ?' This may lead solvers to accept the false premise that they differ in architecture."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question presents a false premise that the two variants differ in architecture, which aligns with the target failure mode. It is natural, serious, and can be answered from the evidence that the variants share the same base model.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0020",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0025",
+      "source_challenge_plan_id": "CHP_0025",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Describe how RATE-FT maintains inference cost while incorporating rationales during fine-tuning, and discuss how its core design principles could be adapted to improve other natural language processing tasks.",
+      "surface_intent": "Asks to describe RATE-FT's inference cost maintenance and to discuss potential broader applications.",
+      "target_kc_ids": [
+        "KC49"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M4"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=explicit and the recorded scope={'task': 'hallucination detection', 'dataset': 'not_specified', 'generality': 'limited_to_claim_context'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC49",
+          "text": "Augmenting Fine-Tuning with Rationales Building on the above observation, we augment the fine-tuning dataset with rationales generated by the model during data construction, explaining\n\nwhether the search results support the claims. Notably, we adopt the ‘label-rationale’ format to maintain the same inference cost as the baseline Fine-Tuning. This allows us to directly derive $ P_{factual} $ from the first output token without requiring the generation of the complete reasoning path.",
+          "span_id": "S8",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan itself is not inherently too easy; the trap is appropriately designed to test overclaim. However, the question phrasing directly asks about extension to other tasks, making the overclaim trap obvious to cautious solvers. A more subtle question could still elicit overclaim. Revision guidance: Rephrase the question to avoid directly asking about extension. Instead, focus on the method's design principles and ask the model to explain how the approach could be applied broadly, or ask for implications beyond hallucination detection without indicating that the paper does not discuss this. For example: 'Describe RATE-FT's approach to maintaining inference cost and discuss how its core ideas might inform other NLP tasks.' This may lead models to overclaim generality."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question effectively prompts the model to generalize beyond the paper's scope, targeting the overclaim failure mode without exposing hidden metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0027",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0004",
+      "source_challenge_plan_id": "CHP_0004",
+      "challenge_scope": "macro",
+      "challenge_type": "overclaim_challenge",
+      "question_text": "Based on the results reported, how robust and generalizable is RATE-FT across different backbone models?",
+      "surface_intent": "Asking about the overall robustness and generalizability of RATE-FT based on the experiments.",
+      "target_kc_ids": [
+        "KC59"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should state the paper's claim while respecting claim_strength=experimentally_supported and the recorded scope={'task': 'claim verification', 'dataset': 'LongFact', 'generality': 'limited_to_reported_experiments'}.",
+      "target_failure_mode": "overclaim",
+      "evidence": [
+        {
+          "kc_id": "KC59",
+          "text": "Generalization to Different Models Our experiments and analysis so far use Llama-3-8B-Instruct as the backbone model. To verify whether the performance gain of RATE-FT is consistent across different backbone models, we extend the experiments to Llama-3.1-70B-Instruct (Dubey et al., 2024), Mistral-7B-Instruct (Jiang et al., 2023), and Qwen2.5-7B-Instruct (Yang et al., 2024) on LongFact (see Appendix A.7 for details on data collection). From the results shown in Table 4, we can observe that RATE-FT consistently outperforms baseline approaches across all models, demonstrating its robustness and generalizability to diverse model architectures and scales.",
+          "span_id": "S9",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly based on the paper's reported experiments. It asks about robustness and generalizability across backbone models, which matches the evidence in the plan. It does not expose hidden labels or internal metadata, and it is not ambiguous in a way that prevents judging the target failure mode (overclaim).",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQ_0036",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0017",
+      "source_challenge_plan_id": "CHP_0017",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "According to the paper, how does improving the hallucination detector relate to the idea of using its feedback as a reward signal for LLMs?",
+      "surface_intent": "Ask about the connection between two research directions mentioned in the paper.",
+      "target_kc_ids": [
+        "KC63",
+        "KC64"
+      ],
+      "target_edge_ids": [
+        "E25"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M8"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the verified edge direction and relation.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E25",
+          "kc_ids": [
+            "KC63",
+            "KC64"
+          ],
+          "text": "One limitation of our work is its focus solely on improving the performance of the hallucination detector. A potential improvement could be to explore leveraging the detector's feedback as a reward signal to guide LLMs to generate more factual responses. Additionally, developing a more comprehensive benchmark for hallucination detection in open-domain long-form generation that covers a broader range of domains would further enhance its applicability."
+        },
+        {
+          "kc_id": "KC63",
+          "text": "One limitation of our work is its focus solely on improving the performance of the hallucination detector. A potential improvement could be to explore leveraging the detector's feedback as a reward signal to guide LLMs to generate more factual responses. Additionally, developing a more comprehensive benchmark for hallucination detection in open-domain long-form generation that covers a broader range of domains would further enhance its applicability.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC64",
+          "text": "One limitation of our work is its focus solely on improving the performance of the hallucination detector. A potential improvement could be to explore leveraging the detector's feedback as a reward signal to guide LLMs to generate more factual responses. Additionally, developing a more comprehensive benchmark for hallucination detection in open-domain long-form generation that covers a broader range of domains would further enhance its applicability.",
+          "span_id": "S11",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, does not expose internal metadata, aligns with the target failure mode of wrong relation, is answerable from the provided evidence, and is not overly ambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0001",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0074",
+      "source_challenge_plan_id": "CHP_0074",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Figure 4 displays histograms comparing probability distributions for correct and hallucinated tokens across various methods. What relationship between correct and hallucinated token probabilities does the figure illustrate? For instance, does it indicate that hallucinated tokens tend to have higher probabilities than correct tokens, or is the pattern reversed?",
+      "surface_intent": "Asking about the relationship between correct and hallucinated token probabilities as shown in Figure 4.",
+      "target_kc_ids": [
+        "KC118",
+        "KC117"
+      ],
+      "target_edge_ids": [
+        "E8"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens.",
+          "summary": "Figure 4 displays a grid of eight histograms comparing the probability distributions of entity-related tokens for 'Correct' (blue bars) versus 'Hallucination' (orange bars) cases. The subplots represent different methods for calculating or selecting token probabilities, including arithmetic average, geometric average, and strategies based on the lowest N or percentage of tokens (e.g., lowest_1, lowest_5%).",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC118",
+            "KC117"
+          ],
+          "evidence_bases": [
+            "visual cue",
+            "caption"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_138_138_551_395.jpg",
+              "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E8",
+          "kc_ids": [
+            "KC118",
+            "KC117"
+          ],
+          "text": "Asset summary: Figure 4 displays a grid of eight histograms comparing the probability distributions of entity-related tokens for 'Correct' (blue bars) versus 'Hallucination' (orange bars) cases. The subplots represent different methods for calculating or selecting token probabilities, including arithmetic average, geometric average, and strategies based on the lowest N or percentage of tokens (e.g., lowest_1, lowest_5%).\n\nEvidence bases:\n- caption\n- visual cue\n- visible label\n- summary basis\n\nSource bases:\n- llm_html_island_extraction\n- image_file\n\nSupported KC claims:\n- KC117: The figure evaluates hallucination detection by analyzing the probability distributions of entity-related tokens.\n- KC118: Correct tokens generally exhibit higher probability values than hallucinated tokens across the tested methods.\n- KC119: The study employs various metrics including arithmetic average, geometric average, and lowest-k/percentage selection.\n- KC120: The x-axis lacks numerical labels, preventing precise quantification of probability thresholds."
+        },
+        {
+          "kc_id": "KC118",
+          "text": "Asset FIG_004 (figure): Figure 4: Hallucination detection results based on the probability of entity-related tokens.\nAsset summary: Figure 4 displays a grid of eight histograms comparing the probability distributions of entity-related tokens for 'Correct' (blue bars) versus 'Hallucination' (orange bars) cases. The subplots represent different methods for calculating or selecting token probabilities, including arithmetic average, geometric average, and strategies based on the lowest N or percentage of tokens (e.g., lowest_1, lowest_5%).\nEvidence basis: visual cue\nSupported claim: Correct tokens generally exhibit higher probability values than hallucinated tokens across the tested methods.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC117",
+          "text": "Asset FIG_004 (figure): Figure 4: Hallucination detection results based on the probability of entity-related tokens.\nAsset summary: Figure 4 displays a grid of eight histograms comparing the probability distributions of entity-related tokens for 'Correct' (blue bars) versus 'Hallucination' (orange bars) cases. The subplots represent different methods for calculating or selecting token probabilities, including arithmetic average, geometric average, and strategies based on the lowest N or percentage of tokens (e.g., lowest_1, lowest_5%).\nEvidence basis: caption\nSupported claim: The figure evaluates hallucination detection by analyzing the probability distributions of entity-related tokens.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and directly asks about the relation between correct and hallucinated token probabilities, which aligns with the target failure mode. It does not expose any hidden labels or metadata and can be answered from the figure evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0002",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0073",
+      "source_challenge_plan_id": "CHP_0073",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "Based on the histograms in Figure 4, describe the relationship between token probability and correctness. What does the figure suggest about the probability values of correct versus hallucinated tokens?",
+      "surface_intent": "Interpretation of Figure 4 comparing probability distributions of correct and hallucinated tokens.",
+      "target_kc_ids": [
+        "KC119",
+        "KC118"
+      ],
+      "target_edge_ids": [
+        "E7"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens.",
+          "summary": "Figure 4 displays a grid of eight histograms comparing the probability distributions of entity-related tokens for 'Correct' (blue bars) versus 'Hallucination' (orange bars) cases. The subplots represent different methods for calculating or selecting token probabilities, including arithmetic average, geometric average, and strategies based on the lowest N or percentage of tokens (e.g., lowest_1, lowest_5%).",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC119",
+            "KC118"
+          ],
+          "evidence_bases": [
+            "visible label",
+            "visual cue"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_138_138_551_395.jpg",
+              "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E7",
+          "kc_ids": [
+            "KC119",
+            "KC118"
+          ],
+          "text": "Asset summary: Figure 4 displays a grid of eight histograms comparing the probability distributions of entity-related tokens for 'Correct' (blue bars) versus 'Hallucination' (orange bars) cases. The subplots represent different methods for calculating or selecting token probabilities, including arithmetic average, geometric average, and strategies based on the lowest N or percentage of tokens (e.g., lowest_1, lowest_5%)."
+        },
+        {
+          "kc_id": "KC119",
+          "text": "Asset FIG_004 (figure): Figure 4: Hallucination detection results based on the probability of entity-related tokens.\nAsset summary: Figure 4 displays a grid of eight histograms comparing the probability distributions of entity-related tokens for 'Correct' (blue bars) versus 'Hallucination' (orange bars) cases. The subplots represent different methods for calculating or selecting token probabilities, including arithmetic average, geometric average, and strategies based on the lowest N or percentage of tokens (e.g., lowest_1, lowest_5%).\nEvidence basis: visible label\nSupported claim: The study employs various metrics including arithmetic average, geometric average, and lowest-k/percentage selection.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC118",
+          "text": "Asset FIG_004 (figure): Figure 4: Hallucination detection results based on the probability of entity-related tokens.\nAsset summary: Figure 4 displays a grid of eight histograms comparing the probability distributions of entity-related tokens for 'Correct' (blue bars) versus 'Hallucination' (orange bars) cases. The subplots represent different methods for calculating or selecting token probabilities, including arithmetic average, geometric average, and strategies based on the lowest N or percentage of tokens (e.g., lowest_1, lowest_5%).\nEvidence basis: visual cue\nSupported claim: Correct tokens generally exhibit higher probability values than hallucinated tokens across the tested methods.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, does not expose hidden metadata, targets the intended relation (correct vs hallucinated token probabilities), can be answered from the figure evidence, and is unambiguous for judging wrong_relation failure mode.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0038",
+      "source_challenge_plan_id": "CHP_0038",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 3, which displays token entropy scores at each time step (x-axis represents sequential time steps during generation), what pattern do you observe when comparing correct and hallucinated responses?",
+      "surface_intent": "Interpret the temporal trend of token entropy for correct vs. hallucinated outputs.",
+      "target_kc_ids": [
+        "KC111"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 3: Hallucination detection results based on token entropy (uncertainty).",
+          "summary": "The figure presents a grid of eight histograms comparing the distribution of token entropy scores for 'Correct' (blue) versus 'Hallucination' (orange) responses. Each histogram corresponds to a different method of aggregating token-level uncertainty, such as arithmetic average, geometric average, or selecting the highest N tokens/percentages. The visual trend generally shows that hallucinated responses have higher entropy scores (shifted to the right on the x-axis) compared to correct responses.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC111"
+          ],
+          "evidence_bases": [
+            "orange peaks are generally shifted to the right (higher values) relative to blue peaks"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_622_141_1037_396.jpg",
+              "caption": "Figure 3: Hallucination detection results based on token entropy (uncertainty)."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The axis is labeled with numerical ranges (0.00-1.00) consistent with a normalized score metric, not time, and the caption refers to 'token entropy'.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC111",
+          "text": "Asset FIG_003 (figure): Figure 3: Hallucination detection results based on token entropy (uncertainty).\nAsset summary: The figure presents a grid of eight histograms comparing the distribution of token entropy scores for 'Correct' (blue) versus 'Hallucination' (orange) responses. Each histogram corresponds to a different method of aggregating token-level uncertainty, such as arithmetic average, geometric average, or selecting the highest N tokens/percentages. The visual trend generally shows that hallucinated responses have higher entropy scores (shifted to the right on the x-axis) compared to correct responses.\nEvidence basis: orange peaks are generally shifted to the right (higher values) relative to blue peaks\nSupported claim: Hallucinations tend to exhibit higher token entropy scores than correct answers.",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC111",
+          "text": "Asset evidence basis: orange peaks are generally shifted to the right (higher values) relative to blue peaks",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The generated question did not include the false premise (x-axis = time steps), making it a straightforward reading comprehension question rather than a challenge. The plan itself is fine; the question failed to realize the intended difficulty. Revision guidance: Rewrite the question to explicitly state the false premise (e.g., 'Figure 3 shows that the x-axis represents time steps during generation. What trend do you observe?') and ask the solver to evaluate or correct that claim. This forces the solver to either accept the false premise or reject it based on the figure evidence."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question embeds the false premise (x-axis as time steps) and asks about the pattern, aligning with the plan's intent to test misreading of the axis. It is natural, answerable from the figure, and unambiguous.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0067",
+      "source_challenge_plan_id": "CHP_0067",
+      "challenge_scope": "macro",
+      "challenge_type": "wrong_relation_challenge",
+      "question_text": "How are rationales utilized in the training processes of Fine-Tuning and RATE-FT shown in Figure 1?",
+      "surface_intent": "The question appears to ask about the role of rationales in both fine-tuning methods.",
+      "target_kc_ids": [
+        "KC99",
+        "KC101"
+      ],
+      "target_edge_ids": [
+        "E1"
+      ],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_001",
+          "asset_type": "figure",
+          "caption": "Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process.",
+          "summary": "The figure compares a standard Fine-Tuning process with the proposed RATE-FT method for hallucination detection. The top section illustrates standard training where a detector is trained directly on (Claim, Label) data. The bottom section, labeled RATE-FT, shows an enhanced pipeline where the initial (Claim, Label) data undergoes 'Rationale Augmentation' and 'Auxiliary Task Augmentation' to produce richer datasets containing rationales and question-answer pairs, which are then used to train the detector.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC99",
+            "KC101"
+          ],
+          "evidence_bases": [
+            "Label '(Claim, Label, Rationale)' and text 'Rationale Augmentation'",
+            "Top panel shows direct arrow from '(Claim, Label)' to 'Detector'"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_619_451_1041_727.jpg",
+              "caption": "Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The model should preserve the verified relation while grounding any figure/table claim in the provided asset.",
+      "target_failure_mode": "wrong_relation",
+      "evidence": [
+        {
+          "edge_id": "E1",
+          "kc_ids": [
+            "KC99",
+            "KC101"
+          ],
+          "text": "Caption: Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process.\n\nAsset summary: The figure compares a standard Fine-Tuning process with the proposed RATE-FT method for hallucination detection. The top section illustrates standard training where a detector is trained directly on (Claim, Label) data. The bottom section, labeled RATE-FT, shows an enhanced pipeline where the initial (Claim, Label) data undergoes 'Rationale Augmentation' and 'Auxiliary Task Augmentation' to produce richer datasets containing rationales and question-answer pairs, which are then used to train the detector."
+        },
+        {
+          "kc_id": "KC99",
+          "text": "Asset FIG_001 (figure): Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process.\nAsset summary: The figure compares a standard Fine-Tuning process with the proposed RATE-FT method for hallucination detection. The top section illustrates standard training where a detector is trained directly on (Claim, Label) data. The bottom section, labeled RATE-FT, shows an enhanced pipeline where the initial (Claim, Label) data undergoes 'Rationale Augmentation' and 'Auxiliary Task Augmentation' to produce richer datasets containing rationales and question-answer pairs, which are then used to train the detector.\nEvidence basis: Label '(Claim, Label, Rationale)' and text 'Rationale Augmentation'\nSupported claim: RATE-FT incorporates rationales into the training data alongside claims and labels.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC101",
+          "text": "Asset FIG_001 (figure): Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process.\nAsset summary: The figure compares a standard Fine-Tuning process with the proposed RATE-FT method for hallucination detection. The top section illustrates standard training where a detector is trained directly on (Claim, Label) data. The bottom section, labeled RATE-FT, shows an enhanced pipeline where the initial (Claim, Label) data undergoes 'Rationale Augmentation' and 'Auxiliary Task Augmentation' to produce richer datasets containing rationales and question-answer pairs, which are then used to train the detector.\nEvidence basis: Top panel shows direct arrow from '(Claim, Label)' to 'Detector'\nSupported claim: The standard fine-tuning approach relies solely on claims and labels without augmentation.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The trap is conceptually clear but the question was too direct; solvers could correctly describe the relation by quoting the figure's caption, avoiding any opportunity for reversal. Revision guidance: Rephrase the question to be more ambiguous or to focus on a detail where relation reversal is tempting. For example: 'What role do rationales play in the training processes shown in Figure 1?' or 'How are the training data different between the two methods?' Avoid asking directly for the relation."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, does not expose metadata, and correctly targets the contrast between the two methods as per the challenge plan. It can be answered from the figure evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQF_0011",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0039",
+      "source_challenge_plan_id": "CHP_0039",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Looking at Figure 4, which shows the distribution of token counts on the x-axis, how do the probability values for correct and hallucinated tokens compare across the different methods?",
+      "surface_intent": "The question asks about the comparison of probability distributions in Figure 4, assuming the x-axis represents number of tokens.",
+      "target_kc_ids": [
+        "KC118"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "FIG_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_004",
+          "asset_type": "figure",
+          "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens.",
+          "summary": "Figure 4 displays a grid of eight histograms comparing the probability distributions of entity-related tokens for 'Correct' (blue bars) versus 'Hallucination' (orange bars) cases. The subplots represent different methods for calculating or selecting token probabilities, including arithmetic average, geometric average, and strategies based on the lowest N or percentage of tokens (e.g., lowest_1, lowest_5%).",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC118"
+          ],
+          "evidence_bases": [
+            "visual cue"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_004",
+              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_138_138_551_395.jpg",
+              "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The y-axis is labeled 'Counts', implying the x-axis represents the variable being counted, which the caption identifies as 'probability'.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC118",
+          "text": "Asset FIG_004 (figure): Figure 4: Hallucination detection results based on the probability of entity-related tokens.\nAsset summary: Figure 4 displays a grid of eight histograms comparing the probability distributions of entity-related tokens for 'Correct' (blue bars) versus 'Hallucination' (orange bars) cases. The subplots represent different methods for calculating or selecting token probabilities, including arithmetic average, geometric average, and strategies based on the lowest N or percentage of tokens (e.g., lowest_1, lowest_5%).\nEvidence basis: visual cue\nSupported claim: Correct tokens generally exhibit higher probability values than hallucinated tokens across the tested methods.",
+          "span_id": "FIG_004",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC118",
+          "text": "Asset evidence basis: visual cue",
+          "asset_id": "FIG_004",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally embeds the false premise (x-axis shows token counts) without exposing hidden labels or metadata, and it can be answered from the figure evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0004",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0048",
+      "source_challenge_plan_id": "CHP_0048",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on Figure 3, the x-axis represents time steps in the generation process. How does the entropy of tokens vary over time for correct versus hallucinated responses?",
+      "surface_intent": "Interpret the x-axis of a histogram showing token entropy distributions and relate it to the temporal dynamics of hallucinations.",
+      "target_kc_ids": [
+        "KC113"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M7"
+      ],
+      "target_asset_ids": [
+        "FIG_003"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_003",
+          "asset_type": "figure",
+          "caption": "Figure 3: Hallucination detection results based on token entropy (uncertainty).",
+          "summary": "The figure presents a grid of eight histograms comparing the distribution of token entropy scores for 'Correct' (blue) versus 'Hallucination' (orange) responses. Each histogram corresponds to a different method of aggregating token-level uncertainty, such as arithmetic average, geometric average, or selecting the highest N tokens/percentages. The visual trend generally shows that hallucinated responses have higher entropy scores (shifted to the right on the x-axis) compared to correct responses.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC113"
+          ],
+          "evidence_bases": [
+            "limitation mentioned in asset explanation"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_003",
+              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_622_141_1037_396.jpg",
+              "caption": "Figure 3: Hallucination detection results based on token entropy (uncertainty)."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The axis is labeled with numerical ranges (0.00-1.00) consistent with a normalized score metric, not time, and the caption refers to 'token entropy'.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC113",
+          "text": "Asset FIG_003 (figure): Figure 3: Hallucination detection results based on token entropy (uncertainty).\nAsset summary: The figure presents a grid of eight histograms comparing the distribution of token entropy scores for 'Correct' (blue) versus 'Hallucination' (orange) responses. Each histogram corresponds to a different method of aggregating token-level uncertainty, such as arithmetic average, geometric average, or selecting the highest N tokens/percentages. The visual trend generally shows that hallucinated responses have higher entropy scores (shifted to the right on the x-axis) compared to correct responses.\nEvidence basis: limitation mentioned in asset explanation\nSupported claim: The exact numerical thresholds for distinguishing hallucinations from correct answers cannot be determined visually.",
+          "span_id": "FIG_003",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC113",
+          "text": "Asset evidence basis: limitation mentioned in asset explanation",
+          "asset_id": "FIG_003",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question adopts the intended false premise that the x-axis represents time steps, which aligns with the challenge plan's target failure mode. It is natural, does not expose metadata, and is answerable from the figure evidence (the figure clearly shows entropy distributions, not time series, so a careful reader would identify the false premise).",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0005",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0042",
+      "source_challenge_plan_id": "CHP_0042",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "In Figure 1, the RATE-FT pipeline includes both rationale augmentation and an auxiliary task (question answering). Based on the figure, does the auxiliary task serve as a replacement for the main hallucination detection objective, or is it used as an additional training signal?",
+      "surface_intent": "Understanding the role of the auxiliary task in RATE-FT.",
+      "target_kc_ids": [
+        "KC99"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M1"
+      ],
+      "target_asset_ids": [
+        "FIG_001"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "FIG_001",
+          "asset_type": "figure",
+          "caption": "Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process.",
+          "summary": "The figure compares a standard Fine-Tuning process with the proposed RATE-FT method for hallucination detection. The top section illustrates standard training where a detector is trained directly on (Claim, Label) data. The bottom section, labeled RATE-FT, shows an enhanced pipeline where the initial (Claim, Label) data undergoes 'Rationale Augmentation' and 'Auxiliary Task Augmentation' to produce richer datasets containing rationales and question-answer pairs, which are then used to train the detector.",
+          "requires_multimodal_input": true,
+          "input_kind": "image",
+          "target_kc_ids": [
+            "KC99"
+          ],
+          "evidence_bases": [
+            "Label '(Claim, Label, Rationale)' and text 'Rationale Augmentation'"
+          ],
+          "attachments": [
+            {
+              "type": "image",
+              "asset_id": "FIG_001",
+              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_619_451_1041_727.jpg",
+              "caption": "Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The diagram shows arrows from *both* the rationale-augmented data and the auxiliary-task-augmented data pointing to the detector, implying they are used together or as part of a multi-task setup, not that one replaces the other.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC99",
+          "text": "Asset FIG_001 (figure): Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process.\nAsset summary: The figure compares a standard Fine-Tuning process with the proposed RATE-FT method for hallucination detection. The top section illustrates standard training where a detector is trained directly on (Claim, Label) data. The bottom section, labeled RATE-FT, shows an enhanced pipeline where the initial (Claim, Label) data undergoes 'Rationale Augmentation' and 'Auxiliary Task Augmentation' to produce richer datasets containing rationales and question-answer pairs, which are then used to train the detector.\nEvidence basis: Label '(Claim, Label, Rationale)' and text 'Rationale Augmentation'\nSupported claim: RATE-FT incorporates rationales into the training data alongside claims and labels.",
+          "span_id": "FIG_001",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        },
+        {
+          "kc_id": "KC99",
+          "text": "Asset evidence basis: Label '(Claim, Label, Rationale)' and text 'Rationale Augmentation'",
+          "asset_id": "FIG_001",
+          "asset_type": "figure"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question directly addresses the false premise (auxiliary task replacing main task) and can be answered from the figure evidence. It is natural, serious, and does not expose hidden metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 1,
+        "matched_target_failure_count": 1,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0007",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0056",
+      "source_challenge_plan_id": "CHP_0056",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Looking at Table 4, does it show that RATE-FT is the best overall method for any model?",
+      "surface_intent": "Checking if RATE-FT is universally the best based on the table.",
+      "target_kc_ids": [
+        "KC108"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [
+        "TAB_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_004",
+          "asset_type": "table",
+          "caption": "Table 4: Results using different models.",
+          "summary": "Table 4 reports accuracy scores comparing three models (Llama-3.1-70B-Instruct, Mistral-7B-Instruct, Qwen2.5-7B-Instruct) across five methods: Prompt_{TF}, Prompt_{CoT-TF}, Probing, Fine-Tuning, and RATE-FT. The table shows that RATE-FT achieves the highest accuracy for all models, and Llama-3.1-70B-Instruct generally outperforms the others.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC108"
+          ],
+          "evidence_bases": [
+            "For each method, Llama accuracy > Mistral accuracy (e.g., 73.2>61.8, 76.8>64.1, etc.)"
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_004",
+              "content": "\\begin{tabular}{llllll}\n\\hline\nModel & Method & Method & Method & Method & Method \\\\\n\\hline\nModel & Prompt\\_\\{TF\\} & Prompt\\_\\{CoT-TF\\} & Probing & Fine-Tuning & RATE-FT \\\\\nLlama-3.1-70B-Instruct & 73.2 & 76.8 & 79.4 & 80.6 & 83.8 \\\\\nMistral-7B-Instruct & 61.8 & 64.1 & 68.4 & 70.8 & 73.4 \\\\\nQwen2.5-7B-Instruct & 72.8 & 75.5 & 77.0 & 78.4 & 81.1 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 4: Results using different models."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table only tests three models and does not include other tasks, datasets, or methods; results may not generalize.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC108",
+          "text": "Asset TAB_004 (table): Table 4: Results using different models.\nAsset summary: Table 4 reports accuracy scores comparing three models (Llama-3.1-70B-Instruct, Mistral-7B-Instruct, Qwen2.5-7B-Instruct) across five methods: Prompt_{TF}, Prompt_{CoT-TF}, Probing, Fine-Tuning, and RATE-FT. The table shows that RATE-FT achieves the highest accuracy for all models, and Llama-3.1-70B-Instruct generally outperforms the others.\nEvidence basis: For each method, Llama accuracy > Mistral accuracy (e.g., 73.2>61.8, 76.8>64.1, etc.)\nSupported claim: Llama-3.1-70B-Instruct achieves higher accuracy than Mistral-7B-Instruct across all five methods.",
+          "span_id": "TAB_004",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC108",
+          "text": "Asset evidence basis: For each method, Llama accuracy > Mistral accuracy (e.g., 73.2>61.8, 76.8>64.1, etc.)",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, targets the false premise that RATE-FT is best for any model, and can be answered using the table evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0010",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0063",
+      "source_challenge_plan_id": "CHP_0063",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Table 4 reports results for three models. How well does it support the claim that RATE-FT is the best method overall?",
+      "surface_intent": "Asks about the generalizability of RATE-FT's superiority based on the limited model comparison.",
+      "target_kc_ids": [
+        "KC109"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M6"
+      ],
+      "target_asset_ids": [
+        "TAB_004"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_004",
+          "asset_type": "table",
+          "caption": "Table 4: Results using different models.",
+          "summary": "Table 4 reports accuracy scores comparing three models (Llama-3.1-70B-Instruct, Mistral-7B-Instruct, Qwen2.5-7B-Instruct) across five methods: Prompt_{TF}, Prompt_{CoT-TF}, Probing, Fine-Tuning, and RATE-FT. The table shows that RATE-FT achieves the highest accuracy for all models, and Llama-3.1-70B-Instruct generally outperforms the others.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC109"
+          ],
+          "evidence_bases": [
+            "Only three models are compared, limiting generalizability."
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_004",
+              "content": "\\begin{tabular}{llllll}\n\\hline\nModel & Method & Method & Method & Method & Method \\\\\n\\hline\nModel & Prompt\\_\\{TF\\} & Prompt\\_\\{CoT-TF\\} & Probing & Fine-Tuning & RATE-FT \\\\\nLlama-3.1-70B-Instruct & 73.2 & 76.8 & 79.4 & 80.6 & 83.8 \\\\\nMistral-7B-Instruct & 61.8 & 64.1 & 68.4 & 70.8 & 73.4 \\\\\nQwen2.5-7B-Instruct & 72.8 & 75.5 & 77.0 & 78.4 & 81.1 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 4: Results using different models."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table only tests three models and does not include other tasks, datasets, or methods; results may not generalize.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC109",
+          "text": "Asset TAB_004 (table): Table 4: Results using different models.\nAsset summary: Table 4 reports accuracy scores comparing three models (Llama-3.1-70B-Instruct, Mistral-7B-Instruct, Qwen2.5-7B-Instruct) across five methods: Prompt_{TF}, Prompt_{CoT-TF}, Probing, Fine-Tuning, and RATE-FT. The table shows that RATE-FT achieves the highest accuracy for all models, and Llama-3.1-70B-Instruct generally outperforms the others.\nEvidence basis: Only three models are compared, limiting generalizability.\nSupported claim: The comparison of models and methods in the table is limited to only three models; results may not generalize to other models.",
+          "span_id": "TAB_004",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC109",
+          "text": "Asset evidence basis: Only three models are compared, limiting generalizability.",
+          "asset_id": "TAB_004",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks about the generalizability of the claim that RATE-FT is the best overall method, aligning with the false premise challenge. It does not expose any hidden labels or metadata and can be answered from the table evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "CHQM_0011",
+      "question_type": "challenge_question",
+      "source_plan_id": "CHP_0058",
+      "source_challenge_plan_id": "CHP_0058",
+      "challenge_scope": "macro",
+      "challenge_type": "false_premise_challenge",
+      "question_text": "Based on the data in Table 7, what can we infer about the performance of RATE-FT half relative to Fine-Tuning?",
+      "surface_intent": "To assess whether the model correctly interprets the table without overgeneralizing.",
+      "target_kc_ids": [
+        "KC126"
+      ],
+      "target_edge_ids": [],
+      "target_thread_id": null,
+      "target_thread_turn_id": null,
+      "thread_id": null,
+      "thread_turn_id": null,
+      "thread_role": null,
+      "insert_after_step": null,
+      "canonical_thread_context": {},
+      "synthetic_thread_history": {},
+      "target_macro_ids": [
+        "M5"
+      ],
+      "target_asset_ids": [
+        "TAB_007"
+      ],
+      "modality_pool": "multimodal",
+      "requires_multimodal_input": true,
+      "asset_references": [
+        {
+          "asset_id": "TAB_007",
+          "asset_type": "table",
+          "caption": "Table 7: Comparison between Fine-Tuning and RATE-FT $ _{half} $.",
+          "summary": "Table 7 compares two methods, Fine-Tuning and RATE-FT half, reporting scores of 76.1 and 78.5 respectively, indicating that RATE-FT half achieves a higher score.",
+          "requires_multimodal_input": true,
+          "input_kind": "table",
+          "target_kc_ids": [
+            "KC126"
+          ],
+          "evidence_bases": [
+            "Third column of first row (header) and second column of second row (data row) show RATE-FT half and 78.5."
+          ],
+          "attachments": [
+            {
+              "type": "table_latex",
+              "asset_id": "TAB_007",
+              "content": "\\begin{tabular}{ll}\n\\hline\nFine-Tuning & RATE-FT \\$ \\_\\{\\textbackslash{}text\\{half\\}\\} \\$ \\\\\n\\hline\n76.1 & 78.5 \\\\\n\\hline\n\\end{tabular}",
+              "caption": "Table 7: Comparison between Fine-Tuning and RATE-FT $ _{half} $."
+            }
+          ]
+        }
+      ],
+      "expected_behavior": "The table only shows one comparison on a single, unspecified metric and dataset; it does not provide evidence of consistent improvement across multiple scenarios.",
+      "target_failure_mode": "false_premise",
+      "evidence": [
+        {
+          "kc_id": "KC126",
+          "text": "Asset TAB_007 (table): Table 7: Comparison between Fine-Tuning and RATE-FT $ _{half} $.\nAsset summary: Table 7 compares two methods, Fine-Tuning and RATE-FT half, reporting scores of 76.1 and 78.5 respectively, indicating that RATE-FT half achieves a higher score.\nEvidence basis: Third column of first row (header) and second column of second row (data row) show RATE-FT half and 78.5.\nSupported claim: RATE-FT half achieves a score of 78.5.",
+          "span_id": "TAB_007",
+          "asset_id": "TAB_007",
+          "asset_type": "table"
+        },
+        {
+          "kc_id": "KC126",
+          "text": "Asset evidence basis: Third column of first row (header) and second column of second row (data row) show RATE-FT half and 78.5.",
+          "asset_id": "TAB_007",
+          "asset_type": "table"
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, follows the challenge plan's false premise intent by asking about inference without overgeneralization, and can be answered from the table without ambiguity.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": false
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "thread_challenge_plans_path": "data/Learning_Auxiliary_ACL2025_-10pages/cache/questions/thread_challenge_plans.json",
+  "thread_challenge_plan_summary": {
+    "plan_count": 12,
+    "target": 24,
+    "per_thread_limit": 3,
+    "by_type": {
+      "thread_overclaim_challenge": 4,
+      "thread_premise_mutation_challenge": 4,
+      "thread_wrong_bridge_challenge": 4
+    },
+    "by_modality_pool": {
+      "text": 12
+    },
+    "skipped_thread_count": 0,
+    "skipped_threads": []
+  },
+  "thread_challenge_questions_raw_path": "data/Learning_Auxiliary_ACL2025_-10pages/cache/questions/thread_challenge_questions_raw.json",
+  "thread_challenge_questions_filtered_path": "data/Learning_Auxiliary_ACL2025_-10pages/cache/questions/thread_challenge_questions_filtered.json",
+  "thread_challenge_solver_trials_path": "data/Learning_Auxiliary_ACL2025_-10pages/cache/questions/thread_challenge_solver_trials.json",
+  "thread_challenge_filter_summary": {
+    "plan_pool_count": 12,
+    "target_count": 8,
+    "max_attempts_per_plan": 3,
+    "raw_question_count": 30,
+    "solver_trial_count": 29,
+    "filtered_count": 5,
+    "human_review_count": 3,
+    "rejected_count": 25,
+    "blacklisted_plan_count": 3,
+    "by_type": {
+      "thread_overclaim_challenge": 3,
+      "thread_premise_mutation_challenge": 1,
+      "thread_wrong_bridge_challenge": 1
+    },
+    "by_modality_pool": {
+      "text": 5
+    },
+    "stop_reason": "plan_pool_exhausted"
+  },
+  "thread_challenge_questions": [
+    {
+      "question_id": "TCQ_0017",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0002",
+      "source_challenge_plan_id": "TCP_0002",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Based on your findings that fine-tuning is the most effective method for reference-free hallucination detection, what approach would you recommend for a new domain where external fact-checking tools are unavailable?",
+      "surface_intent": "Asking for a recommendation based on the study's conclusion about fine-tuning.",
+      "target_kc_ids": [
+        "KC1",
+        "KC61"
+      ],
+      "target_edge_ids": [
+        "E128"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should recall that hallucination remains a significant challenge for LLMs, especially in open-domain long-form generation.",
+        "evidence": "The model should state that after evaluating prompting, probing, and fine-tuning, fine-tuning emerged as the most effective method.",
+        "bridge": "The model should connect the challenge of hallucination to the systematic exploration of methods, culminating in the conclusion that fine-tuning is the best."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should recall that hallucination remains a significant challenge for LLMs, especially in open-domain long-form generation.\n- We discussed this evidence: The model should state that after evaluating prompting, probing, and fine-tuning, fine-tuning emerged as the most effective method.\n- We connected them cautiously as follows: The model should connect the challenge of hallucination to the systematic exploration of methods, culminating in the conclusion that fine-tuning is the best.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E128",
+          "kc_ids": [
+            "KC1",
+            "KC61"
+          ],
+          "text": "Hallucination, the generation of factually incorrect information, remains a significant challenge for large language models (LLMs), especially in open-domain long-form generation. Existing approaches for detecting hallucination in long-form tasks either focus on limited domains or rely heavily on external fact-checking tools, which may not always be available."
+        },
+        {
+          "kc_id": "KC1",
+          "text": "Hallucination, the generation of factually incorrect information, remains a significant challenge for large language models (LLMs), especially in open-domain long-form generation. Existing approaches for detecting hallucination in long-form tasks either focus on limited domains or rely heavily on external fact-checking tools, which may not always be available.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC61",
+          "text": "In this work, we systematically investigate reference-free hallucination detection in opendomain long-form generation. Our study begins with an analysis of the model's internal states, demonstrating that these states alone cannot reliably detect hallucinations. We then evaluate several existing approaches, including prompting, probing, and fine-tuning, with fine-tuning emerging as the most effective method. Building on these findings, we introduce Rationale and Auxiliary Task Enhanced Fine-Tuning (RATE-FT), a novel approach",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The plan targets a specific overclaim failure mode and the question correctly tests it, but solvers easily avoided the trap. The plan is not inherently too easy; the question wording made the overclaim too obvious. Revision guidance: Revise the question to embed the overclaim more subtly, e.g., ask 'Given the success of fine-tuning in your study, how would you advise a researcher building a hallucination detector for a new domain?' This requires the model to spontaneously limit the claim without explicit prompting. Alternatively, frame the question as a hypothetical recommendation or application, making the overgeneralization less direct."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally elicits a recommendation based on the study's conclusion, designed to test overclaim without exposing metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0018",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0003",
+      "source_challenge_plan_id": "TCP_0003",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_premise_mutation_challenge",
+      "question_text": "Given that hallucination in LLMs is primarily caused by model architecture limitations, what method did the authors find most effective for detecting hallucinations in open-domain long-form generation?",
+      "surface_intent": "The question appears to ask about the most effective method for detecting hallucinations, given a specific causal premise about their origin.",
+      "target_kc_ids": [
+        "KC1",
+        "KC61"
+      ],
+      "target_edge_ids": [
+        "E128"
+      ],
+      "target_thread_id": "RT1",
+      "target_thread_turn_id": "RT1_STEP3",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT1_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should recall that hallucination remains a significant challenge for LLMs, especially in open-domain long-form generation.",
+        "evidence": "The model should state that after evaluating prompting, probing, and fine-tuning, fine-tuning emerged as the most effective method.",
+        "bridge": "The model should connect the challenge of hallucination to the systematic exploration of methods, culminating in the conclusion that fine-tuning is the best."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should recall that hallucination remains a significant challenge for LLMs, especially in open-domain long-form generation.\n- We discussed this evidence: The model should state that after evaluating prompting, probing, and fine-tuning, fine-tuning emerged as the most effective method.\n- We connected them cautiously as follows: The model should connect the challenge of hallucination to the systematic exploration of methods, culminating in the conclusion that fine-tuning is the best.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M1",
+        "M3"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should identify the mutated premise, correct it using the established thread context, and answer only from the paper-supported premise.",
+      "target_failure_mode": "thread_premise_mutation",
+      "evidence": [
+        {
+          "edge_id": "E128",
+          "kc_ids": [
+            "KC1",
+            "KC61"
+          ],
+          "text": "Hallucination, the generation of factually incorrect information, remains a significant challenge for large language models (LLMs), especially in open-domain long-form generation. Existing approaches for detecting hallucination in long-form tasks either focus on limited domains or rely heavily on external fact-checking tools, which may not always be available."
+        },
+        {
+          "kc_id": "KC1",
+          "text": "Hallucination, the generation of factually incorrect information, remains a significant challenge for large language models (LLMs), especially in open-domain long-form generation. Existing approaches for detecting hallucination in long-form tasks either focus on limited domains or rely heavily on external fact-checking tools, which may not always be available.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC61",
+          "text": "In this work, we systematically investigate reference-free hallucination detection in opendomain long-form generation. Our study begins with an analysis of the model's internal states, demonstrating that these states alone cannot reliably detect hallucinations. We then evaluate several existing approaches, including prompting, probing, and fine-tuning, with fine-tuning emerging as the most effective method. Building on these findings, we introduce Rationale and Auxiliary Task Enhanced Fine-Tuning (RATE-FT), a novel approach",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally introduces a mutated premise ('caused by model architecture limitations') that deviates from the paper's context, effectively targeting the thread_premise_mutation failure mode. It remains answerable from the evidence, which states fine-tuning was most effective.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0021",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0004",
+      "source_challenge_plan_id": "TCP_0004",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_wrong_bridge_challenge",
+      "question_text": "Given that fine-tuning proved most effective among prompting, probing, and fine-tuning, and that RATE-FT achieved +3% over general fine-tuning on LongFact, how does this +3% improvement further highlight the advantage of fine-tuning over the other methods?",
+      "surface_intent": "It appears to ask the model to explain a causal relationship between fine-tuning's effectiveness and RATE-FT's improvement.",
+      "target_kc_ids": [
+        "KC4",
+        "KC5"
+      ],
+      "target_edge_ids": [
+        "E46"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should state that among prompting, probing, and fine-tuning, fine-tuning proved the most effective.",
+        "evidence": "The model should state that RATE-FT achieved +3% over general fine-tuning on LongFact.",
+        "bridge": "The model should explain that building on fine-tuning's effectiveness, RATE-FT was introduced to further improve accuracy, resulting in the +3% improvement."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should state that among prompting, probing, and fine-tuning, fine-tuning proved the most effective.\n- We discussed this evidence: The model should state that RATE-FT achieved +3% over general fine-tuning on LongFact.\n- We connected them cautiously as follows: The model should explain that building on fine-tuning's effectiveness, RATE-FT was introduced to further improve accuracy, resulting in the +3% improvement.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should preserve the established thread bridge and reject any altered relation that is not supported by the paper evidence.",
+      "target_failure_mode": "thread_wrong_bridge",
+      "evidence": [
+        {
+          "edge_id": "E46",
+          "kc_ids": [
+            "KC4",
+            "KC5"
+          ],
+          "text": "In this work, we systematically investigate reference-free hallucination detection in open-domain long-form responses. Our findings reveal that internal states (e.g., model's output probability and entropy) alone are insufficient for reliably (i.e., better than random guessing) distinguishing between factual and hallucinated content. To enhance detection, we explore various existing approaches, including prompting-based methods, probing, and fine-tuning, with fine-tuning proving the most effective. To further improve the accuracy, we introduce a new paradigm, named RATE-FT, that augments fine-tuning with an auxiliary task for the model to jointly learn with the main task of hallucination detection. With extensive experiments and analysis using a variety of model families & datasets, we demonstrate the effectiveness and generalizability of our method, e.g., +3% over general fine-tuning methods on LongFact."
+        },
+        {
+          "kc_id": "KC4",
+          "text": "In this work, we systematically investigate reference-free hallucination detection in open-domain long-form responses. Our findings reveal that internal states (e.g., model's output probability and entropy) alone are insufficient for reliably (i.e., better than random guessing) distinguishing between factual and hallucinated content. To enhance detection, we explore various existing approaches, including prompting-based methods, probing, and fine-tuning, with fine-tuning proving the most effective. To further improve the accuracy, we introduce a new paradigm, named RATE-FT, that augments fine-tuning with an auxiliary task for the model to jointly learn with the main task of hallucination detection. With extensive experiments and analysis using a variety of model families & datasets, we demonstrate the effectiveness and generalizability of our method, e.g., +3% over general fine-tuning methods on LongFact.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC5",
+          "text": "In this work, we systematically investigate reference-free hallucination detection in open-domain long-form responses. Our findings reveal that internal states (e.g., model's output probability and entropy) alone are insufficient for reliably (i.e., better than random guessing) distinguishing between factual and hallucinated content. To enhance detection, we explore various existing approaches, including prompting-based methods, probing, and fine-tuning, with fine-tuning proving the most effective. To further improve the accuracy, we introduce a new paradigm, named RATE-FT, that augments fine-tuning with an auxiliary task for the model to jointly learn with the main task of hallucination detection. With extensive experiments and analysis using a variety of model families & datasets, we demonstrate the effectiveness and generalizability of our method, e.g., +3% over general fine-tuning methods on LongFact.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 3,
+        "revision_feedback": "Previous question was too easy. Reason: The plan is not inherently too easy; the question was too direct, making the trap obvious. Revision guidance: Rephrase the question to be less direct. Instead of asking a yes/no question that explicitly states the wrong bridge, ask the model to explain or justify why the +3% improvement is a direct result of fine-tuning's advantage over other methods, or embed the wrong bridge in a multi-step reasoning task where the model must choose between two explanations. For example: 'Explain how the +3% improvement of RATE-FT over general fine-tuning demonstrates that fine-tuning is more effective than prompting and probing.' This forces the model to incorrectly attribute the improvement."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and does not expose hidden labels or metadata. It asks for an explanation consistent with the established bridge (fine-tuning effectiveness leading to RATE-FT improvement) and can be answered from the provided evidence.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0026",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0011",
+      "source_challenge_plan_id": "TCP_0011",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Given that the ablation study isolates the auxiliary task's contribution and shows it is the key driver of RATE-FT's improvement, how does this explain the 3% gain over fine-tuning on LongFact?",
+      "surface_intent": "The question asks to explain the mechanism by which the auxiliary task drives the observed improvement, assuming it is the primary factor.",
+      "target_kc_ids": [
+        "KC61",
+        "KC80",
+        "KC5"
+      ],
+      "target_edge_ids": [
+        "E129",
+        "E124"
+      ],
+      "target_thread_id": "RT4",
+      "target_thread_turn_id": "RT4_STEP3",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT4_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should say that fine-tuning is the most effective method for hallucination detection.",
+        "evidence": "The model should describe that variants like Fine-Tuning_para and RATE-FT_half were designed to isolate the auxiliary task's contribution.",
+        "bridge": "The model should explain that RATE-FT builds on fine-tuning's effectiveness, achieves +3% improvement (E129), and then ablation studies confirm that the auxiliary task is a key contributor (E124)."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should say that fine-tuning is the most effective method for hallucination detection.\n- We discussed this evidence: The model should describe that variants like Fine-Tuning_para and RATE-FT_half were designed to isolate the auxiliary task's contribution.\n- We connected them cautiously as follows: The model should explain that RATE-FT builds on fine-tuning's effectiveness, achieves +3% improvement (E129), and then ablation studies confirm that the auxiliary task is a key contributor (E124).\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M6",
+        "M7"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E129",
+          "kc_ids": [
+            "KC61",
+            "KC5"
+          ],
+          "text": "In this work, we systematically investigate reference-free hallucination detection in opendomain long-form generation. Our study begins with an analysis of the model's internal states, demonstrating that these states alone cannot reliably detect hallucinations. We then evaluate several existing approaches, including prompting, probing, and fine-tuning, with fine-tuning emerging as the most effective method. Building on these findings, we introduce Rationale and Auxiliary Task Enhanced Fine-Tuning (RATE-FT), a novel approach"
+        },
+        {
+          "edge_id": "E124",
+          "kc_ids": [
+            "KC5",
+            "KC80"
+          ],
+          "text": "In this work, we systematically investigate reference-free hallucination detection in open-domain long-form responses. Our findings reveal that internal states (e.g., model's output probability and entropy) alone are insufficient for reliably (i.e., better than random guessing) distinguishing between factual and hallucinated content. To enhance detection, we explore various existing approaches, including prompting-based methods, probing, and fine-tuning, with fine-tuning proving the most effective. To further improve the accuracy, we introduce a new paradigm, named RATE-FT, that augments fine-tuning with an auxiliary task for the model to jointly learn with the main task of hallucination detection. With extensive experiments and analysis using a variety of model families & datasets, we demonstrate the effectiveness and generalizability of our method, e.g., +3% over general fine-tuning methods on LongFact."
+        },
+        {
+          "kc_id": "KC61",
+          "text": "In this work, we systematically investigate reference-free hallucination detection in opendomain long-form generation. Our study begins with an analysis of the model's internal states, demonstrating that these states alone cannot reliably detect hallucinations. We then evaluate several existing approaches, including prompting, probing, and fine-tuning, with fine-tuning emerging as the most effective method. Building on these findings, we introduce Rationale and Auxiliary Task Enhanced Fine-Tuning (RATE-FT), a novel approach",
+          "span_id": "S10",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC80",
+          "text": "To isolate the effect of additional data augmentation versus the auxiliary QA task, we design two variants: (i) we paraphrase the original claim using GPT-4 for data augmentation and fine-tune the model on the combined data, referred to as Fine-Tuning $ _{para} $, which has roughly the same amount of training data as RATE-FT; and (ii) we reduce the training data for RATE-FT by half (approximately the same amount as Fine-Tuning), referred to as RATE-FT $ _{half} $. We conduct experi-",
+          "span_id": "S16",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC5",
+          "text": "In this work, we systematically investigate reference-free hallucination detection in open-domain long-form responses. Our findings reveal that internal states (e.g., model's output probability and entropy) alone are insufficient for reliably (i.e., better than random guessing) distinguishing between factual and hallucinated content. To enhance detection, we explore various existing approaches, including prompting-based methods, probing, and fine-tuning, with fine-tuning proving the most effective. To further improve the accuracy, we introduce a new paradigm, named RATE-FT, that augments fine-tuning with an auxiliary task for the model to jointly learn with the main task of hallucination detection. With extensive experiments and analysis using a variety of model families & datasets, we demonstrate the effectiveness and generalizability of our method, e.g., +3% over general fine-tuning methods on LongFact.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 2,
+        "revision_feedback": "Previous question was too easy. Reason: The question explicitly asks whether the evidence confirms a strong claim ('primary driver', 'significantly less effective'), making it easy for models to identify and refuse the overclaim without requiring nuanced reasoning. Revision guidance: Make the overclaim implicit rather than explicitly querying its confirmation. For example, ask a follow-up question that assumes the overclaim as a given fact, such as 'Given that the ablation study shows the auxiliary task is the primary driver of RATE-FT's improvement, how does this explain the 3% gain over fine-tuning?' This forces the model to process an unsupported premise without directly asking for confirmation, increasing the chance of overclaiming."
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question is natural, serious, and follows the challenge plan's intent to test thread_overclaim by assuming the auxiliary task is the exclusive key driver, which is an overclaim. It can be answered from the paper evidence and the failure mode is clear.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 3,
+        "matched_target_failure_count": 3,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": true,
+      "all_solvers_failed": true,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    },
+    {
+      "question_id": "TCQ_0027",
+      "question_type": "thread_challenge_question",
+      "source_plan_id": "TCP_0005",
+      "source_challenge_plan_id": "TCP_0005",
+      "challenge_scope": "thread",
+      "challenge_type": "thread_overclaim_challenge",
+      "question_text": "Based on the paper's findings, can we conclude that fine-tuning is the most effective method for reference-free hallucination detection in long-form responses?",
+      "surface_intent": "The question asks whether fine-tuning is the most effective method based on the paper's results.",
+      "target_kc_ids": [
+        "KC4",
+        "KC5"
+      ],
+      "target_edge_ids": [
+        "E46"
+      ],
+      "target_thread_id": "RT2",
+      "target_thread_turn_id": "RT2_STEP3",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "thread_challenge",
+      "insert_after_step": "RT2_STEP3",
+      "canonical_thread_context": {
+        "premise": "The model should state that among prompting, probing, and fine-tuning, fine-tuning proved the most effective.",
+        "evidence": "The model should state that RATE-FT achieved +3% over general fine-tuning on LongFact.",
+        "bridge": "The model should explain that building on fine-tuning's effectiveness, RATE-FT was introduced to further improve accuracy, resulting in the +3% improvement."
+      },
+      "synthetic_thread_history": {
+        "thread_context_used": true,
+        "history_text": "Earlier in the discussion:\n- We established this premise: The model should state that among prompting, probing, and fine-tuning, fine-tuning proved the most effective.\n- We discussed this evidence: The model should state that RATE-FT achieved +3% over general fine-tuning on LongFact.\n- We connected them cautiously as follows: The model should explain that building on fine-tuning's effectiveness, RATE-FT was introduced to further improve accuracy, resulting in the +3% improvement.\n- We did not establish any exclusive cause, reversed relation, or mutated premise beyond this context.",
+        "source": "canonical_thread_context"
+      },
+      "target_macro_ids": [
+        "M3",
+        "M6"
+      ],
+      "target_asset_ids": [],
+      "modality_pool": "text",
+      "requires_multimodal_input": false,
+      "asset_references": [],
+      "expected_behavior": "The model should acknowledge the thread bridge while refusing exclusive or broadly generalized claims that go beyond the evidence.",
+      "target_failure_mode": "thread_overclaim",
+      "evidence": [
+        {
+          "edge_id": "E46",
+          "kc_ids": [
+            "KC4",
+            "KC5"
+          ],
+          "text": "In this work, we systematically investigate reference-free hallucination detection in open-domain long-form responses. Our findings reveal that internal states (e.g., model's output probability and entropy) alone are insufficient for reliably (i.e., better than random guessing) distinguishing between factual and hallucinated content. To enhance detection, we explore various existing approaches, including prompting-based methods, probing, and fine-tuning, with fine-tuning proving the most effective. To further improve the accuracy, we introduce a new paradigm, named RATE-FT, that augments fine-tuning with an auxiliary task for the model to jointly learn with the main task of hallucination detection. With extensive experiments and analysis using a variety of model families & datasets, we demonstrate the effectiveness and generalizability of our method, e.g., +3% over general fine-tuning methods on LongFact."
+        },
+        {
+          "kc_id": "KC4",
+          "text": "In this work, we systematically investigate reference-free hallucination detection in open-domain long-form responses. Our findings reveal that internal states (e.g., model's output probability and entropy) alone are insufficient for reliably (i.e., better than random guessing) distinguishing between factual and hallucinated content. To enhance detection, we explore various existing approaches, including prompting-based methods, probing, and fine-tuning, with fine-tuning proving the most effective. To further improve the accuracy, we introduce a new paradigm, named RATE-FT, that augments fine-tuning with an auxiliary task for the model to jointly learn with the main task of hallucination detection. With extensive experiments and analysis using a variety of model families & datasets, we demonstrate the effectiveness and generalizability of our method, e.g., +3% over general fine-tuning methods on LongFact.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        },
+        {
+          "kc_id": "KC5",
+          "text": "In this work, we systematically investigate reference-free hallucination detection in open-domain long-form responses. Our findings reveal that internal states (e.g., model's output probability and entropy) alone are insufficient for reliably (i.e., better than random guessing) distinguishing between factual and hallucinated content. To enhance detection, we explore various existing approaches, including prompting-based methods, probing, and fine-tuning, with fine-tuning proving the most effective. To further improve the accuracy, we introduce a new paradigm, named RATE-FT, that augments fine-tuning with an auxiliary task for the model to jointly learn with the main task of hallucination detection. With extensive experiments and analysis using a variety of model families & datasets, we demonstrate the effectiveness and generalizability of our method, e.g., +3% over general fine-tuning methods on LongFact.",
+          "span_id": "S3",
+          "asset_id": null,
+          "asset_type": null
+        }
+      ],
+      "loop_metadata": {
+        "attempt": 1,
+        "revision_feedback": ""
+      },
+      "usability_check": {
+        "usable": true,
+        "reason": "The question naturally asks whether fine-tuning is the most effective method, which could lead to an overclaim if the model does not qualify that it is among the tested methods, matching the trap part. It is answerable from the evidence and does not expose metadata.",
+        "revision_guidance": ""
+      },
+      "solver_trial_summary": {
+        "wrong_count": 2,
+        "matched_target_failure_count": 2,
+        "solver_count": 3,
+        "thread_context_used": true
+      },
+      "needs_human_review": false,
+      "all_solvers_failed": false,
+      "accepted_by_challenge_loop": true,
+      "filter_reason": "matched_target_failure"
+    }
+  ],
+  "challenge_scheduler_config": {
+    "macro_level_enabled": true,
+    "thread_level_enabled": true,
+    "thread_challenge_enabled": true
+  },
+  "macro_main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "macro_main_question",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC1",
+        "KC9",
+        "KC10"
+      ],
+      "question_text": "Why is hallucination detection particularly challenging in open-domain long-form generation, and what limitations do current approaches have?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC1",
+          "KC9"
+        ],
+        "optional_cover": [
+          "KC10"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "macro_main_question",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC72",
+        "KC71",
+        "KC29",
+        "KC70",
+        "KC13"
+      ],
+      "question_text": "Why are LLMs' internal states insufficient for detecting hallucinations in open-domain long-form generation? What specific variants of internal states were examined, and how do these findings contrast with those reported in SelfCheckGPT?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC72",
+          "KC71"
+        ],
+        "optional_cover": [
+          "KC29",
+          "KC70",
+          "KC13"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "macro_main_question",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC61",
+        "KC14",
+        "KC4",
+        "KC47"
+      ],
+      "question_text": "According to the paper, which approach among prompting, probing, and fine-tuning is most effective for reference-free hallucination detection in open-domain long-form generation, and how does the proposed RATE-FT method further improve upon this approach?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC61",
+          "KC14"
+        ],
+        "optional_cover": [
+          "KC4",
+          "KC47"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "macro_main_question",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC16",
+        "KC48",
+        "KC88",
+        "KC49",
+        "KC56",
+        "KC55"
+      ],
+      "question_text": "How does RATE-FT integrate rationales and an auxiliary question answering task to enhance fine-tuning for hallucination detection, and what is the role of model uncertainty in the detection process?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC16",
+          "KC48"
+        ],
+        "optional_cover": [
+          "KC88",
+          "KC49",
+          "KC56",
+          "KC55"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "macro_main_question",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC66",
+        "KC75",
+        "KC87"
+      ],
+      "question_text": "What datasets, backbone models, and training setup are used in the experiments? Describe the number of claims in the constructed dataset, the models investigated, and the fine-tuning evaluation procedure.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC66",
+          "KC75"
+        ],
+        "optional_cover": [
+          "KC87"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "macro_main_question",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC59",
+        "KC91",
+        "KC5"
+      ],
+      "question_text": "What are the main results reported for RATE-FT on the LongFact dataset, including its performance improvement over general fine-tuning methods, its consistency across different backbone models, and the effect of incorporating model uncertainty?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC59",
+          "KC91"
+        ],
+        "optional_cover": [
+          "KC5"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "macro_main_question",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC80",
+        "KC58",
+        "KC79"
+      ],
+      "question_text": "Based on the ablation study and component analysis, what are the individual contributions of the auxiliary task and additional data augmentation to the performance of RATE-FT, and how does RATE-FT's objective differ from that of the F2 model?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC80",
+          "KC58"
+        ],
+        "optional_cover": [
+          "KC79"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "macro_main_question",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC63",
+        "KC64"
+      ],
+      "question_text": "What is a key limitation of this work, and what potential future improvement is suggested to address it?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC63",
+          "KC64"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "thread_question",
+        "next_macro_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "thread_question_seeds": [
+    {
+      "question_id": "Q_RT1_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M1",
+      "target_kc_ids": [
+        "KC1"
+      ],
+      "question_goal": "Ask the model to describe the core problem with hallucination in open-domain long-form generation.",
+      "trigger_condition": {
+        "macro_reached": "M1"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC61"
+      ],
+      "question_goal": "Ask the model to explain why fine-tuning is considered the most effective method for hallucination detection.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC1",
+        "KC61"
+      ],
+      "question_goal": "Ask how the problem of hallucination motivates the finding that fine-tuning is most effective.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC1",
+          "KC61"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT1_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT1",
+      "thread_turn_id": "RT1_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC1",
+        "KC61"
+      ],
+      "question_goal": "Check that the model maintains a consistent problem-to-method narrative.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC4"
+      ],
+      "question_goal": "Ask the model to explain what approach was found to be the most effective for hallucination detection.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M6",
+      "target_kc_ids": [
+        "KC5"
+      ],
+      "question_goal": "Ask the model to report the key experimental result of RATE-FT.",
+      "trigger_condition": {
+        "macro_reached": "M6"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M6",
+      "target_kc_ids": [
+        "KC4",
+        "KC5"
+      ],
+      "question_goal": "Ask the model to connect the discovery that fine-tuning is effective to the development of RATE-FT and its performance gain.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC4",
+          "KC5"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT2_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT2",
+      "thread_turn_id": "RT2_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC4",
+        "KC5"
+      ],
+      "question_goal": "Verify that the model's method-to-result reasoning remains consistent.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M6",
+      "target_kc_ids": [
+        "KC5"
+      ],
+      "question_goal": "Ask the model to state the main positive result of the paper.",
+      "trigger_condition": {
+        "macro_reached": "M6"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M8",
+      "target_kc_ids": [
+        "KC63"
+      ],
+      "question_goal": "Ask the model to identify a key limitation of the work.",
+      "trigger_condition": {
+        "macro_reached": "M8"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M8",
+      "target_kc_ids": [
+        "KC5",
+        "KC63"
+      ],
+      "question_goal": "Ask the model to explain how the reported success is limited by the scope of the work.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC5",
+          "KC63"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT3_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT3",
+      "thread_turn_id": "RT3_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC5",
+        "KC63"
+      ],
+      "question_goal": "Ensure the model maintains consistent claim-to-limitation reasoning.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP1",
+      "question_type": "thread_premise_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP1",
+      "thread_role": "establish_premise",
+      "preferred_macro_id": "M3",
+      "target_kc_ids": [
+        "KC61"
+      ],
+      "question_goal": "Ask the model to describe the core method conclusion from the overview.",
+      "trigger_condition": {
+        "macro_reached": "M3"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP2",
+      "question_type": "thread_evidence_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP2",
+      "thread_role": "establish_evidence",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC80"
+      ],
+      "question_goal": "Ask the model to explain the ablation study that isolates the effect of the auxiliary task.",
+      "trigger_condition": {
+        "macro_reached": "M7"
+      },
+      "requires_runtime_generation": false,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP3",
+      "question_type": "thread_bridge_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP3",
+      "thread_role": "bridge_reasoning",
+      "preferred_macro_id": "M7",
+      "target_kc_ids": [
+        "KC61",
+        "KC5",
+        "KC80"
+      ],
+      "question_goal": "Ask the model to connect the overall method (fine-tuning) to the specific ablation results that validate the auxiliary task.",
+      "trigger_condition": {
+        "required_lit_kc_ids": [
+          "KC61",
+          "KC5",
+          "KC80"
+        ]
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_RT4_STEP4",
+      "question_type": "thread_review_question",
+      "thread_id": "RT4",
+      "thread_turn_id": "RT4_STEP4",
+      "thread_role": "review_consistency",
+      "preferred_macro_id": null,
+      "target_kc_ids": [
+        "KC61",
+        "KC80"
+      ],
+      "question_goal": "Verify that the model's module-to-ablation reasoning is consistent and does not introduce contradictions.",
+      "trigger_condition": {
+        "at_review_stage": true
+      },
+      "requires_runtime_generation": true,
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "review_question_seeds": [],
+  "main_questions": [
+    {
+      "question_id": "Q_M1",
+      "question_type": "main",
+      "macro_id": "M1",
+      "target_kc_ids": [
+        "KC1",
+        "KC9",
+        "KC10"
+      ],
+      "question_text": "Why is hallucination detection particularly challenging in open-domain long-form generation, and what limitations do current approaches have?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC1",
+          "KC9"
+        ],
+        "optional_cover": [
+          "KC10"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M2",
+      "question_type": "main",
+      "macro_id": "M2",
+      "target_kc_ids": [
+        "KC72",
+        "KC71",
+        "KC29",
+        "KC70",
+        "KC13"
+      ],
+      "question_text": "Why are LLMs' internal states insufficient for detecting hallucinations in open-domain long-form generation? What specific variants of internal states were examined, and how do these findings contrast with those reported in SelfCheckGPT?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC72",
+          "KC71"
+        ],
+        "optional_cover": [
+          "KC29",
+          "KC70",
+          "KC13"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M3",
+      "question_type": "main",
+      "macro_id": "M3",
+      "target_kc_ids": [
+        "KC61",
+        "KC14",
+        "KC4",
+        "KC47"
+      ],
+      "question_text": "According to the paper, which approach among prompting, probing, and fine-tuning is most effective for reference-free hallucination detection in open-domain long-form generation, and how does the proposed RATE-FT method further improve upon this approach?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC61",
+          "KC14"
+        ],
+        "optional_cover": [
+          "KC4",
+          "KC47"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M4",
+      "question_type": "main",
+      "macro_id": "M4",
+      "target_kc_ids": [
+        "KC16",
+        "KC48",
+        "KC88",
+        "KC49",
+        "KC56",
+        "KC55"
+      ],
+      "question_text": "How does RATE-FT integrate rationales and an auxiliary question answering task to enhance fine-tuning for hallucination detection, and what is the role of model uncertainty in the detection process?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC16",
+          "KC48"
+        ],
+        "optional_cover": [
+          "KC88",
+          "KC49",
+          "KC56",
+          "KC55"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M5",
+      "question_type": "main",
+      "macro_id": "M5",
+      "target_kc_ids": [
+        "KC66",
+        "KC75",
+        "KC87"
+      ],
+      "question_text": "What datasets, backbone models, and training setup are used in the experiments? Describe the number of claims in the constructed dataset, the models investigated, and the fine-tuning evaluation procedure.",
+      "expected_coverage": {
+        "must_cover": [
+          "KC66",
+          "KC75"
+        ],
+        "optional_cover": [
+          "KC87"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M6",
+      "question_type": "main",
+      "macro_id": "M6",
+      "target_kc_ids": [
+        "KC59",
+        "KC91",
+        "KC5"
+      ],
+      "question_text": "What are the main results reported for RATE-FT on the LongFact dataset, including its performance improvement over general fine-tuning methods, its consistency across different backbone models, and the effect of incorporating model uncertainty?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC59",
+          "KC91"
+        ],
+        "optional_cover": [
+          "KC5"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M7",
+      "question_type": "main",
+      "macro_id": "M7",
+      "target_kc_ids": [
+        "KC80",
+        "KC58",
+        "KC79"
+      ],
+      "question_text": "Based on the ablation study and component analysis, what are the individual contributions of the auxiliary task and additional data augmentation to the performance of RATE-FT, and how does RATE-FT's objective differ from that of the F2 model?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC80",
+          "KC58"
+        ],
+        "optional_cover": [
+          "KC79"
+        ]
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    },
+    {
+      "question_id": "Q_M8",
+      "question_type": "main",
+      "macro_id": "M8",
+      "target_kc_ids": [
+        "KC63",
+        "KC64"
+      ],
+      "question_text": "What is a key limitation of this work, and what potential future improvement is suggested to address it?",
+      "expected_coverage": {
+        "must_cover": [
+          "KC63",
+          "KC64"
+        ],
+        "optional_cover": []
+      },
+      "allowed_next_actions": [
+        "detail_followup",
+        "hallucination_followup",
+        "multi_hop_question",
+        "next_main_question"
+      ],
+      "requires_multimodal_input": false,
+      "asset_references": []
+    }
+  ],
+  "multi_hop_questions": [],
+  "reserved_followup_templates": []
+}

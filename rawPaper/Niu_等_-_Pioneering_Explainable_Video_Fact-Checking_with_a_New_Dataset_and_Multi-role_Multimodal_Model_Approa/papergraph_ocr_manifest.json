@@ -1,0 +1,13 @@
+{
+  "paper_id": "Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa",
+  "source_pdf": "E:\\作业\\研究生牛马日记\\科研\\galgamebench\\paper2Bench\\pdfInput\\Niu 等 - Pioneering Explainable Video Fact-Checking with a New Dataset and Multi-role Multimodal Model Approa.pdf",
+  "raw_paper_dir": "E:\\作业\\研究生牛马日记\\科研\\galgamebench\\paper2Bench\\rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa",
+  "doc_count": 8,
+  "markdown_image_count": 11,
+  "layout_image_count": 8,
+  "build_graph_env": {
+    "PAPER_INPUT_DIR": "E:\\作业\\研究生牛马日记\\科研\\galgamebench\\paper2Bench\\rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa",
+    "PAPER_ID": "Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa"
+  },
+  "papergraph_data_dir": "E:\\作业\\研究生牛马日记\\科研\\galgamebench\\paper2Bench\\papergraph_demo\\data\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa"
+}

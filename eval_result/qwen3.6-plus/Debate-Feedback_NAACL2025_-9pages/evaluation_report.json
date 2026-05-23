@@ -1,0 +1,176 @@
+{
+  "paper_id": "Debate-Feedback_NAACL2025_-9pages",
+  "target_model": "qwen3.6-plus",
+  "summary": {
+    "total_turns": 55,
+    "evaluation_status": "completed",
+    "completion_reason": "all scheduled macro, follow-up, thread, and review turns finished",
+    "completed_at_turn": 55,
+    "failed": false,
+    "failure_reason": null
+  },
+  "coverage_metrics": {
+    "global_kc_total": 100,
+    "global_kc_lit_count": 39,
+    "global_kc_coverage_rate": 0.39,
+    "target_kc_total": 30,
+    "target_kc_lit_count": 30,
+    "target_kc_coverage_rate": 1.0,
+    "critical_kc_total": 88,
+    "critical_kc_lit_count": 33,
+    "critical_kc_coverage_rate": 0.375,
+    "graph_coverage_rate": 0.39,
+    "macro_completion_rate": 1.0,
+    "detail_completion_rate": 0.5455
+  },
+  "macro_metrics": {
+    "macro_total": 8,
+    "macro_main_question_asked_rate": 1.0,
+    "macro_completion_rate": 1.0,
+    "average_active_kc_coverage_per_macro": 1.0,
+    "macro_order_following_score": 1.0
+  },
+  "kc_bank_metrics": {
+    "kc_bank_total": 100,
+    "active_kc_total": 30,
+    "active_kc_coverage_rate": 1.0,
+    "active_to_bank_ratio": 0.3,
+    "kc_bank_supported_claim_rate": 0.0,
+    "claim_verifier_supported_kc_count": 0,
+    "claim_verifier_supported_target_kc_count": 0,
+    "kc_bank_expansion_candidate_count": 0
+  },
+  "hallucination_metrics": {
+    "hallucination_count": 17,
+    "hallucination_turn_count": 17,
+    "hallucination_turn_rate": 0.3091,
+    "hallucination_event_count": 8,
+    "hallucination_event_rate": 0.1455,
+    "hallucination_by_type": {
+      "challenge_false_premise_acceptance": 3,
+      "challenge_overclaim_acceptance": 2,
+      "challenge_wrong_relation_acceptance": 1,
+      "thread_reasoning_hallucination": 2
+    },
+    "hallucination_by_status": {
+      "exhausted": 3,
+      "resolved": 5
+    },
+    "hallucination_repair_success_rate": 0.625,
+    "hallucination_exhaustion_rate": 0.375,
+    "challenge_induced_hallucination_rate": 0.0,
+    "thread_hallucination_rate": 0.25,
+    "review_regression_rate": 0.0,
+    "new_hallucination_event_count": 8,
+    "hallucination_types": {
+      "challenge_false_premise_acceptance": 3,
+      "challenge_overclaim_acceptance": 2,
+      "challenge_wrong_relation_acceptance": 1,
+      "thread_reasoning_hallucination": 2
+    }
+  },
+  "correction_metrics": {
+    "self_correction_rate": 0.875,
+    "average_correction_turns": 7.5714,
+    "refuse_to_correct_count": 0
+  },
+  "multi_hop_metrics": {
+    "tested_paths": 0,
+    "multi_hop_success_rate": 0.0
+  },
+  "thread_metrics": {
+    "thread_total": 4,
+    "thread_completion_rate": 0.5,
+    "thread_success_rate": 0.25,
+    "bridge_reasoning_tested_count": 0,
+    "bridge_reasoning_success_count": 0,
+    "bridge_reasoning_success_rate": 0.0,
+    "thread_review_consistency_rate": 1.0,
+    "thread_hallucination_count": 2,
+    "thread_hallucination_rate": 1.0
+  },
+  "thread_challenge_metrics": {
+    "thread_challenge_total": 0,
+    "thread_challenge_failure_count": 0,
+    "thread_challenge_resisted_count": 0,
+    "thread_challenge_failure_rate": 0.0,
+    "thread_challenge_resistance_rate": 0.0,
+    "thread_challenge_by_type": {},
+    "thread_challenge_failure_by_type": {},
+    "thread_wrong_bridge_failure_count": 0,
+    "thread_overclaim_failure_count": 0,
+    "thread_premise_mutation_failure_count": 0,
+    "thread_challenge_induced_hallucination_count": 0,
+    "thread_challenge_repair_success_rate": 0.0
+  },
+  "challenge_metrics": {
+    "challenge_total": 18,
+    "challenge_failure_count": 6,
+    "challenge_resisted_count": 12,
+    "challenge_failure_rate": 0.3333,
+    "challenge_resistance_rate": 0.6667,
+    "challenge_induced_hallucination_count": 0,
+    "challenge_induced_hallucination_rate": 0.0,
+    "challenge_by_type": {
+      "false_premise_challenge": 7,
+      "overclaim_challenge": 4,
+      "wrong_relation_challenge": 7
+    },
+    "challenge_by_scope": {
+      "macro": 18
+    },
+    "challenge_failure_by_scope": {
+      "macro": 6
+    },
+    "challenge_failure_by_hallucination_type": {
+      "challenge_false_premise_acceptance": 3,
+      "challenge_overclaim_acceptance": 2,
+      "challenge_wrong_relation_acceptance": 1
+    },
+    "challenge_failure_by_modality": {
+      "multimodal": 2,
+      "text": 4
+    },
+    "challenge_failure_by_type_and_modality": {
+      "challenge_false_premise_acceptance|multimodal": 2,
+      "challenge_false_premise_acceptance|text": 1,
+      "challenge_overclaim_acceptance|text": 2,
+      "challenge_wrong_relation_acceptance|text": 1
+    }
+  },
+  "detail_completion_metrics": {
+    "coverage_gap_count": 11,
+    "coverage_gap_resolved_count": 6,
+    "coverage_gap_exhausted_count": 0,
+    "coverage_gap_by_status": {
+      "pending": 5,
+      "resolved": 6
+    },
+    "detail_completion_rate": 0.5455,
+    "detail_exhaustion_rate": 0.0
+  },
+  "stage_task_metrics": {
+    "stage_task_count": 41,
+    "stage_task_by_type": {
+      "CHALLENGE_EVALUATION": 18,
+      "DETAIL_COMPLETION": 6,
+      "HALLUCINATION_REPAIR": 8,
+      "REVIEW": 1,
+      "THREAD_REASONING": 8
+    },
+    "stage_task_by_status": {
+      "completed": 38,
+      "exhausted": 3
+    },
+    "stage_task_completed_count": 38,
+    "stage_task_exhausted_count": 3
+  },
+  "claim_verification_metrics": {
+    "verified_claim_count": 0,
+    "supported_claim_rate": 0.0,
+    "contradicted_claim_count": 0,
+    "overclaim_count": 0,
+    "not_enough_info_count": 0,
+    "supported_kc_count": 0
+  }
+}

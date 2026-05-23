@@ -1,0 +1,1147 @@
+{
+  "paper_id": "Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation",
+  "schema_version": "v3_latex_table_assets",
+  "assets": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S3",
+      "section_title": "1. Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem Motivation and Need for CMHE Benchmark",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S3_0001",
+      "source_block_ids": [
+        "P001_B0015",
+        "P001_B0016"
+      ],
+      "media_block_ids": [
+        "P001_B0015"
+      ],
+      "image_paths": [
+        "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_762_1054_1107.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_001",
+          "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_762_1054_1107.jpg",
+          "caption": "Figure 1: An example of snowballing hallucinations. We formulate a multi-choice question with options A, B, and D as correct answers, and specifically instruct ChatGPT, a specific LLM, to select only one option. ChatGPT follows our instructions without questioning them, chooses option A as the answer and then provides explanations for why both options B and D are incorrect. We discover that ChatGPT possesses the capability to identify its own errors when prompted with questions."
+        }
+      ],
+      "caption": "Figure 1: An example of snowballing hallucinations. We formulate a multi-choice question with options A, B, and D as correct answers, and specifically instruct ChatGPT, a specific LLM, to select only one option. ChatGPT follows our instructions without questioning them, chooses option A as the answer and then provides explanations for why both options B and D are incorrect. We discover that ChatGPT possesses the capability to identify its own errors when prompted with questions.",
+      "caption_kind": "figure",
+      "caption_number": "1",
+      "nearby_context": "Figure illustrating an example of snowballing hallucinations involving a multi-choice question interaction with ChatGPT.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P001_B0015",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 1: An example of snowballing hallucinations. We formulate a multi-choice question with options A, B, and D as correct answers, and specifically instruct ChatGPT, a specific LLM, to select only one option. ChatGPT follows our instructions without questioning them, chooses option A as the answer and then provides explanations for why both options B and D are incorrect. We discover that ChatGPT possesses the capability to identify its own errors when prompted with questions.",
+        "caption_kind": "figure",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P001_B0015",
+          "P001_B0016"
+        ],
+        "media_block_ids": [
+          "P001_B0015"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P001_B0015"
+        ],
+        "description_from_html": "Figure illustrating an example of snowballing hallucinations involving a multi-choice question interaction with ChatGPT.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "pipeline_diagram",
+      "section_id": "S6",
+      "section_title": "10. Language Resource References",
+      "macro_id": null,
+      "macro_candidates": [],
+      "macro_resolution_status": "unresolved",
+      "source_group_id": "MAG_S6_0002",
+      "source_block_ids": [
+        "P004_B0001",
+        "P004_B0002"
+      ],
+      "media_block_ids": [
+        "P004_B0001"
+      ],
+      "image_paths": [
+        "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_162_123_1043_494.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_002",
+          "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_162_123_1043_494.jpg",
+          "caption": "Figure 2: Overview of the CMHE dataset construction, which contains three components (A), (B), and (C) corresponding to CMHE-HD, CMHE-DD, and CMHE-CE, respectively. Note that orange color denotes the data source and blue color denotes the generated data. Parallelograms represent operations, where the red ones represent operations involving humans, while the green ones represent operations involving machines."
+        }
+      ],
+      "caption": "Figure 2: Overview of the CMHE dataset construction, which contains three components (A), (B), and (C) corresponding to CMHE-HD, CMHE-DD, and CMHE-CE, respectively. Note that orange color denotes the data source and blue color denotes the generated data. Parallelograms represent operations, where the red ones represent operations involving humans, while the green ones represent operations involving machines.",
+      "caption_kind": "figure",
+      "caption_number": "2",
+      "nearby_context": "Figure with caption describing overview of CMHE dataset construction, including three components and color-coded operations.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": "(A)",
+          "source_block_id": "P004_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "pipeline_diagram",
+        "caption": "Figure 2: Overview of the CMHE dataset construction, which contains three components (A), (B), and (C) corresponding to CMHE-HD, CMHE-DD, and CMHE-CE, respectively. Note that orange color denotes the data source and blue color denotes the generated data. Parallelograms represent operations, where the red ones represent operations involving humans, while the green ones represent operations involving machines.",
+        "caption_kind": "figure",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P004_B0001",
+          "P004_B0002"
+        ],
+        "media_block_ids": [
+          "P004_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P004_B0001"
+        ],
+        "description_from_html": "Figure with caption describing overview of CMHE dataset construction, including three components and color-coded operations.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "pipeline_diagram",
+      "section_id": "S10",
+      "section_title": "Instruction:",
+      "macro_id": "M4",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Task Definitions and Creation",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S10_0003",
+      "source_block_ids": [
+        "P005_B0001",
+        "P005_B0002"
+      ],
+      "media_block_ids": [
+        "P005_B0001"
+      ],
+      "image_paths": [
+        "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_145_129_579_448.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_145_129_579_448.jpg",
+          "caption": "Figure 3: Instructions of dataset construction for hallucination testing."
+        }
+      ],
+      "caption": "Figure 3: Instructions of dataset construction for hallucination testing.",
+      "caption_kind": "figure",
+      "caption_number": "3",
+      "nearby_context": "Figure 3 presents instructions for dataset construction for hallucination testing.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P005_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "pipeline_diagram",
+        "caption": "Figure 3: Instructions of dataset construction for hallucination testing.",
+        "caption_kind": "figure",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P005_B0001",
+          "P005_B0002"
+        ],
+        "media_block_ids": [
+          "P005_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P005_B0001"
+        ],
+        "description_from_html": "Figure 3 presents instructions for dataset construction for hallucination testing.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S10",
+      "section_title": "Instruction:",
+      "macro_id": "M4",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Task Definitions and Creation",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S10_0004",
+      "source_block_ids": [
+        "P005_B0007",
+        "P005_B0008"
+      ],
+      "media_block_ids": [
+        "P005_B0007"
+      ],
+      "image_paths": [
+        "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_616_129_1050_387.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_616_129_1050_387.jpg",
+          "caption": "Figure 4: Instructions for extracting ICD-10 codes."
+        }
+      ],
+      "caption": "Figure 4: Instructions for extracting ICD-10 codes.",
+      "caption_kind": "figure",
+      "caption_number": "4",
+      "nearby_context": "Figure 4: Instructions for extracting ICD-10 codes.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P005_B0007",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 4: Instructions for extracting ICD-10 codes.",
+        "caption_kind": "figure",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P005_B0007",
+          "P005_B0008"
+        ],
+        "media_block_ids": [
+          "P005_B0007"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P005_B0007"
+        ],
+        "description_from_html": "Figure 4: Instructions for extracting ICD-10 codes.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S10",
+      "section_title": "Instruction:",
+      "macro_id": "M4",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Task Definitions and Creation",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S10_0004",
+      "source_block_ids": [
+        "P005_B0009",
+        "P005_B0010"
+      ],
+      "media_block_ids": [
+        "P005_B0009"
+      ],
+      "image_paths": [
+        "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_468_1052_722.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_005",
+          "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_468_1052_722.jpg",
+          "caption": "Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0."
+        }
+      ],
+      "caption": "Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0.",
+      "caption_kind": "figure",
+      "caption_number": "5",
+      "nearby_context": "Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P005_B0009",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0.",
+        "caption_kind": "figure",
+        "caption_number": "5",
+        "source_block_ids": [
+          "P005_B0009",
+          "P005_B0010"
+        ],
+        "media_block_ids": [
+          "P005_B0009"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P005_B0009"
+        ],
+        "description_from_html": "Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_006",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S12",
+      "section_title": "Answer: [Diagnostic result]",
+      "macro_id": "M4",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Task Definitions and Creation",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S12_0005",
+      "source_block_ids": [
+        "P006_B0006",
+        "P006_B0007"
+      ],
+      "media_block_ids": [
+        "P006_B0006"
+      ],
+      "image_paths": [
+        "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_chart_box_614_140_1047_671.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_006",
+          "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_chart_box_614_140_1047_671.jpg",
+          "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system."
+        }
+      ],
+      "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system.",
+      "caption_kind": "figure",
+      "caption_number": "6",
+      "nearby_context": "Figure showing distributions of CMHE-DD dataset on disease categories in ICD-10 system.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P006_B0006",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system.",
+        "caption_kind": "figure",
+        "caption_number": "6",
+        "source_block_ids": [
+          "P006_B0006",
+          "P006_B0007"
+        ],
+        "media_block_ids": [
+          "P006_B0006"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P006_B0006"
+        ],
+        "description_from_html": "Figure showing distributions of CMHE-DD dataset on disease categories in ICD-10 system.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_007",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "pipeline_diagram",
+      "section_id": "S13",
+      "section_title": "3.3. Concept Explanation",
+      "macro_id": "M4",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Task Definitions and Creation",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S13_0006",
+      "source_block_ids": [
+        "P007_B0007",
+        "P007_B0008"
+      ],
+      "media_block_ids": [
+        "P007_B0007"
+      ],
+      "image_paths": [
+        "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_125_1049_518.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_007",
+          "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_125_1049_518.jpg",
+          "caption": "Figure 7: The overview of self-familiar test."
+        }
+      ],
+      "caption": "Figure 7: The overview of self-familiar test.",
+      "caption_kind": "figure",
+      "caption_number": "7",
+      "nearby_context": "A figure showing an overview of self-familiar test.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P007_B0007",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "pipeline_diagram",
+        "caption": "Figure 7: The overview of self-familiar test.",
+        "caption_kind": "figure",
+        "caption_number": "7",
+        "source_block_ids": [
+          "P007_B0007",
+          "P007_B0008"
+        ],
+        "media_block_ids": [
+          "P007_B0007"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P007_B0007"
+        ],
+        "description_from_html": "A figure showing an overview of self-familiar test.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "explanatory",
+      "subtype": "dataset_statistics_table",
+      "section_id": "S13",
+      "section_title": "3.3. Concept Explanation",
+      "macro_id": "M4",
+      "macro_candidates": [
+        {
+          "macro_id": "M4",
+          "title": "Task Definitions and Creation",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S13_0007",
+      "source_block_ids": [
+        "P008_B0001",
+        "P008_B0002"
+      ],
+      "media_block_ids": [
+        "P008_B0001"
+      ],
+      "caption": "Table 1: The statistics of each sub-category in the CMHE dataset.",
+      "caption_kind": "table",
+      "caption_number": "1",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Dataset</td><td colspan=\"3\">Partition</td><td style='text-align: center; word-wrap: break-word;'>Total</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>CMHE-HD</td><td style='text-align: center; word-wrap: break-word;'>Generated 387</td><td style='text-align: center; word-wrap: break-word;'>Tampered 613</td><td style='text-align: center; word-wrap: break-word;'>Correct 1,000</td><td style='text-align: center; word-wrap: break-word;'>2,000</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>CMHE-DD</td><td style='text-align: center; word-wrap: break-word;'>Chat 327</td><td style='text-align: center; word-wrap: break-word;'>Exam 1,295</td><td style='text-align: center; word-wrap: break-word;'>-</td><td style='text-align: center; word-wrap: break-word;'>1,622</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>CMHE-CE</td><td style='text-align: center; word-wrap: break-word;'>Medicine 1,753  $ \\times $ 4</td><td style='text-align: center; word-wrap: break-word;'>Disease 7,096  $ \\times $ 4</td><td style='text-align: center; word-wrap: break-word;'>Checkup 1,060  $ \\times $ 2</td><td style='text-align: center; word-wrap: break-word;'>38,576</td></tr></table>",
+      "normalized_markdown": "| Dataset | Partition | Partition | Partition | Total |\n| --- | --- | --- | --- | --- |\n| CMHE-HD | Generated 387 | Tampered 613 | Correct 1,000 | 2,000 |\n| CMHE-DD | Chat 327 | Exam 1,295 | - | 1,622 |\n| CMHE-CE | Medicine 1,753 $ \\times $ 4 | Disease 7,096 $ \\times $ 4 | Checkup 1,060 $ \\times $ 2 | 38,576 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nDataset & Partition & Partition & Partition & Total \\\\\n\\hline\nCMHE-HD & Generated 387 & Tampered 613 & Correct 1,000 & 2,000 \\\\\nCMHE-DD & Chat 327 & Exam 1,295 & - & 1,622 \\\\\nCMHE-CE & Medicine 1,753 \\$ \\textbackslash{}times \\$ 4 & Disease 7,096 \\$ \\textbackslash{}times \\$ 4 & Checkup 1,060 \\$ \\textbackslash{}times \\$ 2 & 38,576 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Dataset",
+          "Partition",
+          "Partition",
+          "Partition",
+          "Total"
+        ],
+        [
+          "CMHE-HD",
+          "Generated 387",
+          "Tampered 613",
+          "Correct 1,000",
+          "2,000"
+        ],
+        [
+          "CMHE-DD",
+          "Chat 327",
+          "Exam 1,295",
+          "-",
+          "1,622"
+        ],
+        [
+          "CMHE-CE",
+          "Medicine 1,753 $ \\times $ 4",
+          "Disease 7,096 $ \\times $ 4",
+          "Checkup 1,060 $ \\times $ 2",
+          "38,576"
+        ]
+      ],
+      "nearby_context": "A table showing the partition and total number of samples for each sub-category (CMHE-HD, CMHE-DD, CMHE-CE) in the CMHE dataset.",
+      "table_shape": {
+        "rows": 4,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "explanatory",
+        "subtype_hint": "dataset_statistics_table",
+        "caption": "Table 1: The statistics of each sub-category in the CMHE dataset.",
+        "caption_kind": "table",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P008_B0001",
+          "P008_B0002"
+        ],
+        "media_block_ids": [
+          "P008_B0001"
+        ],
+        "table_block_ids": [
+          "P008_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "A table showing the partition and total number of samples for each sub-category (CMHE-HD, CMHE-DD, CMHE-CE) in the CMHE dataset.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S16",
+      "section_title": "5. Results and Analysis",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Results and Findings",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S16_0008",
+      "source_block_ids": [
+        "P008_B0012",
+        "P008_B0013"
+      ],
+      "media_block_ids": [
+        "P008_B0012"
+      ],
+      "caption": "Table 2: Performances of the mainstream medical large language models on CMHE-HD dataset. Note that 'Generated', 'Modified', and 'Correct' denote that data partition with various generation mode. 'All' denotes the whole dataset. 'Random' denotes that the results are generated randomly and accuracy is used as the metrics.",
+      "caption_kind": "table",
+      "caption_number": "2",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Model</td><td style='text-align: center; word-wrap: break-word;'>Generated</td><td style='text-align: center; word-wrap: break-word;'>Tampered</td><td style='text-align: center; word-wrap: break-word;'>Correct</td><td style='text-align: center; word-wrap: break-word;'>All</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ChatGPT</td><td style='text-align: center; word-wrap: break-word;'>29.2</td><td style='text-align: center; word-wrap: break-word;'>49.5</td><td style='text-align: center; word-wrap: break-word;'>59.8</td><td style='text-align: center; word-wrap: break-word;'>50.8</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Baichuan</td><td style='text-align: center; word-wrap: break-word;'>8.0</td><td style='text-align: center; word-wrap: break-word;'>42.7</td><td style='text-align: center; word-wrap: break-word;'>80.7</td><td style='text-align: center; word-wrap: break-word;'>55.0</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Qwen</td><td style='text-align: center; word-wrap: break-word;'>2.0</td><td style='text-align: center; word-wrap: break-word;'>25.3</td><td style='text-align: center; word-wrap: break-word;'>97.4</td><td style='text-align: center; word-wrap: break-word;'>56.9</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Random</td><td style='text-align: center; word-wrap: break-word;'>50.0</td><td style='text-align: center; word-wrap: break-word;'>50.0</td><td style='text-align: center; word-wrap: break-word;'>50.0</td><td style='text-align: center; word-wrap: break-word;'>50.0</td></tr></table>",
+      "normalized_markdown": "| Model | Generated | Tampered | Correct | All |\n| --- | --- | --- | --- | --- |\n| ChatGPT | 29.2 | 49.5 | 59.8 | 50.8 |\n| Baichuan | 8.0 | 42.7 | 80.7 | 55.0 |\n| Qwen | 2.0 | 25.3 | 97.4 | 56.9 |\n| Random | 50.0 | 50.0 | 50.0 | 50.0 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nModel & Generated & Tampered & Correct & All \\\\\n\\hline\nChatGPT & 29.2 & 49.5 & 59.8 & 50.8 \\\\\nBaichuan & 8.0 & 42.7 & 80.7 & 55.0 \\\\\nQwen & 2.0 & 25.3 & 97.4 & 56.9 \\\\\nRandom & 50.0 & 50.0 & 50.0 & 50.0 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "Generated",
+          "Tampered",
+          "Correct",
+          "All"
+        ],
+        [
+          "ChatGPT",
+          "29.2",
+          "49.5",
+          "59.8",
+          "50.8"
+        ],
+        [
+          "Baichuan",
+          "8.0",
+          "42.7",
+          "80.7",
+          "55.0"
+        ],
+        [
+          "Qwen",
+          "2.0",
+          "25.3",
+          "97.4",
+          "56.9"
+        ],
+        [
+          "Random",
+          "50.0",
+          "50.0",
+          "50.0",
+          "50.0"
+        ]
+      ],
+      "nearby_context": "Performance comparison of ChatGPT, Baichuan, Qwen, and Random on accuracy metrics for Generated, Tampered, Correct, and All categories.",
+      "table_shape": {
+        "rows": 5,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 2: Performances of the mainstream medical large language models on CMHE-HD dataset. Note that 'Generated', 'Modified', and 'Correct' denote that data partition with various generation mode. 'All' denotes the whole dataset. 'Random' denotes that the results are generated randomly and accuracy is used as the metrics.",
+        "caption_kind": "table",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P008_B0012",
+          "P008_B0013"
+        ],
+        "media_block_ids": [
+          "P008_B0012"
+        ],
+        "table_block_ids": [
+          "P008_B0012"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Performance comparison of ChatGPT, Baichuan, Qwen, and Random on accuracy metrics for Generated, Tampered, Correct, and All categories.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S18",
+      "section_title": "5.2. Performance on Disease Diagnosis",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Results and Findings",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S18_0009",
+      "source_block_ids": [
+        "P009_B0001",
+        "P009_B0002"
+      ],
+      "media_block_ids": [
+        "P009_B0001"
+      ],
+      "caption": "Table 3: Performances of the mainstream medical large language models on CMHE-DD dataset. Note that \"Diagnose-chat\" and \"Diagnose-exam\" denote the data source, and \"Level=0,1,2\" denotes the category level in the ICD-10. Bold number denotes the best result of three models.",
+      "caption_kind": "table",
+      "caption_number": "3",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td colspan=\"10\">Diagnose-chat</td></tr><tr><td rowspan=\"2\">Model</td><td colspan=\"3\">Level=0</td><td colspan=\"3\">Level=1</td><td colspan=\"3\">Level=2</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Precision</td><td style='text-align: center; word-wrap: break-word;'>Recall</td><td style='text-align: center; word-wrap: break-word;'>F1-score</td><td style='text-align: center; word-wrap: break-word;'>Precision</td><td style='text-align: center; word-wrap: break-word;'>Recall</td><td style='text-align: center; word-wrap: break-word;'>F1-score</td><td style='text-align: center; word-wrap: break-word;'>Precision</td><td style='text-align: center; word-wrap: break-word;'>Recall</td><td style='text-align: center; word-wrap: break-word;'>F1-score</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ChatGPT</td><td style='text-align: center; word-wrap: break-word;'>51.7</td><td style='text-align: center; word-wrap: break-word;'>50.6</td><td style='text-align: center; word-wrap: break-word;'>51.1</td><td style='text-align: center; word-wrap: break-word;'>27.7</td><td style='text-align: center; word-wrap: break-word;'>26.9</td><td style='text-align: center; word-wrap: break-word;'>27.3</td><td style='text-align: center; word-wrap: break-word;'>16.7</td><td style='text-align: center; word-wrap: break-word;'>16.2</td><td style='text-align: center; word-wrap: break-word;'>16.5</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Baichuan</td><td style='text-align: center; word-wrap: break-word;'>49.8</td><td style='text-align: center; word-wrap: break-word;'>45.0</td><td style='text-align: center; word-wrap: break-word;'>43.7</td><td style='text-align: center; word-wrap: break-word;'>26.4</td><td style='text-align: center; word-wrap: break-word;'>23.5</td><td style='text-align: center; word-wrap: break-word;'>24.8</td><td style='text-align: center; word-wrap: break-word;'>14.5</td><td style='text-align: center; word-wrap: break-word;'>12.9</td><td style='text-align: center; word-wrap: break-word;'>13.6</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Qwen</td><td style='text-align: center; word-wrap: break-word;'>48.4</td><td style='text-align: center; word-wrap: break-word;'>46.7</td><td style='text-align: center; word-wrap: break-word;'>48.4</td><td style='text-align: center; word-wrap: break-word;'>27.2</td><td style='text-align: center; word-wrap: break-word;'>25.2</td><td style='text-align: center; word-wrap: break-word;'>26.2</td><td style='text-align: center; word-wrap: break-word;'>14.6</td><td style='text-align: center; word-wrap: break-word;'>13.4</td><td style='text-align: center; word-wrap: break-word;'>14.0</td></tr><tr><td colspan=\"10\">Diagnose-exam</td></tr><tr><td rowspan=\"2\">Model</td><td colspan=\"3\">Level=0</td><td colspan=\"3\">Level=1</td><td colspan=\"3\">Level=2</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Precision</td><td style='text-align: center; word-wrap: break-word;'>Recall</td><td style='text-align: center; word-wrap: break-word;'>F1-score</td><td style='text-align: center; word-wrap: break-word;'>Precision</td><td style='text-align: center; word-wrap: break-word;'>Recall</td><td style='text-align: center; word-wrap: break-word;'>F1-score</td><td style='text-align: center; word-wrap: break-word;'>Precision</td><td style='text-align: center; word-wrap: break-word;'>Recall</td><td style='text-align: center; word-wrap: break-word;'>F1-score</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ChatGPT</td><td style='text-align: center; word-wrap: break-word;'>64.0</td><td style='text-align: center; word-wrap: break-word;'>63.7</td><td style='text-align: center; word-wrap: break-word;'>63.8</td><td style='text-align: center; word-wrap: break-word;'>49.4</td><td style='text-align: center; word-wrap: break-word;'>49.2</td><td style='text-align: center; word-wrap: break-word;'>49.3</td><td style='text-align: center; word-wrap: break-word;'>38.2</td><td style='text-align: center; word-wrap: break-word;'>37.9</td><td style='text-align: center; word-wrap: break-word;'>38.0</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Baichuan</td><td style='text-align: center; word-wrap: break-word;'>64.8</td><td style='text-align: center; word-wrap: break-word;'>62.5</td><td style='text-align: center; word-wrap: break-word;'>63.6</td><td style='text-align: center; word-wrap: break-word;'>50.1</td><td style='text-align: center; word-wrap: break-word;'>48.4</td><td style='text-align: center; word-wrap: break-word;'>49.3</td><td style='text-align: center; word-wrap: break-word;'>36.2</td><td style='text-align: center; word-wrap: break-word;'>34.9</td><td style='text-align: center; word-wrap: break-word;'>35.5</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Qwen</td><td style='text-align: center; word-wrap: break-word;'>71.1</td><td style='text-align: center; word-wrap: break-word;'>68.6</td><td style='text-align: center; word-wrap: break-word;'>69.8</td><td style='text-align: center; word-wrap: break-word;'>58.0</td><td style='text-align: center; word-wrap: break-word;'>55.9</td><td style='text-align: center; word-wrap: break-word;'>56.9</td><td style='text-align: center; word-wrap: break-word;'>45.2</td><td style='text-align: center; word-wrap: break-word;'>43.3</td><td style='text-align: center; word-wrap: break-word;'>44.2</td></tr><tr><td colspan=\"10\">Diagnose-all</td></tr><tr><td rowspan=\"2\">Model</td><td colspan=\"3\">Level=0</td><td colspan=\"3\">Level=1</td><td colspan=\"3\">Level=2</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Precision</td><td style='text-align: center; word-wrap: break-word;'>Recall</td><td style='text-align: center; word-wrap: break-word;'>F1-score</td><td style='text-align: center; word-wrap: break-word;'>Precision</td><td style='text-align: center; word-wrap: break-word;'>Recall</td><td style='text-align: center; word-wrap: break-word;'>F1-score</td><td style='text-align: center; word-wrap: break-word;'>Precision</td><td style='text-align: center; word-wrap: break-word;'>Recall</td><td style='text-align: center; word-wrap: break-word;'>F1-score</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ChatGPT</td><td style='text-align: center; word-wrap: break-word;'>61.5</td><td style='text-align: center; word-wrap: break-word;'>61.0</td><td style='text-align: center; word-wrap: break-word;'>61.3</td><td style='text-align: center; word-wrap: break-word;'>44.9</td><td style='text-align: center; word-wrap: break-word;'>44.6</td><td style='text-align: center; word-wrap: break-word;'>44.8</td><td style='text-align: center; word-wrap: break-word;'>33.7</td><td style='text-align: center; word-wrap: break-word;'>33.3</td><td style='text-align: center; word-wrap: break-word;'>33.5</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Baichuan</td><td style='text-align: center; word-wrap: break-word;'>61.9</td><td style='text-align: center; word-wrap: break-word;'>58.9</td><td style='text-align: center; word-wrap: break-word;'>60.4</td><td style='text-align: center; word-wrap: break-word;'>45.5</td><td style='text-align: center; word-wrap: break-word;'>43.2</td><td style='text-align: center; word-wrap: break-word;'>44.3</td><td style='text-align: center; word-wrap: break-word;'>31.9</td><td style='text-align: center; word-wrap: break-word;'>30.2</td><td style='text-align: center; word-wrap: break-word;'>31.0</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Qwen</td><td style='text-align: center; word-wrap: break-word;'>66.9</td><td style='text-align: center; word-wrap: break-word;'>64.1</td><td style='text-align: center; word-wrap: break-word;'>65.5</td><td style='text-align: center; word-wrap: break-word;'>51.8</td><td style='text-align: center; word-wrap: break-word;'>49.5</td><td style='text-align: center; word-wrap: break-word;'>50.6</td><td style='text-align: center; word-wrap: break-word;'>38.9</td><td style='text-align: center; word-wrap: break-word;'>36.9</td><td style='text-align: center; word-wrap: break-word;'>37.9</td></tr></table>",
+      "normalized_markdown": "| Diagnose-chat | Diagnose-chat | Diagnose-chat | Diagnose-chat | Diagnose-chat | Diagnose-chat | Diagnose-chat | Diagnose-chat | Diagnose-chat | Diagnose-chat |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Model | Level=0 | Level=0 | Level=0 | Level=1 | Level=1 | Level=1 | Level=2 | Level=2 | Level=2 |\n| Model | Precision | Recall | F1-score | Precision | Recall | F1-score | Precision | Recall | F1-score |\n| ChatGPT | 51.7 | 50.6 | 51.1 | 27.7 | 26.9 | 27.3 | 16.7 | 16.2 | 16.5 |\n| Baichuan | 49.8 | 45.0 | 43.7 | 26.4 | 23.5 | 24.8 | 14.5 | 12.9 | 13.6 |\n| Qwen | 48.4 | 46.7 | 48.4 | 27.2 | 25.2 | 26.2 | 14.6 | 13.4 | 14.0 |\n| Diagnose-exam | Diagnose-exam | Diagnose-exam | Diagnose-exam | Diagnose-exam | Diagnose-exam | Diagnose-exam | Diagnose-exam | Diagnose-exam | Diagnose-exam |\n| Model | Level=0 | Level=0 | Level=0 | Level=1 | Level=1 | Level=1 | Level=2 | Level=2 | Level=2 |\n| Model | Precision | Recall | F1-score | Precision | Recall | F1-score | Precision | Recall | F1-score |\n| ChatGPT | 64.0 | 63.7 | 63.8 | 49.4 | 49.2 | 49.3 | 38.2 | 37.9 | 38.0 |\n| Baichuan | 64.8 | 62.5 | 63.6 | 50.1 | 48.4 | 49.3 | 36.2 | 34.9 | 35.5 |\n| Qwen | 71.1 | 68.6 | 69.8 | 58.0 | 55.9 | 56.9 | 45.2 | 43.3 | 44.2 |\n| Diagnose-all | Diagnose-all | Diagnose-all | Diagnose-all | Diagnose-all | Diagnose-all | Diagnose-all | Diagnose-all | Diagnose-all | Diagnose-all |\n| Model | Level=0 | Level=0 | Level=0 | Level=1 | Level=1 | Level=1 | Level=2 | Level=2 | Level=2 |\n| Model | Precision | Recall | F1-score | Precision | Recall | F1-score | Precision | Recall | F1-score |\n| ChatGPT | 61.5 | 61.0 | 61.3 | 44.9 | 44.6 | 44.8 | 33.7 | 33.3 | 33.5 |\n| Baichuan | 61.9 | 58.9 | 60.4 | 45.5 | 43.2 | 44.3 | 31.9 | 30.2 | 31.0 |\n| Qwen | 66.9 | 64.1 | 65.5 | 51.8 | 49.5 | 50.6 | 38.9 | 36.9 | 37.9 |",
+      "normalized_latex": "\\begin{tabular}{llllllllll}\n\\hline\nDiagnose-chat & Diagnose-chat & Diagnose-chat & Diagnose-chat & Diagnose-chat & Diagnose-chat & Diagnose-chat & Diagnose-chat & Diagnose-chat & Diagnose-chat \\\\\n\\hline\nModel & Level=0 & Level=0 & Level=0 & Level=1 & Level=1 & Level=1 & Level=2 & Level=2 & Level=2 \\\\\nModel & Precision & Recall & F1-score & Precision & Recall & F1-score & Precision & Recall & F1-score \\\\\nChatGPT & 51.7 & 50.6 & 51.1 & 27.7 & 26.9 & 27.3 & 16.7 & 16.2 & 16.5 \\\\\nBaichuan & 49.8 & 45.0 & 43.7 & 26.4 & 23.5 & 24.8 & 14.5 & 12.9 & 13.6 \\\\\nQwen & 48.4 & 46.7 & 48.4 & 27.2 & 25.2 & 26.2 & 14.6 & 13.4 & 14.0 \\\\\nDiagnose-exam & Diagnose-exam & Diagnose-exam & Diagnose-exam & Diagnose-exam & Diagnose-exam & Diagnose-exam & Diagnose-exam & Diagnose-exam & Diagnose-exam \\\\\nModel & Level=0 & Level=0 & Level=0 & Level=1 & Level=1 & Level=1 & Level=2 & Level=2 & Level=2 \\\\\nModel & Precision & Recall & F1-score & Precision & Recall & F1-score & Precision & Recall & F1-score \\\\\nChatGPT & 64.0 & 63.7 & 63.8 & 49.4 & 49.2 & 49.3 & 38.2 & 37.9 & 38.0 \\\\\nBaichuan & 64.8 & 62.5 & 63.6 & 50.1 & 48.4 & 49.3 & 36.2 & 34.9 & 35.5 \\\\\nQwen & 71.1 & 68.6 & 69.8 & 58.0 & 55.9 & 56.9 & 45.2 & 43.3 & 44.2 \\\\\nDiagnose-all & Diagnose-all & Diagnose-all & Diagnose-all & Diagnose-all & Diagnose-all & Diagnose-all & Diagnose-all & Diagnose-all & Diagnose-all \\\\\nModel & Level=0 & Level=0 & Level=0 & Level=1 & Level=1 & Level=1 & Level=2 & Level=2 & Level=2 \\\\\nModel & Precision & Recall & F1-score & Precision & Recall & F1-score & Precision & Recall & F1-score \\\\\nChatGPT & 61.5 & 61.0 & 61.3 & 44.9 & 44.6 & 44.8 & 33.7 & 33.3 & 33.5 \\\\\nBaichuan & 61.9 & 58.9 & 60.4 & 45.5 & 43.2 & 44.3 & 31.9 & 30.2 & 31.0 \\\\\nQwen & 66.9 & 64.1 & 65.5 & 51.8 & 49.5 & 50.6 & 38.9 & 36.9 & 37.9 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Diagnose-chat",
+          "Diagnose-chat",
+          "Diagnose-chat",
+          "Diagnose-chat",
+          "Diagnose-chat",
+          "Diagnose-chat",
+          "Diagnose-chat",
+          "Diagnose-chat",
+          "Diagnose-chat",
+          "Diagnose-chat"
+        ],
+        [
+          "Model",
+          "Level=0",
+          "Level=0",
+          "Level=0",
+          "Level=1",
+          "Level=1",
+          "Level=1",
+          "Level=2",
+          "Level=2",
+          "Level=2"
+        ],
+        [
+          "Model",
+          "Precision",
+          "Recall",
+          "F1-score",
+          "Precision",
+          "Recall",
+          "F1-score",
+          "Precision",
+          "Recall",
+          "F1-score"
+        ],
+        [
+          "ChatGPT",
+          "51.7",
+          "50.6",
+          "51.1",
+          "27.7",
+          "26.9",
+          "27.3",
+          "16.7",
+          "16.2",
+          "16.5"
+        ],
+        [
+          "Baichuan",
+          "49.8",
+          "45.0",
+          "43.7",
+          "26.4",
+          "23.5",
+          "24.8",
+          "14.5",
+          "12.9",
+          "13.6"
+        ],
+        [
+          "Qwen",
+          "48.4",
+          "46.7",
+          "48.4",
+          "27.2",
+          "25.2",
+          "26.2",
+          "14.6",
+          "13.4",
+          "14.0"
+        ],
+        [
+          "Diagnose-exam",
+          "Diagnose-exam",
+          "Diagnose-exam",
+          "Diagnose-exam",
+          "Diagnose-exam",
+          "Diagnose-exam",
+          "Diagnose-exam",
+          "Diagnose-exam",
+          "Diagnose-exam",
+          "Diagnose-exam"
+        ],
+        [
+          "Model",
+          "Level=0",
+          "Level=0",
+          "Level=0",
+          "Level=1",
+          "Level=1",
+          "Level=1",
+          "Level=2",
+          "Level=2",
+          "Level=2"
+        ],
+        [
+          "Model",
+          "Precision",
+          "Recall",
+          "F1-score",
+          "Precision",
+          "Recall",
+          "F1-score",
+          "Precision",
+          "Recall",
+          "F1-score"
+        ],
+        [
+          "ChatGPT",
+          "64.0",
+          "63.7",
+          "63.8",
+          "49.4",
+          "49.2",
+          "49.3",
+          "38.2",
+          "37.9",
+          "38.0"
+        ],
+        [
+          "Baichuan",
+          "64.8",
+          "62.5",
+          "63.6",
+          "50.1",
+          "48.4",
+          "49.3",
+          "36.2",
+          "34.9",
+          "35.5"
+        ],
+        [
+          "Qwen",
+          "71.1",
+          "68.6",
+          "69.8",
+          "58.0",
+          "55.9",
+          "56.9",
+          "45.2",
+          "43.3",
+          "44.2"
+        ],
+        [
+          "Diagnose-all",
+          "Diagnose-all",
+          "Diagnose-all",
+          "Diagnose-all",
+          "Diagnose-all",
+          "Diagnose-all",
+          "Diagnose-all",
+          "Diagnose-all",
+          "Diagnose-all",
+          "Diagnose-all"
+        ],
+        [
+          "Model",
+          "Level=0",
+          "Level=0",
+          "Level=0",
+          "Level=1",
+          "Level=1",
+          "Level=1",
+          "Level=2",
+          "Level=2",
+          "Level=2"
+        ],
+        [
+          "Model",
+          "Precision",
+          "Recall",
+          "F1-score",
+          "Precision",
+          "Recall",
+          "F1-score",
+          "Precision",
+          "Recall",
+          "F1-score"
+        ],
+        [
+          "ChatGPT",
+          "61.5",
+          "61.0",
+          "61.3",
+          "44.9",
+          "44.6",
+          "44.8",
+          "33.7",
+          "33.3",
+          "33.5"
+        ],
+        [
+          "Baichuan",
+          "61.9",
+          "58.9",
+          "60.4",
+          "45.5",
+          "43.2",
+          "44.3",
+          "31.9",
+          "30.2",
+          "31.0"
+        ],
+        [
+          "Qwen",
+          "66.9",
+          "64.1",
+          "65.5",
+          "51.8",
+          "49.5",
+          "50.6",
+          "38.9",
+          "36.9",
+          "37.9"
+        ]
+      ],
+      "nearby_context": "Table showing precision, recall, and F1-score for three models (ChatGPT, Baichuan, Qwen) on three subsets (Diagnose-chat, Diagnose-exam, Diagnose-all) of the CMHE-DD dataset at three ICD-10 category levels (0, 1, 2).",
+      "table_shape": {
+        "rows": 18,
+        "columns": 10
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 3: Performances of the mainstream medical large language models on CMHE-DD dataset. Note that \"Diagnose-chat\" and \"Diagnose-exam\" denote the data source, and \"Level=0,1,2\" denotes the category level in the ICD-10. Bold number denotes the best result of three models.",
+        "caption_kind": "table",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P009_B0001",
+          "P009_B0002"
+        ],
+        "media_block_ids": [
+          "P009_B0001"
+        ],
+        "table_block_ids": [
+          "P009_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table showing precision, recall, and F1-score for three models (ChatGPT, Baichuan, Qwen) on three subsets (Diagnose-chat, Diagnose-exam, Diagnose-all) of the CMHE-DD dataset at three ICD-10 category levels (0, 1, 2).",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S19",
+      "section_title": "5.3. Performance on Concept Explanation",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Results and Findings",
+          "role": "main_result",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S19_0010",
+      "source_block_ids": [
+        "P009_B0008",
+        "P009_B0009"
+      ],
+      "media_block_ids": [
+        "P009_B0008"
+      ],
+      "caption": "Table 4: Performances of the mainstream medical large language models on CMHE-CE dataset. Note that “Medicine”, “Disease” and “Test” denote the data partition based on concept categories, and “All” denotes the whole dataset and accuracy is used as the metrics.",
+      "caption_kind": "table",
+      "caption_number": "4",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Model</td><td style='text-align: center; word-wrap: break-word;'>Medicine</td><td style='text-align: center; word-wrap: break-word;'>Disease</td><td style='text-align: center; word-wrap: break-word;'>Test</td><td style='text-align: center; word-wrap: break-word;'>All</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>ChatGPT</td><td style='text-align: center; word-wrap: break-word;'>66.7</td><td style='text-align: center; word-wrap: break-word;'>65.4</td><td style='text-align: center; word-wrap: break-word;'>78.8</td><td style='text-align: center; word-wrap: break-word;'>67.1</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Baichuan</td><td style='text-align: center; word-wrap: break-word;'>57.4</td><td style='text-align: center; word-wrap: break-word;'>57.3</td><td style='text-align: center; word-wrap: break-word;'>81.7</td><td style='text-align: center; word-wrap: break-word;'>59.9</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Qwen</td><td style='text-align: center; word-wrap: break-word;'>60.1</td><td style='text-align: center; word-wrap: break-word;'>61.7</td><td style='text-align: center; word-wrap: break-word;'>74.0</td><td style='text-align: center; word-wrap: break-word;'>62.8</td></tr></table>",
+      "normalized_markdown": "| Model | Medicine | Disease | Test | All |\n| --- | --- | --- | --- | --- |\n| ChatGPT | 66.7 | 65.4 | 78.8 | 67.1 |\n| Baichuan | 57.4 | 57.3 | 81.7 | 59.9 |\n| Qwen | 60.1 | 61.7 | 74.0 | 62.8 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\nModel & Medicine & Disease & Test & All \\\\\n\\hline\nChatGPT & 66.7 & 65.4 & 78.8 & 67.1 \\\\\nBaichuan & 57.4 & 57.3 & 81.7 & 59.9 \\\\\nQwen & 60.1 & 61.7 & 74.0 & 62.8 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "Medicine",
+          "Disease",
+          "Test",
+          "All"
+        ],
+        [
+          "ChatGPT",
+          "66.7",
+          "65.4",
+          "78.8",
+          "67.1"
+        ],
+        [
+          "Baichuan",
+          "57.4",
+          "57.3",
+          "81.7",
+          "59.9"
+        ],
+        [
+          "Qwen",
+          "60.1",
+          "61.7",
+          "74.0",
+          "62.8"
+        ]
+      ],
+      "nearby_context": "A table listing performance metrics (accuracy) of models ChatGPT, Baichuan, and Qwen on Medicine, Disease, Test, and All categories of the CMHE-CE dataset.",
+      "table_shape": {
+        "rows": 4,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 4: Performances of the mainstream medical large language models on CMHE-CE dataset. Note that “Medicine”, “Disease” and “Test” denote the data partition based on concept categories, and “All” denotes the whole dataset and accuracy is used as the metrics.",
+        "caption_kind": "table",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P009_B0008",
+          "P009_B0009"
+        ],
+        "media_block_ids": [
+          "P009_B0008"
+        ],
+        "table_block_ids": [
+          "P009_B0008"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "A table listing performance metrics (accuracy) of models ChatGPT, Baichuan, and Qwen on Medicine, Disease, Test, and All categories of the CMHE-CE dataset.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    }
+  ],
+  "summary": {
+    "asset_count": 11,
+    "by_asset_type": {
+      "figure": 7,
+      "table": 4
+    },
+    "by_modality_class": {
+      "explanatory": 7,
+      "evidential": 4
+    },
+    "macro_unresolved_count": 1
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "paper_id": "Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks",
+  "source_pdf": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\pdfInput\\Synergistic Multi-Agent Framework with Trajectory Learning for Knowledge-Intensive Tasks.pdf",
+  "raw_paper_dir": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks",
+  "doc_count": 9,
+  "markdown_image_count": 6,
+  "layout_image_count": 9,
+  "build_graph_env": {
+    "PAPER_INPUT_DIR": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks",
+    "PAPER_ID": "Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks"
+  },
+  "papergraph_data_dir": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\papergraph_demo\\data\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks"
+}

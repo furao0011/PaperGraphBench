@@ -1,0 +1,13 @@
+{
+  "paper_id": "Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation",
+  "source_pdf": "E:\\作业\\研究生牛马日记\\科研\\galgamebench\\paper2Bench\\pdfInput\\Dou 等 - 2024 - Detection, Diagnosis, and Explanation A Benchmark for Chinese Medical Hallucination Evaluation.pdf",
+  "raw_paper_dir": "E:\\作业\\研究生牛马日记\\科研\\galgamebench\\paper2Bench\\rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation",
+  "doc_count": 11,
+  "markdown_image_count": 8,
+  "layout_image_count": 11,
+  "build_graph_env": {
+    "PAPER_INPUT_DIR": "E:\\作业\\研究生牛马日记\\科研\\galgamebench\\paper2Bench\\rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation",
+    "PAPER_ID": "Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation"
+  },
+  "papergraph_data_dir": "E:\\作业\\研究生牛马日记\\科研\\galgamebench\\paper2Bench\\papergraph_demo\\data\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation"
+}

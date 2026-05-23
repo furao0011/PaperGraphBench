@@ -1,0 +1,1342 @@
+{
+  "paper_id": "Learning_Auxiliary_ACL2025_-10pages",
+  "schema_version": "v3_latex_table_assets",
+  "assets": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S4",
+      "section_title": "1 Introduction",
+      "macro_id": "M1",
+      "macro_candidates": [
+        {
+          "macro_id": "M1",
+          "title": "Problem: Hallucination in Open-Domain Long-Form Generation",
+          "role": "problem_motivation",
+          "order": 1
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S4_0001",
+      "source_block_ids": [
+        "P001_B0010",
+        "P001_B0011"
+      ],
+      "media_block_ids": [
+        "P001_B0010"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_619_451_1041_727.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_001",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_619_451_1041_727.jpg",
+          "caption": "Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process."
+        }
+      ],
+      "caption": "Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process.",
+      "caption_kind": "figure",
+      "caption_number": "1",
+      "nearby_context": "Figure comparing Fine-Tuning and RATE-FT for hallucination detection.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P001_B0010",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process.",
+        "caption_kind": "figure",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P001_B0010",
+          "P001_B0011"
+        ],
+        "media_block_ids": [
+          "P001_B0010"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P001_B0010"
+        ],
+        "description_from_html": "Figure comparing Fine-Tuning and RATE-FT for hallucination detection.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S6",
+      "section_title": "3 Are LLMs’ Internal States Sufficient for Open-Domain Long-Form Generation?",
+      "macro_id": "M2",
+      "macro_candidates": [
+        {
+          "macro_id": "M2",
+          "title": "Insufficiency of Internal States for Detection",
+          "role": "prior_work_limitation",
+          "order": 2
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S6_0002",
+      "source_block_ids": [
+        "P003_B0001",
+        "P003_B0002"
+      ],
+      "media_block_ids": [
+        "P003_B0001"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_147_138_570_400.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_002",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_147_138_570_400.jpg",
+          "caption": "Figure 2: Detection results based on token probability."
+        }
+      ],
+      "caption": "Figure 2: Detection results based on token probability.",
+      "caption_kind": "figure",
+      "caption_number": "2",
+      "nearby_context": "Figure showing detection results based on token probability.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P003_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 2: Detection results based on token probability.",
+        "caption_kind": "figure",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P003_B0001",
+          "P003_B0002"
+        ],
+        "media_block_ids": [
+          "P003_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P003_B0001"
+        ],
+        "description_from_html": "Figure showing detection results based on token probability.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S7",
+      "section_title": "4 Prompting, Probing and Fine-Tuning",
+      "macro_id": null,
+      "macro_candidates": [],
+      "macro_resolution_status": "unresolved",
+      "source_group_id": "MAG_S7_0003",
+      "source_block_ids": [
+        "P004_B0001",
+        "P004_B0002"
+      ],
+      "media_block_ids": [
+        "P004_B0001"
+      ],
+      "caption": "Table 1: BAcc (%) of existing hallucination detection methods on LongFact and biography generation.",
+      "caption_kind": "table",
+      "caption_number": "1",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Dataset</td><td colspan=\"5\">Method</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>$ Prompt_{TF} $</td><td style='text-align: center; word-wrap: break-word;'>$ Prompt_{Prob} $</td><td style='text-align: center; word-wrap: break-word;'>SelfCheckGPT</td><td style='text-align: center; word-wrap: break-word;'>Probing</td><td style='text-align: center; word-wrap: break-word;'>Fine-Tuning</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LongFact</td><td style='text-align: center; word-wrap: break-word;'>69.9</td><td style='text-align: center; word-wrap: break-word;'>53.4</td><td style='text-align: center; word-wrap: break-word;'>69.1</td><td style='text-align: center; word-wrap: break-word;'>74.4</td><td style='text-align: center; word-wrap: break-word;'>76.1</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Biography</td><td style='text-align: center; word-wrap: break-word;'>72.3</td><td style='text-align: center; word-wrap: break-word;'>56.3</td><td style='text-align: center; word-wrap: break-word;'>71.9</td><td style='text-align: center; word-wrap: break-word;'>77.0</td><td style='text-align: center; word-wrap: break-word;'>78.2</td></tr></table>",
+      "normalized_markdown": "| Dataset | Method | Method | Method | Method | Method |\n| --- | --- | --- | --- | --- | --- |\n| Dataset | $ Prompt_{TF} $ | $ Prompt_{Prob} $ | SelfCheckGPT | Probing | Fine-Tuning |\n| LongFact | 69.9 | 53.4 | 69.1 | 74.4 | 76.1 |\n| Biography | 72.3 | 56.3 | 71.9 | 77.0 | 78.2 |",
+      "normalized_latex": "\\begin{tabular}{llllll}\n\\hline\nDataset & Method & Method & Method & Method & Method \\\\\n\\hline\nDataset & \\$ Prompt\\_\\{TF\\} \\$ & \\$ Prompt\\_\\{Prob\\} \\$ & SelfCheckGPT & Probing & Fine-Tuning \\\\\nLongFact & 69.9 & 53.4 & 69.1 & 74.4 & 76.1 \\\\\nBiography & 72.3 & 56.3 & 71.9 & 77.0 & 78.2 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Dataset",
+          "Method",
+          "Method",
+          "Method",
+          "Method",
+          "Method"
+        ],
+        [
+          "Dataset",
+          "$ Prompt_{TF} $",
+          "$ Prompt_{Prob} $",
+          "SelfCheckGPT",
+          "Probing",
+          "Fine-Tuning"
+        ],
+        [
+          "LongFact",
+          "69.9",
+          "53.4",
+          "69.1",
+          "74.4",
+          "76.1"
+        ],
+        [
+          "Biography",
+          "72.3",
+          "56.3",
+          "71.9",
+          "77.0",
+          "78.2"
+        ]
+      ],
+      "nearby_context": "Table showing BAcc percentages for hallucination detection methods Prompt_TF, Prompt_Prob, SelfCheckGPT, Probing, and Fine-Tuning on datasets LongFact and Biography.",
+      "table_shape": {
+        "rows": 4,
+        "columns": 6
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 1: BAcc (%) of existing hallucination detection methods on LongFact and biography generation.",
+        "caption_kind": "table",
+        "caption_number": "1",
+        "source_block_ids": [
+          "P004_B0001",
+          "P004_B0002"
+        ],
+        "media_block_ids": [
+          "P004_B0001"
+        ],
+        "table_block_ids": [
+          "P004_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table showing BAcc percentages for hallucination detection methods Prompt_TF, Prompt_Prob, SelfCheckGPT, Probing, and Fine-Tuning on datasets LongFact and Biography.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S8",
+      "section_title": "5 Rationale and Auxiliary Task Enhanced Fine-Tuning (RATE-FT)",
+      "macro_id": null,
+      "macro_candidates": [
+        {
+          "macro_id": "M3",
+          "title": "Overview of RATE-FT: Rationale and Auxiliary Task Enhanced Fine-Tuning",
+          "role": "method_overview",
+          "order": 3
+        },
+        {
+          "macro_id": "M4",
+          "title": "Details of RATE-FT: Rationales and Auxiliary QA Task",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "ambiguous",
+      "source_group_id": "MAG_S8_0004",
+      "source_block_ids": [
+        "P004_B0008",
+        "P004_B0009"
+      ],
+      "media_block_ids": [
+        "P004_B0008"
+      ],
+      "caption": "Table 2: BAcc (%) of RATE-FT and baseline methods.",
+      "caption_kind": "table",
+      "caption_number": "2",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Dataset</td><td colspan=\"5\">Method</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>$ Prompt_{TF} $</td><td style='text-align: center; word-wrap: break-word;'>$ Prompt_{CoT-TF} $</td><td style='text-align: center; word-wrap: break-word;'>Probing</td><td style='text-align: center; word-wrap: break-word;'>Fine-Tuning</td><td style='text-align: center; word-wrap: break-word;'>RATE-FT</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LongFact</td><td style='text-align: center; word-wrap: break-word;'>69.9</td><td style='text-align: center; word-wrap: break-word;'>74.9</td><td style='text-align: center; word-wrap: break-word;'>74.4</td><td style='text-align: center; word-wrap: break-word;'>76.1</td><td style='text-align: center; word-wrap: break-word;'>79.6</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Biography</td><td style='text-align: center; word-wrap: break-word;'>72.3</td><td style='text-align: center; word-wrap: break-word;'>74.8</td><td style='text-align: center; word-wrap: break-word;'>77.0</td><td style='text-align: center; word-wrap: break-word;'>78.2</td><td style='text-align: center; word-wrap: break-word;'>80.9</td></tr></table>",
+      "normalized_markdown": "| Dataset | Method | Method | Method | Method | Method |\n| --- | --- | --- | --- | --- | --- |\n| Dataset | $ Prompt_{TF} $ | $ Prompt_{CoT-TF} $ | Probing | Fine-Tuning | RATE-FT |\n| LongFact | 69.9 | 74.9 | 74.4 | 76.1 | 79.6 |\n| Biography | 72.3 | 74.8 | 77.0 | 78.2 | 80.9 |",
+      "normalized_latex": "\\begin{tabular}{llllll}\n\\hline\nDataset & Method & Method & Method & Method & Method \\\\\n\\hline\nDataset & \\$ Prompt\\_\\{TF\\} \\$ & \\$ Prompt\\_\\{CoT-TF\\} \\$ & Probing & Fine-Tuning & RATE-FT \\\\\nLongFact & 69.9 & 74.9 & 74.4 & 76.1 & 79.6 \\\\\nBiography & 72.3 & 74.8 & 77.0 & 78.2 & 80.9 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Dataset",
+          "Method",
+          "Method",
+          "Method",
+          "Method",
+          "Method"
+        ],
+        [
+          "Dataset",
+          "$ Prompt_{TF} $",
+          "$ Prompt_{CoT-TF} $",
+          "Probing",
+          "Fine-Tuning",
+          "RATE-FT"
+        ],
+        [
+          "LongFact",
+          "69.9",
+          "74.9",
+          "74.4",
+          "76.1",
+          "79.6"
+        ],
+        [
+          "Biography",
+          "72.3",
+          "74.8",
+          "77.0",
+          "78.2",
+          "80.9"
+        ]
+      ],
+      "nearby_context": "Table comparing BAcc percentages for LongFact and Biography datasets across methods Prompt_TF, Prompt_CoT-TF, Probing, Fine-Tuning, and RATE-FT. RATE-FT achieves highest scores: 79.6 and 80.9 respectively.",
+      "table_shape": {
+        "rows": 4,
+        "columns": 6
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 2: BAcc (%) of RATE-FT and baseline methods.",
+        "caption_kind": "table",
+        "caption_number": "2",
+        "source_block_ids": [
+          "P004_B0008",
+          "P004_B0009"
+        ],
+        "media_block_ids": [
+          "P004_B0008"
+        ],
+        "table_block_ids": [
+          "P004_B0008"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing BAcc percentages for LongFact and Biography datasets across methods Prompt_TF, Prompt_CoT-TF, Probing, Fine-Tuning, and RATE-FT. RATE-FT achieves highest scores: 79.6 and 80.9 respectively.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S8",
+      "section_title": "5 Rationale and Auxiliary Task Enhanced Fine-Tuning (RATE-FT)",
+      "macro_id": null,
+      "macro_candidates": [
+        {
+          "macro_id": "M3",
+          "title": "Overview of RATE-FT: Rationale and Auxiliary Task Enhanced Fine-Tuning",
+          "role": "method_overview",
+          "order": 3
+        },
+        {
+          "macro_id": "M4",
+          "title": "Details of RATE-FT: Rationales and Auxiliary QA Task",
+          "role": "method_module",
+          "order": 4
+        }
+      ],
+      "macro_resolution_status": "ambiguous",
+      "source_group_id": "MAG_S8_0005",
+      "source_block_ids": [
+        "P005_B0001",
+        "P005_B0002"
+      ],
+      "media_block_ids": [
+        "P005_B0001"
+      ],
+      "caption": "Table 3: Results of different ablations.",
+      "caption_kind": "table",
+      "caption_number": "3",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Dataset</td><td colspan=\"3\">Method</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Fine-Tuning</td><td style='text-align: center; word-wrap: break-word;'>w.o. aux</td><td style='text-align: center; word-wrap: break-word;'>RATE-FT</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>LongFact</td><td style='text-align: center; word-wrap: break-word;'>76.1</td><td style='text-align: center; word-wrap: break-word;'>77.5</td><td style='text-align: center; word-wrap: break-word;'>79.6</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Biography</td><td style='text-align: center; word-wrap: break-word;'>78.2</td><td style='text-align: center; word-wrap: break-word;'>79.4</td><td style='text-align: center; word-wrap: break-word;'>80.9</td></tr></table>",
+      "normalized_markdown": "| Dataset | Method | Method | Method |\n| --- | --- | --- | --- |\n| Dataset | Fine-Tuning | w.o. aux | RATE-FT |\n| LongFact | 76.1 | 77.5 | 79.6 |\n| Biography | 78.2 | 79.4 | 80.9 |",
+      "normalized_latex": "\\begin{tabular}{llll}\n\\hline\nDataset & Method & Method & Method \\\\\n\\hline\nDataset & Fine-Tuning & w.o. aux & RATE-FT \\\\\nLongFact & 76.1 & 77.5 & 79.6 \\\\\nBiography & 78.2 & 79.4 & 80.9 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Dataset",
+          "Method",
+          "Method",
+          "Method"
+        ],
+        [
+          "Dataset",
+          "Fine-Tuning",
+          "w.o. aux",
+          "RATE-FT"
+        ],
+        [
+          "LongFact",
+          "76.1",
+          "77.5",
+          "79.6"
+        ],
+        [
+          "Biography",
+          "78.2",
+          "79.4",
+          "80.9"
+        ]
+      ],
+      "nearby_context": "Table comparing results of Fine-Tuning, w.o. aux, and RATE-FT on LongFact and Biography datasets.",
+      "table_shape": {
+        "rows": 4,
+        "columns": 4
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "ablation_table",
+        "caption": "Table 3: Results of different ablations.",
+        "caption_kind": "table",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P005_B0001",
+          "P005_B0002"
+        ],
+        "media_block_ids": [
+          "P005_B0001"
+        ],
+        "table_block_ids": [
+          "P005_B0001"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing results of Fine-Tuning, w.o. aux, and RATE-FT on LongFact and Biography datasets.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S10",
+      "section_title": "6 Conclusion",
+      "macro_id": "M6",
+      "macro_candidates": [
+        {
+          "macro_id": "M6",
+          "title": "Main Results: RATE-FT Outperforms Baselines",
+          "role": "main_result",
+          "order": 6
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S10_0006",
+      "source_block_ids": [
+        "P005_B0010",
+        "P005_B0011"
+      ],
+      "media_block_ids": [
+        "P005_B0010"
+      ],
+      "caption": "Table 4: Results using different models.",
+      "caption_kind": "table",
+      "caption_number": "4",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td rowspan=\"2\">Model</td><td colspan=\"5\">Method</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Prompt_{TF}</td><td style='text-align: center; word-wrap: break-word;'>Prompt_{CoT-TF}</td><td style='text-align: center; word-wrap: break-word;'>Probing</td><td style='text-align: center; word-wrap: break-word;'>Fine-Tuning</td><td style='text-align: center; word-wrap: break-word;'>RATE-FT</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Llama-3.1-70B-Instruct</td><td style='text-align: center; word-wrap: break-word;'>73.2</td><td style='text-align: center; word-wrap: break-word;'>76.8</td><td style='text-align: center; word-wrap: break-word;'>79.4</td><td style='text-align: center; word-wrap: break-word;'>80.6</td><td style='text-align: center; word-wrap: break-word;'>83.8</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Mistral-7B-Instruct</td><td style='text-align: center; word-wrap: break-word;'>61.8</td><td style='text-align: center; word-wrap: break-word;'>64.1</td><td style='text-align: center; word-wrap: break-word;'>68.4</td><td style='text-align: center; word-wrap: break-word;'>70.8</td><td style='text-align: center; word-wrap: break-word;'>73.4</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>Qwen2.5-7B-Instruct</td><td style='text-align: center; word-wrap: break-word;'>72.8</td><td style='text-align: center; word-wrap: break-word;'>75.5</td><td style='text-align: center; word-wrap: break-word;'>77.0</td><td style='text-align: center; word-wrap: break-word;'>78.4</td><td style='text-align: center; word-wrap: break-word;'>81.1</td></tr></table>",
+      "normalized_markdown": "| Model | Method | Method | Method | Method | Method |\n| --- | --- | --- | --- | --- | --- |\n| Model | Prompt_{TF} | Prompt_{CoT-TF} | Probing | Fine-Tuning | RATE-FT |\n| Llama-3.1-70B-Instruct | 73.2 | 76.8 | 79.4 | 80.6 | 83.8 |\n| Mistral-7B-Instruct | 61.8 | 64.1 | 68.4 | 70.8 | 73.4 |\n| Qwen2.5-7B-Instruct | 72.8 | 75.5 | 77.0 | 78.4 | 81.1 |",
+      "normalized_latex": "\\begin{tabular}{llllll}\n\\hline\nModel & Method & Method & Method & Method & Method \\\\\n\\hline\nModel & Prompt\\_\\{TF\\} & Prompt\\_\\{CoT-TF\\} & Probing & Fine-Tuning & RATE-FT \\\\\nLlama-3.1-70B-Instruct & 73.2 & 76.8 & 79.4 & 80.6 & 83.8 \\\\\nMistral-7B-Instruct & 61.8 & 64.1 & 68.4 & 70.8 & 73.4 \\\\\nQwen2.5-7B-Instruct & 72.8 & 75.5 & 77.0 & 78.4 & 81.1 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Model",
+          "Method",
+          "Method",
+          "Method",
+          "Method",
+          "Method"
+        ],
+        [
+          "Model",
+          "Prompt_{TF}",
+          "Prompt_{CoT-TF}",
+          "Probing",
+          "Fine-Tuning",
+          "RATE-FT"
+        ],
+        [
+          "Llama-3.1-70B-Instruct",
+          "73.2",
+          "76.8",
+          "79.4",
+          "80.6",
+          "83.8"
+        ],
+        [
+          "Mistral-7B-Instruct",
+          "61.8",
+          "64.1",
+          "68.4",
+          "70.8",
+          "73.4"
+        ],
+        [
+          "Qwen2.5-7B-Instruct",
+          "72.8",
+          "75.5",
+          "77.0",
+          "78.4",
+          "81.1"
+        ]
+      ],
+      "nearby_context": "Table comparing models (Llama-3.1-70B-Instruct, Mistral-7B-Instruct, Qwen2.5-7B-Instruct) across methods Prompt_{TF}, Prompt_{CoT-TF}, Probing, Fine-Tuning, RATE-FT with accuracy scores.",
+      "table_shape": {
+        "rows": 5,
+        "columns": 6
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 4: Results using different models.",
+        "caption_kind": "table",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P005_B0010",
+          "P005_B0011"
+        ],
+        "media_block_ids": [
+          "P005_B0010"
+        ],
+        "table_block_ids": [
+          "P005_B0010"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table comparing models (Llama-3.1-70B-Instruct, Mistral-7B-Instruct, Qwen2.5-7B-Instruct) across methods Prompt_{TF}, Prompt_{CoT-TF}, Probing, Fine-Tuning, RATE-FT with accuracy scores.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S16",
+      "section_title": "A.6 Additional Data Augmentation versus Auxiliary QA Task",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Ablation Study and Component Analysis",
+          "role": "ablation_analysis",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S16_0007",
+      "source_block_ids": [
+        "P008_B0009",
+        "P008_B0010"
+      ],
+      "media_block_ids": [
+        "P008_B0009"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_622_141_1037_396.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_003",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_622_141_1037_396.jpg",
+          "caption": "Figure 3: Hallucination detection results based on token entropy (uncertainty)."
+        }
+      ],
+      "caption": "Figure 3: Hallucination detection results based on token entropy (uncertainty).",
+      "caption_kind": "figure",
+      "caption_number": "3",
+      "nearby_context": "Figure 3 showing hallucination detection results based on token entropy (uncertainty). Image path: imgs/img_in_chart_box_622_141_1037_396.jpg",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P008_B0009",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 3: Hallucination detection results based on token entropy (uncertainty).",
+        "caption_kind": "figure",
+        "caption_number": "3",
+        "source_block_ids": [
+          "P008_B0009",
+          "P008_B0010"
+        ],
+        "media_block_ids": [
+          "P008_B0009"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P008_B0009"
+        ],
+        "description_from_html": "Figure 3 showing hallucination detection results based on token entropy (uncertainty). Image path: imgs/img_in_chart_box_622_141_1037_396.jpg",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_005",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S16",
+      "section_title": "A.6 Additional Data Augmentation versus Auxiliary QA Task",
+      "macro_id": "M7",
+      "macro_candidates": [
+        {
+          "macro_id": "M7",
+          "title": "Ablation Study and Component Analysis",
+          "role": "ablation_analysis",
+          "order": 7
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S16_0007",
+      "source_block_ids": [
+        "P008_B0011",
+        "P008_B0012"
+      ],
+      "media_block_ids": [
+        "P008_B0011"
+      ],
+      "caption": "Table 5: Results of different methods in OOD scenarios.",
+      "caption_kind": "table",
+      "caption_number": "5",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>$ Prompt_{TF} $</td><td style='text-align: center; word-wrap: break-word;'>$ Prompt_{Prob} $</td><td style='text-align: center; word-wrap: break-word;'>SelfCheckGPT</td><td style='text-align: center; word-wrap: break-word;'>Probing</td><td style='text-align: center; word-wrap: break-word;'>Fine-Tuning</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>72.3</td><td style='text-align: center; word-wrap: break-word;'>56.3</td><td style='text-align: center; word-wrap: break-word;'>71.9</td><td style='text-align: center; word-wrap: break-word;'>71.1</td><td style='text-align: center; word-wrap: break-word;'>74.7</td></tr></table>",
+      "normalized_markdown": "| $ Prompt_{TF} $ | $ Prompt_{Prob} $ | SelfCheckGPT | Probing | Fine-Tuning |\n| --- | --- | --- | --- | --- |\n| 72.3 | 56.3 | 71.9 | 71.1 | 74.7 |",
+      "normalized_latex": "\\begin{tabular}{lllll}\n\\hline\n\\$ Prompt\\_\\{TF\\} \\$ & \\$ Prompt\\_\\{Prob\\} \\$ & SelfCheckGPT & Probing & Fine-Tuning \\\\\n\\hline\n72.3 & 56.3 & 71.9 & 71.1 & 74.7 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "$ Prompt_{TF} $",
+          "$ Prompt_{Prob} $",
+          "SelfCheckGPT",
+          "Probing",
+          "Fine-Tuning"
+        ],
+        [
+          "72.3",
+          "56.3",
+          "71.9",
+          "71.1",
+          "74.7"
+        ]
+      ],
+      "nearby_context": "Table 5 showing results of different methods (Prompt_TF, Prompt_Prob, SelfCheckGPT, Probing, Fine-Tuning) in OOD scenarios with values 72.3, 56.3, 71.9, 71.1, 74.7.",
+      "table_shape": {
+        "rows": 2,
+        "columns": 5
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 5: Results of different methods in OOD scenarios.",
+        "caption_kind": "table",
+        "caption_number": "5",
+        "source_block_ids": [
+          "P008_B0011",
+          "P008_B0012"
+        ],
+        "media_block_ids": [
+          "P008_B0011"
+        ],
+        "table_block_ids": [
+          "P008_B0011"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table 5 showing results of different methods (Prompt_TF, Prompt_Prob, SelfCheckGPT, Probing, Fine-Tuning) in OOD scenarios with values 72.3, 56.3, 71.9, 71.1, 74.7.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S17",
+      "section_title": "A.7 Data Collection Process for Other Models",
+      "macro_id": "M5",
+      "macro_candidates": [
+        {
+          "macro_id": "M5",
+          "title": "Experimental Setup and Datasets",
+          "role": "experiment_setup",
+          "order": 5
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S17_0008",
+      "source_block_ids": [
+        "P009_B0001",
+        "P009_B0002"
+      ],
+      "media_block_ids": [
+        "P009_B0001"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_138_138_551_395.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_004",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_138_138_551_395.jpg",
+          "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens."
+        }
+      ],
+      "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens.",
+      "caption_kind": "figure",
+      "caption_number": "4",
+      "nearby_context": "Figure 4: Hallucination detection results based on the probability of entity-related tokens. Image from imgs/img_in_chart_box_138_138_551_395.jpg",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P009_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens.",
+        "caption_kind": "figure",
+        "caption_number": "4",
+        "source_block_ids": [
+          "P009_B0001",
+          "P009_B0002"
+        ],
+        "media_block_ids": [
+          "P009_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P009_B0001"
+        ],
+        "description_from_html": "Figure 4: Hallucination detection results based on the probability of entity-related tokens. Image from imgs/img_in_chart_box_138_138_551_395.jpg",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_006",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S17",
+      "section_title": "A.7 Data Collection Process for Other Models",
+      "macro_id": "M5",
+      "macro_candidates": [
+        {
+          "macro_id": "M5",
+          "title": "Experimental Setup and Datasets",
+          "role": "experiment_setup",
+          "order": 5
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S17_0008",
+      "source_block_ids": [
+        "P009_B0003",
+        "P009_B0004"
+      ],
+      "media_block_ids": [
+        "P009_B0003"
+      ],
+      "caption": "Table 6: Comparison between Fine-Tuning $ _{para} $ and RATE-FT.",
+      "caption_kind": "table",
+      "caption_number": "6",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Fine-Tuning $ _{para} $</td><td style='text-align: center; word-wrap: break-word;'>RATE-FT</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>76.8</td><td style='text-align: center; word-wrap: break-word;'>79.6</td></tr></table>",
+      "normalized_markdown": "| Fine-Tuning $ _{para} $ | RATE-FT |\n| --- | --- |\n| 76.8 | 79.6 |",
+      "normalized_latex": "\\begin{tabular}{ll}\n\\hline\nFine-Tuning \\$ \\_\\{para\\} \\$ & RATE-FT \\\\\n\\hline\n76.8 & 79.6 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Fine-Tuning $ _{para} $",
+          "RATE-FT"
+        ],
+        [
+          "76.8",
+          "79.6"
+        ]
+      ],
+      "nearby_context": "Table 6: Comparison between Fine-Tuning $ _{para} $ and RATE-FT. Table data: Fine-Tuning $ _{para} $, RATE-FT, 76.8, 79.6.",
+      "table_shape": {
+        "rows": 2,
+        "columns": 2
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "ablation_table",
+        "caption": "Table 6: Comparison between Fine-Tuning $ _{para} $ and RATE-FT.",
+        "caption_kind": "table",
+        "caption_number": "6",
+        "source_block_ids": [
+          "P009_B0003",
+          "P009_B0004"
+        ],
+        "media_block_ids": [
+          "P009_B0003"
+        ],
+        "table_block_ids": [
+          "P009_B0003"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table 6: Comparison between Fine-Tuning $ _{para} $ and RATE-FT. Table data: Fine-Tuning $ _{para} $, RATE-FT, 76.8, 79.6.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_007",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S17",
+      "section_title": "A.7 Data Collection Process for Other Models",
+      "macro_id": "M5",
+      "macro_candidates": [
+        {
+          "macro_id": "M5",
+          "title": "Experimental Setup and Datasets",
+          "role": "experiment_setup",
+          "order": 5
+        }
+      ],
+      "macro_resolution_status": "resolved",
+      "source_group_id": "MAG_S17_0008",
+      "source_block_ids": [
+        "P009_B0005",
+        "P009_B0006"
+      ],
+      "media_block_ids": [
+        "P009_B0005"
+      ],
+      "caption": "Table 7: Comparison between Fine-Tuning and RATE-FT $ _{half} $.",
+      "caption_kind": "table",
+      "caption_number": "7",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>Fine-Tuning</td><td style='text-align: center; word-wrap: break-word;'>RATE-FT $ _{\\text{half}} $</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>76.1</td><td style='text-align: center; word-wrap: break-word;'>78.5</td></tr></table>",
+      "normalized_markdown": "| Fine-Tuning | RATE-FT $ _{\\text{half}} $ |\n| --- | --- |\n| 76.1 | 78.5 |",
+      "normalized_latex": "\\begin{tabular}{ll}\n\\hline\nFine-Tuning & RATE-FT \\$ \\_\\{\\textbackslash{}text\\{half\\}\\} \\$ \\\\\n\\hline\n76.1 & 78.5 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "Fine-Tuning",
+          "RATE-FT $ _{\\text{half}} $"
+        ],
+        [
+          "76.1",
+          "78.5"
+        ]
+      ],
+      "nearby_context": "Table 7: Comparison between Fine-Tuning and RATE-FT $ _{half} $. Table data: Fine-Tuning, RATE-FT $ _{\\text{half}} $, 76.1, 78.5.",
+      "table_shape": {
+        "rows": 2,
+        "columns": 2
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A3",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "ablation_table",
+        "caption": "Table 7: Comparison between Fine-Tuning and RATE-FT $ _{half} $.",
+        "caption_kind": "table",
+        "caption_number": "7",
+        "source_block_ids": [
+          "P009_B0005",
+          "P009_B0006"
+        ],
+        "media_block_ids": [
+          "P009_B0005"
+        ],
+        "table_block_ids": [
+          "P009_B0005"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table 7: Comparison between Fine-Tuning and RATE-FT $ _{half} $. Table data: Fine-Tuning, RATE-FT $ _{\\text{half}} $, 76.1, 78.5.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S18",
+      "section_title": "A.8 Incorporating Uncertainty for Hallucination Detection",
+      "macro_id": null,
+      "macro_candidates": [],
+      "macro_resolution_status": "unresolved",
+      "source_group_id": "MAG_S18_0009",
+      "source_block_ids": [
+        "P009_B0011",
+        "P009_B0012"
+      ],
+      "media_block_ids": [
+        "P009_B0011"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_635_137_1052_394.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_005",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_635_137_1052_394.jpg",
+          "caption": "Figure 5: Hallucination detection results based on the entropy of entity-related tokens."
+        }
+      ],
+      "caption": "Figure 5: Hallucination detection results based on the entropy of entity-related tokens.",
+      "caption_kind": "figure",
+      "caption_number": "5",
+      "nearby_context": "Figure 5: Hallucination detection results based on the entropy of entity-related tokens.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P009_B0011",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "evidential",
+        "subtype_hint": "chart",
+        "caption": "Figure 5: Hallucination detection results based on the entropy of entity-related tokens.",
+        "caption_kind": "figure",
+        "caption_number": "5",
+        "source_block_ids": [
+          "P009_B0011",
+          "P009_B0012"
+        ],
+        "media_block_ids": [
+          "P009_B0011"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P009_B0011"
+        ],
+        "description_from_html": "Figure 5: Hallucination detection results based on the entropy of entity-related tokens.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "TAB_008",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S18",
+      "section_title": "A.8 Incorporating Uncertainty for Hallucination Detection",
+      "macro_id": null,
+      "macro_candidates": [],
+      "macro_resolution_status": "unresolved",
+      "source_group_id": "MAG_S18_0009",
+      "source_block_ids": [
+        "P009_B0013",
+        "P009_B0014"
+      ],
+      "media_block_ids": [
+        "P009_B0013"
+      ],
+      "caption": "Table 8: BAcc-unknown (%) of different methods on Longfact with Llama-3-8B-Instruct.",
+      "caption_kind": "table",
+      "caption_number": "8",
+      "html": "<table border=1 style='margin: auto; word-wrap: break-word;'><tr><td style='text-align: center; word-wrap: break-word;'>$ \\text{Prompt}_{CoT-TF} $</td><td style='text-align: center; word-wrap: break-word;'>Probing</td><td style='text-align: center; word-wrap: break-word;'>Fine-Tuning</td><td style='text-align: center; word-wrap: break-word;'>RATE-FT</td></tr><tr><td style='text-align: center; word-wrap: break-word;'>80.4</td><td style='text-align: center; word-wrap: break-word;'>81.1</td><td style='text-align: center; word-wrap: break-word;'>82.4</td><td style='text-align: center; word-wrap: break-word;'>85.0</td></tr></table>",
+      "normalized_markdown": "| $ \\text{Prompt}_{CoT-TF} $ | Probing | Fine-Tuning | RATE-FT |\n| --- | --- | --- | --- |\n| 80.4 | 81.1 | 82.4 | 85.0 |",
+      "normalized_latex": "\\begin{tabular}{llll}\n\\hline\n\\$ \\textbackslash{}text\\{Prompt\\}\\_\\{CoT-TF\\} \\$ & Probing & Fine-Tuning & RATE-FT \\\\\n\\hline\n80.4 & 81.1 & 82.4 & 85.0 \\\\\n\\hline\n\\end{tabular}",
+      "table_grid": [
+        [
+          "$ \\text{Prompt}_{CoT-TF} $",
+          "Probing",
+          "Fine-Tuning",
+          "RATE-FT"
+        ],
+        [
+          "80.4",
+          "81.1",
+          "82.4",
+          "85.0"
+        ]
+      ],
+      "nearby_context": "Table 8: BAcc-unknown (%) of different methods on Longfact with Llama-3-8B-Instruct. Table contains methods: Prompt_CoT-TF, Probing, Fine-Tuning, RATE-FT with values 80.4, 81.1, 82.4, 85.0.",
+      "table_shape": {
+        "rows": 2,
+        "columns": 4
+      },
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "table",
+        "modality_class": "evidential",
+        "subtype_hint": "main_result_table",
+        "caption": "Table 8: BAcc-unknown (%) of different methods on Longfact with Llama-3-8B-Instruct.",
+        "caption_kind": "table",
+        "caption_number": "8",
+        "source_block_ids": [
+          "P009_B0013",
+          "P009_B0014"
+        ],
+        "media_block_ids": [
+          "P009_B0013"
+        ],
+        "table_block_ids": [
+          "P009_B0013"
+        ],
+        "image_block_ids": [],
+        "description_from_html": "Table 8: BAcc-unknown (%) of different methods on Longfact with Llama-3-8B-Instruct. Table contains methods: Prompt_CoT-TF, Probing, Fine-Tuning, RATE-FT with values 80.4, 81.1, 82.4, 85.0.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "table_block_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_006",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S18",
+      "section_title": "A.8 Incorporating Uncertainty for Hallucination Detection",
+      "macro_id": null,
+      "macro_candidates": [],
+      "macro_resolution_status": "unresolved",
+      "source_group_id": "MAG_S18_0009",
+      "source_block_ids": [
+        "P009_B0015",
+        "P009_B0016"
+      ],
+      "media_block_ids": [
+        "P009_B0015"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_618_668_1039_728.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_006",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_618_668_1039_728.jpg",
+          "caption": "Figure 6: Prompt for extracting the original output given an atomized claim."
+        }
+      ],
+      "caption": "Figure 6: Prompt for extracting the original output given an atomized claim.",
+      "caption_kind": "figure",
+      "caption_number": "6",
+      "nearby_context": "Figure 6: Prompt for extracting the original output given an atomized claim.",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P009_B0015",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A3",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "qualitative_example",
+        "caption": "Figure 6: Prompt for extracting the original output given an atomized claim.",
+        "caption_kind": "figure",
+        "caption_number": "6",
+        "source_block_ids": [
+          "P009_B0015",
+          "P009_B0016"
+        ],
+        "media_block_ids": [
+          "P009_B0015"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P009_B0015"
+        ],
+        "description_from_html": "Figure 6: Prompt for extracting the original output given an atomized claim.",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_007",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S18",
+      "section_title": "A.8 Incorporating Uncertainty for Hallucination Detection",
+      "macro_id": null,
+      "macro_candidates": [],
+      "macro_resolution_status": "unresolved",
+      "source_group_id": "MAG_S18_0010",
+      "source_block_ids": [
+        "P010_B0001",
+        "P010_B0002"
+      ],
+      "media_block_ids": [
+        "P010_B0001"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_150_143_569_487.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_007",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_150_143_569_487.jpg",
+          "caption": "Figure 7: Prompts for different prompting methods."
+        }
+      ],
+      "caption": "Figure 7: Prompts for different prompting methods.",
+      "caption_kind": "figure",
+      "caption_number": "7",
+      "nearby_context": "Figure 7: Prompts for different prompting methods. Image: imgs/img_in_image_box_150_143_569_487.jpg",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P010_B0001",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A1",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 7: Prompts for different prompting methods.",
+        "caption_kind": "figure",
+        "caption_number": "7",
+        "source_block_ids": [
+          "P010_B0001",
+          "P010_B0002"
+        ],
+        "media_block_ids": [
+          "P010_B0001"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P010_B0001"
+        ],
+        "description_from_html": "Figure 7: Prompts for different prompting methods. Image: imgs/img_in_image_box_150_143_569_487.jpg",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    },
+    {
+      "asset_id": "FIG_008",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S18",
+      "section_title": "A.8 Incorporating Uncertainty for Hallucination Detection",
+      "macro_id": null,
+      "macro_candidates": [],
+      "macro_resolution_status": "unresolved",
+      "source_group_id": "MAG_S18_0010",
+      "source_block_ids": [
+        "P010_B0003",
+        "P010_B0004"
+      ],
+      "media_block_ids": [
+        "P010_B0003"
+      ],
+      "image_paths": [
+        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_150_556_569_839.jpg"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "asset_id": "FIG_008",
+          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_150_556_569_839.jpg",
+          "caption": "Figure 8: Prompts for different components of RATE-FT."
+        }
+      ],
+      "caption": "Figure 8: Prompts for different components of RATE-FT.",
+      "caption_kind": "figure",
+      "caption_number": "8",
+      "nearby_context": "Figure 8: Prompts for different components of RATE-FT. Image: imgs/img_in_image_box_150_556_569_839.jpg",
+      "panel_structure": [
+        {
+          "panel_id": "panel_1",
+          "panel_label": null,
+          "source_block_id": "P010_B0003",
+          "description_hint": ""
+        }
+      ],
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "llm_group_asset": {
+        "asset_local_id": "A2",
+        "asset_type": "figure",
+        "modality_class": "explanatory",
+        "subtype_hint": "framework_diagram",
+        "caption": "Figure 8: Prompts for different components of RATE-FT.",
+        "caption_kind": "figure",
+        "caption_number": "8",
+        "source_block_ids": [
+          "P010_B0003",
+          "P010_B0004"
+        ],
+        "media_block_ids": [
+          "P010_B0003"
+        ],
+        "table_block_ids": [],
+        "image_block_ids": [
+          "P010_B0003"
+        ],
+        "description_from_html": "Figure 8: Prompts for different components of RATE-FT. Image: imgs/img_in_image_box_150_556_569_839.jpg",
+        "notes": ""
+      },
+      "diagnostics": {
+        "has_caption": true,
+        "image_count": 1
+      }
+    }
+  ],
+  "summary": {
+    "asset_count": 16,
+    "by_asset_type": {
+      "figure": 8,
+      "table": 8
+    },
+    "by_modality_class": {
+      "explanatory": 4,
+      "evidential": 12
+    },
+    "macro_unresolved_count": 8
+  }
+}

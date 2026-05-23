@@ -1,0 +1,1612 @@
+{
+  "paper_id": "Learning_Auxiliary_ACL2025_-10pages",
+  "schema_version": "v1",
+  "table_explainer_model": "deepseek-v4-flash",
+  "figure_explainer_model": "qwen3.6-flash",
+  "figure_explainer_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "asset_explanations": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S4",
+      "macro_id": "M1",
+      "caption": "Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process.",
+      "summary": "The figure compares a standard Fine-Tuning process with the proposed RATE-FT method for hallucination detection. The top section illustrates standard training where a detector is trained directly on (Claim, Label) data. The bottom section, labeled RATE-FT, shows an enhanced pipeline where the initial (Claim, Label) data undergoes 'Rationale Augmentation' and 'Auxiliary Task Augmentation' to produce richer datasets containing rationales and question-answer pairs, which are then used to train the detector.",
+      "key_elements": [
+        {
+          "name": "Standard Training Setup",
+          "role": "Top panel showing baseline fine-tuning"
+        },
+        {
+          "name": "RATE-FT Setup",
+          "role": "Bottom panel showing the proposed augmented method"
+        },
+        {
+          "name": "Input Data (Claim, Label)",
+          "role": "Original dataset source in both panels"
+        },
+        {
+          "name": "Detector (Top)",
+          "role": "Model being trained in standard setup, marked with a question mark"
+        },
+        {
+          "name": "Detector (Bottom)",
+          "role": "Model being trained in RATE-FT, marked with a checkmark"
+        },
+        {
+          "name": "Rationale Augmentation",
+          "role": "Process step adding rationales to the data"
+        },
+        {
+          "name": "Augmented Data 1",
+          "role": "Dataset containing (Claim, Label, Rationale)"
+        },
+        {
+          "name": "Auxiliary Task Augmentation",
+          "role": "Process step creating QA pairs with rationales"
+        },
+        {
+          "name": "Augmented Data 2",
+          "role": "Dataset containing (Question, Answer, Rationale)"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Input Data (Claim, Label)",
+          "target": "Detector (Top)",
+          "relation": "trains"
+        },
+        {
+          "source": "Input Data (Claim, Label)",
+          "target": "Rationale Augmentation",
+          "relation": "undergoes"
+        },
+        {
+          "source": "Input Data (Claim, Label)",
+          "target": "Auxiliary Task Augmentation",
+          "relation": "undergoes"
+        },
+        {
+          "source": "Augmented Data 1",
+          "target": "Detector (Bottom)",
+          "relation": "trains"
+        },
+        {
+          "source": "Augmented Data 2",
+          "target": "Detector (Bottom)",
+          "relation": "trains"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "RATE-FT incorporates rationales into the training data alongside claims and labels.",
+          "support_level": "visible_label",
+          "evidence_basis": "Label '(Claim, Label, Rationale)' and text 'Rationale Augmentation'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "RATE-FT utilizes an auxiliary task involving questions and answers.",
+          "support_level": "visible_label",
+          "evidence_basis": "Label '(Question, Answer, Rationale)' and text 'Auxiliary Task Augmentation'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The standard fine-tuning approach relies solely on claims and labels without augmentation.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Top panel shows direct arrow from '(Claim, Label)' to 'Detector'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "RATE-FT trains the detector using multiple augmented data sources simultaneously.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Two curved arrows converging from two different augmented databases to the single Detector icon",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The auxiliary task replaces the main task entirely.",
+          "why_wrong": "The diagram shows arrows from *both* the rationale-augmented data and the auxiliary-task-augmented data pointing to the detector, implying they are used together or as part of a multi-task setup, not that one replaces the other."
+        },
+        {
+          "claim": "The 'Question, Answer' data comes from a separate source unrelated to the original claims.",
+          "why_wrong": "Dashed lines originate from the original '(Claim, Label)' database, indicating that the auxiliary task data is derived or generated from the original input data."
+        }
+      ],
+      "limitations": [
+        "The figure does not specify the architecture of the 'Detector' itself.",
+        "It does not provide quantitative performance metrics, only symbolic representations (question mark vs checkmark).",
+        "The specific mechanism of 'Augmentation' (e.g., LLM generation, human annotation) is not detailed."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S6",
+      "macro_id": "M2",
+      "caption": "Figure 2: Detection results based on token probability.",
+      "summary": "The figure presents eight histograms comparing the distribution of token probabilities for 'Normal' (blue) versus 'Hallucinated' (orange) tokens. The subplots represent different methods for calculating or selecting these probabilities, including averages (`arithmetic_average`, `geometric_average`) and lowest probability selections (`lowest_1` through `lowest_15%`). The x-axis represents probability values ranging from 0 to 1, while the y-axis indicates the count of tokens.",
+      "key_elements": [
+        {
+          "name": "Eight histogram subplots",
+          "role": "Displaying frequency distributions of token probabilities"
+        },
+        {
+          "name": "Legend (Normal/Hallucinated)",
+          "role": "Distinguishing between correct and incorrect generation outcomes"
+        },
+        {
+          "name": "X-axis labels (method names)",
+          "role": "Identifying the specific probability calculation method used in each subplot"
+        },
+        {
+          "name": "Y-axis (Counts)",
+          "role": "Indicating the frequency of tokens falling into specific probability bins"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Legend",
+          "target": "Eight histogram subplots",
+          "relation": "applies_to"
+        },
+        {
+          "source": "X-axis labels",
+          "target": "Eight histogram subplots",
+          "relation": "labels"
+        },
+        {
+          "source": "Blue bars",
+          "target": "Orange bars",
+          "relation": "compares_with"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The figure compares token probability distributions for Normal and Hallucinated tokens across various aggregation methods.",
+          "support_level": "caption_supported",
+          "evidence_basis": "caption and legend",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "For arithmetic and geometric averages, Normal tokens are heavily concentrated near a probability of 1.0, whereas Hallucinated tokens have lower probabilities.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visual cue in first two subplots",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "In the 'lowest_N' methods, there is a visible separation where Normal tokens generally have higher probabilities than Hallucinated tokens.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visual cue in remaining six subplots",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The x-axis represents the sequence position of tokens.",
+          "why_wrong": "The caption states 'based on token probability', and the axis ranges from 0 to 1, typical for probability scores."
+        },
+        {
+          "claim": "The 'lowest' methods refer to the lowest probability tokens in the entire sequence.",
+          "why_wrong": "While plausible, the label 'lowest_1' etc. likely refers to a specific metric derived from the lowest N tokens, but the exact definition isn't fully explicit without text context, though the visual shows distributions."
+        }
+      ],
+      "limitations": [
+        "The figure shows distributions but does not provide specific numerical thresholds for detection accuracy.",
+        "It is unclear exactly how 'lowest_1' differs from 'lowest_3' other than the number, without further textual explanation."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S7",
+      "macro_id": null,
+      "caption": "Table 1: BAcc (%) of existing hallucination detection methods on LongFact and biography generation.",
+      "summary": "Table 1 reports Balanced Accuracy (BAcc) percentages for five hallucination detection methods (Prompt_TF, Prompt_Prob, SelfCheckGPT, Probing, Fine-Tuning) on the LongFact and Biography generation datasets. The highest BAcc on both datasets is achieved by Fine-Tuning (76.1% on LongFact, 78.2% on Biography), followed by Probing (74.4%, 77.0%), while Prompt_Prob yields the lowest scores (53.4%, 56.3%).",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "On LongFact, Fine-Tuning achieves a BAcc of 76.1%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'LongFact', column 'Fine-Tuning'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "On LongFact, Probing achieves a BAcc of 74.4%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'LongFact', column 'Probing'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "On LongFact, SelfCheckGPT achieves a BAcc of 69.1%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'LongFact', column 'SelfCheckGPT'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "On LongFact, Prompt_TF achieves a BAcc of 69.9%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'LongFact', column 'Prompt_TF'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "On LongFact, Prompt_Prob achieves a BAcc of 53.4%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'LongFact', column 'Prompt_Prob'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "On Biography, Fine-Tuning achieves a BAcc of 78.2%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'Biography', column 'Fine-Tuning'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "On Biography, Probing achieves a BAcc of 77.0%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'Biography', column 'Probing'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "On Biography, SelfCheckGPT achieves a BAcc of 71.9%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'Biography', column 'SelfCheckGPT'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "On Biography, Prompt_TF achieves a BAcc of 72.3%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'Biography', column 'Prompt_TF'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "On Biography, Prompt_Prob achieves a BAcc of 56.3%.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row 'Biography', column 'Prompt_Prob'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "Fine-Tuning achieves the highest BAcc among the five methods on LongFact (76.1%) and on Biography (78.2%).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "comparison of values in LongFact and Biography rows",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "Prompt_Prob achieves the lowest BAcc on both datasets (53.4% on LongFact, 56.3% on Biography).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "comparison of values in LongFact and Biography rows",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The Fine-Tuning method is always the best for hallucination detection.",
+          "why_wrong": "The table only reports results on two datasets (LongFact and Biography); performance may vary on other datasets or domains. Additionally, BAcc is one specific metric; other metrics could yield different rankings."
+        },
+        {
+          "claim": "Prompt_Prob is not effective for hallucination detection.",
+          "why_wrong": "While Prompt_Prob has the lowest BAcc in this table, it might have strengths in other contexts (e.g., different thresholds, cost, or applicability). The table does not provide evidence of its overall ineffectiveness."
+        },
+        {
+          "claim": "The methods compared are the only existing hallucination detection methods.",
+          "why_wrong": "The table only lists five methods; there are many other hallucination detection approaches not included. The caption says 'existing hallucination detection methods' but likely refers to those evaluated in this study, not an exhaustive list."
+        },
+        {
+          "claim": "The BAcc values represent performance on the full LongFact and Biography datasets as used in the original tasks.",
+          "why_wrong": "The table does not specify the exact subsets or conditions under which BAcc was measured. The metrics might be on specific model generations or under particular settings."
+        }
+      ],
+      "limitations": [
+        "The table only covers two datasets (LongFact and Biography), limiting generalizability.",
+        "Only one metric (BAcc) is reported; other metrics like precision, recall, or F1 are not shown.",
+        "The methods' performance may depend on hyperparameters, prompts, or fine-tuning details not listed in the table.",
+        "The table does not include confidence intervals or statistical significance tests for comparisons.",
+        "The exact source or version of the datasets used is not specified in the table."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S8",
+      "macro_id": null,
+      "caption": "Table 2: BAcc (%) of RATE-FT and baseline methods.",
+      "summary": "Table 2 reports balanced accuracy (BAcc %) for RATE-FT and four baseline methods (Prompt_TF, Prompt_CoT-TF, Probing, Fine-Tuning) on two datasets (LongFact and Biography). RATE-FT achieves the highest BAcc on both datasets: 79.6 on LongFact and 80.9 on Biography.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "RATE-FT achieves a BAcc of 79.6% on the LongFact dataset.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'LongFact', Column 'RATE-FT'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "RATE-FT achieves a BAcc of 80.9% on the Biography dataset.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Biography', Column 'RATE-FT'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "RATE-FT outperforms all four baseline methods (Prompt_TF, Prompt_CoT-TF, Probing, Fine-Tuning) on the LongFact dataset.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Row 'LongFact': 79.6 > 69.9, 74.9, 74.4, 76.1",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "RATE-FT outperforms all four baseline methods on the Biography dataset.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Row 'Biography': 80.9 > 72.3, 74.8, 77.0, 78.2",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "RATE-FT consistently outperforms all baselines across all datasets.",
+          "why_wrong": "The table only evaluates two datasets (LongFact and Biography); generalization to other datasets is not supported."
+        },
+        {
+          "claim": "The table reports accuracy rather than balanced accuracy.",
+          "why_wrong": "The caption explicitly states 'BAcc (%)', which is balanced accuracy, not simple accuracy."
+        },
+        {
+          "claim": "RATE-FT's improvements are statistically significant.",
+          "why_wrong": "The table does not include any error bars, confidence intervals, or significance tests."
+        }
+      ],
+      "limitations": [
+        "Only two datasets are evaluated.",
+        "Only one metric (BAcc) is reported.",
+        "No statistical significance or variance information is provided."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S8",
+      "macro_id": null,
+      "caption": "Table 3: Results of different ablations.",
+      "summary": "This table presents the results of an ablation study comparing three methods (Fine-Tuning, w.o. aux, and RATE-FT) on two datasets (LongFact and Biography). The numbers are likely performance scores (e.g., accuracy or F1), with higher values indicating better performance. On LongFact, Fine-Tuning scores 76.1, w.o. aux scores 77.5, and RATE-FT scores 79.6. On Biography, Fine-Tuning scores 78.2, w.o. aux scores 79.4, and RATE-FT scores 80.9. RATE-FT achieves the highest scores on both datasets.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "On the LongFact dataset, RATE-FT achieves a score of 79.6.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'LongFact', Column 'RATE-FT'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "On the LongFact dataset, Fine-Tuning achieves a score of 76.1.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'LongFact', Column 'Fine-Tuning'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "On the LongFact dataset, w.o. aux achieves a score of 77.5.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'LongFact', Column 'w.o. aux'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "On the Biography dataset, RATE-FT achieves a score of 80.9.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Biography', Column 'RATE-FT'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "On the Biography dataset, Fine-Tuning achieves a score of 78.2.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Biography', Column 'Fine-Tuning'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "On the Biography dataset, w.o. aux achieves a score of 79.4.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'Biography', Column 'w.o. aux'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "RATE-FT outperforms both Fine-Tuning and w.o. aux on the LongFact dataset.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparing values: 79.6 > 77.5 > 76.1",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "RATE-FT outperforms both Fine-Tuning and w.o. aux on the Biography dataset.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparing values: 80.9 > 79.4 > 78.2",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "On both datasets, w.o. aux outperforms Fine-Tuning.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "LongFact: 77.5 > 76.1; Biography: 79.4 > 78.2",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The table shows that RATE-FT is always the best method in all scenarios.",
+          "why_wrong": "The table only evaluates on two specific datasets (LongFact and Biography). Without additional datasets or tasks, we cannot generalize to all scenarios."
+        },
+        {
+          "claim": "The numbers represent accuracy percentages.",
+          "why_wrong": "The table does not specify the metric (e.g., accuracy, F1, or other scores). They could be any numerical performance measure."
+        },
+        {
+          "claim": "The differences between methods are statistically significant.",
+          "why_wrong": "The table does not provide any statistical significance tests or variance measures (e.g., p-values, confidence intervals). We cannot infer significance from raw numbers alone."
+        },
+        {
+          "claim": "The table includes a baseline or random performance.",
+          "why_wrong": "No baseline or random performance is reported. The table only compares the three listed methods."
+        }
+      ],
+      "limitations": [
+        "Only two datasets are evaluated (LongFact and Biography), limiting generalizability.",
+        "The performance metric is not specified, so the meaning of the numbers is unclear.",
+        "No statistical significance or variance is reported, so differences may not be reliable.",
+        "The table does not include any baselines (e.g., random or standard methods) for context.",
+        "The column headers in the original table are ambiguous (all three are 'Method'), requiring careful reading of the second row for actual method names."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S10",
+      "macro_id": "M6",
+      "caption": "Table 4: Results using different models.",
+      "summary": "Table 4 reports accuracy scores comparing three models (Llama-3.1-70B-Instruct, Mistral-7B-Instruct, Qwen2.5-7B-Instruct) across five methods: Prompt_{TF}, Prompt_{CoT-TF}, Probing, Fine-Tuning, and RATE-FT. The table shows that RATE-FT achieves the highest accuracy for all models, and Llama-3.1-70B-Instruct generally outperforms the others.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "For Llama-3.1-70B-Instruct, RATE-FT achieves 83.8% accuracy, the highest among methods.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: Llama-3.1-70B-Instruct, Column: RATE-FT, value 83.8",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "For Mistral-7B-Instruct, RATE-FT achieves 73.4% accuracy, the highest among methods.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: Mistral-7B-Instruct, Column: RATE-FT, value 73.4",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "For Qwen2.5-7B-Instruct, RATE-FT achieves 81.1% accuracy, the highest among methods.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row: Qwen2.5-7B-Instruct, Column: RATE-FT, value 81.1",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "Across all models, Prompt_{CoT-TF} outperforms Prompt_{TF} consistently.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "For each model, accuracy of Prompt_{CoT-TF} > Prompt_{TF}: Llama 76.8>73.2, Mistral 64.1>61.8, Qwen 75.5>72.8",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "Llama-3.1-70B-Instruct achieves higher accuracy than Mistral-7B-Instruct in all methods.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "For each method, Llama accuracy > Mistral accuracy (e.g., 73.2>61.8, 76.8>64.1, etc.)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "RATE-FT is the best overall method for any model or task.",
+          "why_wrong": "The table only tests three models and does not include other tasks, datasets, or methods; results may not generalize."
+        },
+        {
+          "claim": "The differences between methods are statistically significant.",
+          "why_wrong": "The table reports point estimates without confidence intervals or error bars; significance cannot be inferred."
+        },
+        {
+          "claim": "Llama-3.1-70B-Instruct is the best model overall.",
+          "why_wrong": "Only three models are compared; other models may perform differently, and the specific task is not detailed."
+        }
+      ],
+      "limitations": [
+        "Only three models are compared, limiting generalizability.",
+        "Only accuracy metric is reported; no precision, recall, F1, or error bars.",
+        "The specific task or dataset is not described in the table.",
+        "No statistical significance tests are provided."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S16",
+      "macro_id": "M7",
+      "caption": "Figure 3: Hallucination detection results based on token entropy (uncertainty).",
+      "summary": "The figure presents a grid of eight histograms comparing the distribution of token entropy scores for 'Correct' (blue) versus 'Hallucination' (orange) responses. Each histogram corresponds to a different method of aggregating token-level uncertainty, such as arithmetic average, geometric average, or selecting the highest N tokens/percentages. The visual trend generally shows that hallucinated responses have higher entropy scores (shifted to the right on the x-axis) compared to correct responses.",
+      "key_elements": [
+        {
+          "name": "Histogram Grid",
+          "role": "Displays eight distinct plots arranged in two rows and four columns."
+        },
+        {
+          "name": "Blue Distribution",
+          "role": "Represents the frequency count of token entropy scores for 'Correct' answers."
+        },
+        {
+          "name": "Orange Distribution",
+          "role": "Represents the frequency count of token entropy scores for 'Hallucination' answers."
+        },
+        {
+          "name": "X-Axis (0.00 - 1.00)",
+          "role": "Indicates the magnitude of the calculated token entropy or uncertainty score."
+        },
+        {
+          "name": "Y-Axis (Counts)",
+          "role": "Indicates the number of occurrences for each entropy score bin."
+        },
+        {
+          "name": "Subplot Titles",
+          "role": "Identify the specific aggregation strategy used (e.g., 'arithmetic_average', 'highest_1', 'highest_5%')."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Blue Distribution",
+          "target": "Orange Distribution",
+          "relation": "compares"
+        },
+        {
+          "source": "Subplot Titles",
+          "target": "Histogram Grid",
+          "relation": "defines_method_for"
+        },
+        {
+          "source": "Caption",
+          "target": "Figure",
+          "relation": "describes_context"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "Token entropy distributions differ between correct and hallucinated answers.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible separation of blue and orange curves in most panels",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Hallucinations tend to exhibit higher token entropy scores than correct answers.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "orange peaks are generally shifted to the right (higher values) relative to blue peaks",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Different aggregation methods (e.g., highest_1 vs arithmetic_average) produce different distribution shapes.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visual comparison of the eight subplots",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The x-axis represents time steps in the generation process.",
+          "why_wrong": "The axis is labeled with numerical ranges (0.00-1.00) consistent with a normalized score metric, not time, and the caption refers to 'token entropy'."
+        },
+        {
+          "claim": "All aggregation methods perform equally well at detecting hallucinations.",
+          "why_wrong": "Visually, the degree of overlap between blue and orange curves varies significantly across the panels (e.g., 'highest_1' shows clearer separation than 'arithmetic_average')."
+        }
+      ],
+      "limitations": [
+        "The exact numerical thresholds for distinguishing hallucinations from correct answers cannot be determined visually.",
+        "The figure does not provide statistical significance metrics (like p-values) for the observed differences."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_005",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S16",
+      "macro_id": "M7",
+      "caption": "Table 5: Results of different methods in OOD scenarios.",
+      "summary": "This table reports the performance (likely accuracy or a similar metric) of five methods (Prompt_TF, Prompt_Prob, SelfCheckGPT, Probing, Fine-Tuning) in Out-of-Distribution (OOD) scenarios. The values are 72.3, 56.3, 71.9, 71.1, and 74.7 respectively, with Fine-Tuning achieving the highest value.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "In OOD scenarios, Prompt_TF achieved a value of 72.3.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 2, Column 1: value 72.3",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "In OOD scenarios, Prompt_Prob achieved a value of 56.3.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 2, Column 2: value 56.3",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "In OOD scenarios, SelfCheckGPT achieved a value of 71.9.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 2, Column 3: value 71.9",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "In OOD scenarios, Probing achieved a value of 71.1.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 2, Column 4: value 71.1",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "In OOD scenarios, Fine-Tuning achieved a value of 74.7.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 2, Column 5: value 74.7",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        },
+        {
+          "claim": "Among the listed methods, Fine-Tuning achieved the highest value (74.7) in OOD scenarios.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of all values in Row 2: 74.7 > 72.3, 71.9, 71.1, 56.3",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_005"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "Prompt_Prob is the worst method because it has the lowest value (56.3).",
+          "why_wrong": "The table does not specify what the numbers represent (e.g., accuracy, F1). A lower value might be better in some metrics (e.g., error rate). Also, no statistical significance is provided."
+        },
+        {
+          "claim": "These results are overall performance on a specific dataset.",
+          "why_wrong": "The caption says 'OOD scenarios' but does not specify the dataset or task. The table only shows one row of results; it may be aggregated or on a particular benchmark."
+        },
+        {
+          "claim": "The values are percentages and can be directly compared as percentage points.",
+          "why_wrong": "The table does not explicitly state that the numbers are percentages. They could be raw scores or other metrics."
+        },
+        {
+          "claim": "Fine-Tuning is the best method overall for OOD scenarios.",
+          "why_wrong": "The table only compares five specific methods. There may be other methods not listed, and the result may not generalize to all OOD tasks or datasets."
+        }
+      ],
+      "limitations": [
+        "The table does not specify the metric (e.g., accuracy, F1, AUC) used to obtain the numbers.",
+        "The dataset or specific OOD scenario is not identified.",
+        "Only one row of results is presented; no variance or confidence intervals are shown.",
+        "No statistical significance testing is reported for comparisons between methods.",
+        "The table does not include a baseline or reference performance level."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S17",
+      "macro_id": "M5",
+      "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens.",
+      "summary": "Figure 4 displays a grid of eight histograms comparing the probability distributions of entity-related tokens for 'Correct' (blue bars) versus 'Hallucination' (orange bars) cases. The subplots represent different methods for calculating or selecting token probabilities, including arithmetic average, geometric average, and strategies based on the lowest N or percentage of tokens (e.g., lowest_1, lowest_5%).",
+      "key_elements": [
+        {
+          "name": "Eight Histograms",
+          "role": "Visualizing the frequency distribution of token probabilities"
+        },
+        {
+          "name": "Blue Bars",
+          "role": "Representing the count of 'Correct' tokens"
+        },
+        {
+          "name": "Orange Bars",
+          "role": "Representing the count of 'Hallucination' tokens"
+        },
+        {
+          "name": "Method Labels",
+          "role": "Identifying the specific probability aggregation strategy used in each subplot (e.g., arithmetic_average, lowest_1)"
+        },
+        {
+          "name": "Y-axis",
+          "role": "Indicating the frequency or count of tokens"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Blue Bars",
+          "target": "Orange Bars",
+          "relation": "compares"
+        },
+        {
+          "source": "Method Labels",
+          "target": "Eight Histograms",
+          "relation": "defines_context_for"
+        },
+        {
+          "source": "Legend",
+          "target": "Blue Bars",
+          "relation": "identifies_as"
+        },
+        {
+          "source": "Legend",
+          "target": "Orange Bars",
+          "relation": "identifies_as"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The figure evaluates hallucination detection by analyzing the probability distributions of entity-related tokens.",
+          "support_level": "caption_supported",
+          "evidence_basis": "caption",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "Correct tokens generally exhibit higher probability values than hallucinated tokens across the tested methods.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible_label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "The study employs various metrics including arithmetic average, geometric average, and lowest-k/percentage selection.",
+          "support_level": "visible_label",
+          "evidence_basis": "visible_label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The x-axis represents the number of tokens processed.",
+          "why_wrong": "The y-axis is labeled 'Counts', implying the x-axis represents the variable being counted, which the caption identifies as 'probability'."
+        },
+        {
+          "claim": "The 'lowest_1' method shows no separation between correct and hallucinated tokens.",
+          "why_wrong": "While there is overlap, the blue bars ('Correct') are still visibly shifted towards the right (higher counts/probability) compared to the orange bars ('Hallucination')."
+        }
+      ],
+      "limitations": [
+        "The x-axis lacks numerical labels, preventing precise quantification of probability thresholds.",
+        "It is difficult to assess statistical significance without error bars or sample size indicators."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_006",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S17",
+      "macro_id": "M5",
+      "caption": "Table 6: Comparison between Fine-Tuning $ _{para} $ and RATE-FT.",
+      "summary": "This table compares RATE-FT and Fine-Tuning_para, reporting that RATE-FT achieves 79.6 and Fine-Tuning_para achieves 76.8, suggesting RATE-FT outperforms Fine-Tuning_para by 2.8 points.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Fine-Tuning_para achieves a value of 76.8.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "First data row, first column",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "RATE-FT achieves a value of 79.6.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "First data row, second column",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        },
+        {
+          "claim": "RATE-FT outperforms Fine-Tuning_para by 2.8 points.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Difference between the two values in the first data row (79.6 - 76.8 = 2.8)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_006"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "RATE-FT always outperforms Fine-Tuning_para across all settings.",
+          "why_wrong": "Table only provides one comparison point; no evidence of general superiority."
+        },
+        {
+          "claim": "The reported numbers are accuracy percentages.",
+          "why_wrong": "The table caption and context do not specify the metric; it could be any performance measure."
+        }
+      ],
+      "limitations": [
+        "Only one data point is provided, so no statistical significance or variance is available.",
+        "The metric being compared is unspecified, limiting interpretation.",
+        "No baseline or other conditions are reported for context."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_007",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S17",
+      "macro_id": "M5",
+      "caption": "Table 7: Comparison between Fine-Tuning and RATE-FT $ _{half} $.",
+      "summary": "Table 7 compares two methods, Fine-Tuning and RATE-FT half, reporting scores of 76.1 and 78.5 respectively, indicating that RATE-FT half achieves a higher score.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Fine-Tuning achieves a score of 76.1.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Second column of first row (header) and first column of second row (data row) show Fine-Tuning and 76.1.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "RATE-FT half achieves a score of 78.5.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Third column of first row (header) and second column of second row (data row) show RATE-FT half and 78.5.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        },
+        {
+          "claim": "RATE-FT half outperforms Fine-Tuning by 2.4 points.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Subtracting 76.1 from 78.5 yields 2.4.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_007"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "RATE-FT half is generally better than Fine-Tuning across all tasks.",
+          "why_wrong": "The table only shows one comparison on a single, unspecified metric and dataset; it does not provide evidence of consistent improvement across multiple scenarios."
+        },
+        {
+          "claim": "The scores represent accuracy or F1 score on a standard benchmark.",
+          "why_wrong": "The table does not specify the metric or dataset, so the values could be from any evaluation measure."
+        }
+      ],
+      "limitations": [
+        "The table does not specify the metric, dataset, or experimental conditions.",
+        "No error bars or statistical significance are provided.",
+        "The table only includes two methods without baseline or upper bound reference."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_005",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S18",
+      "macro_id": null,
+      "caption": "Figure 5: Hallucination detection results based on the entropy of entity-related tokens.",
+      "summary": "Figure 5 displays a grid of eight histograms comparing the entropy distributions of 'Factual' (blue) versus 'Hallucinated' (orange) entity-related tokens. The subplots represent different aggregation methods for calculating these entropy scores, including arithmetic and geometric averages, as well as selecting the highest values by count (1, 3, 5) or percentage (5%, 10%, 15%). Visually, the blue bars (Factual) are generally shifted to the right of the orange bars (Hallucinated), indicating higher entropy for factual entities, though the degree of separation varies across the different aggregation methods.",
+      "key_elements": [
+        {
+          "name": "Histogram Grid",
+          "role": "Displays 8 distinct plots showing data distributions"
+        },
+        {
+          "name": "Legend",
+          "role": "Distinguishes between 'Factual' (blue) and 'Hallucinated' (orange) data series"
+        },
+        {
+          "name": "Subplot Titles",
+          "role": "Labels each plot with the specific aggregation method used (e.g., 'arithmetic_average', 'highest_15%')"
+        },
+        {
+          "name": "Y-axis",
+          "role": "Indicates 'Counts' (frequency) for each bin in the histograms"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Legend",
+          "target": "Blue Bars",
+          "relation": "identifies"
+        },
+        {
+          "source": "Legend",
+          "target": "Orange Bars",
+          "relation": "identifies"
+        },
+        {
+          "source": "Subplot Titles",
+          "target": "Individual Histograms",
+          "relation": "labels"
+        },
+        {
+          "source": "Blue Bars",
+          "target": "Orange Bars",
+          "relation": "compares_with"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The figure evaluates hallucination detection based on the entropy of entity-related tokens.",
+          "support_level": "caption_supported",
+          "evidence_basis": "caption",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "Factual tokens generally exhibit higher entropy scores than hallucinated tokens across most aggregation methods.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visual cue",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "The 'highest_15%' aggregation method shows a clearer separation between factual and hallucinated distributions compared to 'arithmetic_average'.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        },
+        {
+          "claim": "Eight different aggregation strategies were tested.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "panel structure",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_005"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The x-axis represents the probability of the token being correct.",
+          "why_wrong": "The caption states the results are based on 'entropy', and the y-axis is 'Counts', implying the x-axis is the entropy value itself."
+        },
+        {
+          "claim": "The 'highest_1' plot shows the distribution of the single highest entropy token in the entire text.",
+          "why_wrong": "While plausible, the chart title likely refers to an aggregation window (e.g., top 1 entity per sentence), but without the text, we can only see it's a specific metric labeled 'highest_1'."
+        }
+      ],
+      "limitations": [
+        "The exact numerical scale of the x-axis (entropy values) is not visible, preventing precise threshold determination.",
+        "The specific mathematical definition of aggregations like 'highest_3' vs 'highest_5' is not explicitly defined in the visual labels alone."
+      ],
+      "needs_review": false,
+      "confidence": 0.9,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_008",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S18",
+      "macro_id": null,
+      "caption": "Table 8: BAcc-unknown (%) of different methods on Longfact with Llama-3-8B-Instruct.",
+      "summary": "Table 8 reports the Balanced Accuracy for unknown detection (BAcc-unknown, %) of four methods (Prompt_CoT-TF, Probing, Fine-Tuning, and RATE-FT) evaluated on the Longfact dataset using the Llama-3-8B-Instruct model. The values are 80.4%, 81.1%, 82.4%, and 85.0% respectively, indicating that RATE-FT achieves the highest performance among the compared methods.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Prompt_CoT-TF achieves a BAcc-unknown of 80.4% on Longfact with Llama-3-8B-Instruct.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Table 8, column 1, row 2",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_008"
+          }
+        },
+        {
+          "claim": "Probing achieves a BAcc-unknown of 81.1% on Longfact with Llama-3-8B-Instruct.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Table 8, column 2, row 2",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_008"
+          }
+        },
+        {
+          "claim": "Fine-Tuning achieves a BAcc-unknown of 82.4% on Longfact with Llama-3-8B-Instruct.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Table 8, column 3, row 2",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_008"
+          }
+        },
+        {
+          "claim": "RATE-FT achieves a BAcc-unknown of 85.0% on Longfact with Llama-3-8B-Instruct.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Table 8, column 4, row 2",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_008"
+          }
+        },
+        {
+          "claim": "RATE-FT outperforms the other three methods (Prompt_CoT-TF, Probing, Fine-Tuning) by 3.0 to 4.6 percentage points in BAcc-unknown on this setting.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Derived from the four values in row 2: 85.0 - 80.4 = 4.6, 85.0 - 81.1 = 3.9, 85.0 - 82.4 = 2.6",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_008"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "RATE-FT is the best method for hallucination detection overall.",
+          "why_wrong": "The table only evaluates on a single dataset (Longfact) and a single model (Llama-3-8B-Instruct) using one metric (BAcc-unknown). Generalization to other datasets, models, or metrics is not supported."
+        },
+        {
+          "claim": "The methods cover all possible hallucination detection approaches.",
+          "why_wrong": "Only four specific methods (Prompt_CoT-TF, Probing, Fine-Tuning, RATE-FT) are shown; many other techniques exist and are not compared here."
+        },
+        {
+          "claim": "All improvements are statistically significant.",
+          "why_wrong": "The table does not provide any measure of variance or statistical significance (e.g., confidence intervals, p-values), so differences may not be reliable."
+        }
+      ],
+      "limitations": [
+        "Results are limited to the Longfact dataset and Llama-3-8B-Instruct model.",
+        "Only one metric (BAcc-unknown) is reported; other metrics (e.g., precision, recall, F1) are not shown.",
+        "No error bars, standard deviations, or significance tests are provided.",
+        "The table does not describe the experimental setup (e.g., number of runs, hyperparameters).",
+        "Comparison is limited to the four listed methods; absence of baselines or other state-of-the-art methods."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_006",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "qualitative_example",
+      "section_id": "S18",
+      "macro_id": null,
+      "caption": "Figure 6: Prompt for extracting the original output given an atomized claim.",
+      "summary": "The figure displays a text-based prompt template designed for an LLM task. The prompt instructs the model to extract specific original text from a provided response that corresponds to a given claim. It includes placeholders for the 'original response' and the 'claim', and specifies that the output must be enclosed in brackets.",
+      "key_elements": [
+        {
+          "name": "Prompt Header",
+          "role": "Labels the content as a system instruction or prompt."
+        },
+        {
+          "name": "Instructional Text",
+          "role": "Defines the task: extracting original text corresponding to a claim."
+        },
+        {
+          "name": "Placeholders",
+          "role": "Indicates input variables: {response} and {claim}."
+        },
+        {
+          "name": "Output Constraint",
+          "role": "Specifies formatting: enclosing the result in [boxed()]."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Prompt Header",
+          "target": "Instructional Text",
+          "relation": "contains"
+        },
+        {
+          "source": "Instructional Text",
+          "target": "Placeholders",
+          "relation": "references"
+        },
+        {
+          "source": "Instructional Text",
+          "target": "Output Constraint",
+          "relation": "specifies"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The figure shows a prompt used to extract original text from a response based on a claim.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible label, visible text",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        },
+        {
+          "claim": "The prompt requires two inputs: an original response and a claim.",
+          "support_level": "visible_label",
+          "evidence_basis": "visible label",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        },
+        {
+          "claim": "The expected output format involves enclosing the extracted text in brackets.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible text",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_006"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The prompt is for summarizing the response.",
+          "why_wrong": "The text explicitly states 'extract the original text' and 'reply with the original text', not summarize."
+        },
+        {
+          "claim": "The prompt generates new claims.",
+          "why_wrong": "The prompt takes a claim as input ('Claim: {claim}') and asks for text extraction, not claim generation."
+        }
+      ],
+      "limitations": [
+        "The figure only shows the static prompt template; it does not show example inputs or outputs.",
+        "It does not demonstrate the accuracy or success rate of this extraction method."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_007",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S18",
+      "macro_id": null,
+      "caption": "Figure 7: Prompts for different prompting methods.",
+      "summary": "The figure displays four distinct text-based prompt templates used for evaluating claims or sentences. These templates are stacked vertically and labeled as 'Prompt-True/False', 'Prompt-Binary', 'Prompt-Prob', and 'SelfCheckGPT'. Each box contains instructions for the model, placeholders for input (like [claim] or [context]), and examples of expected responses.",
+      "key_elements": [
+        {
+          "name": "Prompt-True/False",
+          "role": "A prompt template instructing the model to output a binary True/False response regarding claim correctness."
+        },
+        {
+          "name": "Prompt-Binary",
+          "role": "A prompt template requiring an explanation followed by a bracketed True/False answer."
+        },
+        {
+          "name": "Prompt-Prob",
+          "role": "A prompt template asking for a probability score between 0.0 and 1.0 indicating claim correctness."
+        },
+        {
+          "name": "SelfCheckGPT",
+          "role": "A prompt template designed to check if a sentence is supported by a given context, expecting a Yes/No answer."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Prompt-True/False",
+          "target": "Prompt-Binary",
+          "relation": "is_alternative_to"
+        },
+        {
+          "source": "Prompt-Binary",
+          "target": "Prompt-Prob",
+          "relation": "is_alternative_to"
+        },
+        {
+          "source": "Prompt-Prob",
+          "target": "SelfCheckGPT",
+          "relation": "is_alternative_to"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The figure presents four specific prompting strategies for hallucination detection or verification.",
+          "support_level": "caption_supported",
+          "evidence_basis": "caption states 'Prompts for different prompting methods' and image shows four distinct boxes.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_007"
+          }
+        },
+        {
+          "claim": "One method involves asking the model to provide a probability score between 0.0 and 1.0.",
+          "support_level": "visible_label",
+          "evidence_basis": "Text inside the 'Prompt-Prob' box explicitly says 'provide the probability... number between 0.0 and 1.0'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_007"
+          }
+        },
+        {
+          "claim": "The SelfCheckGPT prompt requires a context and a sentence to determine support.",
+          "support_level": "visible_label",
+          "evidence_basis": "The bottom box labeled 'SelfCheckGPT' lists fields for 'Context: [context]' and 'Sentence: [sentence]'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_007"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "These prompts are executed sequentially in a single pipeline.",
+          "why_wrong": "The caption describes them as 'different prompting methods', implying they are alternative approaches rather than steps in a sequence. The layout suggests a list of options."
+        },
+        {
+          "claim": "The examples shown (e.g., about South Korea) are the only data used for evaluation.",
+          "why_wrong": "The text inside the boxes uses generic placeholders like '[claim]' and provides illustrative examples, not a complete dataset definition."
+        }
+      ],
+      "limitations": [
+        "The figure only shows the input prompts/templates; it does not show the model's actual outputs or performance metrics for these methods.",
+        "It does not explain the underlying mechanism of how 'SelfCheckGPT' differs from the others beyond the prompt structure."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_008",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S18",
+      "macro_id": null,
+      "caption": "Figure 8: Prompts for different components of RATE-FT.",
+      "summary": "Figure 8 displays four distinct prompt templates used for different components of the RATE-FT framework. These prompts cover tasks including determining claim correctness ('label-rational'), answering questions, and generating questions specifically tailored for both correct and incorrect claims.",
+      "key_elements": [
+        {
+          "name": "Prompt for 'label-rational' Format",
+          "role": "Template for verifying claim truthfulness (True/False) and providing an explanation."
+        },
+        {
+          "name": "Prompt for Question Answering",
+          "role": "Template for answering a specific question and providing an explanation."
+        },
+        {
+          "name": "Prompt for Question Generation (Correct Claim)",
+          "role": "Template for transforming a true claim into a question and answer pair."
+        },
+        {
+          "name": "Prompt for Question Generation (Wrong Claim)",
+          "role": "Template for transforming a false claim (and its reason) into a question and correct answer pair."
+        }
+      ],
+      "relations": [
+        {
+          "source": "All four prompt blocks",
+          "target": "RATE-FT framework",
+          "relation": "are_components_of"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The RATE-FT framework utilizes specific prompt engineering strategies for different sub-tasks.",
+          "support_level": "caption_supported",
+          "evidence_basis": "caption",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_008"
+          }
+        },
+        {
+          "claim": "The framework includes a mechanism to generate questions from incorrect claims.",
+          "support_level": "visible_label",
+          "evidence_basis": "visible label 'Prompt for Question Generation (Wrong Claim)'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_008"
+          }
+        },
+        {
+          "claim": "The prompts require the model to provide explanations alongside answers or classifications.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible text in all four blocks mentioning 'explanation'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_008"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The four prompts represent a strict sequential pipeline where one output feeds into the next.",
+          "why_wrong": "The figure presents them as a list of 'different components' rather than a flowchart with directional arrows indicating sequence. They may be parallel training objectives."
+        },
+        {
+          "claim": "In the 'Wrong Claim' prompt, the 'Reason' field is solely an input provided by the user.",
+          "why_wrong": "While the text says 'Given a wrong claim and why it's wrong', the output format also lists 'Reason: (reason)', suggesting the model might be expected to generate or reproduce the reason as part of the output structure."
+        }
+      ],
+      "limitations": [
+        "The figure only shows the text of the prompts and does not illustrate the data flow or interaction between these components within the broader system architecture.",
+        "It does not show the performance metrics or results associated with using these specific prompts."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    }
+  ],
+  "summary": {
+    "asset_explanation_count": 16,
+    "by_asset_type": {
+      "figure": 8,
+      "table": 8
+    },
+    "needs_review_count": 0,
+    "supported_claim_count": 73,
+    "possible_misreading_count": 41
+  }
+}

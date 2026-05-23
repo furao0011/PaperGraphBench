@@ -1,0 +1,871 @@
+{
+  "paper_id": "Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks",
+  "schema_version": "v1",
+  "table_explainer_model": "deepseek-v4-flash",
+  "figure_explainer_model": "qwen3.6-flash",
+  "figure_explainer_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "asset_explanations": [
+    {
+      "asset_id": "FIG_001",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S3",
+      "macro_id": null,
+      "caption": "Figure 1: Example of our long trajectory for knowledge-intensive scenarios (Top) and optimization comparison of multi-agent frameworks (Bottom). Solid and dashed arrows indicate inference and optimization paths, respectively.",
+      "summary": "The figure illustrates a multi-agent framework for knowledge-intensive tasks, divided into two main sections. The top section depicts a workflow trajectory starting from a task instruction, moving through intent reconstruction and knowledge access, then to fact identification and relevance discrimination, finally producing a response with citations. The bottom section compares three optimization strategies for this framework: (a) Modular Optimization, (b) End-to-end Optimization, and (c) the proposed 'Our Optimization' method, using robot icons and arrows to denote agent interactions and optimization paths.",
+      "key_elements": [
+        {
+          "name": "Task Instruction",
+          "role": "Input component of the workflow"
+        },
+        {
+          "name": "Reconstructing Intent",
+          "role": "Intermediate processing step converting instructions to intent"
+        },
+        {
+          "name": "Accessing Knowledge",
+          "role": "Retrieval component fetching relevant information"
+        },
+        {
+          "name": "Identifying Facts",
+          "role": "Extraction component listing potential facts"
+        },
+        {
+          "name": "Discriminating Relevance",
+          "role": "Filtering component selecting relevant facts"
+        },
+        {
+          "name": "Response&Cites",
+          "role": "Output component generating the final answer"
+        },
+        {
+          "name": "(a) Modular Optimization",
+          "role": "Baseline comparison showing separate optimization blocks"
+        },
+        {
+          "name": "(b) End-to-end Optimization",
+          "role": "Baseline comparison showing joint optimization of all blocks"
+        },
+        {
+          "name": "(c) Our Optimization",
+          "role": "Proposed method showing a specific optimization structure"
+        },
+        {
+          "name": "Robot Icons",
+          "role": "Visual representation of agents or model components in the optimization diagrams"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Task Instruction",
+          "target": "Reconstructing Intent",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Reconstructing Intent",
+          "target": "Accessing Knowledge",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Accessing Knowledge",
+          "target": "Identifying Facts",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Identifying Facts",
+          "target": "Discriminating Relevance",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Discriminating Relevance",
+          "target": "Response&Cites",
+          "relation": "flows_to"
+        },
+        {
+          "source": "(a) Modular Optimization",
+          "target": "(b) End-to-end Optimization",
+          "relation": "compares_with"
+        },
+        {
+          "source": "(b) End-to-end Optimization",
+          "target": "(c) Our Optimization",
+          "relation": "compares_with"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The framework processes task instructions by first reconstructing intent before accessing knowledge.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Top section flow diagram showing sequential boxes",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "The proposed optimization method ('Our Optimization') structurally differs from both modular and end-to-end approaches.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Bottom panels (a), (b), and (c) showing different arrow connections and box groupings",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        },
+        {
+          "claim": "Solid arrows indicate inference paths while dashed arrows indicate optimization paths.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption text explicitly defining arrow meanings",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The top diagram represents the only possible workflow for the system.",
+          "why_wrong": "The caption describes it as an 'Example of our long trajectory', implying it is one instance, not the exhaustive definition."
+        },
+        {
+          "claim": "The robot icons represent physical robots used in the experiment.",
+          "why_wrong": "In the context of 'Multi-Agent Frameworks' and optimization diagrams, these icons represent abstract software agents or model components, not physical hardware."
+        }
+      ],
+      "limitations": [
+        "The internal mechanisms of the 'Reconstructing Intent' and 'Accessing Knowledge' modules are not detailed, only their inputs and outputs.",
+        "The specific mathematical objectives or loss functions for the optimization strategies are not visible, only the structural connectivity.",
+        "The exact nature of the 'long trajectory' mentioned in the caption is illustrative rather than quantitative."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_002",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S4",
+      "macro_id": "M3",
+      "caption": "Figure 2: Overview of our multi-agent framework with long- and short-trajectory learning. This framework incorporates four agents: intent reconstructor, knowledge retriever, fac locator, and response generator.",
+      "summary": "Figure 2 illustrates a multi-agent framework for knowledge-intensive tasks, divided into a high-level architecture overview (top) and a detailed trajectory example (bottom). The top section shows four sequential agents: Intent Reconstructor, Knowledge Retriever, Fact Locator, and Response Generator. The bottom section demonstrates a 'Long Trajectory' using a specific question about Joe Colquhoun and Carlton Loewer, breaking the process into four 'Short Trajectories' corresponding to each agent's function.",
+      "key_elements": [
+        {
+          "name": "Knowledge-intensive tasks",
+          "role": "Input category box listing task types like Fact Verification and Multiple-choice Reasoning"
+        },
+        {
+          "name": "Intent Reconstructor",
+          "role": "First agent that processes instructions into retrieval intents"
+        },
+        {
+          "name": "Knowledge Retriever",
+          "role": "Second agent that fetches external knowledge based on intents"
+        },
+        {
+          "name": "Fact Locator",
+          "role": "Third agent that judges relevance and locates specific facts in paragraphs"
+        },
+        {
+          "name": "Response Generator",
+          "role": "Final agent that generates the task response with citations"
+        },
+        {
+          "name": "Long Trajectory",
+          "role": "The complete workflow example shown in the bottom half"
+        },
+        {
+          "name": "Short Trajectory 1-4",
+          "role": "Individual steps within the example workflow corresponding to each agent"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Knowledge-intensive tasks",
+          "target": "Intent Reconstructor",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Intent Reconstructor",
+          "target": "Knowledge Retriever",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Knowledge Retriever",
+          "target": "Fact Locator",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Fact Locator",
+          "target": "Response Generator",
+          "relation": "flows_to"
+        },
+        {
+          "source": "Fact Locator",
+          "target": "Step 1: Judge Relevance",
+          "relation": "contains"
+        },
+        {
+          "source": "Fact Locator",
+          "target": "Step 2: Locate Facts",
+          "relation": "contains"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The framework incorporates four distinct agents: Intent Reconstructor, Knowledge Retriever, Fact Locator, and Response Generator.",
+          "support_level": "caption_supported",
+          "evidence_basis": "caption and visible labels",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The Fact Locator performs two main steps: judging relevance and locating facts.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible text inside the orange 'Fact Locator' box",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        },
+        {
+          "claim": "The system handles various knowledge-intensive tasks including fact verification and multiple-choice reasoning.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "visible text in the leftmost box",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The bottom section depicts a separate model or training phase.",
+          "why_wrong": "The bottom section is labeled as an example trace ('Long Trajectory') illustrating the operation of the framework shown above it."
+        },
+        {
+          "claim": "The agents operate in parallel branches.",
+          "why_wrong": "Large black arrows indicate a strict sequential flow from left to right across the agents."
+        }
+      ],
+      "limitations": [
+        "The figure does not show the internal neural network architecture or loss functions used by the agents.",
+        "It does not provide quantitative performance metrics or accuracy results."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "FIG_003",
+      "asset_type": "figure",
+      "modality_class": "explanatory",
+      "subtype": "framework_diagram",
+      "section_id": "S5",
+      "macro_id": "M4",
+      "caption": "Figure 3: Overview of Long-Short Trajectory Learning. It consists of two stages, for short trajectory learning, under a given trajectory head, requires insight into the various explicit and implicit signals in each particular task. For long-trajectory learning, LLM executes the entire process by predicting different trajectory tokens, ensuring the synergism of different short-trajectories.",
+      "summary": "The figure illustrates a 'Long-Short Trajectory Learning' framework, contrasting short trajectory learning (top section) with long-trajectory learning (bottom section). The top section displays three distinct modules—Intent Reconstructor, Fact Locator, and Response Generator—each processing specific tokens. The bottom section shows how these individual components are combined into a single, continuous sequence of tokens for long-trajectory learning, connected by colored arrows indicating the mapping between short and long trajectories.",
+      "key_elements": [
+        {
+          "name": "Intent Reconstructor",
+          "role": "A module in the top section responsible for intent reconstruction, highlighted in green."
+        },
+        {
+          "name": "Fact Locator",
+          "role": "A module in the top section responsible for locating facts/retrieval, highlighted in orange."
+        },
+        {
+          "name": "Response Generator",
+          "role": "A module in the top section responsible for generating responses, highlighted in blue."
+        },
+        {
+          "name": "Long-Trajectory Learning Sequence",
+          "role": "A unified sequence in the bottom section combining tokens from the upper modules."
+        },
+        {
+          "name": "Colored Arrows",
+          "role": "Visual connectors mapping specific short-trajectory components to their corresponding positions in the long-trajectory sequence."
+        }
+      ],
+      "relations": [
+        {
+          "source": "Intent Reconstructor",
+          "target": "Long-Trajectory Learning Sequence",
+          "relation": "contributes_to"
+        },
+        {
+          "source": "Fact Locator",
+          "target": "Long-Trajectory Learning Sequence",
+          "relation": "contributes_to"
+        },
+        {
+          "source": "Response Generator",
+          "target": "Long-Trajectory Learning Sequence",
+          "relation": "contributes_to"
+        },
+        {
+          "source": "Long-Trajectory Learning Sequence",
+          "target": "Intent Reconstructor",
+          "relation": "contains_component_of"
+        },
+        {
+          "source": "Long-Trajectory Learning Sequence",
+          "target": "Fact Locator",
+          "relation": "contains_component_of"
+        },
+        {
+          "source": "Long-Trajectory Learning Sequence",
+          "target": "Response Generator",
+          "relation": "contains_component_of"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "The framework separates tasks into Intent Reconstruction, Fact Location, and Response Generation.",
+          "support_level": "visible_label",
+          "evidence_basis": "Headers 'Intent Reconstructor', 'Fact Locator', 'Response Generator' at the top of the figure.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Long-trajectory learning combines these separate modules into a single sequence.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Arrows connecting the top modules to a single linear sequence at the bottom labeled 'Long-Trajectory Learning'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        },
+        {
+          "claim": "Specific tokens like <Reconstructor>, <Locator>, and <Generator> mark the roles within the sequence.",
+          "support_level": "visible_label",
+          "evidence_basis": "Text labels inside the boxes in both the top and bottom sections.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The top section represents a sequential process where one module feeds directly into the next.",
+          "why_wrong": "The top section shows parallel or independent blocks under a dashed line, suggesting they are separate 'short trajectories' or heads, not a direct pipeline feeding into each other before the long trajectory stage."
+        },
+        {
+          "claim": "The bottom sequence is a completely different model architecture.",
+          "why_wrong": "The arrows explicitly link the components of the top section to the tokens in the bottom section, indicating composition rather than a separate architecture."
+        }
+      ],
+      "limitations": [
+        "The figure does not show the internal neural network architecture of the modules (e.g., transformer layers).",
+        "It does not visualize the training loss or optimization process, only the token structure.",
+        "The exact mechanism of 'synergism' mentioned in the caption is abstractly represented by the sequence combination, not detailed algorithmically."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    },
+    {
+      "asset_id": "TAB_001",
+      "asset_type": "table",
+      "modality_class": "explanatory",
+      "subtype": "unknown_table",
+      "section_id": "S5",
+      "macro_id": "M4",
+      "caption": "Table 1: Four types of trajectory tokens. $ x $, $ \\bar{q} $, $ \\bar{d} $, $ \\gamma $, $ \\bar{f} $ and $ \\bar{y} $ indicate instruction, intent, knowledge document, relevance tag, fact evidence and response, respectively.",
+      "summary": "The table defines four types of trajectory tokens used in a trajectory dataset construction: Reconstructor (A_i), Retrieval (A_r), Locator (A_l), and Generator (A_g). For each type, it specifies the head token (e.g., <Reconstructor>), end token (e.g., </eor>), input variables (e.g., x for Reconstructor), and output variables (e.g., \\bar{q} for Reconstructor). Notation is provided in the caption: x=instruction, \\bar{q}=intent, \\bar{d}=knowledge document, \\gamma=relevance tag, \\bar{f}=fact evidence, and y=response.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "There are four trajectory token types: Reconstructor, Retrieval, Locator, Generator.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row labels in table: Type column lists $\\mathcal{A}_i$, $\\mathcal{A}_r$, $\\mathcal{A}_l$, $\\mathcal{A}_g$ mapped to types.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "The Reconstructor token has head <Reconstructor>, end </eor>, input x, and output \\bar{q}.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "First data row: $\\mathcal{A}_i$, <Reconstructor>, </eor>, x, $\\bar{q}$.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "The Retrieval token has head <retrieval>, end </retrieval>, input \\bar{q}, and output \\bar{d}.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Second data row: $\\mathcal{A}_r$, <retrieval>, </retrieval>, $\\bar{q}$, $\\bar{d}$.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "The Locator token has head <Locator>, end </eol>, input x and \\bar{d}, and output \\gamma and \\bar{f}.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Third data row: $\\mathcal{A}_l$, <Locator>, </eol>, x, $\\bar{d}$, $\\gamma,\\bar{f}$ (as two outputs).",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "The Generator token has head <Generator>, end </eog>, input x and \\bar{d}/x, and output y.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Fourth data row: $\\mathcal{A}_g$, <Generator>, </eog>, x, $\\bar{d}/x$, y.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        },
+        {
+          "claim": "The caption defines x as instruction, \\bar{q} as intent, \\bar{d} as knowledge document, \\gamma as relevance tag, \\bar{f} as fact evidence, and y as response.",
+          "support_level": "caption_supported",
+          "evidence_basis": "Caption text: 'Table 1: Four types... $x$, $\\bar{q}$, $\\bar{d}$, $\\gamma$, $\\bar{f}$ and $\\bar{y}$ indicate instruction, intent, knowledge document, relevance tag, fact evidence and response, respectively.'",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_001"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The order of token types in the table implies a sequential processing pipeline (Reconstructor → Retrieval → Locator → Generator).",
+          "why_wrong": "The table only lists types, not their order of execution. The order could be different or they might be used independently."
+        },
+        {
+          "claim": "The table shows that all token types have exactly one input and one output.",
+          "why_wrong": "Locator has two outputs (\\gamma and \\bar{f}) listed together, and Generator has input 'x, \\bar{d}/x' which may be two inputs or an alternative input."
+        },
+        {
+          "claim": "The table is exhaustive and there are no other trajectory token types.",
+          "why_wrong": "The table only lists four types; the paper may define additional tokens elsewhere."
+        }
+      ],
+      "limitations": [
+        "The table does not provide any quantitative data, such as frequency of token use, success rates, or performance metrics.",
+        "The table does not explain the relationships between token types or how they are combined in trajectories.",
+        "The table does not specify the context (e.g., task, dataset) in which these tokens are used.",
+        "The table is a definitional table; it does not support claims about empirical findings or comparisons."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_002",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "main_result_table",
+      "section_id": "S6",
+      "macro_id": "M5",
+      "caption": "Table 2: Comparison results against knowledge internalization and knowledge enhancement methods. * denotes the method we reproduce based on the same base. * denotes re-implemented methods based on the same initial model. The  $ \\underline{\\text{bold}} $ numbers represent the best results and the  $ \\underline{\\text{underlined}} $ numbers represent the second.",
+      "summary": "Table 2 compares knowledge internalization and knowledge enhancement methods across multiple tasks (Health, ARC-C, PopQA, Squad1, ASQA) using metrics Acc, Str_EM, R-L, and Mauve. It reports the performance of various baselines and the proposed SMART method, with best results bold and second underlined. SMART achieves the highest scores on Health Acc (73.18), PopQA Acc (42.60), ASQA Str_EM (41.16), ASQA R-L (40.66), and ASQA Mauve (91.47) among all methods, but is not the best on ARC-C or Squad1.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "SMART (OURS) achieves an accuracy of 73.18 on the Health task.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'SMART (OURS)', column 'Health' under 'Knowledge enhancement methods'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "SMART (OURS) achieves a Mauve score of 91.47 on ASQA.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'SMART (OURS)', column 'ASQA Mauve' (last column).",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "Among knowledge enhancement methods, SMART (OURS) has the highest accuracy on PopQA (42.60).",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparing values in 'PopQA' column under 'Knowledge enhancement methods': SMART (42.60) > INTERACT (41.31) > SelfRag (40.67), etc.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        },
+        {
+          "claim": "ChatGPT achieves the highest accuracy on ARC-C (77.30) among all methods listed.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'ChatGPT' under 'Knowledge internalization methods', column 'ARC-C'.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_002"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "SMART (OURS) outperforms all methods on every task and metric.",
+          "why_wrong": "SMART is not the best on ARC-C (ChatGPT 77.30 > SMART 65.58) and Squad1 (INTERACT 31.52 > SMART 27.80). Also, on some metrics like ASQA Str_EM, SMART is best but not on all tasks."
+        },
+        {
+          "claim": "All methods with an asterisk (*) are reproduced by the authors of SMART.",
+          "why_wrong": "The caption states '*' denotes methods reproduced based on the same base model, but does not specify that they were reproduced by the SMART authors; they may be from original papers."
+        }
+      ],
+      "limitations": [
+        "The table does not report variance or statistical significance of results.",
+        "Only a limited set of tasks and metrics are included; generalizability to other domains is not shown.",
+        "Some methods have different base model sizes (7B, 13B) and training data, which may affect comparability.",
+        "The bold/underline formatting is not explicitly visible in the provided LaTeX; the claim of best/second relies on the caption statement."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_003",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S8",
+      "macro_id": "M7",
+      "caption": "Table 3: Training Ablation and inference ablation for the contribution of different agents. L and S denote long-trajectory and short-trajectory learning, respectively. w/o $ \\mathcal{A}_{f} $, w/o $ \\mathcal{A}_{i} $, and w/o All denote no fact Locator, no intent reconstructor, and only response generator.",
+      "summary": "This table presents training and inference ablation results for the SMART model on four metrics (Health, ARC-C, Pop, AS), comparing the full model against variants without the fact locator (w/o A_f), without the intent reconstructor (w/o A_i), and without both (w/o All). Training ablation uses only long-trajectory learning (L), while inference ablation uses both long and short trajectories (L+S). The results show that each component contributes to performance, with the full model achieving the highest scores in both settings.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "In training ablation, removing the fact locator (w/o A_f) reduces Health accuracy from 72.15% to 70.13%.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Row 'SMART (L)' vs 'w/o $\\mathcal{A}_{f}$' in column 'Health (Acc)' of training ablation section.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "In inference ablation, the full SMART (L+S) achieves 73.18% on Health, 65.58% on ARC-C, 42.60% on Pop, and 41.16% on AS.",
+          "support_level": "direct_table_value",
+          "evidence_basis": "Row 'SMART (L+S)' in inference ablation section across all four metric columns.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "Removing both components (w/o All) in training ablation causes a larger drop than removing either individually, e.g., Health drops from 72.15% to 57.95%.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Comparison of 'SMART (L)' row with 'w/o All' row in training ablation for Health (Acc).",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        },
+        {
+          "claim": "In inference ablation, removing the fact locator reduces ARC-C accuracy from 65.58% to 62.45%.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "Row 'SMART (L+S)' vs 'w/o $\\mathcal{A}_{f}$' in column 'ARC-C (Acc)' of inference ablation section.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_003"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The fact locator is more important than the intent reconstructor because removing the fact locator always causes a larger performance drop than removing the intent reconstructor.",
+          "why_wrong": "While w/o A_f often shows a larger drop than w/o A_i, the relative importance varies by metric and ablation setting. For example, in inference ablation on Pop, w/o A_f drops to 37.45% while w/o A_i drops to 39.88% (smaller drop), but the difference is not universally consistent across all metrics (e.g., on Health, both drops are similar: 71.63 vs 71.22). The table does not provide statistical significance."
+        },
+        {
+          "claim": "Using both long and short trajectories (L+S) is always better than using only long trajectories (L) for every metric.",
+          "why_wrong": "The table only compares training ablation (L) with inference ablation (L+S) but these are different experimental settings (training vs. inference). The results are not directly comparable because the training ablation uses a different training procedure; it is not an ablation of the trajectory length at inference time. The improvement in inference ablation could be due to the addition of short-trajectory data during inference, but the table does not control for other factors."
+        }
+      ],
+      "limitations": [
+        "The table only reports results on four specific metrics (Health, ARC-C, Pop, AS) and may not generalize to other datasets or evaluation measures.",
+        "The ablation experiments are conducted under two different regimes (training and inference), and comparisons across regimes are not valid without further controls.",
+        "The table does not provide statistical significance or confidence intervals, so the magnitude of differences may not be reliable.",
+        "The caption mentions 'w/o All' denotes only response generator, but it is unclear what baseline components are included in that condition (e.g., whether any other modules remain)."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "TAB_004",
+      "asset_type": "table",
+      "modality_class": "evidential",
+      "subtype": "ablation_table",
+      "section_id": "S9",
+      "macro_id": "M8",
+      "caption": "Table 4: Ablation studies of long-trajectory (Long) and short-trajectory (Short) learning.",
+      "summary": "Table 4 reports ablation study results comparing four methods (Vanilla LLM, +Short, +Long, +Short & Long) on four metrics: Health accuracy, PopQA accuracy, ASQA exact match, and ASQA ROUGE-L. The results show that the combination of short and long trajectory learning (+Short & Long) achieves the highest scores on all metrics, with values 73.18, 42.60, 41.16, and 40.66 respectively.",
+      "key_elements": [],
+      "relations": [],
+      "supported_claims": [
+        {
+          "claim": "Vanilla LLM achieves 9.80 on Health (Acc).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row: Vanilla LLM, column: Health (Acc)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "+Short & Long achieves 73.18 on Health (Acc).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row: +Short & Long, column: Health (Acc)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "+Short & Long achieves 42.60 on PopQA (Acc).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row: +Short & Long, column: PopQA (Acc)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "+Short & Long achieves 41.16 on ASQA (Em).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row: +Short & Long, column: ASQA (Em)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "+Short & Long achieves 40.66 on ASQA (R-L).",
+          "support_level": "direct_table_value",
+          "evidence_basis": "row: +Short & Long, column: ASQA (R-L)",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        },
+        {
+          "claim": "The +Short & Long method outperforms all other methods (Vanilla LLM, +Short, +Long) on all four metrics.",
+          "support_level": "computed_comparison",
+          "evidence_basis": "comparison of row values across methods for each metric",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "TAB_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The +Short & Long method is the best method overall for all language tasks.",
+          "why_wrong": "The table only evaluates three specific datasets (Health, PopQA, ASQA) and does not test generalization to other tasks or domains."
+        },
+        {
+          "claim": "The table proves that short-trajectory learning is ineffective because Vanilla LLM is worse than +Short.",
+          "why_wrong": "The table actually shows that +Short improves over Vanilla LLM on all metrics, so short-trajectory learning is effective when added."
+        }
+      ],
+      "limitations": [
+        "The table only reports results on three datasets (Health, PopQA, ASQA) with specific metrics (Acc, Em, R-L) and does not provide statistical significance or confidence intervals.",
+        "The table does not include information about the underlying model architecture, training details, or hyperparameters.",
+        "The metrics used may not capture all aspects of model performance (e.g., fluency, robustness)."
+      ],
+      "needs_review": false,
+      "confidence": 0.95,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "html_table"
+      ],
+      "explanation_model": "deepseek-v4-flash",
+      "explanation_base_url": "https://api.deepseek.com"
+    },
+    {
+      "asset_id": "FIG_004",
+      "asset_type": "figure",
+      "modality_class": "evidential",
+      "subtype": "chart",
+      "section_id": "S9",
+      "macro_id": "M8",
+      "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA.",
+      "summary": "The figure consists of three line charts (likely panels a, b, and c corresponding to tasks ARC-C, PopQA, and ASQA) that illustrate the effect of increasing long-trajectory training data size (K) on model performance. Each chart plots a performance metric (accuracy 'acc' or exact match 'em') on the y-axis against the number of training samples in thousands ('Num of training(k)') on the x-axis. A solid green line with markers represents the primary method's performance at different data sizes (0, 20, 60, 120, 140k), while horizontal dashed lines represent fixed baseline performances for 'SelfRag-7B' (blue) and 'MMAgent' (orange).",
+      "key_elements": [
+        {
+          "name": "Panel 1 (Left)",
+          "role": "Line chart showing accuracy vs training data size, likely for task ARC-C"
+        },
+        {
+          "name": "Panel 2 (Middle)",
+          "role": "Line chart showing accuracy vs training data size, likely for task PopQA"
+        },
+        {
+          "name": "Panel 3 (Right)",
+          "role": "Line chart showing exact match (em) vs training data size, likely for task ASQA"
+        },
+        {
+          "name": "Green Line Series",
+          "role": "Represents the performance of the proposed method across varying data sizes"
+        },
+        {
+          "name": "Blue Dashed Line",
+          "role": "Baseline performance reference for SelfRag-7B"
+        },
+        {
+          "name": "Orange Dashed Line",
+          "role": "Baseline performance reference for MMAgent"
+        },
+        {
+          "name": "X-Axis Label",
+          "role": "Indicates 'Num of training(k)', ranging from 0 to 140"
+        },
+        {
+          "name": "Y-Axis Labels",
+          "role": "Indicates metrics 'acc' (Panels 1 & 2) and 'em' (Panel 3)"
+        }
+      ],
+      "relations": [
+        {
+          "source": "Green Line Series",
+          "target": "Blue Dashed Line",
+          "relation": "compares_against"
+        },
+        {
+          "source": "Green Line Series",
+          "target": "Orange Dashed Line",
+          "relation": "compares_against"
+        },
+        {
+          "source": "Green Line Series",
+          "target": "X-Axis Label",
+          "relation": "depends_on"
+        },
+        {
+          "source": "Panel 1",
+          "target": "Panel 2",
+          "relation": "is_sibling_panel_to"
+        },
+        {
+          "source": "Panel 2",
+          "target": "Panel 3",
+          "relation": "is_sibling_panel_to"
+        }
+      ],
+      "supported_claims": [
+        {
+          "claim": "Increasing the amount of training data generally improves the performance of the method.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "The green line shows an upward trend in all three panels as 'Num of training(k)' increases.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "The method eventually outperforms the MMAgent baseline in all three tasks.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "In all three charts, the green line ends at a higher y-value than the orange dashed line.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "The method outperforms the SelfRag-7B baseline in the second and third tasks.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "In Panel 2 and Panel 3, the green line crosses above the blue dashed line.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        },
+        {
+          "claim": "There is a significant performance jump in the third task (ASQA?) between 120k and 140k training samples.",
+          "support_level": "visually_indicated",
+          "evidence_basis": "Panel 3 shows a steep increase in the green line slope between x=120 and x=140.",
+          "scope": {
+            "generality": "limited_to_asset",
+            "asset_id": "FIG_004"
+          }
+        }
+      ],
+      "possible_misreadings": [
+        {
+          "claim": "The figure displays bar charts.",
+          "why_wrong": "The images clearly show line charts with continuous curves and markers, not bars."
+        },
+        {
+          "claim": "The baselines vary with training data size.",
+          "why_wrong": "The baseline lines (SelfRag-7B and MMAgent) are horizontal, indicating constant performance values independent of the training data size K."
+        },
+        {
+          "claim": "The green line represents one of the named baselines.",
+          "why_wrong": "The legend explicitly labels the dashed lines as baselines; the solid green line is distinct and likely represents the method being evaluated."
+        }
+      ],
+      "limitations": [
+        "The provided context describes the figure as 'bar charts', but the visual evidence shows line charts. This inconsistency requires review.",
+        "The specific task names (ARC-C, PopQA, ASQA) are not visible on the individual chart axes, so their assignment to specific panels relies on external caption information.",
+        "The name of the method represented by the green line is not explicitly stated in the legend.",
+        "The exact numerical values of the data points are not readable, only approximate trends can be observed."
+      ],
+      "needs_review": true,
+      "confidence": 0.8,
+      "source_basis": [
+        "llm_html_island_extraction",
+        "image_file"
+      ],
+      "explanation_model": "qwen3.6-flash",
+      "explanation_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    }
+  ],
+  "summary": {
+    "asset_explanation_count": 8,
+    "by_asset_type": {
+      "figure": 4,
+      "table": 4
+    },
+    "needs_review_count": 1,
+    "supported_claim_count": 33,
+    "possible_misreading_count": 18
+  }
+}
