@@ -114,3 +114,9 @@ papergraph_demo/run_build_graph.py
 papergraph_demo/run_generate_questions.py
 papergraph_demo/run_evaluation.py
 ```
+
+## License
+
+The repository code is released under the Apache License 2.0. See `LICENSE`.
+
+Dataset artifacts in `data/` and evaluation outputs in `eval_result/` are released for research reproduction with this project. OCR-derived paper text and extracted images in `rawPaper/` may remain subject to the copyright and usage terms of the original papers.
