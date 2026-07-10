@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from src.artifact_layout import PaperArtifactLayout
@@ -33,27 +35,39 @@ def main() -> None:
     if not paper_ids:
         raise RuntimeError("No evaluable papers found under papergraph_demo/data.")
 
+    if args.workers <= 0:
+        raise ValueError("--workers must be positive.")
     print(
-        f"[batch-eval] papers={len(paper_ids)} models={len(models)} result_root={result_root}",
+        f"[batch-eval] papers={len(paper_ids)} models={len(models)} "
+        f"workers={args.workers} result_root={result_root}",
         flush=True,
     )
-    for paper_id in paper_ids:
-        for model in models:
-            public_dir = _public_result_dir(result_root, model, paper_id)
-            if not args.force and _has_public_result(public_dir):
-                print(f"[batch-eval] skip existing | paper_id={paper_id} model={model}", flush=True)
-                continue
-            if args.dry_run:
-                print(f"[batch-eval] would run | paper_id={paper_id} model={model}", flush=True)
-                continue
-            code = _run_one_evaluation(paper_id, model, result_root)
-            if code != 0:
-                message = f"[batch-eval] failed | paper_id={paper_id} model={model} exit_code={code}"
-                print(message, flush=True)
+    jobs = [(paper_id, model) for paper_id in paper_ids for model in models]
+    failures = []
+    with ThreadPoolExecutor(max_workers=args.workers) as executor:
+        future_to_job = {
+            executor.submit(_run_job, paper_id, model, result_root, args.force, args.dry_run): (paper_id, model)
+            for paper_id, model in jobs
+        }
+        for future in as_completed(future_to_job):
+            paper_id, model = future_to_job[future]
+            try:
+                code = future.result()
+            except Exception as exc:
+                code = 1
+                print(
+                    f"[batch-eval] failed | paper_id={paper_id} model={model} "
+                    f"error={type(exc).__name__}: {exc}",
+                    flush=True,
+                )
+            if code:
+                failures.append((paper_id, model, code))
                 if not args.continue_on_failure:
+                    for pending in future_to_job:
+                        pending.cancel()
                     raise SystemExit(code)
-            else:
-                print(f"[batch-eval] completed | paper_id={paper_id} model={model}", flush=True)
+    if failures:
+        raise SystemExit(f"Batch evaluation finished with {len(failures)} failed paper/model jobs.")
 
 
 def _parse_args() -> argparse.Namespace:
@@ -73,7 +87,13 @@ def _parse_args() -> argparse.Namespace:
         default="",
         help="Public eval_result root. Defaults to EVAL_RESULT_ROOT or ./eval_result.",
     )
-    parser.add_argument("--force", action="store_true", help="Run even when public result files already exist.")
+    parser.add_argument("--force", action="store_true", help="Restart even when a checkpoint or final result exists.")
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=int(os.getenv("EVAL_BATCH_WORKERS", "4") or "4"),
+        help="Maximum concurrent paper/model evaluation processes.",
+    )
     parser.add_argument("--dry-run", action="store_true", help="Print scheduled runs without executing evaluation.")
     parser.add_argument(
         "--continue-on-failure",
@@ -121,16 +141,39 @@ def _assert_evaluable_paper(paper_id: str) -> str:
     return layout.paper_id
 
 
-def _run_one_evaluation(paper_id: str, model: str, result_root: Path) -> int:
+def _run_job(paper_id: str, model: str, result_root: Path, force: bool, dry_run: bool) -> int:
+    public_dir = _public_result_dir(result_root, model, paper_id)
+    if not force and _has_completed_public_result(public_dir):
+        print(f"[batch-eval] skip completed | paper_id={paper_id} model={model}", flush=True)
+        return 0
+    if dry_run:
+        action = "restart" if force else "resume/run"
+        print(
+            f"[batch-eval] would {action} | paper_id={paper_id} model={model} out_dir={public_dir}",
+            flush=True,
+        )
+        return 0
+    return _run_one_evaluation(paper_id, model, result_root, public_dir, force)
+
+
+def _run_one_evaluation(
+    paper_id: str,
+    model: str,
+    result_root: Path,
+    artifact_dir: Path,
+    force: bool,
+) -> int:
     env = os.environ.copy()
     env["PAPER_ID"] = paper_id
     env["USE_ONLINE_EVAL"] = "true"
     env["EVAL_TARGET_MODEL"] = model
     env["EVAL_RESULT_ROOT"] = str(result_root)
-    env["PAPERGRAPH_RESTART"] = "true"
-    env["EVAL_RESTART"] = "true"
-    env["PAPERGRAPH_RESUME"] = "false"
-    env["EVAL_RESUME"] = "false"
+    env["EVAL_ARTIFACT_DIR"] = str(artifact_dir)
+    env["PAPERGRAPH_RESTART"] = "true" if force else "false"
+    env["EVAL_RESTART"] = "true" if force else "false"
+    env["PAPERGRAPH_RESUME"] = "false" if force else "true"
+    env["EVAL_RESUME"] = "false" if force else "true"
+    env.pop("EVAL_CHECKPOINT_PATH", None)
 
     model_env_suffix = _model_env_suffix(model)
     for name in ("EVAL_TARGET_API_KEY", "EVAL_TARGET_BASE_URL"):
@@ -151,11 +194,16 @@ def _public_result_dir(result_root: Path, model: str, paper_id: str) -> Path:
     return result_root / _safe_dir_name(model) / _safe_dir_name(paper_id)
 
 
-def _has_public_result(public_dir: Path) -> bool:
-    return (
-        (public_dir / "dialogue_trajectory.json").exists()
-        and (public_dir / "evaluation_report.json").exists()
-    )
+def _has_completed_public_result(public_dir: Path) -> bool:
+    trajectory_path = public_dir / "dialogue_trajectory.json"
+    report_path = public_dir / "evaluation_report.json"
+    if not trajectory_path.exists() or not report_path.exists():
+        return False
+    try:
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    return report.get("summary", {}).get("evaluation_status") == "completed"
 
 
 def _split_values(values: list[str]) -> list[str]:

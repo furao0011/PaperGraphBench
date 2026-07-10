@@ -79,25 +79,46 @@ $env:USE_ONLINE_EVAL='true'
 uv run python papergraph_demo\run_evaluation.py
 ```
 
-Key outputs are written to `papergraph_demo/data/<paper_id>/`:
-
-- `dialogue_trajectory.json`
-- `evaluation_report.json`
-- `eval_state_graph.json`
-
-A public result copy is also written under:
+Each evaluation job now owns an isolated model-and-paper directory:
 
 ```text
 eval_result/<target_model>/<paper_id>/
+|-- dialogue_trajectory.json
+|-- evaluation_report.json
++-- cache/
+    |-- evaluation_checkpoint.json
+    |-- eval_state_graph.json
+    +-- claim_verification_log.json
 ```
 
-If a long run is interrupted, resume the same stage with:
+The checkpoint and intermediate state no longer write into papergraph_demo/data/<paper_id>/, so different models can evaluate the same paper concurrently.
+
+Run every paper/model pair concurrently with:
 
 ```powershell
-$env:PAPERGRAPH_RESUME='true'
+uv run python papergraph_demo\run_batch_evaluation.py --workers 4 --continue-on-failure
 ```
 
-Use `PAPERGRAPH_RESTART=true` only when old artifacts should be discarded and rebuilt.
+Completed reports are skipped. Interrupted jobs resume from their own cache/evaluation_checkpoint.json; add --force only when every selected job should restart.
+
+### Parallel dataset construction
+
+Different papers can be built concurrently, while graph construction and question generation remain ordered inside each paper:
+
+```powershell
+uv run python papergraph_demo\run_batch_dataset.py --workers 2 --continue-on-failure
+```
+
+Use --paper-ids <paper_id...> for a subset, --skip-graph or --skip-questions for one stage, and --dry-run to inspect the schedule.
+
+The no-graph ablation uses the same paper/model isolation:
+
+```powershell
+uv run python papergraph_demo\run_generate_textonly_questions.py --workers 2
+uv run python papergraph_demo\run_textonly_evaluation.py --workers 4
+```
+
+For individual entry scripts, set PAPERGRAPH_RESUME=true to resume and use PAPERGRAPH_RESTART=true only when old stage artifacts should be rebuilt.
 
 ## Repository Data Layout
 
@@ -113,6 +134,10 @@ papergraph_demo/run_parse_pdf.py
 papergraph_demo/run_build_graph.py
 papergraph_demo/run_generate_questions.py
 papergraph_demo/run_evaluation.py
+papergraph_demo/run_batch_dataset.py
+papergraph_demo/run_batch_evaluation.py
+papergraph_demo/run_generate_textonly_questions.py
+papergraph_demo/run_textonly_evaluation.py
 ```
 
 ## License

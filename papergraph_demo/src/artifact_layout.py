@@ -7,9 +7,6 @@ from pathlib import Path
 FINAL_ARTIFACT_FILES = {
     "master_graph": "master_graph.json",
     "question_templates": "question_templates.json",
-    "dialogue_trajectory": "dialogue_trajectory.json",
-    "evaluation_report": "evaluation_report.json",
-    "eval_state_graph": "eval_state_graph.json",
     "multimodal_assets": "multimodal_assets.json",
     "multimodal_asset_explanations": "multimodal_asset_explanations.json",
     "paper_clean_text": "paper_clean_text.md",
@@ -96,9 +93,38 @@ class PaperArtifactLayout:
         return path.resolve().relative_to(self.base_dir.resolve()).as_posix()
 
 
+class EvaluationArtifactLayout:
+    """Model-and-paper-scoped runtime outputs for one evaluation job."""
+
+    def __init__(
+        self,
+        result_root: Path,
+        paper_id: str,
+        target_model: str,
+        artifact_dir: Path | None = None,
+    ) -> None:
+        self.paper_id = safe_path_component(paper_id, "paper_id")
+        self.target_model = safe_path_component(target_model, "target_model")
+        self.root = artifact_dir or result_root / self.target_model / self.paper_id
+        self.cache_root = self.root / "cache"
+
+    def final(self, filename: str) -> Path:
+        return self.root / filename
+
+    def cache(self, filename: str) -> Path:
+        return self.cache_root / filename
+
+
 def safe_paper_id(value: str) -> str:
     safe = re.sub(r"[^\w._-]+", "_", value.strip())
     return safe.strip("._-")
+
+
+def safe_path_component(value: str, label: str = "path component") -> str:
+    safe = safe_paper_id(value)
+    if not safe:
+        raise ValueError(f"{label} is required for scoped artifacts.")
+    return safe
 
 
 def paper_data_root(base_dir: Path, paper_id: str) -> Path:

@@ -2,7 +2,7 @@ import json
 import os
 from pathlib import Path
 
-from src.artifact_layout import PaperArtifactLayout
+from src.artifact_layout import EvaluationArtifactLayout, PaperArtifactLayout
 from src.challenge_scheduler import ensure_challenge_states
 from src.config import load_settings
 from src.eval_artifacts import load_eval_checkpoint, save_eval_artifacts
@@ -46,18 +46,28 @@ def _apply_paper_layout_from_env() -> PaperArtifactLayout | None:
 
 
 def _configure_layout_paths(layout: PaperArtifactLayout) -> None:
-    global GRAPH_PATH, QUESTION_PATH, TRAJ_PATH, REPORT_PATH, STATE_PATH
-    global FINAL_MMD_PATH, FINAL_THREAD_MMD_PATH, EVAL_CHECKPOINT_PATH, CLAIM_LOG_PATH
+    global GRAPH_PATH, QUESTION_PATH
 
     GRAPH_PATH = layout.final("master_graph")
     QUESTION_PATH = layout.final("question_templates")
-    TRAJ_PATH = layout.final("dialogue_trajectory")
-    REPORT_PATH = layout.final("evaluation_report")
-    STATE_PATH = layout.final("eval_state_graph")
-    FINAL_MMD_PATH = layout.cache_file("evaluation", "final_state_graph")
-    FINAL_THREAD_MMD_PATH = layout.cache_file("evaluation", "final_thread_state_graph")
-    EVAL_CHECKPOINT_PATH = layout.cache_file("evaluation", "evaluation_checkpoint")
-    CLAIM_LOG_PATH = layout.cache_file("evaluation", "claim_verification_log")
+
+
+def _configure_evaluation_paths(paper_id: str, target_model: str) -> EvaluationArtifactLayout:
+    global TRAJ_PATH, REPORT_PATH, STATE_PATH
+    global FINAL_MMD_PATH, FINAL_THREAD_MMD_PATH, EVAL_CHECKPOINT_PATH, CLAIM_LOG_PATH
+
+    result_root = _env_path("EVAL_RESULT_ROOT", DEFAULT_EVAL_RESULT_ROOT)
+    artifact_dir_raw = os.getenv("EVAL_ARTIFACT_DIR", "").strip()
+    artifact_dir = Path(artifact_dir_raw) if artifact_dir_raw else None
+    eval_layout = EvaluationArtifactLayout(result_root, paper_id, target_model, artifact_dir)
+    TRAJ_PATH = eval_layout.final("dialogue_trajectory.json")
+    REPORT_PATH = eval_layout.final("evaluation_report.json")
+    STATE_PATH = eval_layout.cache("eval_state_graph.json")
+    FINAL_MMD_PATH = eval_layout.cache("final_state_graph.mmd")
+    FINAL_THREAD_MMD_PATH = eval_layout.cache("final_thread_state_graph.mmd")
+    EVAL_CHECKPOINT_PATH = eval_layout.cache("evaluation_checkpoint.json")
+    CLAIM_LOG_PATH = eval_layout.cache("claim_verification_log.json")
+    return eval_layout
 
 
 def _env_bool(name: str, default: bool = False) -> bool:
@@ -92,7 +102,6 @@ def _build_eval_target_client() -> OpenAICompatClient:
 
 
 def _save_eval_artifacts(graph: dict, eval_state: dict, trajectory: dict, checkpoint_path: Path) -> None:
-    public_result_root = _env_path("EVAL_RESULT_ROOT", DEFAULT_EVAL_RESULT_ROOT)
     save_eval_artifacts(
         graph,
         eval_state,
@@ -102,7 +111,7 @@ def _save_eval_artifacts(graph: dict, eval_state: dict, trajectory: dict, checkp
         REPORT_PATH,
         STATE_PATH,
         FINAL_MMD_PATH,
-        public_result_root,
+        None,
     )
     FINAL_THREAD_MMD_PATH.write_text(export_final_thread_state_mermaid(graph, eval_state), encoding="utf-8")
 
@@ -128,10 +137,11 @@ def main() -> None:
     )
     resume = _env_bool("PAPERGRAPH_RESUME") or _env_bool("EVAL_RESUME")
     restart = _env_bool("PAPERGRAPH_RESTART") or _env_bool("EVAL_RESTART")
-    checkpoint_path = _env_path("EVAL_CHECKPOINT_PATH", EVAL_CHECKPOINT_PATH)
     client = OpenAICompatClient(ModelConfig(settings.api_key, settings.base_url, settings.llm_model))
     target_client = _build_eval_target_client() if use_online_eval else client
     target_model = target_client.cfg.llm_model if target_client and target_client.is_ready() else "mock-model"
+    eval_layout = _configure_evaluation_paths(layout.paper_id, target_model)
+    checkpoint_path = _env_path("EVAL_CHECKPOINT_PATH", EVAL_CHECKPOINT_PATH)
     log(
         "evaluation configuration loaded",
         use_online_eval=use_online_eval,
@@ -140,6 +150,7 @@ def main() -> None:
         target_model=target_model,
         resume=resume,
         restart=restart,
+        artifact_dir=eval_layout.root,
         checkpoint=checkpoint_path,
     )
 
