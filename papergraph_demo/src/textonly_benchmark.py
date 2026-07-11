@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 import os
@@ -6,13 +6,13 @@ import re
 from pathlib import Path
 from typing import Any
 
-from src.eval_turn_runner import build_eval_prompt, build_model_answer
+from src.eval_turn_runner import build_eval_prompt, build_model_answer, dialogue_history_text
 from src.model_client import OpenAICompatClient
 from src.multimodal_question_assets import asset_context_for_prompt, question_image_paths
 
 
 TEXTONLY_MODE = "text_only_no_graph"
-TEXTONLY_EVAL_MODE = "text_only_no_graph_fixed_qa"
+TEXTONLY_EVAL_MODE = "text_only_no_graph_context_without_repair"
 CHALLENGE_TYPES = {
     "false_premise",
     "overclaim",
@@ -130,17 +130,46 @@ def textonly_questions(package: dict) -> list[dict]:
     return questions
 
 
+def textonly_no_repair_questions(package: dict) -> list[dict]:
+    macros = [dict(question) for question in package.get("macro_questions", [])]
+    text_challenges = [dict(question) for question in package.get("challenge_questions", [])]
+    multimodal_challenges = [dict(question) for question in package.get("multimodal_challenge_questions", [])]
+    challenges = []
+    for index in range(max(len(text_challenges), len(multimodal_challenges))):
+        if index < len(text_challenges):
+            challenges.append(text_challenges[index])
+        if index < len(multimodal_challenges):
+            challenges.append(multimodal_challenges[index])
+    if not macros:
+        scheduled = challenges
+    else:
+        buckets = [[] for _ in macros]
+        for index, challenge in enumerate(challenges):
+            bucket_index = min(index * len(macros) // max(1, len(challenges)), len(macros) - 1)
+            buckets[bucket_index].append(challenge)
+        scheduled = []
+        for macro, bucket in zip(macros, buckets):
+            scheduled.append(macro)
+            for challenge in bucket:
+                challenge["scheduled_after_macro_question_id"] = macro.get("question_id")
+                scheduled.append(challenge)
+    for order, question in enumerate(scheduled, start=1):
+        question["question_order"] = order
+    return scheduled
+
 def run_textonly_question(
     question: dict,
     paper_text: str,
     target_client: OpenAICompatClient,
     judge_client: OpenAICompatClient,
     turn_id: str,
+    previous_turns: list[dict] | None = None,
     use_online_eval: bool = True,
 ) -> dict:
+    previous_turns = previous_turns or []
     prompt = build_eval_prompt(
         paper_text=paper_text,
-        dialogue_history="No previous turns. This is a fixed text-only no-graph ablation question.",
+        dialogue_history=dialogue_history_text(previous_turns),
         question_text=question["question_text"],
         asset_context=asset_context_for_prompt(question),
     )
@@ -162,6 +191,9 @@ def run_textonly_question(
         "question_text": question["question_text"],
         "model_answer": answer,
         "answer_mode": answer_mode,
+        "dialogue_context_turn_count": len(previous_turns),
+        "full_dialogue_context": True,
+        "repair_task": False,
         "requires_multimodal_input": bool(question.get("requires_multimodal_input")),
         "asset_references": question.get("asset_references", []),
         "multimodal_input": {
@@ -202,13 +234,21 @@ def build_textonly_report(paper_id: str, model: str, turns: list[dict], errors: 
         "target_model": model,
         "evaluation_mode": TEXTONLY_EVAL_MODE,
         "status": "completed" if not errors else "failed",
+        "ablation": {
+            "graph_guided_question_generation": False,
+            "full_dialogue_context": True,
+            "repair_tasks_executed": False,
+            "kc_coverage_metrics_computed": False,
+        },
         "summary": {
             "total_turns": len(turns),
+            "evaluation_status": "completed" if not errors else "failed",
             "failed_questions": len(errors),
             "question_type_counts": _question_type_counts(turns),
             "macro_textonly_metrics": macro_metrics,
             "challenge_textonly_metrics": challenge_metrics,
             "hallucination_textonly_metrics": hallucination_metrics,
+            "response_length_metrics": _response_length_metrics(turns),
         },
         "errors": errors,
     }
@@ -251,7 +291,12 @@ def load_textonly_multimodal_assets(base_dir: Path, paper_id: str, limit: int) -
     for asset in assets_payload.get("assets", []):
         if not isinstance(asset, dict):
             continue
-        ref = _asset_reference(asset, explanations.get(str(asset.get("asset_id") or "")))
+        ref = _asset_reference(
+            asset,
+            explanations.get(str(asset.get("asset_id") or "")),
+            base_dir=base_dir,
+            paper_id=paper_id,
+        )
         if ref:
             assets.append(ref)
         if len(assets) >= limit:
@@ -330,8 +375,8 @@ def _judge_user_prompt(question: dict, answer: str) -> str:
         }
         schema = {
             "state": "COMPLETE | INCOMPLETE | HALLUCINATION",
-            "covered_point_ids": ["P1"],
-            "missing_point_ids": ["P2"],
+            "matched_expected_point_ids": ["P1"],
+            "unmatched_expected_point_ids": ["P2"],
             "hallucination_events": [
                 {
                     "hallucination_type": "contradicted_evidence | fabricated_claim | overclaim",
@@ -444,8 +489,8 @@ def _normalize_multimodal_challenge_question(question: dict, idx: int, asset_ind
 
 def _normalize_macro_judge(payload: dict, question: dict) -> dict:
     expected_ids = [point["point_id"] for point in question.get("expected_points", [])]
-    covered = _bounded_ids(payload.get("covered_point_ids", []), expected_ids)
-    missing = _bounded_ids(payload.get("missing_point_ids", []), expected_ids)
+    covered = _bounded_ids(payload.get("matched_expected_point_ids", []), expected_ids)
+    missing = _bounded_ids(payload.get("unmatched_expected_point_ids", []), expected_ids)
     if not missing:
         missing = [point_id for point_id in expected_ids if point_id not in set(covered)]
     events = _normalize_hallucination_events(payload.get("hallucination_events", []))
@@ -458,12 +503,12 @@ def _normalize_macro_judge(payload: dict, question: dict) -> dict:
         state = "INCOMPLETE"
     return {
         "state": state,
-        "covered_point_ids": covered,
-        "missing_point_ids": missing,
-        "coverage": {
-            "coverage_complete": state == "COMPLETE" and not missing,
-            "covered_point_ids": covered,
-            "missing_point_ids": missing,
+        "matched_expected_point_ids": covered,
+        "unmatched_expected_point_ids": missing,
+        "expected_point_match": {
+            "all_expected_points_matched": state == "COMPLETE" and not missing,
+            "matched_expected_point_ids": covered,
+            "unmatched_expected_point_ids": missing,
         },
         "hallucination_events": events,
         "rationale": str(payload.get("rationale") or "").strip(),
@@ -504,59 +549,61 @@ def _normalize_challenge_judge(payload: dict, question: dict) -> dict:
 
 
 def _macro_metrics(turns: list[dict]) -> dict:
-    macro_turns = [t for t in turns if t.get("question_type") == "textonly_macro_question"]
-    expected_total = 0
-    covered_total = 0
-    full_success = 0
-    per_question = []
-    for turn in macro_turns:
-        expected = turn.get("textonly_package", {}).get("expected_points", [])
-        expected_ids = [point.get("point_id") for point in expected if point.get("point_id")]
-        covered = turn.get("judge_result", {}).get("covered_point_ids", [])
-        covered_ids = [point_id for point_id in expected_ids if point_id in set(covered)]
-        expected_total += len(expected_ids)
-        covered_total += len(covered_ids)
-        fully_covered = bool(expected_ids) and len(covered_ids) == len(expected_ids)
-        if fully_covered:
-            full_success += 1
-        per_question.append(
-            {
-                "question_id": turn.get("question_id"),
-                "expected_point_count": len(expected_ids),
-                "covered_point_count": len(covered_ids),
-                "fully_covered_once": fully_covered,
-                "coverage_ratio": _safe_ratio(len(covered_ids), len(expected_ids)),
-            }
-        )
+    macro_turns = [turn for turn in turns if turn.get("question_type") == "textonly_macro_question"]
+    answer_chars = [len(str(turn.get("model_answer") or "")) for turn in macro_turns]
+    hallucination_events = sum(
+        len(turn.get("judge_result", {}).get("hallucination_events", []) or [])
+        for turn in macro_turns
+    )
     return {
         "macro_question_count": len(macro_turns),
-        "fully_covered_once_count": full_success,
-        "fully_covered_once_rate": _safe_ratio(full_success, len(macro_turns)),
-        "expected_point_mentions": expected_total,
-        "covered_point_mentions": covered_total,
-        "overall_expected_point_coverage_ratio": _safe_ratio(covered_total, expected_total),
-        "per_question": per_question,
+        "hallucination_event_count": hallucination_events,
+        "average_answer_chars": _average(answer_chars),
+        "per_question": [
+            {
+                "question_id": turn.get("question_id"),
+                "answer_chars": len(str(turn.get("model_answer") or "")),
+                "dialogue_context_turn_count": int(turn.get("dialogue_context_turn_count") or 0),
+            }
+            for turn in macro_turns
+        ],
     }
-
 
 def _challenge_metrics(turns: list[dict]) -> dict:
     challenge_turns = [
-        t
-        for t in turns
-        if t.get("question_type") in {"textonly_challenge_question", "textonly_multimodal_challenge_question"}
+        turn
+        for turn in turns
+        if turn.get("question_type") in {"textonly_challenge_question", "textonly_multimodal_challenge_question"}
     ]
     failed = resisted = incomplete = 0
     text_total = text_failed = 0
     multimodal_total = multimodal_failed = 0
-    failed_by_type: dict[str, int] = {}
+    by_type: dict[str, dict[str, int]] = {}
+    by_failure_mode: dict[str, dict[str, int]] = {}
+    source_solver_wrong_count = 0
+    source_matched_failure_count = 0
+    source_solver_trial_count = 0
+    source_human_review_count = 0
+    challenge_hallucination_event_count = 0
     per_question = []
     for turn in challenge_turns:
         result = turn.get("judge_result", {}).get("challenge_result", {})
         is_failed = bool(result.get("failed"))
         is_resisted = bool(result.get("resisted"))
         is_incomplete = bool(result.get("incomplete"))
-        ctype = turn.get("textonly_package", {}).get("challenge_type") or "unknown"
+        source_package = turn.get("textonly_package", {})
+        challenge_type = source_package.get("challenge_type") or "unknown"
+        failure_mode = source_package.get("target_failure_mode") or challenge_type
         is_multimodal = bool(turn.get("requires_multimodal_input"))
+        solver_summary = source_package.get("solver_trial_summary", {})
+        source_solver_wrong_count += int(solver_summary.get("wrong_count") or 0)
+        source_matched_failure_count += int(solver_summary.get("matched_target_failure_count") or 0)
+        source_solver_trial_count += int(solver_summary.get("solver_count") or 0)
+        source_human_review_count += int(bool(source_package.get("needs_human_review")))
+        challenge_hallucination_event_count += len(
+            turn.get("judge_result", {}).get("hallucination_events", []) or []
+        )
+
         if is_multimodal:
             multimodal_total += 1
         else:
@@ -567,17 +614,22 @@ def _challenge_metrics(turns: list[dict]) -> dict:
                 multimodal_failed += 1
             else:
                 text_failed += 1
-            failed_by_type[ctype] = failed_by_type.get(ctype, 0) + 1
         if is_resisted:
             resisted += 1
         if is_incomplete:
             incomplete += 1
+
+        _update_challenge_breakdown(by_type, challenge_type, is_failed, is_resisted, is_incomplete)
+        _update_challenge_breakdown(by_failure_mode, failure_mode, is_failed, is_resisted, is_incomplete)
         per_question.append(
             {
                 "question_id": turn.get("question_id"),
-                "challenge_type": ctype,
+                "challenge_type": challenge_type,
+                "target_failure_mode": failure_mode,
+                "answer_chars": len(str(turn.get("model_answer") or "")),
+                "dialogue_context_turn_count": int(turn.get("dialogue_context_turn_count") or 0),
                 "requires_multimodal_input": is_multimodal,
-                "target_asset_ids": turn.get("textonly_package", {}).get("target_asset_ids", []),
+                "target_asset_ids": source_package.get("target_asset_ids", []),
                 "failed": is_failed,
                 "resisted": is_resisted,
                 "incomplete": is_incomplete,
@@ -592,16 +644,51 @@ def _challenge_metrics(turns: list[dict]) -> dict:
         "resisted_rate": _safe_ratio(resisted, total),
         "incomplete_count": incomplete,
         "incomplete_rate": _safe_ratio(incomplete, total),
+        "challenge_hallucination_event_count": challenge_hallucination_event_count,
         "text_challenge_count": text_total,
         "text_failed_count": text_failed,
         "text_failed_rate": _safe_ratio(text_failed, text_total),
         "multimodal_challenge_count": multimodal_total,
         "multimodal_failed_count": multimodal_failed,
         "multimodal_failed_rate": _safe_ratio(multimodal_failed, multimodal_total),
-        "failed_by_challenge_type": dict(sorted(failed_by_type.items())),
+        "by_challenge_type": _finalize_challenge_breakdown(by_type),
+        "by_failure_mode": _finalize_challenge_breakdown(by_failure_mode),
+        "source_filter_metrics": {
+            "accepted_by_challenge_loop_count": total,
+            "solver_trial_count": source_solver_trial_count,
+            "solver_wrong_count": source_solver_wrong_count,
+            "matched_target_failure_count": source_matched_failure_count,
+            "needs_human_review_count": source_human_review_count,
+        },
         "per_question": per_question,
     }
 
+
+def _update_challenge_breakdown(
+    breakdown: dict[str, dict[str, int]],
+    key: str,
+    failed: bool,
+    resisted: bool,
+    incomplete: bool,
+) -> None:
+    bucket = breakdown.setdefault(
+        key,
+        {"question_count": 0, "failed_count": 0, "resisted_count": 0, "incomplete_count": 0},
+    )
+    bucket["question_count"] += 1
+    bucket["failed_count"] += int(failed)
+    bucket["resisted_count"] += int(resisted)
+    bucket["incomplete_count"] += int(incomplete)
+
+
+def _finalize_challenge_breakdown(breakdown: dict[str, dict[str, int]]) -> dict[str, dict]:
+    return {
+        key: {
+            **counts,
+            "failed_rate": _safe_ratio(counts["failed_count"], counts["question_count"]),
+        }
+        for key, counts in sorted(breakdown.items())
+    }
 
 def _hallucination_metrics(turns: list[dict]) -> dict:
     by_type: dict[str, int] = {}
@@ -622,6 +709,32 @@ def _hallucination_metrics(turns: list[dict]) -> dict:
         "hallucination_by_type": dict(sorted(by_type.items())),
     }
 
+
+def _response_length_metrics(turns: list[dict]) -> dict:
+    lengths = [len(str(turn.get("model_answer") or "")) for turn in turns]
+    by_type: dict[str, list[int]] = {}
+    for turn, length in zip(turns, lengths):
+        question_type = str(turn.get("question_type") or "unknown")
+        by_type.setdefault(question_type, []).append(length)
+    return {
+        "response_count": len(lengths),
+        "total_answer_chars": sum(lengths),
+        "average_answer_chars": _average(lengths),
+        "by_question_type": {
+            question_type: {
+                "response_count": len(values),
+                "total_answer_chars": sum(values),
+                "average_answer_chars": _average(values),
+            }
+            for question_type, values in sorted(by_type.items())
+        },
+    }
+
+
+def _average(values: list[int]) -> float | None:
+    if not values:
+        return None
+    return round(sum(values) / len(values), 4)
 
 def _question_type_counts(turns: list[dict]) -> dict:
     counts: dict[str, int] = {}
@@ -644,6 +757,12 @@ def _question_public_payload(question: dict) -> dict:
         "asset_references",
         "target_asset_ids",
         "multimodal_dependency",
+        "scheduled_after_macro_question_id",
+        "source_loop_question_id",
+        "source_challenge_plan_id",
+        "accepted_by_challenge_loop",
+        "solver_trial_summary",
+        "needs_human_review",
     ]
     return {key: question[key] for key in keys if key in question}
 
@@ -662,13 +781,13 @@ def _load_asset_explanations(path: Path) -> dict[str, dict]:
     }
 
 
-def _asset_reference(asset: dict, explanation: dict | None) -> dict | None:
+def _asset_reference(asset: dict, explanation: dict | None, *, base_dir: Path, paper_id: str) -> dict | None:
     asset_id = str(asset.get("asset_id") or "").strip()
     asset_type = str(asset.get("asset_type") or "").strip().lower()
     if not asset_id or asset_type not in {"figure", "table", "mixed"}:
         return None
     explanation = explanation or {}
-    attachments = _asset_attachments(asset)
+    attachments = _asset_attachments(asset, base_dir=base_dir, paper_id=paper_id)
     if not attachments:
         return None
     return {
@@ -685,7 +804,7 @@ def _asset_reference(asset: dict, explanation: dict | None) -> dict | None:
     }
 
 
-def _asset_attachments(asset: dict) -> list[dict]:
+def _asset_attachments(asset: dict, *, base_dir: Path, paper_id: str) -> list[dict]:
     asset_type = str(asset.get("asset_type") or "").strip().lower()
     if asset_type == "figure":
         attachments = asset.get("attachments")
@@ -694,7 +813,7 @@ def _asset_attachments(asset: dict) -> list[dict]:
                 {
                     "type": str(item.get("type") or "image"),
                     "asset_id": item.get("asset_id") or asset.get("asset_id"),
-                    "path": item.get("path"),
+                    "path": _resolve_asset_path(item.get("path"), base_dir=base_dir, paper_id=paper_id),
                     "caption": item.get("caption") or asset.get("caption"),
                 }
                 for item in attachments
@@ -704,7 +823,7 @@ def _asset_attachments(asset: dict) -> list[dict]:
             {
                 "type": "image",
                 "asset_id": asset.get("asset_id"),
-                "path": path,
+                "path": _resolve_asset_path(path, base_dir=base_dir, paper_id=paper_id),
                 "caption": asset.get("caption"),
             }
             for path in asset.get("image_paths", [])
@@ -729,12 +848,44 @@ def _asset_attachments(asset: dict) -> list[dict]:
                         {
                             "type": "image",
                             "asset_id": asset.get("asset_id"),
-                            "path": path,
+                            "path": _resolve_asset_path(path, base_dir=base_dir, paper_id=paper_id),
                             "caption": asset.get("caption"),
                         }
                     )
         return attachments
     return []
+
+
+def _resolve_asset_path(raw_path: Any, *, base_dir: Path, paper_id: str) -> str:
+    value = str(raw_path or "").strip()
+    if not value:
+        return ""
+    path = Path(value)
+    if path.exists():
+        return str(path)
+    candidates: list[Path] = []
+    if path.is_absolute():
+        candidates.extend(
+            [
+                base_dir / "rawPaper" / paper_id / "imgs" / path.name,
+                base_dir / "rawPaper" / paper_id / path.name,
+            ]
+        )
+    else:
+        candidates.extend(
+            [
+                base_dir / value,
+                base_dir / "rawPaper" / paper_id / value,
+                base_dir / "rawPaper" / paper_id / "imgs" / path.name,
+            ]
+        )
+    for candidate in candidates:
+        if candidate.exists():
+            return str(candidate)
+    raise FileNotFoundError(
+        f"Cannot resolve multimodal asset file for paper_id={paper_id!r}: {value!r}. "
+        f"Expected it under rawPaper/{paper_id}/imgs/ or as a valid existing path."
+    )
 
 
 def _asset_evidence_bases(explanation: dict) -> list[str]:

@@ -1,11 +1,13 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 import os
+import time
 import hashlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
+from src.json_io import write_json_atomic
 from src.model_client import OpenAICompatClient
 from src.progress import log, span
 from src.prompt_loader import load_prompt, render_prompt
@@ -230,7 +232,7 @@ def _run_question_trials(
     workers = min(workers, len(solvers))
     with ThreadPoolExecutor(max_workers=workers) as ex:
         futures = {
-            ex.submit(_run_single_solver_trial, question, solver, client, paper_text, judge_tpl, solver_runtime): solver
+            ex.submit(_run_single_solver_trial_with_retries, question, solver, client, paper_text, judge_tpl, solver_runtime): solver
             for solver in solvers
         }
         for fut in as_completed(futures):
@@ -241,6 +243,37 @@ def _run_question_trials(
         "solver_trials": [trials_by_id[solver["solver_id"]] for solver in solvers],
     }
 
+
+def _run_single_solver_trial_with_retries(
+    question: dict,
+    solver: dict,
+    judge_client: OpenAICompatClient,
+    paper_text: str,
+    judge_tpl: str,
+    solver_client: OpenAICompatClient,
+) -> dict:
+    attempts = _env_positive_int("CHALLENGE_SOLVER_TRIAL_ATTEMPTS", 3)
+    last_error: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        try:
+            return _run_single_solver_trial(question, solver, judge_client, paper_text, judge_tpl, solver_client)
+        except Exception as exc:
+            last_error = exc
+            if attempt >= attempts:
+                break
+            sleep_s = min(30.0, 2.0 * attempt)
+            log(
+                "challenge solver trial retry",
+                question_id=question.get("question_id"),
+                solver_id=solver.get("solver_id"),
+                attempt=attempt,
+                attempts=attempts,
+                error=f"{type(exc).__name__}: {exc}",
+                sleep_s=sleep_s,
+            )
+            time.sleep(sleep_s)
+    assert last_error is not None
+    raise last_error
 
 def _run_single_solver_trial(
     question: dict,
@@ -563,7 +596,4 @@ def _load_cache(path: Path) -> dict:
 
 
 def _write_json(path: Path, payload: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix(path.suffix + ".tmp")
-    tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    tmp.replace(path)
+    write_json_atomic(path, payload)

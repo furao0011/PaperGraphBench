@@ -1,0 +1,16 @@
+
+/__pycache__/
+/.venv/
+/.env
+*.py[cod]
+
+/papergraph_demo/data/
+/pdfInput/
+/当前工作顺序记录.md
+/util_example/
+/.idea/
+/AGENTS.md
+/EMNLP2026/
+/eval_result_withoutRepair/
+/eval_result_withoutTurn/
+/eval_result_textOnly/

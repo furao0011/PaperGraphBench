@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import hashlib
 import json
@@ -12,6 +12,7 @@ from src.challenge_filter import (
     run_single_challenge_question_trials,
 )
 from src.challenge_question_generator import generate_challenge_question_for_plan
+from src.json_io import write_json_atomic
 from src.model_client import OpenAICompatClient
 from src.progress import log, span
 from src.prompt_loader import load_prompt, render_prompt
@@ -187,14 +188,16 @@ def _judge_question_usability(plan: dict, question: dict, client: OpenAICompatCl
             "surface_intent": question.get("surface_intent"),
         },
     }
-    result = client.chat_json(
+    return _run_meta_judge_with_validation(
+        client=client,
+        component="usability",
         system_prompt="You validate challenge questions for paper evaluation. Return JSON only.",
-        user_prompt=render_prompt(
-            tpl,
-            usability_check_json=json.dumps(payload, ensure_ascii=False, indent=2),
-        ),
-        temperature=_env_float("CHALLENGE_META_JUDGE_TEMPERATURE", 0.1),
+        user_prompt=render_prompt(tpl, usability_check_json=json.dumps(payload, ensure_ascii=False, indent=2)),
+        normalizer=_normalize_usability_judge,
     )
+
+
+def _normalize_usability_judge(result: dict) -> dict:
     if not isinstance(result, dict) or "usable" not in result:
         raise ValueError("Challenge usability judge must return an object with usable.")
     return {
@@ -220,14 +223,16 @@ def _judge_plan_easiness(
         },
         "solver_trial": trial_bundle,
     }
-    result = client.chat_json(
+    return _run_meta_judge_with_validation(
+        client=client,
+        component="easiness",
         system_prompt="You diagnose failed challenge-question attempts for paper evaluation. Return JSON only.",
-        user_prompt=render_prompt(
-            tpl,
-            easiness_check_json=json.dumps(payload, ensure_ascii=False, indent=2),
-        ),
-        temperature=_env_float("CHALLENGE_META_JUDGE_TEMPERATURE", 0.1),
+        user_prompt=render_prompt(tpl, easiness_check_json=json.dumps(payload, ensure_ascii=False, indent=2)),
+        normalizer=_normalize_easiness_judge,
     )
+
+
+def _normalize_easiness_judge(result: dict) -> dict:
     if not isinstance(result, dict) or "plan_too_easy" not in result:
         raise ValueError("Challenge easiness judge must return an object with plan_too_easy.")
     return {
@@ -236,6 +241,42 @@ def _judge_plan_easiness(
         "revision_guidance": str(result.get("revision_guidance", "")).strip(),
     }
 
+
+def _run_meta_judge_with_validation(
+    *,
+    client: OpenAICompatClient,
+    component: str,
+    system_prompt: str,
+    user_prompt: str,
+    normalizer,
+) -> dict:
+    attempts = _env_positive_int("CHALLENGE_META_JUDGE_SCHEMA_ATTEMPTS", 3)
+    temperature = _env_float("CHALLENGE_META_JUDGE_TEMPERATURE", 0.1)
+    last_error: ValueError | None = None
+    prompt = user_prompt
+    for attempt in range(1, attempts + 1):
+        result = client.chat_json(system_prompt=system_prompt, user_prompt=prompt, temperature=temperature)
+        try:
+            return normalizer(result)
+        except ValueError as exc:
+            last_error = exc
+            if attempt >= attempts:
+                break
+            log(
+                "challenge meta judge schema retry",
+                component=component,
+                attempt=attempt,
+                attempts=attempts,
+                error=f"{type(exc).__name__}: {exc}",
+            )
+            prompt = (
+                user_prompt
+                + "\n\nYour previous JSON response failed validation:\n"
+                + f"{type(exc).__name__}: {exc}\n"
+                + "Return the JSON again. Include all required fields and a non-empty reason string."
+            )
+    assert last_error is not None
+    raise last_error
 
 def _next_plan(state: dict, plan_by_id: dict[str, dict], max_attempts_per_plan: int) -> dict | None:
     blacklisted = set(state["blacklisted_plan_ids"])
@@ -493,7 +534,4 @@ def _load_cache(path: Path) -> dict:
 
 
 def _write_json(path: Path, payload: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix(path.suffix + ".tmp")
-    tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    tmp.replace(path)
+    write_json_atomic(path, payload)

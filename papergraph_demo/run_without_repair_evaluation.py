@@ -188,7 +188,7 @@ def _run_paper_model(
 ) -> None:
     out_dir = _public_result_dir(result_root, model, paper_id)
     paths = _result_paths(out_dir)
-    if not force and paths["trajectory"].exists() and paths["report"].exists():
+    if not force and _completed_result_exists(paths):
         print(f"[without-repair] skip existing | model={model} paper_id={paper_id}", flush=True)
         return
     if dry_run:
@@ -534,6 +534,21 @@ def _result_paths(out_dir: Path) -> dict[str, Path]:
         "final_mmd": cache_dir / "final_state_graph.mmd",
         "final_thread_mmd": cache_dir / "final_thread_state_graph.mmd",
     }
+
+
+def _completed_result_exists(paths: dict[str, Path]) -> bool:
+    trajectory_path = paths["trajectory"]
+    report_path = paths["report"]
+    if not trajectory_path.exists() or not report_path.exists():
+        return False
+    trajectory = json.loads(trajectory_path.read_text(encoding="utf-8"))
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    if trajectory.get("evaluation_mode") != EVALUATION_MODE:
+        return False
+    if report.get("evaluation_mode") != EVALUATION_MODE:
+        return False
+    status = (report.get("summary") or {}).get("evaluation_status")
+    return status == "completed"
 
 
 def _build_target_client(model: str) -> OpenAICompatClient:

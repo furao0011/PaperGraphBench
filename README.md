@@ -111,13 +111,67 @@ uv run python papergraph_demo\run_batch_dataset.py --workers 2 --continue-on-fai
 
 Use --paper-ids <paper_id...> for a subset, --skip-graph or --skip-questions for one stage, and --dry-run to inspect the schedule.
 
-The no-graph ablation uses the same paper/model isolation:
+### No-graph ablation
+
+The no-graph ablation scans every eligible paper under the repository-root `data/<paper_id>/` directory. Enable the Rich live panel with `PAPERGRAPH_PROGRESS=true`:
 
 ```powershell
-uv run python papergraph_demo\run_generate_textonly_questions.py --workers 2
-uv run python papergraph_demo\run_textonly_evaluation.py --workers 4
+$env:PAPERGRAPH_PROGRESS='true'
+uv run python papergraph_demo/run_generate_textonly_questions.py --workers 2 --continue-on-failure
+uv run python papergraph_demo/run_textonly_evaluation.py --workers 4 --continue-on-failure
 ```
 
+The build command reads `paper_clean_text.md`, `multimodal_assets.json`, and `multimodal_asset_explanations.json`. It writes the final package to:
+
+```text
+data/<paper_id>/textonly_question_templates.json
+```
+
+Each paper is one build job. A worker takes the next queued paper after finishing its current paper. The generated package contains macro questions, text challenge questions, and multimodal challenge questions.
+
+Challenge construction follows the full filtering shape without using the graph:
+
+```text
+paper text / asset summaries
+-> macro questions
+-> text + multimodal challenge plan pools
+-> natural challenge question generation
+-> usability judge
+-> solver trials
+-> target-failure matching
+-> easy-plan rejection or question revision
+-> accepted / rejected / human-review outputs
+```
+
+The default pools contain 40 text plans and 40 multimodal plans, with 10 accepted questions required from each pool. Candidate JSON is validated immediately; invalid multimodal plan entries are regenerated in place with their original positions, exact validation errors, and legal asset-id list, while valid entries are preserved. This runs for up to `TEXTONLY_GENERATION_SCHEMA_ATTEMPTS` attempts (default 3). No asset is assigned automatically. Text solver trials use the common model API; multimodal solver trials use the configured vision API and original image attachments. Build checkpoints and audit artifacts are written under:
+
+```text
+data/<paper_id>/cache/textonly/
+|-- generation_candidates.json
+|-- challenge_plans.json
+|-- challenge_loop_text.json
+|-- challenge_loop_multimodal.json
+|-- challenge_questions_raw.json
+|-- challenge_questions_filtered.json
+|-- challenge_questions_need_human_review.json
+|-- challenge_questions_rejected.json
++-- challenge_solver_trials.json
+```
+
+Evaluation uses paper-level workers. Each worker runs `gpt-5-mini`, `gpt-5`, Doubao Pro, and Doubao Mini sequentially for one paper before taking the next paper. Macro questions establish dialogue context; accepted text and multimodal challenges are distributed after macro turns. Every new turn receives the complete preceding question-answer history. Repair, detail follow-up, hallucination follow-up, thread, and review tasks are disabled.
+
+Because no graph or KC targets exist, the report does not calculate graph/KC coverage. Macro expected points are used only by the judge to classify the turn and detect unsupported claims; they are not aggregated as coverage. The primary metrics are challenge failure/resistance/incomplete rates, text and multimodal failure rates, per-type and per-failure-mode counts/rates, challenge hallucination events, source solver-filter statistics, total turns, and response lengths.
+
+Evaluation outputs are isolated by model and paper:
+
+```text
+eval_resultTextOnly/<model>/<paper_id>/
+|-- dialogue_trajectory.json
+|-- evaluation_report.json
++-- cache/textonly_evaluation_checkpoint.json
+```
+
+Completed model/paper results are skipped, and incomplete results resume from their own checkpoint.
 For individual entry scripts, set PAPERGRAPH_RESUME=true to resume and use PAPERGRAPH_RESTART=true only when old stage artifacts should be rebuilt.
 
 ## Repository Data Layout

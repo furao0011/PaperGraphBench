@@ -4,13 +4,13 @@ import argparse
 import json
 import os
 import re
-import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 from src.artifact_layout import PaperArtifactLayout
+from src.batch_progress import BatchTask, PaperBatchProgress
 from src.config import load_dotenv, load_settings
 from src.model_client import ModelConfig, OpenAICompatClient
 from src.textonly_benchmark import (
@@ -19,7 +19,7 @@ from src.textonly_benchmark import (
     completed_textonly_result_exists,
     load_paper_clean_text,
     run_textonly_question,
-    textonly_questions,
+    textonly_no_repair_questions,
 )
 
 
@@ -49,44 +49,47 @@ def main() -> None:
     if not models:
         raise RuntimeError("No text-only evaluation models configured.")
     if not paper_ids:
-        raise RuntimeError("No textonly_question_templates.json files found under papergraph_demo/data.")
+        raise RuntimeError("No textonly_question_templates.json files found under data/.")
     if args.workers <= 0:
         raise ValueError("--workers must be positive.")
 
-    print(
-        f"[textonly-eval] start | papers={len(paper_ids)} models={len(models)} workers={args.workers} result_root={result_root}",
-        flush=True,
-    )
+    tasks = [BatchTask(paper_id=paper_id, total=len(models)) for paper_id in paper_ids]
     failures: list[dict] = []
-    jobs = [(paper_id, model) for paper_id in paper_ids for model in models]
-    with ThreadPoolExecutor(max_workers=args.workers) as executor:
-        future_to_job = {
-            executor.submit(_run_paper_model, paper_id, model, result_root, args.force, args.dry_run): (paper_id, model)
-            for paper_id, model in jobs
-        }
-        for future in as_completed(future_to_job):
-            paper_id, model = future_to_job[future]
-            try:
-                future.result()
-            except Exception as exc:
-                failure = {
-                    "paper_id": paper_id,
-                    "model": model,
-                    "error_type": type(exc).__name__,
-                    "error": str(exc),
-                    "updated_at": _now_iso(),
-                }
-                failures.append(failure)
-                print(
-                    f"[textonly-eval] failed | paper_id={paper_id} model={model} error={type(exc).__name__}: {exc}",
-                    flush=True,
-                )
-                if not args.continue_on_failure:
-                    raise
+    with PaperBatchProgress("textonly-eval", tasks) as progress:
+        with ThreadPoolExecutor(max_workers=args.workers) as executor:
+            future_to_paper = {
+                executor.submit(
+                    _run_paper_models,
+                    progress,
+                    paper_id,
+                    models,
+                    result_root,
+                    args.force,
+                    args.dry_run,
+                    args.continue_on_failure,
+                ): paper_id
+                for paper_id in paper_ids
+            }
+            for future in as_completed(future_to_paper):
+                paper_id = future_to_paper[future]
+                try:
+                    failures.extend(future.result())
+                except Exception as exc:
+                    failures.append(
+                        {
+                            "paper_id": paper_id,
+                            "model": None,
+                            "error_type": type(exc).__name__,
+                            "error": str(exc),
+                            "updated_at": _now_iso(),
+                        }
+                    )
+                    if not args.continue_on_failure:
+                        for pending in future_to_paper:
+                            pending.cancel()
+                        raise
     if failures:
-        print(f"[textonly-eval] finished with failures | failures={len(failures)}", flush=True)
-    else:
-        print("[textonly-eval] finished", flush=True)
+        raise RuntimeError(f"Text-only evaluation finished with {len(failures)} failed model runs.")
 
 
 def _parse_args() -> argparse.Namespace:
@@ -94,11 +97,76 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--models", nargs="*", help="Target model list. Supports aliases: gpt5mini, gpt5, doubaopro, doubaomini.")
     parser.add_argument("--paper-ids", nargs="*", help="Optional paper_id subset. Defaults to every paper with textonly_question_templates.json.")
     parser.add_argument("--result-root", default="", help="Defaults to TEXTONLY_EVAL_RESULT_ROOT or ./eval_result_textOnly.")
-    parser.add_argument("--workers", type=int, default=int(os.getenv("TEXTONLY_EVAL_WORKERS", "4") or "4"))
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=int(os.getenv("TEXTONLY_EVAL_WORKERS", "4") or "4"),
+        help="Maximum concurrent papers. The configured models run sequentially inside each paper worker.",
+    )
     parser.add_argument("--force", action="store_true", help="Ignore existing final result and checkpoint.")
     parser.add_argument("--dry-run", action="store_true", help="Print scheduled runs without calling models.")
-    parser.add_argument("--continue-on-failure", action="store_true", help="Continue other model/paper jobs after a failed job.")
+    parser.add_argument("--continue-on-failure", action="store_true", help="Continue remaining models and papers, then fail after the full batch.")
     return parser.parse_args()
+
+
+def _run_paper_models(
+    progress: PaperBatchProgress,
+    paper_id: str,
+    models: list[str],
+    result_root: Path,
+    force: bool,
+    dry_run: bool,
+    continue_on_failure: bool,
+) -> list[dict]:
+    failures = []
+    progress.start(paper_id, f"running 0/{len(models)} models")
+    for model_index, model in enumerate(models, start=1):
+        progress.update(
+            paper_id,
+            status=f"{model}: starting ({model_index}/{len(models)})",
+        )
+        try:
+            outcome = _run_paper_model(
+                paper_id=paper_id,
+                model=model,
+                result_root=result_root,
+                force=force,
+                dry_run=dry_run,
+                progress=progress,
+                model_index=model_index,
+                model_total=len(models),
+            )
+        except Exception as exc:
+            failures.append(
+                {
+                    "paper_id": paper_id,
+                    "model": model,
+                    "error_type": type(exc).__name__,
+                    "error": str(exc),
+                    "updated_at": _now_iso(),
+                }
+            )
+            progress.update(
+                paper_id,
+                status=f"{model}: failed ({model_index}/{len(models)})",
+                advance=1,
+                emit=True,
+            )
+            if not continue_on_failure:
+                progress.fail(paper_id, exc)
+                raise
+            continue
+        progress.update(
+            paper_id,
+            status=f"{model}: {outcome} ({model_index}/{len(models)})",
+            advance=1,
+            emit=True,
+        )
+    if failures:
+        progress.finish(paper_id, f"finished with failures={len(failures)}")
+    else:
+        progress.finish(paper_id, "completed")
+    return failures
 
 
 def _run_paper_model(
@@ -107,30 +175,34 @@ def _run_paper_model(
     result_root: Path,
     force: bool,
     dry_run: bool,
-) -> None:
+    progress: PaperBatchProgress,
+    model_index: int,
+    model_total: int,
+) -> str:
     out_dir = _result_dir(result_root, model, paper_id)
     paths = _result_paths(out_dir)
     if not force and completed_textonly_result_exists(paths["trajectory"], paths["report"]):
-        print(f"[textonly-eval] skip existing | paper_id={paper_id} model={model}", flush=True)
-        return
+        return "skipped"
     if dry_run:
-        print(f"[textonly-eval] would run | paper_id={paper_id} model={model} out_dir={out_dir}", flush=True)
-        return
+        return "dry-run"
 
     context = _load_context(paper_id, model)
-    completed, turns, errors = _load_checkpoint(paths["checkpoint"], paper_id, model, force)
+    question_ids = [question["question_id"] for question in context["questions"]]
+    completed, turns, errors = _load_checkpoint(paths["checkpoint"], paper_id, model, question_ids, force)
     pending = [question for question in context["questions"] if question["question_id"] not in completed]
     if not pending and turns:
         _write_final_outputs(paths, paper_id, model, turns, errors)
         paths["checkpoint"].unlink(missing_ok=True)
-        print(f"[textonly-eval] finalized from checkpoint | paper_id={paper_id} model={model}", flush=True)
-        return
+        return "finalized from checkpoint"
 
-    print(
-        f"[textonly-eval] paper/model started | paper_id={paper_id} model={model} total={len(context['questions'])} pending={len(pending)}",
-        flush=True,
+
+    progress.update(
+        paper_id,
+        status=(
+            f"{model}: questions {len(completed)}/{len(context['questions'])} "
+            f"({model_index}/{model_total})"
+        ),
     )
-    lock = threading.Lock()
     first_error: Exception | None = None
     for question in pending:
         try:
@@ -140,6 +212,7 @@ def _run_paper_model(
                 target_client=context["target_client"],
                 judge_client=context["judge_client"],
                 turn_id=f"TXT{int(question['question_order']):04d}",
+                previous_turns=turns,
                 use_online_eval=True,
             )
         except Exception as exc:
@@ -150,21 +223,22 @@ def _run_paper_model(
                 "error": str(exc),
                 "updated_at": _now_iso(),
             }
-            with lock:
-                errors.append(error)
-                _write_checkpoint(paths["checkpoint"], paper_id, model, completed, turns, errors)
+            errors.append(error)
+            _write_checkpoint(paths["checkpoint"], paper_id, model, question_ids, completed, turns, errors)
             if first_error is None:
                 first_error = exc
             continue
-        with lock:
-            completed.add(turn["question_id"])
-            turns.append(turn)
-            turns.sort(key=lambda item: item.get("question_order", 0))
-            _write_checkpoint(paths["checkpoint"], paper_id, model, completed, turns, errors)
-            print(
-                f"[textonly-eval] question completed | paper_id={paper_id} model={model} question_id={turn['question_id']} done={len(completed)}/{len(context['questions'])}",
-                flush=True,
-            )
+        completed.add(turn["question_id"])
+        turns.append(turn)
+        turns.sort(key=lambda item: item.get("question_order", 0))
+        _write_checkpoint(paths["checkpoint"], paper_id, model, question_ids, completed, turns, errors)
+        progress.update(
+            paper_id,
+            status=(
+                f"{model}: {turn['question_id']} {len(completed)}/{len(context['questions'])} "
+                f"({model_index}/{model_total})"
+            ),
+        )
 
     if first_error is not None:
         raise RuntimeError(
@@ -174,17 +248,21 @@ def _run_paper_model(
         ) from first_error
     _write_final_outputs(paths, paper_id, model, turns, errors)
     paths["checkpoint"].unlink(missing_ok=True)
-    print(f"[textonly-eval] paper/model finished | paper_id={paper_id} model={model}", flush=True)
+    return "completed"
 
 
 def _load_context(paper_id: str, model: str) -> dict[str, Any]:
     settings = load_settings(PROJECT_ROOT)
-    layout = PaperArtifactLayout(BASE_DIR, paper_id)
+    layout = PaperArtifactLayout(PROJECT_ROOT, paper_id)
     package_path = layout.root / "textonly_question_templates.json"
     if not package_path.exists():
         raise FileNotFoundError(f"Text-only package not found: {package_path}")
     package = json.loads(package_path.read_text(encoding="utf-8"))
-    questions = textonly_questions(package)
+    if package.get("challenge_pipeline", {}).get("mode") != "plan_solver_filter":
+        raise ValueError(
+            f"Text-only package was not solver-filtered; rebuild with --force: {package_path}"
+        )
+    questions = textonly_no_repair_questions(package)
     if not questions:
         raise ValueError(f"Text-only package has no questions: {package_path}")
     judge_client = OpenAICompatClient(ModelConfig(settings.api_key, settings.base_url, settings.llm_model))
@@ -197,7 +275,7 @@ def _load_context(paper_id: str, model: str) -> dict[str, Any]:
             "EVAL_TARGET_API_KEY/EVAL_TARGET_BASE_URL or model-specific overrides."
         )
     return {
-        "paper_text": load_paper_clean_text(BASE_DIR, paper_id, limit_env="TEXTONLY_EVAL_PAPER_CHAR_LIMIT"),
+        "paper_text": load_paper_clean_text(PROJECT_ROOT, paper_id, limit_env="TEXTONLY_EVAL_PAPER_CHAR_LIMIT"),
         "questions": questions,
         "judge_client": judge_client,
         "target_client": target_client,
@@ -209,6 +287,12 @@ def _write_final_outputs(paths: dict[str, Path], paper_id: str, model: str, turn
         "paper_id": paper_id,
         "target_model": model,
         "evaluation_mode": TEXTONLY_EVAL_MODE,
+        "ablation": {
+            "graph_guided_question_generation": False,
+            "full_dialogue_context": True,
+            "repair_tasks_executed": False,
+            "kc_coverage_metrics_computed": False,
+        },
         "turns": sorted(turns, key=lambda item: item.get("question_order", 0)),
     }
     report = build_textonly_report(paper_id, model, trajectory["turns"], errors)
@@ -220,6 +304,7 @@ def _load_checkpoint(
     checkpoint_path: Path,
     paper_id: str,
     model: str,
+    question_ids: list[str],
     force: bool,
 ) -> tuple[set[str], list[dict], list[dict]]:
     if force or not checkpoint_path.exists():
@@ -227,6 +312,10 @@ def _load_checkpoint(
     data = json.loads(checkpoint_path.read_text(encoding="utf-8"))
     if data.get("paper_id") != paper_id or data.get("target_model") != model:
         raise ValueError(f"Checkpoint identity mismatch: {checkpoint_path}")
+    if data.get("evaluation_mode") != TEXTONLY_EVAL_MODE:
+        raise ValueError(f"Checkpoint evaluation mode mismatch; rerun with --force: {checkpoint_path}")
+    if data.get("question_ids") != question_ids:
+        raise ValueError(f"Checkpoint question package mismatch; rerun with --force: {checkpoint_path}")
     turns = [turn for turn in data.get("turns", []) if isinstance(turn, dict)]
     completed = {str(qid) for qid in data.get("completed_question_ids", []) if qid}
     if not completed:
@@ -239,6 +328,7 @@ def _write_checkpoint(
     checkpoint_path: Path,
     paper_id: str,
     model: str,
+    question_ids: list[str],
     completed: set[str],
     turns: list[dict],
     errors: list[dict],
@@ -249,6 +339,7 @@ def _write_checkpoint(
             "paper_id": paper_id,
             "target_model": model,
             "evaluation_mode": TEXTONLY_EVAL_MODE,
+            "question_ids": question_ids,
             "completed_question_ids": sorted(completed),
             "turns": sorted(turns, key=lambda item: item.get("question_order", 0)),
             "errors": errors,
@@ -268,7 +359,7 @@ def _resolve_paper_ids(raw_paper_ids: list[str] | None) -> list[str]:
     if requested:
         return [_assert_textonly_paper(paper_id) for paper_id in requested]
     paper_ids = []
-    data_root = BASE_DIR / "data"
+    data_root = PROJECT_ROOT / "data"
     if not data_root.exists():
         return paper_ids
     for path in sorted(data_root.iterdir(), key=lambda p: p.name):
@@ -282,7 +373,7 @@ def _resolve_paper_ids(raw_paper_ids: list[str] | None) -> list[str]:
 
 
 def _assert_textonly_paper(paper_id: str) -> str:
-    layout = PaperArtifactLayout(BASE_DIR, paper_id)
+    layout = PaperArtifactLayout(PROJECT_ROOT, paper_id)
     package_path = layout.root / "textonly_question_templates.json"
     paper_path = layout.root / "paper_clean_text.md"
     missing = [str(path) for path in (package_path, paper_path) if not path.exists()]

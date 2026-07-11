@@ -17,9 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
 DEFAULT_EVAL_RESULT_ROOT = PROJECT_ROOT / "eval_result"
 DEFAULT_MODELS = [
-    "fireworks/kimi-k2p5",
-    "ark-doubao-seed-2.0-pro-260215",
-    "ark-doubao-seed-2.0-mini-260215",
+    "qwen3.6-plus"
 ]
 
 
