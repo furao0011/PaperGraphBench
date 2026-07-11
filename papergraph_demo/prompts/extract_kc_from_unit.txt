@@ -25,6 +25,10 @@ Extractable content includes, but is not limited to:
 - conclusion scope claims
 - limitation or unproven-claim claims
 
+`importance` must be one of:
+- critical
+- normal
+
 `claim_strength` must be one of:
 - explicit
 - experimentally_supported

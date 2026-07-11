@@ -1,0 +1,35 @@
+You repair invalid Knowledge Component enum labels.
+
+Allowed values for every repairable label field:
+
+```json
+{{allowed_labels_json}}
+```
+
+Invalid labels found in the previous response:
+
+```json
+{{invalid_labels_json}}
+```
+
+Extraction Unit context:
+
+```json
+{{unit_json}}
+```
+
+Previous KC extraction result:
+
+```json
+{{kc_result_json}}
+```
+
+Rules:
+1. Return the same JSON schema with top-level `kcs` and `empty_reason`.
+2. Preserve the number and order of KCs and preserve the exact set of fields on every KC.
+3. Only change label fields listed in `invalid_labels`: `macro_id`, `type`, `importance`, or `claim_strength`.
+4. Replace each invalid label with the semantically closest value from that field's whitelist.
+5. Preserve every already-valid label exactly.
+6. Do not change claims, evidence_paragraph_ids, scope, related_terms, empty_reason, or any other field.
+7. Do not invent a new label string.
+8. Return strict JSON only.

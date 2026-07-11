@@ -25,11 +25,18 @@ Formal runs should use online models. Do not enable `ALLOW_OFFLINE_FALLBACK` or 
 
 ### 2. Parse PDFs into OCR papers
 
-Put input PDFs under `pdfInput/`, then run:
+Put input PDFs under `pdfInput/`, then process the whole directory with paper-level workers:
 
 ```powershell
-uv run python papergraph_demo\run_parse_pdf.py
+$env:PAPERGRAPH_PROGRESS='true'
+uv run python papergraph_demo\run_parse_pdf.py --all-pdfs --workers 2 --continue-on-failure
 ```
+
+`--all-pdfs` intentionally ignores any stale single-paper `PAPER_ID` and
+`PAPERGRAPH_PDF_INPUT_FILE` values. Each filename stem is normalized into its
+stable `paper_id`, and output is written to `rawPaper/<paper_id>/`. Completed
+OCR directories are validated and skipped; use `--overwrite` only for an
+intentional rebuild.
 
 For one PDF, set the input file and paper id explicitly:
 
@@ -93,23 +100,35 @@ eval_result/<target_model>/<paper_id>/
 
 The checkpoint and intermediate state no longer write into papergraph_demo/data/<paper_id>/, so different models can evaluate the same paper concurrently.
 
-Run every paper/model pair concurrently with:
+Run formal evaluation for every paper selected from `rawPaper/`:
 
 ```powershell
-uv run python papergraph_demo\run_batch_evaluation.py --workers 4 --continue-on-failure
+$env:PAPERGRAPH_PROGRESS='true'
+uv run python papergraph_demo\run_batch_evaluation.py --workers 2 --continue-on-failure
 ```
 
-Completed reports are skipped. Interrupted jobs resume from their own cache/evaluation_checkpoint.json; add --force only when every selected job should restart.
+A worker owns one paper and evaluates its models sequentially. Different papers
+run concurrently. The default model set is `gpt-5-mini`, `gpt-5`, Doubao Pro,
+and Doubao Mini; override it with `--models` or `EVAL_BATCH_MODELS`.
+Completed reports are skipped, and interrupted runs resume from their isolated
+`cache/evaluation_checkpoint.json`. Per-model logs are stored under
+`logs/main_evaluation/<paper_id>/`; add `--force` only for an intentional
+restart.
 
 ### Parallel dataset construction
 
-Different papers can be built concurrently, while graph construction and question generation remain ordered inside each paper:
+Different papers under `rawPaper/` can be built concurrently, while graph
+construction and question generation remain ordered inside each paper:
 
 ```powershell
+$env:PAPERGRAPH_PROGRESS='true'
 uv run python papergraph_demo\run_batch_dataset.py --workers 2 --continue-on-failure
 ```
 
-Use --paper-ids <paper_id...> for a subset, --skip-graph or --skip-questions for one stage, and --dry-run to inspect the schedule.
+Use `--skip-questions` to build only graphs, or `--skip-graph` to generate
+questions from completed graphs. Use `--paper-ids <paper_id...>` for a subset
+and `--dry-run` to inspect the schedule. Child-process logs are isolated under
+`logs/main_dataset/<paper_id>/`.
 
 ### No-graph ablation
 

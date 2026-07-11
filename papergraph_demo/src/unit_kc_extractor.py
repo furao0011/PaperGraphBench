@@ -24,12 +24,27 @@ VALID_CLAIM_STRENGTH = {
 }
 
 
-class InvalidKCTypeError(ValueError):
-    def __init__(self, unit_id: str, kc_index: int, invalid_type: str) -> None:
+LABEL_FIELDS = ("macro_id", "type", "importance", "claim_strength")
+
+
+class InvalidKCLabelError(ValueError):
+    def __init__(
+        self,
+        unit_id: str,
+        kc_index: int,
+        field_name: str,
+        invalid_value: str,
+        allowed_values: set[str],
+    ) -> None:
         self.unit_id = unit_id
         self.kc_index = kc_index
-        self.invalid_type = invalid_type
-        super().__init__(f"KC #{kc_index} in unit {unit_id} has invalid type={invalid_type!r}.")
+        self.field_name = field_name
+        self.invalid_value = invalid_value
+        self.allowed_values = set(allowed_values)
+        super().__init__(
+            f"KC #{kc_index} in unit {unit_id} has invalid {field_name}={invalid_value!r}; "
+            f"allowed={sorted(allowed_values)!r}."
+        )
 
 
 def extract_kc_candidates_by_units(
@@ -54,12 +69,12 @@ def extract_kc_candidates_by_units(
         raise ValueError("Unit-level KC extraction requires a non-empty Macro Spine.")
 
     tpl = load_prompt("extract_kc_from_unit.txt")
-    type_repair_tpl = load_prompt("repair_kc_types.txt")
+    label_repair_tpl = load_prompt("repair_kc_labels.txt")
     macro_context_json = json.dumps(macro_context_for_prompt(macro_spine), ensure_ascii=False, indent=2)
     unit_limit = _env_nonnegative_int("KC_PER_UNIT_LIMIT", 0)
     hard_cap = _env_nonnegative_int("KC_PER_UNIT_HARD_CAP", 20)
     response_cap = _effective_response_cap(unit_limit, hard_cap)
-    type_repair_attempts = _env_nonnegative_int("KC_TYPE_REPAIR_ATTEMPTS", 1)
+    label_repair_attempts = _env_nonnegative_int("KC_LABEL_REPAIR_ATTEMPTS", 2)
     max_workers = min(_env_positive_int("UNIT_KC_WORKERS", 4), len(units))
     errors: list[str] = []
     candidates_by_unit: dict[str, list[dict]] = {}
@@ -84,14 +99,14 @@ def extract_kc_candidates_by_units(
                 user_prompt=user_prompt,
                 temperature=0.1,
             )
-        unit_candidates, empty_reason = _normalize_unit_result_with_type_repair(
+        unit_candidates, empty_reason = _normalize_unit_result_with_label_repair(
             unit=unit,
             result=result,
             macro_ids=macro_ids,
             response_cap=response_cap,
             client=client,
-            repair_template=type_repair_tpl,
-            max_repair_attempts=type_repair_attempts,
+            repair_template=label_repair_tpl,
+            max_repair_attempts=label_repair_attempts,
         )
         return unit_id, unit_candidates, empty_reason
 
@@ -207,20 +222,25 @@ def _normalize_unit_result(
             evidence_paragraph_by_id,
         )
         evidence = "\n\n".join(evidence_paragraph_by_id[paragraph_id]["text"] for paragraph_id in evidence_paragraph_ids)
+        unit_id = str(unit.get("unit_id"))
         macro_id = str(item.get("macro_id", "")).strip()
         if macro_id not in macro_ids:
-            raise ValueError(f"KC #{idx} in unit {unit.get('unit_id')} references invalid macro_id={macro_id!r}.")
+            raise InvalidKCLabelError(unit_id, idx, "macro_id", macro_id, macro_ids)
         raw_kc_type = str(item.get("type", "")).strip()
         kc_type = valid_kc_type(raw_kc_type, TEXT_KC_TYPES)
         if kc_type is None:
-            raise InvalidKCTypeError(str(unit.get("unit_id")), idx, raw_kc_type)
+            raise InvalidKCLabelError(unit_id, idx, "type", raw_kc_type, set(TEXT_KC_TYPES))
         importance = str(item.get("importance", "")).strip()
         if importance not in VALID_IMPORTANCE:
-            raise ValueError(f"KC #{idx} in unit {unit.get('unit_id')} has invalid importance={importance!r}.")
+            raise InvalidKCLabelError(unit_id, idx, "importance", importance, VALID_IMPORTANCE)
         claim_strength = str(item.get("claim_strength", "")).strip()
         if claim_strength not in VALID_CLAIM_STRENGTH:
-            raise ValueError(
-                f"KC #{idx} in unit {unit.get('unit_id')} has invalid claim_strength={claim_strength!r}."
+            raise InvalidKCLabelError(
+                unit_id,
+                idx,
+                "claim_strength",
+                claim_strength,
+                VALID_CLAIM_STRENGTH,
             )
         scope = item.get("scope")
         if not isinstance(scope, dict) or not scope:
@@ -247,7 +267,7 @@ def _normalize_unit_result(
     return out, empty_reason
 
 
-def _normalize_unit_result_with_type_repair(
+def _normalize_unit_result_with_label_repair(
     unit: dict,
     result: dict,
     macro_ids: set[str],
@@ -257,96 +277,173 @@ def _normalize_unit_result_with_type_repair(
     max_repair_attempts: int,
 ) -> tuple[list[dict], str]:
     current = result
+    allowed_by_field = _allowed_labels(macro_ids)
     for attempt in range(max_repair_attempts + 1):
         try:
             return _normalize_unit_result(unit, current, macro_ids, response_cap)
-        except InvalidKCTypeError as exc:
+        except InvalidKCLabelError as exc:
             if attempt >= max_repair_attempts:
                 raise
-            invalid_types = _invalid_kc_types(current)
-            if not invalid_types:
-                invalid_types = [exc.invalid_type]
+            invalid_labels = _invalid_kc_labels(current, allowed_by_field)
+            if not invalid_labels:
+                invalid_labels = [
+                    {
+                        "kc_index": exc.kc_index,
+                        "field": exc.field_name,
+                        "invalid_value": exc.invalid_value,
+                    }
+                ]
             log(
-                "unit KC type repair retry",
+                "unit KC label repair retry",
                 unit_id=str(unit.get("unit_id")),
-                invalid_types=",".join(invalid_types),
+                invalid_labels=json.dumps(invalid_labels, ensure_ascii=False),
                 attempt=attempt + 1,
                 max_attempts=max_repair_attempts,
             )
-            current = _repair_unit_kc_types(
-                unit=unit,
-                result=current,
-                invalid_types=invalid_types,
-                client=client,
-                repair_template=repair_template,
-            )
-    raise RuntimeError(f"Unit {unit.get('unit_id')} type repair did not produce a result.")
+            try:
+                current = _repair_unit_kc_labels(
+                    unit=unit,
+                    result=current,
+                    invalid_labels=invalid_labels,
+                    allowed_by_field=allowed_by_field,
+                    client=client,
+                    repair_template=repair_template,
+                )
+            except ValueError as repair_error:
+                log(
+                    "unit KC label repair rejected",
+                    unit_id=str(unit.get("unit_id")),
+                    attempt=attempt + 1,
+                    max_attempts=max_repair_attempts,
+                    error=f"{type(repair_error).__name__}: {repair_error}",
+                )
+                continue
+    raise RuntimeError(f"Unit {unit.get('unit_id')} label repair did not produce a result.")
 
 
-def _repair_unit_kc_types(
+def _allowed_labels(macro_ids: set[str]) -> dict[str, set[str]]:
+    return {
+        "macro_id": set(macro_ids),
+        "type": set(TEXT_KC_TYPES),
+        "importance": set(VALID_IMPORTANCE),
+        "claim_strength": set(VALID_CLAIM_STRENGTH),
+    }
+
+
+def _repair_unit_kc_labels(
     unit: dict,
     result: dict,
-    invalid_types: list[str],
+    invalid_labels: list[dict],
+    allowed_by_field: dict[str, set[str]],
     client: OpenAICompatClient,
     repair_template: str,
 ) -> dict:
     repaired = client.chat_json(
-        system_prompt="You repair invalid KC type labels by mapping them to the closest allowed type. Return JSON only.",
+        system_prompt=(
+            "You repair invalid KC enum labels by mapping each one to the closest allowed value. "
+            "Return JSON only."
+        ),
         user_prompt=render_prompt(
             repair_template,
-            allowed_types_json=json.dumps(sorted(TEXT_KC_TYPES), ensure_ascii=False, indent=2),
-            invalid_types_json=json.dumps(invalid_types, ensure_ascii=False, indent=2),
+            allowed_labels_json=json.dumps(
+                {field: sorted(values) for field, values in allowed_by_field.items()},
+                ensure_ascii=False,
+                indent=2,
+            ),
+            invalid_labels_json=json.dumps(invalid_labels, ensure_ascii=False, indent=2),
             unit_json=json.dumps(_unit_prompt_payload(unit), ensure_ascii=False, indent=2),
             kc_result_json=json.dumps(result, ensure_ascii=False, indent=2),
         ),
         temperature=0.0,
     )
-    return _validate_type_only_repair(result, repaired, str(unit.get("unit_id")))
+    return _validate_label_only_repair(
+        original=result,
+        repaired=repaired,
+        unit_id=str(unit.get("unit_id")),
+        allowed_by_field=allowed_by_field,
+    )
 
 
-def _validate_type_only_repair(original: dict, repaired: dict, unit_id: str) -> dict:
+def _validate_label_only_repair(
+    original: dict,
+    repaired: dict,
+    unit_id: str,
+    allowed_by_field: dict[str, set[str]],
+) -> dict:
     original_kcs = original.get("kcs", [])
     repaired_kcs = repaired.get("kcs", [])
     if not isinstance(original_kcs, list) or not isinstance(repaired_kcs, list):
-        raise ValueError(f"KC type repair for unit {unit_id} must preserve a kcs list.")
+        raise ValueError(f"KC label repair for unit {unit_id} must preserve a kcs list.")
     if len(original_kcs) != len(repaired_kcs):
         raise ValueError(
-            f"KC type repair for unit {unit_id} changed KC count from {len(original_kcs)} to {len(repaired_kcs)}."
+            f"KC label repair for unit {unit_id} changed KC count from "
+            f"{len(original_kcs)} to {len(repaired_kcs)}."
         )
+    if repaired.get("empty_reason", "") != original.get("empty_reason", ""):
+        raise ValueError(f"KC label repair for unit {unit_id} changed empty_reason.")
+
     checked_kcs = []
     for idx, (original_item, repaired_item) in enumerate(zip(original_kcs, repaired_kcs), start=1):
         if not isinstance(original_item, dict) or not isinstance(repaired_item, dict):
-            raise ValueError(f"KC type repair for unit {unit_id} item #{idx} must be an object.")
-        for key, original_value in original_item.items():
-            if key == "type":
-                continue
-            if repaired_item.get(key) != original_value:
-                raise ValueError(f"KC type repair for unit {unit_id} changed non-type field {key!r} on KC #{idx}.")
-        repaired_type = str(repaired_item.get("type", "")).strip()
-        if valid_kc_type(repaired_type, TEXT_KC_TYPES) is None:
-            raise InvalidKCTypeError(unit_id, idx, repaired_type)
+            raise ValueError(f"KC label repair for unit {unit_id} item #{idx} must be an object.")
+        if set(repaired_item) != set(original_item):
+            raise ValueError(f"KC label repair for unit {unit_id} changed fields on KC #{idx}.")
+
         checked = dict(original_item)
-        checked["type"] = repaired_type
+        for key, original_value in original_item.items():
+            if key not in LABEL_FIELDS:
+                if repaired_item.get(key) != original_value:
+                    raise ValueError(
+                        f"KC label repair for unit {unit_id} changed non-label field {key!r} on KC #{idx}."
+                    )
+                continue
+
+            original_label = str(original_value).strip()
+            repaired_label = str(repaired_item.get(key, "")).strip()
+            allowed_values = allowed_by_field[key]
+            if not _label_is_valid(key, repaired_label, allowed_values):
+                raise InvalidKCLabelError(unit_id, idx, key, repaired_label, allowed_values)
+            if _label_is_valid(key, original_label, allowed_values) and repaired_label != original_label:
+                raise ValueError(
+                    f"KC label repair for unit {unit_id} changed already-valid {key!r} on KC #{idx}."
+                )
+            checked[key] = repaired_label
         checked_kcs.append(checked)
+
     return {
         "kcs": checked_kcs,
         "empty_reason": original.get("empty_reason", ""),
     }
 
 
-def _invalid_kc_types(result: dict) -> list[str]:
+def _invalid_kc_labels(
+    result: dict,
+    allowed_by_field: dict[str, set[str]],
+) -> list[dict]:
     raw_kcs = result.get("kcs", [])
     if not isinstance(raw_kcs, list):
         return []
     invalid = []
-    for item in raw_kcs:
+    for idx, item in enumerate(raw_kcs, start=1):
         if not isinstance(item, dict):
             continue
-        kc_type = str(item.get("type", "")).strip()
-        if kc_type and valid_kc_type(kc_type, TEXT_KC_TYPES) is None and kc_type not in invalid:
-            invalid.append(kc_type)
+        for field in LABEL_FIELDS:
+            value = str(item.get(field, "")).strip()
+            if not _label_is_valid(field, value, allowed_by_field[field]):
+                invalid.append(
+                    {
+                        "kc_index": idx,
+                        "field": field,
+                        "invalid_value": value,
+                    }
+                )
     return invalid
 
+
+def _label_is_valid(field: str, value: str, allowed_values: set[str]) -> bool:
+    if field == "type":
+        return valid_kc_type(value, TEXT_KC_TYPES) is not None
+    return value in allowed_values
 
 def _normalize_scope(scope: dict) -> dict:
     normalized = {

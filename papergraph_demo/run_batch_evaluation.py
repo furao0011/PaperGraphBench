@@ -7,17 +7,24 @@ import re
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime
 from pathlib import Path
 
 from src.artifact_layout import PaperArtifactLayout
+from src.batch_progress import BatchTask, PaperBatchProgress
 from src.config import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
+DEFAULT_RAW_PAPER_ROOT = PROJECT_ROOT / "rawPaper"
 DEFAULT_EVAL_RESULT_ROOT = PROJECT_ROOT / "eval_result"
+DEFAULT_LOG_ROOT = PROJECT_ROOT / "logs" / "main_evaluation"
 DEFAULT_MODELS = [
-    "qwen3.6-plus"
+    "gpt-5-mini",
+    "gpt-5",
+    "ark-doubao-seed-2.0-pro-260215",
+    "ark-doubao-seed-2.0-mini-260215",
 ]
 
 
@@ -25,51 +32,62 @@ def main() -> None:
     load_dotenv(PROJECT_ROOT / ".env")
     args = _parse_args()
     models = _resolve_models(args.models)
-    paper_ids = _resolve_paper_ids(args.paper_ids)
-    result_root = Path(args.eval_result_root or os.getenv("EVAL_RESULT_ROOT") or DEFAULT_EVAL_RESULT_ROOT)
+    raw_root = Path(args.raw_paper_root or os.getenv("RAW_PAPER_ROOT") or DEFAULT_RAW_PAPER_ROOT).resolve()
+    paper_ids = _resolve_paper_ids(args.paper_ids, raw_root)
+    result_root = Path(args.eval_result_root or os.getenv("EVAL_RESULT_ROOT") or DEFAULT_EVAL_RESULT_ROOT).resolve()
+    log_root = Path(args.log_dir or os.getenv("EVAL_BATCH_LOG_DIR") or DEFAULT_LOG_ROOT).resolve()
 
     if not models:
         raise RuntimeError("No evaluation models configured. Use --models or EVAL_BATCH_MODELS.")
     if not paper_ids:
-        raise RuntimeError("No evaluable papers found under papergraph_demo/data.")
-
+        raise RuntimeError(f"No evaluable papers selected from {raw_root}.")
     if args.workers <= 0:
         raise ValueError("--workers must be positive.")
-    print(
-        f"[batch-eval] papers={len(paper_ids)} models={len(models)} "
-        f"workers={args.workers} result_root={result_root}",
-        flush=True,
-    )
-    jobs = [(paper_id, model) for paper_id in paper_ids for model in models]
-    failures = []
-    with ThreadPoolExecutor(max_workers=args.workers) as executor:
-        future_to_job = {
-            executor.submit(_run_job, paper_id, model, result_root, args.force, args.dry_run): (paper_id, model)
-            for paper_id, model in jobs
-        }
-        for future in as_completed(future_to_job):
-            paper_id, model = future_to_job[future]
-            try:
-                code = future.result()
-            except Exception as exc:
-                code = 1
-                print(
-                    f"[batch-eval] failed | paper_id={paper_id} model={model} "
-                    f"error={type(exc).__name__}: {exc}",
-                    flush=True,
-                )
-            if code:
-                failures.append((paper_id, model, code))
-                if not args.continue_on_failure:
-                    for pending in future_to_job:
-                        pending.cancel()
-                    raise SystemExit(code)
+
+    tasks = [BatchTask(paper_id=paper_id, total=len(models)) for paper_id in paper_ids]
+    failures: list[dict] = []
+    with PaperBatchProgress("main-eval", tasks) as progress:
+        with ThreadPoolExecutor(max_workers=args.workers) as executor:
+            future_to_paper = {
+                executor.submit(
+                    _run_paper_models,
+                    progress=progress,
+                    paper_id=paper_id,
+                    models=models,
+                    result_root=result_root,
+                    log_root=log_root,
+                    force=args.force,
+                    dry_run=args.dry_run,
+                    continue_on_failure=args.continue_on_failure,
+                ): paper_id
+                for paper_id in paper_ids
+            }
+            for future in as_completed(future_to_paper):
+                paper_id = future_to_paper[future]
+                try:
+                    failures.extend(future.result())
+                except Exception as exc:
+                    failures.append(
+                        {
+                            "paper_id": paper_id,
+                            "model": None,
+                            "error_type": type(exc).__name__,
+                            "error": str(exc),
+                        }
+                    )
+                    if not args.continue_on_failure:
+                        for pending in future_to_paper:
+                            pending.cancel()
+                        raise
+
     if failures:
-        raise SystemExit(f"Batch evaluation finished with {len(failures)} failed paper/model jobs.")
+        raise RuntimeError(f"Batch evaluation finished with {len(failures)} failed paper/model runs.")
 
 
 def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run formal evaluations for every paper/model pair.")
+    parser = argparse.ArgumentParser(
+        description="Run formal evaluations with one worker owning one paper and evaluating its models sequentially."
+    )
     parser.add_argument(
         "--models",
         nargs="*",
@@ -78,25 +96,31 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--paper-ids",
         nargs="*",
-        help="Optional paper_id subset. Defaults to every evaluable directory under papergraph_demo/data.",
+        help="Optional paper_id subset. Defaults to papers under RAW_PAPER_ROOT.",
+    )
+    parser.add_argument(
+        "--raw-paper-root",
+        default="",
+        help="Paper selection root. Defaults to RAW_PAPER_ROOT or ./rawPaper.",
     )
     parser.add_argument(
         "--eval-result-root",
         default="",
         help="Public eval_result root. Defaults to EVAL_RESULT_ROOT or ./eval_result.",
     )
-    parser.add_argument("--force", action="store_true", help="Restart even when a checkpoint or final result exists.")
+    parser.add_argument("--log-dir", default="", help="Per-paper/model subprocess log root.")
+    parser.add_argument("--force", action="store_true", help="Restart selected runs even when final results exist.")
     parser.add_argument(
         "--workers",
         type=int,
-        default=int(os.getenv("EVAL_BATCH_WORKERS", "4") or "4"),
-        help="Maximum concurrent paper/model evaluation processes.",
+        default=int(os.getenv("EVAL_BATCH_WORKERS", "2") or "2"),
+        help="Maximum concurrent papers. Models remain sequential inside each paper.",
     )
-    parser.add_argument("--dry-run", action="store_true", help="Print scheduled runs without executing evaluation.")
+    parser.add_argument("--dry-run", action="store_true", help="Show resolved paper/model jobs without executing them.")
     parser.add_argument(
         "--continue-on-failure",
         action="store_true",
-        help="Continue remaining paper/model pairs after a failed evaluation.",
+        help="Continue remaining models and papers after a failed evaluation.",
     )
     return parser.parse_args()
 
@@ -107,23 +131,17 @@ def _resolve_models(raw_models: list[str] | None) -> list[str]:
     return models or DEFAULT_MODELS
 
 
-def _resolve_paper_ids(raw_paper_ids: list[str] | None) -> list[str]:
+def _resolve_paper_ids(raw_paper_ids: list[str] | None, raw_root: Path) -> list[str]:
     requested = _split_values(raw_paper_ids or [])
     if requested:
         return [_assert_evaluable_paper(paper_id) for paper_id in requested]
-
+    if not raw_root.is_dir():
+        return []
     paper_ids = []
-    data_root = BASE_DIR / "data"
-    if not data_root.exists():
-        return paper_ids
-    for path in sorted(data_root.iterdir(), key=lambda p: p.name):
-        if not path.is_dir():
+    for path in sorted(raw_root.iterdir(), key=lambda item: item.name):
+        if not path.is_dir() or path.name.endswith(".tmp"):
             continue
-        try:
-            paper_id = _assert_evaluable_paper(path.name)
-        except FileNotFoundError:
-            continue
-        paper_ids.append(paper_id)
+        paper_ids.append(_assert_evaluable_paper(path.name))
     return paper_ids
 
 
@@ -132,6 +150,7 @@ def _assert_evaluable_paper(paper_id: str) -> str:
     required = [
         layout.final("master_graph"),
         layout.final("question_templates"),
+        layout.final("paper_clean_text"),
     ]
     missing = [str(path) for path in required if not path.exists()]
     if missing:
@@ -139,28 +158,93 @@ def _assert_evaluable_paper(paper_id: str) -> str:
     return layout.paper_id
 
 
-def _run_job(paper_id: str, model: str, result_root: Path, force: bool, dry_run: bool) -> int:
-    public_dir = _public_result_dir(result_root, model, paper_id)
-    if not force and _has_completed_public_result(public_dir):
-        print(f"[batch-eval] skip completed | paper_id={paper_id} model={model}", flush=True)
-        return 0
-    if dry_run:
-        action = "restart" if force else "resume/run"
-        print(
-            f"[batch-eval] would {action} | paper_id={paper_id} model={model} out_dir={public_dir}",
-            flush=True,
-        )
-        return 0
-    return _run_one_evaluation(paper_id, model, result_root, public_dir, force)
+def _run_paper_models(
+    *,
+    progress: PaperBatchProgress,
+    paper_id: str,
+    models: list[str],
+    result_root: Path,
+    log_root: Path,
+    force: bool,
+    dry_run: bool,
+    continue_on_failure: bool,
+) -> list[dict]:
+    failures: list[dict] = []
+    progress.start(paper_id, "starting")
+    for model in models:
+        public_dir = _public_result_dir(result_root, model, paper_id)
+        try:
+            if not force and _has_completed_public_result(public_dir):
+                progress.update(
+                    paper_id,
+                    status=f"skipped {model}",
+                    advance=1,
+                    emit=True,
+                )
+                continue
+            if dry_run:
+                action = "would restart" if force else "would run/resume"
+                progress.update(
+                    paper_id,
+                    status=f"{action} {model}",
+                    advance=1,
+                    emit=True,
+                )
+                continue
+
+            progress.update(paper_id, status=f"evaluating {model}", emit=True)
+            _run_one_evaluation(
+                paper_id=paper_id,
+                model=model,
+                result_root=result_root,
+                artifact_dir=public_dir,
+                log_root=log_root,
+                force=force,
+            )
+            if not _has_completed_public_result(public_dir):
+                raise RuntimeError(
+                    f"Evaluation process exited successfully but no completed report was written: {public_dir}"
+                )
+            progress.update(
+                paper_id,
+                status=f"completed {model}",
+                advance=1,
+                emit=True,
+            )
+        except Exception as exc:
+            failures.append(
+                {
+                    "paper_id": paper_id,
+                    "model": model,
+                    "error_type": type(exc).__name__,
+                    "error": str(exc),
+                }
+            )
+            progress.update(
+                paper_id,
+                status=f"failed {model}: {type(exc).__name__}",
+                advance=1,
+                emit=True,
+            )
+            if not continue_on_failure:
+                progress.fail(paper_id, exc)
+                raise
+    if failures:
+        progress.finish(paper_id, f"finished with {len(failures)} failure(s)")
+    else:
+        progress.finish(paper_id, "completed")
+    return failures
 
 
 def _run_one_evaluation(
+    *,
     paper_id: str,
     model: str,
     result_root: Path,
     artifact_dir: Path,
+    log_root: Path,
     force: bool,
-) -> int:
+) -> None:
     env = os.environ.copy()
     env["PAPER_ID"] = paper_id
     env["USE_ONLINE_EVAL"] = "true"
@@ -179,13 +263,26 @@ def _run_one_evaluation(
         if override:
             env[name] = override
 
-    print(f"[batch-eval] run | paper_id={paper_id} model={model}", flush=True)
-    completed = subprocess.run(
-        [sys.executable, str(BASE_DIR / "run_evaluation.py")],
-        cwd=str(PROJECT_ROOT),
-        env=env,
-    )
-    return completed.returncode
+    log_path = log_root / _safe_dir_name(paper_id) / f"{_safe_dir_name(model)}.log"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with log_path.open("a", encoding="utf-8") as log_file:
+        log_file.write(
+            f"\n[{datetime.now().isoformat(timespec='seconds')}] "
+            f"paper_id={paper_id} model={model} force={force}\n"
+        )
+        log_file.flush()
+        completed = subprocess.run(
+            [sys.executable, str(BASE_DIR / "run_evaluation.py")],
+            cwd=str(PROJECT_ROOT),
+            env=env,
+            stdout=log_file,
+            stderr=subprocess.STDOUT,
+        )
+    if completed.returncode:
+        raise RuntimeError(
+            f"Evaluation failed for paper_id={paper_id} model={model} "
+            f"with exit code {completed.returncode}; log={log_path}"
+        )
 
 
 def _public_result_dir(result_root: Path, model: str, paper_id: str) -> Path:
