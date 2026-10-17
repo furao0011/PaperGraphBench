@@ -11,7 +11,8 @@ from typing import Any
 
 from src.artifact_layout import PaperArtifactLayout
 from src.batch_progress import BatchTask, PaperBatchProgress
-from src.config import load_dotenv, load_settings
+from src.config import load_environment, load_settings
+from src.preflight import validate_config
 from src.model_client import ModelConfig, OpenAICompatClient
 from src.textonly_benchmark import (
     TEXTONLY_EVAL_MODE,
@@ -26,12 +27,6 @@ from src.textonly_benchmark import (
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
 DEFAULT_RESULT_ROOT = PROJECT_ROOT / "eval_result_textOnly"
-DEFAULT_MODELS = [
-    "gpt-5-mini",
-    "gpt-5",
-    "ark-doubao-seed-2.0-pro-260215",
-    "ark-doubao-seed-2.0-mini-260215",
-]
 MODEL_ALIASES = {
     "gpt5mini": "gpt-5-mini",
     "gpt5": "gpt-5",
@@ -41,17 +36,23 @@ MODEL_ALIASES = {
 
 
 def main() -> None:
-    load_dotenv(PROJECT_ROOT / ".env")
+    load_environment(PROJECT_ROOT)
     args = _parse_args()
     models = _resolve_models(args.models)
     paper_ids = _resolve_paper_ids(args.paper_ids)
     result_root = Path(args.result_root or os.getenv("TEXTONLY_EVAL_RESULT_ROOT") or DEFAULT_RESULT_ROOT)
     if not models:
-        raise RuntimeError("No text-only evaluation models configured.")
+        raise RuntimeError("No text-only evaluation models configured. Use --models, TEXTONLY_EVAL_MODELS, EVAL_BATCH_MODELS, or EVAL_TARGET_MODEL.")
     if not paper_ids:
-        raise RuntimeError("No textonly_question_templates.json files found under data/.")
+        raise RuntimeError("No textonly_question_templates.json files found under PAPERGRAPH_DATA_ROOT.")
     if args.workers <= 0:
         raise ValueError("--workers must be positive.")
+    if not args.dry_run:
+        if not os.getenv("EVAL_TARGET_MODEL", "").strip():
+            os.environ["EVAL_TARGET_MODEL"] = models[0]
+        errors = validate_config(["evaluate"], PROJECT_ROOT)
+        if errors:
+            raise RuntimeError("Configuration errors:\n- " + "\n- ".join(errors))
 
     tasks = [BatchTask(paper_id=paper_id, total=len(models)) for paper_id in paper_ids]
     failures: list[dict] = []
@@ -349,9 +350,12 @@ def _write_checkpoint(
 
 
 def _resolve_models(raw_models: list[str] | None) -> list[str]:
-    chunks = raw_models if raw_models else [os.getenv("TEXTONLY_EVAL_MODELS", "")]
+    chunks = raw_models if raw_models else [os.getenv("TEXTONLY_EVAL_MODELS") or os.getenv("EVAL_BATCH_MODELS", "")]
     models = [_normalize_model_name(item) for item in _split_values(chunks)]
-    return models or DEFAULT_MODELS
+    if models:
+        return models
+    target_model = os.getenv("EVAL_TARGET_MODEL", "").strip()
+    return [_normalize_model_name(target_model)] if target_model else []
 
 
 def _resolve_paper_ids(raw_paper_ids: list[str] | None) -> list[str]:
@@ -359,7 +363,7 @@ def _resolve_paper_ids(raw_paper_ids: list[str] | None) -> list[str]:
     if requested:
         return [_assert_textonly_paper(paper_id) for paper_id in requested]
     paper_ids = []
-    data_root = PROJECT_ROOT / "data"
+    data_root = PaperArtifactLayout(BASE_DIR, "_selection").data_root
     if not data_root.exists():
         return paper_ids
     for path in sorted(data_root.iterdir(), key=lambda p: p.name):

@@ -77,7 +77,7 @@ def _configure_layout_paths(layout: PaperArtifactLayout) -> None:
 
 
 def _rel(path: Path) -> str:
-    return path.resolve().relative_to(BASE_DIR.resolve()).as_posix()
+    return PaperArtifactLayout(BASE_DIR, os.environ["PAPER_ID"]).rel(path)
 
 
 def _env_bool(name: str, default: bool = False) -> bool:

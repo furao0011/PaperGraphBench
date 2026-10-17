@@ -3478,7 +3478,7 @@
               {
                 "type": "image",
                 "asset_id": "FIG_004",
-                "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_138_138_551_395.jpg",
+                "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_138_138_551_395.jpg",
                 "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens."
               }
             ]
@@ -3487,7 +3487,7 @@
         "multimodal_input": {
           "requires_multimodal_input": true,
           "image_paths": [
-            "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_138_138_551_395.jpg"
+            "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_138_138_551_395.jpg"
           ],
           "asset_ids": [
             "FIG_004"

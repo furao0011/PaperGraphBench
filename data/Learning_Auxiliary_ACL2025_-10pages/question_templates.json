@@ -739,7 +739,7 @@
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_138_138_551_395.jpg",
+              "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_138_138_551_395.jpg",
               "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens."
             }
           ]
@@ -843,7 +843,7 @@
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_138_138_551_395.jpg",
+              "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_138_138_551_395.jpg",
               "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens."
             }
           ]
@@ -942,7 +942,7 @@
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_622_141_1037_396.jpg",
+              "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_622_141_1037_396.jpg",
               "caption": "Figure 3: Hallucination detection results based on token entropy (uncertainty)."
             }
           ]
@@ -1037,7 +1037,7 @@
             {
               "type": "image",
               "asset_id": "FIG_001",
-              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_619_451_1041_727.jpg",
+              "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_image_box_619_451_1041_727.jpg",
               "caption": "Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process."
             }
           ]
@@ -1136,7 +1136,7 @@
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_138_138_551_395.jpg",
+              "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_138_138_551_395.jpg",
               "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens."
             }
           ]
@@ -1226,7 +1226,7 @@
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_622_141_1037_396.jpg",
+              "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_622_141_1037_396.jpg",
               "caption": "Figure 3: Hallucination detection results based on token entropy (uncertainty)."
             }
           ]
@@ -1316,7 +1316,7 @@
             {
               "type": "image",
               "asset_id": "FIG_001",
-              "path": "rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_619_451_1041_727.jpg",
+              "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_image_box_619_451_1041_727.jpg",
               "caption": "Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process."
             }
           ]

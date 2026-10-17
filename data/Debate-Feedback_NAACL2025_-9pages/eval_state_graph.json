@@ -2487,7 +2487,7 @@
               {
                 "type": "image",
                 "asset_id": "FIG_001",
-                "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_image_box_253_154_937_389.jpg",
+                "path": "rawPaper/Debate-Feedback_NAACL2025_-9pages/imgs/img_in_image_box_253_154_937_389.jpg",
                 "caption": "Figure 1: A brief introduction of Debate-Feedback Structure"
               }
             ]
@@ -2496,7 +2496,7 @@
         "multimodal_input": {
           "requires_multimodal_input": true,
           "image_paths": [
-            "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_image_box_253_154_937_389.jpg"
+            "rawPaper/Debate-Feedback_NAACL2025_-9pages/imgs/img_in_image_box_253_154_937_389.jpg"
           ],
           "asset_ids": [
             "FIG_001"
@@ -3500,7 +3500,7 @@
               {
                 "type": "image",
                 "asset_id": "FIG_002",
-                "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_chart_box_325_400_866_820.jpg",
+                "path": "rawPaper/Debate-Feedback_NAACL2025_-9pages/imgs/img_in_chart_box_325_400_866_820.jpg",
                 "caption": "Figure 2: Influence of the number of debaters selected."
               }
             ]
@@ -3509,7 +3509,7 @@
         "multimodal_input": {
           "requires_multimodal_input": true,
           "image_paths": [
-            "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_chart_box_325_400_866_820.jpg"
+            "rawPaper/Debate-Feedback_NAACL2025_-9pages/imgs/img_in_chart_box_325_400_866_820.jpg"
           ],
           "asset_ids": [
             "FIG_002"

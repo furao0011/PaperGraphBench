@@ -3,6 +3,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from src.artifact_paths import configured_data_root, repository_root
+
 
 FINAL_ARTIFACT_FILES = {
     "master_graph": "master_graph.json",
@@ -73,15 +75,26 @@ CACHE_FILES = {
 
 class PaperArtifactLayout:
     def __init__(self, base_dir: Path, paper_id: str) -> None:
-        self.base_dir = base_dir
+        self.base_dir = Path(base_dir).resolve()
+        self.project_root = repository_root(self.base_dir)
+        self.data_root = configured_data_root(self.base_dir)
         self.paper_id = safe_paper_id(paper_id)
-        self.root = paper_data_root(base_dir, self.paper_id)
+        self.root = paper_data_root(self.base_dir, self.paper_id)
+
+    @property
+    def storage_metadata(self) -> dict[str, str]:
+        return {"path_base": "repository"}
 
     def final(self, artifact_name: str) -> Path:
-        return final_artifact_path(self.base_dir, self.paper_id, artifact_name)
+        filename = FINAL_ARTIFACT_FILES.get(artifact_name)
+        if not filename:
+            raise KeyError(f"Unknown final artifact name: {artifact_name}")
+        return self.root / filename
 
     def cache_dir(self, cache_name: str) -> Path:
-        return cache_dir(self.base_dir, self.paper_id, cache_name)
+        if not cache_name or "/" in cache_name or "\\" in cache_name:
+            raise ValueError(f"Invalid cache directory name: {cache_name!r}")
+        return self.root / "cache" / cache_name
 
     def cache_file(self, cache_name: str, artifact_name: str) -> Path:
         filename = CACHE_FILES.get(cache_name, {}).get(artifact_name)
@@ -90,7 +103,13 @@ class PaperArtifactLayout:
         return self.cache_dir(cache_name) / filename
 
     def rel(self, path: Path) -> str:
-        return path.resolve().relative_to(self.base_dir.resolve()).as_posix()
+        absolute = path.resolve()
+        try:
+            return absolute.relative_to(self.project_root).as_posix()
+        except ValueError:
+            # External dataset roots have explicit absolute references; their
+            # meaning must not depend on cwd or filesystem-volume heuristics.
+            return absolute.as_posix()
 
 
 class EvaluationArtifactLayout:
@@ -131,7 +150,7 @@ def paper_data_root(base_dir: Path, paper_id: str) -> Path:
     safe = safe_paper_id(paper_id)
     if not safe:
         raise ValueError("paper_id is required for paper-scoped artifacts.")
-    return base_dir / "data" / safe
+    return configured_data_root(base_dir) / safe
 
 
 def final_artifact_path(base_dir: Path, paper_id: str, artifact_name: str) -> Path:

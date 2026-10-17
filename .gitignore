@@ -2,6 +2,16 @@
 /__pycache__/
 /.venv/
 /.env
+/config.env
+*.env
+.env.*
+!/config.example.env
+/outputs/
+/.papergraph-test-*/
+/.pipeline-cache-test-*/
+/papergraph-http-*/
+**/__pycache__/
+/data/*/cache/
 *.py[cod]
 
 /papergraph_demo/data/

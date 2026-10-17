@@ -752,7 +752,7 @@
             {
               "type": "image",
               "asset_id": "FIG_006",
-              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_chart_box_614_140_1047_671.jpg",
+              "path": "rawPaper/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/imgs/img_in_chart_box_614_140_1047_671.jpg",
               "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system."
             }
           ]
@@ -842,7 +842,7 @@
             {
               "type": "image",
               "asset_id": "FIG_005",
-              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_468_1052_722.jpg",
+              "path": "rawPaper/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/imgs/img_in_image_box_614_468_1052_722.jpg",
               "caption": "Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0."
             }
           ]
@@ -932,7 +932,7 @@
             {
               "type": "image",
               "asset_id": "FIG_007",
-              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_125_1049_518.jpg",
+              "path": "rawPaper/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/imgs/img_in_image_box_614_125_1049_518.jpg",
               "caption": "Figure 7: The overview of self-familiar test."
             }
           ]
@@ -1022,7 +1022,7 @@
             {
               "type": "image",
               "asset_id": "FIG_006",
-              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_chart_box_614_140_1047_671.jpg",
+              "path": "rawPaper/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/imgs/img_in_chart_box_614_140_1047_671.jpg",
               "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system."
             }
           ]
@@ -1112,7 +1112,7 @@
             {
               "type": "image",
               "asset_id": "FIG_007",
-              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_125_1049_518.jpg",
+              "path": "rawPaper/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/imgs/img_in_image_box_614_125_1049_518.jpg",
               "caption": "Figure 7: The overview of self-familiar test."
             }
           ]
@@ -1202,7 +1202,7 @@
             {
               "type": "image",
               "asset_id": "FIG_005",
-              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_614_468_1052_722.jpg",
+              "path": "rawPaper/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/imgs/img_in_image_box_614_468_1052_722.jpg",
               "caption": "Figure 5: An example of how to evaluate using the ICD-10 system with 3-level categories. Let's assume that the correct answer to the question is Allergic Rhinitis. Model A predicted Chronic Rhinitis and Model B predicted Bronchitis. According to the ICD-10 grading scale, Model A correctly answered at level-0 and level-1, while Model B only answered correctly at level-0."
             }
           ]
@@ -1382,7 +1382,7 @@
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_616_129_1050_387.jpg",
+              "path": "rawPaper/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/imgs/img_in_image_box_616_129_1050_387.jpg",
               "caption": "Figure 4: Instructions for extracting ICD-10 codes."
             }
           ]
@@ -1472,7 +1472,7 @@
             {
               "type": "image",
               "asset_id": "FIG_006",
-              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_chart_box_614_140_1047_671.jpg",
+              "path": "rawPaper/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/imgs/img_in_chart_box_614_140_1047_671.jpg",
               "caption": "Figure 6: The distributions of the CMHE-DD dataset on disease categories in ICD-10 system."
             }
           ]
@@ -1562,7 +1562,7 @@
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation\\imgs\\img_in_image_box_145_129_579_448.jpg",
+              "path": "rawPaper/Dou_等_-_2024_-_Detection_Diagnosis_and_Explanation_A_Benchmark_for_Chinese_Medical_Hallucination_Evaluation/imgs/img_in_image_box_145_129_579_448.jpg",
               "caption": "Figure 3: Instructions of dataset construction for hallucination testing."
             }
           ]

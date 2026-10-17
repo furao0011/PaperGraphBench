@@ -2893,7 +2893,7 @@
               {
                 "type": "image",
                 "asset_id": "FIG_002",
-                "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_104_146_1089_693.jpg",
+                "path": "rawPaper/Hallu_Augment_CVPR2024_-11pages/imgs/img_in_image_box_104_146_1089_693.jpg",
                 "caption": "Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL."
               }
             ]
@@ -2902,7 +2902,7 @@
         "multimodal_input": {
           "requires_multimodal_input": true,
           "image_paths": [
-            "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_104_146_1089_693.jpg"
+            "rawPaper/Hallu_Augment_CVPR2024_-11pages/imgs/img_in_image_box_104_146_1089_693.jpg"
           ],
           "asset_ids": [
             "FIG_002"
@@ -2960,7 +2960,7 @@
               {
                 "type": "image",
                 "asset_id": "FIG_002",
-                "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_104_146_1089_693.jpg",
+                "path": "rawPaper/Hallu_Augment_CVPR2024_-11pages/imgs/img_in_image_box_104_146_1089_693.jpg",
                 "caption": "Figure 2. Subfigure (a) illustrates the proposed HACL. In this framework, we employ GPT-4 [39] to generate the hallucinative captions as the hard negative samples in the image-to-text contrastive learning. Subfigure (b) shows the training paradigm of HACL."
               }
             ]
@@ -2969,7 +2969,7 @@
         "multimodal_input": {
           "requires_multimodal_input": true,
           "image_paths": [
-            "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Hallu_Augment_CVPR2024_-11pages\\imgs\\img_in_image_box_104_146_1089_693.jpg"
+            "rawPaper/Hallu_Augment_CVPR2024_-11pages/imgs/img_in_image_box_104_146_1089_693.jpg"
           ],
           "asset_ids": [
             "FIG_002"

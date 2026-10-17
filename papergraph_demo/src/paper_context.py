@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+from src.artifact_paths import resolve_graph_path
 from src.paper_parser import load_paper_text, load_paper_text_from_dir
 
 
@@ -23,7 +24,7 @@ def load_full_paper_text(
             "master_graph.json must include evaluation_paper_text_path or paper_text_path for full-paper evaluation context."
         )
 
-    paper_path = _resolve_paper_path(Path(raw_path), base_dir)
+    paper_path = resolve_graph_path(raw_path, base_dir, graph)
     if raw_path == evaluation_path and paper_path.is_file():
         text = paper_path.read_text(encoding="utf-8")
     elif paper_path.is_dir():
@@ -38,17 +39,7 @@ def load_full_paper_text(
 
 
 def _resolve_paper_path(path: Path, base_dir: Path) -> Path:
-    if path.is_absolute():
-        return path
-    candidates = [
-        base_dir / path,
-        base_dir.parent / path,
-        Path.cwd() / path,
-    ]
-    for candidate in candidates:
-        if candidate.exists():
-            return candidate
-    return candidates[0]
+    return resolve_graph_path(path, base_dir)
 
 
 def _env_nonnegative_int(name: str, default: int) -> int:

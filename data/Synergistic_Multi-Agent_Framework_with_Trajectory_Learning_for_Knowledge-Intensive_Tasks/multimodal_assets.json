@@ -34,13 +34,13 @@
         "P001_B0013"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_637_436_1116_799.jpg"
+        "rawPaper/Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks/imgs/img_in_image_box_637_436_1116_799.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_001",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_637_436_1116_799.jpg",
+          "path": "rawPaper/Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks/imgs/img_in_image_box_637_436_1116_799.jpg",
           "caption": "Figure 1: Example of our long trajectory for knowledge-intensive scenarios (Top) and optimization comparison of multi-agent frameworks (Bottom). Solid and dashed arrows indicate inference and optimization paths, respectively."
         }
       ],
@@ -113,13 +113,13 @@
         "P003_B0001"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_109_109_1110_603.jpg"
+        "rawPaper/Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks/imgs/img_in_image_box_109_109_1110_603.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_002",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_109_109_1110_603.jpg",
+          "path": "rawPaper/Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks/imgs/img_in_image_box_109_109_1110_603.jpg",
           "caption": "Figure 2: Overview of our multi-agent framework with long- and short-trajectory learning. This framework incorporates four agents: intent reconstructor, knowledge retriever, fac locator, and response generator."
         }
       ],
@@ -192,13 +192,13 @@
         "P004_B0001"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_162_124_1062_493.jpg"
+        "rawPaper/Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks/imgs/img_in_image_box_162_124_1062_493.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_003",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_image_box_162_124_1062_493.jpg",
+          "path": "rawPaper/Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks/imgs/img_in_image_box_162_124_1062_493.jpg",
           "caption": "Figure 3: Overview of Long-Short Trajectory Learning. It consists of two stages, for short trajectory learning, under a given trajectory head, requires insight into the various explicit and implicit signals in each particular task. For long-trajectory learning, LLM executes the entire process by predicting different trajectory tokens, ensuring the synergism of different short-trajectories."
         }
       ],
@@ -895,27 +895,27 @@
         "P007_B0005"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_138_110_454_334.jpg",
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_456_110_772_336.jpg",
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_774_111_1088_334.jpg"
+        "rawPaper/Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks/imgs/img_in_chart_box_138_110_454_334.jpg",
+        "rawPaper/Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks/imgs/img_in_chart_box_456_110_772_336.jpg",
+        "rawPaper/Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks/imgs/img_in_chart_box_774_111_1088_334.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_004",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_138_110_454_334.jpg",
+          "path": "rawPaper/Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks/imgs/img_in_chart_box_138_110_454_334.jpg",
           "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
         },
         {
           "type": "image",
           "asset_id": "FIG_004",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_456_110_772_336.jpg",
+          "path": "rawPaper/Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks/imgs/img_in_chart_box_456_110_772_336.jpg",
           "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
         },
         {
           "type": "image",
           "asset_id": "FIG_004",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks\\imgs\\img_in_chart_box_774_111_1088_334.jpg",
+          "path": "rawPaper/Synergistic_Multi-Agent_Framework_with_Trajectory_Learning_for_Knowledge-Intensive_Tasks/imgs/img_in_chart_box_774_111_1088_334.jpg",
           "caption": "Figure 4: Effects of long-trajectory training data size (K) on three tasks, ARC-C, PopQA and ASQA."
         }
       ],

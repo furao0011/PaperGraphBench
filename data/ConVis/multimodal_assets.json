@@ -28,13 +28,13 @@
         "P001_B0011"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_641_436_1114_714.jpg"
+        "rawPaper/ConVis/imgs/img_in_image_box_641_436_1114_714.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_001",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_641_436_1114_714.jpg",
+          "path": "rawPaper/ConVis/imgs/img_in_image_box_641_436_1114_714.jpg",
           "caption": "Figure 1: The text-to-image model visualizes hallucinations (e.g., book') in the semantically reconstructed images based on the hallucinated caption, exhibiting differences (e.g., missing clock') from the original image."
         }
       ],
@@ -107,13 +107,13 @@
         "P002_B0001"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_113_112_584_354.jpg"
+        "rawPaper/ConVis/imgs/img_in_image_box_113_112_584_354.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_002",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_113_112_584_354.jpg",
+          "path": "rawPaper/ConVis/imgs/img_in_image_box_113_112_584_354.jpg",
           "caption": "Figure 2: The original and reconstructed image generate the contrastive logit distribution for the hallucinated tokens (e.g., ‘book’). The reconstructed image tends to amplify the logits of tokens corresponding to the visualized hallucination."
         }
       ],
@@ -186,13 +186,13 @@
         "P003_B0001"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_110_113_1110_358.jpg"
+        "rawPaper/ConVis/imgs/img_in_image_box_110_113_1110_358.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_003",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_110_113_1110_358.jpg",
+          "path": "rawPaper/ConVis/imgs/img_in_image_box_110_113_1110_358.jpg",
           "caption": "The original and generated image produce the contrastive distribution for the hallucinated tokens (e.g., ‘book’). The generated image tends to amplify the logits of tokens corresponding to the visualized hallucination."
         }
       ],
@@ -1110,20 +1110,20 @@
         "P006_B0007"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_chart_box_109_657_342_897.jpg",
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_chart_box_350_657_578_897.jpg"
+        "rawPaper/ConVis/imgs/img_in_chart_box_109_657_342_897.jpg",
+        "rawPaper/ConVis/imgs/img_in_chart_box_350_657_578_897.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_004",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_chart_box_109_657_342_897.jpg",
+          "path": "rawPaper/ConVis/imgs/img_in_chart_box_109_657_342_897.jpg",
           "caption": "Figure 4: Effect of the number of images with different captions."
         },
         {
           "type": "image",
           "asset_id": "FIG_004",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_chart_box_350_657_578_897.jpg",
+          "path": "rawPaper/ConVis/imgs/img_in_chart_box_350_657_578_897.jpg",
           "caption": "Figure 4: Effect of the number of images with different captions."
         }
       ],
@@ -1207,13 +1207,13 @@
         "P006_B0012"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_chart_box_682_360_1072_578.jpg"
+        "rawPaper/ConVis/imgs/img_in_chart_box_682_360_1072_578.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_005",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_chart_box_682_360_1072_578.jpg",
+          "path": "rawPaper/ConVis/imgs/img_in_chart_box_682_360_1072_578.jpg",
           "caption": "Figure 5: KL divergence between output distributions across each decoding step when the MLLM is provided with the images and caption from Figure 6 (a). The KL divergence is significantly elevated for the hallucinated token “car”."
         }
       ],
@@ -1285,13 +1285,13 @@
         "P007_B0001"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_127_110_1096_682.jpg"
+        "rawPaper/ConVis/imgs/img_in_image_box_127_110_1096_682.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_006",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\ConVis\\imgs\\img_in_image_box_127_110_1096_682.jpg",
+          "path": "rawPaper/ConVis/imgs/img_in_image_box_127_110_1096_682.jpg",
           "caption": ""
         }
       ],

@@ -716,13 +716,13 @@
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_626_143_869_300.jpg",
+              "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_626_143_869_300.jpg",
               "caption": "Figure 3. The probability changes of tokens across different layers."
             },
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_867_143_1107_300.jpg",
+              "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_867_143_1107_300.jpg",
               "caption": "Figure 3. The probability changes of tokens across different layers."
             }
           ]
@@ -812,7 +812,7 @@
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_645_867_1101_987.jpg",
+              "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_645_867_1101_987.jpg",
               "caption": "Figure 4. We randomly select 400 images from the MSCOCO dataset and conduct statistical analyses on LLaVA-1.5 and mPLUG-owl2, and the hierarchical phenomenon in all images"
             }
           ]
@@ -902,13 +902,13 @@
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_626_143_869_300.jpg",
+              "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_626_143_869_300.jpg",
               "caption": "Figure 3. The probability changes of tokens across different layers."
             },
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_867_143_1107_300.jpg",
+              "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_867_143_1107_300.jpg",
               "caption": "Figure 3. The probability changes of tokens across different layers."
             }
           ]
@@ -998,13 +998,13 @@
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_626_143_869_300.jpg",
+              "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_626_143_869_300.jpg",
               "caption": "Figure 3. The probability changes of tokens across different layers."
             },
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_867_143_1107_300.jpg",
+              "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_867_143_1107_300.jpg",
               "caption": "Figure 3. The probability changes of tokens across different layers."
             }
           ]
@@ -1094,7 +1094,7 @@
             {
               "type": "image",
               "asset_id": "FIG_009",
-              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_192_141_1032_446.jpg",
+              "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_192_141_1032_446.jpg",
               "caption": "Figure 9. SHIFT effectively suppresses token probability mutations caused by injected hallucinated information."
             }
           ]
@@ -1184,7 +1184,7 @@
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_645_867_1101_987.jpg",
+              "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_645_867_1101_987.jpg",
               "caption": "Figure 4. We randomly select 400 images from the MSCOCO dataset and conduct statistical analyses on LLaVA-1.5 and mPLUG-owl2, and the hierarchical phenomenon in all images"
             }
           ]
@@ -1454,7 +1454,7 @@
             {
               "type": "image",
               "asset_id": "FIG_005",
-              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_119_145_586_308.jpg",
+              "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_119_145_586_308.jpg",
               "caption": "Figure 5. Visualization of attention maps before and after mutation shows that the original distribution aligns with input semantics, while the mutated version significantly deviates."
             }
           ]
@@ -1544,7 +1544,7 @@
             {
               "type": "image",
               "asset_id": "FIG_002",
-              "path": "rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_125_145_580_383.jpg",
+              "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_125_145_580_383.jpg",
               "caption": "Figure 2. JSDs of the probability distributions between two adjacent layers in LLaVA-1.5."
             }
           ]

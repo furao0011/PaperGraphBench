@@ -769,19 +769,19 @@
             {
               "type": "image",
               "asset_id": "FIG_005",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_645_632_870_778.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_image_box_645_632_870_778.jpg",
               "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework."
             },
             {
               "type": "image",
               "asset_id": "FIG_005",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_647_779_871_867.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_chart_box_647_779_871_867.jpg",
               "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework."
             },
             {
               "type": "image",
               "asset_id": "FIG_005",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_885_632_1109_778.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_image_box_885_632_1109_778.jpg",
               "caption": "Figure 5: Examples of successful and failed claim detection by the 3MFact framework."
             }
           ]
@@ -871,7 +871,7 @@
             {
               "type": "image",
               "asset_id": "FIG_001",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_639_432_1115_882.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_image_box_639_432_1115_882.jpg",
               "caption": "Figure 1: A sample in the proposed TRUE Dataset. It includes the claim, video, and video background information. Besides, three types of annotations are provided: 1) label, 2) evidences, and 3) original and summary rationales."
             }
           ]
@@ -961,13 +961,13 @@
             {
               "type": "image",
               "asset_id": "FIG_002",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_644_700_881_893.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_chart_box_644_700_881_893.jpg",
               "caption": "Figure 2: (a) Label Composition: False labels include False (1062), Miscaptioned (268), Mixture (305), Fake (52), and Mostly False (MF, 126). True labels include True (798), Mostly True (MT, 100), and Correct Attribution (CA, 199). (b) Social Media (SM): Platforms include Instagram (IG), TikTok (TT), Facebook (FB), X (formerly Twitter), and YouTube (YT). Official Media (OM): Sources include the New York Times (NYT), CNBC, and Fox News (FN)."
             },
             {
               "type": "image",
               "asset_id": "FIG_002",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_903_699_1110_886.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_chart_box_903_699_1110_886.jpg",
               "caption": "Figure 2: (a) Label Composition: False labels include False (1062), Miscaptioned (268), Mixture (305), Fake (52), and Mostly False (MF, 126). True labels include True (798), Mostly True (MT, 100), and Correct Attribution (CA, 199). (b) Social Media (SM): Platforms include Instagram (IG), TikTok (TT), Facebook (FB), X (formerly Twitter), and YouTube (YT). Official Media (OM): Sources include the New York Times (NYT), CNBC, and Fox News (FN)."
             }
           ]
@@ -1057,25 +1057,25 @@
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_122_107_370_285.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_chart_box_122_107_370_285.jpg",
               "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
             },
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_383_107_632_291.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_chart_box_383_107_632_291.jpg",
               "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
             },
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_644_105_858_290.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_chart_box_644_105_858_290.jpg",
               "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
             },
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_873_111_1099_292.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_chart_box_873_111_1099_292.jpg",
               "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
             }
           ]
@@ -1165,25 +1165,25 @@
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_122_107_370_285.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_chart_box_122_107_370_285.jpg",
               "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
             },
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_383_107_632_291.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_chart_box_383_107_632_291.jpg",
               "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
             },
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_644_105_858_290.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_chart_box_644_105_858_290.jpg",
               "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
             },
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_chart_box_873_111_1099_292.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_chart_box_873_111_1099_292.jpg",
               "caption": "Figure 3: (a) Average Claim Length: false claims are shorter in length. (b) Average Claim Entropy: false claims have lower information richness. (c) Scene Transition Counts: Videos associated with false claims tend to have more uniform scenes. (d) Average Count of Fact-Checking Materials (E: Evidence, ECR: the Expert-Crafted Rationale, LSR: LLM-Summary-Rationale.) per Claim: False claims require more evidence and rationales for accurate judgment."
             }
           ]
@@ -1363,7 +1363,7 @@
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa\\imgs\\img_in_image_box_113_110_1113_367.jpg",
+              "path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/imgs/img_in_image_box_113_110_1113_367.jpg",
               "caption": "Figure 4: Overview of the proposed 3MFact framework, comprising five components: Video Descriptor (video-to-text conversion), Claim Verifier (assesses evidence sufficiency), Question Manager (generates questions and retrieves answers), Information Retriever (searches for evidence), and Reasoner (synthesizes judgment with rationale and evidence)."
             }
           ]

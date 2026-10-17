@@ -961,6 +961,8 @@ def main() -> None:
         graph["diagnostics"]["multimodal_explanation_summary"] = (
             multimodal_asset_explanations_payload.get("summary", {}) if multimodal_asset_explanations_payload else {}
         )
+    graph["storage"] = layout.storage_metadata
+    graph["macro_spine_path"] = layout.rel(MACRO_SPINE_PATH)
     graph["paper_text_path"] = layout.rel(PAPER_CLEAN_TEXT_PATH)
     graph["evaluation_paper_text_path"] = layout.rel(
         PAPER_EVAL_CONTEXT_PATH if use_multimodal_eval_context else PAPER_CLEAN_TEXT_PATH

@@ -28,13 +28,13 @@
         "P001_B0010"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_619_451_1041_727.jpg"
+        "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_image_box_619_451_1041_727.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_001",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_619_451_1041_727.jpg",
+          "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_image_box_619_451_1041_727.jpg",
           "caption": "Figure 1: Comparison between Fine-Tuning and RATE-FT for hallucination detection. RATE-FT improves Fine-Tuning by incorporating rationales and an auxiliary task (question answering) into the training process."
         }
       ],
@@ -107,13 +107,13 @@
         "P003_B0001"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_147_138_570_400.jpg"
+        "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_147_138_570_400.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_002",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_147_138_570_400.jpg",
+          "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_147_138_570_400.jpg",
           "caption": "Figure 2: Detection results based on token probability."
         }
       ],
@@ -595,13 +595,13 @@
         "P008_B0009"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_622_141_1037_396.jpg"
+        "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_622_141_1037_396.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_003",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_622_141_1037_396.jpg",
+          "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_622_141_1037_396.jpg",
           "caption": "Figure 3: Hallucination detection results based on token entropy (uncertainty)."
         }
       ],
@@ -757,13 +757,13 @@
         "P009_B0001"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_138_138_551_395.jpg"
+        "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_138_138_551_395.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_004",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_138_138_551_395.jpg",
+          "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_138_138_551_395.jpg",
           "caption": "Figure 4: Hallucination detection results based on the probability of entity-related tokens."
         }
       ],
@@ -983,13 +983,13 @@
         "P009_B0011"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_635_137_1052_394.jpg"
+        "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_635_137_1052_394.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_005",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_chart_box_635_137_1052_394.jpg",
+          "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_chart_box_635_137_1052_394.jpg",
           "caption": "Figure 5: Hallucination detection results based on the entropy of entity-related tokens."
         }
       ],
@@ -1129,13 +1129,13 @@
         "P009_B0015"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_618_668_1039_728.jpg"
+        "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_image_box_618_668_1039_728.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_006",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_618_668_1039_728.jpg",
+          "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_image_box_618_668_1039_728.jpg",
           "caption": "Figure 6: Prompt for extracting the original output given an atomized claim."
         }
       ],
@@ -1201,13 +1201,13 @@
         "P010_B0001"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_150_143_569_487.jpg"
+        "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_image_box_150_143_569_487.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_007",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_150_143_569_487.jpg",
+          "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_image_box_150_143_569_487.jpg",
           "caption": "Figure 7: Prompts for different prompting methods."
         }
       ],
@@ -1273,13 +1273,13 @@
         "P010_B0003"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_150_556_569_839.jpg"
+        "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_image_box_150_556_569_839.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_008",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\Learning_Auxiliary_ACL2025_-10pages\\imgs\\img_in_image_box_150_556_569_839.jpg",
+          "path": "rawPaper/Learning_Auxiliary_ACL2025_-10pages/imgs/img_in_image_box_150_556_569_839.jpg",
           "caption": "Figure 8: Prompts for different components of RATE-FT."
         }
       ],

@@ -34,20 +34,20 @@
         "P001_B0017"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_651_515_870_665.jpg",
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_873_461_1105_618.jpg"
+        "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_image_box_651_515_870_665.jpg",
+        "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_image_box_873_461_1105_618.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_001",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_651_515_870_665.jpg",
+          "path": "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_image_box_651_515_870_665.jpg",
           "caption": "Figure 1: Examples of Metaphorical Memes."
         },
         {
           "type": "image",
           "asset_id": "FIG_001",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_873_461_1105_618.jpg",
+          "path": "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_image_box_873_461_1105_618.jpg",
           "caption": "Figure 1: Examples of Metaphorical Memes."
         }
       ],
@@ -133,13 +133,13 @@
         "P003_B0001"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_149_105_1074_592.jpg"
+        "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_image_box_149_105_1074_592.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_002",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_149_105_1074_592.jpg",
+          "path": "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_image_box_149_105_1074_592.jpg",
           "caption": "Figure 2: The overall architecture of our model. “mr” means metaphor recognition, “sa” means sentiment analysis, “id” means intention detection, “od” means offensiveness detection."
         }
       ],
@@ -866,13 +866,13 @@
         "P006_B0008"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_662_111_1082_508.jpg"
+        "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_chart_box_662_111_1082_508.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_003",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_662_111_1082_508.jpg",
+          "path": "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_chart_box_662_111_1082_508.jpg",
           "caption": "Figure 3: Comparative results between global-local and local-local interaction on the MET-MEME English dataset."
         }
       ],
@@ -945,13 +945,13 @@
         "P007_B0001"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_206_107_487_355.jpg"
+        "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_image_box_206_107_487_355.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_004",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_206_107_487_355.jpg",
+          "path": "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_image_box_206_107_487_355.jpg",
           "caption": "Figure 4: Visualization of a typical example."
         }
       ],
@@ -1030,34 +1030,34 @@
         "P007_B0006"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_110_434_341_587.jpg",
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_343_416_578_587.jpg",
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_109_588_341_726.jpg",
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_346_588_577_726.jpg"
+        "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_chart_box_110_434_341_587.jpg",
+        "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_chart_box_343_416_578_587.jpg",
+        "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_chart_box_109_588_341_726.jpg",
+        "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_chart_box_346_588_577_726.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_005",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_110_434_341_587.jpg",
+          "path": "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_chart_box_110_434_341_587.jpg",
           "caption": "Figure 5: Influence of unimodal prediction on the MET-MEME English dataset."
         },
         {
           "type": "image",
           "asset_id": "FIG_005",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_343_416_578_587.jpg",
+          "path": "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_chart_box_343_416_578_587.jpg",
           "caption": "Figure 5: Influence of unimodal prediction on the MET-MEME English dataset."
         },
         {
           "type": "image",
           "asset_id": "FIG_005",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_109_588_341_726.jpg",
+          "path": "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_chart_box_109_588_341_726.jpg",
           "caption": "Figure 5: Influence of unimodal prediction on the MET-MEME English dataset."
         },
         {
           "type": "image",
           "asset_id": "FIG_005",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_chart_box_346_588_577_726.jpg",
+          "path": "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_chart_box_346_588_577_726.jpg",
           "caption": "Figure 5: Influence of unimodal prediction on the MET-MEME English dataset."
         }
       ],
@@ -1157,13 +1157,13 @@
         "P007_B0011"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_685_111_1065_464.jpg"
+        "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_image_box_685_111_1065_464.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_006",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding\\imgs\\img_in_image_box_685_111_1065_464.jpg",
+          "path": "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/imgs/img_in_image_box_685_111_1065_464.jpg",
           "caption": "Figure 6: Influence of CLIP in MMU on the MET-MEME English dataset."
         }
       ],

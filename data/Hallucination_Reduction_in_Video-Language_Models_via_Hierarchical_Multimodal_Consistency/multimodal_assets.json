@@ -28,13 +28,13 @@
         "P002_B0002"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_image_box_121_107_1117_740.jpg"
+        "rawPaper/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/imgs/img_in_image_box_121_107_1117_740.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_001",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_image_box_121_107_1117_740.jpg",
+          "path": "rawPaper/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/imgs/img_in_image_box_121_107_1117_740.jpg",
           "caption": "Figure 1: (Top-left) Existing methods utilize visual features that are not semantically aligned for text decoding. (Bottom-left) Our MMA employs a multi-level multimodal semantic alignment strategy to mitigate the hallucinations. (Right) Our method effectively identifies confusable objects, showcasing its capability to grasp complex semantics. It significantly outperforms MA-LMM in reducing hallucinations and enhancing answer accuracy."
         }
       ],
@@ -107,13 +107,13 @@
         "P003_B0002"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_image_box_121_124_1112_689.jpg"
+        "rawPaper/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/imgs/img_in_image_box_121_124_1112_689.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_002",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_image_box_121_124_1112_689.jpg",
+          "path": "rawPaper/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/imgs/img_in_image_box_121_124_1112_689.jpg",
           "caption": "Figure 2: (Left) Framework overview. Framework overview. Long-Term Memory Bank and Q-Former are employed to encode visual features. Text encoder extracts joint semantic features from the prompt and text label, achieving multi-level semantic alignment with visual features through contrastive learning. The LLM then generates text outputs for various downstream tasks in video understanding. (Right) Two-stage training strategy. In the auxiliary pre-training stage, semantic discriminant loss is utilized on a larger and more diverse video-language dataset. In the task-specific training stage, both semantic discriminant loss and text decoding loss are applied to train on downstream task datasets."
         }
       ],
@@ -470,13 +470,13 @@
         "P006_B0014"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_chart_box_617_1034_1096_1341.jpg"
+        "rawPaper/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/imgs/img_in_chart_box_617_1034_1096_1341.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_003",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_chart_box_617_1034_1096_1341.jpg",
+          "path": "rawPaper/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/imgs/img_in_chart_box_617_1034_1096_1341.jpg",
           "caption": "Figure 3: Ablation results of effect of multi-level multimodal alignment and two-stage training on the LVU Relation."
         }
       ],
@@ -549,13 +549,13 @@
         "P007_B0001"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_chart_box_130_123_578_475.jpg"
+        "rawPaper/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/imgs/img_in_chart_box_130_123_578_475.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_004",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_chart_box_130_123_578_475.jpg",
+          "path": "rawPaper/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/imgs/img_in_chart_box_130_123_578_475.jpg",
           "caption": "Figure 4: Ablation experiment of multi-level alignment module."
         }
       ],
@@ -628,13 +628,13 @@
         "P007_B0008"
       ],
       "image_paths": [
-        "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_image_box_633_115_1104_544.jpg"
+        "rawPaper/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/imgs/img_in_image_box_633_115_1104_544.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_005",
-          "path": "D:\\研究生\\研究生科研\\Experiments\\PaperGraphBench\\PaperGraphBench\\rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency\\imgs\\img_in_image_box_633_115_1104_544.jpg",
+          "path": "rawPaper/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/imgs/img_in_image_box_633_115_1104_544.jpg",
           "caption": "Figure 5: Visualization results of our method on long-term video recognition task on LVU dataset."
         }
       ],

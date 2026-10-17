@@ -22565,7 +22565,7 @@
   "multimodal_asset_groups_path": "data/ConVis/cache/multimodal/multimodal_asset_groups.json",
   "multimodal_asset_explanations_path": "data/ConVis/multimodal_asset_explanations.json",
   "evaluation_paper_text_path": "data/ConVis/paper_clean_text.md",
-  "raw_paper_path": "rawPaper\\ConVis",
+  "raw_paper_path": "rawPaper/ConVis",
   "reasoning_threads_path": "data/ConVis/cache/graph_build/reasoning_threads.json",
   "reasoning_threads": [
     {
@@ -22844,5 +22844,8 @@
         "The model maintains consistent reasoning in the review step."
       ]
     }
-  ]
+  ],
+  "storage": {
+    "path_base": "repository"
+  }
 }

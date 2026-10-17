@@ -11,7 +11,8 @@ from typing import Any
 
 from src.artifact_layout import PaperArtifactLayout
 from src.challenge_scheduler import ensure_challenge_states
-from src.config import load_dotenv, load_settings
+from src.config import load_environment, load_settings
+from src.preflight import validate_config
 from src.eval_artifacts import load_eval_checkpoint, reconcile_actual_transitions, write_json
 from src.eval_turn_runner import EvaluationTurnRunner
 from src.evaluation_inputs import load_kc_bank, repair_questions_for_graph
@@ -35,12 +36,6 @@ from src.thread_scheduler import completed_thread_step_ids
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
 DEFAULT_RESULT_ROOT = PROJECT_ROOT / "eval_result_withoutRepair"
-DEFAULT_MODELS = [
-    "gpt-5-mini",
-    "gpt-5",
-    "ark-doubao-seed-2.0-pro-260215",
-    "ark-doubao-seed-2.0-mini-260215",
-]
 MODEL_ALIASES = {
     "gpt5mini": "gpt-5-mini",
     "gpt5": "gpt-5",
@@ -51,20 +46,26 @@ EVALUATION_MODE = "with_context_without_repair"
 
 
 def main() -> None:
-    load_dotenv(PROJECT_ROOT / ".env")
+    load_environment(PROJECT_ROOT)
     args = _parse_args()
     models = _resolve_models(args.models)
     paper_ids = _resolve_paper_ids(args.paper_ids)
     result_root = Path(args.result_root or os.getenv("WITHOUT_REPAIR_RESULT_ROOT") or DEFAULT_RESULT_ROOT)
 
     if not models:
-        raise RuntimeError("No withoutRepair evaluation models configured.")
+        raise RuntimeError("No withoutRepair evaluation models configured. Use --models, WITHOUT_REPAIR_MODELS, EVAL_BATCH_MODELS, or EVAL_TARGET_MODEL.")
     if not paper_ids:
-        raise RuntimeError("No evaluable papers found under papergraph_demo/data.")
+        raise RuntimeError("No evaluable papers found under PAPERGRAPH_DATA_ROOT.")
     if args.paper_batch_size <= 0:
         raise ValueError("--paper-batch-size must be positive.")
     if args.model_workers_per_paper <= 0:
         raise ValueError("--model-workers-per-paper must be positive.")
+    if not args.dry_run:
+        if not os.getenv("EVAL_TARGET_MODEL", "").strip():
+            os.environ["EVAL_TARGET_MODEL"] = models[0]
+        errors = validate_config(["evaluate"], PROJECT_ROOT)
+        if errors:
+            raise RuntimeError("Configuration errors:\n- " + "\n- ".join(errors))
 
     print(
         "[without-repair] start | papers={papers} models={models} result_root={root} "
@@ -111,7 +112,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--paper-ids",
         nargs="*",
-        help="Optional paper_id subset. Defaults to every evaluable directory under papergraph_demo/data.",
+        help="Optional paper_id subset. Defaults to every evaluable directory under PAPERGRAPH_DATA_ROOT.",
     )
     parser.add_argument(
         "--result-root",
@@ -559,9 +560,12 @@ def _build_target_client(model: str) -> OpenAICompatClient:
 
 
 def _resolve_models(raw_models: list[str] | None) -> list[str]:
-    chunks = raw_models if raw_models else [os.getenv("WITHOUT_REPAIR_MODELS", "")]
+    chunks = raw_models if raw_models else [os.getenv("WITHOUT_REPAIR_MODELS") or os.getenv("EVAL_BATCH_MODELS", "")]
     models = [_normalize_model_name(item) for item in _split_values(chunks)]
-    return models or DEFAULT_MODELS
+    if models:
+        return models
+    target_model = os.getenv("EVAL_TARGET_MODEL", "").strip()
+    return [_normalize_model_name(target_model)] if target_model else []
 
 
 def _resolve_paper_ids(raw_paper_ids: list[str] | None) -> list[str]:
@@ -569,7 +573,7 @@ def _resolve_paper_ids(raw_paper_ids: list[str] | None) -> list[str]:
     if requested:
         return [_assert_evaluable_paper(paper_id) for paper_id in requested]
     paper_ids = []
-    data_root = BASE_DIR / "data"
+    data_root = PaperArtifactLayout(BASE_DIR, "_selection").data_root
     if not data_root.exists():
         return paper_ids
     for path in sorted(data_root.iterdir(), key=lambda p: p.name):

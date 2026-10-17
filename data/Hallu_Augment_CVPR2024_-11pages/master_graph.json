@@ -16580,7 +16580,7 @@
   "multimodal_asset_groups_path": "data/Hallu_Augment_CVPR2024_-11pages/cache/multimodal/multimodal_asset_groups.json",
   "multimodal_asset_explanations_path": "data/Hallu_Augment_CVPR2024_-11pages/multimodal_asset_explanations.json",
   "evaluation_paper_text_path": "data/Hallu_Augment_CVPR2024_-11pages/paper_clean_text.md",
-  "raw_paper_path": "rawPaper\\Hallu_Augment_CVPR2024_-11pages",
+  "raw_paper_path": "rawPaper/Hallu_Augment_CVPR2024_-11pages",
   "reasoning_threads_path": "data/Hallu_Augment_CVPR2024_-11pages/cache/graph_build/reasoning_threads.json",
   "reasoning_threads": [
     {
@@ -16955,5 +16955,8 @@
         "The model remains consistent at review."
       ]
     }
-  ]
+  ],
+  "storage": {
+    "path_base": "repository"
+  }
 }

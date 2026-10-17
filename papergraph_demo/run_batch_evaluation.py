@@ -12,37 +12,41 @@ from pathlib import Path
 
 from src.artifact_layout import PaperArtifactLayout
 from src.batch_progress import BatchTask, PaperBatchProgress
-from src.config import load_dotenv
+from src.config import load_environment
+from src.preflight import validate_config
 
 
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
-DEFAULT_RAW_PAPER_ROOT = PROJECT_ROOT / "rawPaper"
-DEFAULT_EVAL_RESULT_ROOT = PROJECT_ROOT / "eval_result"
+DEFAULT_EVAL_RESULT_ROOT = PROJECT_ROOT / "outputs" / "evaluation"
 DEFAULT_LOG_ROOT = PROJECT_ROOT / "logs" / "main_evaluation"
-DEFAULT_MODELS = [
-    "gpt-5-mini",
-    "gpt-5",
-    "ark-doubao-seed-2.0-pro-260215",
-    "ark-doubao-seed-2.0-mini-260215",
-]
 
 
 def main() -> None:
-    load_dotenv(PROJECT_ROOT / ".env")
+    load_environment(PROJECT_ROOT)
     args = _parse_args()
     models = _resolve_models(args.models)
-    raw_root = Path(args.raw_paper_root or os.getenv("RAW_PAPER_ROOT") or DEFAULT_RAW_PAPER_ROOT).resolve()
-    paper_ids = _resolve_paper_ids(args.paper_ids, raw_root)
+    selection_root = (
+        Path(args.raw_paper_root).resolve()
+        if args.raw_paper_root
+        else PaperArtifactLayout(BASE_DIR, "_selection").data_root
+    )
+    paper_ids = _resolve_paper_ids(args.paper_ids, selection_root)
     result_root = Path(args.eval_result_root or os.getenv("EVAL_RESULT_ROOT") or DEFAULT_EVAL_RESULT_ROOT).resolve()
     log_root = Path(args.log_dir or os.getenv("EVAL_BATCH_LOG_DIR") or DEFAULT_LOG_ROOT).resolve()
 
     if not models:
-        raise RuntimeError("No evaluation models configured. Use --models or EVAL_BATCH_MODELS.")
+        raise RuntimeError("No evaluation models configured. Use --models, EVAL_BATCH_MODELS, or EVAL_TARGET_MODEL.")
     if not paper_ids:
-        raise RuntimeError(f"No evaluable papers selected from {raw_root}.")
+        raise RuntimeError(f"No evaluable papers selected from {selection_root}.")
     if args.workers <= 0:
         raise ValueError("--workers must be positive.")
+    if not args.dry_run:
+        if not os.getenv("EVAL_TARGET_MODEL", "").strip():
+            os.environ["EVAL_TARGET_MODEL"] = models[0]
+        errors = validate_config(["evaluate"], PROJECT_ROOT)
+        if errors:
+            raise RuntimeError("Configuration errors:\n- " + "\n- ".join(errors))
 
     tasks = [BatchTask(paper_id=paper_id, total=len(models)) for paper_id in paper_ids]
     failures: list[dict] = []
@@ -96,17 +100,17 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--paper-ids",
         nargs="*",
-        help="Optional paper_id subset. Defaults to papers under RAW_PAPER_ROOT.",
+        help="Optional paper_id subset. Defaults to evaluable papers under PAPERGRAPH_DATA_ROOT.",
     )
     parser.add_argument(
         "--raw-paper-root",
         default="",
-        help="Paper selection root. Defaults to RAW_PAPER_ROOT or ./rawPaper.",
+        help="Legacy paper selection root override; default selection uses PAPERGRAPH_DATA_ROOT.",
     )
     parser.add_argument(
         "--eval-result-root",
         default="",
-        help="Public eval_result root. Defaults to EVAL_RESULT_ROOT or ./eval_result.",
+        help="Evaluation output root. Defaults to EVAL_RESULT_ROOT or ./outputs/evaluation.",
     )
     parser.add_argument("--log-dir", default="", help="Per-paper/model subprocess log root.")
     parser.add_argument("--force", action="store_true", help="Restart selected runs even when final results exist.")
@@ -128,17 +132,20 @@ def _parse_args() -> argparse.Namespace:
 def _resolve_models(raw_models: list[str] | None) -> list[str]:
     chunks = raw_models if raw_models else [os.getenv("EVAL_BATCH_MODELS", "")]
     models = _split_values(chunks)
-    return models or DEFAULT_MODELS
+    if models:
+        return models
+    target_model = os.getenv("EVAL_TARGET_MODEL", "").strip()
+    return [target_model] if target_model else []
 
 
-def _resolve_paper_ids(raw_paper_ids: list[str] | None, raw_root: Path) -> list[str]:
+def _resolve_paper_ids(raw_paper_ids: list[str] | None, selection_root: Path) -> list[str]:
     requested = _split_values(raw_paper_ids or [])
     if requested:
         return [_assert_evaluable_paper(paper_id) for paper_id in requested]
-    if not raw_root.is_dir():
+    if not selection_root.is_dir():
         return []
     paper_ids = []
-    for path in sorted(raw_root.iterdir(), key=lambda item: item.name):
+    for path in sorted(selection_root.iterdir(), key=lambda item: item.name):
         if not path.is_dir() or path.name.endswith(".tmp"):
             continue
         paper_ids.append(_assert_evaluable_paper(path.name))

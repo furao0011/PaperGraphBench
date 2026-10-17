@@ -218,13 +218,13 @@
         "P003_B0001"
       ],
       "image_paths": [
-        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_221_149_1004_447.jpg"
+        "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_chart_box_221_149_1004_447.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_001",
-          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_221_149_1004_447.jpg",
+          "path": "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_chart_box_221_149_1004_447.jpg",
           "caption": "Figure 6: Model multidimensional performance in Immediate Feedback and Self Recovery modes."
         }
       ],
@@ -299,20 +299,20 @@
         "P003_B0004"
       ],
       "image_paths": [
-        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_217_539_605_834.jpg",
-        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_611_543_1004_840.jpg"
+        "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_chart_box_217_539_605_834.jpg",
+        "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_chart_box_611_543_1004_840.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_002",
-          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_217_539_605_834.jpg",
+          "path": "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_chart_box_217_539_605_834.jpg",
           "caption": "Figure 7: Accuracy disparities across Models: overall, easy & hard tasks."
         },
         {
           "type": "image",
           "asset_id": "FIG_002",
-          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_611_543_1004_840.jpg",
+          "path": "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_chart_box_611_543_1004_840.jpg",
           "caption": "Figure 7: Accuracy disparities across Models: overall, easy & hard tasks."
         }
       ],
@@ -396,20 +396,20 @@
         "P004_B0002"
       ],
       "image_paths": [
-        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_220_147_610_484.jpg",
-        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_612_148_1002_482.jpg"
+        "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_chart_box_220_147_610_484.jpg",
+        "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_chart_box_612_148_1002_482.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_003",
-          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_220_147_610_484.jpg",
+          "path": "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_chart_box_220_147_610_484.jpg",
           "caption": "Figure 8: Mode impact on models: First-Try Accuracy & Longest Consecutive Correct Sequence metrics."
         },
         {
           "type": "image",
           "asset_id": "FIG_003",
-          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_chart_box_612_148_1002_482.jpg",
+          "path": "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_chart_box_612_148_1002_482.jpg",
           "caption": "Figure 8: Mode impact on models: First-Try Accuracy & Longest Consecutive Correct Sequence metrics."
         }
       ],
@@ -491,13 +491,13 @@
         "P011_B0004"
       ],
       "image_paths": [
-        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_264_463_955_620.jpg"
+        "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_image_box_264_463_955_620.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_004",
-          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_264_463_955_620.jpg",
+          "path": "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_image_box_264_463_955_620.jpg",
           "caption": "Figure 1: Immediate Feedback. The model is informed immediately after each incorrect choice and prompted to retry until the correct option is selected."
         }
       ],
@@ -570,13 +570,13 @@
         "P011_B0007"
       ],
       "image_paths": [
-        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_269_861_943_1119.jpg"
+        "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_image_box_269_861_943_1119.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_005",
-          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_269_861_943_1119.jpg",
+          "path": "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_image_box_269_861_943_1119.jpg",
           "caption": "Figure 2: Self Recovery. An incorrect choice leads to a failure ending either immediately or after several scenes. The model is then asked to identify the earliest point in the story where it believes the incorrect decision occurred and to attempt recovery from that point."
         }
       ],
@@ -652,13 +652,13 @@
         "P013_B0008"
       ],
       "image_paths": [
-        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_297_1068_937_1361.jpg"
+        "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_image_box_297_1068_937_1361.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_006",
-          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_297_1068_937_1361.jpg",
+          "path": "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_image_box_297_1068_937_1361.jpg",
           "caption": "Figure 3: Four typical patterns illustrating dataset structure complexity."
         }
       ],
@@ -734,13 +734,13 @@
         "P014_B0004"
       ],
       "image_paths": [
-        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_223_660_985_1011.jpg"
+        "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_image_box_223_660_985_1011.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_007",
-          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_223_660_985_1011.jpg",
+          "path": "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_image_box_223_660_985_1011.jpg",
           "caption": "Figure 4: Scene node example with character descriptions, dialogues, and other details."
         }
       ],
@@ -813,13 +813,13 @@
         "P014_B0006"
       ],
       "image_paths": [
-        "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_300_1157_922_1346.jpg"
+        "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_image_box_300_1157_922_1346.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_008",
-          "path": "rawPaper\\Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns\\imgs\\img_in_image_box_300_1157_922_1346.jpg",
+          "path": "rawPaper/Wan和Ma_-_2025_-_StoryBench_A_Dynamic_Benchmark_for_Evaluating_Long-Term_Memory_with_Multi_Turns/imgs/img_in_image_box_300_1157_922_1346.jpg",
           "caption": "Figure 5: Choice node example with choice text, branches, and other details."
         }
       ],

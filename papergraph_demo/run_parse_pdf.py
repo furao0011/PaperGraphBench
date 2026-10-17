@@ -15,7 +15,8 @@ from pathlib import Path
 
 from src.artifact_layout import paper_data_root, safe_paper_id
 from src.batch_progress import BatchTask, PaperBatchProgress
-from src.config import load_dotenv
+from src.config import load_environment
+from src.preflight import validate_config
 from src.progress import log, span
 
 
@@ -26,10 +27,14 @@ DEFAULT_RAW_PAPER_ROOT = PROJECT_ROOT / "rawPaper"
 
 
 def main() -> None:
-    load_dotenv(PROJECT_ROOT / ".env")
+    load_environment(PROJECT_ROOT)
     args = _parse_args()
-    api_url = _required_env("PADDLE_OCR_API_URL")
-    token = _required_env("PADDLE_OCR_TOKEN")
+    if not args.dry_run:
+        errors = validate_config(["parse_pdf"], PROJECT_ROOT)
+        if errors:
+            raise RuntimeError("Configuration errors:\n- " + "\n- ".join(errors))
+    api_url = "" if args.dry_run else _required_env("PADDLE_OCR_API_URL")
+    token = "" if args.dry_run else _required_env("PADDLE_OCR_TOKEN")
     timeout_s = int(os.getenv("PADDLE_OCR_TIMEOUT_S", "600") or "600")
     overwrite = args.overwrite or _env_bool("PAPERGRAPH_OCR_OVERWRITE", False)
     ocr_retries = _env_positive_int("PADDLE_OCR_MAX_RETRIES", 3)
@@ -40,7 +45,8 @@ def main() -> None:
         raise ValueError("--workers must be positive.")
     pdf_paths = _input_pdf_paths(args)
     raw_root = Path(args.raw_paper_root or os.getenv("RAW_PAPER_ROOT") or DEFAULT_RAW_PAPER_ROOT).resolve()
-    raw_root.mkdir(parents=True, exist_ok=True)
+    if not args.dry_run:
+        raw_root.mkdir(parents=True, exist_ok=True)
     fixed_paper_id = "" if args.all_pdfs else safe_paper_id(args.paper_id or os.getenv("PAPER_ID", ""))
     if fixed_paper_id and len(pdf_paths) > 1:
         raise ValueError("PAPER_ID can only be set when parsing a single PDF. Leave PAPER_ID empty for batch OCR.")

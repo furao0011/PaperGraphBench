@@ -735,7 +735,7 @@
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_144_147_1041_493.jpg",
+              "path": "rawPaper/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/imgs/img_in_image_box_144_147_1041_493.jpg",
               "caption": "Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference."
             }
           ]
@@ -825,7 +825,7 @@
             {
               "type": "image",
               "asset_id": "FIG_002",
-              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_197_1054_978_1353.jpg",
+              "path": "rawPaper/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/imgs/img_in_image_box_197_1054_978_1353.jpg",
               "caption": "Table 6: Prompts used in LLM as judge to evaluate groundness in the given claim (generated text) to the given document. To obtain more accurate results, we sequentially provided the model with only the passages related to the question from the given context as prompts."
             }
           ]
@@ -915,7 +915,7 @@
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_144_147_1041_493.jpg",
+              "path": "rawPaper/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/imgs/img_in_image_box_144_147_1041_493.jpg",
               "caption": "Figure 2: Synthetic Paths to Integral Truth. The process of constructing synthetic data to mitigate confirmation bias has a total of three steps. (i) Knowledge Segment Relevance Tagging: Tagging the knowledge related to the question using LLM. The knowledge highlighted in blue green represents the knowledge segments related to the question. (ii) Chosen Response Generation: Generating a chosen response using only the knowledge related to the question (iii) Rejected Response Generation: Partial Evidence-Based Response, Distorted Evidence-Based Response using two methods to make rejected responses. The pair dataset is then used to optimize the LLM's preference."
             }
           ]
@@ -1005,7 +1005,7 @@
             {
               "type": "image",
               "asset_id": "FIG_001",
-              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_644_440_1016_847.jpg",
+              "path": "rawPaper/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/imgs/img_in_image_box_644_440_1016_847.jpg",
               "caption": "Figure 1: Example of Confirmation Bias in LLMs (Llama-3-8B) using RAG-retrieved Knowledge about Brady's Super Bowl appearances. The LLMs typically generate a biased answer by focusing only on one event, such as Super Bowl LII, while ignoring other relevant information like Super Bowl LV. The good answer represents the ideal response the model should generate, referencing both events to provide a complete and accurate answer."
             }
           ]
@@ -1095,7 +1095,7 @@
             {
               "type": "image",
               "asset_id": "FIG_002",
-              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_image_box_197_1054_978_1353.jpg",
+              "path": "rawPaper/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/imgs/img_in_image_box_197_1054_978_1353.jpg",
               "caption": "Table 6: Prompts used in LLM as judge to evaluate groundness in the given claim (generated text) to the given document. To obtain more accurate results, we sequentially provided the model with only the passages related to the question from the given context as prompts."
             }
           ]
@@ -1275,19 +1275,19 @@
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_144_142_411_379.jpg",
+              "path": "rawPaper/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/imgs/img_in_chart_box_144_142_411_379.jpg",
               "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
             },
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_442_141_712_392.jpg",
+              "path": "rawPaper/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/imgs/img_in_chart_box_442_141_712_392.jpg",
               "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
             },
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_742_141_1009_391.jpg",
+              "path": "rawPaper/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/imgs/img_in_chart_box_742_141_1009_391.jpg",
               "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
             }
           ]
@@ -1377,19 +1377,19 @@
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_144_142_411_379.jpg",
+              "path": "rawPaper/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/imgs/img_in_chart_box_144_142_411_379.jpg",
               "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
             },
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_442_141_712_392.jpg",
+              "path": "rawPaper/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/imgs/img_in_chart_box_442_141_712_392.jpg",
               "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
             },
             {
               "type": "image",
               "asset_id": "FIG_004",
-              "path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe\\imgs\\img_in_chart_box_742_141_1009_391.jpg",
+              "path": "rawPaper/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/imgs/img_in_chart_box_742_141_1009_391.jpg",
               "caption": "Figure 3: Comparison between our model and the Llama-8B-Inst baseline as the position of the document containing the answer increases in Lost in the Middle setting. The index on the x-axis represents the position of the gold passage among the total knowledge segments, and the index starts at 0."
             }
           ]

@@ -3731,7 +3731,7 @@
               {
                 "type": "image",
                 "asset_id": "FIG_004",
-                "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_645_867_1101_987.jpg",
+                "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_645_867_1101_987.jpg",
                 "caption": "Figure 4. We randomly select 400 images from the MSCOCO dataset and conduct statistical analyses on LLaVA-1.5 and mPLUG-owl2, and the hierarchical phenomenon in all images"
               }
             ]
@@ -3740,7 +3740,7 @@
         "multimodal_input": {
           "requires_multimodal_input": true,
           "image_paths": [
-            "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_645_867_1101_987.jpg"
+            "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_645_867_1101_987.jpg"
           ],
           "asset_ids": [
             "FIG_004"
@@ -3796,7 +3796,7 @@
               {
                 "type": "image",
                 "asset_id": "FIG_004",
-                "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_645_867_1101_987.jpg",
+                "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_645_867_1101_987.jpg",
                 "caption": "Figure 4. We randomly select 400 images from the MSCOCO dataset and conduct statistical analyses on LLaVA-1.5 and mPLUG-owl2, and the hierarchical phenomenon in all images"
               }
             ]
@@ -3805,7 +3805,7 @@
         "multimodal_input": {
           "requires_multimodal_input": true,
           "image_paths": [
-            "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_645_867_1101_987.jpg"
+            "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_645_867_1101_987.jpg"
           ],
           "asset_ids": [
             "FIG_004"

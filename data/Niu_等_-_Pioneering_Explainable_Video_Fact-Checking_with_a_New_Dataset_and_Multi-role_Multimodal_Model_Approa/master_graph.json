@@ -25594,7 +25594,7 @@
   "multimodal_asset_groups_path": "data/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/cache/multimodal/multimodal_asset_groups.json",
   "multimodal_asset_explanations_path": "data/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/multimodal_asset_explanations.json",
   "evaluation_paper_text_path": "data/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/paper_clean_text.md",
-  "raw_paper_path": "rawPaper\\Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa",
+  "raw_paper_path": "rawPaper/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa",
   "reasoning_threads_path": "data/Niu_等_-_Pioneering_Explainable_Video_Fact-Checking_with_a_New_Dataset_and_Multi-role_Multimodal_Model_Approa/cache/graph_build/reasoning_threads.json",
   "reasoning_threads": [
     {
@@ -25953,5 +25953,8 @@
         "The model does not overgeneralize the success."
       ]
     }
-  ]
+  ],
+  "storage": {
+    "path_base": "repository"
+  }
 }

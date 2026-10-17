@@ -3,20 +3,62 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from src.artifact_paths import resolve_asset_path, resolve_graph_path
+
 
 def load_multimodal_asset_index(graph: dict, base_dir: Path) -> dict[str, dict]:
     rel_path = str(graph.get("multimodal_assets_path") or "").strip()
     if not rel_path:
         return {}
-    path = base_dir / rel_path
+    path = resolve_graph_path(rel_path, base_dir, graph)
     if not path.exists():
         raise FileNotFoundError(f"Master graph references missing multimodal assets file: {path}")
     payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("paper_id") != graph.get("paper_id"):
+        raise ValueError(f"Multimodal assets paper id does not match graph: {path}")
     return {
-        str(asset.get("asset_id", "")).strip(): asset
+        str(asset.get("asset_id", "")).strip(): normalize_asset_paths(asset, graph, base_dir)
         for asset in payload.get("assets", [])
         if isinstance(asset, dict) and str(asset.get("asset_id", "")).strip()
     }
+
+
+def normalize_asset_paths(asset: dict, graph: dict, base_dir: Path) -> dict:
+    """Resolve OCR image references without changing the serialized input object."""
+    normalized = dict(asset)
+
+    def image_path(raw_path: object) -> str:
+        path = resolve_asset_path(str(raw_path or ""), base_dir, graph)
+        if not path.is_file():
+            raise FileNotFoundError(f"Asset {asset.get('asset_id')} references missing image: {path}")
+        return str(path)
+
+    if "image_paths" in asset:
+        normalized["image_paths"] = [image_path(path) for path in asset["image_paths"]]
+    if "attachments" in asset:
+        attachments = []
+        for attachment in asset["attachments"]:
+            item = dict(attachment)
+            if item.get("type") == "image":
+                item["path"] = image_path(item.get("path"))
+            attachments.append(item)
+        normalized["attachments"] = attachments
+    return normalized
+
+
+def normalize_question_asset_paths(question: dict, graph: dict, base_dir: Path) -> dict:
+    normalized = dict(question)
+    if "asset_references" in question:
+        normalized["asset_references"] = [
+            normalize_asset_paths(ref, graph, base_dir) for ref in question["asset_references"]
+        ]
+    metadata = question.get("question_metadata")
+    if isinstance(metadata, dict) and "asset_references" in metadata:
+        normalized["question_metadata"] = {
+            **metadata,
+            "asset_references": [normalize_asset_paths(ref, graph, base_dir) for ref in metadata["asset_references"]],
+        }
+    return normalized
 
 
 def asset_references_for_kcs(kcs: list[dict], asset_index: dict[str, dict] | None = None) -> list[dict]:

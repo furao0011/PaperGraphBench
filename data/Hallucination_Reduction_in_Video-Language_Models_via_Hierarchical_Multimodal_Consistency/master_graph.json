@@ -17302,7 +17302,7 @@
   "multimodal_asset_groups_path": "data/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/cache/multimodal/multimodal_asset_groups.json",
   "multimodal_asset_explanations_path": "data/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/multimodal_asset_explanations.json",
   "evaluation_paper_text_path": "data/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/paper_clean_text.md",
-  "raw_paper_path": "rawPaper\\Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency",
+  "raw_paper_path": "rawPaper/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency",
   "reasoning_threads_path": "data/Hallucination_Reduction_in_Video-Language_Models_via_Hierarchical_Multimodal_Consistency/cache/graph_build/reasoning_threads.json",
   "reasoning_threads": [
     {
@@ -17572,5 +17572,8 @@
         "The model does not introduce alternative explanations."
       ]
     }
-  ]
+  ],
+  "storage": {
+    "path_base": "repository"
+  }
 }

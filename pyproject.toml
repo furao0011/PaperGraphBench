@@ -1,7 +1,7 @@
 [project]
 name = "paper2bench"
 version = "0.1.0"
-description = "PaperGraph demo scaffold for paper understanding evaluation"
+description = "Graph-guided benchmark construction and multi-turn scientific-paper evaluation"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

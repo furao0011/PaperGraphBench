@@ -34,13 +34,13 @@
         "P001_B0012"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_658_1101_1085_1305.jpg"
+        "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_658_1101_1085_1305.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_001",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_658_1101_1085_1305.jpg",
+          "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_658_1101_1085_1305.jpg",
           "caption": "Figure 1. SHIFT is effective for mitigating hallucinations."
         }
       ],
@@ -113,13 +113,13 @@
         "P004_B0001"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_125_145_580_383.jpg"
+        "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_125_145_580_383.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_002",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_125_145_580_383.jpg",
+          "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_125_145_580_383.jpg",
           "caption": "Figure 2. JSDs of the probability distributions between two adjacent layers in LLaVA-1.5."
         }
       ],
@@ -196,20 +196,20 @@
         "P004_B0012"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_626_143_869_300.jpg",
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_867_143_1107_300.jpg"
+        "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_626_143_869_300.jpg",
+        "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_867_143_1107_300.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_003",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_626_143_869_300.jpg",
+          "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_626_143_869_300.jpg",
           "caption": "Figure 3. The probability changes of tokens across different layers."
         },
         {
           "type": "image",
           "asset_id": "FIG_003",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_867_143_1107_300.jpg",
+          "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_867_143_1107_300.jpg",
           "caption": "Figure 3. The probability changes of tokens across different layers."
         }
       ],
@@ -293,13 +293,13 @@
         "P004_B0016"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_645_867_1101_987.jpg"
+        "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_645_867_1101_987.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_004",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_645_867_1101_987.jpg",
+          "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_645_867_1101_987.jpg",
           "caption": "Figure 4. We randomly select 400 images from the MSCOCO dataset and conduct statistical analyses on LLaVA-1.5 and mPLUG-owl2, and the hierarchical phenomenon in all images"
         }
       ],
@@ -372,13 +372,13 @@
         "P005_B0001"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_119_145_586_308.jpg"
+        "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_119_145_586_308.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_005",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_119_145_586_308.jpg",
+          "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_119_145_586_308.jpg",
           "caption": "Figure 5. Visualization of attention maps before and after mutation shows that the original distribution aligns with input semantics, while the mutated version significantly deviates."
         }
       ],
@@ -451,13 +451,13 @@
         "P005_B0003"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_125_427_573_563.jpg"
+        "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_125_427_573_563.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_006",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_125_427_573_563.jpg",
+          "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_125_427_573_563.jpg",
           "caption": "Figure 6. Mutation knowledge may differ significantly from the original, leading the model to make predictions faithless to the input image, such as describing a “black” apple as “red”."
         }
       ],
@@ -613,13 +613,13 @@
         "P005_B0011"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_645_146_1089_441.jpg"
+        "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_645_146_1089_441.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_007",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_645_146_1089_441.jpg",
+          "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_645_146_1089_441.jpg",
           "caption": "Figure 7. The continuous information from preceding layers is used to tune the mutated information, and therefore the injected hallucinated knowledge can be smoothed."
         }
       ],
@@ -871,13 +871,13 @@
         "P007_B0006"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_659_494_1082_825.jpg"
+        "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_659_494_1082_825.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_008",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_chart_box_659_494_1082_825.jpg",
+          "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_chart_box_659_494_1082_825.jpg",
           "caption": "Figure 8. Experimental results on the MMHal-Bench benchmark."
         }
       ],
@@ -1691,13 +1691,13 @@
         "P009_B0001"
       ],
       "image_paths": [
-        "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_192_141_1032_446.jpg"
+        "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_192_141_1032_446.jpg"
       ],
       "attachments": [
         {
           "type": "image",
           "asset_id": "FIG_009",
-          "path": "D:\\Paper\\PaperGraph\\PaperGraphBench-master\\rawPaper\\SHIFT_ICCV2025_-11pages\\imgs\\img_in_image_box_192_141_1032_446.jpg",
+          "path": "rawPaper/SHIFT_ICCV2025_-11pages/imgs/img_in_image_box_192_141_1032_446.jpg",
           "caption": "Figure 9. SHIFT effectively suppresses token probability mutations caused by injected hallucinated information."
         }
       ],

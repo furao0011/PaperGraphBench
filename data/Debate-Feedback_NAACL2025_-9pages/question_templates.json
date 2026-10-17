@@ -772,7 +772,7 @@
             {
               "type": "image",
               "asset_id": "FIG_001",
-              "path": "rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_image_box_253_154_937_389.jpg",
+              "path": "rawPaper/Debate-Feedback_NAACL2025_-9pages/imgs/img_in_image_box_253_154_937_389.jpg",
               "caption": "Figure 1: A brief introduction of Debate-Feedback Structure"
             }
           ]
@@ -867,7 +867,7 @@
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_chart_box_325_923_864_1332.jpg",
+              "path": "rawPaper/Debate-Feedback_NAACL2025_-9pages/imgs/img_in_chart_box_325_923_864_1332.jpg",
               "caption": "Figure 3: Influence of the number of rounds selected."
             }
           ]
@@ -971,7 +971,7 @@
             {
               "type": "image",
               "asset_id": "FIG_001",
-              "path": "rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_image_box_253_154_937_389.jpg",
+              "path": "rawPaper/Debate-Feedback_NAACL2025_-9pages/imgs/img_in_image_box_253_154_937_389.jpg",
               "caption": "Figure 1: A brief introduction of Debate-Feedback Structure"
             }
           ]
@@ -1264,7 +1264,7 @@
             {
               "type": "image",
               "asset_id": "FIG_003",
-              "path": "rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_chart_box_325_923_864_1332.jpg",
+              "path": "rawPaper/Debate-Feedback_NAACL2025_-9pages/imgs/img_in_chart_box_325_923_864_1332.jpg",
               "caption": "Figure 3: Influence of the number of rounds selected."
             }
           ]
@@ -1354,7 +1354,7 @@
             {
               "type": "image",
               "asset_id": "FIG_002",
-              "path": "rawPaper\\Debate-Feedback_NAACL2025_-9pages\\imgs\\img_in_chart_box_325_400_866_820.jpg",
+              "path": "rawPaper/Debate-Feedback_NAACL2025_-9pages/imgs/img_in_chart_box_325_400_866_820.jpg",
               "caption": "Figure 2: Influence of the number of debaters selected."
             }
           ]

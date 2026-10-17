@@ -18502,7 +18502,7 @@
   "multimodal_asset_groups_path": "data/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/cache/multimodal/multimodal_asset_groups.json",
   "multimodal_asset_explanations_path": "data/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/multimodal_asset_explanations.json",
   "evaluation_paper_text_path": "data/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/paper_clean_text.md",
-  "raw_paper_path": "rawPaper\\Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding",
+  "raw_paper_path": "rawPaper/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding",
   "reasoning_threads_path": "data/Multi-Granular_Multimodal_Clue_Fusion_for_Meme_Understanding/cache/graph_build/reasoning_threads.json",
   "reasoning_threads": [
     {
@@ -18853,5 +18853,8 @@
         "The model correctly connects the modules as parts that realize the novelty."
       ]
     }
-  ]
+  ],
+  "storage": {
+    "path_base": "repository"
+  }
 }

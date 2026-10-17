@@ -26589,7 +26589,7 @@
   "multimodal_asset_groups_path": "data/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/cache/multimodal/multimodal_asset_groups.json",
   "multimodal_asset_explanations_path": "data/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/multimodal_asset_explanations.json",
   "evaluation_paper_text_path": "data/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/paper_clean_text.md",
-  "raw_paper_path": "rawPaper\\Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe",
+  "raw_paper_path": "rawPaper/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe",
   "reasoning_threads_path": "data/Ok_等_-_2025_-_Synthetic_Paths_to_Integral_Truth_Mitigating_Hallucinations_Caused_by_Confirmation_Bias_with_Synthe/cache/graph_build/reasoning_threads.json",
   "reasoning_threads": [
     {
@@ -26973,5 +26973,8 @@
         "The model remains consistent in the review step."
       ]
     }
-  ]
+  ],
+  "storage": {
+    "path_base": "repository"
+  }
 }

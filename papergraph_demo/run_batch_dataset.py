@@ -11,7 +11,8 @@ from pathlib import Path
 
 from src.artifact_layout import PaperArtifactLayout
 from src.batch_progress import BatchTask, PaperBatchProgress
-from src.config import load_dotenv
+from src.config import load_environment
+from src.preflight import validate_config
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -21,12 +22,21 @@ DEFAULT_LOG_ROOT = PROJECT_ROOT / "logs" / "main_dataset"
 
 
 def main() -> None:
-    load_dotenv(PROJECT_ROOT / ".env")
+    load_environment(PROJECT_ROOT)
     args = _parse_args()
     if args.skip_graph and args.skip_questions:
         raise ValueError("At least one dataset stage must be enabled.")
     if args.workers <= 0:
         raise ValueError("--workers must be positive.")
+    if not args.dry_run:
+        stages = []
+        if not args.skip_graph:
+            stages.append("build_graph")
+        if not args.skip_questions:
+            stages.append("generate_questions")
+        errors = validate_config(stages, PROJECT_ROOT)
+        if errors:
+            raise RuntimeError("Configuration errors:\n- " + "\n- ".join(errors))
 
     raw_root = Path(args.raw_paper_root or os.getenv("RAW_PAPER_ROOT") or DEFAULT_RAW_PAPER_ROOT).resolve()
     log_root = Path(args.log_dir or os.getenv("DATASET_BATCH_LOG_DIR") or DEFAULT_LOG_ROOT).resolve()
