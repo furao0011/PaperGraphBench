@@ -10,7 +10,7 @@ PaperGraph-Bench 从科学论文构建图引导的评测基准，并通过多轮
 
 ## 推荐入口：使用已有数据集评测并自动统计
 
-> **直接运行 `start.ps1` / `start.sh`，默认评测仓库 `data/` 中已有的 12 篇论文题包并统计，不重新建图、出题或做 OCR。运行结束自动生成逐论文明细和按模型汇总的统计表；显式使用 `test` 命令效果相同。**
+> **直接运行 `start.ps1` / `start.sh`，默认评测仓库 `data/` 中已有的 12 篇论文题包并统计，不重新建图、出题或做 OCR。运行结束自动生成逐论文结果、模型汇总和细粒度幻觉分类文件，无需另行执行提取脚本；显式使用 `test` 命令效果相同。**
 
 安装 [uv](https://docs.astral.sh/uv/)，使用 Python 3.11+。在完整克隆的仓库根目录运行：
 
@@ -57,15 +57,23 @@ Judge 需要支持结构化 JSON 输出，被测模型需要支持图片输入�
 
 | 文件或目录 | 用途 |
 | --- | --- |
-| `statistics/summary.csv` | 按模型汇总的主要指标、标准差、有效论文数及完整性统计，优先查看 |
+| `statistics/four_dimensions.csv` | 四维专用表，每模型六行，含均值、标准差、分母及任务状态，优先查看 |
+| `statistics/summary.csv` | 完整模型指标、标准差、有效论文数及任务完整性统计 |
 | `statistics/per_paper.csv` | 每轮每篇论文的明细、分子分母和完成状态 |
 | `statistics/summary.json` | 可供程序读取的统计结果 |
+| `statistics/classification_events.csv`、`classification_events.json` | 自动导出的逐事件分类、来源、关联 KC 和最终状态 |
+| `statistics/classification_paths.csv` | 按模型与原始 `family/type/subtype` 路径列出的事件数量 |
+| `statistics/classification_summary.csv`、`classification_summary.json` | 按模型的分类完整性及问题统计；JSON 同时包含分类路径分布 |
 | `round-01/evaluation/<model>/<paper_id>/` | 逐任务 `evaluation_report.json`、`dialogue_trajectory.json` 及状态缓存 |
 | `testing.json`、`main.log`、`logs/` | 计划任务清单、主进程日志及分阶段日志 |
 
-统计包含 KC 覆盖率、宏阶段完成率、挑战失败率、幻觉轮次比例、事件密度、事件闭环率和遗漏补全率等。主表按论文等权平均；空分母显示为空/N/A，缺失或未完成任务会明确标注，不按零分计入模型均值。多轮实验先对同一论文跨轮平均，再汇总论文均值。
+四个评估维度为知识覆盖、挑战诱发幻觉、幻觉行为和错误修复。挑战题中的错误或幻觉回答计作挑战诱发幻觉，兼容原 `challenge_failure` 指标名；`INCOMPLETE` 不算幻觉。主表按论文等权平均；空分母显示为空/N/A，缺失或未完成任务单列，不按零分计入均值。多轮实验先对同一论文跨轮平均，再汇总论文均值。
 
-已有评测报告也可单独重新统计，**不调用模型 API**：
+分类统计自动读取最终状态库，检查事件计数与报告一致并保留缺失、重复等标签问题；已完成任务缺少最终状态文件时明确报错，不当作零事件。无事件时分类完整率为 N/A，三级字段完整或不重复仅表示候选路径，不自动证明语义上的三级细分。
+
+先看 `four_dimensions.csv`、`classification_paths.csv` 和 `classification_summary.csv`，即可查看四维结果、实际分类数量与分类问题；上述九个文件均由默认启动自动生成。分类数量累加已完成任务跨论文、跨轮次的原始事件数，不是四维表的论文等权均值。接口调用成功不等于回答无幻觉或分类层级有效。
+
+已有评测报告和最终状态也可单独重新统计，**不调用模型 API，并自动导出上述全部分类文件**：
 
 ```powershell
 uv run --locked python scripts/summarize_results.py --result-root outputs/evaluation

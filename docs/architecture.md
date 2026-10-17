@@ -2,7 +2,9 @@
 
 PaperGraph-Bench has four ordered stages. The root `start.ps1` and `start.sh` launchers prepare dependencies and configuration. Their default is existing-dataset evaluation and statistics; an explicit `run` command invokes the construction pipeline through `run.py`. The implementation lives in `papergraph_demo/`.
 
-Running `start.ps1` / `bash start.sh` without a command is equivalent to `test`: it consumes all existing `data/` packages, evaluates one round per model, and exports statistics. It does not run construction stages. New sessions under `outputs/testing/` contain the task manifest, independent rounds, logs, and `statistics/{summary.csv,per_paper.csv,summary.json}`. `scripts/summarize_results.py` can also summarize existing results without model requests.
+Running `start.ps1` / `bash start.sh` without a command is equivalent to `test`: it consumes all existing `data/` packages, evaluates one round per model, and exports four-dimension metrics and fine-grained hallucination statistics. It does not run construction stages. New sessions under `outputs/testing/` contain the task manifest, independent rounds, logs, and `statistics/`; start with `four_dimensions.csv`, `classification_paths.csv`, and `classification_summary.csv`. Full metric tables and event CSV/JSON are also exported. `scripts/summarize_results.py` regenerates these files without model requests, validating completed tasks against final state stores rather than substituting turn snapshots or empty events.
+
+Statistics are separated into input validation (`statistics_inputs.py`), metric aggregation (`statistics_metrics.py`), four-dimension presentation (`statistics_dimensions.py`), final-event classification (`statistics_classification.py`), and export (`summarize_results.py`). The challenge-induced hallucination dimension uses the existing turn-based `challenge_failure` ratio; it is not a count of all failed or incomplete answers.
 
 ```text
 PDF ──parse──> rawPaper/<paper_id>/

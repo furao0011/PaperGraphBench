@@ -68,6 +68,14 @@ class _ProviderHandler(BaseHTTPRequestHandler):
                         "judge_explanation": "The answer covers the sole target KC.",
                     }
                 )
+                if self.server.inject_hallucination and not self.server.hallucination_injected:
+                    self.server.hallucination_injected = True
+                    judgement = json.loads(content)
+                    judgement.update(state="HALLUCINATION", next_action="hallucination_followup",
+                                     hallucination_type="unsupported_detail",
+                                     hallucinated_claims=["The paper used an unsupported additional dataset."],
+                                     judge_explanation="Controlled fixture error to test event tracking and repair.")
+                    content = json.dumps(judgement)
         else:
             self._respond(400, {"error": "unexpected model or request shape"})
             return
@@ -96,6 +104,8 @@ class PipelineHttpTests(unittest.TestCase):
         self.server.requests = []
         self.server.requests_lock = threading.Lock()
         self.server.reject_target = False
+        self.server.inject_hallucination = False
+        self.server.hallucination_injected = False
         self.server_thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.server_thread.start()
         self.addCleanup(self._stop_server)

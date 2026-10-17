@@ -169,7 +169,7 @@ class ExistingDatasetHttpTests(unittest.TestCase):
         self.addCleanup(self.fixture.doCleanups)
 
     def _run(self, repeats=1):
-        return subprocess.run([sys.executable, str(ROOT / "scripts" / "start.py"), "test",
+        return subprocess.run([sys.executable, str(ROOT / "scripts" / "start.py"),
             "--config", str(self.fixture.config_path), "--data-root", str(self.fixture.root / "data"),
             "--output-root", str(self.fixture.root / "testing"), "--repeats", str(repeats)],
             cwd=ROOT.parent, env=self.fixture._isolated_env(), capture_output=True,
@@ -185,7 +185,15 @@ class ExistingDatasetHttpTests(unittest.TestCase):
         self.assertEqual(manifest["status"], "completed")
         self.assertEqual(len(manifest["expected_tasks"]), 2)
         self.assertEqual(json.loads((session / "statistics" / "summary.json").read_text(encoding="utf-8"))["task_counts"]["completed"], 2)
-        self.assertTrue((session / "statistics" / "summary.csv").is_file())
+        for name in ("summary.csv", "four_dimensions.csv", "classification_paths.csv", "classification_events.csv", "classification_events.json",
+                     "classification_summary.csv", "classification_summary.json"):
+            self.assertTrue((session / "statistics" / name).is_file(), name)
+        classification = json.loads((session / "statistics" / "classification_summary.json").read_text(encoding="utf-8"))
+        self.assertEqual(classification["task_counts"]["completed"], 2)
+        self.assertEqual(classification["event_count"], 0)
+        self.assertIsNone(classification["three_fields_present_rate"])
+        self.assertIn("4. Error repair", process.stdout)
+        self.assertIn("[classification]", process.stdout)
         self.assertEqual(before, {path.name: path.read_bytes() for path in (self.fixture.root / "data" / "tiny").iterdir()})
 
     def test_http_failure_marks_session_failed_without_successful_statistics(self):
@@ -196,6 +204,21 @@ class ExistingDatasetHttpTests(unittest.TestCase):
         self.assertEqual(json.loads((session / "testing.json").read_text(encoding="utf-8"))["status"], "failed")
         self.assertFalse((session / "round-02").exists())
         self.assertFalse((session / "statistics" / "summary.csv").exists())
+
+    def test_default_http_evaluation_exports_actual_hallucination_and_repair_classification(self):
+        self.fixture.server.inject_hallucination = True
+        process = self._run()
+        logs = "\n".join(path.read_text(encoding="utf-8") for path in (self.fixture.root / "testing").rglob("*.log"))
+        self.assertEqual(process.returncode, 0, process.stdout + process.stderr + logs)
+        session = next((self.fixture.root / "testing").iterdir())
+        events = json.loads((session / "statistics" / "classification_events.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(events), 1)
+        self.assertEqual(events[0]["family"], "contradicted_kc_claim")
+        self.assertEqual(events[0]["subtype"], "unsupported_detail")
+        self.assertEqual(events[0]["status"], "resolved")
+        self.assertTrue(events[0]["followup_turns"])
+        self.assertIn("duplicate_labels", events[0]["issues"])
+        self.assertTrue((session / "statistics" / "four_dimensions.csv").is_file())
 
 
 if __name__ == "__main__":

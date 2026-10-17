@@ -10,7 +10,7 @@ For test operators, see the [Indicator 1.3 evaluation plan (Chinese)](docs/evalu
 
 ## Recommended: evaluate existing datasets and generate statistics
 
-> **Running `start.ps1` / `start.sh` without a command evaluates the 12 released paper packages in `data/` and exports statistics. It does not rebuild graphs, regenerate questions, or run OCR. The explicit `test` command does the same.**
+> **Running `start.ps1` / `start.sh` without a command evaluates the 12 released paper packages in `data/` and exports per-paper results, model summaries, and fine-grained hallucination classifications. No separate extraction script is needed. It does not rebuild graphs, regenerate questions, or run OCR. Explicit `test` does the same.**
 
 Install [uv](https://docs.astral.sh/uv/), use Python 3.11+, and run from a complete repository checkout:
 
@@ -57,15 +57,23 @@ Each test creates `outputs/testing/<session>/` and prints the exact path:
 
 | File or directory | Purpose |
 | --- | --- |
-| `statistics/summary.csv` | Main model-level metrics, standard deviations, valid-paper counts and completeness statistics; start here |
+| `statistics/four_dimensions.csv` | Four-dimension table, six rows per model, with means, standard deviations, denominators and task status; start here |
+| `statistics/summary.csv` | Full model-level metrics, standard deviations, valid-paper counts and completeness statistics |
 | `statistics/per_paper.csv` | Per-round, per-paper metrics, numerators, denominators and completion status |
 | `statistics/summary.json` | Machine-readable statistics |
+| `statistics/classification_events.csv`, `classification_events.json` | Automatically exported event classifications, origins, related KCs, and final status |
+| `statistics/classification_paths.csv` | Event counts per model and original `family/type/subtype` path |
+| `statistics/classification_summary.csv`, `classification_summary.json` | Per-model classification completeness and issue counts; JSON also includes classification-path distributions |
 | `round-01/evaluation/<model>/<paper_id>/` | Per-task `evaluation_report.json`, `dialogue_trajectory.json` and state cache |
 | `testing.json`, `main.log`, `logs/` | Planned task manifest, main log and stage logs |
 
-Statistics cover KC coverage, macro completion, challenge failure, hallucination-turn proportion, event density, event closure and omission completion. Main means weight papers equally. Zero denominators are blank/N/A; missing or incomplete tasks are identified rather than scored as zero. Repeated runs are averaged within each paper before averaging across papers.
+The four dimensions are knowledge coverage, challenge-induced hallucination, hallucination behavior, and error repair. Erroneous or hallucinatory challenge answers count as challenge-induced hallucinations, retaining the compatible `challenge_failure` metric name; `INCOMPLETE` is not a hallucination. Main means weight papers equally. Zero denominators are blank/N/A; missing or incomplete tasks are listed separately rather than scored as zero. Repeated runs are averaged within each paper before averaging across papers.
 
-Existing reports can also be summarized separately, **without model API calls**:
+Classification statistics automatically read the final state, check event counts against the report, and retain missing or repeated label issues. A completed task without its final state is an error, not a zero-event result. With no events, classification completeness is N/A. Complete or non-repeating label fields identify candidate paths, not proof of three semantic classification levels.
+
+Start with `four_dimensions.csv`, `classification_paths.csv`, and `classification_summary.csv` for the four dimensions, observed category counts, and classification issues. The default launch automatically creates all nine statistics files above. Category counts sum raw events across completed papers and independent runs; they are not the paper-weighted means in the four-dimension table. A successful API call does not establish a hallucination-free answer or valid semantic classification levels.
+
+Existing reports and final states can also be summarized separately, **without model API calls, automatically exporting all classification files above**:
 
 ```powershell
 uv run --locked python scripts/summarize_results.py --result-root outputs/evaluation

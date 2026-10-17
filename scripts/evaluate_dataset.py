@@ -76,7 +76,7 @@ def _test(args) -> int:
     print(f"[testing] NO graph construction or question generation; session={session}")
     for index in range(1, args.repeats + 1):
         print(f"[plan] round-{index:02d}: {' '.join(command)} -> {session / f'round-{index:02d}' / 'evaluation'}")
-    print(f"[plan] automatic statistics -> {session / 'statistics'}")
+    print(f"[plan] automatic four-dimension metrics and hallucination classification -> {session / 'statistics'}")
     if args.dry_run:
         return 0
     for job in jobs:
@@ -118,6 +118,7 @@ def _test(args) -> int:
         manifest["finished_at"] = datetime.now(timezone.utc).isoformat()
         write_json(session / "testing.json", manifest)
         print(f"[testing] completed; summary CSV={session / 'statistics' / 'summary.csv'}")
+        print(f"[testing] four dimensions={session / 'statistics' / 'four_dimensions.csv'}; classification={session / 'statistics' / 'classification_summary.csv'}")
         print(f"[testing] per-paper CSV={session / 'statistics' / 'per_paper.csv'}; main log={session / 'main.log'}")
         return 0
     except BaseException:

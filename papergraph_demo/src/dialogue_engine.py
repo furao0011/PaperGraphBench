@@ -47,12 +47,17 @@ def generate_followup_question(
             for event in active_hallucinations
             if event.get("claim")
         ] or last_turn.get("judge_result", {}).get("hallucinated_claims", [])
-        hint = primary.get("forbidden_claims", [{}])[0].get("followup_hint", "Re-check the statement against the paper evidence and correct it.")
+        hints = list(dict.fromkeys(
+            forbidden["followup_hint"]
+            for kc in target_kcs
+            for forbidden in kc.get("forbidden_claims", [])
+            if forbidden.get("followup_hint")
+        ))
         prompt_name = "generate_hallucination_followup.txt"
         prompt_kwargs = {
             "question": last_turn.get("question_text", ""),
             "hallucinated_claims": json.dumps(hallucinated, ensure_ascii=False),
-            "followup_hints": json.dumps([hint], ensure_ascii=False),
+            "followup_hints": json.dumps(hints, ensure_ascii=False),
             "repair_context_json": json.dumps(repair_context or {}, ensure_ascii=False),
         }
         claims_text = "; ".join(str(c) for c in hallucinated[:3]) if hallucinated else "the suspicious claim(s) in the previous answer"

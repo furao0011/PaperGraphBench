@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from summarize_results import _csv, main, summarize
+from summarize_results import _csv, main, print_summary, summarize
 from statistics_inputs import report_path
 
 
@@ -33,13 +33,28 @@ class ResultStatisticsTests(unittest.TestCase):
                   "coverage_metrics": {f"{name}_kc_{suffix}": value for name in ("global", "target", "critical") for suffix, value in (("lit_count", covered), ("total", total))},
                   "macro_metrics": {"macro_total": 2, "macro_completion_rate": 0.5},
                   "challenge_metrics": {"challenge_total": challenge_total, "challenge_failure_count": min(1, challenge_total)},
-                  "hallucination_metrics": {"hallucination_turn_count": 1, "hallucination_event_count": events,
-                                            "hallucination_by_status": {"resolved": resolved, "exhausted": events - resolved}},
+                  "hallucination_metrics": {"hallucination_turn_count": int(events > 0), "hallucination_event_count": events,
+                                            "hallucination_by_type": {"challenge_false_premise_acceptance": events} if events else {},
+                                            "hallucination_by_status": {key: value for key, value in {"resolved": resolved, "exhausted": events - resolved}.items() if value}},
                   "detail_completion_metrics": {"coverage_gap_count": 1, "coverage_gap_resolved_count": 1},
                   "thread_metrics": {"bridge_reasoning_tested_count": 1, "bridge_reasoning_success_count": 1}}
-        trajectory = {"paper_id": paper, "target_model": model, "turns": [{"turn_id": "T1"}, {"turn_id": "T2"}]}
+        trajectory = {"paper_id": paper, "target_model": model,
+                      "turns": [{"turn_id": "T1", "question_id": "Q1"}, {"turn_id": "T2", "question_id": "Q2"}]}
+        final_events = {}
+        for index in range(events):
+            event_id = f"H_T1_{index + 1}"
+            final_events[event_id] = {
+                "event_id": event_id, "created_at_turn": "T1", "source_question_id": "Q1",
+                "hallucination_family": "challenge_failure", "hallucination_type": "challenge_false_premise_acceptance",
+                "subtype": "false_premise", "claim": "Unsupported fixture claim", "related_kc_ids": ["K1"],
+                "status": "resolved" if index < resolved else "exhausted", "followup_turns": ["T2"],
+                "resolved_at_turn": "T2" if index < resolved else None, "source": "judge_result.hallucination_events",
+            }
         path.write_text(json.dumps(report), encoding="utf-8")
         (path.parent / "dialogue_trajectory.json").write_text(json.dumps(trajectory), encoding="utf-8")
+        state_path = path.parent / "cache" / "eval_state_graph.json"
+        state_path.parent.mkdir()
+        state_path.write_text(json.dumps({"paper_id": paper, "target_model": model, "hallucination_events": final_events}), encoding="utf-8")
         return path, task
 
     def edit(self, path, change):
@@ -55,6 +70,53 @@ class ResultStatisticsTests(unittest.TestCase):
         path = self.root / "statistics" / "per_paper.csv"
         self.assertTrue(path.read_bytes().startswith(b"\xef\xbb\xbf"))
         self.assertIn("中文论文", path.read_text(encoding="utf-8-sig"))
+
+    def test_default_statistics_export_four_dimensions_and_classification(self):
+        self.report()
+        result = summarize(self.root)
+        destination = self.root / "statistics"
+        expected = {"summary.csv", "per_paper.csv", "summary.json", "four_dimensions.csv",
+                    "classification_events.csv", "classification_events.json",
+                    "classification_summary.csv", "classification_summary.json", "classification_paths.csv"}
+        self.assertEqual({path.name for path in destination.iterdir()}, expected)
+        with (destination / "four_dimensions.csv").open(encoding="utf-8-sig", newline="") as stream:
+            dimensions = list(csv.DictReader(stream))
+        self.assertEqual(len(dimensions), 6)
+        self.assertEqual(len({row["dimension_id"] for row in dimensions}), 4)
+        challenge = next(row for row in dimensions if row["metric"] == "challenge_induced_hallucination")
+        self.assertEqual(challenge["source_metric"], "challenge_failure")
+        self.assertEqual(float(challenge["mean"]), 1)
+        self.assertEqual(result["classification"]["event_count"], 1)
+        self.assertEqual(result["classification"]["three_fields_present_rate"], 1)
+        with (destination / "classification_paths.csv").open(encoding="utf-8-sig", newline="") as stream:
+            paths = list(csv.DictReader(stream))
+        self.assertEqual(paths[0]["family"], "challenge_failure")
+        self.assertEqual(paths[0]["event_count"], "1")
+        self.assertEqual(result["four_dimensions"][1]["mean"], result["models"][0]["challenge_failure_mean"])
+        console = io.StringIO()
+        with redirect_stdout(console):
+            print_summary(result)
+        for label in ("Knowledge coverage", "Challenge-induced hallucination", "Hallucination behavior", "Error repair", "[classification]"):
+            self.assertIn(label, console.getvalue())
+
+    def test_missing_classification_state_stops_before_exporting_successful_statistics(self):
+        path, _ = self.report()
+        (path.parent / "cache" / "eval_state_graph.json").unlink()
+        with redirect_stderr(io.StringIO()):
+            self.assertEqual(main(["--result-root", str(self.root)]), 1)
+        self.assertFalse((self.root / "statistics").exists())
+
+    def test_classification_csv_protects_untrusted_labels_without_modifying_json(self):
+        path, _ = self.report()
+        state_path = path.parent / "cache" / "eval_state_graph.json"
+        self.edit(state_path, lambda value: value["hallucination_events"]["H_T1_1"].update(subtype="=HYPERLINK(1)", claim="  +untrusted"))
+        summarize(self.root)
+        with (self.root / "statistics" / "classification_events.csv").open(encoding="utf-8-sig", newline="") as stream:
+            event = next(csv.DictReader(stream))
+        self.assertEqual(event["subtype"], "'=HYPERLINK(1)")
+        self.assertEqual(event["claim"], "'  +untrusted")
+        original = json.loads((self.root / "statistics" / "classification_events.json").read_text(encoding="utf-8"))[0]
+        self.assertEqual(original["subtype"], "=HYPERLINK(1)")
 
     def test_repetitions_are_averaged_before_papers(self):
         self.report(paper="a", round="round-01", covered=0)
