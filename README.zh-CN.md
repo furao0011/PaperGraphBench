@@ -58,22 +58,23 @@ Judge 需要支持结构化 JSON 输出，被测模型需要支持图片输入�
 | 文件或目录 | 用途 |
 | --- | --- |
 | `statistics/four_dimensions.csv` | 四维专用表，每模型六行，含均值、标准差、分母及任务状态，优先查看 |
+| `statistics/failure_category_by_model.csv` | 论文四类幻觉及未映射事件的模型级计数，优先查看 |
 | `statistics/summary.csv` | 完整模型指标、标准差、有效论文数及任务完整性统计 |
 | `statistics/per_paper.csv` | 每轮每篇论文的明细、分子分母和完成状态 |
 | `statistics/summary.json` | 可供程序读取的统计结果 |
-| `statistics/classification_events.csv`、`classification_events.json` | 自动导出的逐事件分类、来源、关联 KC 和最终状态 |
-| `statistics/classification_paths.csv` | 按模型与原始 `family/type/subtype` 路径列出的事件数量 |
+| `statistics/classification_events.csv`、`classification_events.json` | 逐事件论文类别、原始标签、来源、关联 KC 和最终状态 |
+| `statistics/classification_paths.csv` | 原始 `family/type/subtype` 路径数量，用于排查底层标签 |
 | `statistics/classification_summary.csv`、`classification_summary.json` | 按模型的分类完整性及问题统计；JSON 同时包含分类路径分布 |
 | `round-01/evaluation/<model>/<paper_id>/` | 逐任务 `evaluation_report.json`、`dialogue_trajectory.json` 及状态缓存 |
 | `testing.json`、`main.log`、`logs/` | 计划任务清单、主进程日志及分阶段日志 |
 
 四个评估维度为知识覆盖、挑战诱发幻觉、幻觉行为和错误修复。挑战题中的错误或幻觉回答计作挑战诱发幻觉，兼容原 `challenge_failure` 指标名；`INCOMPLETE` 不算幻觉。主表按论文等权平均；空分母显示为空/N/A，缺失或未完成任务单列，不按零分计入均值。多轮实验先对同一论文跨轮平均，再汇总论文均值。
 
-已有幻觉分类包括 **KC 证据冲突、无依据主张／虚构、挑战诱发、跨轮推理、回顾阶段幻觉**五类事件族；其中显式区分**错误前提接受、过度推断接受、错误关系接受、错误推理桥接受、线程过度推断接受、前提变异接受**六种挑战相关细类。具体定义、代码标签及判定依据见[测评方案第四节](docs/evaluation_plan.zh-CN.md)。`classification_paths.csv` 按实际事件的类别族、类型和细分标签统计，不以挑战题数代替幻觉事件数。
+论文采用 **KC 证据冲突（Contr.KC）、错误前提接受（False prem.）、过度推断接受（Overclaim）、错误关系接受（Wrong rel.）**四类幻觉。线程前提变异归入错误前提，线程过度推断归入过度推断，错误推理桥及通用线程推理幻觉归入错误关系，回顾退化归入 KC 证据冲突。按原始 `hallucination_type` 精确映射；`fabricated_claim`、未细分的 `challenge_failure` 等未映射事件透明单列，不猜测归类。完整规则见[测评方案第四节](docs/evaluation_plan.zh-CN.md)。底层 `family/type/subtype` 仅作技术溯源，不另计成论文主类别。
 
 分类统计自动读取最终状态库，检查事件计数与报告一致并保留缺失、重复等标签问题；已完成任务缺少最终状态文件时明确报错，不当作零事件。无事件时分类完整率为 N/A，三级字段完整或不重复仅表示候选路径，不自动证明语义上的三级细分。
 
-先看 `four_dimensions.csv`、`classification_paths.csv` 和 `classification_summary.csv`，即可查看四维结果、实际分类数量与分类问题；上述九个文件均由默认启动自动生成。分类数量累加已完成任务跨论文、跨轮次的原始事件数，不是四维表的论文等权均值。接口调用成功不等于回答无幻觉或分类层级有效。
+先看 `four_dimensions.csv` 和 `failure_category_by_model.csv`，即可查看四维结果与论文四类幻觉；其他分类文件供追溯和问题排查。上述十个文件均由默认启动自动生成。分类数量累加已完成任务跨论文、跨轮次的原始事件数，不是四维表的论文等权均值；四类之和加 `unmapped_event_count` 等于事件总数。接口调用成功不等于回答无幻觉或分类层级有效。
 
 已有评测报告和最终状态也可单独重新统计，**不调用模型 API，并自动导出上述全部分类文件**：
 

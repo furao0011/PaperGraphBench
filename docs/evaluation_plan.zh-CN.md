@@ -106,7 +106,7 @@ bash ./start.sh --workers 2 --repeats 3
 
 ### 3.3 查看结果与独立重统计
 
-启动会打印实际批次目录 `outputs/testing/<session>/`。四维结果和分类统计在同一次运行中自动生成：**先查看 `statistics/four_dimensions.csv`、`classification_paths.csv` 和 `classification_summary.csv`**，分别核对四维指标、实际分类数量与分类完整性。完整模型汇总和逐事件 CSV/JSON 也已导出，无需额外运行 PowerShell 提取步骤。
+启动会打印实际批次目录 `outputs/testing/<session>/`。四维结果和分类统计在同一次运行中自动生成：**先查看 `statistics/four_dimensions.csv` 和 `failure_category_by_model.csv`**，分别核对四维指标与论文四类幻觉数量。分类完整性、原始标签路径和逐事件 CSV/JSON 也已导出，无需额外运行 PowerShell 提取步骤。
 
 `four_dimensions.csv` 每模型六行，覆盖四个维度：知识覆盖率、挑战诱发幻觉率、幻觉轮次比例与事件密度、事件闭环率与遗漏补全率。每行保留 `dimension`、`metric`、`source_metric`、`mean`、`std`、`valid_papers`、`valid_runs`、`micro`、`numerator_sum`、`denominator_sum` 和任务 `status`，不用从完整指标表手工拼出四维结果。
 
@@ -121,55 +121,45 @@ uv run --locked python scripts/summarize_results.py --result-root outputs/testin
 
 ## 四 细粒度幻觉分类专项测试
 
-### 4.1 已有幻觉类别与细分类型
+### 4.1 论文中的四类幻觉与归并规则
 
-本工具已有 **5 类幻觉事件族，并对其中的普通挑战、推理线程挑战显式细分为 6 种错误类型**，不是仅记录“是否有幻觉”。分类由 Judge 判决、题目失败模式和论文证据共同确定。
+本方案采用论文实验中的**四类幻觉**：KC 证据冲突、错误前提接受、过度推断接受、错误关系接受。线程错误按相同错误性质归并，不作为额外主类别；底层事件族和原始标签也不另计为论文主类别。
 
-#### （1）五类幻觉事件族
-
-| 事件族 | `hallucination_family` | 定义与判定依据 |
-| --- | --- | --- |
-| KC 证据冲突类幻觉 | `contradicted_kc_claim` | 回答中的论文事实或主张与关联 KC 证据冲突，或命中禁用主张；核对原回答、KC 的 `evidence` 与 `forbidden_claims` |
-| 无依据主张／虚构类幻觉 | `fabricated_claim` | 把缺乏论文支持的主张、虚构的实验或引用、过度扩张的结论当作论文事实；核对 Judge 原始判别，启用全局核验时核对相应 OVERCLAIM 判决 |
-| 挑战诱发幻觉 | `challenge_failure` | 在普通挑战中接受、重复或强化错误前提、过度推断或错误关系，而未基于论文证据纠正 |
-| 跨轮推理幻觉 | `thread_reasoning_hallucination` | 推理线程中出现不受证据支持的前提、连接或结论，包含线程挑战诱发的错误推理 |
-| 回顾阶段幻觉 | `review_regression` | 对话末尾回顾时出现与 KC 证据冲突、虚构支持或错误重述；不要求此前回答一定正确 |
-
-事件族兼顾错误性质与发生场景，最终 `family/type` 会按题型及状态归一化，不能把它当作脱离上下文的纯语义分类。Judge 原始类型与规范类型不同时，事件库可保留 `judge_hallucination_type`，并可通过来源轮次查看原始判决。分类统计以最终事件实际标签为准，不将同一事件重复计入多个事件族。
-
-#### （2）六种显式细分类型
-
-| 所属事件族 | 细分类型 | `hallucination_type` | 判定要点 |
+| 论文类别 | 表中标签 | 规范统计列 | 定义与判定依据 |
 | --- | --- | --- | --- |
-| 挑战诱发幻觉 | 错误前提接受 | `challenge_false_premise_acceptance` | 把与论文证据不符的前提当真，并据此作答，而不是指出和纠正前提 |
-| 挑战诱发幻觉 | 过度推断接受 | `challenge_overclaim_acceptance` | 接受超出实验范围、适用条件或结论强度的说法，如把特定设置下有效扩大为普遍保证 |
-| 挑战诱发幻觉 | 错误关系接受 | `challenge_wrong_relation_acceptance` | 接受不受支持、错置或颠倒的 KC 关系，如把 A 支持 B 说成 B 支持 A |
-| 跨轮推理幻觉 | 错误推理桥接受 | `thread_wrong_bridge_acceptance` | 在先前已建立的事实之间采用错误、反转或无支持的推理连接 |
-| 跨轮推理幻觉 | 线程过度推断接受 | `thread_overclaim_acceptance` | 将已经成立的推理桥或联合结论推广到证据不支持的范围 |
-| 跨轮推理幻觉 | 前提变异接受 | `thread_premise_mutation_acceptance` | 接受对既有前提的篡改或条件替换，未依据先前对话与论文纠正 |
+| KC 证据冲突 | `Contr.KC` | `contradicted_kc_claim` | 回答中的论文事实或主张与关联 KC 的证据冲突；按论文统计口径合并回顾阶段的退化错误 |
+| 错误前提接受 | `False prem.` | `challenge_false_premise_acceptance` | 把与论文证据不符的前提或变异后的线程前提当真，并据此作答，而非纠正前提 |
+| 过度推断接受 | `Overclaim` | `challenge_overclaim_acceptance` | 接受超出实验范围、适用条件或结论强度的说法，包括对已建立推理桥的过度推广 |
+| 错误关系接受 | `Wrong rel.` | `challenge_wrong_relation_acceptance` | 接受不受支持、错置或颠倒的 KC 关系，或采用错误的线程推理桥 |
 
-六类分别与题目的 `target_failure_mode` 对应：`false_premise`、`overclaim`、`wrong_relation`、`thread_wrong_bridge`、`thread_overclaim`、`thread_premise_mutation`。只有实际回答被判为幻觉时才计入对应事件；题目属于某个挑战类型，不等于模型发生了该类幻觉。未进一步细分的事件保留其事件族标签。
+程序根据最终事件的 `hallucination_type` 精确归并，规则与论文结果分析一致：
 
-#### （3）第三级标签与模态区分
+| 原始 `hallucination_type` | 归入论文类别 |
+| --- | --- |
+| `contradicted_kc_claim`、`review_regression` | `Contr.KC` |
+| `challenge_false_premise_acceptance`、`thread_premise_mutation_acceptance` | `False prem.` |
+| `challenge_overclaim_acceptance`、`thread_overclaim_acceptance` | `Overclaim` |
+| `challenge_wrong_relation_acceptance`、`thread_wrong_bridge_acceptance`、`thread_reasoning_hallucination` | `Wrong rel.` |
 
-完整记录采用 `hallucination_family → hallucination_type → subtype`。普通挑战的 `subtype` 约定为 `false_premise / overclaim / wrong_relation / other`；线程挑战可记录相应的三种线程错误标签或 `other`；常规问答、回顾和修复中的细分标签由 Judge 根据实际错误补充，不宣称为固定封闭枚举。
+仅按上表映射，不根据事件族、细分标签或文字印象猜测类别。`fabricated_claim`、未细分的 `challenge_failure` 及其他未映射标签保留原值，计入 `unmapped_event_count`，不强行归入四类。四类计数之和为 `categorized_event_count`，再加 `unmapped_event_count` 应等于全部 `event_count`。只有实际事件计入类别，挑战题数量不等于模型发生的幻觉数量。
 
-例如 `challenge_failure → challenge_false_premise_acceptance → false_premise` 是实现支持的字段路径，用于说明已有分类，不代表本批已经观测到该事件。验收查看实际标签和证据；重复标签、仅含状态或缺失的标签单列，不改写原始分类凑足三级。
+`hallucination_family / hallucination_type / subtype` 是实现中的原始记录字段，用于技术溯源和分类质量检查，不代表另外一套论文主类别。逐事件导出额外提供 `paper_category` 和 `paper_category_label`，记录上述规范类别及展示标签；原始字段保持不变。Judge 原始类型与规范类型不同时，可查看事件的 `judge_hallucination_type` 及来源轮次。
 
-文本与图像是与上述类别交叉的证据模态，不另计成新的幻觉类别。同一种错误前提、关系错误或过度推断可以发生在文本、图表数据或图文联合解释中；通过源轮次的 `question_metadata.modality_pool`、资产引用及多模态输入记录定位其证据来源。
+**四类是分类数量，不等于四个层级，也不自动满足三级标注要求。** 层级核验使用实际原始路径及其语义：标签缺失、重复、仅含状态或同义重述均单列，不能补写标签凑足三级。文本与图像是交叉证据模态，不另算新的幻觉类别；通过源轮次的 `question_metadata.modality_pool`、资产引用及多模态输入记录定位证据。
 
-读取每个任务最终 `cache/eval_state_graph.json` 的顶层 `hallucination_events`，结构为 `{事件ID: 事件对象}`。轨迹中每轮的事件数组用于回溯，不重复累计为新事件。
+统计源为每任务最终 `cache/eval_state_graph.json` 顶层的 `hallucination_events`，结构为 `{事件ID: 事件对象}`。轨迹中的轮内事件数组仅用于回溯，不重复累计为新事件。
 
 ### 4.2 默认自动分类统计
 
 默认启动会在评测后自动读取已完成任务的最终事件库，并与报告、轨迹核对身份、事件 ID、计数和最终状态。随后在 `statistics/` 中生成以下文件，不需要新增 API 配置或另行提取：
 
-- `classification_events.csv`、`classification_events.json`：逐事件类别族、类型、细分标签、来源轮次、关联 KC、最终状态和追溯信息。
-- `classification_paths.csv`：按模型及原始 `family/type/subtype` 组合列出 `event_count`，可直接在电子表格中查看各类事件数量。
+- `failure_category_by_model.csv`：按模型列出论文四类计数、`categorized_event_count`、`unmapped_event_count`、全部 `event_count` 和任务 `status`，优先查看。
+- `classification_events.csv`、`classification_events.json`：逐事件论文类别及原始标签、来源轮次、关联 KC、最终状态和追溯信息。
+- `classification_paths.csv`：按模型及原始 `family/type/subtype` 组合列出 `event_count`，用于排查底层标签，不代替论文四类主表。
 - `classification_summary.csv`：按模型汇总事件数、分类字段完整性和缺失、重复等问题，便于直接查看。
 - `classification_summary.json`：结构化分类汇总及实际分类路径分布。
 
-逐事件明细保留 `round`、`model`、`paper_id`、`event_id` 及 `issues`；模型汇总中的 `event_count`、`three_fields_present_count`、`three_fields_present_rate`、`non_repeating_path_count` 和 `warning_counts` 分别记录事件数、三级字段完整性、不重复候选路径及问题计数。JSON 的 `classification_counts` 给出实际 `family/type/subtype` 组合及数量。
+逐事件明细保留 `round`、`model`、`paper_id`、`event_id`、`paper_category`、`paper_category_label` 及 `issues`。`classification_summary.json` 的 `paper_categories` 提供按模型的论文四类统计，`classification_counts` 则保留原始 `family/type/subtype` 组合及数量；`three_fields_present_count/rate`、`non_repeating_path_count` 和 `warning_counts` 用于检查字段完整性及标签问题，不能作为额外论文类别。
 
 分类数量为各模型已完成任务跨论文、跨独立轮次的原始事件数累加，不是论文等权均值或幻觉率；轮数不同的批次不能只比较事件总数。四维表的 `mean` 仍按同一论文先跨轮平均、再按论文等权汇总。
 
@@ -180,7 +170,7 @@ uv run --locked python scripts/summarize_results.py --result-root outputs/testin
 ### 4.3 分类、证据与修复核验
 
 1. **计数一致：**自动统计核对逐任务事件字典长度与报告事件数，以及按类型、最终状态的分布与 `hallucination_by_type`、`hallucination_by_status` 是否一致。跨任务以“轮次、模型、论文、事件 ID”区分，不能仅按局部 ID 全批去重。
-2. **类别与层级有效：**按第 4.1 节的五类事件族、六种显式细类核对实际分类路径，并结合 `target_failure_mode` 和 Judge 原始判决说明依据。报告实际出现的类别、各类数量与实例；未出现只记为本批未观测到，不以题目数量代替幻觉数量。缺失、重复、同义重述或仅含状态的路径单列，同时报告三级字段完整性和实际层级。
+2. **类别与层级有效：**按第 4.1 节的四类及精确归并规则核对主表，并单列未映射事件；四类计数总和加未映射数须等于全部事件数。结合 `target_failure_mode`、KC 证据及 Judge 原始判决说明实例依据。未出现的类别只记为本批未观测到，不以题目数量代替幻觉数量。原始路径中的缺失、重复、同义重述或仅含状态问题另列，独立核验实际层级。
 3. **错误可定位：**由 `created_at_turn`、`source_question_id` 找到轨迹中的 `question_text`、`model_answer`、`judge_result`；由 `related_kc_ids` 找到主图 KC 的 `evidence` 及相关正文。事件 `source` 是记录来源，不是原文证据。图像事件还需核对资产引用与实际图片。
 4. **修复可追踪：**由 `followup_turns`、`resolved_at_turn` 和最终 `status` 连接原始错误与后续处置，不用轮内事件快照代替最终状态。
 
@@ -199,12 +189,13 @@ outputs/testing/<session>/
   round-02/ ...                      仅在独立重复时生成
   statistics/
     four_dimensions.csv              自动：四维专用表，每模型六行，优先查看
+    failure_category_by_model.csv    自动：论文四类幻觉及未映射计数，优先查看
     summary.csv                      自动：完整模型指标与任务状态
     per_paper.csv                    自动：每轮每篇状态、指标和分子分母
     summary.json                     自动：结构化汇总
-    classification_events.csv        自动：逐事件分类、状态与追溯明细
+    classification_events.csv        自动：逐事件论文类别、原始标签与追溯明细
     classification_events.json       自动：相同明细的结构化版本
-    classification_paths.csv         自动：按模型及原始分类路径的事件数量
+    classification_paths.csv         自动：原始标签路径数量，用于排查
     classification_summary.csv       自动：按模型的分类计数、完整性与问题统计
     classification_summary.json      自动：分类汇总及路径分布
 ```
@@ -252,6 +243,7 @@ outputs/testing/<session>/
 | 验收项 | 通过条件 | 证据 |
 | --- | --- | --- |
 | 四个核心维度 | 第一节四维均有有效输出、分母和执行实例；别名与同维多个指标不重复计数 | 自动 `four_dimensions.csv`、逐论文报告、轨迹与最终状态 |
+| 论文四类幻觉 | 按精确映射归并线程错误，四类及未映射计数与事件总数对账；不增加或猜测主类别 | `failure_category_by_model.csv`、逐事件 `paper_category` 及原始标签 |
 | 不少于三级的细粒度分类 | 实际事件中有可解释、逐层细分的三级路径；同时报告完整性、缺失和退化情况，仅有三个字段不视为通过 | 分类明细、分类统计、原始判决和层级说明 |
 | 分类与证据追溯 | 自动核对事件计数及类型/状态分布，明细能连接回答、KC 与论文证据；缺失状态或损坏数据明确报错 | 自动分类 CSV/JSON、最终事件库、轨迹、主图和原文/图片 |
 | 错误修复过程 | 幻觉修复与遗漏补全均有实际跟进实例，能连到最终状态；成功或耗尽均可验证工具功能 | 跟进轮次、事件/缺口状态、闭环和补全指标 |

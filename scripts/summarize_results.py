@@ -17,6 +17,7 @@ from statistics_inputs import collect_rows, planned_tasks
 from statistics_metrics import METRICS, aggregate
 from statistics_classification import EVENT_COLUMNS, collect_classification
 from statistics_dimensions import DIMENSION_COLUMNS, dimension_rows
+from statistics_taxonomy import PAPER_CATEGORY_COLUMNS
 
 
 def _csv_value(value):
@@ -46,6 +47,8 @@ def _classification_csv(classification: dict) -> tuple[list[dict], list[dict]]:
                        "three_fields_present_count": model["three_fields_present_count"],
                        "three_fields_present_rate": model["three_fields_present_rate"],
                        "non_repeating_path_count": model["non_repeating_path_count"],
+                       "categorized_event_count": model["categorized_event_count"],
+                       "unmapped_event_count": model["unmapped_event_count"],
                        "warning_counts": json.dumps(model["warning_counts"], ensure_ascii=False, sort_keys=True)})
     return events, models
 
@@ -85,7 +88,9 @@ def summarize(result_root: Path, output_dir: Path | None = None, expected_tasks:
     _csv(destination / "classification_summary.csv", classification_models, [
         "model", "status", "task_total", "completed_tasks", "incomplete_tasks", "event_count",
         "three_fields_present_count", "three_fields_present_rate", "non_repeating_path_count", "warning_counts",
+        "categorized_event_count", "unmapped_event_count",
     ])
+    _csv(destination / "failure_category_by_model.csv", classification["summary"]["paper_categories"], PAPER_CATEGORY_COLUMNS)
     paths = [{"model": model["model"], "family": path["family"], "type": path["type"],
               "subtype": path["subtype"], "event_count": path["count"]}
              for model in classification["summary"]["models"] for path in model["classification_counts"]]
@@ -113,6 +118,8 @@ def print_summary(result: dict) -> None:
         print(f"    4. Error repair: event closure={formatted('hallucination_event_closure')}; omission completion={formatted('detail_completion')}")
     classification = result["classification"]
     print(f"[classification] events={classification['event_count']} three-fields-present={classification['three_fields_present_count']} non-repeating-candidates={classification['non_repeating_path_count']} (not automatic semantic-level validation)")
+    for model in classification["paper_categories"]:
+        print(f"[paper categories] {model['model']}: Contr. KC={model['contradicted_kc_claim']}; False prem.={model['challenge_false_premise_acceptance']}; Overclaim={model['challenge_overclaim_acceptance']}; Wrong rel.={model['challenge_wrong_relation_acceptance']}; unmapped={model['unmapped_event_count']}")
     print(f"[statistics] CSV/JSON: {result['output_dir']}")
 
 

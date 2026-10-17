@@ -118,7 +118,7 @@ def _test(args) -> int:
         manifest["finished_at"] = datetime.now(timezone.utc).isoformat()
         write_json(session / "testing.json", manifest)
         print(f"[testing] completed; summary CSV={session / 'statistics' / 'summary.csv'}")
-        print(f"[testing] four dimensions={session / 'statistics' / 'four_dimensions.csv'}; classification={session / 'statistics' / 'classification_summary.csv'}")
+        print(f"[testing] four dimensions={session / 'statistics' / 'four_dimensions.csv'}; paper categories={session / 'statistics' / 'failure_category_by_model.csv'}")
         print(f"[testing] per-paper CSV={session / 'statistics' / 'per_paper.csv'}; main log={session / 'main.log'}")
         return 0
     except BaseException:

@@ -185,7 +185,7 @@ class ExistingDatasetHttpTests(unittest.TestCase):
         self.assertEqual(manifest["status"], "completed")
         self.assertEqual(len(manifest["expected_tasks"]), 2)
         self.assertEqual(json.loads((session / "statistics" / "summary.json").read_text(encoding="utf-8"))["task_counts"]["completed"], 2)
-        for name in ("summary.csv", "four_dimensions.csv", "classification_paths.csv", "classification_events.csv", "classification_events.json",
+        for name in ("summary.csv", "four_dimensions.csv", "failure_category_by_model.csv", "classification_paths.csv", "classification_events.csv", "classification_events.json",
                      "classification_summary.csv", "classification_summary.json"):
             self.assertTrue((session / "statistics" / name).is_file(), name)
         classification = json.loads((session / "statistics" / "classification_summary.json").read_text(encoding="utf-8"))
@@ -214,11 +214,13 @@ class ExistingDatasetHttpTests(unittest.TestCase):
         events = json.loads((session / "statistics" / "classification_events.json").read_text(encoding="utf-8"))
         self.assertEqual(len(events), 1)
         self.assertEqual(events[0]["family"], "contradicted_kc_claim")
+        self.assertEqual(events[0]["paper_category"], "contradicted_kc_claim")
         self.assertEqual(events[0]["subtype"], "unsupported_detail")
         self.assertEqual(events[0]["status"], "resolved")
         self.assertTrue(events[0]["followup_turns"])
         self.assertIn("duplicate_labels", events[0]["issues"])
         self.assertTrue((session / "statistics" / "four_dimensions.csv").is_file())
+        self.assertTrue((session / "statistics" / "failure_category_by_model.csv").is_file())
 
 
 if __name__ == "__main__":

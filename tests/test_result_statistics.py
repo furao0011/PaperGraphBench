@@ -77,7 +77,8 @@ class ResultStatisticsTests(unittest.TestCase):
         destination = self.root / "statistics"
         expected = {"summary.csv", "per_paper.csv", "summary.json", "four_dimensions.csv",
                     "classification_events.csv", "classification_events.json",
-                    "classification_summary.csv", "classification_summary.json", "classification_paths.csv"}
+                    "classification_summary.csv", "classification_summary.json", "classification_paths.csv",
+                    "failure_category_by_model.csv"}
         self.assertEqual({path.name for path in destination.iterdir()}, expected)
         with (destination / "four_dimensions.csv").open(encoding="utf-8-sig", newline="") as stream:
             dimensions = list(csv.DictReader(stream))
@@ -96,8 +97,33 @@ class ResultStatisticsTests(unittest.TestCase):
         console = io.StringIO()
         with redirect_stdout(console):
             print_summary(result)
-        for label in ("Knowledge coverage", "Challenge-induced hallucination", "Hallucination behavior", "Error repair", "[classification]"):
+        for label in ("Knowledge coverage", "Challenge-induced hallucination", "Hallucination behavior", "Error repair", "[classification]", "[paper categories]"):
             self.assertIn(label, console.getvalue())
+
+    def test_paper_four_category_export_merges_threads_and_preserves_unmapped(self):
+        path, _ = self.report(events=5)
+        types = ["thread_premise_mutation_acceptance", "thread_overclaim_acceptance",
+                 "thread_wrong_bridge_acceptance", "review_regression", "fabricated_claim"]
+        def update_events(state):
+            for event, raw_type in zip(state["hallucination_events"].values(), types):
+                event["hallucination_type"] = raw_type
+        self.edit(path.parent / "cache" / "eval_state_graph.json", update_events)
+        self.edit(path, lambda report: report["hallucination_metrics"].update(hallucination_by_type={key: 1 for key in types}))
+        result = summarize(self.root)
+        with (self.root / "statistics" / "failure_category_by_model.csv").open(encoding="utf-8-sig", newline="") as stream:
+            model = next(csv.DictReader(stream))
+        for key in ("contradicted_kc_claim", "challenge_false_premise_acceptance",
+                    "challenge_overclaim_acceptance", "challenge_wrong_relation_acceptance"):
+            self.assertEqual(model[key], "1")
+        self.assertEqual(model["categorized_event_count"], "4")
+        self.assertEqual(model["unmapped_event_count"], "1")
+        self.assertEqual(model["event_count"], "5")
+        self.assertEqual(result["classification"]["unmapped_event_count"], 1)
+        saved = json.loads((self.root / "statistics" / "classification_events.json").read_text(encoding="utf-8"))
+        original = next(event for event in saved if event["type"] == "fabricated_claim")
+        self.assertIsNone(original["paper_category"])
+        self.assertIn("unmapped_paper_category", original["issues"])
+        self.assertEqual(next(event for event in saved if event["type"] == "thread_wrong_bridge_acceptance")["paper_category"], "challenge_wrong_relation_acceptance")
 
     def test_missing_classification_state_stops_before_exporting_successful_statistics(self):
         path, _ = self.report()

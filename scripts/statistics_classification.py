@@ -11,12 +11,13 @@ from pathlib import Path
 
 from statistics_inputs import read_json
 from statistics_metrics import count
+from statistics_taxonomy import PAPER_CATEGORIES, PAPER_CATEGORY_LABELS, collapsed_failure_type, paper_category_rows
 
 
 _LABELS = ("hallucination_family", "hallucination_type", "subtype")
 EVENT_COLUMNS = (
     "round", "model", "paper_id", "event_id", "created_at_turn", "source_question_id",
-    "family", "type", "subtype", "three_fields_present", "non_repeating_path", "issues",
+    "family", "type", "subtype", "paper_category", "paper_category_label", "three_fields_present", "non_repeating_path", "issues",
     "related_kc_ids", "claim", "status", "followup_turns", "resolved_at_turn", "source", "state_path",
 )
 _STATE_LABELS = {
@@ -74,6 +75,9 @@ def _event_row(event: dict, event_id: str, row: dict, turns: dict, state_path: P
         issues.append("empty_related_kc_ids")
     if source_question is None:
         issues.append("missing_source_question_id")
+    paper_category = collapsed_failure_type(labels[1])
+    if paper_category is None:
+        issues.append("unmapped_paper_category")
     followups = event.get("followup_turns")
     if followups is None:
         issues.append("missing_followup_turns")
@@ -85,6 +89,8 @@ def _event_row(event: dict, event_id: str, row: dict, turns: dict, state_path: P
     return {**{key: row[key] for key in ("round", "model", "paper_id")},
             "event_id": event_id, "created_at_turn": created, "source_question_id": source_question,
             "family": labels[0], "type": labels[1], "subtype": labels[2],
+            "paper_category": paper_category,
+            "paper_category_label": PAPER_CATEGORY_LABELS[paper_category]["en"] if paper_category else None,
             "three_fields_present": len(present) == 3,
             "non_repeating_path": len(present) == 3 and len(set(present)) == 3,
             "issues": issues, "related_kc_ids": related, "claim": event.get("claim"),
@@ -165,5 +171,15 @@ def collect_classification(root: Path, rows: list[dict]) -> dict:
         **_summary([event for event in events if event["model"] == model],
                    [row for row in ordered_rows if row["model"] == model]))
         for model in sorted({row["model"] for row in ordered_rows})]
+    summary["paper_categories"] = paper_category_rows(events, ordered_rows)
+    summary["paper_category_definition"] = [{"category": key, **PAPER_CATEGORY_LABELS[key]} for key in PAPER_CATEGORIES]
+    summary["categorized_event_count"] = sum(row["categorized_event_count"] for row in summary["paper_categories"])
+    summary["unmapped_event_count"] = sum(row["unmapped_event_count"] for row in summary["paper_categories"])
+    by_model = {row["model"]: row for row in summary["paper_categories"]}
+    for model in summary["models"]:
+        category = by_model[model["model"]]
+        model["paper_category_counts"] = {key: category[key] for key in PAPER_CATEGORIES}
+        model["categorized_event_count"] = category["categorized_event_count"]
+        model["unmapped_event_count"] = category["unmapped_event_count"]
     summary["interpretation"] = "Nonempty/distinct label strings are candidate paths, not proof of three semantic levels; missing labels are not filled."
     return {"events": events, "summary": summary}

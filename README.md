@@ -58,22 +58,23 @@ Each test creates `outputs/testing/<session>/` and prints the exact path:
 | File or directory | Purpose |
 | --- | --- |
 | `statistics/four_dimensions.csv` | Four-dimension table, six rows per model, with means, standard deviations, denominators and task status; start here |
+| `statistics/failure_category_by_model.csv` | Per-model counts for the paper's four hallucination categories and unmapped events; start here |
 | `statistics/summary.csv` | Full model-level metrics, standard deviations, valid-paper counts and completeness statistics |
 | `statistics/per_paper.csv` | Per-round, per-paper metrics, numerators, denominators and completion status |
 | `statistics/summary.json` | Machine-readable statistics |
-| `statistics/classification_events.csv`, `classification_events.json` | Automatically exported event classifications, origins, related KCs, and final status |
-| `statistics/classification_paths.csv` | Event counts per model and original `family/type/subtype` path |
+| `statistics/classification_events.csv`, `classification_events.json` | Per-event paper category, raw labels, origins, related KCs, and final status |
+| `statistics/classification_paths.csv` | Original `family/type/subtype` path counts for debugging raw labels |
 | `statistics/classification_summary.csv`, `classification_summary.json` | Per-model classification completeness and issue counts; JSON also includes classification-path distributions |
 | `round-01/evaluation/<model>/<paper_id>/` | Per-task `evaluation_report.json`, `dialogue_trajectory.json` and state cache |
 | `testing.json`, `main.log`, `logs/` | Planned task manifest, main log and stage logs |
 
 The four dimensions are knowledge coverage, challenge-induced hallucination, hallucination behavior, and error repair. Erroneous or hallucinatory challenge answers count as challenge-induced hallucinations, retaining the compatible `challenge_failure` metric name; `INCOMPLETE` is not a hallucination. Main means weight papers equally. Zero denominators are blank/N/A; missing or incomplete tasks are listed separately rather than scored as zero. Repeated runs are averaged within each paper before averaging across papers.
 
-The existing taxonomy has five event families: KC-evidence contradiction, unsupported/fabricated claims, challenge-induced hallucination, cross-turn reasoning hallucination, and review-stage hallucination. Challenge-related types explicitly distinguish false-premise acceptance, overclaim acceptance, wrong-relation acceptance, wrong-bridge acceptance, thread overclaim acceptance, and premise-mutation acceptance. See Section 4 of the [evaluation plan](docs/evaluation_plan.zh-CN.md) for definitions and code labels. Classification counts describe actual events, not the number of challenge questions.
+The paper reports four hallucination categories: **KC-evidence contradiction (Contr.KC), false-premise acceptance (False prem.), overclaim acceptance (Overclaim), and wrong-relation acceptance (Wrong rel.)**. Thread premise mutations merge into false premises; thread overclaims into overclaims; wrong bridges and generic thread-reasoning hallucinations into wrong relations; review regressions into KC contradictions. Mapping uses the exact original `hallucination_type`. Unmapped labels, including `fabricated_claim` and generic `challenge_failure`, remain explicit rather than being guessed into a category. Section 4 of the [evaluation plan](docs/evaluation_plan.zh-CN.md) lists the full mapping. Raw `family/type/subtype` fields are technical traceability labels, not additional paper categories.
 
 Classification statistics automatically read the final state, check event counts against the report, and retain missing or repeated label issues. A completed task without its final state is an error, not a zero-event result. With no events, classification completeness is N/A. Complete or non-repeating label fields identify candidate paths, not proof of three semantic classification levels.
 
-Start with `four_dimensions.csv`, `classification_paths.csv`, and `classification_summary.csv` for the four dimensions, observed category counts, and classification issues. The default launch automatically creates all nine statistics files above. Category counts sum raw events across completed papers and independent runs; they are not the paper-weighted means in the four-dimension table. A successful API call does not establish a hallucination-free answer or valid semantic classification levels.
+Start with `four_dimensions.csv` and `failure_category_by_model.csv` for the four dimensions and the paper's four hallucination categories. Other classification files support traceability and debugging. The default launch automatically creates all ten statistics files above. Category counts sum raw events across completed papers and independent runs; they are not paper-weighted means. The four counts plus `unmapped_event_count` equal the total event count. A successful API call does not establish a hallucination-free answer or valid semantic classification levels.
 
 Existing reports and final states can also be summarized separately, **without model API calls, automatically exporting all classification files above**:
 
