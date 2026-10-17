@@ -1,6 +1,59 @@
 # Configuration
 
-Use Python 3.11+ and run `uv sync` first. `python run.py init` creates `config.env` from `config.example.env` if it does not already exist. Put your provider credentials in `config.env`, keep it private, and use `--config path/to/config.env` to select a different file. Commands below use `uv run python run.py ...`; if your uv environment is already active, `python run.py ...` is equivalent.
+> **Before running, supply your own API keys, base URLs, and model IDs in the root `config.env`. No API access, credentials, or free model services are included. Running the pipeline consumes your provider quota.**
+>
+> **运行前必须在根目录 `config.env` 填写自己的 API 密钥、服务地址和模型 ID。本仓库不提供密钥或免费模型服务，调用费用与额度由运行者承担。**
+
+## Required API settings
+
+The complete build → questions → evaluation workflow needs all four groups below. Each field must be filled explicitly, even when several groups use the same provider, URL, or key.
+
+| Group / purpose | API key | Provider API base URL | Exact model ID | Required capability |
+| --- | --- | --- | --- | --- |
+| 1. Text model: graph construction, questions, evaluation judge | `API_KEY` | `BASE_URL` | `LLM_MODEL` | OpenAI-compatible chat API with JSON responses |
+| 2. Vision model: figure/table understanding and multimodal questions | `VISION_API_KEY` | `VISION_BASE_URL` | `VISION_MODEL` | OpenAI-compatible chat API accepting image input |
+| 3. Embedding model: graph construction | `EMBED_API_KEY` | `EMBED_BASE_URL` | `EMBED_MODEL` | OpenAI-compatible embeddings API; a chat model is not sufficient |
+| 4. Evaluated target model | `EVAL_TARGET_API_KEY` | `EVAL_TARGET_BASE_URL` | `EVAL_TARGET_MODEL` | Chat API accepting text and images for the released multimodal packages |
+
+Use the base URL documented by your provider, such as its API root ending in `/v1` when applicable. Do **not** use a website URL or append `/chat/completions` or `/embeddings`: the client adds the endpoint itself. Model IDs must be callable by your account; selecting a name does not grant access. The judge and evaluated target have independent settings and need not use the same model.
+
+To **evaluate existing packages only**, fill groups **1 and 4**; the default `CLAIM_VERIFY_ENABLED=false` does not require embeddings. Groups 2 and 3 are needed to construct graphs and questions. OCR credentials are only required when starting from PDF, not for the released parsed papers.
+
+## First run
+
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and ensure Python 3.11+ is available. In the repository root, run the appropriate launcher:
+
+```powershell
+# Windows PowerShell
+.\start.ps1
+```
+
+```bash
+# macOS / Linux
+bash ./start.sh
+```
+
+The launcher prepares dependencies and creates private `config.env` from `config.example.env` if absent. Without valid configuration it stops before model requests. Fill the fields above, then run the same command again to process the `ConVis` example. The template contains blank values deliberately.
+
+Use the same launchers for batch work or existing-package evaluation:
+
+```powershell
+.\start.ps1 --all --workers 2
+.\start.ps1 evaluate --all
+.\start.ps1 measure --workers 2
+```
+
+```bash
+bash ./start.sh --all --workers 2
+bash ./start.sh evaluate --all
+bash ./start.sh measure --workers 2
+```
+
+Keep `config.env` private and out of version control. Use `--config path/to/config.env` for a different file; relative paths resolve from the repository root. **Existing process environment variables take priority over the file**, so remove obsolete environment settings if your edits appear to have no effect. The application does not read a legacy `.env` automatically.
+
+`measure` builds a fixed package once, then runs three independent evaluation rounds by default. It creates a new session under `outputs/measurement/`, with source snapshots, the dataset, round outputs, hashes, `main.log`, and isolated stage logs. Use `--repeats 1` for one evaluation round. See the [evaluation plan](evaluation_plan.zh-CN.md) for the test procedure.
+
+For manual control, `uv sync`, `uv run python run.py init`, and `uv run python run.py ...` remain available. If the uv environment is active, `python run.py ...` is equivalent.
 
 ## Required services by stage
 

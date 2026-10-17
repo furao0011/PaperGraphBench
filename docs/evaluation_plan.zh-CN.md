@@ -1,4 +1,6 @@
-# PaperGraph-Bench 纯 AI 建图与评测方案
+# PaperGraph-Bench 建图与评测方案
+
+> **运行前必须提供自己的 API Key、Base URL 和模型 ID，并填写根目录 `config.env`：文本/Judge、视觉、Embedding、被测模型共四组。本仓库不提供模型服务或密钥。首次启动脚本会创建空配置并列出待填项，填好后再次执行同一命令即可。**
 
 ## 一 测评对象与范围
 
@@ -13,13 +15,13 @@
     → 覆盖、挑战、幻觉、修复及推理指标
 ```
 
-不包含 PDF OCR、人工审查、人工修改题目或人工评分。流程中的 `review_followup` 是模型自动回顾，不是人工审核。
+测评从已解析的论文正文和图片开始，覆盖建图、出题与多轮评测。`review_followup` 表示模型在对话中的回顾轮次。
 
 | 项目 | 内容 |
 | --- | --- |
 | 成果名称 | PaperGraph-Bench 科学论文多模态基准构建与多轮诊断工具 |
 | 公开仓库 | [PaperGraphBench](https://github.com/furao0011/PaperGraphBench) |
-| 测评基线 | 远端 master 提交 `5f5f47dfbb6555d3f22959ff861f35da97a0fe40` |
+| 测评基线 | 使用包含 `start.ps1`、`start.sh` 和 `scripts/run_measurement.py` 的公开版本；每批记录实际 Git 提交号 |
 | 输入 | `rawPaper/<paper_id>/` 中的 Markdown 正文和图片 |
 | 主要输出 | 论文图、问题包、对话轨迹、AI 判决、评测报告和运行日志 |
 | 模型角色 | 文本构建模型兼 Judge、视觉模型、Embedding 模型、被测模型 |
@@ -77,14 +79,10 @@
 ```powershell
 git clone https://github.com/furao0011/PaperGraphBench.git PaperGraphBench-test
 Set-Location PaperGraphBench-test
-git switch --detach 5f5f47dfbb6555d3f22959ff861f35da97a0fe40
-uv sync --locked
-uv run python --version
-uv --version
-uv run python run.py init
+git rev-parse HEAD
 ```
 
-`init` 创建根目录私有 `config.env`，不覆盖已有文件。按下表填写 API；字段使用实际服务配置，不保留占位内容。
+依赖准备、配置初始化及预检由启动脚本完成，无需逐项执行。首次运行后按下表填写生成的 `config.env`，已有文件不会被覆盖。所有 API Key、Base URL 和模型 ID 均需使用实际服务配置。
 
 ### 4.2 模型角色与配置项
 
@@ -99,7 +97,7 @@ uv run python run.py init
 
 `BASE_URL` 填 API 根地址，不填 `/chat/completions` 或 `/embeddings` 完整端点。环境变量优先于 `config.env`，测试前应排除无关旧变量的干扰。Embedding 的维度等额外参数应与所用服务匹配，并记录于非敏感参数清单。
 
-保留以下正式运行设置。为避免改写公开数据包，本方案将新建图和问题写入独立目录：
+除 API 配置外，其余项目可保留模板默认值。完整测评脚本会自动为每批创建独立目录，不改写发布数据包：
 
 ```dotenv
 USE_ONLINE_KC_EXTRACT=true
@@ -111,9 +109,9 @@ CLAIM_VERIFY_ENABLED=false
 ALLOW_OFFLINE_FALLBACK=false
 ALLOW_MOCK_EVAL=false
 EVAL_MAX_TURNS=0
-PAPERGRAPH_DATA_ROOT=outputs/measurement/dataset_ai
+PAPERGRAPH_DATA_ROOT=data
 RAW_PAPER_ROOT=rawPaper
-EVAL_RESULT_ROOT=outputs/measurement/run-01
+EVAL_RESULT_ROOT=outputs/evaluation
 ```
 
 `EVAL_MAX_TURNS=0` 表示不设置全局提前截断，不取消框架自身的有界跟进规则；当前任务的默认跟进预算为 3 次，各模型保持一致。`CLAIM_VERIFY_ENABLED=false` 与公开默认一致；开启额外 claim verification 应单列实验条件，不能和默认条件混报。本方案不调用 OCR，故无需填写 `PADDLE_OCR_*`。
@@ -122,118 +120,63 @@ EVAL_RESULT_ROOT=outputs/measurement/run-01
 
 ## 五 测试步骤与运行命令
 
-以下命令均在仓库根目录依次执行。每个命令后检查退出码；非零时处理对应原因并重跑原命令，不开启 mock 或 offline 模式补齐结果。
+### 5.1 一键启动完整测评
 
-### 5.1 环境自检与计划预演
-
-```powershell
-uv run python -m unittest discover -s tests -v
-if ($LASTEXITCODE -ne 0) { throw "Offline regression tests failed." }
-
-uv run python run.py check --stage all
-if ($LASTEXITCODE -ne 0) { throw "API configuration check failed." }
-
-uv run python run.py run --all --workers 2 --dry-run
-if ($LASTEXITCODE -ne 0) { throw "Pipeline planning failed." }
-```
-
-基线版本包含 60 项离线测试，使用假凭据和本机 HTTP 模拟服务。正式测试机应允许本机回环连接。完整克隆的执行计划应包含 12 篇论文及建图、问题生成、评测三个阶段。
-
-配置检查和 `--dry-run` 均不调用模型，不能作为端到端通过证明。可显式追加以下连通性探针，产生少量可能计费的真实请求：
+在仓库根目录执行下面一个命令：
 
 ```powershell
-uv run python run.py check --stage all --probe-apis
+.\start.ps1 measure --workers 2
 ```
 
-探针不验证被测模型的图片输入能力，该能力由下一步实际多模态轮次验证。
+macOS/Linux 使用：
 
-### 5.2 单篇完整启动检查
-
-在全新的测评目录执行：
-
-```powershell
-uv run python run.py run --paper-id ConVis --workers 1
-if ($LASTEXITCODE -ne 0) { throw "ConVis pipeline failed." }
+```bash
+bash ./start.sh measure --workers 2
 ```
 
-该命令自动执行建图、问题生成和评测。检查新图与题包已生成、对话报告满足第七节完成条件，并至少存在一轮成功的 `answer_mode=online_target_multimodal`。只有文本请求成功不能证明多模态通过；若未产生有效图片问题，应补充能触发图片任务的论文并记录，不能将该项记为通过。
+首次执行会自动准备依赖、创建 `config.env` 并列出四组必填 API 信息；未配置时会停止。**填写自己的 Key、Base URL 和模型 ID 后，再执行同一命令即可完成整批测评。** 不需要分别运行建图、出题和评测命令。若 Windows 执行策略拦截，使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 measure --workers 2`，仅对此次启动生效。
 
-### 5.3 全量建图与问题生成
+启动脚本依次完成配置预检、创建本批独立目录、保存源论文快照、建图、自动出题、冻结输入并计算 SHA256、独立评测三轮。所有模型和轮次使用同一图题包；任何阶段失败立即停止，不以模拟结果替代。
 
-```powershell
-uv run python run.py build --all --workers 2
-if ($LASTEXITCODE -ne 0) { throw "Graph construction failed." }
+完整克隆应选中 12 篇论文；实际选中清单、Git 版本、模型 ID、轮数、并发数和执行状态保存在 `measurement.json`。运行会消耗 API 额度，默认三轮；如只需一轮，使用 `--repeats 1`。
 
-uv run python run.py questions --all --workers 2
-if ($LASTEXITCODE -ne 0) { throw "Question generation failed." }
+### 5.2 常用启动方式
+
+| 测试目的 | Windows 命令 |
+| --- | --- |
+| 先测一篇并只评测一轮 | `.\start.ps1 measure --paper-id ConVis --repeats 1` |
+| 完整数据集，建图出题一次并评测三轮 | `.\start.ps1 measure --workers 2` |
+| 自定义配置文件 | `.\start.ps1 measure --config path/to/config.env --workers 2` |
+| 多模型使用同一冻结题包 | `.\start.ps1 measure --models model-a model-b --workers 2` |
+| 只预览计划，不调用模型或创建本批结果 | `.\start.ps1 measure --dry-run` |
+| 复测已发布题包，不重新建图出题 | `.\start.ps1 evaluate --all --workers 2` |
+
+多模型命令中的 `model-a`、`model-b` 必须替换为账号实际可调用的 ID，并配置对应服务；macOS/Linux 把 `.\start.ps1` 换为 `bash ./start.sh` 即可。发布题包复测与重新构建测评分表记录。
+
+`--workers` 是论文级并发，单篇内部按顺序执行。所有轮次保持同一 Judge、题包和参数；重复轮次使用独立输出目录，不因缓存复用而误计为独立实验。不要用 `run --force` 做重复评测，以免重新生成图和问题。
+
+### 5.3 过程检查与结果目录
+
+启动时会打印本批目录 `outputs/measurement/<session>/`，主要文件如下：
+
+```text
+<session>/
+  measurement.json          批次清单和执行状态
+  main.log                  主进程日志
+  rawPaper/                 本批源论文与图片快照
+  dataset/                  一次构建后冻结的图题包
+  frozen_inputs.json        输入 SHA256 清单
+  round-01/evaluation/      第一轮逐模型逐论文结果
+  round-02/evaluation/      第二轮结果
+  round-03/evaluation/      第三轮结果
+  logs/                     建图 出题及各轮评测日志
 ```
 
-全量产物位于 `outputs/measurement/dataset_ai/<paper_id>/`。启动检查已完成且输入配置未变化的阶段会按签名复用；其余论文正常构建。`--workers` 是论文级并发，单篇内部阶段及多个目标模型依次执行。服务限流时降低并发，不改变评测题目或忽略失败。
+检查每篇有非空宏阶段、KC 和有效主问题，正文和所需图片可读取，批次覆盖文本与图像及至少两类任务；至少存在一轮成功的 `answer_mode=online_target_multimodal`，才能确认图片输入链路已执行。未触发的模态或修复分支按实际情况记录，不推断其已经通过。
 
-每篇应有非空宏阶段和 KC，正文及需要的图片可读取，题包有有效主问题；批次应覆盖文本及图像任务、至少两类评测任务。挑战题经自动筛选后数量按实记录，不用未经接受的候选填充正式题包。
+正常完成后按第六、七节读取结果和验收。API 认证、限流、超时、格式错误及附件缺失保留在主日志和对应阶段日志中；失败、中断或缺失任务单列，不填零混入均值。再次启动 `measure` 会创建新批次；需要处理上一批失败时应使用其日志、快照和记录的路径进行定位，不把新批次冒充上一批的断点恢复。
 
-冻结本批输入，生成 SHA256 清单：
-
-```powershell
-$paths = @("outputs/measurement/dataset_ai", "rawPaper")
-Get-ChildItem -LiteralPath $paths -Recurse -File |
-    Where-Object { $_.FullName -notmatch '[\\/]cache[\\/]' } |
-    Get-FileHash -Algorithm SHA256 |
-    Select-Object Path, Hash |
-    Export-Csv -LiteralPath "outputs/measurement/input_sha256.csv" -NoTypeInformation -Encoding UTF8
-```
-
-同时记录论文清单、各类对象数量、构建模型和非敏感配置。主结果比较期间不再重新生成图或题目。
-
-### 5.4 正式多轮评测
-
-为避免启动检查结果混入，显式选择新的正式结果根：
-
-```powershell
-$env:EVAL_RESULT_ROOT = "outputs/measurement/formal-01"
-uv run python run.py evaluate --all --workers 2
-if ($LASTEXITCODE -ne 0) { throw "Formal evaluation failed." }
-```
-
-默认仅评测 `EVAL_TARGET_MODEL`。如需比较多个模型，将下列 ID 替换为实际可用的模型：
-
-```powershell
-$models = @("model-a", "model-b")
-uv run python run.py check --stage evaluate --models $models
-if ($LASTEXITCODE -ne 0) { throw "Target model configuration failed." }
-uv run python run.py evaluate --all --workers 2 --models $models
-if ($LASTEXITCODE -ne 0) { throw "Multi-model evaluation failed." }
-```
-
-若为同一正式批次选择多模型，应从一开始使用多模型命令并固定模型清单。新增模型时，同配置下已有完成产物可能被复用，这不构成独立重复实验。跨服务模型可按配置文档使用模型后缀形式的目标 API 设置。
-
-独立重复测试采用新的结果目录，仅运行 `evaluate`，复用同一冻结题包：
-
-```powershell
-$session = Get-Date -Format "yyyyMMdd_HHmmss"
-foreach ($round in 1..3) {
-    $roundName = "round-{0:D2}" -f $round
-    $env:EVAL_RESULT_ROOT = "outputs/measurement/$session/$roundName"
-    uv run python run.py evaluate --all --workers 2
-    if ($LASTEXITCODE -ne 0) { throw "Evaluation failed: $roundName" }
-}
-```
-
-此处使用配置中的单一目标；若采用多模型设计，在循环内同样追加固定的 `--models $models`。新目录不需要 `--force`。相同目录重跑通常是恢复或复用，不算独立重复；不要用 `run --force` 做重复评测，因为它会同时重建图和问题。
-
-只复测发布包时，可把 `PAPERGRAPH_DATA_ROOT` 改为 `data` 后执行 `evaluate`，无需重建；该结果须与“纯 AI 重新构建”的结果分表记录，不代替本方案建图阶段测试。
-
-### 5.5 查看进度与处理失败
-
-终端显示批次进度；重定向输出时显示文本进度。详细日志固定写入 `outputs/logs/`，不随 `EVAL_RESULT_ROOT` 改变，并会追加同论文同阶段的后续运行。
-
-```powershell
-Get-Content -LiteralPath "outputs/logs/ConVis/build_graph.log" -Tail 50 -Wait
-```
-
-在另一终端查看日志，按 Ctrl+C 退出查看。问题生成日志为 `generate_questions.log`，评测日志为 `evaluate_<规范化模型名>.log`。每批结束归档该时段日志和起止时间；重复轮次不能只凭日志文件名区分。
-
-API 认证、限流、超时、模型输出格式或附件缺失分别记录为环境或执行异常；同配置同目录重跑以恢复断点。`--force` 仅用于明确要求重启所选阶段的场景。失败或中断报告不能作为已完成模型结果取平均。
+需要分阶段调试时，可使用 README 保留的 `run.py build / questions / evaluate` 命令，并将数据根、源论文根及结果根明确指向相应批次。
 
 ## 六 结果文件与指标口径
 
@@ -252,7 +195,7 @@ API 认证、限流、超时、模型输出格式或附件缺失分别记录为�
 | 状态可视化 | 同目录 `cache/final_state_graph.mmd`、`cache/final_thread_state_graph.mmd` |
 | 阶段日志 | `outputs/logs/<paper_id>/` |
 
-发布主图内含完整 KC bank，发布包评测不依赖未发布的建图缓存；本次新生成的缓存保留用于追溯和恢复。`eval_result/` 是历史结果，不作为本次测评输出。
+完整测评中的“数据根”为 `<session>/dataset`，“结果根”为 `<session>/round-XX/evaluation`；各阶段日志位于 `<session>/logs/`。常规 `start.ps1` 或 `run.py` 运行仍使用 `outputs/logs/`，可通过 `PAPERGRAPH_LOG_ROOT` 自定义。发布主图内含完整 KC bank，评测不依赖未发布的建图缓存；本批缓存保留用于追溯和恢复。`eval_result/` 是历史结果，不作为本次输出。
 
 ### 6.2 核心指标
 
@@ -319,7 +262,7 @@ API 认证、限流、超时、模型输出格式或附件缺失分别记录为�
 以下 PowerShell 示例读取一个正式结果根并生成明细 CSV。空分母导出为空，展示时标为 N/A；状态不完整的行保留记录，不纳入能力指标均值。
 
 ```powershell
-$ResultRoot = "outputs/measurement/formal-01"
+$ResultRoot = "outputs/measurement/<session>/round-01/evaluation"
 function Get-Rate($Numerator, $Denominator) {
     if ([double]$Denominator -le 0) { return $null }
     return [math]::Round([double]$Numerator / [double]$Denominator, 4)
@@ -375,7 +318,7 @@ $rows | Export-Csv -LiteralPath "$ResultRoot/paper_metrics.csv" -NoTypeInformati
 
 ## 八 公开实现索引
 
-以下链接对应测评基线版本，可用于核对脚本、参数及指标实现：
+新启动入口见 `start.ps1`、`start.sh`、`scripts/start.py` 和 `scripts/run_measurement.py`。以下链接固定到核心评测实现版本，用于核对沿用的参数及指标口径；实际运行版本由批次清单记录：
 
 - [中英文运行说明](https://github.com/furao0011/PaperGraphBench/blob/5f5f47dfbb6555d3f22959ff861f35da97a0fe40/README.zh-CN.md)
 - [配置要求](https://github.com/furao0011/PaperGraphBench/blob/5f5f47dfbb6555d3f22959ff861f35da97a0fe40/docs/configuration.md)

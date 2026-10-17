@@ -6,56 +6,58 @@ PaperGraph-Bench constructs a graph-guided benchmark from scientific papers and 
 
 All standard stages run automatically, including graph verification, question validation, solver filtering, and dialogue judging.
 
-For test operators, see the [Pure-AI evaluation plan (Chinese)](docs/evaluation_plan.zh-CN.md) for environment and API setup, step-by-step commands, batch and repeat runs, metric definitions, and acceptance criteria.
+For test operators, see the [Evaluation plan (Chinese)](docs/evaluation_plan.zh-CN.md) for the test procedure, metric definitions, and acceptance criteria.
+
+## Required before running: your API configuration
+
+> **You must provide your own API keys, provider base URLs, and model IDs in the root `config.env`. No model services or credentials are bundled. Calls consume your provider quota and may incur charges.**
+
+The full graph → questions → evaluation workflow needs all four groups:
+
+| Service | API key | API base URL | Model ID |
+| --- | --- | --- | --- |
+| Text model and evaluation judge | `API_KEY` | `BASE_URL` | `LLM_MODEL` |
+| Vision model | `VISION_API_KEY` | `VISION_BASE_URL` | `VISION_MODEL` |
+| Embedding model | `EMBED_API_KEY` | `EMBED_BASE_URL` | `EMBED_MODEL` |
+| Evaluated target model | `EVAL_TARGET_API_KEY` | `EVAL_TARGET_BASE_URL` | `EVAL_TARGET_MODEL` |
+
+Obtain the key, API root URL, and callable model ID from your provider. Do not use a website address or a full `/chat/completions` or `/embeddings` endpoint. The target must support image input for multimodal evaluation. If groups share a service, explicitly fill each group even when the key and URL are the same. Evaluation of existing packages needs only the text/judge and target groups by default. See [Configuration](docs/configuration.md) for details.
 
 ## Quick start
 
-Use Python 3.11+ and [uv](https://docs.astral.sh/uv/). The project uses the Python standard library plus `rich` for progress display.
+Install [uv](https://docs.astral.sh/uv/) and use Python 3.11+. From the repository root, run:
 
 ```powershell
-uv sync
-uv run python run.py init
+.\start.ps1
 ```
 
-`init` copies `config.example.env` to `config.env` without overwriting an existing configuration. Edit `config.env` with credentials for the stages you intend to run. Graph construction requires a text model, an embedding model, and—under the default multimodal configuration—a vision model. Evaluation also requires a judge model and the target model. OCR credentials are needed only when parsing a PDF. See [Configuration](docs/configuration.md) for the stage-by-stage requirements.
+On macOS/Linux:
 
-Check configuration before making API calls:
+```bash
+bash ./start.sh
+```
+
+The launcher prepares dependencies and creates `config.env` if absent. **On the first run, fill the API settings listed above, then run the same command again.** Existing configuration is never overwritten. Missing configuration stops execution before model requests and lists the fields to fill.
+
+Once configured, that single command builds the ConVis graph, generates questions, and evaluates the configured target model. The first full build can make many paid API requests. For other runs:
 
 ```powershell
-uv run python run.py check --stage all
+# Full measurement: build once, freeze inputs, evaluate three independent rounds
+.\start.ps1 measure --workers 2
+
+# Process all parsed papers once
+.\start.ps1 --all --workers 2
+
+# Evaluate released packages without rebuilding graphs or questions
+.\start.ps1 evaluate --all --workers 2
+
+# Preview the plan without model requests
+.\start.ps1 --all --dry-run
 ```
 
-This is a local preflight, not a paid API test. Add `--probe-apis` only when you explicitly want to test provider connectivity. A successful local check does not guarantee that an external API will accept a later request.
+On macOS/Linux, replace `.\start.ps1` with `bash ./start.sh`. Measurement sessions are isolated under `outputs/measurement/<session>/`, including the dataset, round results, input hashes, and main log. Use `measure --repeats 1` for one evaluation round or `measure --paper-id ConVis` for one paper.
 
-To rebuild and evaluate an OCR-parsed paper already under `rawPaper/ConVis/`:
-
-```powershell
-uv run python run.py run --paper-id ConVis
-```
-
-`run` executes graph construction, question generation, then evaluation. By default, evaluation uses only `EVAL_TARGET_MODEL` from `config.env`. To start from a new PDF, including OCR:
-
-```powershell
-uv run python run.py run --pdf pdfInput/your-paper.pdf
-```
-
-To process all eligible papers with two paper-level workers:
-
-```powershell
-uv run python run.py run --all --workers 2
-```
-
-If you only want to evaluate an existing released package in `data/ConVis/`, without rebuilding its graph or questions:
-
-```powershell
-uv run python run.py evaluate --paper-id ConVis
-```
-
-Use `--dry-run` to see the planned stages and paths without executing them. Use `--config path/to/config.env` to select another configuration file. For example:
-
-```powershell
-uv run python run.py run --paper-id ConVis --dry-run --config path/to/config.env
-```
+Use `--config path/to/config.env` to select a different configuration. If Windows blocks script execution, use `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1` for that launch only. Individual `uv run python run.py ...` commands remain available below for development and stage-level control.
 
 ## Inputs and outputs
 
@@ -66,6 +68,7 @@ uv run python run.py run --paper-id ConVis --dry-run --config path/to/config.env
 | `data/<paper_id>/` | Paper graph, multimodal assets, clean text, and graph-linked question package. |
 | `outputs/evaluation/<model>/<paper_id>/` | New dialogue trajectories, reports, and evaluation checkpoints. |
 | `outputs/logs/` | New pipeline logs. |
+| `outputs/measurement/<session>/` | Isolated measurement dataset, round results, manifests, and logs. |
 | `eval_result/` | Historical paper evaluation results; not the destination for new runs. |
 
 Original paper text and figures remain subject to their source licenses.

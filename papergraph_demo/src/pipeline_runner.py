@@ -12,7 +12,7 @@ from pathlib import Path
 
 from src.pipeline_artifacts import completed_evaluation, validate_graph_inputs, validate_question_inputs
 from src.pipeline_cache import build_stage_signature, prepare_stage_execution, record_stage_completion, stage_is_current
-from src.pipeline_plans import PROJECT_ROOT, SCRIPTS, PaperJob, paper_layout, require_json, result_dir
+from src.pipeline_plans import PROJECT_ROOT, SCRIPTS, PaperJob, paper_layout, project_path, require_json, result_dir
 
 
 def target_environment(model: str) -> dict[str, str]:
@@ -127,7 +127,7 @@ def _run_paper(job: PaperJob, models: list[str], force: bool, progress) -> None:
                 if restart and stage == "parse_pdf":
                     command.append("--overwrite")
                 log_name = "evaluate_" + re.sub(r"[^\w.-]+", "_", model) if model else stage
-                log_path = PROJECT_ROOT / "outputs" / "logs" / job.paper_id / f"{log_name}.log"
+                log_path = project_path(os.getenv("PAPERGRAPH_LOG_ROOT", "outputs/logs")) / job.paper_id / f"{log_name}.log"
                 log_path.parent.mkdir(parents=True, exist_ok=True)
                 progress.update(job.paper_id, status=f"{label}: running; log={log_path}", emit=True)
                 with log_path.open("a", encoding="utf-8") as stream:

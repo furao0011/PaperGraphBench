@@ -100,6 +100,27 @@ class ConfigurationTests(unittest.TestCase):
         ):
             self.assertIn(f"Missing required setting: {name}.", errors)
 
+    def test_public_template_keeps_all_api_credentials_blank(self) -> None:
+        template = (REPOSITORY / "config.example.env").read_text(encoding="utf-8")
+        values = {
+            line.split("=", 1)[0].strip(): line.split("=", 1)[1].strip()
+            for line in template.splitlines()
+            if "=" in line and not line.lstrip().startswith("#")
+        }
+        required = CHAT | VISION | EMBEDDING | TARGET
+        for name in (*required, "PADDLE_OCR_API_URL", "PADDLE_OCR_TOKEN"):
+            self.assertEqual(values[name], "", name)
+
+        (self.root / "config.env").write_text(template, encoding="utf-8")
+        with patch.dict(os.environ, {}, clear=True):
+            errors = validate_config(
+                ["build_graph", "generate_questions", "evaluate"], self.root
+            )
+        self.assertEqual(
+            set(errors),
+            {f"Missing required setting: {name}." for name in required},
+        )
+
     def test_build_requires_embeddings_but_not_target_or_ocr(self) -> None:
         with patch.dict(os.environ, CHAT | VISION, clear=True):
             errors = validate_config(["build_graph"], self.root)

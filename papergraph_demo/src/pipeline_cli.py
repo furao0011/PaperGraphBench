@@ -1,4 +1,4 @@
-"""One documented interface for configuration and the pure-AI pipeline."""
+"""One documented interface for configuration and the paper evaluation pipeline."""
 
 from __future__ import annotations
 

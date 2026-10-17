@@ -1,6 +1,6 @@
 # Pipeline architecture
 
-PaperGraph-Bench has four ordered stages. The root `run.py` entry point coordinates them; the implementation lives in `papergraph_demo/`.
+PaperGraph-Bench has four ordered stages. The root `start.ps1` and `start.sh` launchers prepare dependencies and configuration, then use `run.py` to coordinate the pipeline. The implementation lives in `papergraph_demo/`.
 
 ```text
 PDF ──parse──> rawPaper/<paper_id>/
@@ -12,13 +12,15 @@ PDF ──parse──> rawPaper/<paper_id>/
                                                           └──evaluate──> outputs/evaluation/<model>/<paper_id>/
 ```
 
-The `build` stage reads OCR text and extracted figure/table assets, creates macro-stage and knowledge-component (KC) objects, verifies reasoning edges, and writes a paper graph plus clean evaluation context. The `questions` stage creates macro coverage questions, text and multimodal challenge questions, and reasoning-thread seeds. Challenge candidates pass automatic usability checks and solver trials. Rejected candidates and review flags are diagnostic outputs; the standard AI pipeline does not pause for a human approval file. The evaluator reads the graph and final question package, schedules multi-turn questions and follow-ups, judges answers, updates graph state, and writes a dialogue trajectory and report.
+The `build` stage reads OCR text and extracted figure/table assets, creates macro-stage and knowledge-component (KC) objects, verifies reasoning edges, and writes a paper graph plus clean evaluation context. The `questions` stage creates macro coverage questions, text and multimodal challenge questions, and reasoning-thread seeds. Challenge candidates pass automatic usability checks and solver trials. Rejected candidates and review flags are saved as diagnostic outputs. The evaluator reads the graph and final question package, schedules multi-turn questions and follow-ups, judges answers, updates graph state, and writes a dialogue trajectory and report.
 
 ## Source tree
 
 ```text
 config.example.env       API settings and standard defaults
+start.ps1 / start.sh     Quick start and first-run configuration checks
 run.py                   Public command entry point
+scripts/                 Startup, measurement orchestration and dataset utilities
 docs/                    Configuration and architecture
 papergraph_demo/
   run_*.py               Stage implementations and optional experiments
@@ -59,3 +61,5 @@ The main source modules follow the pipeline:
 `rawPaper/` contains OCR-derived source material. `data/` is the canonical graph-and-question package location for both released packages and newly built paper packages. `outputs/evaluation/` and `outputs/logs/` hold new runtime results; `eval_result/` is historical paper output. Per-paper and per-model isolation prevents simultaneous evaluations from sharing a checkpoint.
 
 The lower-level `papergraph_demo/run_*.py` programs implement individual stages and research ablations. They are not required as separate manual steps for the standard workflow. For service requirements and safe preflight commands, see [Configuration](configuration.md).
+
+`start.ps1 measure` / `bash start.sh measure` creates an isolated measurement session, snapshots source papers, builds graphs and questions once, freezes input hashes, and evaluates independent rounds. Its session `main.log` and `logs/` directories keep the batch and per-stage logs together. `PAPERGRAPH_LOG_ROOT` selects an alternative stage-log directory; ordinary runs default to `outputs/logs/`.

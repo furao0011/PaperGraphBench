@@ -4,58 +4,60 @@
 
 PaperGraph-Bench 从科学论文构建图引导的评测基准，并通过多轮阅读任务评测目标模型。标准流水线按需解析 PDF、构建论文图、生成图关联问题，并记录对话轨迹中的知识覆盖、挑战题表现、幻觉及修复结果。
 
-所有标准阶段均自动执行，包括图验证、问题验证、求解器筛选和对话评判，无需人工审核。
+所有标准阶段均自动执行，包括图验证、问题验证、求解器筛选和对话评判。
 
-测试人员请参阅[纯 AI 建图与评测方案](docs/evaluation_plan.zh-CN.md)，其中包含环境与 API 配置、逐步运行命令、批量与重复实验、指标定义及验收条件。
+测试人员请参阅[建图与评测方案](docs/evaluation_plan.zh-CN.md)，了解测试流程、指标定义及验收条件。
+
+## 运行前必须填写 API 配置
+
+> **必须在根目录 `config.env` 中提供自己的 API Key、服务商 Base URL 和模型 ID。本仓库不提供模型服务或密钥，实际调用会消耗你的服务额度，并可能产生费用。**
+
+完整的“建图 → 出题 → 评测”需要填写下面四组配置：
+
+| 服务用途 | API Key | API 根地址 Base URL | 模型 ID |
+| --- | --- | --- | --- |
+| 文本模型及评测 Judge | `API_KEY` | `BASE_URL` | `LLM_MODEL` |
+| 视觉模型 | `VISION_API_KEY` | `VISION_BASE_URL` | `VISION_MODEL` |
+| Embedding 模型 | `EMBED_API_KEY` | `EMBED_BASE_URL` | `EMBED_MODEL` |
+| 被测模型 | `EVAL_TARGET_API_KEY` | `EVAL_TARGET_BASE_URL` | `EVAL_TARGET_MODEL` |
+
+这三类信息均需从你的服务商处获取。Base URL 填 API 根地址，不能填网页地址或带 `/chat/completions`、`/embeddings` 的完整接口地址；模型 ID 必须在你的账号下可调用。被测模型需支持图片输入。同一服务的 Key 和 URL 可复用，但每组仍需显式填写。仅评测已有数据包时，默认只需文本/Judge 与被测模型两组。详见[配置说明](docs/configuration.md)。
 
 ## 快速启动
 
-使用 Python 3.11+ 和 [uv](https://docs.astral.sh/uv/)。项目使用 Python 标准库，并通过 `rich` 展示进度。
+安装 [uv](https://docs.astral.sh/uv/)，使用 Python 3.11+，在仓库根目录执行：
 
 ```powershell
-uv sync
-uv run python run.py init
+.\start.ps1
 ```
 
-`init` 将 `config.example.env` 复制为 `config.env`，不会覆盖已有配置。请在 `config.env` 中填写所需阶段的 API 配置。建图需要文本模型、Embedding 模型，以及默认多模态配置下的视觉模型；评测还需要评判模型和被测模型。只有从 PDF 开始解析时才需要 OCR 配置。各阶段的配置要求见[配置说明](docs/configuration.md)。
+macOS/Linux 使用：
 
-调用 API 前，先检查配置：
+```bash
+bash ./start.sh
+```
+
+脚本自动准备依赖，并在配置不存在时创建 `config.env`。**首次运行后，按上表填写 API 配置，再执行同一命令即可启动。** 已有配置不会被覆盖；配置缺失时会列出待填字段并停止，不会调用模型。
+
+配置完成后，上述一个命令会依次完成 ConVis 的建图、出题和评测。首次完整构建会发起较多付费 API 请求。其他常用启动方式：
 
 ```powershell
-uv run python run.py check --stage all
+# 完整测评：建图出题一次、冻结输入、独立评测三轮
+.\start.ps1 measure --workers 2
+
+# 批量处理所有已解析论文，各评测一轮
+.\start.ps1 --all --workers 2
+
+# 只评测已发布题包，不重新建图出题
+.\start.ps1 evaluate --all --workers 2
+
+# 只查看计划，不调用模型
+.\start.ps1 --all --dry-run
 ```
 
-此命令仅执行本地预检，不会发起付费 API 请求。只有明确需要测试服务连通性时，才添加 `--probe-apis`。本地检查通过不代表外部 API 一定接受后续请求。
+macOS/Linux 将 `.\start.ps1` 替换为 `bash ./start.sh` 即可。完整测评会在 `outputs/measurement/<session>/` 下保存独立的数据包、各轮结果、输入哈希和主日志；`measure --repeats 1` 可改为只评测一轮，`measure --paper-id ConVis` 可只测一篇。
 
-对于已完成 OCR、位于 `rawPaper/ConVis/` 的论文，可直接重新建图并评测：
-
-```powershell
-uv run python run.py run --paper-id ConVis
-```
-
-`run` 依次执行建图、问题生成和评测。评测默认只使用 `config.env` 中的 `EVAL_TARGET_MODEL`。从新 PDF 开始执行完整流程（含 OCR）：
-
-```powershell
-uv run python run.py run --pdf pdfInput/your-paper.pdf
-```
-
-以两个论文级工作进程并发处理所有符合条件的论文：
-
-```powershell
-uv run python run.py run --all --workers 2
-```
-
-如果只需评测 `data/ConVis/` 中已发布的数据包，而不重新构建图和问题：
-
-```powershell
-uv run python run.py evaluate --paper-id ConVis
-```
-
-添加 `--dry-run` 可查看计划执行的阶段和路径，不实际运行；使用 `--config path/to/config.env` 可指定其他配置文件。例如：
-
-```powershell
-uv run python run.py run --paper-id ConVis --dry-run --config path/to/config.env
-```
+可用 `--config path/to/config.env` 指定其他配置。若 Windows 执行策略拦截脚本，可仅对此次启动使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1`。下方 `uv run python run.py ...` 命令保留用于开发及分阶段操作。
 
 ## 输入与输出
 
@@ -66,6 +68,7 @@ uv run python run.py run --paper-id ConVis --dry-run --config path/to/config.env
 | `data/<paper_id>/` | 论文图、多模态资产、清洗后的正文和图关联问题包。 |
 | `outputs/evaluation/<model>/<paper_id>/` | 新生成的对话轨迹、报告和评测检查点。 |
 | `outputs/logs/` | 新生成的流水线日志。 |
+| `outputs/measurement/<session>/` | 独立测评数据包、各轮结果、清单和日志。 |
 | `eval_result/` | 论文中的历史评测结果，不存放新运行的结果。 |
 
 原始论文文本及图片仍受其来源许可约束。
