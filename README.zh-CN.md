@@ -6,6 +6,8 @@ PaperGraph-Bench 从科学论文构建图引导的评测基准，并通过多轮
 
 所有标准阶段均自动执行，包括图验证、问题验证、求解器筛选和对话评判，无需人工审核。
 
+测试人员请参阅[纯 AI 建图与评测方案](docs/evaluation_plan.zh-CN.md)，其中包含环境与 API 配置、逐步运行命令、批量与重复实验、指标定义及验收条件。
+
 ## 快速启动
 
 使用 Python 3.11+ 和 [uv](https://docs.astral.sh/uv/)。项目使用 Python 标准库，并通过 `rich` 展示进度。

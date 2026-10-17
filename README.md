@@ -6,6 +6,8 @@ PaperGraph-Bench constructs a graph-guided benchmark from scientific papers and 
 
 All standard stages run automatically, including graph verification, question validation, solver filtering, and dialogue judging.
 
+For test operators, see the [Pure-AI evaluation plan (Chinese)](docs/evaluation_plan.zh-CN.md) for environment and API setup, step-by-step commands, batch and repeat runs, metric definitions, and acceptance criteria.
+
 ## Quick start
 
 Use Python 3.11+ and [uv](https://docs.astral.sh/uv/). The project uses the Python standard library plus `rich` for progress display.
