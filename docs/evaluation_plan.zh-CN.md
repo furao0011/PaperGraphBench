@@ -121,19 +121,44 @@ uv run --locked python scripts/summarize_results.py --result-root outputs/testin
 
 ## 四 细粒度幻觉分类专项测试
 
-### 4.1 分层定义
+### 4.1 已有幻觉类别与细分类型
+
+本工具已有 **5 类幻觉事件族，并对其中的普通挑战、推理线程挑战显式细分为 6 种错误类型**，不是仅记录“是否有幻觉”。分类由 Judge 判决、题目失败模式和论文证据共同确定。
+
+#### （1）五类幻觉事件族
+
+| 事件族 | `hallucination_family` | 定义与判定依据 |
+| --- | --- | --- |
+| KC 证据冲突类幻觉 | `contradicted_kc_claim` | 回答中的论文事实或主张与关联 KC 证据冲突，或命中禁用主张；核对原回答、KC 的 `evidence` 与 `forbidden_claims` |
+| 无依据主张／虚构类幻觉 | `fabricated_claim` | 把缺乏论文支持的主张、虚构的实验或引用、过度扩张的结论当作论文事实；核对 Judge 原始判别，启用全局核验时核对相应 OVERCLAIM 判决 |
+| 挑战诱发幻觉 | `challenge_failure` | 在普通挑战中接受、重复或强化错误前提、过度推断或错误关系，而未基于论文证据纠正 |
+| 跨轮推理幻觉 | `thread_reasoning_hallucination` | 推理线程中出现不受证据支持的前提、连接或结论，包含线程挑战诱发的错误推理 |
+| 回顾阶段幻觉 | `review_regression` | 对话末尾回顾时出现与 KC 证据冲突、虚构支持或错误重述；不要求此前回答一定正确 |
+
+事件族兼顾错误性质与发生场景，最终 `family/type` 会按题型及状态归一化，不能把它当作脱离上下文的纯语义分类。Judge 原始类型与规范类型不同时，事件库可保留 `judge_hallucination_type`，并可通过来源轮次查看原始判决。分类统计以最终事件实际标签为准，不将同一事件重复计入多个事件族。
+
+#### （2）六种显式细分类型
+
+| 所属事件族 | 细分类型 | `hallucination_type` | 判定要点 |
+| --- | --- | --- | --- |
+| 挑战诱发幻觉 | 错误前提接受 | `challenge_false_premise_acceptance` | 把与论文证据不符的前提当真，并据此作答，而不是指出和纠正前提 |
+| 挑战诱发幻觉 | 过度推断接受 | `challenge_overclaim_acceptance` | 接受超出实验范围、适用条件或结论强度的说法，如把特定设置下有效扩大为普遍保证 |
+| 挑战诱发幻觉 | 错误关系接受 | `challenge_wrong_relation_acceptance` | 接受不受支持、错置或颠倒的 KC 关系，如把 A 支持 B 说成 B 支持 A |
+| 跨轮推理幻觉 | 错误推理桥接受 | `thread_wrong_bridge_acceptance` | 在先前已建立的事实之间采用错误、反转或无支持的推理连接 |
+| 跨轮推理幻觉 | 线程过度推断接受 | `thread_overclaim_acceptance` | 将已经成立的推理桥或联合结论推广到证据不支持的范围 |
+| 跨轮推理幻觉 | 前提变异接受 | `thread_premise_mutation_acceptance` | 接受对既有前提的篡改或条件替换，未依据先前对话与论文纠正 |
+
+六类分别与题目的 `target_failure_mode` 对应：`false_premise`、`overclaim`、`wrong_relation`、`thread_wrong_bridge`、`thread_overclaim`、`thread_premise_mutation`。只有实际回答被判为幻觉时才计入对应事件；题目属于某个挑战类型，不等于模型发生了该类幻觉。未进一步细分的事件保留其事件族标签。
+
+#### （3）第三级标签与模态区分
+
+完整记录采用 `hallucination_family → hallucination_type → subtype`。普通挑战的 `subtype` 约定为 `false_premise / overclaim / wrong_relation / other`；线程挑战可记录相应的三种线程错误标签或 `other`；常规问答、回顾和修复中的细分标签由 Judge 根据实际错误补充，不宣称为固定封闭枚举。
+
+例如 `challenge_failure → challenge_false_premise_acceptance → false_premise` 是实现支持的字段路径，用于说明已有分类，不代表本批已经观测到该事件。验收查看实际标签和证据；重复标签、仅含状态或缺失的标签单列，不改写原始分类凑足三级。
+
+文本与图像是与上述类别交叉的证据模态，不另计成新的幻觉类别。同一种错误前提、关系错误或过度推断可以发生在文本、图表数据或图文联合解释中；通过源轮次的 `question_metadata.modality_pool`、资产引用及多模态输入记录定位其证据来源。
 
 读取每个任务最终 `cache/eval_state_graph.json` 的顶层 `hallucination_events`，结构为 `{事件ID: 事件对象}`。轨迹中每轮的事件数组用于回溯，不重复累计为新事件。
-
-| 层级 | 字段 | 核验内容 |
-| --- | --- | --- |
-| 第一级：类别族 | `hallucination_family` | 挑战诱发幻觉、推理线程幻觉、回顾退化等场景类别 |
-| 第二级：具体类型 | `hallucination_type` | 结合失败模式区分错误前提接受、过度推断接受、错误关系接受等 |
-| 第三级：细分标签 | `subtype` | Judge 实际提供的进一步细分标签及含义，而非仅检查字段存在 |
-
-代码允许的字段路径示例为 `challenge_failure → challenge_false_premise_acceptance → false_premise`。这仅用于说明字段，**不是实测结果或三级分类已达标的证明**；验收使用实际事件及其判决，检查是否具有逐层细分的语义。
-
-部分事件可能缺少 `subtype`，或类别族与类型重复；`subtype` 也可能只记录状态。需分别标注缺失、重复、同义重述或未实质细分，不能改写标签凑足三级。三个字段均非空或字符串不同，均不自动证明三个有效分类层级。
 
 ### 4.2 默认自动分类统计
 
@@ -155,7 +180,7 @@ uv run --locked python scripts/summarize_results.py --result-root outputs/testin
 ### 4.3 分类、证据与修复核验
 
 1. **计数一致：**自动统计核对逐任务事件字典长度与报告事件数，以及按类型、最终状态的分布与 `hallucination_by_type`、`hallucination_by_status` 是否一致。跨任务以“轮次、模型、论文、事件 ID”区分，不能仅按局部 ID 全批去重。
-2. **层级有效：**列出实际三级路径，结合挑战 `target_failure_mode` 和 Judge 原始标签解释各层含义；将缺失、重复、同义重述或仅含状态的路径单列。分类专项报告包含总事件数、三级字段非空数及比例、有效三级路径实例和未细分记录。
+2. **类别与层级有效：**按第 4.1 节的五类事件族、六种显式细类核对实际分类路径，并结合 `target_failure_mode` 和 Judge 原始判决说明依据。报告实际出现的类别、各类数量与实例；未出现只记为本批未观测到，不以题目数量代替幻觉数量。缺失、重复、同义重述或仅含状态的路径单列，同时报告三级字段完整性和实际层级。
 3. **错误可定位：**由 `created_at_turn`、`source_question_id` 找到轨迹中的 `question_text`、`model_answer`、`judge_result`；由 `related_kc_ids` 找到主图 KC 的 `evidence` 及相关正文。事件 `source` 是记录来源，不是原文证据。图像事件还需核对资产引用与实际图片。
 4. **修复可追踪：**由 `followup_turns`、`resolved_at_turn` 和最终 `status` 连接原始错误与后续处置，不用轮内事件快照代替最终状态。
 
