@@ -6,7 +6,7 @@
 
 ## Required API settings
 
-**For the recommended `start.ps1 test` / `bash start.sh test` workflow, fill only groups 1 and 4 below.** It uses existing datasets, makes no graph/question-generation requests, and exports statistics automatically. Groups 2 and 3 are for rebuilding benchmarks. Each required group's fields must be filled explicitly even when services share a provider, URL or key.
+**For the default `start.ps1` / `bash start.sh` workflow, fill only groups 1 and 4 below.** It evaluates existing datasets and exports statistics without building graphs or questions. Explicit `test` is equivalent; construction requires an explicit command. Groups 2 and 3 are for rebuilding benchmarks. Each required group's fields must be filled explicitly even when services share a provider, URL or key.
 
 | Group / purpose | API key | Provider API base URL | Exact model ID | Required capability |
 | --- | --- | --- | --- | --- |
@@ -25,12 +25,12 @@ Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and ensure
 
 ```powershell
 # Windows PowerShell
-.\start.ps1 test --workers 2
+.\start.ps1
 ```
 
 ```bash
 # macOS / Linux
-bash ./start.sh test --workers 2
+bash ./start.sh
 ```
 
 The launcher prepares dependencies and creates private `config.env` if absent. Fill the Judge and target API key, base URL, and model ID, then repeat the command to evaluate all released packages and write model-level statistics. Missing settings stop execution before model requests. The template contains blank values deliberately.
@@ -51,11 +51,11 @@ bash ./start.sh test --repeats 3 --workers 2
 
 Keep `config.env` private and out of version control. Use `--config path/to/config.env` for a different file; relative paths resolve from the repository root. **Existing process environment variables take priority over the file**, so remove obsolete environment settings if your edits appear to have no effect. The application does not read a legacy `.env` automatically.
 
-`test` defaults to the released `data/` directory, one independent round and all paper packages. `--data-root` explicitly selects another existing dataset. It does not use an old `PAPERGRAPH_DATA_ROOT` setting implicitly. Results and statistics are isolated under `outputs/testing/<session>/`; look first at `statistics/summary.csv`. `--repeats 3` evaluates the same packages three times. No graph or question file is rewritten.
+No command defaults to `test`: the released `data/` directory, all paper packages, one independent round and one worker. Options such as `--workers 2` also work without a command. `--data-root` explicitly selects another existing dataset. It does not use an old `PAPERGRAPH_DATA_ROOT` setting implicitly. Results and statistics are isolated under `outputs/testing/<session>/`; look first at `statistics/summary.csv`. `--repeats 3` evaluates the same packages three times. No graph or question file is rewritten.
 
 To summarize reports without any API access, run `uv run --locked python scripts/summarize_results.py --result-root outputs/evaluation`. A test-session root, a round's evaluation root, or a historical result root can be used. Without a task manifest, planned completion is unknown rather than assumed to be 100%.
 
-Optional: `measure` rebuilds a package once, then evaluates it three times. This separate construction workflow writes under `outputs/measurement/` and needs all four API groups. It is not required for testing released packages. See the [evaluation plan](evaluation_plan.zh-CN.md) for the recommended existing-dataset procedure.
+Optional: `start.ps1 run --paper-id ConVis` builds the ConVis graph and questions, then evaluates once. `start.ps1 measure` builds once and evaluates three independent rounds under `outputs/measurement/`. Both require all four API groups and an explicit command; neither runs by default. See the [evaluation plan](evaluation_plan.zh-CN.md) for the existing-dataset procedure.
 
 For manual control, `uv sync`, `uv run python run.py init`, and `uv run python run.py ...` remain available. If the uv environment is active, `python run.py ...` is equivalent.
 

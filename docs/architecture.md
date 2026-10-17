@@ -1,8 +1,8 @@
 # Pipeline architecture
 
-PaperGraph-Bench has four ordered stages. The root `start.ps1` and `start.sh` launchers prepare dependencies and configuration, then use `run.py` to coordinate the pipeline. The implementation lives in `papergraph_demo/`.
+PaperGraph-Bench has four ordered stages. The root `start.ps1` and `start.sh` launchers prepare dependencies and configuration. Their default is existing-dataset evaluation and statistics; an explicit `run` command invokes the construction pipeline through `run.py`. The implementation lives in `papergraph_demo/`.
 
-For model testing, `start.ps1 test` / `bash start.sh test` consumes the existing `data/` packages directly, runs only evaluation, and exports statistics. It does not run construction stages. New sessions under `outputs/testing/` contain the task manifest, independent rounds, logs, and `statistics/{summary.csv,per_paper.csv,summary.json}`. `scripts/summarize_results.py` can also summarize existing results without model requests.
+Running `start.ps1` / `bash start.sh` without a command is equivalent to `test`: it consumes all existing `data/` packages, evaluates one round per model, and exports statistics. It does not run construction stages. New sessions under `outputs/testing/` contain the task manifest, independent rounds, logs, and `statistics/{summary.csv,per_paper.csv,summary.json}`. `scripts/summarize_results.py` can also summarize existing results without model requests.
 
 ```text
 PDF ──parse──> rawPaper/<paper_id>/

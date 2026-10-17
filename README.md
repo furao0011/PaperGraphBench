@@ -10,18 +10,18 @@ For test operators, see the [Existing-dataset evaluation and statistics plan (Ch
 
 ## Recommended: evaluate existing datasets and generate statistics
 
-> **Use `test` to evaluate models on the 12 released paper packages in `data/`. It does not rebuild graphs, regenerate questions, or run OCR. It automatically exports per-paper results and model-level statistics.**
+> **Running `start.ps1` / `start.sh` without a command evaluates the 12 released paper packages in `data/` and exports statistics. It does not rebuild graphs, regenerate questions, or run OCR. The explicit `test` command does the same.**
 
 Install [uv](https://docs.astral.sh/uv/), use Python 3.11+, and run from a complete repository checkout:
 
 ```powershell
-.\start.ps1 test --workers 2
+.\start.ps1
 ```
 
 On macOS/Linux:
 
 ```bash
-bash ./start.sh test --workers 2
+bash ./start.sh
 ```
 
 **Before evaluation, supply your own API key, base URL, and model ID for these two roles in `config.env`.** The first launch creates a blank file and lists the fields to fill. Edit it, then repeat the same command. Missing settings stop execution before model requests.
@@ -49,7 +49,7 @@ The judge must support JSON responses; the target must accept images. Use your p
 .\start.ps1 test --dry-run
 ```
 
-The default is all papers in `data/`, one round per model. Use `--data-root` for another existing dataset and `--config` for a private configuration. On macOS/Linux, replace `.\start.ps1` with `bash ./start.sh`. If Windows blocks execution, use `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 test --workers 2`.
+No command defaults to `test`: all papers in `data/`, one round per model, one worker, followed by statistics. Options also work without `test`, for example `.\start.ps1 --workers 2`. Use `--data-root` for another existing dataset and `--config` for a private configuration. On macOS/Linux, replace `.\start.ps1` with `bash ./start.sh`. If Windows blocks execution, use `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1`.
 
 ### Results and statistics
 
@@ -90,18 +90,18 @@ Obtain the key, API root URL, and callable model ID from your provider. Do not u
 
 ## Optional: construct a new benchmark
 
-The no-command launcher and `measure` below rebuild graphs and questions. **Skip this section when testing existing packages; use `test` above.**
+**Construction requires an explicit `run`, `build`, `questions`, or `measure` command.** Running the launcher without a command only tests existing packages. Skip this section if you do not need a new benchmark.
 
 Install [uv](https://docs.astral.sh/uv/) and use Python 3.11+. From the repository root, run:
 
 ```powershell
-.\start.ps1
+.\start.ps1 run --paper-id ConVis
 ```
 
 On macOS/Linux:
 
 ```bash
-bash ./start.sh
+bash ./start.sh run --paper-id ConVis
 ```
 
 The launcher prepares dependencies and creates `config.env` if absent. **On the first run, fill the API settings listed above, then run the same command again.** Existing configuration is never overwritten. Missing configuration stops execution before model requests and lists the fields to fill.
@@ -113,18 +113,15 @@ Once configured, that single command builds the ConVis graph, generates question
 .\start.ps1 measure --workers 2
 
 # Process all parsed papers once
-.\start.ps1 --all --workers 2
+.\start.ps1 run --all --workers 2
 
-# Evaluate released packages without rebuilding graphs or questions
-.\start.ps1 evaluate --all --workers 2
-
-# Preview the plan without model requests
-.\start.ps1 --all --dry-run
+# Preview the construction plan without model requests
+.\start.ps1 run --all --dry-run
 ```
 
 On macOS/Linux, replace `.\start.ps1` with `bash ./start.sh`. Measurement sessions are isolated under `outputs/measurement/<session>/`, including the dataset, round results, input hashes, and main log. Use `measure --repeats 1` for one evaluation round or `measure --paper-id ConVis` for one paper.
 
-Use `--config path/to/config.env` to select a different configuration. If Windows blocks script execution, use `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1` for that launch only. Individual `uv run python run.py ...` commands remain available below for development and stage-level control.
+Use `--config path/to/config.env` to select a different configuration. If Windows blocks script execution, use `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 run --paper-id ConVis` for that launch only. Individual `uv run python run.py ...` commands remain available below for development and stage-level control.
 
 ## Inputs and outputs
 

@@ -14,11 +14,7 @@ from src.config import load_environment
 from src.pipeline_cli import main as pipeline_main, parser
 
 
-def startup_arguments(argv: list[str]) -> tuple[list[str], object]:
-    """Default to the public ConVis example; retain the existing CLI grammar."""
-    cli = parser()
-    commands = next(action.choices for action in cli._actions if action.dest == "command")
-    tokens = list(argv)
+def _command_index(tokens: list[str]) -> int:
     index = 0
     while index < len(tokens):
         if tokens[index] == "--config":
@@ -27,8 +23,22 @@ def startup_arguments(argv: list[str]) -> tuple[list[str], object]:
             index += 1
         else:
             break
-    if index < len(tokens) and tokens[index] in {"measure", "test"}:
-        command = tokens.pop(index)
+    return index
+
+
+def startup_arguments(argv: list[str]) -> tuple[list[str], object]:
+    """Default to existing-package testing; building requires an explicit command."""
+    cli = parser()
+    commands = next(action.choices for action in cli._actions if action.dest == "command")
+    tokens = list(argv)
+    index = _command_index(tokens)
+    explicit = index < len(tokens) and tokens[index] in {*commands, "measure", "test"}
+    command = tokens[index] if explicit else "test"
+    if command in {"measure", "test"}:
+        if explicit:
+            tokens.pop(index)
+        elif any(token.split("=", 1)[0] in {"--pdf", "--input"} for token in tokens):
+            cli.error("Building new packages requires an explicit command: use run --pdf FILE or build --input PATH.")
         if command == "test":
             from evaluate_dataset import parser as command_parser
         else:
@@ -36,8 +46,6 @@ def startup_arguments(argv: list[str]) -> tuple[list[str], object]:
         args = command_parser().parse_args(tokens)
         args.command = command
         return tokens, args
-    if index == len(tokens) or tokens[index] not in commands:
-        tokens.insert(index, "run")
     args = cli.parse_args(tokens)
     if args.command in {"run", "build", "questions", "evaluate"}:
         if not (args.paper_id or args.all or args.pdf or args.input):
@@ -107,14 +115,17 @@ def main(argv: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     if "--help" in argv or "-h" in argv:
         print("Quick start: start.ps1 / start.sh [test|run|measure|evaluate|build|questions] [options]")
-        print("RECOMMENDED FOR TESTING: start.ps1 test --workers 2 (existing data + automatic statistics)")
-        print("No command defaults to: run --paper-id ConVis")
-        print("Examples: --all --workers 2 | evaluate --all | measure --workers 2 | --config private.env")
+        print("No command defaults to: test (all existing data/ packages, one round + automatic statistics)")
+        print("Examples: --workers 2 | --paper-id ConVis | test --repeats 3 | --config private.env")
+        print("Rebuilding is opt-in: run --paper-id ConVis | build --all | measure --workers 2")
         print("First run creates config.env; fill your own API keys, BASE URLs and model IDs, then rerun.\n")
-        if "test" in argv:
+        index = _command_index(argv)
+        command = argv[index] if index < len(argv) else "test"
+        explicit_commands = next(action.choices for action in parser()._actions if action.dest == "command")
+        if command == "test" or command not in {*explicit_commands, "measure"}:
             from evaluate_dataset import parser as test_parser
             test_parser().print_help()
-        elif "measure" in argv:
+        elif command == "measure":
             from run_measurement import parser as measurement_parser
             measurement_parser().print_help()
         else:

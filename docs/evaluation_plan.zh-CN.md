@@ -1,6 +1,6 @@
 # PaperGraph-Bench 已有数据集评测与结果统计方案
 
-> **推荐命令：`.\start.ps1 test --workers 2`。直接使用仓库已有数据集评测并自动统计，不重新建图出题。只需在 `config.env` 填写 Judge、被测模型两组 API Key、Base URL 和模型 ID；默认无需视觉生成、Embedding 或 OCR 服务。**
+> **直接运行 `.\start.ps1`（macOS/Linux：`bash ./start.sh`），默认评测已有数据集并自动统计，不重新建图出题。只需在 `config.env` 填写 Judge、被测模型两组 API Key、Base URL 和模型 ID；默认无需视觉生成、Embedding 或 OCR 服务。**
 
 ## 一 测评对象与范围
 
@@ -28,7 +28,9 @@
 
 ## 二 与考核指标的对应关系
 
-本次测试主要验证图片中指标 1.3 的多维度幻觉评估能力，并提供指标 1.1 所需的已有数据规模和模态、任务类型统计。新建图和新出题能力不在本次运行中重新测试；软件完成条件与项目性能阈值分别记录。
+**建议主要对接指标 1.3「多维度幻觉评估指标体系」**，成果可表述为「面向科学论文理解的图引导多维度幻觉评测工具」。知识覆盖、挑战稳健性、幻觉行为、错误修复构成四个核心评估维度，结合事件分层记录提供细粒度诊断。指标 1.1 仅作为数据构建方面的辅助对应，当前发布规模不直接满足其 2 万条样本要求。
+
+本次运行验证上述评测能力，并统计已有数据规模、模态和任务类型，不重新测试建图出题。软件完成条件与项目性能阈值分别记录。
 
 | 图片考核项 | 本次测试内容及证据 | 判定边界 |
 | --- | --- | --- |
@@ -119,25 +121,26 @@ EVAL_RESULT_ROOT=outputs/evaluation
 在仓库根目录执行下面一个命令：
 
 ```powershell
-.\start.ps1 test --workers 2
+.\start.ps1
 ```
 
 macOS/Linux 使用：
 
 ```bash
-bash ./start.sh test --workers 2
+bash ./start.sh
 ```
 
-首次执行会自动准备依赖、创建 `config.env` 并列出 Judge、被测模型两组必填信息；未配置时停止。**填写自己的 Key、Base URL 和模型 ID 后，再执行同一命令即可评测全部已有题包并导出统计表。** 若 Windows 执行策略拦截，使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 test --workers 2`，仅对此次启动生效。
+首次执行会自动准备依赖、创建 `config.env` 并列出 Judge、被测模型两组必填信息；未配置时停止。**填写自己的 Key、Base URL 和模型 ID 后，再执行同一命令即可评测全部已有题包并导出统计表。** 若 Windows 执行策略拦截，使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1`，仅对此次启动生效。
 
 脚本依次检查配置和已有图题包、创建独立批次目录、记录输入签名、按模型和论文评测、验证输入未变化，最后生成逐论文与按模型统计。**不会重新建图、生成问题或修改已有数据文件。**
 
-完整克隆默认选中 12 篇论文；实际论文、模型、轮数、Git 版本、预期任务和输入签名保存在 `testing.json`。默认一轮；使用 `--repeats 3` 会额外消耗对应多轮 API 额度。无子命令的 `start.ps1` 和 `measure` 是可选重建流程，不是本方案推荐入口。
+完整克隆默认选中 12 篇论文；实际论文、模型、轮数、Git 版本、预期任务和输入签名保存在 `testing.json`。不带子命令等同于 `test`，默认一轮、单任务并发；使用 `--repeats 3` 会额外消耗对应多轮 API 额度。只有显式使用 `run`、`build`、`questions` 或 `measure` 才会进入构建流程，例如 `.\start.ps1 run --paper-id ConVis`。
 
 ### 5.2 常用启动方式
 
 | 测试目的 | Windows 命令 |
 | --- | --- |
+| 默认：全部已有题包，每模型一轮并统计 | `.\start.ps1` |
 | 先测试一篇已有题包 | `.\start.ps1 test --paper-id ConVis` |
 | 全部已有题包，每模型一轮并统计 | `.\start.ps1 test --workers 2` |
 | 三轮独立测试并统计 | `.\start.ps1 test --repeats 3 --workers 2` |

@@ -53,14 +53,18 @@ class StartupTests(unittest.TestCase):
         path.write_text(text + extra, encoding="utf-8")
         return path
 
-    def test_no_arguments_select_public_example_and_existing_cli(self):
+    def test_no_arguments_select_existing_dataset_test_without_rebuilding(self):
         tokens, args = startup.startup_arguments([])
-        self.assertEqual(tokens, ["run", "--paper-id", "ConVis"])
-        self.assertEqual(args.command, "run")
+        self.assertEqual(tokens, [])
+        self.assertEqual(args.command, "test")
+        self.assertIsNone(args.paper_id)
+        self.assertEqual(args.repeats, 1)
+        self.assertEqual(args.data_root, "data")
 
     def test_batch_and_explicit_command_options_are_forwarded(self):
         tokens, args = startup.startup_arguments(["--all", "--workers", "2"])
-        self.assertEqual(tokens, ["run", "--all", "--workers", "2"])
+        self.assertEqual(tokens, ["--all", "--workers", "2"])
+        self.assertEqual(args.command, "test")
         self.assertTrue(args.all)
         tokens, args = startup.startup_arguments(["evaluate", "--all", "--models", "alpha", "beta"])
         self.assertEqual(args.models, ["alpha", "beta"])
@@ -72,14 +76,50 @@ class StartupTests(unittest.TestCase):
             self.assertEqual(args.config, "settings/private.env")
             self.assertEqual(startup.configuration_path(args.config), self.root / "settings/private.env")
 
+    def test_options_only_forward_config_models_repeats_and_paper_to_test(self):
+        cases = [
+            ["--config", "settings/private.env", "--workers", "2", "--models", "alpha", "beta", "--repeats", "3"],
+            ["--paper-id", "ConVis", "--config=settings/private.env", "--workers", "2"],
+        ]
+        for original in cases:
+            tokens, args = startup.startup_arguments(original)
+            self.assertEqual(tokens, original)
+            self.assertEqual(args.command, "test")
+            self.assertEqual(args.config, "settings/private.env")
+            self.assertEqual(args.workers, 2)
+        self.assertEqual(startup.startup_arguments(cases[0])[1].models, ["alpha", "beta"])
+        self.assertEqual(startup.startup_arguments(cases[0])[1].repeats, 3)
+        self.assertEqual(startup.startup_arguments(cases[1])[1].paper_id, "ConVis")
+
+    def test_explicit_pipeline_commands_retain_their_original_defaults(self):
+        for command in ("run", "build", "questions", "evaluate"):
+            tokens, args = startup.startup_arguments([command])
+            self.assertEqual(args.command, command)
+            self.assertEqual(tokens, [command, "--paper-id", "ConVis"])
+        tokens, args = startup.startup_arguments(["run", "--all", "--workers", "2"])
+        self.assertEqual(tokens, ["run", "--all", "--workers", "2"])
+        self.assertEqual(args.command, "run")
+        self.assertTrue(args.all)
+
+    def test_implicit_source_options_require_explicit_rebuild_command(self):
+        for tokens in (["--pdf", "paper.pdf"], ["--input", "paper.md"], ["--pdf=paper.pdf"],
+                       ["--config", "private.env", "--input=paper.md"]):
+            with self.assertRaises(SystemExit) as error:
+                self.call(tokens)
+            self.assertEqual(error.exception.code, 2)
+        self.assertIn("requires an explicit command", self.stderr.getvalue())
+        self.assertFalse((self.root / "config.env").exists())
+
     def test_missing_config_created_then_missing_fields_stop_before_execution(self):
         with patch("src.pipeline_cli.execute_jobs") as execute:
             status = self.call([])
         self.assertNotEqual(status, 0)
         self.assertTrue((self.root / "config.env").is_file())
         execute.assert_not_called()
-        for field in ("API_KEY", "BASE_URL", "LLM_MODEL", "VISION_API_KEY", "EMBED_BASE_URL", "EVAL_TARGET_MODEL"):
+        for field in ("API_KEY", "BASE_URL", "LLM_MODEL", "EVAL_TARGET_API_KEY", "EVAL_TARGET_BASE_URL", "EVAL_TARGET_MODEL"):
             self.assertIn(field, self.stdout.getvalue() + self.stderr.getvalue())
+        self.assertNotIn("VISION_API_KEY", self.stdout.getvalue() + self.stderr.getvalue())
+        self.assertNotIn("EMBED_API_KEY", self.stdout.getvalue() + self.stderr.getvalue())
         self.assertIn(str(self.root / "config.env"), self.stdout.getvalue())
 
     def test_existing_config_is_never_overwritten(self):
@@ -137,12 +177,26 @@ class StartupTests(unittest.TestCase):
         self.assertFalse((self.root / "config.env").exists())
 
     def test_help_and_dry_run_do_not_initialize_or_call_apis(self):
-        with patch.object(startup, "pipeline_main", return_value=0) as command:
+        with patch.object(startup, "pipeline_main", return_value=0) as command, patch("evaluate_dataset.main", return_value=0) as test:
             self.assertEqual(self.call(["--help"]), 0)
             command.assert_not_called()
+            test.assert_not_called()
+            self.assertIn("No command defaults to: test", self.stdout.getvalue())
+            self.assertIn("--data-root", self.stdout.getvalue())
             self.assertEqual(self.call(["--dry-run"]), 0)
-            command.assert_called_once_with(["run", "--dry-run", "--paper-id", "ConVis"])
+            command.assert_not_called()
+            test.assert_called_once_with(["--dry-run"])
         self.assertFalse((self.root / "config.env").exists())
+
+    def test_default_launch_works_with_only_judge_and_target_configuration(self):
+        self.write_config()
+        with patch("evaluate_dataset.main", return_value=0) as test, patch("src.pipeline_cli.execute_jobs") as execute:
+            self.assertEqual(self.call([]), 0)
+        test.assert_called_once_with([])
+        execute.assert_not_called()
+        self.assertIn("Configuration OK", self.stdout.getvalue())
+        self.assertNotIn("VISION_API_KEY", self.stdout.getvalue())
+        self.assertNotIn("EMBED_API_KEY", self.stdout.getvalue())
 
     def test_full_pipeline_checks_all_roles_and_pdf_also_checks_ocr(self):
         self.write_config(full=True)
@@ -227,6 +281,7 @@ class StartupWrapperTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         self.assertIn("MUST provide your own API keys", completed.stdout)
         self.assertIn("measure --workers 2", completed.stdout)
+        self.assertIn("DEFAULT: test all existing data + export statistics", completed.stdout)
 
     @unittest.skipUnless(shutil.which("powershell"), "Windows PowerShell unavailable")
     def test_powershell_missing_uv_has_actionable_install_message(self):

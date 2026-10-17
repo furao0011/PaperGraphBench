@@ -10,18 +10,18 @@ PaperGraph-Bench 从科学论文构建图引导的评测基准，并通过多轮
 
 ## 推荐入口：使用已有数据集评测并自动统计
 
-> **测试模型请使用本节的 `test` 命令：直接读取仓库 `data/` 中已有的 12 篇论文题包，不重新建图、出题或做 OCR。运行结束自动生成逐论文明细和按模型汇总的统计表。**
+> **直接运行 `start.ps1` / `start.sh`，默认评测仓库 `data/` 中已有的 12 篇论文题包并统计，不重新建图、出题或做 OCR。运行结束自动生成逐论文明细和按模型汇总的统计表；显式使用 `test` 命令效果相同。**
 
 安装 [uv](https://docs.astral.sh/uv/)，使用 Python 3.11+。在完整克隆的仓库根目录运行：
 
 ```powershell
-.\start.ps1 test --workers 2
+.\start.ps1
 ```
 
 macOS/Linux 使用：
 
 ```bash
-bash ./start.sh test --workers 2
+bash ./start.sh
 ```
 
 **运行前必须在 `config.env` 填写以下两组自己的 API Key、Base URL 和模型 ID。** 首次运行会自动创建空配置并列出待填项；填写后再次执行同一命令。配置缺失时会停止，不调用模型。
@@ -49,7 +49,7 @@ Judge 需要支持结构化 JSON 输出，被测模型需要支持图片输入�
 .\start.ps1 test --dry-run
 ```
 
-默认评测 `data/` 中全部论文、每模型一轮；可用 `--data-root` 选择另一套已有题包，`--config` 选择私有配置。macOS/Linux 将 `.\start.ps1` 换为 `bash ./start.sh`。若 Windows 执行策略拦截，可使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 test --workers 2`。
+不带子命令时默认执行 `test`：评测 `data/` 中全部论文、每模型一轮、单任务并发，完成后自动统计。参数也可直接传入，例如 `.\start.ps1 --workers 2`。可用 `--data-root` 选择另一套已有题包，`--config` 选择私有配置。macOS/Linux 将 `.\start.ps1` 换为 `bash ./start.sh`。若 Windows 执行策略拦截，可使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1`。
 
 ### 结果在哪里，如何统计
 
@@ -90,18 +90,18 @@ uv run --locked python scripts/summarize_results.py --result-root outputs/evalua
 
 ## 可选：构建新基准
 
-下面的无子命令启动和 `measure` 会重新建图出题；**只想测试已有数据集时无需执行这一节，使用上方 `test` 命令即可。**
+**重新构建必须显式使用 `run`、`build`、`questions` 或 `measure` 命令。** 不带子命令只评测已有题包；不需要新建基准时无需执行本节。
 
 安装 [uv](https://docs.astral.sh/uv/)，使用 Python 3.11+，在仓库根目录执行：
 
 ```powershell
-.\start.ps1
+.\start.ps1 run --paper-id ConVis
 ```
 
 macOS/Linux 使用：
 
 ```bash
-bash ./start.sh
+bash ./start.sh run --paper-id ConVis
 ```
 
 脚本自动准备依赖，并在配置不存在时创建 `config.env`。**首次运行后，按上表填写 API 配置，再执行同一命令即可启动。** 已有配置不会被覆盖；配置缺失时会列出待填字段并停止，不会调用模型。
@@ -113,18 +113,15 @@ bash ./start.sh
 .\start.ps1 measure --workers 2
 
 # 批量处理所有已解析论文，各评测一轮
-.\start.ps1 --all --workers 2
+.\start.ps1 run --all --workers 2
 
-# 只评测已发布题包，不重新建图出题
-.\start.ps1 evaluate --all --workers 2
-
-# 只查看计划，不调用模型
-.\start.ps1 --all --dry-run
+# 只查看构建计划，不调用模型
+.\start.ps1 run --all --dry-run
 ```
 
 macOS/Linux 将 `.\start.ps1` 替换为 `bash ./start.sh` 即可。完整测评会在 `outputs/measurement/<session>/` 下保存独立的数据包、各轮结果、输入哈希和主日志；`measure --repeats 1` 可改为只评测一轮，`measure --paper-id ConVis` 可只测一篇。
 
-可用 `--config path/to/config.env` 指定其他配置。若 Windows 执行策略拦截脚本，可仅对此次启动使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1`。下方 `uv run python run.py ...` 命令保留用于开发及分阶段操作。
+可用 `--config path/to/config.env` 指定其他配置。若 Windows 执行策略拦截脚本，可仅对此次启动使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 run --paper-id ConVis`。下方 `uv run python run.py ...` 命令保留用于开发及分阶段操作。
 
 ## 输入与输出
 
