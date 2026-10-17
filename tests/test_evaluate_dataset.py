@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import csv
 import io
 import json
 import os
@@ -186,7 +187,7 @@ class ExistingDatasetHttpTests(unittest.TestCase):
         self.assertEqual(len(manifest["expected_tasks"]), 2)
         self.assertEqual(json.loads((session / "statistics" / "summary.json").read_text(encoding="utf-8"))["task_counts"]["completed"], 2)
         for name in ("summary.csv", "four_dimensions.csv", "failure_category_by_model.csv", "classification_paths.csv", "classification_events.csv", "classification_events.json",
-                     "classification_summary.csv", "classification_summary.json"):
+                     "classification_summary.csv", "classification_summary.json", "repair_tasks.csv"):
             self.assertTrue((session / "statistics" / name).is_file(), name)
         classification = json.loads((session / "statistics" / "classification_summary.json").read_text(encoding="utf-8"))
         self.assertEqual(classification["task_counts"]["completed"], 2)
@@ -216,11 +217,48 @@ class ExistingDatasetHttpTests(unittest.TestCase):
         self.assertEqual(events[0]["family"], "contradicted_kc_claim")
         self.assertEqual(events[0]["paper_category"], "contradicted_kc_claim")
         self.assertEqual(events[0]["subtype"], "unsupported_detail")
-        self.assertEqual(events[0]["status"], "resolved")
-        self.assertTrue(events[0]["followup_turns"])
+        self.assertEqual(events[0]["status_at_detection"], "unresolved")
+        trajectory_path = next((session / "round-01").rglob("dialogue_trajectory.json"))
+        trajectory = json.loads(trajectory_path.read_text(encoding="utf-8"))
+        raw_event = trajectory["turns"][0]["judge_result"]["hallucination_events"][0]
+        self.assertEqual(events[0]["followup_turns_at_detection"], raw_event["followup_turns"])
+        self.assertEqual(events[0]["resolved_at_turn_at_detection"], raw_event["resolved_at_turn"])
+        self.assertNotIn("status", events[0])
+        self.assertNotIn("state_path", events[0])
         self.assertIn("duplicate_labels", events[0]["issues"])
         self.assertTrue((session / "statistics" / "four_dimensions.csv").is_file())
         self.assertTrue((session / "statistics" / "failure_category_by_model.csv").is_file())
+        with (session / "statistics" / "repair_tasks.csv").open(encoding="utf-8-sig", newline="") as stream:
+            tasks = list(csv.DictReader(stream))
+        self.assertEqual(len(tasks), 1)
+        self.assertEqual(tasks[0]["repair_type"], "hallucination")
+        self.assertEqual(tasks[0]["success"], "True")
+
+    def test_unseen_model_runs_default_start_and_exports_paper_aligned_statistics(self):
+        model = "new-research-lab/scientific-reader-2099"
+        self.fixture.set_target_model(model)
+        self.fixture.server.inject_hallucination = True
+        data_root = self.fixture.root / "data" / "tiny"
+        before = {path.name: path.read_bytes() for path in data_root.iterdir()}
+        process = self._run()
+        logs = "\n".join(path.read_text(encoding="utf-8") for path in (self.fixture.root / "testing").rglob("*.log"))
+        self.assertEqual(process.returncode, 0, process.stdout + process.stderr + logs)
+        session = next((self.fixture.root / "testing").iterdir())
+        manifest = json.loads((session / "testing.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["target_models"], [model])
+        self.assertEqual(manifest["expected_tasks"][0]["model"], model)
+        summary = json.loads((session / "statistics" / "summary.json").read_text(encoding="utf-8"))
+        self.assertEqual(summary["status"], "completed")
+        self.assertEqual(summary["models"][0]["model"], model)
+        self.assertEqual(summary["models"][0]["one_turn_kc_coverage"], 1)
+        self.assertEqual(summary["classification"]["event_count"], 1)
+        with (session / "statistics" / "repair_tasks.csv").open(encoding="utf-8-sig", newline="") as stream:
+            repairs = list(csv.DictReader(stream))
+        self.assertEqual(repairs[0]["model"], model)
+        self.assertEqual(repairs[0]["success"], "True")
+        requested_models = {request["payload"].get("model") for request in self.fixture.server.requests}
+        self.assertEqual(requested_models, {model, "judge-mini"})
+        self.assertEqual(before, {path.name: path.read_bytes() for path in data_root.iterdir()})
 
 
 if __name__ == "__main__":

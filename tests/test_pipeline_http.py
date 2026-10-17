@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -41,10 +42,10 @@ class _ProviderHandler(BaseHTTPRequestHandler):
         if self.path != "/v1/chat/completions":
             self._respond(404, {"error": "unknown endpoint"})
             return
-        if model == TARGET_MODEL and self.server.reject_target:
+        if model == self.server.target_model and self.server.reject_target:
             self._respond(401, {"error": "test provider rejected target credentials"})
             return
-        if model == TARGET_MODEL:
+        if model == self.server.target_model:
             content = "The paper's method uses the stated graph-grounded bridge."
         elif model == JUDGE_MODEL and payload.get("response_format") == {"type": "json_object"}:
             system = payload.get("messages", [{}])[0].get("content", "")
@@ -94,6 +95,8 @@ class _ProviderHandler(BaseHTTPRequestHandler):
 
 
 class PipelineHttpTests(unittest.TestCase):
+    target_model = TARGET_MODEL
+
     def setUp(self) -> None:
         self.temporary = tempfile.TemporaryDirectory(prefix="papergraph-http-", dir=REPOSITORY)
         self.addCleanup(self.temporary.cleanup)
@@ -104,13 +107,15 @@ class PipelineHttpTests(unittest.TestCase):
         self.server.requests = []
         self.server.requests_lock = threading.Lock()
         self.server.reject_target = False
+        self.server.target_model = self.target_model
         self.server.inject_hallucination = False
         self.server.hallucination_injected = False
         self.server_thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.server_thread.start()
         self.addCleanup(self._stop_server)
 
-        self.log_path = REPOSITORY / "outputs" / "logs" / PAPER_ID / f"evaluate_{TARGET_MODEL}.log"
+        model_name = re.sub(r"[^\w.-]+", "_", self.target_model)
+        self.log_path = REPOSITORY / "outputs" / "logs" / PAPER_ID / f"evaluate_{model_name}.log"
         if self.log_path.exists():
             self.skipTest(f"Refusing to append to an existing test log: {self.log_path}")
         self.preexisting_log_dirs = {
@@ -219,7 +224,7 @@ class PipelineHttpTests(unittest.TestCase):
             "LLM_MODEL": JUDGE_MODEL,
             "EVAL_TARGET_API_KEY": "fake-target-key",
             "EVAL_TARGET_BASE_URL": base_url,
-            "EVAL_TARGET_MODEL": TARGET_MODEL,
+            "EVAL_TARGET_MODEL": self.target_model,
             "PAPERGRAPH_DATA_ROOT": (self.root / "data").as_posix(),
             "RAW_PAPER_ROOT": (self.root / "rawPaper").as_posix(),
             "EVAL_RESULT_ROOT": (self.root / "outputs" / "evaluation").as_posix(),
@@ -232,9 +237,22 @@ class PipelineHttpTests(unittest.TestCase):
             "PAPERGRAPH_LLM_TIMEOUT_S": "5",
         }
         self.config_path = self.root / "config.env"
-        self.config_path.write_text("\n".join(f"{key}={value}" for key, value in settings.items()) + "\n", encoding="utf-8")
-        self.report_path = self.root / "outputs" / "evaluation" / TARGET_MODEL / PAPER_ID / "evaluation_report.json"
+        self.settings = settings
+        self.set_target_model(self.target_model)
+
+    def set_target_model(self, model: str) -> None:
+        """Configure a new caller-supplied model ID on the fake local service."""
+        self.target_model = model
+        self.server.target_model = model
+        self.settings["EVAL_TARGET_MODEL"] = model
+        self.config_path.write_text("\n".join(f"{key}={value}" for key, value in self.settings.items()) + "\n", encoding="utf-8")
+        model_name = re.sub(r"[^\w._-]+", "_", model.strip()).strip("._-")
+        self.report_path = self.root / "outputs" / "evaluation" / model_name / PAPER_ID / "evaluation_report.json"
         self.trajectory_path = self.report_path.with_name("dialogue_trajectory.json")
+        log_name = re.sub(r"[^\w.-]+", "_", model)
+        self.log_path = REPOSITORY / "outputs" / "logs" / PAPER_ID / f"evaluate_{log_name}.log"
+        if self.log_path.exists():
+            self.skipTest(f"Refusing to append to an existing test log: {self.log_path}")
 
     @staticmethod
     def _isolated_env() -> dict[str, str]:
@@ -281,7 +299,7 @@ class PipelineHttpTests(unittest.TestCase):
         self.assertEqual(trajectory["turns"][0]["judge_result"]["state"], "MAIN_PROGRESS")
 
         requests = self.server.requests
-        target_requests = [item for item in requests if item["payload"].get("model") == TARGET_MODEL]
+        target_requests = [item for item in requests if item["payload"].get("model") == self.target_model]
         judge_requests = [item for item in requests if item["payload"].get("model") == JUDGE_MODEL]
         self.assertTrue(target_requests, requests)
         self.assertTrue(judge_requests, requests)
@@ -296,7 +314,7 @@ class PipelineHttpTests(unittest.TestCase):
         process = self._evaluate()
         self.assertNotEqual(process.returncode, 0, process.stdout + process.stderr)
         self.assertIn("HTTP 401", self._log_text())
-        self.assertTrue(any(item["payload"].get("model") == TARGET_MODEL for item in self.server.requests))
+        self.assertTrue(any(item["payload"].get("model") == self.target_model for item in self.server.requests))
         self.assertFalse(self.report_path.exists(), "A rejected target request must not create a completed report.")
 
     def test_completed_cache_reuses_output_and_paper_change_reruns(self) -> None:
@@ -321,7 +339,7 @@ class PipelineHttpTests(unittest.TestCase):
         self.assertGreater(len(self.server.requests), first_request_count, "A changed paper must invalidate the completed result.")
         later_target_requests = [
             item for item in self.server.requests[first_request_count:]
-            if item["payload"].get("model") == TARGET_MODEL
+            if item["payload"].get("model") == self.target_model
         ]
         self.assertTrue(any(revised_marker in item["payload"]["messages"][1]["content"] for item in later_target_requests))
         self.assertEqual(json.loads(self.report_path.read_text(encoding="utf-8"))["summary"]["evaluation_status"], "completed")

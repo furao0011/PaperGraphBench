@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "description": "Frozen numerical reference for the paper's 12-paper, ten-model results. Verification never invokes models or imports the research project.",
+  "sources": {
+    "main": "PaperGraph-Bench camera-ready main results; original focused_eval_stats_bin10_no_sonnet/model_summary.csv",
+    "repair": "PaperGraph-Bench camera-ready repair results; original focused_eval_stats_bin10_no_sonnet/repair_by_type.csv",
+    "categories": "PaperGraph-Bench four-category figure; original failure_category_by_model.csv",
+    "cost": "Camera-ready main table displayed Chars/Turn, rounded to one decimal"
+  },
+  "expected": {"models": 10, "tasks": 120, "tasks_per_model": 12, "total_turns": 7295, "hallucination_events": 1491, "unmapped_events": 0},
+  "tolerance": {"core_absolute": 1e-12, "displayed_chars_absolute": 0.050001},
+  "main_metrics": ["one_turn_kc_coverage", "one_turn_macro_complete_rate", "challenge_failure_rate", "text_challenge_failure_rate", "multimodal_challenge_failure_rate", "mean_hallucination_events", "mean_total_turns"],
+  "repair_metrics": ["detail_repair_success_rate", "detail_repair_avg_rounds", "hallucination_repair_success_rate", "hallucination_repair_avg_rounds"],
+  "category_metrics": ["contradicted_kc_claim", "challenge_false_premise_acceptance", "challenge_overclaim_acceptance", "challenge_wrong_relation_acceptance"],
+  "cost_note": "The archived GLM-4.5v trajectories recompute to 1737.0548245614036 chars/turn (1737.1 displayed), versus 1736.1 in the paper. This discrepancy is reported, never corrected or ignored.",
+  "known_cost_discrepancies": [
+    {"model": "glm-4.5v", "field": "mean_answer_chars_per_turn", "actual": 1737.0548245614036, "reference": 1736.1}
+  ],
+  "models": [
+    {"model": "claude-haiku-4-5", "main": [0.9607142857142857, 0.8871693121693122, 0.31512605042016806, 0.35833333333333334, 0.2711864406779661, 10.666666666666666, 52.0], "repair": [0.84, 1.46, 0.9770114942528736, 1.0459770114942528], "categories": [39, 47, 21, 21], "chars_per_turn": 8385.6},
+    {"model": "gpt-5", "main": [0.879584017515052, 0.6874669312169313, 0.3319327731092437, 0.35833333333333334, 0.3050847457627119, 10.083333333333334, 60.833333333333336], "repair": [0.9072164948453608, 1.288659793814433, 0.8297872340425532, 1.5425531914893618], "categories": [32, 52, 26, 11], "chars_per_turn": 832.2},
+    {"model": "gpt-5-mini", "main": [0.9295771756978654, 0.7969907407407407, 0.27102803738317754, 0.2777777777777778, 0.2641509433962264, 6.166666666666667, 51.333333333333336], "repair": [0.9705882352941176, 1.1323529411764706, 0.746268656716418, 1.5522388059701493], "categories": [5, 43, 14, 12], "chars_per_turn": 1858.6},
+    {"model": "gemini-3-flash-preview", "main": [0.8789203612479475, 0.7648478835978836, 0.3865546218487395, 0.4083333333333333, 0.3644067796610169, 13.166666666666666, 62.833333333333336], "repair": [0.8809523809523809, 1.3333333333333333, 0.6724137931034483, 1.6206896551724137], "categories": [39, 48, 42, 29], "chars_per_turn": 1924.3},
+    {"model": "ark-doubao-seed-2.0-pro-260215", "main": [0.9044813902572524, 0.719047619047619, 0.31512605042016806, 0.3333333333333333, 0.2966101694915254, 10.75, 57.833333333333336], "repair": [0.9230769230769231, 1.2435897435897436, 0.7553191489361702, 1.5], "categories": [38, 44, 31, 16], "chars_per_turn": 2168.0},
+    {"model": "ark-doubao-seed-2.0-mini-260215", "main": [0.901135741652983, 0.7743386243386243, 0.42857142857142855, 0.44166666666666665, 0.4152542372881356, 14.166666666666666, 63.416666666666664], "repair": [0.9382716049382716, 1.1851851851851851, 0.6691729323308271, 1.5714285714285714], "categories": [41, 63, 37, 29], "chars_per_turn": 1790.2},
+    {"model": "qwen3.6-plus", "main": [0.879488232074439, 0.7440145502645502, 0.37815126050420167, 0.39166666666666666, 0.3644067796610169, 13.25, 63.916666666666664], "repair": [0.8823529411764706, 1.3411764705882352, 0.6403508771929824, 1.736842105263158], "categories": [49, 52, 36, 22], "chars_per_turn": 1912.0},
+    {"model": "qwen3.6-flash", "main": [0.8895457033388068, 0.7383597883597883, 0.3907563025210084, 0.44166666666666665, 0.3389830508474576, 13.666666666666666, 61.583333333333336], "repair": [0.8780487804878049, 1.2560975609756098, 0.7043478260869566, 1.5739130434782609], "categories": [53, 51, 37, 23], "chars_per_turn": 2179.0},
+    {"model": "fireworks/kimi-k2p5", "main": [0.8984984842743464, 0.742526455026455, 0.3319327731092437, 0.31666666666666665, 0.3474576271186441, 10.833333333333334, 58.166666666666664], "repair": [0.9146341463414634, 1.2804878048780488, 0.8144329896907216, 1.402061855670103], "categories": [40, 53, 23, 14], "chars_per_turn": 2210.2},
+    {"model": "glm-4.5v", "main": [0.803978516694034, 0.5987103174603174, 0.5210084033613446, 0.5666666666666667, 0.4745762711864407, 21.5, 76.0], "repair": [0.8319327731092437, 1.411764705882353, 0.5668789808917197, 1.8152866242038217], "categories": [107, 74, 48, 29], "chars_per_turn": 1736.1}
+  ]
+}

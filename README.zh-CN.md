@@ -57,32 +57,37 @@ Judge 需要支持结构化 JSON 输出，被测模型需要支持图片输入�
 
 | 文件或目录 | 用途 |
 | --- | --- |
-| `statistics/four_dimensions.csv` | 四维专用表，每模型六行，含均值、标准差、分母及任务状态，优先查看 |
+| `statistics/four_dimensions.csv` | 论文四维表，每模型十一行，含主值、聚合规则、分母及任务状态，优先查看 |
 | `statistics/failure_category_by_model.csv` | 论文四类幻觉及未映射事件的模型级计数，优先查看 |
-| `statistics/summary.csv` | 完整模型指标、标准差、有效论文数及任务完整性统计 |
+| `statistics/summary.csv` | 与论文同名的模型指标主值、有效数量及任务完整性 |
 | `statistics/per_paper.csv` | 每轮每篇论文的明细、分子分母和完成状态 |
 | `statistics/summary.json` | 可供程序读取的统计结果 |
-| `statistics/classification_events.csv`、`classification_events.json` | 逐事件论文类别、原始标签、来源、关联 KC 和最终状态 |
+| `statistics/repair_tasks.csv` | 真实跟进轮归组的修复任务、成功判定与尝试轮数 |
+| `statistics/classification_events.csv`、`classification_events.json` | 轨迹新事件的论文类别、原始标签、来源及检测时快照 |
 | `statistics/classification_paths.csv` | 原始 `family/type/subtype` 路径数量，用于排查底层标签 |
 | `statistics/classification_summary.csv`、`classification_summary.json` | 按模型的分类完整性及问题统计；JSON 同时包含分类路径分布 |
 | `round-01/evaluation/<model>/<paper_id>/` | 逐任务 `evaluation_report.json`、`dialogue_trajectory.json` 及状态缓存 |
 | `testing.json`、`main.log`、`logs/` | 计划任务清单、主进程日志及分阶段日志 |
 
-四个评估维度为知识覆盖、挑战诱发幻觉、幻觉行为和错误修复。挑战题中的错误或幻觉回答计作挑战诱发幻觉，兼容原 `challenge_failure` 指标名；`INCOMPLETE` 不算幻觉。主表按论文等权平均；空分母显示为空/N/A，缺失或未完成任务单列，不按零分计入均值。多轮实验先对同一论文跨轮平均，再汇总论文均值。
+统计与论文口径一致：知识覆盖看宏问题首答 KC 覆盖及宏完成；挑战失败率只含普通 `challenge_question`，不含线程挑战，并报告 Text/MM 分组；幻觉主指标为每篇平均事件数，幻觉轮次按是否含新事件计算；两类修复按 `repair_context` 实际任务报告成功率和平均尝试轮数，不用最终事件闭环率代替。
+
+首答覆盖、宏完成、每篇平均事件数及平均总轮数按论文等权（独立重复先在同篇内平均）；挑战、含事件轮次比例/密度、修复成功率/轮数和回答字符数按合并分子分母计算，不一律对论文比例求均值。`summary.csv` 主值直接使用 `one_turn_kc_coverage`、`challenge_failure_rate`、`mean_hallucination_events` 等论文列名，不加 `_mean`；四维表对应 `value` 和 `aggregation`。零分母为 N/A，失败或缺失任务单列。
 
 论文采用 **KC 证据冲突（Contr.KC）、错误前提接受（False prem.）、过度推断接受（Overclaim）、错误关系接受（Wrong rel.）**四类幻觉。线程前提变异归入错误前提，线程过度推断归入过度推断，错误推理桥及通用线程推理幻觉归入错误关系，回顾退化归入 KC 证据冲突。按原始 `hallucination_type` 精确映射；`fabricated_claim`、未细分的 `challenge_failure` 等未映射事件透明单列，不猜测归类。完整规则见[测评方案第四节](docs/evaluation_plan.zh-CN.md)。底层 `family/type/subtype` 仅作技术溯源，不另计成论文主类别。
 
-分类统计自动读取最终状态库，检查事件计数与报告一致并保留缺失、重复等标签问题；已完成任务缺少最终状态文件时明确报错，不当作零事件。无事件时分类完整率为 N/A，三级字段完整或不重复仅表示候选路径，不自动证明语义上的三级细分。
+分类直接读取轨迹各轮的新事件，检查同任务事件 ID 唯一并保留标签问题。事件中的 `status_at_detection`、`followup_turns_at_detection`、`resolved_at_turn_at_detection` 只代表检测时快照，不是最终状态；实际修复见 `repair_tasks.csv`。**统计只需完成报告与轨迹，不读取或重建最终状态缓存。** 无事件时分类完整率为 N/A，三级字段完整或不重复不自动证明语义上的三级细分。
 
-先看 `four_dimensions.csv` 和 `failure_category_by_model.csv`，即可查看四维结果与论文四类幻觉；其他分类文件供追溯和问题排查。上述十个文件均由默认启动自动生成。分类数量累加已完成任务跨论文、跨轮次的原始事件数，不是四维表的论文等权均值；四类之和加 `unmapped_event_count` 等于事件总数。接口调用成功不等于回答无幻觉或分类层级有效。
+先看 `four_dimensions.csv` 和 `failure_category_by_model.csv`，需要核对修复时看 `repair_tasks.csv`。上述十一个文件由默认启动自动生成。分类数量累加已完成任务跨论文、跨轮次的新事件数，不是每篇平均事件数；四类之和加 `unmapped_event_count` 等于事件总数。接口调用成功不等于回答或分类有效。
 
-已有评测报告和最终状态也可单独重新统计，**不调用模型 API，并自动导出上述全部分类文件**：
+已有结果可直接离线统计，**只需 `evaluation_report.json` 与 `dialogue_trajectory.json`，不需要 API 配置、题包或状态缓存，也不调用模型**：
 
 ```powershell
-uv run --locked python scripts/summarize_results.py --result-root outputs/evaluation
+uv run --locked python scripts/summarize_results.py --result-root eval_result
 ```
 
-将 `--result-root` 换为实际的测试批次目录或历史结果根目录即可。没有任务清单的旧结果只统计找到的报告，不据此宣称已完成全部论文测试。
+该命令自动导出与新模型默认评测相同的十一份文件。`--result-root` 也可换为 `outputs/evaluation`、实际批次或某轮结果目录；没有任务清单的历史结果只统计实际找到的报告，计划总数未知。缺少报告/轨迹的任务记为不完整，数据损坏或不一致则报错；可选缓存缺失不影响统计。
+
+需要核对论文原始固定实验时，按[测评方案第 3.1 节](docs/evaluation_plan.zh-CN.md)离线运行 `scripts/verify_paper_results.py`。150 项核心核对均一致；GLM 回答长度的已知差异（轨迹实算 1737.1，论文 1736.1）单列报告，不修改真实值，其他新增偏差则核验失败。该参考值核验不适用于新模型性能要求。
 
 ## 可选：重新建图出题所需的 API 配置
 

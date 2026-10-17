@@ -70,7 +70,8 @@ def _read_row(root: Path, task: dict, path: Path) -> dict:
         if not completed_evaluation(path, task["paper_id"], task["model"]):
             row.update(status="incomplete", reason="Completed report is missing its trajectory")
             return row
-        row.update(extract_metrics(report), status="completed", reason="")
+        trajectory = read_json(path.with_name("dialogue_trajectory.json"))
+        row.update(extract_metrics(report, trajectory), status="completed", reason="")
     else:
         if summary.get("evaluation_status") == "completed":
             raise ValueError(f"Completed report has inconsistent failure status: {path}")

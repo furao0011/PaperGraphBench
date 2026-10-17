@@ -1,4 +1,4 @@
-"""Summarize existing reports into per-paper CSV and equal-paper model results."""
+"""Reproduce paper metrics from existing reports and dialogue trajectories offline."""
 
 from __future__ import annotations
 
@@ -18,6 +18,7 @@ from statistics_metrics import METRICS, aggregate
 from statistics_classification import EVENT_COLUMNS, collect_classification
 from statistics_dimensions import DIMENSION_COLUMNS, dimension_rows
 from statistics_taxonomy import PAPER_CATEGORY_COLUMNS
+from statistics_repair_export import REPAIR_COLUMNS, repair_rows
 
 
 def _csv_value(value):
@@ -65,16 +66,20 @@ def summarize(result_root: Path, output_dir: Path | None = None, expected_tasks:
     classification = collect_classification(root, rows)
     events, classification_models = _classification_csv(classification)
     dimensions = dimension_rows(models)
+    repairs = repair_rows(root, rows)
     result = {"status": "completed" if completed == len(rows) else "incomplete", "result_root": str(root),
               "task_counts": {"planned": len(expected) if expected is not None else None,
                               "discovered": sum(row["status"] != "missing" for row in rows),
                               "completed": completed, "incomplete": len(rows) - completed},
-              "aggregation": {"macro": "Average each paper's valid repeated runs first, then weight papers equally",
+              "aggregation": {"primary": METRICS,
+                              "paper_mean": "Average each paper's valid repeated runs first, then weight papers equally",
+                              "pooled": "Ratio of recorded numerator/denominator sums across completed runs",
                               "std": "Sample standard deviation across paper means; NA with fewer than two papers",
                               "micro": "Ratio of count sums across valid completed runs; repeat-weighted",
-                              "na": "Missing metric or zero denominator; excluded from means, never replaced by zero",
+                              "na": "No applicable turns/tasks or zero denominator; never replaced by zero; malformed required data is an error",
                               "plan": "Known from manifest/explicit tasks" if expected is not None else "Unknown: only discovered reports were checked"},
-              "models": models, "four_dimensions": dimensions, "classification": classification["summary"]}
+              "models": models, "four_dimensions": dimensions, "classification": classification["summary"],
+              "repair_task_count": len(repairs), "metric_source": "dialogue_trajectory.json, validated against evaluation_report.json"}
     destination = Path(output_dir).expanduser().resolve() if output_dir is not None else root / "statistics"
     destination.mkdir(parents=True, exist_ok=True)
     per_paper_columns = ["round", "paper_id", "model", "status", "reason", "report_path", "total_turns"]
@@ -84,6 +89,7 @@ def summarize(result_root: Path, output_dir: Path | None = None, expected_tasks:
     _csv(destination / "per_paper.csv", rows, per_paper_columns)
     _csv(destination / "summary.csv", models, summary_columns)
     _csv(destination / "four_dimensions.csv", dimensions, DIMENSION_COLUMNS)
+    _csv(destination / "repair_tasks.csv", repairs, REPAIR_COLUMNS)
     _csv(destination / "classification_events.csv", events, EVENT_COLUMNS)
     _csv(destination / "classification_summary.csv", classification_models, [
         "model", "status", "task_total", "completed_tasks", "incomplete_tasks", "event_count",
@@ -108,14 +114,15 @@ def print_summary(result: dict) -> None:
     print(f"[statistics] status={result['status']} completed={counts['completed']} planned={counts['planned'] if counts['planned'] is not None else 'unknown'} incomplete={counts['incomplete']}")
     for model in result["models"]:
         def formatted(name: str) -> str:
-            value = model[name + "_mean"]
+            value = model[name]
             return "NA" if value is None else f"{value:.2%} (N={model[name + '_valid_papers']})"
-        density = model["hallucination_event_density_mean"]
+        def number(name: str) -> str:
+            return "NA" if model[name] is None else f"{model[name]:.3f}"
         print(f"  {model['model']}:")
-        print(f"    1. Knowledge coverage: {formatted('global_kc_coverage')}")
-        print(f"    2. Challenge-induced hallucination: {formatted('challenge_failure')}")
-        print(f"    3. Hallucination behavior: turns={formatted('hallucination_turn_rate')}; event density={density if density is not None else 'NA'} events/turn")
-        print(f"    4. Error repair: event closure={formatted('hallucination_event_closure')}; omission completion={formatted('detail_completion')}")
+        print(f"    1. Knowledge coverage: KC={formatted('one_turn_kc_coverage')}; macro={formatted('one_turn_macro_complete_rate')}")
+        print(f"    2. Challenge-induced hallucination: all={formatted('challenge_failure_rate')}; text={formatted('text_challenge_failure_rate')}; MM={formatted('multimodal_challenge_failure_rate')}")
+        print(f"    3. Hallucination behavior: events/paper={number('mean_hallucination_events')}; event-bearing turns={formatted('hallucination_turn_rate')}")
+        print(f"    4. Error repair: detail={formatted('detail_repair_success_rate')}, rounds={number('detail_repair_avg_rounds')}; hallucination={formatted('hallucination_repair_success_rate')}, rounds={number('hallucination_repair_avg_rounds')}")
     classification = result["classification"]
     print(f"[classification] events={classification['event_count']} three-fields-present={classification['three_fields_present_count']} non-repeating-candidates={classification['non_repeating_path_count']} (not automatic semantic-level validation)")
     for model in classification["paper_categories"]:

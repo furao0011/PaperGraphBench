@@ -1,4 +1,4 @@
-"""Validate final event stores and summarize recorded classification labels.
+"""Validate trajectory event records and summarize the paper's classification.
 
 Nonempty or distinct strings are observable candidates, not proof of a semantic
 three-level ontology. Missing labels remain missing and are never reconstructed.
@@ -18,7 +18,8 @@ _LABELS = ("hallucination_family", "hallucination_type", "subtype")
 EVENT_COLUMNS = (
     "round", "model", "paper_id", "event_id", "created_at_turn", "source_question_id",
     "family", "type", "subtype", "paper_category", "paper_category_label", "three_fields_present", "non_repeating_path", "issues",
-    "related_kc_ids", "claim", "status", "followup_turns", "resolved_at_turn", "source", "state_path",
+    "related_kc_ids", "claim", "status_at_detection", "followup_turns_at_detection",
+    "resolved_at_turn_at_detection", "source", "trajectory_path",
 )
 _STATE_LABELS = {
     "hallucination", "misled", "global_overclaim", "refuse_to_correct", "incomplete",
@@ -49,20 +50,18 @@ def _distribution(value, expected: Counter, field: str, path: Path) -> None:
         raise ValueError(f"Missing classification distribution {field}: {path}")
     actual = {key: count(number, f"{field}.{key}") for key, number in value.items()}
     if actual != dict(expected):
-        raise ValueError(f"Classification {field} disagrees with final events: {path}")
+        raise ValueError(f"Classification {field} disagrees with trajectory events: {path}")
 
 
-def _event_row(event: dict, event_id: str, row: dict, turns: dict, state_path: Path, root: Path) -> dict:
-    if event.get("event_id") != event_id:
-        raise ValueError(f"Classification event ID/key mismatch: {state_path}")
+def _event_row(event: dict, event_id: str, row: dict, source_turn: dict, turns: dict, trajectory_path: Path, root: Path) -> dict:
     created = event.get("created_at_turn")
-    if not isinstance(created, str) or created not in turns:
-        raise ValueError(f"Classification source turn not found: {event_id} in {state_path}")
+    if not isinstance(created, str) or created != source_turn["turn_id"]:
+        raise ValueError(f"Classification source turn mismatch: {event_id} in {trajectory_path}")
     source_question = event.get("source_question_id")
-    if source_question is not None and source_question != turns[created].get("question_id"):
-        raise ValueError(f"Classification source question mismatch: {event_id} in {state_path}")
-    related = _strings(event.get("related_kc_ids"), "related_kc_ids", state_path)
-    labels = [_label(event.get(name), name, state_path) for name in _LABELS]
+    if source_question is not None and source_question != source_turn.get("question_id"):
+        raise ValueError(f"Classification source question mismatch: {event_id} in {trajectory_path}")
+    related = _strings(event.get("related_kc_ids"), "related_kc_ids", trajectory_path)
+    labels = [_label(event.get(name), name, trajectory_path) for name in _LABELS]
     normalized = [label.strip().casefold() if label is not None else "" for label in labels]
     issues = [f"missing_{name}" for name, value in zip(("family", "type", "subtype"), normalized) if not value]
     present = [value for value in normalized if value]
@@ -81,11 +80,11 @@ def _event_row(event: dict, event_id: str, row: dict, turns: dict, state_path: P
     followups = event.get("followup_turns")
     if followups is None:
         issues.append("missing_followup_turns")
-    elif any(turn not in turns for turn in _strings(followups, "followup_turns", state_path)):
-        raise ValueError(f"Classification follow-up turn not found: {event_id} in {state_path}")
+    elif any(turn not in turns for turn in _strings(followups, "followup_turns", trajectory_path)):
+        raise ValueError(f"Classification follow-up turn not found: {event_id} in {trajectory_path}")
     resolved = event.get("resolved_at_turn")
     if resolved is not None and (not isinstance(resolved, str) or resolved not in turns):
-        raise ValueError(f"Classification resolved turn not found: {event_id} in {state_path}")
+        raise ValueError(f"Classification resolved turn not found: {event_id} in {trajectory_path}")
     return {**{key: row[key] for key in ("round", "model", "paper_id")},
             "event_id": event_id, "created_at_turn": created, "source_question_id": source_question,
             "family": labels[0], "type": labels[1], "subtype": labels[2],
@@ -94,22 +93,19 @@ def _event_row(event: dict, event_id: str, row: dict, turns: dict, state_path: P
             "three_fields_present": len(present) == 3,
             "non_repeating_path": len(present) == 3 and len(set(present)) == 3,
             "issues": issues, "related_kc_ids": related, "claim": event.get("claim"),
-            "status": _label(event.get("status"), "status", state_path),
-            "followup_turns": followups, "resolved_at_turn": resolved, "source": event.get("source"),
-            "state_path": state_path.relative_to(root).as_posix()}
+            "status_at_detection": _label(event.get("status"), "status", trajectory_path),
+            "followup_turns_at_detection": followups, "resolved_at_turn_at_detection": resolved,
+            "source": event.get("source"), "trajectory_path": trajectory_path.relative_to(root).as_posix()}
 
 
 def _task_events(root: Path, row: dict) -> list[dict]:
     report_path = (root / row["report_path"]).resolve()
     if not report_path.is_relative_to(root):
         raise ValueError("Classification report path escapes its result directory")
-    state_path = report_path.parent / "cache" / "eval_state_graph.json"
-    if not state_path.is_file():
-        raise ValueError(f"Missing final classification state: {state_path}")
-    report, state = read_json(report_path), read_json(state_path)
+    report = read_json(report_path)
     trajectory_path = report_path.parent / "dialogue_trajectory.json"
     trajectory = read_json(trajectory_path)
-    for value, path in ((report, report_path), (state, state_path), (trajectory, trajectory_path)):
+    for value, path in ((report, report_path), (trajectory, trajectory_path)):
         _identity(value, row, path)
     raw_turns = trajectory.get("turns")
     if not isinstance(raw_turns, list) or not raw_turns:
@@ -120,21 +116,30 @@ def _task_events(root: Path, row: dict) -> list[dict]:
         if not isinstance(turn_id, str) or not turn_id.strip() or turn_id in turns:
             raise ValueError(f"Classification trajectory has invalid/duplicate turn IDs: {trajectory_path}")
         turns[turn_id] = turn
-    events = state.get("hallucination_events")
-    if not isinstance(events, dict):
-        raise ValueError(f"Final hallucination_events must be an event dictionary: {state_path}")
+    summary = report.get("summary")
+    if not isinstance(summary, dict) or count(summary.get("total_turns"), "total_turns") != len(raw_turns):
+        raise ValueError(f"Classification report/trajectory turn counts differ: {report_path}")
+    if summary.get("evaluation_status") != "completed" or summary.get("failed") is not False:
+        raise ValueError(f"Classification completed row has an incomplete report: {report_path}")
     metrics = report.get("hallucination_metrics")
     if not isinstance(metrics, dict):
         raise ValueError(f"Missing hallucination_metrics: {report_path}")
-    if count(metrics.get("hallucination_event_count"), "hallucination_event_count") != len(events):
-        raise ValueError(f"Classification event count mismatch: {state_path}")
-    records = []
-    for event_id, event in sorted(events.items()):
-        if not isinstance(event_id, str) or not event_id.strip() or not isinstance(event, dict):
-            raise ValueError(f"Invalid classification event entry: {state_path}")
-        records.append(_event_row(event, event_id, row, turns, state_path, root))
+    records, seen_ids = [], set()
+    for turn in raw_turns:
+        judge = turn.get("judge_result")
+        if not isinstance(judge, dict) or not isinstance(judge.get("hallucination_events"), list):
+            raise ValueError(f"Classification turn requires a Judge event list: {trajectory_path}")
+        for event in judge["hallucination_events"]:
+            event_id = event.get("event_id") if isinstance(event, dict) else None
+            if not isinstance(event_id, str) or not event_id.strip():
+                raise ValueError(f"Invalid classification event ID: {trajectory_path}")
+            if event_id in seen_ids:
+                raise ValueError(f"Duplicate classification event ID in trajectory: {trajectory_path}")
+            seen_ids.add(event_id)
+            records.append(_event_row(event, event_id, row, turn, turns, trajectory_path, root))
+    if count(metrics.get("hallucination_event_count"), "hallucination_event_count") != len(records):
+        raise ValueError(f"Classification event count mismatch: {trajectory_path}")
     _distribution(metrics.get("hallucination_by_type"), Counter(event["type"] or "unknown" for event in records), "hallucination_by_type", report_path)
-    _distribution(metrics.get("hallucination_by_status"), Counter(event["status"] or "unknown" for event in records), "hallucination_by_status", report_path)
     return records
 
 
@@ -182,4 +187,6 @@ def collect_classification(root: Path, rows: list[dict]) -> dict:
         model["categorized_event_count"] = category["categorized_event_count"]
         model["unmapped_event_count"] = category["unmapped_event_count"]
     summary["interpretation"] = "Nonempty/distinct label strings are candidate paths, not proof of three semantic levels; missing labels are not filled."
+    summary["source"] = "dialogue_trajectory.json"
+    summary["status_interpretation"] = "Event status, follow-ups and resolution fields are snapshots at detection, not final repair outcomes."
     return {"events": events, "summary": summary}
