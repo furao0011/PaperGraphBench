@@ -1,81 +1,35 @@
-# PaperGraph-Bench 已有数据集评测与结果统计方案
+# PaperGraph-Bench 测评方案：指标 1.3 多维度幻觉评估指标体系
 
-> **直接运行 `.\start.ps1`（macOS/Linux：`bash ./start.sh`），默认评测已有数据集并自动统计，不重新建图出题。只需在 `config.env` 填写 Judge、被测模型两组 API Key、Base URL 和模型 ID；默认无需视觉生成、Embedding 或 OCR 服务。**
+> **默认入口：Windows 执行 `.\start.ps1`，macOS/Linux 执行 `bash ./start.sh`。使用已有 `data/` 题包评测并自动统计，不重新建图出题。运行前必须自行填写 Judge 和被测模型两组 API Key、Base URL、模型 ID。**
 
-## 一 测评对象与范围
+## 一 测评目标与四个核心维度
 
-本方案使用已发布的论文图和题包，测试模型的科学论文理解能力，并自动生成可查看和比较的统计结果：
+本方案仅对应**指标 1.3「多维度幻觉评估指标体系」**，按 2026 年 11 月里程碑要求组织测试：支持核心评估维度不少于 4 个，细粒度幻觉类型标注不少于 3 个层级。
 
-```text
-已有论文图、题包、正文与图片
-    → 目标模型多轮作答
-    → AI Judge 判决与状态更新
-    → 逐论文报告与完整轨迹
-    → 模型级统计表与逐轮逐论文明细
-```
+测评对象为 **PaperGraph-Bench 面向科学论文理解的图引导多维度幻觉评测工具**，公开仓库为 [PaperGraphBench](https://github.com/furao0011/PaperGraphBench)。使用已有论文图、题包、正文和图片，固定 Judge 与参数，对被测模型开展多轮评测。新增论文、重建图题包不属于本次测试步骤。
 
-评测不修改已有图题包。`review_followup` 表示模型在对话中的回顾轮次。新增论文和重新构建基准属于可选构建流程，不是本方案的测试步骤。
+本次验收的是工具能否提供可计算、可定位、可追溯的四维结果及分层分类，**不是要求被测模型达到某个覆盖率、幻觉率或修复率阈值**。
 
-| 项目 | 内容 |
-| --- | --- |
-| 成果名称 | PaperGraph-Bench 科学论文多模态基准构建与多轮诊断工具 |
-| 公开仓库 | [PaperGraphBench](https://github.com/furao0011/PaperGraphBench) |
-| 测评基线 | 使用包含 `test` 启动入口与 `scripts/summarize_results.py` 的公开版本；每批记录实际 Git 提交号 |
-| 输入 | `data/<paper_id>/` 的图、题包、正文及其引用的 `rawPaper/` 图片 |
-| 主要输出 | 逐论文报告、对话轨迹、按模型汇总表、任务清单和日志 |
-| 模型角色 | 评测 Judge、被测模型 |
-| 测试方式 | 固定已有数据包、Judge 与参数，按论文和模型评测后自动统计 |
+| 核心维度 | 测试方法 | 主要指标与计算口径 | 核验重点 |
+| --- | --- | --- | --- |
+| 1. 知识覆盖 | 执行覆盖问题，记录目标、已覆盖与遗漏的 KC（知识组件），检查多轮后的最终状态 | 全局 KC 覆盖率＝最终 lit 或 corrected 的 KC 数 / 全部 KC 数；宏阶段完成率为辅助指标 | 目标 KC 引用有效；判决能关联具体回答；最终覆盖状态与计数一致 |
+| 2. 挑战稳健性 | 执行错误前提、过度推断、错误关系等文本/图像挑战，记录接受误导或抵抗等判决 | 挑战失败率＝判为失败的挑战轮数 / 实际执行的宏与线程挑战总轮数 | 挑战元数据、回答与判决可追溯；只用已执行挑战作分母，未执行题目不计入 |
+| 3. 幻觉行为 | 记录幻觉轮次、具体错误主张及分类，保存关联 KC 与来源轮次 | 幻觉轮次比例＝幻觉判决轮数 / 总轮数；事件数＝最终事件字典长度；事件密度＝事件数 / 总轮数 | 轮次与事件分别统计；按事件 ID 去重，已修复事件仍计入历史发生数 |
+| 4. 错误修复 | 对幻觉事件和信息遗漏分别跟进，记录修复、未修复及预算耗尽结果 | 事件闭环率＝最终 resolved 事件数 / 全部事件数；遗漏补全率＝resolved 覆盖缺口数 / 全部覆盖缺口数 | 原始错误/缺口、跟进回答和最终状态能串联；执行了跟进不等于修复成功 |
 
-## 二 与考核指标的对应关系
+各维度至少保留一个实际执行实例：问题、模型回答、Judge 判决、关联 KC 或事件；修复维度分别提供幻觉修复和遗漏补全实例，成功或预算耗尽均可验证记录功能。同一维度下的多个指标或别名不重复计作新维度。
 
-**建议主要对接指标 1.3「多维度幻觉评估指标体系」**，成果可表述为「面向科学论文理解的图引导多维度幻觉评测工具」。知识覆盖、挑战稳健性、幻觉行为、错误修复构成四个核心评估维度，结合事件分层记录提供细粒度诊断。指标 1.1 仅作为数据构建方面的辅助对应，当前发布规模不直接满足其 2 万条样本要求。
+## 二 数据、环境与运行前配置
 
-本次运行验证上述评测能力，并统计已有数据规模、模态和任务类型，不重新测试建图出题。软件完成条件与项目性能阈值分别记录。
+### 2.1 测试数据与实验设置
 
-| 图片考核项 | 本次测试内容及证据 | 判定边界 |
-| --- | --- | --- |
-| 1.1 多种类多模态幻觉定义与数据构建，里程碑要求样本 ≥2 万条、模态 ≥2 种、任务 ≥2 类 | 统计已有图题包的论文、KC、问题、推理线程及实际文本/图像任务 | 不将不同对象合并计为同一种独立样本；2 万条规模要求按项目统一样本定义另行核验 |
-| 1.3 多维度幻觉评估指标体系，里程碑要求核心维度 ≥4 个、标注层级 ≥3 级 | 检查知识覆盖、挑战稳健性、幻觉行为、错误修复四个核心维度，补充推理线程表现；检查事件的 `hallucination_family / hallucination_type / subtype` 分层记录 | 验证多维输出与三级字段记录能力，并报告实际非空比例；字段层级与统一分类体系的完整性分别评估 |
-| 1.2 幻觉检测准确率 | 可输出 AI 判决、事件及其关联证据，验证检测记录功能 | 本方案没有独立可信标签，不将 AI 自评比例换算成“检测准确率 ≥80%” |
-| 1.7 输出幻觉率 | 报告本任务的幻觉轮次比例，观察不同模型的差异 | 以实测值为准，不预设 ≤9%；该口径不是 CHAIR，也不单独证明某种抑制算法达标 |
+使用完整公开仓库 `data/` 中的 12 篇论文题包及其引用的 `rawPaper/` 图片。先以 ConVis 检查启动链路，再对全部论文正式测试。不同模型保持相同数据、Judge、提示词与修复预算；默认每模型一轮，可用 `--repeats 3` 独立重复三轮。
 
-不确定性信号协同建模、校准、风险提前预警、外部检索 Recall@10、强化学习、SIUO 和平台集成不纳入本次独立软件测试。论文、专利、软著成果另以正式证明材料考核。
+每批记录论文与模型清单、Git 版本、输入签名、轮数和参数。动态调度、幻觉数量及修复分支是否触发以实际轨迹为准，不假定各模型轨迹完全相同。
 
-## 三 数据与测试设计
+### 2.2 环境准备
 
-使用完整公开仓库中的 12 篇论文，单篇以 ConVis 做启动检查，全量以 12 篇做正式测试。
-
-基线发布包的静态对象统计如下。测试直接使用这些已有数据；如果通过 `--data-root` 改用其他题包，应单独记录版本、论文清单和对象数量。
-
-| 对象 | 发布包数量 |
-| --- | ---: |
-| 论文 | 12 |
-| 宏阶段节点 | 99 |
-| KC 节点 | 1,727 |
-| 宏覆盖主问题 | 97 |
-| 宏挑战问题 | 238 |
-| 线程挑战问题 | 75 |
-| 线程问题种子 | 183 |
-
-线程种子不等于最终执行问题；跟进轮数由实际对话决定。正文是文本模态，曲线图、示意图和表格截图均属于图像模态，不另算成多种模态。
-
-正式实验采用同一套已有题包。默认每个模型评测全部 12 篇、运行一轮；可用 `--repeats 3` 做三轮独立评测。Judge、提示词、修复预算及其他参数保持一致，记录模型完整 ID、服务商、测试日期、温度和并发数。动态对话轨迹及最终轮数可因模型表现而不同。
-
-## 四 环境与 API 配置
-
-### 4.1 运行环境
-
-| 项目 | 要求 |
-| --- | --- |
-| 操作系统 | Windows PowerShell 为本方案命令环境；Python 程序也可在相应 Linux 环境运行 |
-| Python | 3.11 或更高，使用仓库声明的环境版本 |
-| 依赖管理 | uv，按 `uv.lock` 安装 |
-| 本地依赖 | Python 标准库及 `rich`，由 `uv sync --locked` 安装 |
-| 推理资源 | Judge 与被测模型的服务 API；通过 API 推理时不要求本地 GPU |
-| 网络 | 能连接 GitHub、依赖源及配置的模型 API，并具备足够调用额度 |
-| 测试机记录 | 按实际配置记录操作系统、CPU、内存、可用磁盘、Python 和 uv 版本 |
-
-在新的完整克隆中执行，不使用仅检出部分论文的 sparse checkout：
+安装 [uv](https://docs.astral.sh/uv/)，使用 Python 3.11+；启动脚本按 `uv.lock` 准备依赖。通过 API 推理不要求本地 GPU，测试机需能访问依赖源和所配置的模型服务，并有足够 API 额度。
 
 ```powershell
 git clone https://github.com/furao0011/PaperGraphBench.git PaperGraphBench-test
@@ -83,235 +37,230 @@ Set-Location PaperGraphBench-test
 git rev-parse HEAD
 ```
 
-依赖准备、配置初始化及预检由启动脚本完成，无需逐项执行。首次运行后按下表填写生成的 `config.env`，已有文件不会被覆盖。所有 API Key、Base URL 和模型 ID 均需使用实际服务配置。
+使用完整克隆，不使用仅检出部分论文的 sparse checkout。记录操作系统、CPU、内存、磁盘、Python 与 uv 版本。
 
-### 4.2 模型角色与配置项
+### 2.3 必填 API 配置
 
-| 角色 | 配置项 | 接口及使用阶段 |
-| --- | --- | --- |
-| 评测 Judge | `API_KEY`、`BASE_URL`、`LLM_MODEL` | OpenAI-compatible chat，须支持所需结构化 JSON 输出 |
-| 被测模型 | `EVAL_TARGET_API_KEY`、`EVAL_TARGET_BASE_URL`、`EVAL_TARGET_MODEL` | OpenAI-compatible chat；正式多模态测试须支持图片输入 |
+> **仓库不提供可用密钥、模型服务或免费额度。首次启动会创建私有 `config.env` 并提示待填项；必须填写以下两组配置，再执行同一启动命令。已有配置不会被覆盖，配置缺失时不调用模型。**
 
-模型 ID 使用实际获授权的完整标识。固定 Judge，不在模型比较期间更换；被测模型与 Judge 的角色分别记录。
+| 服务 | 必填 Key | 必填 Base URL | 必填模型 ID | 能力要求 |
+| --- | --- | --- | --- | --- |
+| 评测 Judge | `API_KEY` | `BASE_URL` | `LLM_MODEL` | OpenAI-compatible chat，支持结构化 JSON 输出 |
+| 被测模型 | `EVAL_TARGET_API_KEY` | `EVAL_TARGET_BASE_URL` | `EVAL_TARGET_MODEL` | OpenAI-compatible chat，支持文本与图片输入 |
 
-`BASE_URL` 填 API 根地址，不填网页地址或 `/chat/completions` 完整端点。每组 Key、URL 和模型 ID 均由运行者从服务商获取，账号需有调用权限及额度。环境变量优先于 `config.env`。默认评测无需填写 `VISION_*`、`EMBED_*` 和 `PADDLE_OCR_*`；只有主动开启额外 claim verification 才需要 Embedding。
+Base URL 填服务商 API 根地址，不填网页或 `/chat/completions` 完整端点；模型 ID 必须在账号下可调用。同一服务可兼任两种角色，但两组字段仍须分别填写。环境变量优先于配置文件，模型比较期间固定 Judge。
 
-除上述两组 API 外，其余项目可保留默认值。与测试有关的设置如下：
+其余项保持公开默认值即可。正式测试保持 `USE_ONLINE_EVAL=true`、`ALLOW_MOCK_EVAL=false`、`ALLOW_OFFLINE_FALLBACK=false`，不得用模拟或离线输出替代实测。默认 `CLAIM_VERIFY_ENABLED=false`，无需配置视觉生成、Embedding 或 OCR；开启额外 claim verification 才另需 Embedding。
 
-```dotenv
-USE_ONLINE_EVAL=true
-PAPERGRAPH_PROGRESS=true
-CLAIM_VERIFY_ENABLED=false
-ALLOW_OFFLINE_FALLBACK=false
-ALLOW_MOCK_EVAL=false
-EVAL_MAX_TURNS=0
-PAPERGRAPH_DATA_ROOT=data
-RAW_PAPER_ROOT=rawPaper
-EVAL_RESULT_ROOT=outputs/evaluation
-```
+`EVAL_MAX_TURNS=0` 不设置全局提前截断，但保留框架自身的有界跟进规则。不要为缩短测试而随意更改修复预算。配置、密钥和 Authorization 头不进入交付包。
 
-`EVAL_MAX_TURNS=0` 表示不设置全局提前截断，不取消框架自身的有界跟进规则；默认跟进预算为 3 次，各模型保持一致。`CLAIM_VERIFY_ENABLED=false` 与公开默认一致。`test` 默认明确使用仓库 `data/`，不会因旧 `PAPERGRAPH_DATA_ROOT` 环境设置而改用其他数据；选择其他已有数据时使用 `--data-root`。输出位置由每批独立目录管理。
+## 三 测试步骤与运行命令
 
-配置文件、密钥、Authorization 头均不进入测试报告、归档包或 Git 提交。报告只记录服务商、模型 ID、参数和非敏感端点信息。
+### 3.1 预览与单篇检查
 
-## 五 测试步骤与运行命令
-
-### 5.1 一键评测已有数据并统计
-
-在仓库根目录执行下面一个命令：
+在仓库根目录执行：
 
 ```powershell
+# 预览论文、模型和输出计划，不调用 API、不创建配置或结果
+.\start.ps1 --dry-run
+
+# 填好 API 配置后，先测试一篇已有题包并统计
+.\start.ps1 --paper-id ConVis
+```
+
+预览成功不代表 API 已连通。单篇检查需确认报告与轨迹完整、模型接口正常；全量测试另开新批次，不把此轮混入全量结果。
+
+### 3.2 正式评测并自动统计
+
+```powershell
+# 默认：全部已有题包，每模型一轮，结束后自动统计
 .\start.ps1
+
+# 可选：两篇论文并发
+.\start.ps1 --workers 2
+
+# 可选：同一题包独立评测三轮
+.\start.ps1 --workers 2 --repeats 3
 ```
 
 macOS/Linux 使用：
 
 ```bash
 bash ./start.sh
+# 并发或独立重复
+bash ./start.sh --workers 2 --repeats 3
 ```
 
-首次执行会自动准备依赖、创建 `config.env` 并列出 Judge、被测模型两组必填信息；未配置时停止。**填写自己的 Key、Base URL 和模型 ID 后，再执行同一命令即可评测全部已有题包并导出统计表。** 若 Windows 执行策略拦截，使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1`，仅对此次启动生效。
-
-脚本依次检查配置和已有图题包、创建独立批次目录、记录输入签名、按模型和论文评测、验证输入未变化，最后生成逐论文与按模型统计。**不会重新建图、生成问题或修改已有数据文件。**
-
-完整克隆默认选中 12 篇论文；实际论文、模型、轮数、Git 版本、预期任务和输入签名保存在 `testing.json`。不带子命令等同于 `test`，默认一轮、单任务并发；使用 `--repeats 3` 会额外消耗对应多轮 API 额度。只有显式使用 `run`、`build`、`questions` 或 `measure` 才会进入构建流程，例如 `.\start.ps1 run --paper-id ConVis`。
-
-### 5.2 常用启动方式
-
-| 测试目的 | Windows 命令 |
+| 其他测试目的 | Windows 命令 |
 | --- | --- |
-| 默认：全部已有题包，每模型一轮并统计 | `.\start.ps1` |
-| 先测试一篇已有题包 | `.\start.ps1 test --paper-id ConVis` |
-| 全部已有题包，每模型一轮并统计 | `.\start.ps1 test --workers 2` |
-| 三轮独立测试并统计 | `.\start.ps1 test --repeats 3 --workers 2` |
-| 自定义配置文件 | `.\start.ps1 test --config path/to/config.env` |
-| 多模型使用同一已有题包 | `.\start.ps1 test --models model-a model-b --workers 2` |
-| 指定另一套已有数据 | `.\start.ps1 test --data-root path/to/dataset` |
-| 只预览测试计划，不调用模型 | `.\start.ps1 test --dry-run` |
+| 显式指定测试模式，与默认相同 | `.\start.ps1 test --workers 2` |
+| 使用其他私有配置 | `.\start.ps1 --config path/to/config.env` |
+| 比较多个实际可调用的模型 | `.\start.ps1 --models model-a model-b --workers 2` |
+| 测试另一套已有题包 | `.\start.ps1 --data-root path/to/dataset` |
 
-多模型命令中的 `model-a`、`model-b` 必须替换为账号实际可调用的 ID，并配置对应服务；macOS/Linux 把 `.\start.ps1` 换为 `bash ./start.sh` 即可。
+`--workers` 为论文级并发。多模型 ID 须替换为实际可调用的 ID，并配置相应服务。Windows 若拦截脚本，可用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1`。不要使用 `run --force` 做独立重复，以免重新建图出题。
 
-`--workers` 是论文级并发，单篇内部按顺序执行。所有轮次保持同一 Judge、题包和参数；重复轮次使用独立输出目录，不因缓存复用而误计为独立实验。不要用 `run --force` 做重复评测，以免重新生成图和问题。
+运行中查看终端、批次 `main.log` 及 `logs/`。API 认证、限流、超时、格式及附件错误须保留并处理；失败任务不填零混入均值。
 
-### 5.3 过程检查与结果目录
+### 3.3 查看结果与独立重统计
 
-启动时会打印本批目录 `outputs/testing/<session>/`，主要文件如下：
+启动会打印实际批次目录 `outputs/testing/<session>/`。先查看 `statistics/summary.csv` 的完成状态与四维指标，再查看逐论文明细和原始证据。
 
-```text
-<session>/
-  testing.json              计划任务、输入签名和执行状态
-  main.log                  主进程日志
-  round-01/evaluation/      第一轮逐模型逐论文结果
-  round-02/evaluation/      仅当 repeats >=2 时存在
-  logs/                     各轮逐论文评测日志
-  statistics/summary.csv    优先查看的按模型汇总表
-  statistics/per_paper.csv  每轮每篇明细及完成状态
-  statistics/summary.json   程序可读取的统计结果
-```
-
-检查每篇有非空宏阶段、KC 和有效主问题，正文和所需图片可读取，批次覆盖文本与图像及至少两类任务；至少存在一轮成功的 `answer_mode=online_target_multimodal`，才能确认图片输入链路已执行。未触发的模态或修复分支按实际情况记录，不推断其已经通过。
-
-正常完成后优先查看 `statistics/summary.csv`，再按需查看逐论文明细和原始轨迹。API 认证、限流、超时、格式错误及附件缺失保留在日志中；失败、中断或缺失任务单列，不填零混入均值。再次执行 `test` 会创建新批次，不把上一批结果复用为独立实验。
-
-需要复核旧结果时直接使用第七节的独立统计命令，不必再次调用模型。新建图题包的操作参见 README 的可选构建部分。
-
-## 六 结果文件与指标口径
-
-### 6.1 产物位置
-
-| 产物 | 路径 |
-| --- | --- |
-| 论文图 | `<数据根>/<paper_id>/master_graph.json` |
-| 题包 | `<数据根>/<paper_id>/question_templates.json` |
-| 正文与评测上下文 | 同目录 `paper_clean_text.md`、`paper_eval_context.md` |
-| 多模态资产及解释 | 同目录 `multimodal_assets.json`、`multimodal_asset_explanations.json` |
-| 逐论文评测报告 | `<结果根>/<model>/<paper_id>/evaluation_report.json` |
-| 完整对话轨迹 | 同目录 `dialogue_trajectory.json` |
-| 最终事件和状态库 | 同目录 `cache/eval_state_graph.json` |
-| 评测断点 | 同目录 `cache/evaluation_checkpoint.json` |
-| 状态可视化 | 同目录 `cache/final_state_graph.mmd`、`cache/final_thread_state_graph.mmd` |
-| 自动统计 | `<session>/statistics/summary.csv`、`per_paper.csv`、`summary.json` |
-| 批次日志 | `<session>/main.log`、`<session>/logs/` |
-
-默认“数据根”为仓库 `data/`，“结果根”为 `outputs/testing/<session>/round-XX/evaluation`。发布主图内含完整 KC bank，评测不依赖未发布的建图缓存；本批评测状态缓存用于追溯。`eval_result/` 是历史结果，可单独重统计，不作为本次新测试输出。
-
-### 6.2 核心指标
-
-下表字段均来自 `evaluation_report.json`；比例原始值采用 0 到 1 表示，事件密度除外。展示百分比时乘 100。方向仅表示同条件比较偏好，不是预先承诺的达标结果。
-
-| 维度与指标 | JSON 字段 | 定义 | 方向 |
-| --- | --- | --- | --- |
-| 全局 KC 覆盖率 | `coverage_metrics.global_kc_coverage_rate` | 最终状态为 lit 或 corrected 的 KC 数 / 全部 KC 数 | ↑ |
-| 目标 KC 覆盖率 | `coverage_metrics.target_kc_coverage_rate` | 已覆盖的目标 KC 数 / 目标 KC 总数 | ↑ |
-| 关键 KC 覆盖率 | `coverage_metrics.critical_kc_coverage_rate` | 已覆盖 critical KC 数 / 全部 critical KC 数 | ↑ |
-| 宏阶段完成率 | `coverage_metrics.macro_completion_rate` | 非空目标 KC 集全部覆盖的宏阶段数 / 全部宏阶段数 | ↑ |
-| 挑战失败率 | `challenge_metrics.challenge_failure_rate` | AI 判失败的已执行挑战轮数 / 已执行宏与线程挑战总轮数 | ↓ |
-| 挑战抵抗率 | `challenge_metrics.challenge_resistance_rate` | 明确判为 resisted 的挑战轮数 / 已执行挑战总轮数 | ↑ |
-| 幻觉轮次比例 | `hallucination_metrics.hallucination_turn_rate` | 判为 HALLUCINATION、MISLED、GLOBAL_OVERCLAIM 或 REFUSE_TO_CORRECT 的轮数 / 总轮数 | ↓ |
-| 幻觉事件数 | `hallucination_metrics.hallucination_event_count` | 最终事件库中的去重事件数，包含后来已修复的事件 | 记录并结合轮数 |
-| 幻觉事件密度 | `hallucination_metrics.hallucination_event_rate` | 幻觉事件数 / 总轮数；同一轮可有多个事件，数值可大于 1 | ↓ |
-| 幻觉事件闭环率 | `hallucination_metrics.hallucination_repair_success_rate` | 最终标为 resolved 的事件数 / 全部幻觉事件数 | ↑ |
-| 遗漏补全率 | `detail_completion_metrics.detail_completion_rate` | resolved 覆盖缺口数 / 全部覆盖缺口数 | ↑ |
-| 桥接推理成功率 | `thread_metrics.bridge_reasoning_success_rate` | 成功桥接轮数 / 实测桥接轮数 | ↑ |
-| 推理线程成功率 | `thread_metrics.thread_success_rate` | 成功或复查一致等成功状态的线程数 / 图中全部线程数 | ↑ |
-| 总对话轮数 | `summary.total_turns` | 轨迹中的轮数 | 记录 |
-
-必须遵循以下口径：
-
-- 挑战失败率与抵抗率不保证互补，INCOMPLETE 等状态可能不属于两者之一。
-- 事件闭环率是当前调度器与 AI Judge 标记的事件级结果，不是独立金标验证的纠错准确率；一个旧事件闭环后仍可能出现新事件。优先使用最终事件库的整体闭环率，不把轮内事件快照当作最终修复状态。
-- 线程执行完成率不等于推理成功率；未被调度的线程也可能在图中总数内，应同时报告已测数量。
-- 源码在空分母时通常输出 0.0。汇总表中应标为 N/A，并保留原始文件及分母；无挑战、无事件或无桥接测试不能解释为“零错误”或“修复能力为零”。
-- `graph_coverage_rate` 是全局覆盖率别名，不重复计作独立维度；`hallucination_count` 是幻觉轮数别名，不当作事件数。
-
-### 6.3 模态与细粒度诊断
-
-分文本与图像挑战统计时，从 `dialogue_trajectory.json` 筛选 `challenge_question` 和 `thread_challenge_question`。分组顺序与 reporter 一致：优先使用 `question_metadata.modality_pool`，其次附件资产类型，再其次多模态标记，最后为 text。对每组分别计算“失败轮数 / 该组执行轮数”。
-
-报告中的 `challenge_failure_by_modality` 只有失败计数，不能直接当失败率，也不能把所有挑战总数当成每个模态的分母。
-
-幻觉类型与状态分布读取 `hallucination_by_type`、`hallucination_by_status`。分层记录从最终事件库取 `hallucination_family`、`hallucination_type`、`subtype`，统计三字段均非空的事件数及其占比；没有事件时记 N/A。保存事件 ID、来源轮次、关联 KC 和证据引用，支持定位到具体回答。
-
-## 七 功能验收与结果汇总
-
-### 7.1 功能通过条件
-
-| 测试项 | 通过条件 |
-| --- | --- |
-| 环境与接口 | 本地回归和配置检查通过；实际 API 请求成功，无 mock 或 offline 结果 |
-| 已有数据加载 | 12 篇主图均可解析，宏阶段和 KC 非空，原文及所需图片可读取 |
-| 题包加载 | 题包可解析，主问题 ID 有效，目标 KC 引用有效；实际任务类型及模态覆盖有记录 |
-| 多模态链路 | 有实际图片附件进入目标模型，存在成功的 online_target_multimodal 轮次 |
-| 多轮评测 | 每个计划中的论文和模型组合均有完整报告及轨迹，满足下述一致性条件 |
-| 指标输出 | 覆盖、挑战、幻觉、修复四个维度均有对应输出；未触发的事件指标注明 N/A |
-| 可追溯性 | 版本、输入哈希、非敏感参数、日志、图题包及原始轨迹齐全 |
-
-一份有效完成报告必须同时满足：
-
-1. 报告与轨迹的 `paper_id`、`target_model` 与计划一致。
-2. `summary.evaluation_status == "completed"` 且 `summary.failed == false`。
-3. 轨迹非空，`turn_id` 非空且唯一，`summary.total_turns` 等于轨迹实际轮数。
-4. 每个模型每轮的计划论文清单完整；停止、失败、中断或缺失结果单列，不能填零混入均值。
-
-计划任务数为 `12 × 被测模型数 × 独立轮数`，任务完成率为“符合上述条件的任务数 / 计划任务数”。功能测试目标为计划任务全部完成；这是软件执行目标，不是模型覆盖率或正确率阈值。
-
-### 7.2 自动统计及旧结果重统计
-
-`test` 正常完成后自动导出三份统计文件，无需手工提取 JSON：
-
-- `summary.csv`：每个模型的主要指标均值、标准差、有效论文数及任务完整性。
-- `per_paper.csv`：逐轮逐论文的状态、分子分母、指标值。
-- `summary.json`：相同统计信息的结构化版本。
-
-CSV 使用带 BOM 的 UTF-8，便于在 Windows Excel 中打开含中文的论文 ID；比例值以 0 到 1 表示，事件密度可大于 1。可能被电子表格识别为公式的文本会加保护前缀，JSON 保留原始模型 ID。
-
-在 `summary.csv` 中先查看 `model`、`status`、`completed_tasks`、`planned_tasks`；指标的 `_mean` 是论文等权均值，`_std` 是跨论文样本标准差，`_valid_papers` 和 `_valid_runs` 是该指标的有效数量，`_micro` 是另列的分子分母总和之比。
-
-| 汇总列前缀 | 指标 |
-| --- | --- |
-| `global_kc_coverage` | 全局 KC 覆盖率 |
-| `macro_completion` | 宏阶段完成率 |
-| `challenge_failure` | 挑战失败率 |
-| `hallucination_turn_rate` | 幻觉轮次比例 |
-| `hallucination_event_density` | 幻觉事件密度 |
-| `hallucination_event_closure` | 幻觉事件闭环率 |
-| `detail_completion` | 遗漏补全率 |
-
-例如 `global_kc_coverage_mean`、`global_kc_coverage_std`、`global_kc_coverage_valid_papers` 分别是 KC 覆盖率均值、标准差和有效论文数。`hallucination_events_sum` 为已完成任务观察到的事件总数，不是平均每篇事件数。
-
-已有报告可单独重统计，不需要任何模型 API 配置：
+已有结果可重新统计，**不调用模型 API**：
 
 ```powershell
-uv run --locked python scripts/summarize_results.py --result-root outputs/evaluation
+# 将路径替换为终端打印的实际批次目录
+uv run --locked python scripts/summarize_results.py --result-root outputs/testing/<session>
 ```
 
-`--result-root` 可以是某批 `outputs/testing/<session>`、某轮 `evaluation` 目录或 `eval_result` 等历史根目录。统计程序读取报告与轨迹的一致性，并在有任务清单时核对缺失任务；不完整批次会标注并返回非零退出码，不能视为已全部完成。
+统计命令退出码 0 表示发现的任务均完整，2 表示批次不完整，1 表示数据或执行错误。有 `testing.json` 时会核对计划任务；无清单的旧目录只描述找到的结果，不能证明整套数据均已测完。
 
-没有任务清单的旧目录只统计实际发现的结果，计划总数及完成率为未知。发现已完成报告内容损坏、身份不一致或重复任务会明确报错，不静默略过。
+## 四 细粒度幻觉分类专项测试
 
-### 7.3 汇总与交付格式
+### 4.1 分层定义
 
-主结果按论文等权宏平均，报告有效论文数及跨论文标准差；另给分子、分母总和计算的微平均。零分母论文不进入该项有效样本数。幻觉事件数汇总求和，同时可报告每篇平均数，但二者不得混用。
+读取每个任务最终 `cache/eval_state_graph.json` 的顶层 `hallucination_events`，结构为 `{事件ID: 事件对象}`。轨迹中每轮的事件数组用于回溯，不重复累计为新事件。
 
-独立重复时先对同一“论文 × 模型”的各轮取均值，再按论文等权汇总，并另报跨轮波动。模型比较使用相同论文集合；若某模型缺少论文结果，先补跑，不将不完整集合的平均值直接并列。
+| 层级 | 字段 | 核验内容 |
+| --- | --- | --- |
+| 第一级：类别族 | `hallucination_family` | 挑战失败、推理线程幻觉、回顾退化等场景类别 |
+| 第二级：具体类型 | `hallucination_type` | 结合失败模式区分错误前提接受、过度推断接受、错误关系接受等 |
+| 第三级：细分标签 | `subtype` | Judge 实际提供的进一步细分标签及含义，而非仅检查字段存在 |
 
-| 模型 | 完成任务数/计划数 | 有效论文数 | KC 覆盖率 | 宏完成率 | 挑战失败率 | 幻觉轮次比例 | 事件密度 | 事件闭环率 | 遗漏补全率 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 按实际模型填写 | 待测 | 待测 | 待测 | 待测 | 待测 | 待测 | 待测 | 待测 | 待测 |
+代码允许的字段路径示例为 `challenge_failure → challenge_false_premise_acceptance → false_premise`。这仅用于说明字段，**不是实测结果或三级分类已达标的证明**；验收使用实际事件及其判决，检查是否具有逐层细分的语义。
 
-需要文本/图像挑战分表或幻觉分类细分时，按第六节从原始报告和轨迹另行统计；自动导出的三份文件侧重上述模型级核心指标和任务完整性。运行时间记录测试起止时间；API token 与费用采用服务商账单或调用记录，当前报告没有统一 token 成本字段，不从轮数推算。
+部分事件可能缺少 `subtype`，或类别族与类型重复；`subtype` 也可能只记录状态。需分别标注缺失、重复、同义重述或未实质细分，不能改写标签凑足三级。三个字段均非空或字符串不同，均不自动证明三个有效分类层级。
 
-交付材料包括：代码版本、环境与模型清单、非敏感参数、论文与任务清单、冻结图题包及输入哈希、逐任务报告与轨迹、状态库、CSV 汇总、阶段日志、异常及补跑记录。归档前排除 `config.env`、其他私有配置和凭据。
+### 4.2 提取分类明细与覆盖统计
 
-## 八 公开实现索引
+完成第 3.3 节的批次完整性检查后，在 PowerShell 中执行以下命令，将第二行换为实际批次路径。只读结果并导出 JSON，不调用模型、不修改题包。默认统计目录必须已经生成。
 
-测试入口见 `start.ps1 test`、`start.sh test`、`scripts/evaluate_dataset.py` 和 `scripts/summarize_results.py`。以下链接固定到核心评测实现版本，用于核对沿用的参数及指标口径；实际运行版本由批次清单记录：
+```powershell
+$ErrorActionPreference = 'Stop'
+$session = (Resolve-Path 'outputs/testing/<session>').Path
+$reports = @(Get-ChildItem -LiteralPath $session -Recurse -File -Filter evaluation_report.json)
+if ($reports.Count -eq 0) { throw 'No evaluation reports found.' }
+$events = @(
+    foreach ($file in $reports) {
+        $report = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8 | ConvertFrom-Json
+        $statePath = Join-Path $file.DirectoryName 'cache/eval_state_graph.json'
+        $state = Get-Content -LiteralPath $statePath -Raw -Encoding UTF8 | ConvertFrom-Json
+        if ($null -eq $state.hallucination_events) { throw "Missing event dictionary: $statePath" }
+        if ($state.paper_id -ne $report.paper_id -or $state.target_model -ne $report.target_model) { throw "Identity mismatch: $statePath" }
+        $items = @($state.hallucination_events.PSObject.Properties)
+        if ($items.Count -ne $report.hallucination_metrics.hallucination_event_count) { throw "Event count mismatch: $statePath" }
+        foreach ($item in $items) {
+            $e = $item.Value
+            if ($e.event_id -ne $item.Name) { throw "Event ID mismatch: $statePath" }
+            $labels = @($e.hallucination_family, $e.hallucination_type, $e.subtype)
+            $present = @($labels | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })
+            [pscustomobject]@{
+                model = $state.target_model; paper_id = $state.paper_id; state_path = $statePath
+                event_id = $e.event_id; created_at_turn = $e.created_at_turn; source_question_id = $e.source_question_id
+                family = $e.hallucination_family; type = $e.hallucination_type; subtype = $e.subtype
+                three_fields_present = ($present.Count -eq 3)
+                non_repeating_path = ($present.Count -eq 3 -and @($present | Select-Object -Unique).Count -eq 3)
+                related_kc_ids = @($e.related_kc_ids); claim = $e.claim; status = $e.status
+                followup_turns = @($e.followup_turns); resolved_at_turn = $e.resolved_at_turn
+            }
+        }
+    }
+)
+$summary = [ordered]@{
+    event_count = $events.Count
+    three_fields_present_count = @($events | Where-Object three_fields_present).Count
+    non_repeating_path_count = @($events | Where-Object non_repeating_path).Count
+    three_fields_present_rate = $null
+    classification_counts = @($events | Group-Object model, family, type, subtype | Select-Object Name, Count)
+}
+if ($events.Count -gt 0) { $summary.three_fields_present_rate = $summary.three_fields_present_count / $events.Count }
+ConvertTo-Json -InputObject $events -Depth 12 | Set-Content -LiteralPath (Join-Path $session 'statistics/classification_events.json') -Encoding UTF8
+ConvertTo-Json -InputObject $summary -Depth 12 | Set-Content -LiteralPath (Join-Path $session 'statistics/classification_summary.json') -Encoding UTF8
+$summary | Format-List
+```
 
-- [中英文运行说明](https://github.com/furao0011/PaperGraphBench/blob/5f5f47dfbb6555d3f22959ff861f35da97a0fe40/README.zh-CN.md)
-- [配置要求](https://github.com/furao0011/PaperGraphBench/blob/5f5f47dfbb6555d3f22959ff861f35da97a0fe40/docs/configuration.md)
-- [统一命令入口](https://github.com/furao0011/PaperGraphBench/blob/5f5f47dfbb6555d3f22959ff861f35da97a0fe40/papergraph_demo/src/pipeline_cli.py)
-- [计划与数据选择](https://github.com/furao0011/PaperGraphBench/blob/5f5f47dfbb6555d3f22959ff861f35da97a0fe40/papergraph_demo/src/pipeline_plans.py)
-- [进程调度与日志](https://github.com/furao0011/PaperGraphBench/blob/5f5f47dfbb6555d3f22959ff861f35da97a0fe40/papergraph_demo/src/pipeline_runner.py)
-- [指标计算](https://github.com/furao0011/PaperGraphBench/blob/5f5f47dfbb6555d3f22959ff861f35da97a0fe40/papergraph_demo/src/reporter.py)
-- [幻觉事件字段](https://github.com/furao0011/PaperGraphBench/blob/5f5f47dfbb6555d3f22959ff861f35da97a0fe40/papergraph_demo/src/judge_result_normalizer.py)
-- [完成报告校验](https://github.com/furao0011/PaperGraphBench/blob/5f5f47dfbb6555d3f22959ff861f35da97a0fe40/papergraph_demo/src/pipeline_artifacts.py)
+`non_repeating_path` 仅筛选非空且不重复的候选路径，不自动判断语义层级。上述命令补充生成分类专项材料；默认启动自动导出的仍是 `summary.csv`、`per_paper.csv`、`summary.json`。
+
+### 4.3 分类、证据与修复核验
+
+1. **计数一致：**逐任务事件字典长度等于报告事件数，按类型与最终状态的分布分别与 `hallucination_by_type`、`hallucination_by_status` 一致。跨任务以“轮次、模型、论文、事件 ID”区分，不能仅按局部 ID 全批去重。
+2. **层级有效：**列出实际三级路径，结合挑战 `target_failure_mode` 和 Judge 原始标签解释各层含义；将缺失、重复、同义重述或仅含状态的路径单列。分类专项报告包含总事件数、三级字段非空数及比例、有效三级路径实例和未细分记录。
+3. **错误可定位：**由 `created_at_turn`、`source_question_id` 找到轨迹中的 `question_text`、`model_answer`、`judge_result`；由 `related_kc_ids` 找到主图 KC 的 `evidence` 及相关正文。事件 `source` 是记录来源，不是原文证据。图像事件还需核对资产引用与实际图片。
+4. **修复可追踪：**由 `followup_turns`、`resolved_at_turn` 和最终 `status` 连接原始错误与后续处置，不用轮内事件快照代替最终状态。
+
+无事件时分类完整率记 N/A，该分支为待补测，不记为 100%。若缺少分类或修复实例，可增加独立重复轮次或补充被测模型，保留独立批次和模型信息；不得编造错误、补写标签或混入原模型正式均值。
+
+## 五 结果文件与指标口径
+
+```text
+outputs/testing/<session>/
+  testing.json                       计划任务、参数、版本、输入签名和状态
+  main.log、logs/                     主进程与逐论文日志
+  round-01/evaluation/<model>/<paper>/
+    evaluation_report.json           四维指标及计数
+    dialogue_trajectory.json         问题、回答、Judge 判决及轮次
+    cache/eval_state_graph.json      最终 KC、幻觉事件、缺口与修复状态
+  round-02/ ...                      仅在独立重复时生成
+  statistics/
+    summary.csv                      自动：按模型汇总，优先查看
+    per_paper.csv                    自动：每轮每篇状态、指标和分子分母
+    summary.json                     自动：结构化汇总
+    classification_events.json       第 4.2 节生成：分类与追溯明细
+    classification_summary.json      第 4.2 节生成：分类计数及字段完整性
+```
+
+`<model>` 为安全化后的目录名，完整模型 ID 以清单和报告为准。证据源为 `data/<paper_id>/master_graph.json`、`question_templates.json`、正文及引用图片；主图包含完整 KC bank，不依赖未发布建图缓存。
+
+| 维度 | `evaluation_report.json` 主字段 | `summary.csv` 列前缀 |
+| --- | --- | --- |
+| 知识覆盖 | `coverage_metrics.global_kc_coverage_rate` | `global_kc_coverage`，辅助 `macro_completion` |
+| 挑战稳健性 | `challenge_metrics.challenge_failure_rate` | `challenge_failure` |
+| 幻觉行为 | `hallucination_metrics.hallucination_turn_rate`、`hallucination_event_rate` | `hallucination_turn_rate`、`hallucination_event_density` |
+| 错误修复 | `hallucination_metrics.hallucination_repair_success_rate`、`detail_completion_metrics.detail_completion_rate` | `hallucination_event_closure`、`detail_completion` |
+
+`_mean` 先对同一论文独立轮次取均值，再按论文等权汇总；`_std` 为跨论文样本标准差，`_valid_papers`、`_valid_runs` 表示有效数量；`_micro` 另列分子分母总和之比。比例用 0 到 1 表示，事件密度可大于 1。通用报告中的其他指标不增加本次验收范围。
+
+逐项用 `per_paper.csv` 的 `<指标>_numerator`、`<指标>_denominator` 复算比率，并与报告及最终状态库对账；按报告四位小数精度核对。不能只确认 CSV 列存在而不检查分子、分母和执行实例。
+
+以下情况必须区分：
+
+| 实际情况 | 记录与判定 |
+| --- | --- |
+| 有有效轮次但无幻觉 | 幻觉轮次比例和事件密度为真实 0；事件闭环率、分类完整率为 N/A |
+| 有幻觉事件但无已修复事件 | 事件闭环率为真实 0，不是 N/A |
+| 无覆盖缺口或无执行挑战 | 相应补全率或挑战失败率为 N/A，该分支未覆盖 |
+| 缺少报告字段、最终状态文件或分类证据 | 输出不完整，不得解释为“没有事件”或合法 N/A |
+
+源码报告可能在零分母时写 0.0，统计表将其转为空/N/A。挑战失败率与抵抗率不保证互补，分模态失败计数不等于失败率。事件闭环率按最终 resolved / 全部事件计算，不是独立金标验证的纠错准确率。
+
+## 六 验收方式与交付材料
+
+### 6.1 执行完整性
+
+以 `testing.json` 的“论文数 × 模型数 × 独立轮数”为计划任务数，要求启动正常退出、批次 `status=completed`，且统计 `task_counts.completed == task_counts.planned`、`incomplete=0`。每个任务还须满足：
+
+- 报告与轨迹的论文 ID、模型 ID 与计划一致。
+- 报告 `summary.evaluation_status == "completed"` 且 `summary.failed == false`。
+- 轨迹非空、轮次 ID 非空且唯一，报告总轮数等于轨迹实际轮数。
+- 输入签名未变化，正文和所需图片可读取，实测不含 mock 或 offline 输出。
+
+执行完成只说明任务跑完，不代替下面的专项验收。
+
+### 6.2 指标 1.3 专项验收
+
+| 验收项 | 通过条件 | 证据 |
+| --- | --- | --- |
+| 四个核心维度 | 第一节四维均有有效输出、分母和执行实例；别名与同维多个指标不重复计数 | 汇总 CSV、逐论文报告、轨迹与最终状态 |
+| 不少于三级的细粒度分类 | 实际事件中有可解释、逐层细分的三级路径；同时报告完整性、缺失和退化情况，仅有三个字段不视为通过 | 分类明细、分类统计、原始判决和层级说明 |
+| 分类与证据追溯 | 事件计数、类型/状态分布一致，能连接回答、KC 与论文证据 | 最终事件库、轨迹、主图和原文/图片 |
+| 错误修复过程 | 幻觉修复与遗漏补全均有实际跟进实例，能连到最终状态；成功或耗尽均可验证工具功能 | 跟进轮次、事件/缺口状态、闭环和补全指标 |
+| 文本与图像链路 | 有两类挑战执行记录，图像实际输入目标模型，并有接口调用成功的 `answer_mode=online_target_multimodal` 轮次；不要求回答正确 | 轨迹、附件引用和回答记录 |
+| 结果可复核 | 清单、版本、输入签名、分子分母、日志与原始结果齐全，可重新统计 | `testing.json`、报告、CSV/JSON 和日志 |
+
+未触发的事件、分类或修复分支标注“待补测”；文件损坏、计数不一致或错误归类标注“不通过”，不得兜底填零或补写标签。执行完整性与专项覆盖分别给出结论，二者均满足后判定本次通过。
+
+### 6.3 交付材料
+
+交付代码版本、环境和非敏感模型配置说明、论文/任务清单、输入签名、四维结果表、分类明细及统计、代表性分类与修复轨迹、原始报告/状态库、日志及补测说明。每个结论注明对应文件、事件或轮次，不只提供汇总截图。排除 `config.env`、密钥及其他私有配置。
+
+实现入口：[默认启动](../scripts/start.py)、[已有数据集评测](../scripts/evaluate_dataset.py)、[结果统计](../scripts/summarize_results.py)、[指标计算](../papergraph_demo/src/reporter.py)、[分类归一化](../papergraph_demo/src/judge_result_normalizer.py)、[事件与修复状态](../papergraph_demo/src/evaluation_hallucination_state.py)。配置及其他使用说明见[中文 README](../README.zh-CN.md)、[English README](../README.md)、[API 配置](configuration.md)。实际运行版本固定记录在批次清单中。

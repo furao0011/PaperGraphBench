@@ -6,7 +6,7 @@ PaperGraph-Bench constructs a graph-guided benchmark from scientific papers and 
 
 All standard stages run automatically, including graph verification, question validation, solver filtering, and dialogue judging.
 
-For test operators, see the [Existing-dataset evaluation and statistics plan (Chinese)](docs/evaluation_plan.zh-CN.md) for the procedure, metric definitions, and acceptance criteria.
+For test operators, see the [Indicator 1.3 evaluation plan (Chinese)](docs/evaluation_plan.zh-CN.md) for the four evaluation dimensions, fine-grained hallucination classification, commands, result files, and acceptance criteria.
 
 ## Recommended: evaluate existing datasets and generate statistics
 
