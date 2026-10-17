@@ -2,17 +2,17 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-PaperGraph-Bench 从科学论文构建图引导的评测基准，并通过多轮阅读任务评测目标模型。标准流水线按需解析 PDF、构建论文图、生成图关联问题，并记录对话轨迹中的知识覆盖、挑战题表现、幻觉及修复结果。
+PaperGraph-Bench 通过图引导的多轮阅读任务评测模型对科学论文的理解能力。论文图将文章的论证结构、有证据支撑的知识组件、推理关系及图表连接起来，据此生成覆盖、误导挑战和推理问题，并在对话过程中持续观察幻觉及其修复情况。
 
-所有标准阶段均自动执行，包括图验证、问题验证、求解器筛选和对话评判。
+这一过程能够反映模型是否理解论文的整体内容，是否忠实于图文证据，以及能否在后续阅读中纠正错误。
 
-测试人员请参阅[指标 1.3 测评方案](docs/evaluation_plan.zh-CN.md)，了解四个评估维度、细粒度幻觉分类测试、运行命令、结果文件及验收方式。
+## 快速开始：使用已有数据集测试模型
 
-## 推荐入口：使用已有数据集评测并自动统计
+仓库 `data/` 已提供 **12 篇论文题包**。默认启动脚本使用这些题包评测你的模型，并自动生成统计结果。
 
-> **直接运行 `start.ps1` / `start.sh`，默认评测仓库 `data/` 中已有的 12 篇论文题包并统计，不重新建图、出题或做 OCR。运行结束自动生成逐论文结果、模型汇总和细粒度幻觉分类文件，无需另行执行提取脚本；显式使用 `test` 命令效果相同。**
+### 1. 准备环境与 API 配置
 
-安装 [uv](https://docs.astral.sh/uv/)，使用 Python 3.11+。在完整克隆的仓库根目录运行：
+安装 [uv](https://docs.astral.sh/uv/)，使用 Python 3.11+。完整克隆仓库后，在仓库根目录运行：
 
 ```powershell
 .\start.ps1
@@ -24,162 +24,95 @@ macOS/Linux 使用：
 bash ./start.sh
 ```
 
-**运行前必须在 `config.env` 填写以下两组自己的 API Key、Base URL 和模型 ID。** 首次运行会自动创建空配置并列出待填项；填写后再次执行同一命令。配置缺失时会停止，不调用模型。
+脚本会准备运行依赖。首次启动时会创建 `config.env`，并提示需要填写的配置。
 
-| 必填服务 | API Key | API 根地址 Base URL | 可调用模型 ID |
+> **测试前，请在 `config.env` 中填写下面两组服务的 API Key、API 根地址和可调用模型 ID，再次执行启动命令。实际调用会消耗你的服务商额度，并可能产生费用。**
+
+| 服务用途 | API Key | API 根地址 Base URL | 模型 ID |
 | --- | --- | --- | --- |
 | 评测 Judge | `API_KEY` | `BASE_URL` | `LLM_MODEL` |
 | 被测模型 | `EVAL_TARGET_API_KEY` | `EVAL_TARGET_BASE_URL` | `EVAL_TARGET_MODEL` |
 
-Judge 需要支持结构化 JSON 输出，被测模型需要支持图片输入。Base URL 使用服务商的 API 根地址，不填网页或 `/chat/completions` 完整端点。**默认无需配置视觉生成模型、Embedding 或 OCR 服务**；只有主动开启 `CLAIM_VERIFY_ENABLED=true` 时，评测才额外需要 Embedding。仓库不提供密钥或模型额度，实际测试会产生相应 API 消耗。
+两组服务均使用 OpenAI 兼容接口。Judge 需支持结构化 JSON 输出，被测模型需支持图片输入。Base URL 填写服务商提供的 API 根地址，例如 `https://your-provider.example/v1`。默认已有数据集测试使用上述两组服务，更多选项见[配置说明](docs/configuration.md)。
 
-### 常用测试命令
+### 2. 运行评测
+
+配置完成后，执行 `.\start.ps1` 即可对全部 12 篇论文评测一轮并生成结果表。以下命令可用于单篇试运行、重复测试和模型对比：
 
 ```powershell
-# 先用一篇已有题包测试
+# 先测试一篇论文
 .\start.ps1 test --paper-id ConVis
 
-# 对全部已有题包独立评测三轮并统计
+# 全部论文独立评测三轮，同时运行两个任务
 .\start.ps1 test --workers 2 --repeats 3
 
-# 对比多个模型；ID需替换为实际可调用的模型
+# 对比配置的被测服务中可调用的多个模型
 .\start.ps1 test --models model-a model-b --workers 2
-
-# 预览选中的论文、模型和输出路径，不调用模型
-.\start.ps1 test --dry-run
 ```
 
-不带子命令时默认执行 `test`：评测 `data/` 中全部论文、每模型一轮、单任务并发，完成后自动统计。参数也可直接传入，例如 `.\start.ps1 --workers 2`。可用 `--data-root` 选择另一套已有题包，`--config` 选择私有配置。macOS/Linux 将 `.\start.ps1` 换为 `bash ./start.sh`。若 Windows 执行策略拦截，可使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1`。
+macOS/Linux 将 `.\start.ps1` 替换为 `bash ./start.sh`。使用 `--dry-run` 预览测试计划，`--data-root` 选择其他数据集，`--config` 选择其他配置文件。若 Windows 执行策略拦截，可使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1`。
 
-### 结果在哪里，如何统计
+### 3. 查看结果
 
-每次 `test` 创建独立目录 `outputs/testing/<session>/`，终端会打印实际路径：
+每次测试会打印结果目录：`outputs/testing/<session>/`。优先查看以下文件：
 
-| 文件或目录 | 用途 |
+| 文件 | 内容 |
 | --- | --- |
-| `statistics/four_dimensions.csv` | 论文四维表，每模型十一行，含主值、聚合规则、分母及任务状态，优先查看 |
-| `statistics/failure_category_by_model.csv` | 论文四类幻觉及未映射事件的模型级计数，优先查看 |
-| `statistics/summary.csv` | 与论文同名的模型指标主值、有效数量及任务完整性 |
-| `statistics/per_paper.csv` | 每轮每篇论文的明细、分子分母和完成状态 |
-| `statistics/summary.json` | 可供程序读取的统计结果 |
-| `statistics/repair_tasks.csv` | 真实跟进轮归组的修复任务、成功判定与尝试轮数 |
-| `statistics/classification_events.csv`、`classification_events.json` | 轨迹新事件的论文类别、原始标签、来源及检测时快照 |
-| `statistics/classification_paths.csv` | 原始 `family/type/subtype` 路径数量，用于排查底层标签 |
-| `statistics/classification_summary.csv`、`classification_summary.json` | 按模型的分类完整性及问题统计；JSON 同时包含分类路径分布 |
-| `round-01/evaluation/<model>/<paper_id>/` | 逐任务 `evaluation_report.json`、`dialogue_trajectory.json` 及状态缓存 |
-| `testing.json`、`main.log`、`logs/` | 计划任务清单、主进程日志及分阶段日志 |
+| `statistics/four_dimensions.csv` | 四个评估维度的测试结果 |
+| `statistics/failure_category_by_model.csv` | 四类细粒度幻觉的数量统计 |
+| `statistics/summary.csv` | 模型级指标汇总 |
+| `statistics/per_paper.csv` | 各篇论文、各轮测试结果 |
+| `main.log` | 整体进度与运行日志 |
 
-统计与论文口径一致：知识覆盖看宏问题首答 KC 覆盖及宏完成；挑战失败率只含普通 `challenge_question`，不含线程挑战，并报告 Text/MM 分组；幻觉主指标为每篇平均事件数，幻觉轮次按是否含新事件计算；两类修复按 `repair_context` 实际任务报告成功率和平均尝试轮数，不用最终事件闭环率代替。
+四个评估维度与论文保持一致：
 
-首答覆盖、宏完成、每篇平均事件数及平均总轮数按论文等权（独立重复先在同篇内平均）；挑战、含事件轮次比例/密度、修复成功率/轮数和回答字符数按合并分子分母计算，不一律对论文比例求均值。`summary.csv` 主值直接使用 `one_turn_kc_coverage`、`challenge_failure_rate`、`mean_hallucination_events` 等论文列名，不加 `_mean`；四维表对应 `value` 和 `aggregation`。零分母为 N/A，失败或缺失任务单列。
+| 评估维度 | 测试内容 |
+| --- | --- |
+| 知识覆盖 | 首次回答的知识覆盖率与宏观阶段完成率 |
+| 挑战诱发幻觉 | 误导挑战下的失败率，以及文本与多模态问题的分组表现 |
+| 幻觉发生 | 每篇论文的平均幻觉事件数与出现幻觉的对话轮次比例 |
+| 错误修复 | 信息遗漏修复、幻觉修复的成功率与平均尝试轮数 |
 
-论文采用 **KC 证据冲突（Contr.KC）、错误前提接受（False prem.）、过度推断接受（Overclaim）、错误关系接受（Wrong rel.）**四类幻觉。线程前提变异归入错误前提，线程过度推断归入过度推断，错误推理桥及通用线程推理幻觉归入错误关系，回顾退化归入 KC 证据冲突。按原始 `hallucination_type` 精确映射；`fabricated_claim`、未细分的 `challenge_failure` 等未映射事件透明单列，不猜测归类。完整规则见[测评方案第四节](docs/evaluation_plan.zh-CN.md)。底层 `family/type/subtype` 仅作技术溯源，不另计成论文主类别。
+细粒度分析区分**与论文证据冲突**、**接受错误前提**、**接受过度推断**、**接受错误推理关系**四类幻觉。这些结果共同反映模型的阅读能力及其主要错误类型。
 
-分类直接读取轨迹各轮的新事件，检查同任务事件 ID 唯一并保留标签问题。事件中的 `status_at_detection`、`followup_turns_at_detection`、`resolved_at_turn_at_detection` 只代表检测时快照，不是最终状态；实际修复见 `repair_tasks.csv`。**统计只需完成报告与轨迹，不读取或重建最终状态缓存。** 无事件时分类完整率为 N/A，三级字段完整或不重复不自动证明语义上的三级细分。
+完整测试步骤和验收方式见[指标 1.3 测评方案](docs/evaluation_plan.zh-CN.md)。
 
-先看 `four_dimensions.csv` 和 `failure_category_by_model.csv`，需要核对修复时看 `repair_tasks.csv`。上述十一个文件由默认启动自动生成。分类数量累加已完成任务跨论文、跨轮次的新事件数，不是每篇平均事件数；四类之和加 `unmapped_event_count` 等于事件总数。接口调用成功不等于回答或分类有效。
+## 离线统计已有结果
 
-已有结果可直接离线统计，**只需 `evaluation_report.json` 与 `dialogue_trajectory.json`，不需要 API 配置、题包或状态缓存，也不调用模型**：
+使用已保存的报告和对话轨迹，即可生成相同的统计表：
 
 ```powershell
 uv run --locked python scripts/summarize_results.py --result-root eval_result
 ```
 
-该命令自动导出与新模型默认评测相同的十一份文件。`--result-root` 也可换为 `outputs/evaluation`、实际批次或某轮结果目录；没有任务清单的历史结果只统计实际找到的报告，计划总数未知。缺少报告/轨迹的任务记为不完整，数据损坏或不一致则报错；可选缓存缺失不影响统计。
-
-需要核对论文原始固定实验时，按[测评方案第 3.1 节](docs/evaluation_plan.zh-CN.md)离线运行 `scripts/verify_paper_results.py`。150 项核心核对均一致；GLM 回答长度的已知差异（轨迹实算 1737.1，论文 1736.1）单列报告，不修改真实值，其他新增偏差则核验失败。该参考值核验不适用于新模型性能要求。
-
-## 可选：重新建图出题所需的 API 配置
-
-> **必须在根目录 `config.env` 中提供自己的 API Key、服务商 Base URL 和模型 ID。本仓库不提供模型服务或密钥，实际调用会消耗你的服务额度，并可能产生费用。**
-
-完整的“建图 → 出题 → 评测”需要填写下面四组配置：
-
-| 服务用途 | API Key | API 根地址 Base URL | 模型 ID |
-| --- | --- | --- | --- |
-| 文本模型及评测 Judge | `API_KEY` | `BASE_URL` | `LLM_MODEL` |
-| 视觉模型 | `VISION_API_KEY` | `VISION_BASE_URL` | `VISION_MODEL` |
-| Embedding 模型 | `EMBED_API_KEY` | `EMBED_BASE_URL` | `EMBED_MODEL` |
-| 被测模型 | `EVAL_TARGET_API_KEY` | `EVAL_TARGET_BASE_URL` | `EVAL_TARGET_MODEL` |
-
-这三类信息均需从你的服务商处获取。Base URL 填 API 根地址，不能填网页地址或带 `/chat/completions`、`/embeddings` 的完整接口地址；模型 ID 必须在你的账号下可调用。被测模型需支持图片输入。同一服务的 Key 和 URL 可复用，但每组仍需显式填写。仅评测已有数据包时，默认只需文本/Judge 与被测模型两组。详见[配置说明](docs/configuration.md)。
+结果保存至 `eval_result/statistics/`。将 `eval_result` 替换为此前的测试批次目录，即可统计自己的结果。此步骤在本地完成，无需模型服务。
 
 ## 可选：构建新基准
 
-**重新构建必须显式使用 `run`、`build`、`questions` 或 `measure` 命令。** 不带子命令只评测已有题包；不需要新建基准时无需执行本节。
-
-安装 [uv](https://docs.astral.sh/uv/)，使用 Python 3.11+，在仓库根目录执行：
+对已解析的论文依次建图、出题和评测：
 
 ```powershell
 .\start.ps1 run --paper-id ConVis
 ```
 
-macOS/Linux 使用：
+该流程使用文本/Judge、视觉、Embedding 和被测模型四组服务，请按[配置说明](docs/configuration.md)填写。使用 `run --all --workers 2` 可批量处理已解析论文；默认启动方式仍为前述已有数据集测试。
 
-```bash
-bash ./start.sh run --paper-id ConVis
-```
+## 仓库结构
 
-脚本自动准备依赖，并在配置不存在时创建 `config.env`。**首次运行后，按上表填写 API 配置，再执行同一命令即可启动。** 已有配置不会被覆盖；配置缺失时会列出待填字段并停止，不会调用模型。
-
-配置完成后，上述一个命令会依次完成 ConVis 的建图、出题和评测。首次完整构建会发起较多付费 API 请求。其他常用启动方式：
-
-```powershell
-# 完整测评：建图出题一次、冻结输入、独立评测三轮
-.\start.ps1 measure --workers 2
-
-# 批量处理所有已解析论文，各评测一轮
-.\start.ps1 run --all --workers 2
-
-# 只查看构建计划，不调用模型
-.\start.ps1 run --all --dry-run
-```
-
-macOS/Linux 将 `.\start.ps1` 替换为 `bash ./start.sh` 即可。完整测评会在 `outputs/measurement/<session>/` 下保存独立的数据包、各轮结果、输入哈希和主日志；`measure --repeats 1` 可改为只评测一轮，`measure --paper-id ConVis` 可只测一篇。
-
-可用 `--config path/to/config.env` 指定其他配置。若 Windows 执行策略拦截脚本，可仅对此次启动使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 run --paper-id ConVis`。下方 `uv run python run.py ...` 命令保留用于开发及分阶段操作。
-
-## 输入与输出
-
-| 路径 | 用途 |
+| 路径 | 内容 |
 | --- | --- |
-| `pdfInput/` | 可选的待 OCR 解析 PDF。 |
-| `rawPaper/<paper_id>/` | OCR 页面、提取的图片和完成清单。 |
-| `data/<paper_id>/` | 论文图、多模态资产、清洗后的正文和图关联问题包。 |
-| `outputs/evaluation/<model>/<paper_id>/` | 新生成的对话轨迹、报告和评测检查点。 |
-| `outputs/logs/` | 新生成的流水线日志。 |
-| `outputs/testing/<session>/` | 已有数据集测试的逐轮结果、统计表和独立日志。 |
-| `outputs/measurement/<session>/` | 独立测评数据包、各轮结果、清单和日志。 |
-| `eval_result/` | 论文中的历史评测结果，不存放新运行的结果。 |
+| `data/` | 已发布的论文图、问题、正文与图像证据 |
+| `rawPaper/` | 用于构建基准的已解析论文 |
+| `papergraph_demo/`、`scripts/` | 建图、评测与统计代码 |
+| `eval_result/` | 论文实验的已有评测结果 |
+| `outputs/` | 新运行产生的结果和日志 |
 
-原始论文文本及图片仍受其来源许可约束。
+统一入口为 `start.ps1`、`start.sh` 和 `run.py`，代码组织见[架构说明](docs/architecture.md)。
 
-已发布数据包使用正斜杠格式的仓库相对路径。主图中包含完整 KC bank，评测已有数据包无需未发布的建图缓存。
+## 文档与许可
 
-## 更多运行方式
+- [测评方案与验收方式](docs/evaluation_plan.zh-CN.md)
+- [API 配置说明](docs/configuration.md)
+- [代码架构](docs/architecture.md)
 
-统一入口也支持单独执行构建阶段和多模型评测：
-
-```powershell
-uv run python run.py build --paper-id ConVis
-uv run python run.py questions --paper-id ConVis
-uv run python run.py evaluate --paper-id ConVis --models gpt-5-mini gpt-5
-uv run python run.py run --all --workers 2 --models gpt-5-mini gpt-5
-uv run python run.py check --stage build
-```
-
-`check --stage` 支持 `parse`、`build`、`questions`、`evaluate` 和 `all`。执行阶段缺少必要输入或配置时会明确报错，不会静默切换为离线或模拟结果。`papergraph_demo/` 下的底层脚本仍可用于开发和消融实验；端到端运行请使用 `run.py`。
-
-代码目录、阶段模块和产物约定见[架构说明](docs/architecture.md)。
-
-## 验证
-
-```powershell
-uv run python -m unittest discover -s tests -v
-```
-
-测试使用已发布的 ConVis 数据包、隔离的临时配置和本机 HTTP 服务模拟器，不访问外部模型 API，也不需要真实 API 密钥。
-
-## 许可
-
-代码采用 Apache License 2.0 许可，详见 [LICENSE](LICENSE)。数据集产物和评测输出用于研究复现，仍须遵守原始论文及图片的版权和再分发条款。
+代码采用 [Apache License 2.0](LICENSE) 许可。论文正文、图表及数据集产物仍须遵守原始来源的版权和再分发条款。

@@ -1,30 +1,15 @@
-# Configuration
+# API configuration / API 配置
 
-> **Before live evaluation of a new model, supply your own API keys, base URLs, and model IDs in the root `config.env`. No credentials or free model services are included. Offline statistics on existing reports and trajectories need no API settings or model calls.**
+> **Before evaluating a new model, provide your own API key, base URL and model ID for both the judge and target in `config.env`. Model calls use your provider's quota.**
 >
-> **仅新模型实测需在 `config.env` 填写自己的 API 密钥、服务地址与模型 ID，调用费用由运行者承担。已有报告＋轨迹的离线统计不需要 API 配置，也不调用模型。**
+> **运行新模型评测前，请在 `config.env` 中填写评判模型和被测模型两组 API 密钥、服务地址与模型 ID。调用费用由所使用的服务计费。**
 
-## Required API settings
+## Evaluate the released dataset / 评测已有数据集
 
-**For the default `start.ps1` / `bash start.sh` workflow, fill only groups 1 and 4 below.** It evaluates existing datasets and exports statistics without building graphs or questions. Explicit `test` is equivalent; construction requires an explicit command. Groups 2 and 3 are for rebuilding benchmarks. Each required group's fields must be filled explicitly even when services share a provider, URL or key.
-
-| Group / purpose | API key | Provider API base URL | Exact model ID | Required capability |
-| --- | --- | --- | --- | --- |
-| 1. Text model: graph construction, questions, evaluation judge | `API_KEY` | `BASE_URL` | `LLM_MODEL` | OpenAI-compatible chat API with JSON responses |
-| 2. Vision model: figure/table understanding and multimodal questions | `VISION_API_KEY` | `VISION_BASE_URL` | `VISION_MODEL` | OpenAI-compatible chat API accepting image input |
-| 3. Embedding model: graph construction | `EMBED_API_KEY` | `EMBED_BASE_URL` | `EMBED_MODEL` | OpenAI-compatible embeddings API; a chat model is not sufficient |
-| 4. Evaluated target model | `EVAL_TARGET_API_KEY` | `EVAL_TARGET_BASE_URL` | `EVAL_TARGET_MODEL` | Chat API accepting text and images for the released multimodal packages |
-
-Use the base URL documented by your provider, such as its API root ending in `/v1` when applicable. Do **not** use a website URL or append `/chat/completions` or `/embeddings`: the client adds the endpoint itself. Model IDs must be callable by your account; selecting a name does not grant access. The judge and evaluated target have independent settings and need not use the same model.
-
-To **evaluate existing packages only**, fill groups **1 and 4**; the default `CLAIM_VERIFY_ENABLED=false` does not require embeddings. Groups 2 and 3 are needed to construct graphs and questions. OCR credentials are only required when starting from PDF, not for the released parsed papers.
-
-## First run
-
-Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and ensure Python 3.11+ is available. In the repository root, run the appropriate launcher:
+Install [uv](https://docs.astral.sh/uv/) and use Python 3.11+. Run the launcher from the repository root:
 
 ```powershell
-# Windows PowerShell
+# Windows
 .\start.ps1
 ```
 
@@ -33,82 +18,74 @@ Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and ensure
 bash ./start.sh
 ```
 
-The launcher prepares dependencies and creates private `config.env` if absent. Fill the Judge and target API key, base URL, and model ID, then repeat the command to evaluate all released packages and write model-level and fine-grained hallucination statistics. No separate classification command or API is required. Missing settings stop execution before model requests. The template contains blank values deliberately.
+The first launch prepares dependencies and creates `config.env`. Fill these six settings, then run the same command again:
 
-Common existing-dataset tests (all automatically export statistics):
+首次启动会准备依赖并生成 `config.env`。填写以下六项后，再次执行启动命令即可评测全部 12 篇论文并自动统计结果。
 
-```powershell
-.\start.ps1 test --workers 2
-.\start.ps1 test --paper-id ConVis
-.\start.ps1 test --repeats 3 --workers 2
-```
+| Role / 角色 | API key | Base URL | Model ID | Capability / 能力 |
+| --- | --- | --- | --- | --- |
+| Judge / 评判模型 | `API_KEY` | `BASE_URL` | `LLM_MODEL` | OpenAI-compatible chat with JSON output / 支持 JSON 输出 |
+| Target / 被测模型 | `EVAL_TARGET_API_KEY` | `EVAL_TARGET_BASE_URL` | `EVAL_TARGET_MODEL` | OpenAI-compatible chat with text and image input / 支持文本和图片输入 |
 
-```bash
-bash ./start.sh test --workers 2
-bash ./start.sh test --paper-id ConVis
-bash ./start.sh test --repeats 3 --workers 2
-```
+Use your provider's API root, for example `https://api.example.com/v1`; the client adds the request endpoint. Enter a model ID available to your account. A provider can serve both roles; fill each role's settings explicitly.
 
-Keep `config.env` private and out of version control. Use `--config path/to/config.env` for a different file; relative paths resolve from the repository root. **Existing process environment variables take priority over the file**, so remove obsolete environment settings if your edits appear to have no effect. The application does not read a legacy `.env` automatically.
+Base URL 填写服务商的 API 根地址，程序自动补全请求端点；模型名称填写账号下实际可用的 ID。同一服务可兼任两种角色，两组配置项分别填写。
 
-No command defaults to `test`: the released `data/` directory, all paper packages, one independent round and one worker. Options such as `--workers 2` also work without a command. `--data-root` explicitly selects another existing dataset. It does not use an old `PAPERGRAPH_DATA_ROOT` setting implicitly. Results and statistics are isolated under `outputs/testing/<session>/`; look first at `statistics/four_dimensions.csv` and `failure_category_by_model.csv`. `--repeats 3` evaluates the same packages three times. No graph or question file is rewritten.
+Keep the remaining options at their defaults for the released-dataset test. Configuration files and credentials are private. Existing environment variables take priority over `config.env`; check those settings if a file edit appears to have no effect. Use `--config path/to/config.env` to select another private file.
 
-Each default test automatically exports eleven files under `statistics/`: `four_dimensions.csv`, `failure_category_by_model.csv`, `summary.csv`, `per_paper.csv`, `summary.json`, `repair_tasks.csv`, `classification_events.csv`, `classification_events.json`, `classification_paths.csv`, `classification_summary.csv`, and `classification_summary.json`. Offline statistics export the same files. The four-dimension table contains eleven rows per model: two initial-macro coverage metrics, three ordinary-challenge rates (overall/Text/MM), mean hallucination events and event-bearing-turn rate, and four detail/hallucination repair success/attempt metrics. It uses `value`, `aggregation`, `paper_std`, valid counts and numerators/denominators, not a universal `_mean` convention.
+评测已有数据集时，其余选项保持默认即可。配置文件与密钥自行保管。环境变量优先于文件设置；如需指定其他配置文件，使用 `--config path/to/config.env`。
 
-`failure_category_by_model.csv` follows the paper's four categories: Contr.KC, False prem., Overclaim, and Wrong rel. Exact `hallucination_type` mappings merge thread variants and review regressions; unmapped events remain in `unmapped_event_count`, not a guessed fifth category. The four category counts plus the unmapped count equal `event_count`. These are raw event sums across completed papers and runs, not paper-weighted metric means. See the [evaluation plan](evaluation_plan.zh-CN.md) for definitions and mappings. No extra API or option is required.
-
-Event files retain `paper_category`, `paper_category_label`, original family/type/subtype fields, and `trajectory_path`. Detection-time snapshot fields are named `status_at_detection`, `followup_turns_at_detection`, and `resolved_at_turn_at_detection`; none is a final repair result. New events come directly from each turn's `judge_result.hallucination_events`, with unique IDs required within each task. Raw paths support debugging, not additional paper categories. No events means N/A classification completeness; candidate paths do not establish three semantic levels. A successful API call does not validate answers or labels.
-
-Paper-aligned coverage uses macro first answers, not final global state. Challenge rates include only `challenge_question`, exclude `thread_challenge_question`, and pool failures/executed counts; `INCOMPLETE` is not failure. Hallucination turns are turns with new events, not a list of Judge states. Repairs group actual follow-ups by `(repair_type, root_turn_id, root_question_id)`, with attempts until first success or termination; event closure and coverage-gap closure are not substitutes. `repair_tasks.csv` exposes these groups and decisions.
-
-Coverage, macro completion, mean events and mean total turns weight papers equally, averaging repeats within each paper first. Challenges, event-bearing-turn rate/density, repair success/attempts and answer length pool count numerators and denominators. Canonical `summary.csv` values retain the paper names, including `one_turn_kc_coverage`, `one_turn_macro_complete_rate`, `challenge_failure_rate`, `mean_hallucination_events`, and the detail/hallucination repair success/round metrics; they do not append `_mean`. Incomplete tasks remain separate, and zero denominators are N/A.
-
-To regenerate all eleven files without any API access or configuration loading, run `uv run --locked python scripts/summarize_results.py --result-root eval_result`. Only completed `evaluation_report.json` plus `dialogue_trajectory.json` pairs are needed. A test-session root, one round's evaluation root, or `outputs/evaluation` can also be used. Final-state caches and original benchmark inputs are neither required nor reconstructed. Missing reports/trajectories produce incomplete tasks; malformed data or inconsistent IDs are errors. Missing optional caches are allowed. Without a task manifest, planned completion is unknown rather than assumed to be 100%.
-
-Optional: `start.ps1 run --paper-id ConVis` builds the ConVis graph and questions, then evaluates once. `start.ps1 measure` builds once and evaluates three independent rounds under `outputs/measurement/`. Both require all four API groups and an explicit command; neither runs by default. See the [evaluation plan](evaluation_plan.zh-CN.md) for the existing-dataset procedure.
-
-For manual control, `uv sync`, `uv run python run.py init`, and `uv run python run.py ...` remain available. If the uv environment is active, `python run.py ...` is equivalent.
-
-## Required services by stage
-
-| Stage | Local input | API configuration |
-| --- | --- | --- |
-| `parse` | A PDF file or directory of PDFs | `PADDLE_OCR_API_URL`, `PADDLE_OCR_TOKEN` |
-| `build` | Completed `rawPaper/<paper_id>/` OCR output | `API_KEY`, `BASE_URL`, `LLM_MODEL`; `EMBED_API_KEY`, `EMBED_BASE_URL`, `EMBED_MODEL`; and, for the default multimodal build, `VISION_API_KEY`, `VISION_BASE_URL`, `VISION_MODEL` |
-| `questions` | `data/<paper_id>/master_graph.json` and associated paper artifacts | Text-model settings plus vision-model settings for default multimodal challenge generation |
-| `evaluate` | Released or generated graph, questions, and clean paper text in `data/<paper_id>/` | Text-model settings for the judge; `EVAL_TARGET_API_KEY`, `EVAL_TARGET_BASE_URL`, `EVAL_TARGET_MODEL` for the target model |
-
-The embedding service is required during graph construction. Direct evaluation of an existing package needs it only if `CLAIM_VERIFY_ENABLED` is enabled. A target model used for multimodal questions must accept the attached images. Supplying a credential does not by itself establish that a model supports image input.
-
-`run --paper-id <id>` executes `build`, `questions`, and `evaluate` from existing OCR output. `run --pdf <path>` adds `parse`. `run --all` selects eligible papers and runs their stages in order, with `--workers` controlling paper-level concurrency. Each stage uses only the services it actually needs; in particular, an OCR key is not required to evaluate a published package.
-
-## Local checks and API probes
+## Common commands / 常用命令
 
 ```powershell
-uv run python run.py check --stage all
-uv run python run.py check --stage evaluate --config path/to/config.env
-uv run python run.py run --paper-id ConVis --dry-run
+# Check one paper first / 先测单篇
+.\start.ps1 --paper-id ConVis
+
+# Two concurrent papers, three independent rounds / 两篇并发、独立重复三轮
+.\start.ps1 --workers 2 --repeats 3
+
+# Compare models available through your configured service / 比较服务下可用的模型
+.\start.ps1 --models model-a model-b --workers 2
 ```
 
-`check` validates the stage configuration; `--dry-run` lists selected papers, stages and output paths without sending model or OCR requests. `check --stage` accepts `parse`, `build`, `questions`, `evaluate`, and `all`. If you add `--probe-apis`, the command contacts configured providers; a provider may bill or rate-limit those probe requests.
+On macOS/Linux, replace `.\start.ps1` with `bash ./start.sh`. Results go to `outputs/testing/<session>/`; start with `statistics/four_dimensions.csv` and `statistics/failure_category_by_model.csv`. See the [evaluation plan / 测评方案](evaluation_plan.zh-CN.md) for result interpretation and acceptance steps.
 
-## Evaluation models
+### Multiple providers / 多服务商配置
 
-Without `--models`, evaluation uses the single `EVAL_TARGET_MODEL` in the configuration. To select several models explicitly:
+Selected models share the target key and URL by default. For a model using another service, add per-model overrides. Convert punctuation in the model ID to underscores and uppercase it for the suffix. For example, `gpt-5-mini` uses:
+
+多个模型默认共用被测模型的密钥与地址。模型来自其他服务时，可按模型 ID 添加专用配置：将标点替换为下划线并转成大写。例如 `gpt-5-mini` 对应：
+
+```dotenv
+EVAL_TARGET_API_KEY_GPT_5_MINI=your-provider-key
+EVAL_TARGET_BASE_URL_GPT_5_MINI=https://api.example.com/v1
+```
+
+The judge remains fixed during model comparisons. / 比较期间固定评判模型。
+
+## Optional: build a new benchmark / 可选：构建新基准
+
+The complete graph → questions → evaluation workflow also uses vision and embedding services. Fill these additional settings in `config.env`:
+
+完整的建图、出题与评测流程还需要视觉和向量服务，补充以下配置：
+
+| Role / 角色 | API key | Base URL | Model ID | Capability / 能力 |
+| --- | --- | --- | --- | --- |
+| Vision / 视觉模型 | `VISION_API_KEY` | `VISION_BASE_URL` | `VISION_MODEL` | Chat with image input / 支持图片输入 |
+| Embedding / 向量模型 | `EMBED_API_KEY` | `EMBED_BASE_URL` | `EMBED_MODEL` | Embeddings API / 向量接口 |
 
 ```powershell
-uv run python run.py evaluate --paper-id ConVis --models gpt-5-mini gpt-5
-uv run python run.py run --all --workers 2 --models gpt-5-mini gpt-5
+.\start.ps1 run --paper-id ConVis
 ```
 
-Configure valid target credentials and endpoints for every selected model. A list of model names alone does not provision access. The judge uses `API_KEY`, `BASE_URL`, and `LLM_MODEL` independently of the evaluated target.
+This builds the graph and questions from the released parsed paper, then evaluates the target. To start from a new PDF, use `run --pdf path/to/paper.pdf` and configure `PADDLE_OCR_API_URL` and `PADDLE_OCR_TOKEN` for OCR.
 
-Models share `EVAL_TARGET_API_KEY` and `EVAL_TARGET_BASE_URL` unless per-model overrides are supplied. For example, `gpt-5-mini` can use `EVAL_TARGET_API_KEY_GPT_5_MINI` and `EVAL_TARGET_BASE_URL_GPT_5_MINI`. Replace punctuation with underscores and uppercase the model ID for the suffix. The selection order is `--models`, optional `EVAL_BATCH_MODELS`, then `EVAL_TARGET_MODEL`.
+该命令从已有解析论文开始建图、出题并评测。处理新的 PDF 时，使用 `run --pdf path/to/paper.pdf`，并配置 OCR 服务的 `PADDLE_OCR_API_URL` 和 `PADDLE_OCR_TOKEN`。
 
-## Paths and resumes
+## Summarize saved results / 统计已有结果
 
-OCR output goes to `rawPaper/<paper_id>/`; generated graph and question artifacts go to `data/<paper_id>/`. New evaluation results are isolated by model and paper under `outputs/evaluation/<model>/<paper_id>/`, and logs go to `outputs/logs/`. The tracked `eval_result/` directory holds historical results and is not the new output root.
+```powershell
+uv run --locked python scripts/summarize_results.py --result-root eval_result
+```
 
-Keep each paper's OCR manifest, graph, and question package together under the same `paper_id`. The unified runner should surface missing prerequisites as errors; do not use `ALLOW_OFFLINE_FALLBACK` or `ALLOW_MOCK_EVAL` for real benchmark runs.
-
-The runner records input/configuration signatures under each output's `cache/pipeline/` directory. Unchanged completed stages are skipped; an interrupted stage resumes only when its signature is unchanged. Changed inputs or model settings restart that stage instead of reusing incompatible checkpoints. Outputs made before the unified runner have no signature and are regenerated when their stage is selected. Use `evaluate` to consume a released graph/question package without rebuilding it. `--force` explicitly reruns every selected stage.
+This reads saved evaluation results locally and writes `eval_result/statistics/`. / 此命令在本地读取已有评测结果，输出至 `eval_result/statistics/`，无需配置模型服务。
