@@ -6,9 +6,74 @@ PaperGraph-Bench 从科学论文构建图引导的评测基准，并通过多轮
 
 所有标准阶段均自动执行，包括图验证、问题验证、求解器筛选和对话评判。
 
-测试人员请参阅[建图与评测方案](docs/evaluation_plan.zh-CN.md)，了解测试流程、指标定义及验收条件。
+测试人员请参阅[已有数据集评测与统计方案](docs/evaluation_plan.zh-CN.md)，了解测试流程、指标定义及验收条件。
 
-## 运行前必须填写 API 配置
+## 推荐入口：使用已有数据集评测并自动统计
+
+> **测试模型请使用本节的 `test` 命令：直接读取仓库 `data/` 中已有的 12 篇论文题包，不重新建图、出题或做 OCR。运行结束自动生成逐论文明细和按模型汇总的统计表。**
+
+安装 [uv](https://docs.astral.sh/uv/)，使用 Python 3.11+。在完整克隆的仓库根目录运行：
+
+```powershell
+.\start.ps1 test --workers 2
+```
+
+macOS/Linux 使用：
+
+```bash
+bash ./start.sh test --workers 2
+```
+
+**运行前必须在 `config.env` 填写以下两组自己的 API Key、Base URL 和模型 ID。** 首次运行会自动创建空配置并列出待填项；填写后再次执行同一命令。配置缺失时会停止，不调用模型。
+
+| 必填服务 | API Key | API 根地址 Base URL | 可调用模型 ID |
+| --- | --- | --- | --- |
+| 评测 Judge | `API_KEY` | `BASE_URL` | `LLM_MODEL` |
+| 被测模型 | `EVAL_TARGET_API_KEY` | `EVAL_TARGET_BASE_URL` | `EVAL_TARGET_MODEL` |
+
+Judge 需要支持结构化 JSON 输出，被测模型需要支持图片输入。Base URL 使用服务商的 API 根地址，不填网页或 `/chat/completions` 完整端点。**默认无需配置视觉生成模型、Embedding 或 OCR 服务**；只有主动开启 `CLAIM_VERIFY_ENABLED=true` 时，评测才额外需要 Embedding。仓库不提供密钥或模型额度，实际测试会产生相应 API 消耗。
+
+### 常用测试命令
+
+```powershell
+# 先用一篇已有题包测试
+.\start.ps1 test --paper-id ConVis
+
+# 对全部已有题包独立评测三轮并统计
+.\start.ps1 test --workers 2 --repeats 3
+
+# 对比多个模型；ID需替换为实际可调用的模型
+.\start.ps1 test --models model-a model-b --workers 2
+
+# 预览选中的论文、模型和输出路径，不调用模型
+.\start.ps1 test --dry-run
+```
+
+默认评测 `data/` 中全部论文、每模型一轮；可用 `--data-root` 选择另一套已有题包，`--config` 选择私有配置。macOS/Linux 将 `.\start.ps1` 换为 `bash ./start.sh`。若 Windows 执行策略拦截，可使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 test --workers 2`。
+
+### 结果在哪里，如何统计
+
+每次 `test` 创建独立目录 `outputs/testing/<session>/`，终端会打印实际路径：
+
+| 文件或目录 | 用途 |
+| --- | --- |
+| `statistics/summary.csv` | 按模型汇总的主要指标、标准差、有效论文数及完整性统计，优先查看 |
+| `statistics/per_paper.csv` | 每轮每篇论文的明细、分子分母和完成状态 |
+| `statistics/summary.json` | 可供程序读取的统计结果 |
+| `round-01/evaluation/<model>/<paper_id>/` | 逐任务 `evaluation_report.json`、`dialogue_trajectory.json` 及状态缓存 |
+| `testing.json`、`main.log`、`logs/` | 计划任务清单、主进程日志及分阶段日志 |
+
+统计包含 KC 覆盖率、宏阶段完成率、挑战失败率、幻觉轮次比例、事件密度、事件闭环率和遗漏补全率等。主表按论文等权平均；空分母显示为空/N/A，缺失或未完成任务会明确标注，不按零分计入模型均值。多轮实验先对同一论文跨轮平均，再汇总论文均值。
+
+已有评测报告也可单独重新统计，**不调用模型 API**：
+
+```powershell
+uv run --locked python scripts/summarize_results.py --result-root outputs/evaluation
+```
+
+将 `--result-root` 换为实际的测试批次目录或历史结果根目录即可。没有任务清单的旧结果只统计找到的报告，不据此宣称已完成全部论文测试。
+
+## 可选：重新建图出题所需的 API 配置
 
 > **必须在根目录 `config.env` 中提供自己的 API Key、服务商 Base URL 和模型 ID。本仓库不提供模型服务或密钥，实际调用会消耗你的服务额度，并可能产生费用。**
 
@@ -23,7 +88,9 @@ PaperGraph-Bench 从科学论文构建图引导的评测基准，并通过多轮
 
 这三类信息均需从你的服务商处获取。Base URL 填 API 根地址，不能填网页地址或带 `/chat/completions`、`/embeddings` 的完整接口地址；模型 ID 必须在你的账号下可调用。被测模型需支持图片输入。同一服务的 Key 和 URL 可复用，但每组仍需显式填写。仅评测已有数据包时，默认只需文本/Judge 与被测模型两组。详见[配置说明](docs/configuration.md)。
 
-## 快速启动
+## 可选：构建新基准
+
+下面的无子命令启动和 `measure` 会重新建图出题；**只想测试已有数据集时无需执行这一节，使用上方 `test` 命令即可。**
 
 安装 [uv](https://docs.astral.sh/uv/)，使用 Python 3.11+，在仓库根目录执行：
 
@@ -68,6 +135,7 @@ macOS/Linux 将 `.\start.ps1` 替换为 `bash ./start.sh` 即可。完整测评�
 | `data/<paper_id>/` | 论文图、多模态资产、清洗后的正文和图关联问题包。 |
 | `outputs/evaluation/<model>/<paper_id>/` | 新生成的对话轨迹、报告和评测检查点。 |
 | `outputs/logs/` | 新生成的流水线日志。 |
+| `outputs/testing/<session>/` | 已有数据集测试的逐轮结果、统计表和独立日志。 |
 | `outputs/measurement/<session>/` | 独立测评数据包、各轮结果、清单和日志。 |
 | `eval_result/` | 论文中的历史评测结果，不存放新运行的结果。 |
 

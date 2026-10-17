@@ -27,11 +27,14 @@ def startup_arguments(argv: list[str]) -> tuple[list[str], object]:
             index += 1
         else:
             break
-    if index < len(tokens) and tokens[index] == "measure":
-        from run_measurement import parser as measurement_parser
-        tokens.pop(index)
-        args = measurement_parser().parse_args(tokens)
-        args.command = "measure"
+    if index < len(tokens) and tokens[index] in {"measure", "test"}:
+        command = tokens.pop(index)
+        if command == "test":
+            from evaluate_dataset import parser as command_parser
+        else:
+            from run_measurement import parser as command_parser
+        args = command_parser().parse_args(tokens)
+        args.command = command
         return tokens, args
     if index == len(tokens) or tokens[index] not in commands:
         tokens.insert(index, "run")
@@ -71,6 +74,7 @@ def print_requirements(args, path: Path) -> None:
         "build": ["text", "vision", "embedding"],
         "questions": ["text", "vision"],
         "evaluate": ["text", "target"],
+        "test": ["text", "target"],
         "parse": [],
         "check": {
             "all": ["text", "vision", "embedding", "target"],
@@ -88,7 +92,7 @@ def print_requirements(args, path: Path) -> None:
     }
     for name in stages:
         print(f"  {required[name]}")
-    if args.command == "evaluate" or (args.command == "check" and args.stage == "evaluate"):
+    if args.command in {"evaluate", "test"} or (args.command == "check" and args.stage == "evaluate"):
         print("  Embedding is additionally required only if CLAIM_VERIFY_ENABLED=true.")
     if args.command == "parse" or getattr(args, "pdf", None) or (args.command == "check" and args.stage == "parse"):
         print("  PDF OCR: PADDLE_OCR_API_URL + PADDLE_OCR_TOKEN")
@@ -102,18 +106,24 @@ def print_requirements(args, path: Path) -> None:
 def main(argv: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     if "--help" in argv or "-h" in argv:
-        print("Quick start: start.ps1 / start.sh [run|measure|evaluate|build|questions] [options]")
+        print("Quick start: start.ps1 / start.sh [test|run|measure|evaluate|build|questions] [options]")
+        print("RECOMMENDED FOR TESTING: start.ps1 test --workers 2 (existing data + automatic statistics)")
         print("No command defaults to: run --paper-id ConVis")
         print("Examples: --all --workers 2 | evaluate --all | measure --workers 2 | --config private.env")
         print("First run creates config.env; fill your own API keys, BASE URLs and model IDs, then rerun.\n")
-        if "measure" in argv:
+        if "test" in argv:
+            from evaluate_dataset import parser as test_parser
+            test_parser().print_help()
+        elif "measure" in argv:
             from run_measurement import parser as measurement_parser
             measurement_parser().print_help()
         else:
             parser().print_help()
         return 0
     tokens, args = startup_arguments(argv)
-    if args.command == "measure":
+    if args.command == "test":
+        from evaluate_dataset import main as command_main
+    elif args.command == "measure":
         from run_measurement import main as command_main
     else:
         command_main = pipeline_main
@@ -131,9 +141,9 @@ def main(argv: list[str] | None = None) -> int:
         load_environment(ROOT, path)
         if args.command == "check":
             return pipeline_main(tokens)
-        stage = {"run": "all", "measure": "all", "build": "build", "questions": "questions", "evaluate": "evaluate", "parse": "parse"}[args.command]
+        stage = {"run": "all", "measure": "all", "test": "evaluate", "build": "build", "questions": "questions", "evaluate": "evaluate", "parse": "parse"}[args.command]
         check = ["check", "--stage", stage]
-        if getattr(args, "models", None) and args.command in {"run", "measure", "evaluate"}:
+        if getattr(args, "models", None) and args.command in {"run", "measure", "test", "evaluate"}:
             check.extend(["--models", *args.models])
         status = pipeline_main(check)
         if status:

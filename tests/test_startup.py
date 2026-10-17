@@ -187,6 +187,33 @@ class StartupTests(unittest.TestCase):
         self.assertIn("--output-root", self.stdout.getvalue())
         self.assertFalse((self.root / "config.env").exists())
 
+    def test_existing_dataset_test_parser_defaults_to_all_and_one_round(self):
+        tokens, args = startup.startup_arguments(["test", "--workers", "2"])
+        self.assertEqual(tokens, ["--workers", "2"])
+        self.assertEqual(args.command, "test")
+        self.assertEqual(args.repeats, 1)
+        self.assertIsNone(args.paper_id)
+        self.assertEqual(args.data_root, "data")
+
+    def test_existing_dataset_test_needs_only_evaluation_configuration(self):
+        self.write_config()
+        with patch.object(startup, "pipeline_main", return_value=0) as check, patch("evaluate_dataset.main", return_value=0) as test:
+            self.assertEqual(self.call(["test", "--models", "alpha"]), 0)
+        check.assert_called_once_with(["check", "--stage", "evaluate", "--models", "alpha"])
+        test.assert_called_once_with(["--models", "alpha"])
+        self.assertNotIn("VISION_API_KEY", self.stdout.getvalue())
+        self.assertNotIn("EMBED_API_KEY", self.stdout.getvalue())
+
+    def test_existing_dataset_test_help_and_dry_run_make_no_files(self):
+        with patch.object(startup, "pipeline_main") as check, patch("evaluate_dataset.main", return_value=0) as test:
+            self.assertEqual(self.call(["test", "--help"]), 0)
+            test.assert_not_called()
+            self.assertIn("--data-root", self.stdout.getvalue())
+            self.assertEqual(self.call(["test", "--dry-run"]), 0)
+        check.assert_not_called()
+        test.assert_called_once_with(["--dry-run"])
+        self.assertFalse((self.root / "config.env").exists())
+
 
 class StartupWrapperTests(unittest.TestCase):
     @unittest.skipUnless(shutil.which("powershell"), "Windows PowerShell unavailable")

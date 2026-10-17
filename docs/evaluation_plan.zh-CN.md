@@ -1,39 +1,38 @@
-# PaperGraph-Bench 建图与评测方案
+# PaperGraph-Bench 已有数据集评测与结果统计方案
 
-> **运行前必须提供自己的 API Key、Base URL 和模型 ID，并填写根目录 `config.env`：文本/Judge、视觉、Embedding、被测模型共四组。本仓库不提供模型服务或密钥。首次启动脚本会创建空配置并列出待填项，填好后再次执行同一命令即可。**
+> **推荐命令：`.\start.ps1 test --workers 2`。直接使用仓库已有数据集评测并自动统计，不重新建图出题。只需在 `config.env` 填写 Judge、被测模型两组 API Key、Base URL 和模型 ID；默认无需视觉生成、Embedding 或 OCR 服务。**
 
 ## 一 测评对象与范围
 
-本方案用于测试科学论文多模态基准的自动构建及多轮评测能力，执行链路为：
+本方案使用已发布的论文图和题包，测试模型的科学论文理解能力，并自动生成可查看和比较的统计结果：
 
 ```text
-已解析论文正文与图片
-    → 论文图构建与自动验证
-    → 图关联问题生成与求解器筛选
+已有论文图、题包、正文与图片
     → 目标模型多轮作答
     → AI Judge 判决与状态更新
-    → 覆盖、挑战、幻觉、修复及推理指标
+    → 逐论文报告与完整轨迹
+    → 模型级统计表与逐轮逐论文明细
 ```
 
-测评从已解析的论文正文和图片开始，覆盖建图、出题与多轮评测。`review_followup` 表示模型在对话中的回顾轮次。
+评测不修改已有图题包。`review_followup` 表示模型在对话中的回顾轮次。新增论文和重新构建基准属于可选构建流程，不是本方案的测试步骤。
 
 | 项目 | 内容 |
 | --- | --- |
 | 成果名称 | PaperGraph-Bench 科学论文多模态基准构建与多轮诊断工具 |
 | 公开仓库 | [PaperGraphBench](https://github.com/furao0011/PaperGraphBench) |
-| 测评基线 | 使用包含 `start.ps1`、`start.sh` 和 `scripts/run_measurement.py` 的公开版本；每批记录实际 Git 提交号 |
-| 输入 | `rawPaper/<paper_id>/` 中的 Markdown 正文和图片 |
-| 主要输出 | 论文图、问题包、对话轨迹、AI 判决、评测报告和运行日志 |
-| 模型角色 | 文本构建模型兼 Judge、视觉模型、Embedding 模型、被测模型 |
-| 测试方式 | 固定软件版本与非敏感参数，自动建图和出题，冻结题包后进行逐论文、逐模型评测 |
+| 测评基线 | 使用包含 `test` 启动入口与 `scripts/summarize_results.py` 的公开版本；每批记录实际 Git 提交号 |
+| 输入 | `data/<paper_id>/` 的图、题包、正文及其引用的 `rawPaper/` 图片 |
+| 主要输出 | 逐论文报告、对话轨迹、按模型汇总表、任务清单和日志 |
+| 模型角色 | 评测 Judge、被测模型 |
+| 测试方式 | 固定已有数据包、Judge 与参数，按论文和模型评测后自动统计 |
 
 ## 二 与考核指标的对应关系
 
-本工作主要支撑图片中指标 1.1 的多模态数据构建能力，以及指标 1.3 的多维度幻觉评估能力。软件功能通过条件与项目数量、性能阈值分别记录，不相互替代。
+本次测试主要验证图片中指标 1.3 的多维度幻觉评估能力，并提供指标 1.1 所需的已有数据规模和模态、任务类型统计。新建图和新出题能力不在本次运行中重新测试；软件完成条件与项目性能阈值分别记录。
 
 | 图片考核项 | 本次测试内容及证据 | 判定边界 |
 | --- | --- | --- |
-| 1.1 多种类多模态幻觉定义与数据构建，里程碑要求样本 ≥2 万条、模态 ≥2 种、任务 ≥2 类 | 自动生成论文图、证据关联 KC、覆盖问题、挑战问题及推理线程；记录文本与图像两类输入 | 分别报告论文数、KC 数、各类问题数和实际执行轮数，不合并计为同一种独立样本。2 万条规模要求按项目统一样本定义另行核验 |
+| 1.1 多种类多模态幻觉定义与数据构建，里程碑要求样本 ≥2 万条、模态 ≥2 种、任务 ≥2 类 | 统计已有图题包的论文、KC、问题、推理线程及实际文本/图像任务 | 不将不同对象合并计为同一种独立样本；2 万条规模要求按项目统一样本定义另行核验 |
 | 1.3 多维度幻觉评估指标体系，里程碑要求核心维度 ≥4 个、标注层级 ≥3 级 | 检查知识覆盖、挑战稳健性、幻觉行为、错误修复四个核心维度，补充推理线程表现；检查事件的 `hallucination_family / hallucination_type / subtype` 分层记录 | 验证多维输出与三级字段记录能力，并报告实际非空比例；字段层级与统一分类体系的完整性分别评估 |
 | 1.2 幻觉检测准确率 | 可输出 AI 判决、事件及其关联证据，验证检测记录功能 | 本方案没有独立可信标签，不将 AI 自评比例换算成“检测准确率 ≥80%” |
 | 1.7 输出幻觉率 | 报告本任务的幻觉轮次比例，观察不同模型的差异 | 以实测值为准，不预设 ≤9%；该口径不是 CHAIR，也不单独证明某种抑制算法达标 |
@@ -44,7 +43,7 @@
 
 使用完整公开仓库中的 12 篇论文，单篇以 ConVis 做启动检查，全量以 12 篇做正式测试。
 
-基线发布包的静态对象统计如下。重新建图与出题后可能因模型生成而变化，应重新统计并冻结本次产物，不要求与发布包数量逐项相等。
+基线发布包的静态对象统计如下。测试直接使用这些已有数据；如果通过 `--data-root` 改用其他题包，应单独记录版本、论文清单和对象数量。
 
 | 对象 | 发布包数量 |
 | --- | ---: |
@@ -58,7 +57,7 @@
 
 线程种子不等于最终执行问题；跟进轮数由实际对话决定。正文是文本模态，曲线图、示意图和表格截图均属于图像模态，不另算成多种模态。
 
-正式实验采用同一冻结题包。每个被测模型覆盖全部 12 篇；建议独立运行 3 轮。Judge、构建模型、提示词、修复预算及其他参数保持一致，记录模型完整 ID、服务商、测试日期、温度和并发数。不同目标模型可形成不同的动态对话轨迹，不要求最终轮数相同。
+正式实验采用同一套已有题包。默认每个模型评测全部 12 篇、运行一轮；可用 `--repeats 3` 做三轮独立评测。Judge、提示词、修复预算及其他参数保持一致，记录模型完整 ID、服务商、测试日期、温度和并发数。动态对话轨迹及最终轮数可因模型表现而不同。
 
 ## 四 环境与 API 配置
 
@@ -70,7 +69,7 @@
 | Python | 3.11 或更高，使用仓库声明的环境版本 |
 | 依赖管理 | uv，按 `uv.lock` 安装 |
 | 本地依赖 | Python 标准库及 `rich`，由 `uv sync --locked` 安装 |
-| 推理资源 | 对应文本、视觉、Embedding 和被测模型的服务 API；通过 API 推理时不要求本地 GPU |
+| 推理资源 | Judge 与被测模型的服务 API；通过 API 推理时不要求本地 GPU |
 | 网络 | 能连接 GitHub、依赖源及配置的模型 API，并具备足够调用额度 |
 | 测试机记录 | 按实际配置记录操作系统、CPU、内存、可用磁盘、Python 和 uv 版本 |
 
@@ -88,21 +87,16 @@ git rev-parse HEAD
 
 | 角色 | 配置项 | 接口及使用阶段 |
 | --- | --- | --- |
-| 文本构建模型兼 Judge | `API_KEY`、`BASE_URL`、`LLM_MODEL` | OpenAI-compatible chat；建图、问题生成、AI 判决，须支持所需结构化 JSON 输出 |
-| 视觉模型 | `VISION_API_KEY`、`VISION_BASE_URL`、`VISION_MODEL` | 图片理解与图像相关问题生成，须支持图片输入 |
-| Embedding 模型 | `EMBED_API_KEY`、`EMBED_BASE_URL`、`EMBED_MODEL` | 建图所需向量服务 |
+| 评测 Judge | `API_KEY`、`BASE_URL`、`LLM_MODEL` | OpenAI-compatible chat，须支持所需结构化 JSON 输出 |
 | 被测模型 | `EVAL_TARGET_API_KEY`、`EVAL_TARGET_BASE_URL`、`EVAL_TARGET_MODEL` | OpenAI-compatible chat；正式多模态测试须支持图片输入 |
 
 模型 ID 使用实际获授权的完整标识。固定 Judge，不在模型比较期间更换；被测模型与 Judge 的角色分别记录。
 
-`BASE_URL` 填 API 根地址，不填 `/chat/completions` 或 `/embeddings` 完整端点。环境变量优先于 `config.env`，测试前应排除无关旧变量的干扰。Embedding 的维度等额外参数应与所用服务匹配，并记录于非敏感参数清单。
+`BASE_URL` 填 API 根地址，不填网页地址或 `/chat/completions` 完整端点。每组 Key、URL 和模型 ID 均由运行者从服务商获取，账号需有调用权限及额度。环境变量优先于 `config.env`。默认评测无需填写 `VISION_*`、`EMBED_*` 和 `PADDLE_OCR_*`；只有主动开启额外 claim verification 才需要 Embedding。
 
-除 API 配置外，其余项目可保留模板默认值。完整测评脚本会自动为每批创建独立目录，不改写发布数据包：
+除上述两组 API 外，其余项目可保留默认值。与测试有关的设置如下：
 
 ```dotenv
-USE_ONLINE_KC_EXTRACT=true
-MULTIMODAL_ENABLED=true
-MULTIMODAL_KC_ENABLED=true
 USE_ONLINE_EVAL=true
 PAPERGRAPH_PROGRESS=true
 CLAIM_VERIFY_ENABLED=false
@@ -114,69 +108,69 @@ RAW_PAPER_ROOT=rawPaper
 EVAL_RESULT_ROOT=outputs/evaluation
 ```
 
-`EVAL_MAX_TURNS=0` 表示不设置全局提前截断，不取消框架自身的有界跟进规则；当前任务的默认跟进预算为 3 次，各模型保持一致。`CLAIM_VERIFY_ENABLED=false` 与公开默认一致；开启额外 claim verification 应单列实验条件，不能和默认条件混报。本方案不调用 OCR，故无需填写 `PADDLE_OCR_*`。
+`EVAL_MAX_TURNS=0` 表示不设置全局提前截断，不取消框架自身的有界跟进规则；默认跟进预算为 3 次，各模型保持一致。`CLAIM_VERIFY_ENABLED=false` 与公开默认一致。`test` 默认明确使用仓库 `data/`，不会因旧 `PAPERGRAPH_DATA_ROOT` 环境设置而改用其他数据；选择其他已有数据时使用 `--data-root`。输出位置由每批独立目录管理。
 
 配置文件、密钥、Authorization 头均不进入测试报告、归档包或 Git 提交。报告只记录服务商、模型 ID、参数和非敏感端点信息。
 
 ## 五 测试步骤与运行命令
 
-### 5.1 一键启动完整测评
+### 5.1 一键评测已有数据并统计
 
 在仓库根目录执行下面一个命令：
 
 ```powershell
-.\start.ps1 measure --workers 2
+.\start.ps1 test --workers 2
 ```
 
 macOS/Linux 使用：
 
 ```bash
-bash ./start.sh measure --workers 2
+bash ./start.sh test --workers 2
 ```
 
-首次执行会自动准备依赖、创建 `config.env` 并列出四组必填 API 信息；未配置时会停止。**填写自己的 Key、Base URL 和模型 ID 后，再执行同一命令即可完成整批测评。** 不需要分别运行建图、出题和评测命令。若 Windows 执行策略拦截，使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 measure --workers 2`，仅对此次启动生效。
+首次执行会自动准备依赖、创建 `config.env` 并列出 Judge、被测模型两组必填信息；未配置时停止。**填写自己的 Key、Base URL 和模型 ID 后，再执行同一命令即可评测全部已有题包并导出统计表。** 若 Windows 执行策略拦截，使用 `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 test --workers 2`，仅对此次启动生效。
 
-启动脚本依次完成配置预检、创建本批独立目录、保存源论文快照、建图、自动出题、冻结输入并计算 SHA256、独立评测三轮。所有模型和轮次使用同一图题包；任何阶段失败立即停止，不以模拟结果替代。
+脚本依次检查配置和已有图题包、创建独立批次目录、记录输入签名、按模型和论文评测、验证输入未变化，最后生成逐论文与按模型统计。**不会重新建图、生成问题或修改已有数据文件。**
 
-完整克隆应选中 12 篇论文；实际选中清单、Git 版本、模型 ID、轮数、并发数和执行状态保存在 `measurement.json`。运行会消耗 API 额度，默认三轮；如只需一轮，使用 `--repeats 1`。
+完整克隆默认选中 12 篇论文；实际论文、模型、轮数、Git 版本、预期任务和输入签名保存在 `testing.json`。默认一轮；使用 `--repeats 3` 会额外消耗对应多轮 API 额度。无子命令的 `start.ps1` 和 `measure` 是可选重建流程，不是本方案推荐入口。
 
 ### 5.2 常用启动方式
 
 | 测试目的 | Windows 命令 |
 | --- | --- |
-| 先测一篇并只评测一轮 | `.\start.ps1 measure --paper-id ConVis --repeats 1` |
-| 完整数据集，建图出题一次并评测三轮 | `.\start.ps1 measure --workers 2` |
-| 自定义配置文件 | `.\start.ps1 measure --config path/to/config.env --workers 2` |
-| 多模型使用同一冻结题包 | `.\start.ps1 measure --models model-a model-b --workers 2` |
-| 只预览计划，不调用模型或创建本批结果 | `.\start.ps1 measure --dry-run` |
-| 复测已发布题包，不重新建图出题 | `.\start.ps1 evaluate --all --workers 2` |
+| 先测试一篇已有题包 | `.\start.ps1 test --paper-id ConVis` |
+| 全部已有题包，每模型一轮并统计 | `.\start.ps1 test --workers 2` |
+| 三轮独立测试并统计 | `.\start.ps1 test --repeats 3 --workers 2` |
+| 自定义配置文件 | `.\start.ps1 test --config path/to/config.env` |
+| 多模型使用同一已有题包 | `.\start.ps1 test --models model-a model-b --workers 2` |
+| 指定另一套已有数据 | `.\start.ps1 test --data-root path/to/dataset` |
+| 只预览测试计划，不调用模型 | `.\start.ps1 test --dry-run` |
 
-多模型命令中的 `model-a`、`model-b` 必须替换为账号实际可调用的 ID，并配置对应服务；macOS/Linux 把 `.\start.ps1` 换为 `bash ./start.sh` 即可。发布题包复测与重新构建测评分表记录。
+多模型命令中的 `model-a`、`model-b` 必须替换为账号实际可调用的 ID，并配置对应服务；macOS/Linux 把 `.\start.ps1` 换为 `bash ./start.sh` 即可。
 
 `--workers` 是论文级并发，单篇内部按顺序执行。所有轮次保持同一 Judge、题包和参数；重复轮次使用独立输出目录，不因缓存复用而误计为独立实验。不要用 `run --force` 做重复评测，以免重新生成图和问题。
 
 ### 5.3 过程检查与结果目录
 
-启动时会打印本批目录 `outputs/measurement/<session>/`，主要文件如下：
+启动时会打印本批目录 `outputs/testing/<session>/`，主要文件如下：
 
 ```text
 <session>/
-  measurement.json          批次清单和执行状态
+  testing.json              计划任务、输入签名和执行状态
   main.log                  主进程日志
-  rawPaper/                 本批源论文与图片快照
-  dataset/                  一次构建后冻结的图题包
-  frozen_inputs.json        输入 SHA256 清单
   round-01/evaluation/      第一轮逐模型逐论文结果
-  round-02/evaluation/      第二轮结果
-  round-03/evaluation/      第三轮结果
-  logs/                     建图 出题及各轮评测日志
+  round-02/evaluation/      仅当 repeats >=2 时存在
+  logs/                     各轮逐论文评测日志
+  statistics/summary.csv    优先查看的按模型汇总表
+  statistics/per_paper.csv  每轮每篇明细及完成状态
+  statistics/summary.json   程序可读取的统计结果
 ```
 
 检查每篇有非空宏阶段、KC 和有效主问题，正文和所需图片可读取，批次覆盖文本与图像及至少两类任务；至少存在一轮成功的 `answer_mode=online_target_multimodal`，才能确认图片输入链路已执行。未触发的模态或修复分支按实际情况记录，不推断其已经通过。
 
-正常完成后按第六、七节读取结果和验收。API 认证、限流、超时、格式错误及附件缺失保留在主日志和对应阶段日志中；失败、中断或缺失任务单列，不填零混入均值。再次启动 `measure` 会创建新批次；需要处理上一批失败时应使用其日志、快照和记录的路径进行定位，不把新批次冒充上一批的断点恢复。
+正常完成后优先查看 `statistics/summary.csv`，再按需查看逐论文明细和原始轨迹。API 认证、限流、超时、格式错误及附件缺失保留在日志中；失败、中断或缺失任务单列，不填零混入均值。再次执行 `test` 会创建新批次，不把上一批结果复用为独立实验。
 
-需要分阶段调试时，可使用 README 保留的 `run.py build / questions / evaluate` 命令，并将数据根、源论文根及结果根明确指向相应批次。
+需要复核旧结果时直接使用第七节的独立统计命令，不必再次调用模型。新建图题包的操作参见 README 的可选构建部分。
 
 ## 六 结果文件与指标口径
 
@@ -193,9 +187,10 @@ bash ./start.sh measure --workers 2
 | 最终事件和状态库 | 同目录 `cache/eval_state_graph.json` |
 | 评测断点 | 同目录 `cache/evaluation_checkpoint.json` |
 | 状态可视化 | 同目录 `cache/final_state_graph.mmd`、`cache/final_thread_state_graph.mmd` |
-| 阶段日志 | `outputs/logs/<paper_id>/` |
+| 自动统计 | `<session>/statistics/summary.csv`、`per_paper.csv`、`summary.json` |
+| 批次日志 | `<session>/main.log`、`<session>/logs/` |
 
-完整测评中的“数据根”为 `<session>/dataset`，“结果根”为 `<session>/round-XX/evaluation`；各阶段日志位于 `<session>/logs/`。常规 `start.ps1` 或 `run.py` 运行仍使用 `outputs/logs/`，可通过 `PAPERGRAPH_LOG_ROOT` 自定义。发布主图内含完整 KC bank，评测不依赖未发布的建图缓存；本批缓存保留用于追溯和恢复。`eval_result/` 是历史结果，不作为本次输出。
+默认“数据根”为仓库 `data/`，“结果根”为 `outputs/testing/<session>/round-XX/evaluation`。发布主图内含完整 KC bank，评测不依赖未发布的建图缓存；本批评测状态缓存用于追溯。`eval_result/` 是历史结果，可单独重统计，不作为本次新测试输出。
 
 ### 6.2 核心指标
 
@@ -241,8 +236,8 @@ bash ./start.sh measure --workers 2
 | 测试项 | 通过条件 |
 | --- | --- |
 | 环境与接口 | 本地回归和配置检查通过；实际 API 请求成功，无 mock 或 offline 结果 |
-| 自动建图 | 12 篇均生成可解析主图，宏阶段和 KC 非空，原文及所需图片可读取 |
-| 自动出题 | 12 篇均生成可解析题包，主问题 ID 有效，目标 KC 引用有效；统计实际任务类型与模态覆盖 |
+| 已有数据加载 | 12 篇主图均可解析，宏阶段和 KC 非空，原文及所需图片可读取 |
+| 题包加载 | 题包可解析，主问题 ID 有效，目标 KC 引用有效；实际任务类型及模态覆盖有记录 |
 | 多模态链路 | 有实际图片附件进入目标模型，存在成功的 online_target_multimodal 轮次 |
 | 多轮评测 | 每个计划中的论文和模型组合均有完整报告及轨迹，满足下述一致性条件 |
 | 指标输出 | 覆盖、挑战、幻觉、修复四个维度均有对应输出；未触发的事件指标注明 N/A |
@@ -257,50 +252,39 @@ bash ./start.sh measure --workers 2
 
 计划任务数为 `12 × 被测模型数 × 独立轮数`，任务完成率为“符合上述条件的任务数 / 计划任务数”。功能测试目标为计划任务全部完成；这是软件执行目标，不是模型覆盖率或正确率阈值。
 
-### 7.2 提取逐论文结果
+### 7.2 自动统计及旧结果重统计
 
-以下 PowerShell 示例读取一个正式结果根并生成明细 CSV。空分母导出为空，展示时标为 N/A；状态不完整的行保留记录，不纳入能力指标均值。
+`test` 正常完成后自动导出三份统计文件，无需手工提取 JSON：
+
+- `summary.csv`：每个模型的主要指标均值、标准差、有效论文数及任务完整性。
+- `per_paper.csv`：逐轮逐论文的状态、分子分母、指标值。
+- `summary.json`：相同统计信息的结构化版本。
+
+CSV 使用带 BOM 的 UTF-8，便于在 Windows Excel 中打开含中文的论文 ID；比例值以 0 到 1 表示，事件密度可大于 1。可能被电子表格识别为公式的文本会加保护前缀，JSON 保留原始模型 ID。
+
+在 `summary.csv` 中先查看 `model`、`status`、`completed_tasks`、`planned_tasks`；指标的 `_mean` 是论文等权均值，`_std` 是跨论文样本标准差，`_valid_papers` 和 `_valid_runs` 是该指标的有效数量，`_micro` 是另列的分子分母总和之比。
+
+| 汇总列前缀 | 指标 |
+| --- | --- |
+| `global_kc_coverage` | 全局 KC 覆盖率 |
+| `macro_completion` | 宏阶段完成率 |
+| `challenge_failure` | 挑战失败率 |
+| `hallucination_turn_rate` | 幻觉轮次比例 |
+| `hallucination_event_density` | 幻觉事件密度 |
+| `hallucination_event_closure` | 幻觉事件闭环率 |
+| `detail_completion` | 遗漏补全率 |
+
+例如 `global_kc_coverage_mean`、`global_kc_coverage_std`、`global_kc_coverage_valid_papers` 分别是 KC 覆盖率均值、标准差和有效论文数。`hallucination_events_sum` 为已完成任务观察到的事件总数，不是平均每篇事件数。
+
+已有报告可单独重统计，不需要任何模型 API 配置：
 
 ```powershell
-$ResultRoot = "outputs/measurement/<session>/round-01/evaluation"
-function Get-Rate($Numerator, $Denominator) {
-    if ([double]$Denominator -le 0) { return $null }
-    return [math]::Round([double]$Numerator / [double]$Denominator, 4)
-}
-$files = @(Get-ChildItem -LiteralPath $ResultRoot -Recurse -File -Filter "evaluation_report.json")
-if ($files.Count -eq 0) { throw "No evaluation reports found." }
-$rows = foreach ($file in $files) {
-    $r = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8 | ConvertFrom-Json
-    $c = $r.coverage_metrics
-    $h = $r.hallucination_metrics
-    $q = $r.challenge_metrics
-    [pscustomobject]@{
-        Paper = $r.paper_id
-        Model = $r.target_model
-        Status = $r.summary.evaluation_status
-        Failed = $r.summary.failed
-        Turns = $r.summary.total_turns
-        KCTotal = $c.global_kc_total
-        KCCovered = $c.global_kc_lit_count
-        KCCoverage = Get-Rate $c.global_kc_lit_count $c.global_kc_total
-        TargetCoverage = Get-Rate $c.target_kc_lit_count $c.target_kc_total
-        MacroTotal = $r.macro_metrics.macro_total
-        MacroCompletion = if ([int]$r.macro_metrics.macro_total -gt 0) { $c.macro_completion_rate } else { $null }
-        ChallengeN = $q.challenge_total
-        ChallengeFailed = $q.challenge_failure_count
-        ChallengeFailure = Get-Rate $q.challenge_failure_count $q.challenge_total
-        HallucinationTurns = $h.hallucination_turn_count
-        HallucinationTurnRate = Get-Rate $h.hallucination_turn_count $r.summary.total_turns
-        Events = $h.hallucination_event_count
-        EventDensity = Get-Rate $h.hallucination_event_count $r.summary.total_turns
-        EventClosure = Get-Rate ([int]$h.hallucination_by_status.resolved) $h.hallucination_event_count
-        DetailCompletion = Get-Rate $r.detail_completion_metrics.coverage_gap_resolved_count $r.detail_completion_metrics.coverage_gap_count
-    }
-}
-$rows | Export-Csv -LiteralPath "$ResultRoot/paper_metrics.csv" -NoTypeInformation -Encoding UTF8
+uv run --locked python scripts/summarize_results.py --result-root outputs/evaluation
 ```
 
-该命令不替代前述轨迹一致性和计划完整性检查：报告缺失的任务不会自动出现在 CSV 中，须按计划清单补列。
+`--result-root` 可以是某批 `outputs/testing/<session>`、某轮 `evaluation` 目录或 `eval_result` 等历史根目录。统计程序读取报告与轨迹的一致性，并在有任务清单时核对缺失任务；不完整批次会标注并返回非零退出码，不能视为已全部完成。
+
+没有任务清单的旧目录只统计实际发现的结果，计划总数及完成率为未知。发现已完成报告内容损坏、身份不一致或重复任务会明确报错，不静默略过。
 
 ### 7.3 汇总与交付格式
 
@@ -312,13 +296,13 @@ $rows | Export-Csv -LiteralPath "$ResultRoot/paper_metrics.csv" -NoTypeInformati
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 按实际模型填写 | 待测 | 待测 | 待测 | 待测 | 待测 | 待测 | 待测 | 待测 | 待测 |
 
-另附文本/图像挑战分表、推理结果分表、幻觉分类与状态分布、异常任务清单及各指标分母。运行时间记录每阶段和总起止时间；API token 与费用采用服务商账单或调用记录，当前报告没有统一 token 成本字段，不从轮数推算。
+需要文本/图像挑战分表或幻觉分类细分时，按第六节从原始报告和轨迹另行统计；自动导出的三份文件侧重上述模型级核心指标和任务完整性。运行时间记录测试起止时间；API token 与费用采用服务商账单或调用记录，当前报告没有统一 token 成本字段，不从轮数推算。
 
 交付材料包括：代码版本、环境与模型清单、非敏感参数、论文与任务清单、冻结图题包及输入哈希、逐任务报告与轨迹、状态库、CSV 汇总、阶段日志、异常及补跑记录。归档前排除 `config.env`、其他私有配置和凭据。
 
 ## 八 公开实现索引
 
-新启动入口见 `start.ps1`、`start.sh`、`scripts/start.py` 和 `scripts/run_measurement.py`。以下链接固定到核心评测实现版本，用于核对沿用的参数及指标口径；实际运行版本由批次清单记录：
+测试入口见 `start.ps1 test`、`start.sh test`、`scripts/evaluate_dataset.py` 和 `scripts/summarize_results.py`。以下链接固定到核心评测实现版本，用于核对沿用的参数及指标口径；实际运行版本由批次清单记录：
 
 - [中英文运行说明](https://github.com/furao0011/PaperGraphBench/blob/5f5f47dfbb6555d3f22959ff861f35da97a0fe40/README.zh-CN.md)
 - [配置要求](https://github.com/furao0011/PaperGraphBench/blob/5f5f47dfbb6555d3f22959ff861f35da97a0fe40/docs/configuration.md)

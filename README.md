@@ -6,9 +6,74 @@ PaperGraph-Bench constructs a graph-guided benchmark from scientific papers and 
 
 All standard stages run automatically, including graph verification, question validation, solver filtering, and dialogue judging.
 
-For test operators, see the [Evaluation plan (Chinese)](docs/evaluation_plan.zh-CN.md) for the test procedure, metric definitions, and acceptance criteria.
+For test operators, see the [Existing-dataset evaluation and statistics plan (Chinese)](docs/evaluation_plan.zh-CN.md) for the procedure, metric definitions, and acceptance criteria.
 
-## Required before running: your API configuration
+## Recommended: evaluate existing datasets and generate statistics
+
+> **Use `test` to evaluate models on the 12 released paper packages in `data/`. It does not rebuild graphs, regenerate questions, or run OCR. It automatically exports per-paper results and model-level statistics.**
+
+Install [uv](https://docs.astral.sh/uv/), use Python 3.11+, and run from a complete repository checkout:
+
+```powershell
+.\start.ps1 test --workers 2
+```
+
+On macOS/Linux:
+
+```bash
+bash ./start.sh test --workers 2
+```
+
+**Before evaluation, supply your own API key, base URL, and model ID for these two roles in `config.env`.** The first launch creates a blank file and lists the fields to fill. Edit it, then repeat the same command. Missing settings stop execution before model requests.
+
+| Required service | API key | Provider API base URL | Callable model ID |
+| --- | --- | --- | --- |
+| Evaluation judge | `API_KEY` | `BASE_URL` | `LLM_MODEL` |
+| Evaluated target model | `EVAL_TARGET_API_KEY` | `EVAL_TARGET_BASE_URL` | `EVAL_TARGET_MODEL` |
+
+The judge must support JSON responses; the target must accept images. Use your provider's API root URL, not a website or full `/chat/completions` endpoint. **No vision-generation, embedding, or OCR service is required by default.** Embeddings are additionally needed only if you enable `CLAIM_VERIFY_ENABLED=true`. API access is not bundled; evaluation consumes your provider quota.
+
+### Common testing commands
+
+```powershell
+# Test one existing package first
+.\start.ps1 test --paper-id ConVis
+
+# Three independent evaluations of all existing packages, followed by statistics
+.\start.ps1 test --workers 2 --repeats 3
+
+# Compare models; replace these IDs with models available to your account
+.\start.ps1 test --models model-a model-b --workers 2
+
+# Preview selected papers, models and output paths without model requests
+.\start.ps1 test --dry-run
+```
+
+The default is all papers in `data/`, one round per model. Use `--data-root` for another existing dataset and `--config` for a private configuration. On macOS/Linux, replace `.\start.ps1` with `bash ./start.sh`. If Windows blocks execution, use `powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 test --workers 2`.
+
+### Results and statistics
+
+Each test creates `outputs/testing/<session>/` and prints the exact path:
+
+| File or directory | Purpose |
+| --- | --- |
+| `statistics/summary.csv` | Main model-level metrics, standard deviations, valid-paper counts and completeness statistics; start here |
+| `statistics/per_paper.csv` | Per-round, per-paper metrics, numerators, denominators and completion status |
+| `statistics/summary.json` | Machine-readable statistics |
+| `round-01/evaluation/<model>/<paper_id>/` | Per-task `evaluation_report.json`, `dialogue_trajectory.json` and state cache |
+| `testing.json`, `main.log`, `logs/` | Planned task manifest, main log and stage logs |
+
+Statistics cover KC coverage, macro completion, challenge failure, hallucination-turn proportion, event density, event closure and omission completion. Main means weight papers equally. Zero denominators are blank/N/A; missing or incomplete tasks are identified rather than scored as zero. Repeated runs are averaged within each paper before averaging across papers.
+
+Existing reports can also be summarized separately, **without model API calls**:
+
+```powershell
+uv run --locked python scripts/summarize_results.py --result-root outputs/evaluation
+```
+
+Replace `--result-root` with a test session or historical result root. Without a planned-task manifest, statistics describe the reports found and do not assert full dataset completion.
+
+## Optional: API configuration for rebuilding benchmarks
 
 > **You must provide your own API keys, provider base URLs, and model IDs in the root `config.env`. No model services or credentials are bundled. Calls consume your provider quota and may incur charges.**
 
@@ -23,7 +88,9 @@ The full graph → questions → evaluation workflow needs all four groups:
 
 Obtain the key, API root URL, and callable model ID from your provider. Do not use a website address or a full `/chat/completions` or `/embeddings` endpoint. The target must support image input for multimodal evaluation. If groups share a service, explicitly fill each group even when the key and URL are the same. Evaluation of existing packages needs only the text/judge and target groups by default. See [Configuration](docs/configuration.md) for details.
 
-## Quick start
+## Optional: construct a new benchmark
+
+The no-command launcher and `measure` below rebuild graphs and questions. **Skip this section when testing existing packages; use `test` above.**
 
 Install [uv](https://docs.astral.sh/uv/) and use Python 3.11+. From the repository root, run:
 
@@ -68,6 +135,7 @@ Use `--config path/to/config.env` to select a different configuration. If Window
 | `data/<paper_id>/` | Paper graph, multimodal assets, clean text, and graph-linked question package. |
 | `outputs/evaluation/<model>/<paper_id>/` | New dialogue trajectories, reports, and evaluation checkpoints. |
 | `outputs/logs/` | New pipeline logs. |
+| `outputs/testing/<session>/` | Existing-dataset test rounds, statistics and isolated logs. |
 | `outputs/measurement/<session>/` | Isolated measurement dataset, round results, manifests, and logs. |
 | `eval_result/` | Historical paper evaluation results; not the destination for new runs. |
 
