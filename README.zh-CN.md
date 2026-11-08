@@ -2,9 +2,23 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
+[![EMNLP 2026 Findings](https://img.shields.io/badge/EMNLP_2026-Findings-blue)](https://2026.emnlp.org/program/find_papers/)
+[![ACL Anthology](https://img.shields.io/badge/ACL_Anthology-2026.findings--emnlp.804-b31b1b)](https://aclanthology.org/2026.findings-emnlp.804/)
+[![论文 PDF](https://img.shields.io/badge/Paper-PDF-red)](https://aclanthology.org/2026.findings-emnlp.804.pdf)
+
+本仓库为论文 [**PaperGraph-Bench: Graph-Guided Benchmark Construction and Multi-Turn Evaluation for Scientific Paper Reading**](https://aclanthology.org/2026.findings-emnlp.804/) 的官方代码与基准。论文已被 **Findings of the Association for Computational Linguistics: EMNLP 2026** 录用并正式发表。
+
+**作者：** Rao Fu、Qing Dai、Kaitai Ou-yang、Kang He、Fei Li、Donghong Ji、Chong Teng
+
+**单位：** 武汉大学
+
 PaperGraph-Bench 通过图引导的多轮阅读任务评测模型对科学论文的理解能力。论文图将文章的论证结构、有证据支撑的知识组件、推理关系及图表连接起来，据此生成覆盖、误导挑战和推理问题，并在对话过程中持续观察幻觉及其修复情况。
 
 这一过程能够反映模型是否理解论文的整体内容，是否忠实于图文证据，以及能否在后续阅读中纠正错误。
+
+## 最新动态
+
+- **2026-10：** 论文发表于 **Findings of EMNLP 2026**，可查阅[正式论文](https://aclanthology.org/2026.findings-emnlp.804/)及[会议官网录用列表](https://2026.emnlp.org/program/find_papers/)。
 
 ## 快速开始：使用已有数据集测试模型
 
@@ -116,3 +130,32 @@ uv run --locked python scripts/summarize_results.py --result-root eval_result
 - [代码架构](docs/architecture.md)
 
 代码采用 [Apache License 2.0](LICENSE) 许可。论文正文、图表及数据集产物仍须遵守原始来源的版权和再分发条款。
+
+## 引用
+
+如果本项目对你的研究有所帮助，请引用正式发表的论文：
+
+```bibtex
+@inproceedings{fu-etal-2026-papergraph,
+    title = "{P}aper{G}raph-Bench: Graph-Guided Benchmark Construction and Multi-Turn Evaluation for Scientific Paper Reading",
+    author = "Fu, Rao  and
+      Dai, Qing  and
+      Ou-yang, Kaitai  and
+      He, Kang  and
+      Li, Fei  and
+      Ji, Donghong  and
+      Teng, Chong",
+    booktitle = "Findings of the {A}ssociation for {C}omputational {L}inguistics: {EMNLP} 2026",
+    month = oct,
+    year = "2026",
+    address = "Budapest, Hungary",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.findings-emnlp.804/",
+    doi = "10.18653/2026.findings-emnlp.804",
+    pages = "17028--17055"
+}
+```
+
+## 问题反馈
+
+使用或复现过程中遇到问题，可在 [GitHub Issues](https://github.com/furao0011/PaperGraphBench/issues) 中反馈，并附运行命令、模型 ID 和相关日志。分享日志前请移除 API Key 等敏感信息。

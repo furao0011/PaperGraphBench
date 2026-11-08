@@ -2,9 +2,23 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
+[![EMNLP 2026 Findings](https://img.shields.io/badge/EMNLP_2026-Findings-blue)](https://2026.emnlp.org/program/find_papers/)
+[![ACL Anthology](https://img.shields.io/badge/ACL_Anthology-2026.findings--emnlp.804-b31b1b)](https://aclanthology.org/2026.findings-emnlp.804/)
+[![Paper PDF](https://img.shields.io/badge/Paper-PDF-red)](https://aclanthology.org/2026.findings-emnlp.804.pdf)
+
+Official code and benchmark for [**PaperGraph-Bench: Graph-Guided Benchmark Construction and Multi-Turn Evaluation for Scientific Paper Reading**](https://aclanthology.org/2026.findings-emnlp.804/), published in **Findings of the Association for Computational Linguistics: EMNLP 2026**.
+
+**Authors:** Rao Fu, Qing Dai, Kaitai Ou-yang, Kang He, Fei Li, Donghong Ji, Chong Teng
+
+**Affiliation:** Wuhan University
+
 PaperGraph-Bench evaluates scientific-paper understanding through graph-guided, multi-turn reading tasks. A paper graph connects the paper's argument structure, evidence-grounded knowledge components, reasoning relations, and figures or tables. It guides questions about coverage, misleading claims, and reasoning, while the evaluation follows hallucinations and their repair throughout the dialogue.
 
 This process reveals whether a model can understand the paper as a whole, stay grounded in textual and visual evidence, and correct mistakes during continued reading.
+
+## News
+
+- **2026-10:** PaperGraph-Bench was published in **Findings of EMNLP 2026**. The [proceedings paper](https://aclanthology.org/2026.findings-emnlp.804/) and [official acceptance listing](https://2026.emnlp.org/program/find_papers/) are available.
 
 ## Quick start: test a model on the released dataset
 
@@ -116,3 +130,32 @@ The supported entry points are `start.ps1`, `start.sh`, and `run.py`. See [Archi
 - [Code architecture](docs/architecture.md)
 
 Code is licensed under [Apache License 2.0](LICENSE). Paper text, figures, and dataset artifacts remain subject to the original sources' copyright and redistribution terms.
+
+## Citation
+
+If you use PaperGraph-Bench in your research, please cite the proceedings paper:
+
+```bibtex
+@inproceedings{fu-etal-2026-papergraph,
+    title = "{P}aper{G}raph-Bench: Graph-Guided Benchmark Construction and Multi-Turn Evaluation for Scientific Paper Reading",
+    author = "Fu, Rao  and
+      Dai, Qing  and
+      Ou-yang, Kaitai  and
+      He, Kang  and
+      Li, Fei  and
+      Ji, Donghong  and
+      Teng, Chong",
+    booktitle = "Findings of the {A}ssociation for {C}omputational {L}inguistics: {EMNLP} 2026",
+    month = oct,
+    year = "2026",
+    address = "Budapest, Hungary",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.findings-emnlp.804/",
+    doi = "10.18653/2026.findings-emnlp.804",
+    pages = "17028--17055"
+}
+```
+
+## Questions and feedback
+
+For usage questions or reproducibility issues, please open a [GitHub issue](https://github.com/furao0011/PaperGraphBench/issues) with the command, model IDs, and relevant logs. Remove API keys and other credentials before sharing logs.
