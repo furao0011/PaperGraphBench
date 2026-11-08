@@ -1,16 +1,52 @@
-# PaperGraph-Bench
+<div align="center">
 
-[English](README.md) | [简体中文](README.zh-CN.md)
+<h1>PaperGraph-Bench</h1>
+<h3>Graph-Guided Benchmark Construction and Multi-Turn Evaluation<br>for Scientific Paper Reading</h3>
 
-[![EMNLP 2026 Findings](https://img.shields.io/badge/EMNLP_2026-Findings-blue)](https://2026.emnlp.org/program/find_papers/)
-[![ACL Anthology](https://img.shields.io/badge/ACL_Anthology-2026.findings--emnlp.804-b31b1b)](https://aclanthology.org/2026.findings-emnlp.804/)
-[![Paper PDF](https://img.shields.io/badge/Paper-PDF-red)](https://aclanthology.org/2026.findings-emnlp.804.pdf)
+<p><strong>Official code and benchmark · Findings of EMNLP 2026</strong></p>
 
-Official code and benchmark for [**PaperGraph-Bench: Graph-Guided Benchmark Construction and Multi-Turn Evaluation for Scientific Paper Reading**](https://aclanthology.org/2026.findings-emnlp.804/), published in **Findings of the Association for Computational Linguistics: EMNLP 2026**.
+<p>
+  <a href="https://aclanthology.org/people/rao-fu/">Rao&nbsp;Fu</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/people/qing-dai/">Qing&nbsp;Dai</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/people/kaitai-ou-yang/">Kaitai&nbsp;Ou-yang</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/people/kang-he-wuhan/">Kang&nbsp;He</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/people/fei-li/">Fei&nbsp;Li</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/people/donghong-ji/">Donghong&nbsp;Ji</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/people/chong-teng/">Chong&nbsp;Teng</a>
+</p>
 
-**Authors:** Rao Fu, Qing Dai, Kaitai Ou-yang, Kang He, Fei Li, Donghong Ji, Chong Teng
+<p>Wuhan University</p>
 
-**Affiliation:** Wuhan University
+<p>
+  <a href="https://2026.emnlp.org/program/find_papers/"><img src="https://img.shields.io/badge/EMNLP_2026-Findings-6366f1?style=flat-square" alt="EMNLP 2026 Findings"></a>
+  <a href="https://aclanthology.org/2026.findings-emnlp.804/"><img src="https://img.shields.io/badge/ACL_Anthology-2026.findings--emnlp.804-b31b1b?style=flat-square" alt="ACL Anthology paper"></a>
+  <a href="https://aclanthology.org/2026.findings-emnlp.804.pdf"><img src="https://img.shields.io/badge/Paper-PDF-ea580c?style=flat-square" alt="Paper PDF"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-4d7c0f?style=flat-square" alt="Apache License 2.0"></a>
+</p>
+<p>
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/Python-3.11%2B-3776ab?style=flat-square&amp;logo=python&amp;logoColor=white" alt="Python 3.11 or newer"></a>
+  <a href="data/"><img src="https://img.shields.io/badge/Dataset-12_papers-0f766e?style=flat-square" alt="Dataset with 12 papers"></a>
+  <a href="eval_result/"><img src="https://img.shields.io/badge/Experiments-10_models-475569?style=flat-square" alt="Results for 10 models"></a>
+</p>
+
+<p>
+  <a href="https://aclanthology.org/2026.findings-emnlp.804/">Paper</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/2026.findings-emnlp.804.pdf">PDF</a> &nbsp;·&nbsp;
+  <a href="https://2026.emnlp.org/program/find_papers/">Conference</a> &nbsp;·&nbsp;
+  <a href="#citation">Citation</a>
+</p>
+<p>
+  <a href="data/">Dataset</a> &nbsp;·&nbsp;
+  <a href="eval_result/">Results</a> &nbsp;·&nbsp;
+  <a href="#quick-start">Quick Start</a> &nbsp;·&nbsp;
+  <a href="docs/configuration.md">API Configuration</a> &nbsp;·&nbsp;
+  <a href="docs/evaluation_plan.zh-CN.md">Evaluation Plan</a> &nbsp;·&nbsp;
+  <a href="https://github.com/furao0011/PaperGraphBench/issues">Issues</a>
+</p>
+
+<p><a href="README.md"><strong>English</strong></a> &nbsp;|&nbsp; <a href="README.zh-CN.md">简体中文</a></p>
+
+</div>
 
 PaperGraph-Bench evaluates scientific-paper understanding through graph-guided, multi-turn reading tasks. A paper graph connects the paper's argument structure, evidence-grounded knowledge components, reasoning relations, and figures or tables. It guides questions about coverage, misleading claims, and reasoning, while the evaluation follows hallucinations and their repair throughout the dialogue.
 
@@ -19,6 +55,8 @@ This process reveals whether a model can understand the paper as a whole, stay g
 ## News
 
 - **2026-10:** PaperGraph-Bench was published in **Findings of EMNLP 2026**. The [proceedings paper](https://aclanthology.org/2026.findings-emnlp.804/) and [official acceptance listing](https://2026.emnlp.org/program/find_papers/) are available.
+
+<a name="quick-start"></a>
 
 ## Quick start: test a model on the released dataset
 
@@ -130,6 +168,8 @@ The supported entry points are `start.ps1`, `start.sh`, and `run.py`. See [Archi
 - [Code architecture](docs/architecture.md)
 
 Code is licensed under [Apache License 2.0](LICENSE). Paper text, figures, and dataset artifacts remain subject to the original sources' copyright and redistribution terms.
+
+<a name="citation"></a>
 
 ## Citation
 

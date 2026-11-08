@@ -1,16 +1,52 @@
-# PaperGraph-Bench
+<div align="center">
 
-[English](README.md) | [简体中文](README.zh-CN.md)
+<h1>PaperGraph-Bench</h1>
+<h3>Graph-Guided Benchmark Construction and Multi-Turn Evaluation<br>for Scientific Paper Reading</h3>
 
-[![EMNLP 2026 Findings](https://img.shields.io/badge/EMNLP_2026-Findings-blue)](https://2026.emnlp.org/program/find_papers/)
-[![ACL Anthology](https://img.shields.io/badge/ACL_Anthology-2026.findings--emnlp.804-b31b1b)](https://aclanthology.org/2026.findings-emnlp.804/)
-[![论文 PDF](https://img.shields.io/badge/Paper-PDF-red)](https://aclanthology.org/2026.findings-emnlp.804.pdf)
+<p><strong>官方代码与基准 · Findings of EMNLP 2026</strong></p>
 
-本仓库为论文 [**PaperGraph-Bench: Graph-Guided Benchmark Construction and Multi-Turn Evaluation for Scientific Paper Reading**](https://aclanthology.org/2026.findings-emnlp.804/) 的官方代码与基准。论文已被 **Findings of the Association for Computational Linguistics: EMNLP 2026** 录用并正式发表。
+<p>
+  <a href="https://aclanthology.org/people/rao-fu/">Rao&nbsp;Fu</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/people/qing-dai/">Qing&nbsp;Dai</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/people/kaitai-ou-yang/">Kaitai&nbsp;Ou-yang</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/people/kang-he-wuhan/">Kang&nbsp;He</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/people/fei-li/">Fei&nbsp;Li</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/people/donghong-ji/">Donghong&nbsp;Ji</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/people/chong-teng/">Chong&nbsp;Teng</a>
+</p>
 
-**作者：** Rao Fu、Qing Dai、Kaitai Ou-yang、Kang He、Fei Li、Donghong Ji、Chong Teng
+<p>武汉大学</p>
 
-**单位：** 武汉大学
+<p>
+  <a href="https://2026.emnlp.org/program/find_papers/"><img src="https://img.shields.io/badge/EMNLP_2026-Findings-6366f1?style=flat-square" alt="EMNLP 2026 Findings"></a>
+  <a href="https://aclanthology.org/2026.findings-emnlp.804/"><img src="https://img.shields.io/badge/ACL_Anthology-2026.findings--emnlp.804-b31b1b?style=flat-square" alt="ACL Anthology 论文"></a>
+  <a href="https://aclanthology.org/2026.findings-emnlp.804.pdf"><img src="https://img.shields.io/badge/Paper-PDF-ea580c?style=flat-square" alt="论文 PDF"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-4d7c0f?style=flat-square" alt="Apache License 2.0"></a>
+</p>
+<p>
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/Python-3.11%2B-3776ab?style=flat-square&amp;logo=python&amp;logoColor=white" alt="Python 3.11 及以上"></a>
+  <a href="data/"><img src="https://img.shields.io/badge/Dataset-12_papers-0f766e?style=flat-square" alt="12 篇论文数据集"></a>
+  <a href="eval_result/"><img src="https://img.shields.io/badge/Experiments-10_models-475569?style=flat-square" alt="10 个模型的实验结果"></a>
+</p>
+
+<p>
+  <a href="https://aclanthology.org/2026.findings-emnlp.804/">论文</a> &nbsp;·&nbsp;
+  <a href="https://aclanthology.org/2026.findings-emnlp.804.pdf">PDF</a> &nbsp;·&nbsp;
+  <a href="https://2026.emnlp.org/program/find_papers/">会议官网</a> &nbsp;·&nbsp;
+  <a href="#citation">引用</a>
+</p>
+<p>
+  <a href="data/">数据集</a> &nbsp;·&nbsp;
+  <a href="eval_result/">实验结果</a> &nbsp;·&nbsp;
+  <a href="#quick-start">快速开始</a> &nbsp;·&nbsp;
+  <a href="docs/configuration.md">API 配置</a> &nbsp;·&nbsp;
+  <a href="docs/evaluation_plan.zh-CN.md">测评方案</a> &nbsp;·&nbsp;
+  <a href="https://github.com/furao0011/PaperGraphBench/issues">问题反馈</a>
+</p>
+
+<p><a href="README.md">English</a> &nbsp;|&nbsp; <a href="README.zh-CN.md"><strong>简体中文</strong></a></p>
+
+</div>
 
 PaperGraph-Bench 通过图引导的多轮阅读任务评测模型对科学论文的理解能力。论文图将文章的论证结构、有证据支撑的知识组件、推理关系及图表连接起来，据此生成覆盖、误导挑战和推理问题，并在对话过程中持续观察幻觉及其修复情况。
 
@@ -19,6 +55,8 @@ PaperGraph-Bench 通过图引导的多轮阅读任务评测模型对科学论文
 ## 最新动态
 
 - **2026-10：** 论文发表于 **Findings of EMNLP 2026**，可查阅[正式论文](https://aclanthology.org/2026.findings-emnlp.804/)及[会议官网录用列表](https://2026.emnlp.org/program/find_papers/)。
+
+<a name="quick-start"></a>
 
 ## 快速开始：使用已有数据集测试模型
 
@@ -130,6 +168,8 @@ uv run --locked python scripts/summarize_results.py --result-root eval_result
 - [代码架构](docs/architecture.md)
 
 代码采用 [Apache License 2.0](LICENSE) 许可。论文正文、图表及数据集产物仍须遵守原始来源的版权和再分发条款。
+
+<a name="citation"></a>
 
 ## 引用
 
